@@ -1,0 +1,19 @@
+\begin{thebibliography}{OST13}
+
+\bibitem[Mot55]{motzkin}
+T.~S. Motzkin.
+\newblock Evaluation of polynomials and evaluation of rational functions.
+\newblock {\em Bulletin of the American Mathematical Society}, 61:163, 1955.
+
+\bibitem[OST13]{horneraddlowerbound}
+A.~OSTROWSKI.
+\newblock On two problems in abstract algebra connected with horner's rule.
+\newblock In RICHARD {von MISES}, editor, {\em Studies in Mathematics and
+  Mechanics}, pages 40--48. Academic Press, 2013.
+
+\bibitem[Pan66]{hornermultlowerbound}
+Victor~Y. Pan.
+\newblock Methods of computing values of polynomials.
+\newblock {\em Russian Mathematical Surveys}, 21:105--136, 1966.
+
+\end{thebibliography}

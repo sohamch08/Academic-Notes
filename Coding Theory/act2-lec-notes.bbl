@@ -1,0 +1,31 @@
+\begin{thebibliography}{DKSS09}
+
+\bibitem[DKSS09]{dvir2009extensions}
+Zeev Dvir, Swastik Kopparty, Shubhangi Saraf, and Madhu Sudan.
+\newblock Extensions to the method of multiplicities, with applications to
+  kakeya sets and mergers.
+\newblock In {\em 2009 50th Annual IEEE Symposium on Foundations of Computer
+  Science}, pages 181--190, 2009.
+
+\bibitem[HKT08]{HirschfeldKorchmárosTorres+2008}
+J.~W.~P. Hirschfeld, G.~Korchmáros, and F.~Torres.
+\newblock {\em Algebraic Curves over a Finite Field}.
+\newblock Princeton University Press, Princeton, 2008.
+
+\bibitem[Kop15]{kopparty2015remarks}
+Swastik Kopparty.
+\newblock Some remarks on multiplicity codes.
+\newblock {\em CoRR}, abs/1505.07547, 2015.
+
+\bibitem[KSY11]{highratesublin}
+Swastik Kopparty, Shubhangi Saraf, and Sergey Yekhanin.
+\newblock High-rate codes with sublinear-time decoding.
+\newblock volume~61, pages 167--176, 06 2011.
+
+\bibitem[Yek12]{ldcsergeysurvey}
+Sergey Yekhanin.
+\newblock Locally decodable codes.
+\newblock {\em Foundations and Trends in Theoretical Computer Science},
+  6(3):139--255, 2012.
+
+\end{thebibliography}

@@ -1,0 +1,23 @@
+\contentsline {chapter}{\numberline {1}Locally Decodable Codes}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Introduction}{2}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Reed Muller Locally Decodable Codes}{3}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Basic Decoding on Lines}{3}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Improved Decoding on Lines}{3}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}Decoding On Curves}{3}{subsection.1.2.3}%
+\contentsline {chapter}{\numberline {2}Multiplicity Code}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Hasse Derivative}{5}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Basic Properties of Hasse Derivatives}{5}{subsection.2.1.1}%
+\contentsline {section}{\numberline {2.2}Multiplicity}{6}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Basic Properties of Multiplicity}{6}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Strengthening of the Schwartz-Zippel Lemma}{7}{subsection.2.2.2}%
+\contentsline {section}{\numberline {2.3}Multiplicity Code}{9}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Local Correction of Multiplicity Codes}{9}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Preliminaries on Restrictions and Derivatives}{10}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Simplified Error-Correction from Few Errors}{10}{subsection.2.4.2}%
+\contentsline {chapter}{\numberline {3}Expander Codes}{12}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Bipartite Expander Graphs}{12}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Expander Code}{12}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Decoding of Expander Codes}{13}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Appendix}{14}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Probabilistic Inequalities}{14}{section.4.1}%
+\contentsline {chapter}{\numberline {5}Bibliography}{15}{chapter.5}%

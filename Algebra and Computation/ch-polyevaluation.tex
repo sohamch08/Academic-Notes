@@ -1,0 +1,30 @@
+\chapter{Polynomial Evaluation}
+\section{Introduction}
+We will consider the following situation: $R$ is a commutative ring  as always and $f\in R[x]$ where $\deg(f)=d$. We also have $k$ points $u_0,\dots, u_{k-1}\in R$. Now we want to discuss here the fast algorithms of finding out $(f(u_0),\dots, f(u_{k-1}))$. So we basically want the evaluation map 
+\begin{align*}
+		\varphi: R[x]/\la m\ra & \to R^n\\ f & \to (f(u_0),\dots, f(u_{k-1}))
+\end{align*}which is a ring homomorphism. If $R$ is a field then $R[x]$ is a vector space over $R$ and the $\phi$ is an isomorphism. Formally we want to solve the following two problems with fast algorithms:
+\pr[singleeva]{Single Point evaluation}{Given $f\in R[x]$ with $\deg(f)=d$ and $\alpha\in R$ compute $f(\alpha)$}
+\pr[multieva]{Multi-Point evaluation}{Given $f\in R[x]$ with $\deg(f)=d$ and $u_o,\dots, u_{n-1}\in R$ compute $f(u_0),\dots, f(u_{n-1})$}
+\pagebreak
+
+\section{Single Point Evaluation}
+\subsection{Horner's Method}
+\begin{Theorem}{Horner's Method}{}
+	Given a polynomial $f(x)=\sum\limits_{i=0}^d a_ix^i$ where $a_i\in R$ for all $i\in [n]$ and a point $\alpha\in R$ using only $O(d)$ many additions and multiplications.
+\end{Theorem}
+
+
+\begin{myproof}Consider the following algorithm:
+	
+	\algo[horner]{$p(x)=a_0+x(a_1+x(a_2+(x(\cdots + x(a_n)\cdots))))$}{Horner's Method}
+	
+	Clearly we are using only $d$ many additions and $d$ many multiplications. So overall we need $2d=O(d)$ ring operations to evaluate the polynomial. The following lower bound results we obtain
+\end{myproof}
+This is the minimal number of additions and multiplications for any algorithm to evaluate a polynomial.
+\thm{\cite{horneraddlowerbound}}{Any algorithm to evaluate an arbitrary degree $d$ polynomial $f\in R[x]$ at any point $\alpha\in R$ must use at least $n$ additions}
+
+\thm{\cite{hornermultlowerbound}}{Any algorithm to evaluate an arbitrary degree $d$ polynomial $f\in R[x]$ at any point $\alpha\in R$ without initial conditioning of coefficients has at least $n$ multiplications  and at least $n$ additions.}
+\thm{\cite{hornermultlowerbound},\cite{motzkin}}{Any degree $d$ real polynomial can be evaluated using $\lt\lfloor \dfrac{d}2\rt\rfloor + 2$ multiplications and $d$ additions.}
+
+\section{Fast Multi-point Evaluation}

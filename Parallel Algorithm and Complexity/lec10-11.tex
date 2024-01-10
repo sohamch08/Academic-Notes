@@ -1,0 +1,196 @@
+\section{Maximal Independent Set ($MIS$)}
+\begin{theorem}
+	$MIS\in P$
+\end{theorem}
+
+\subsection{Matching and Independent Set of Line Graph}
+
+\begin{definition}[Line Graph]
+	The line graph of the graph $G$, written $L(G)$  is the graph whose vertices are the edges of $G$, with $(e_1,e_2)\in E(L(G))$ when $e_1\cap e_2\neq \phi$
+\end{definition}
+
+\begin{theorem}
+	Given a graph $G$ a set of edges $S\subseteq E$ is a matching if and only if it is a independent set in the line graph $L(G)$
+\end{theorem}
+\begin{proof}
+	$(\Rightarrow)$: Let $S$ be a matching of $G$. Therefore for all $e_1,e_2\in S$ we have $e_1\cap e_2-\phi$. Hence $e_1,e_2$ are not adjacent in $L(G)$. Hence $S$ is an independent set of $L(G)$.
+	
+	$(\Leftarrow)$: Let $S$ be a independent set in $L(G)$. Then for all $e_1,e_2\in S$, $e_1$ and $e_2$ are not adjacent. Therefore $e_1\cap e_2=\phi$. Hence the set $S$ is a set of edges of $G$ where none of them shares any endpoint. Hence $S$ is a matching in $G$.
+\end{proof}
+
+\begin{fact}
+	Maximal (Maximum) Matching in $G$ is an Maximal (Maximum) Independent Set  in the line graph $L(G)$.
+\end{fact}
+
+\subsection{Luby's Algorithm (Randomized Algorithms)}
+\begin{definition}[$RNC^{k}$]
+	The class $RNC^{k}$ is the class of problems that can be solved by a randomized algorithm that runs in $O(\log^k n)$ time with a polynomial number of processors. 
+\end{definition}
+\begin{remark}
+	Therefore $RNC$ is the randomized counterpart of NC.\parinn
+\end{remark}
+Luby's Algorithm puts $MIS$ in $RNC^2$. The main steps or the ideas of the algorithm are:\begin{itemize}
+	\item The algorithm tries to find $I$ in each stage.
+	\item Each stage finds an independent set $I$ in parallel, using calls on a 
+	\item Create a set $S$ of candidates for $I$ as follows: For each vertex $v$ in parallel, include $v\in S$ with probability $\frac1{2d(v)}$
+	\item For each edge in $E$ if both its endpoints are in $S$, discard the one of lower degree, ties are resolved arbitrarily
+	\item The resulting set is $I$
+\end{itemize}
+Here we denote for any $v\in V$ $d(v)\coloneqq \deg(v)$. 
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Luby's Algorithm
+%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{algorithm}
+	\DontPrintSemicolon
+	\Begin{
+		$A\longleftarrow \emptyset$\;
+		\While{$G\neq \emptyset$}{
+			$S\longleftarrow \emptyset$\;
+			$I \longleftarrow \emptyset$\;
+			\For{$v\in V(G)$ in parallel}{add $v$ to $S$ with probability $\frac{1}{2d(v)}$}
+			\For{$\{u,v\}\in E(G)$ in parallel}{
+				\If{$u\in S$ and $v\in S$}{
+					\uIf{$d(u)<d(v)$}{delete $u$ from $S$}
+					\uElseIf{$d(v)<d(u)$}{delete $v$ from $S$}
+					\uElseIf{$u<v$}{delete $u$ from $S$}
+					\Else{delete $v$ from $S$}
+				}
+			}
+			Call the resulting  set after deletions $I$\;
+			$A\longleftarrow A\cup I$\;
+			$G\longleftarrow G\setminus (I\cup N(I))$\;
+		}
+	\Return $A$\;		
+	}
+	\caption{Luby's Randomized Algorithm on $MIS$\label{lubymis}}
+\end{algorithm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Analysis of Luby's Algorithm}
+Now we will define certain things which will help us to analyze the algorithm: 
+\begin{itemize}
+	\item A vertex $ v\in V$ is \textit{good} if $$\sum_{u\in N(v)}\frac{1}{2d(u)}\geq \frac16$$A pair of vertices $u,v\in V$ is said to be \textit{good} if $$good(u,v)\iff \llbracket(u,v)\in E\rrbracket\wedge\llbracket good(u)\vee good(v)\rrbracket$$Intuitively a vertex is good if it has lots of neighbors of low degree. This will give it a decent chance of making into $N(I)$. Therefore in case of bad vertex $bad(v)=\neg good(v)$ and for a pair of vertices $u,v\in V$ we have $bad(u,v)=\neg good(u,v)$
+	
+	
+	\item We also define \begin{align*}
+		N^-(v)=\{u\in N(v)\mid d(u)\leq d(v)\} && d^-(v)=|N^-(v)|\\
+		N^+(v)=\{u\in N(v)\mid d(u)>d(v)\} && d^+(v)=|N^+(v)|
+	\end{align*}
+Therefore we have $d^+(v)+d^-(v)=d(v)$.
+\end{itemize}
+
+
+\begin{lemma}\label{badv}
+	For any $v\in V$	$$bad(v)\implies d^+(v)\geq 2d^-(v)\iff  d^-(v)\leq \frac{d(v)}{3}\iff d^+(v)\geq \frac{2d(v)}{3}$$
+\end{lemma}
+\begin{proof}
+	We make the graph directed where if $(u,v)\in E$ previously then the direction of this edge will be $$u\to v\iff \llbracket d(u)<d(v)\rrbracket \vee \Big(\llbracket d(u)=d(v)\rrbracket\wedge \llbracket u<v\rrbracket\Big)$$ Then $d^-(v)$ in the original graph indicates the in-degree of $v$ and $d^+(v)$ indicates the out-degree of $v$. Therefore $d^+(v)\geq \frac{2d(v)}{3}$ means out=degree of $v$ is twice more than the in-degree of $v$. Now assume the statement is not true. Let $v$ is \textit{bad}. Then\begin{align*}
+		\frac16 > \sum_{u\in N(v)}\frac{1}{2d(u)}\geq \sum_{u\in N^-(v)}\frac1{2d(u)}\geq \sum_{u\in N^-(v)}\frac1{2d(v)}\geq \frac{d^{-}(v)}{2d(v)}>\frac{d(v)}3\times \frac{1}{2d(v)}\geq \frac16
+	\end{align*}Hence contradiction.
+\end{proof}
+
+\begin{lemma}\label{halfgood}
+	At least half of the edges in the graph are good
+\end{lemma}
+\begin{proof}
+	We again construct the same directed graph from $G$ as in the proof of \lmref{badv}. If $(u,v)\in E$ then the direction of this edge will be $$u\to v\iff \llbracket d(u)<d(v)\rrbracket \vee \Big(\llbracket d(u)=d(v)\rrbracket\wedge \llbracket u<v\rrbracket\Big)$$
+	
+	Now for any edge $e=(u,v)\in E$ $$bad(e)\iff bad(u)\wedge bad(v)$$Let the direction of $e$ is $u\to v$. Since $e$ is bad the vertex $v$ is bad. Therefore using \lmref{badv} out-degree of $v$ is twice more than the in-degree of $v$. Hence there is at least two edges out-going from $v$. Let those edges are $e_1=v\to w_1$ and $e_2=v\to w_2$. Hence for every bad vertex there are two edges in $E$. Hence $$2\lt|\{ e\in E\mid bad(e)\}\rt| \leq |E|$$Therefore we have $2 \#bad(e)\leq \#good(e)+\#bad(v)\implies \#good(e)\geq \#bad(e)\implies 2\#good(v)\geq |E|$.
+\end{proof}
+
+
+\begin{lemma}\label{vinSnotinI}
+		For any $v\in V$ $$Pr[v\notin I\mid v\in S]\leq \frac12$$
+\end{lemma}
+\begin{proof}If $v\in S$ and $v\notin I$ only if there exists some element of $N^+(v)$ which is also in $S$. Then
+\begin{align*}
+	Pr[v\notin I\mid v\in S] & = Pr[\exs\ u\in N^+(v)\cap S\mid v\in S]                                     &  \\
+	                         & \leq \sum_{u\in N^{+}(v)} Pr[u\in S\mid v\in S]                              &  \\
+	                         & = \sum_{u\in N^{+}(v)} Pr[u\in S]                                            & [\text{Pairwise independence}] \\
+	                         & \leq \sum_{u\in N^+(v)} \frac1{2d(u)}\leq \sum_{u\in N^+(v)} \frac{1}{2d(v)} &  \\
+	                         & \leq \frac{d(v)}{2d(v)}                                                      & [\text{\lmref{badv}}]          \\
+	                         & \leq \frac12                                                                 &
+\end{align*}	
+\end{proof}
+
+\begin{lemma}\label{vinIprob}
+		For any $v\in V$ $$Pr[v\in I]\geq \frac{1}{4d(u)}$$
+\end{lemma}
+\begin{proof}
+	We have \begin{align*}
+		Pr[v\in I] & = Pr[v\in I\mid v\in S]\ Pr[v\in S]                      &                             \\
+		           & \geq \lt(1-Pr[v\notin I\mid v\in S]\rt)\frac{1}{2d(v)}   &                             \\
+		           & =\frac12 \times \frac{1}{2d(v)}           =\frac1{4d(v)} & [\text{\lmref{vinSnotinI}}]
+	\end{align*}
+\end{proof}
+
+\begin{lemma}\label{goodvinnbhd136}
+	If $v\in V$ is good then $$Pr[v\in N(I)]\geq \frac1{36}$$
+\end{lemma}
+\begin{proof}
+	We will consider two cases. \parinf
+	
+	\textbf{Case 1:} $v$ has a neighbor $u$ of degree 2 or less. Then using \lmref{vinIprob}\begin{align*}
+		Pr[v\in N(I)] & \geq Pr[u\in I] \geq \frac{1}{4d(u)}\geq \frac18 & \\
+	\end{align*}
+
+\textbf{Case 2:} $d(u)\geq 3$ for all $u\in N(v)$. Then for all $u\in N(v)$ we have $\frac{1}{2{d(u)}}\leq \frac16$. Now  since $v$ is good we have $\sum\limits_{u\in N(v)}\frac1{2d(u)}\geq \frac16$. Therefore there must exist a subset $M(v)\subseteq N(v)$ such that \begin{equation}
+	\frac16\leq \sum\limits_{u\in M(v)}\frac1{2d(u)}\leq \frac13\label{eqmv}
+\end{equation}Therefore \begin{align*}
+	Pr[v\in N(v)] & \geq Pr[\exs\ u\in M(v)\cap I]\\
+	& \sum_{u\in M(v)}pr[u\in I]-\sum_{\substack{u,w\in M(v)\\ u\neq w}}Pr[u\in I\wedge w\in I] & [\text{Inclusion-Exclusion}]\\
+	& \sum_{u\in M(v)}\frac{1}{4d(u)}  - \sum_{\substack{u,w\in M(v)\\ u\neq w}} pr[u\in S\wedge w\in S] & [\text{\lmref{vinIprob}}]\\
+	& \sum_{u\in M(v)}\frac1{4d(u)} - \sum_{\substack{u,w\in M(v)\\ u\neq w}}Pr[u\in S]Pr[v\in S] & [\text{Pairwise independence}]\\
+	& \sum_{u\in M(v)}\frac1{4d(u)} - \sum_{u\in M(v)}\sum_{w\in M(v)} \frac{1}{2d(u)} \, \frac1{2d(w)} \\
+	& \sum_{u\in M(v)}\frac1{2d(u)} \lt[\frac12- \sum_{w\in M(v)}\frac{1}{2d(w)}  \rt]\\ 
+	& \geq \frac16 \lt(\frac12-\frac13\rt)=\frac1{36}& [\text{By \eqref{eqmv}}]
+\end{align*}
+\end{proof}
+
+\begin{lemma}\label{goodedeleted}
+	If $e\in E$ is good then $$Pr[\text{$e$ is deleted}]\geq \frac1{36}$$
+\end{lemma}
+\begin{proof}
+	If the edge $e=(u,v)\in E$ is deleted then either $u$ or $v$ is good vertex. Let $u$ is good. Since $e$ is deleted then $Pr[u\in N(I)]\geq \frac1{36}$ by \lmref{goodvinnbhd136}. Hence $$Pr[\text{$e$ is deleted}]\geq Pr[good(u)\wedge u\in N(I)] + Pr[good(v)\wedge v\in N(I)]\geq \frac1{36}$$
+\end{proof}
+
+\begin{lemma}\label{edgedeleted}
+	Let $X$ ve the random variable representing the number of deleted edges. Then $$\bbE[X]\geq \frac{|E|}{72}$$
+\end{lemma}
+\begin{proof}
+	Take the indicator random variable for each edge $e\in E$ $$X_e=\begin{cases}
+		1& \text{if $e$ is deleted}\\ 0 &\text{otherwise}
+	\end{cases}$$
+	Therefore $X=\sum\limits_{e\in E}X_e$. Then we have \begin{align*}
+		\bbE[X] & = \bbE\lt[ \sum_{e\in E}X_e \rt] = \sum_{e\in E}\bbE[X_e]\\[2mm]
+		& \geq \sum_{good(e)}\bbE[X_e]\geq \sum_{good(e)}Pr[\text{$e$ is deleted}]\\ 
+		& \geq \sum_{good(e)}\frac1{36} &\quad [\text{\hyperref[goodedeleted]{Lemma \ref{goodedeleted}}}]\\
+		& \geq \frac{|E|}{2}\times \frac1{36}=\frac{|E|}{72}&\quad [\text{\hyperref[halfgood]{Lemma \ref{halfgood}}}]
+	\end{align*}
+\end{proof}
+
+\begin{theorem}
+	Luby's Algorithm puts $MIS\in RNC^2$
+\end{theorem}
+\subsection{Derandomization}
+\begin{theorem}{Bertrand's Postulate}\label{bertrand}
+	For any integer $n>1$ there always exists at least one prime $p$ with $$n<p<2n$$
+\end{theorem}
+
+From the proof of \lmref{vinSnotinI} and \lmref{goodvinnbhd136} we can see that we don't need the vertices to be independent. Pairwise independent is enough for the analysis. We construct pairwise independent family of functions by taking a prime $p$ in the range $n$ to $2n$ (such prime exists because of \thmref{bertrand}) and then we can assume the vertices of the graph are the elements of the finite field $\bbZ_p$. Now for each vertex $u$ we take $a(u)$ be an integer in $\bbZ_p$ such that  $\frac1{2d(u)}\approx  \frac{a(u)}{p}$ that is $\frac{a(u)}{p}$ is as close as possible to $\frac1{2d(u)}$. Then we denote $A_u\coloneqq \{0,1\dots, a(u)-1\}$. We can take $A_u$ as any subset of $\bbZ_p$ of size $a(u)$.  Hence probability of landing in this set is $\frac{a(u)}{p}\approx \frac1{2d(u)}$.
+
+Now we choose $x$ and $y$ uniformly at random $\bbZ_p$ and define the function $$f_{x,y}:v\mapsto x+vy\pmod{p}$$Now for any $u,v,\alpha,\beta\in \bbZ_p$ where $u\neq v$ then there exists exactly one solution to the linear system $$x+uy=\alpha \qquad x+vy=\beta$$ since the matrix $\mat{1& u\\ 1& v}$ is invertible and $$\mat{x\\ y} =\mat{1&u\\ 1&v}^{-1}\mat{\alpha\\ \beta}$$Therefore\begin{align*}
+	\underset{x,y\in \bbZ_p}{Pr}\lt[f_{x,y}(u)\in A_u\wedge f_{x,y}(v)\in A_v\rt] & = \underset{\substack{\alpha\in A_u\\ \beta\in A_v}}{Pr}[x+uy=\alpha \wedge x+vy=\beta]\\[2mm]
+	& = \frac1{p^2} \lt| \{(x,y)\mid x+uy\in A_u\wedge x+vy\in A_v \} \rt|\\
+	& = \frac1{p^2} \sum_{\alpha\in A_u}\sum_{\beta\in A_v} |\{(x,y)\mid x+uy=\alpha \wedge x+vy=\beta\}|\\
+	& = \frac1{p^2} \sum_{\alpha\in A_u}\sum_{\beta\in A_v}1\\
+	& = \frac1{p^2}a(u)a(v)=\frac{a(u)}{p}\, \frac{a(v)}{p}\approx \frac1{2d(u)}\frac1{2d(v)}
+\end{align*}
+So we take the family of pairwise independent functions $\mcH=\{ f_{x,y}\mid x,y\in \bbZ_p\}$. We can construct this family with only $2\log p=O(\log n)$ random bits (while choosing $x,y$). Hence there are total $2^{O(\log n)}=n^{O(1)}$ many functions. So $|\mcH|=n^{O(1)}$. 
+
+So we in parallel  consider all possible strings of $O(\log n)$ length representing all possible outcomes of the $O(\log n)$ random bits. From each of this string we construct the function in $\mcH$ and carry on the algorithm deterministically. Since we expect to delete at least a constant fraction of the edges (\lmref{edgedeleted}) one of the functions must delete at least that many edges. So we pick the function which deletes the most edges and throw the other parallel computation away and then repeat the whole process. Everything is deterministic and at least a constant fraction of the edges are removed at each stage. 
+
+For each stage we choose different the prime $p$ and then do the process as discussed above.
+\begin{theorem}
+	Derandomization of Luby's Algorithm puts $MIS\in NC^2$
+\end{theorem}
