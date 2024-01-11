@@ -680,10 +680,15 @@
 []
 \titlecontents*{subsection}[3.7pc]
 {\addvspace{-1pt}\small}
+{\hspace*{2pc}\contentslabel[\thecontentslabel]{2pc}}
 {}
-{}
-{\ --- \small\thecontentspage}
-[ \textbullet\ ][]
+{\hfill\small \thecontentspage}
+[ \textbullet\ ]
+%{\addvspace{-1pt}\small}
+%{}
+%{}
+%{\ --- \small\thecontentspage}
+%[ \textbullet\ ][]
 
 \makeatletter
 \renewcommand{\tableofcontents}{%

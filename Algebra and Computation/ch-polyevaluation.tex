@@ -10,7 +10,7 @@ We will consider the following situation: $R$ is a commutative ring  as always a
 
 \section{Single Point Evaluation}
 \subsection{Horner's Method}
-\begin{Theorem}{Horner's Method}{}
+\begin{Theorem}{Horner's Method}{horner}
 	Given a polynomial $f(x)=\sum\limits_{i=0}^d a_ix^i$ where $a_i\in R$ for all $i\in [n]$ and a point $\alpha\in R$ using only $O(d)$ many additions and multiplications.
 \end{Theorem}
 
@@ -19,7 +19,7 @@ We will consider the following situation: $R$ is a commutative ring  as always a
 	
 	\algo[horner]{$p(x)=a_0+x(a_1+x(a_2+(x(\cdots + x(a_n)\cdots))))$}{Horner's Method}
 	
-	Clearly we are using only $d$ many additions and $d$ many multiplications. So overall we need $2d=O(d)$ ring operations to evaluate the polynomial. The following lower bound results we obtain
+	Clearly we are using only $d$ many additions and $d$ many multiplications. So overall we need $2d=O(d)$ ring operations to evaluate the polynomial. The following lower bound results we obtain.
 \end{myproof}
 This is the minimal number of additions and multiplications for any algorithm to evaluate a polynomial.
 \thm{\cite{horneraddlowerbound}}{Any algorithm to evaluate an arbitrary degree $d$ polynomial $f\in R[x]$ at any point $\alpha\in R$ must use at least $n$ additions}
@@ -28,3 +28,5 @@ This is the minimal number of additions and multiplications for any algorithm to
 \thm{\cite{hornermultlowerbound},\cite{motzkin}}{Any degree $d$ real polynomial can be evaluated using $\lt\lfloor \dfrac{d}2\rt\rfloor + 2$ multiplications and $d$ additions.}
 
 \section{Fast Multi-point Evaluation}
+
+A trivial algorithm for using $O(d^2)$ ring operations is to apply \hyperref[th:horner]{Horner's Method} for each point and since it takes $O(d)$ operations for each point we can find the evaluations at all $d$ points in $O(d^2)$ many ring operations. But we want to get close to linear operations. Since Horner's rules uses lowest number of ring operations doesn't mean for $d$ points $O(d^2)$ is lowest. There is an fast algorithm to evaluate the polynomial at all $d$ points using $O(M(d)\log d)$ operations.
