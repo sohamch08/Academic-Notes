@@ -84,7 +84,7 @@ We will prove the strengthening of this lemma using $mult$. Now we need a bound 
 		Fix $a_1,\dots, a_{m-1}\in S$. Let $\ovi=(i_1,\dots, i_{m-1})$ be such that $wt(\ovi)=m_{a_1,\dots,a_{m-1}}$. Since $m_{a_1,\dots, a_{m-1}}=mult(P_t,(a_1,\dots, a_{m-1}))$, for all $\ovj$ such that $wt(\ovj)<m_{a_1,\dots, a_{m-1}}$, $P_t^{(\ovj)}(a_1,\dots, a_{m-1})=0$. Hence there exists an $\ovj$ such that $wt(\ovj)=m_{a_1,\dots, a_{m-1}}$ and $P_t^{(\ovj)}(a_1,\dots, a_{m-1})\neq 0$. Therefore  $P_t^{(\ovi)}(X_1,\dots, X_{m-1})\neq 0$. Letting $(\ovi,0)$ we note that $$P^{(\ovi,0)}(X_1,\dots, X_m)=\sum_{j=0}^tP_j^{(\ovi)}(X_1,\dots, X_{m-1})X_m^j$$and therefore $P^{(\ovi,0)}(X_1,\dots, X_m)$ is a nonzero polynomial. Now
 		\begin{align*}
 			mult(P,\ova) & \leq wt(\ovi,0)+mult(P^{(\ovi,0)}, \ova) & [\text{\propref{diffmult}}]\\
-			& \leq m_{a_1,\dots, a_{m-1}}+mult(P^{(\ovi,0)}(a_1,\dots, a_{m-1},X_m),a_m) & [\text{\cormref{chvarmult}}]
+			& \leq m_{a_1,\dots, a_{m-1}}+mult(P^{(\ovi,0)}(a_1,\dots, a_{m-1},X_m),a_m) & [\text{\corref{chvarmult}}]
 		\end{align*}
 		Now summing over all $a_n\in S$ and using the $m-1$ case to $P^{(\ovi,0)}(a_1,\dots, a_{m-1},X_m)$ we have $$\sum_{a_m\in S}mult(P, \ova)\leq \sum_{a_m\in S}m_{a_1,\dots, a_{m-1}}+\sum_{a_m\in S}mult(P^{(\ovi,0)}(a_1,\dots, a_{m-1},X_m),a_m)= m_{a_1,\dots,a_{m-1}}\cdot |S|+t$$
 	\end{proof}

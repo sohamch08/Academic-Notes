@@ -30,3 +30,41 @@ This is the minimal number of additions and multiplications for any algorithm to
 \section{Fast Multi-point Evaluation}
 
 A trivial algorithm for using $O(d^2)$ ring operations is to apply \hyperref[th:horner]{Horner's Method} for each point and since it takes $O(d)$ operations for each point we can find the evaluations at all $d$ points in $O(d^2)$ many ring operations. But we want to get close to linear operations. Since Horner's rules uses lowest number of ring operations doesn't mean for $d$ points $O(d^2)$ is lowest. There is an fast algorithm to evaluate the polynomial at all $d$ points using $O(M(d)\log d)$ operations.
+
+\begin{center}
+\begin{tikzpicture}[
+	node distance=1.5cm,
+	every node/.style={draw, rounded corners, rectangle, align=center},
+	level/.style={sibling distance=3cm/2^(#1-1)},
+	dot/.style={fill=black, circle, minimum size=0.1cm, inner sep=0pt}
+	]
+
+		
+		% Nodes
+		\node {$u_0,\dots, u_{n-1}$}
+		child { node {$u_0,\dots, u_{\frac{n}2-1}$}
+			child { node {$u_0,\dots, u_{\frac{n}2-1}$} 
+				node[draw=none, yshift=-0.5cm] {$\vdots$}
+				child { node {G} }
+				child { node {H} }
+			}
+			child { node {D}
+				node[draw=none, yshift=-0.5cm] {$\vdots$}
+				child { node {I} }
+				child { node {J} }
+			}
+		}
+		child { node {$u_{\frac{n}{2}},\dots, u_{{n}-1}$}
+			child { node {E}
+				node[draw=none, yshift=-0.5cm] {$\vdots$}
+				child { node {Kasdasdas} }
+				child { node {Lasdasdas} }
+			}
+			child { node {F}
+				node[draw=none, yshift=-0.5cm] {$\vdots$}
+				child { node {M} }
+				child { node {N} }
+			}
+		};
+	\end{tikzpicture}
+\end{center}

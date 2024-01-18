@@ -566,13 +566,7 @@
 \newcommand{\pf}[2]{\begin{myproof}[#1]#2\end{myproof}}
 
 
-\newcommand{\algo}[3][]{\begin{algorithm}
-		\DontPrintSemicolon
-		\Begin{
-			#2	
-		}
-		\caption{#3\label{#1}}
-\end{algorithm}}
+
 
 %% The proof environment actually multipurpose. For a proof many things actually play. Proof idea. Proof overview. Main pproof. Proof prerequisites etc. Thats why the first option uses the actual name of what exactly we are writing for the proof. It will go like this
 %% Proof idea: \pf{Proof Idea}{content..}
@@ -657,6 +651,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{tikz}
+\usetikzlibrary{shapes, positioning}
 \definecolor{doc}{RGB}{0,60,110}
 \usepackage{titletoc}
 \contentsmargin{0cm}
