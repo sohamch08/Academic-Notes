@@ -83,7 +83,7 @@ Let $\mcX$ be a finite		set and $p_X$ be a probability distribution or a probabi
 \begin{enumerate}
 	\item Prove $\log x\leq x-1$ and $\log \frac1x\geq 1-x$ for all $x>0$.
 	\item $\sum\limits_{x\in \mcX}p_X(x)\log \frac1{p_X(x)}\leq \log |\mcX|$
-	\item $H(X)+H(Y)\geq H(X,Y)$ where $H(X,Y)=H(p_(X,Y))$ is the entropy of a joint PMF, $H(X)=H(p_X)$ where $p_X$ is marginal of $p_{X,Y}$
+	\item $H(X)+H(Y)\geq H(X,Y)$ where $H(X,Y)=H(p_{X,Y})$ is the entropy of a joint PMF, $H(X)=H(p_X)$ where $p_X$ is marginal of $p_{X,Y}$
 \end{enumerate}
 		%Problem		
 	\end{problem}
@@ -94,6 +94,8 @@ Let $\mcX$ be a finite		set and $p_X$ be a probability distribution or a probabi
 			\item We have $\log x=\displaystyle \int_1^x\frac1t\, dt$ and $x-1=\displaystyle \int_1^x dt$. Now for $x\geq 1$ for all $t\geq 1$ we have $1\geq \frac1t$. Hence $$\int_1^x\frac1t\, dt \leq \int_1^x dt\iff \log x\leq x-1$$ For $0<x<1$ we have  $t<1$ hence $\frac1t \geq 1$. Hence $$\int_x^1\frac1t\, dt \geq \int_x^1 dt\iff -\log x\geq 1-x\iff x-1\geq \log x$$Therefore $\forall\ x>0$ we have $\log x\leq x-1$.
 			
 	Now we have $\log x\leq x-1\iff 1-x\leq -\log x\iff 1-x\leq \log \frac1x$.
+	\item 
+	\item 
 		\end{enumerate}
 	}
 	
