@@ -94,8 +94,14 @@ Let $\mcX$ be a finite		set and $p_X$ be a probability distribution or a probabi
 			\item We have $\log x=\displaystyle \int_1^x\frac1t\, dt$ and $x-1=\displaystyle \int_1^x dt$. Now for $x\geq 1$ for all $t\geq 1$ we have $1\geq \frac1t$. Hence $$\int_1^x\frac1t\, dt \leq \int_1^x dt\iff \log x\leq x-1$$ For $0<x<1$ we have  $t<1$ hence $\frac1t \geq 1$. Hence $$\int_x^1\frac1t\, dt \geq \int_x^1 dt\iff -\log x\geq 1-x\iff x-1\geq \log x$$Therefore $\forall\ x>0$ we have $\log x\leq x-1$.
 			
 	Now we have $\log x\leq x-1\iff 1-x\leq -\log x\iff 1-x\leq \log \frac1x$.
-	\item 
-	\item 
+	\item \begin{align*}
+		\sum_{x\in \mcX}p_X(x)\log \frac1{p_X(x)}-\log |\mcX| & = \sum_{x\in X}p_X(x)\log \frac1{p_X(x)}-\sum_{x\in \mcX}p_X(x)\log|\mcX| \\ 
+	& = \sum_{x\in \mcX}p_X(x)\log \frac{1}{|\mcX|p_X(x)} \\
+	& \leq \sum_{x\in \mcX} p_X(x)\lt[ \frac1{|\mcX|p_X(x)}-1 \rt] & [\text{Using Part (1)}]\\
+	& =\sum_{x\in \mcX}\lt[  \frac{1}{|\mcX|}-p_X(x)\rt] =1-1=0
+	\end{align*}
+	Hence we get $$	\sum_{x\in \mcX}p_X(x)\log \frac1{p_X(x)}-\log |\mcX| \iff 	\sum_{x\in \mcX}p_X(x)\log \frac1{p_X(x)}\leq \log |\mcX| $$
+	\item We have $$1\geq p_{XY}({x,y})=p_Y(y)$$
 		\end{enumerate}
 	}
 	
@@ -149,7 +155,7 @@ Let $\mcX$ be a finite		set and $p_X$ be a probability distribution or a probabi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 4
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- \parinf \textbf{Definitions:} Suppose $p_{XY}$ is a probability distribution (probability mass function (PMF)) on $|mmcX\times \mcY$. We recall the condition distribution $p_{Y|X}(y|x)=\frac{p_{XY}(x,y)}{p_X(x)}$ and  for a pair $(x^n,y^n)\i \mcX^n\times \mcY^n$ of sequence $(x^n,y^n)\i \mcX^n\times \mcY^n$ of sequences $p_{Y|X}^n(y^n|x^n)=\prod\limits_{i=1}^np_{Y|X}(y_i|x_i)$\parinn
+ \parinf \textbf{Definitions:} Suppose $p_{XY}$ is a probability distribution (probability mass function (PMF)) on $|mmcX\times \mcY$. We recall the condition distribution $p_{Y|X}(y|x)=\frac{p_{XY}(x,y)}{p_X(x)}$ and  for a pair $(x^n,y^n)\in \mcX^n\times \mcY^n$ of sequence $(x^n,y^n)\i \mcX^n\times \mcY^n$ of sequences $p_{Y|X}^n(y^n|x^n)=\prod\limits_{i=1}^np_{Y|X}(y_i|x_i)$\parinn
  	
  We define $$H(Y|X=x)\triangleq H(p_{XY}|X=x)=-\sum_{y\in \mcY}p_{Y|X}(y|x)\log p_{Y|X}(y|x)$$ and $$H(Y|X)=H(p_{Y|X}|p_X)\triangleq \sum_{x\in \mcX}p_X(x)h9Y|X=x)$$
  
