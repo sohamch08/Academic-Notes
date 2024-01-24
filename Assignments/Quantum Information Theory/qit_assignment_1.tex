@@ -1,0 +1,174 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage{amsmath,mathtools,mathdots}
+\usepackage{amssymb,amsthm}  % assumes amsmath package installed
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=blue!70!red,
+	pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
+}
+\usepackage[most,many,breakable]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing,angles,quotes,patterns}
+\usepackage{caption}
+\usepackage{bbm}
+\usepackage{mathpazo}
+\usepackage{libertine}
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+
+
+\tcbuselibrary{theorems,skins,hooks}
+\newtcbtheorem{problem}{Problem}
+{%
+	enhanced,
+	breakable,
+	colback = mytheorembg,
+	frame hidden,
+	boxrule = 0sp,
+	borderline west = {2pt}{0pt}{mytheoremfr},
+	sharp corners,
+	detach title,
+	before upper = \tcbtitle\par\smallskip,
+	coltitle = mytheoremfr,
+	fonttitle = \bfseries\sffamily,
+	description font = \mdseries,
+	separator sign none,
+	segmentation style={solid, mytheoremfr},
+}
+{p}
+
+% To give references for any problem use like this
+% suppose the problem number is p3 then 2 options either 
+% \hyperref[p:p3]{<text you want to use to hyperlink> \ref{p:p3}}
+%                  or directly 
+%                   \ref{p:p3}
+
+
+
+\input{../../letterfonts}
+
+\input{../../macros}
+
+\setlength{\parindent}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 1}\\
+		Email: \href{sohamc@cmi.ac.in}{sohamc@cmi.ac.in} \hfill Roll: BMC202175\\
+		\normalsize Course: Quantum Information Theory \hfill Date: January 31, 2024}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Problem 1
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\begin{problem}{%problem statement
+		}{p1% problem reference text
+		}
+Let $\mcX$ be a finite		set and $p_X$ be a probability distribution or a probability mass function (PMF) on $\mcX$. The Shannon entropy of $p_X$ is defined as $$H(p_X)\triangleq -\sum_{x\in \mcX}p_X(x)\log p_X(x)$$.
+\begin{enumerate}
+	\item Prove $\log x\leq x-1$ and $\log \frac1x\geq 1-x$ for all $x>0$.
+	\item $\sum\limits_{x\in \mcX}p_X(x)\log \frac1{p_X(x)}\leq \log |\mcX|$
+	\item $H(X)+H(Y)\geq H(X,Y)$ where $H(X,Y)=H(p_(X,Y))$ is the entropy of a joint PMF, $H(X)=H(p_X)$ where $p_X$ is marginal of $p_{X,Y}$
+\end{enumerate}
+		%Problem		
+	\end{problem}
+	
+	\solve{
+		%Solution
+		\begin{enumerate}
+			\item We have $\log x=\displaystyle \int_1^x\frac1t\, dt$ and $x-1=\displaystyle \int_1^x dt$. Now for $x\geq 1$ for all $t\geq 1$ we have $1\geq \frac1t$. Hence $$\int_1^x\frac1t\, dt \leq \int_1^x dt\iff \log x\leq x-1$$ For $0<x<1$ we have  $t<1$ hence $\frac1t \geq 1$. Hence $$\int_x^1\frac1t\, dt \geq \int_x^1 dt\iff -\log x\geq 1-x\iff x-1\geq \log x$$Therefore $\forall\ x>0$ we have $\log x\leq x-1$.
+			
+	Now we have $\log x\leq x-1\iff 1-x\leq -\log x\iff 1-x\leq \log \frac1x$.
+		\end{enumerate}
+	}
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Problem 2
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\begin{problem}{%problem statement
+	}{p1% problem reference text
+	}
+	Let $p_X(x)$ be a PMF on $\mcX$. For $n\in bbN$, $\delta>0$, let $$T_{\delta}^n(p_X)\triangleq \lt\{ x^n\in \mcX^n\mid  \lt| \frac{N(a|x^n)}{n}-p_X(a) \rt| \leq \frac{\delta p_X(a)}{\log |\mcX|}\ \forall \ a\in \mcX \rt\}$$ where $N(a|x^n)=\sum\limits_{i=1}^n\mathbbm{1}_{\{x_i=a\}}$ denotes the number of occurrences of $a$ in the sequences $x_1x_2\cdots x_n$.
+	\begin{enumerate}
+		\item Prove that $$\sum_{x^n\notin T_{\delta}^n(p_X)} \prod_{i=1}^n p_X(x_i)\leq \exp \lt[ -\frac{2n\delta^2\eta^2_{p_X}}{(\log |\mcX|)^2} \rt]$$ where $\eta_{p_X}=\min\limits_{a\in \mcX}\{p_X(a)\mid 0<p_X(a)<1\}$
+		\item Prove that $$\lt[1-   \exp \lt( \frac{2n\delta^2\eta^2_{p_X}}{(\log |\mcX|)^2}  \rt) \rt] \exp\lt[  n(H(p_X)-\delta)\rt]\leq |T_{\delta}^n(p_X)|\leq \exp\lt[n(H(p_X)+\delta)\rt] $$
+		\item Prove that $$x^n\in T_{\delta}^n(p_X)\implies \exp[-n(H(p_X)+\delta)]\leq \prod_{i=1}^np_X(x_i)\leq \exp[-n(H(p_X)-\delta)]$$
+	\end{enumerate}
+	%Problem		
+\end{problem}
+
+\solve{
+	%Solution
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \parinf \textbf{Definitions:} Let $p_{X,Y}$ be a joint PMF on $\mcX\times \mcY$ where $\mcX$, $\mcY$ are finite sets. (Essentially $p_{XY}(x,y)\geq 0$ and $\sum\limits_{x\in \mcX}\sum\limits_{y\in mcY}p_{XY}(x,y)=1$). We define the marginal of $p_{XY}$ on $X$ as $p_X(x)\triangleq \sum\limits_{y\in \mcY}p_{XY}(x,y)$ for $x\in \mcX$ and marginal of $p_{XY}$ on $Y$ as $p_Y(y)\triangleq \sum\limits_{x\in \mcX}p_{XY}(x,y)$ for $y\in \mcY$. 
+\parinn 
+ or a pair $(x^n,y^n)\in \mcX^n\times \mcY^n$ of sequences we define $N(a,b\mid x^n,y^n)=\sum\limits_{i=1}^n\mathbbm{1}_{\{(x_i,y_i)=(a,b)\}}$ as the number of occurances of $(a,b)$ in $(x^n,y^n)$. 
+ 
+ Next the joint typical set wrt $p_{XY}$ is defined as $$T_{\delta}^n(p_{XY})\triangleq \lt\{ (x^n,y^n)\in \mcX^n\times \mcY^n\mid \lt|\frac{N(a,b\mid x^n,y^n)}{n}-p_{XY}(a,b)  \rt| \leq \frac{\delta p_{XY}(a,b)}{\log |\mcX||mcY|}\ \forall \ (a,b)\in \mcX\times \mcY\rt\}$$
+\begin{problem}{%problem statement
+}{p1% problem reference text
+}
+\begin{enumerate}
+	\item Prove that if $p_{XY}(a,b)=0$ for some $(a,b)\in \mcX\times \mcY$ and $(x^n,y^n)\in T_{\delta}^n(p_{XY})$ then $N(a,b|p_{XY})=0$. In other words, a pair that - probability does not occur in any typical pair of sequences.
+	\item Let $\eta_{p_{XY}}=\min\limits_{(x,y)\in \mcX\times \mcY}\{p_{XY}(x,y)\mid 0<p_{XY}(a,b)<1\}$. Use the Hoeffding Inequality to prove that $$\sum_{(x^n,y^n)\notin T_{\delta}^n(p_{XY})}p_{XY}^n(x^n,y^n)\leq 2|\mcX||\mcY|\exp\lt[- \frac{2n\delta^2\eta^2_{p_{XY}}}{(\log |\mcX||\mcY|)^2}  \rt]$$
+	\textbf{Hoeffding Inequality:} Let $Z_1,\dots, Z_m$ are independent and identically distributed random variables for which $P[a\leq Z_i\leq b]=1$ for ever $1\leq i\leq m$ and $\mu=\bbE[Z_i]$. Then for every $\eps>0$ $$p\lt[\lt| \frac1m\sum_{i=1}^mZ_i-\mu \rt|>\eps\rt]\leq 2\exp\lt[ -2m\frac{\eps^2}{(b-a)^2}\rt ]$$
+	\item For any $(x^n,y^n)\in T_{\delta}^n(p_{XY})$ prove that $$2^{-n[H(p_{XY})+\delta]}\leq p_{XY}^n(x^n,y^n)=\prod_{i=1}^np_{XY}(x_i,y_i)\leq 2^{-n[H(p_{XY})-\delta]}$$
+	\item Prove that $$(1-\tilde{\delta})2^{n[H(p_{XY})-\delta]}\leq |T_{\delta}^n(p_{XY})|\leq 2^{n[H(p_{XY})+\delta]}$$ where $\tilde{\delta}=2|\mcX||\mcY|\exp\lt[  \frac{2n\delta^2\eta^2_{p_{XY}}}{(\log |\mcX||\mcY|)^2}   \rt]$
+	\item Prove that $(x^n,y^n)\in T_{\delta}^n(p_{XY})$ then $x^n\in T_{\delta}^n (p_X)$ and $y^n\in T_{\delta}^n(p_Y)$.
+\end{enumerate}
+	%Problem		
+\end{problem}
+
+
+\solve{
+	%Solution
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \parinf \textbf{Definitions:} Suppose $p_{XY}$ is a probability distribution (probability mass function (PMF)) on $|mmcX\times \mcY$. We recall the condition distribution $p_{Y|X}(y|x)=\frac{p_{XY}(x,y)}{p_X(x)}$ and  for a pair $(x^n,y^n)\i \mcX^n\times \mcY^n$ of sequence $(x^n,y^n)\i \mcX^n\times \mcY^n$ of sequences $p_{Y|X}^n(y^n|x^n)=\prod\limits_{i=1}^np_{Y|X}(y_i|x_i)$\parinn
+ 	
+ We define $$H(Y|X=x)\triangleq H(p_{XY}|X=x)=-\sum_{y\in \mcY}p_{Y|X}(y|x)\log p_{Y|X}(y|x)$$ and $$H(Y|X)=H(p_{Y|X}|p_X)\triangleq \sum_{x\in \mcX}p_X(x)h9Y|X=x)$$
+ 
+ For any $x^n\in \mcX^n$ define the conditional typical set of $x^n$ as $$T_{\delta}^n(p_{Y|X})=\lt\{ y^n\in \mcY^n\mid (x^n,y^n)\in T_{\delta}^n(p_{XY}) \rt\}$$
+\begin{problem}{%problem statement
+	}{p1% problem reference text
+	}
+	\begin{enumerate}
+		\item Prove that $\sum\limits_{y\in \mcY}p_{Y|X)(y|x)=1}$
+		\item Prove that  $H(Y|X)=H(X,Y)-H(X)$ and $H(Y|X)\geq 0$
+		\item Prove that Verify that if $x^n\notin T_{\delta}^n(p_X)$ then $T_{\delta}^n(p_{XY}|x^n)=\phi$
+		\item Suppose $x^n\in T_{\delta}^n(p_X)$ and $y^n\in T_{\delta}^n(p_{XY}|x^n)$ prove that $$2^{-n[H(Y|X)+2\delta]}\leq p^n_{Y|X}(y^n|x^n)\leq 2^{-n[H(Y|X)-2\delta]}$$
+		\item Prove that if $x^n\in T_{\delta}^n(p_{X})$ then $$\sum_{y^n\in T_{2\delta}^n(p_{XY}|x^n)}p_{Y|X}^n(y^n|x^n)\geq 1-2|\mcX||\mcY|\exp\lt[ -\frac{2n\delta^2}{(\log |\mcX||\mcY|)^2} \eta_{p_{Y|X}}\rt]$$ where $\eta_{p_{Y|X}}=\min\limits_{(x,y)\in \mcX\times \mcY}\lt\{ p_{Y|X}(y|x)\mid 0<p_{Y|X}(y|x)<1 \rt\}$
+		\item Suppose $x^n\in T_{\delta}^n(p_X)$ then $$(1-\tilde{\delta})2^{n[H(Y|X)-4\delta]}\leq |T_{\delta}^n(p_{XY}|x^n)|\leq 2^{n[H(Y|X)+4\delta]}$$ where $\tilde{\delta}=2|\mcX||\mcY|\exp\lt[ -\frac{2n\delta^2}{(\log |\mcX||\mcY|)^2} \eta_{p_{Y|X}}\rt]$
+	\end{enumerate}
+	%Problem		
+\end{problem}
+
+
+\solve{
+	%Solution
+}
+	
+\end{document}
