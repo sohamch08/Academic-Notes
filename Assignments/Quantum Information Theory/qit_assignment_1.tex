@@ -95,28 +95,29 @@ Let $\mcX$ be a finite		set and $p_X$ be a probability distribution or a probabi
 			
 	Now we have $\log x\leq x-1\iff 1-x\leq -\log x\iff 1-x\leq \log \frac1x$.
 	\item \begin{align*}
-		\sum_{x\in \mcX}p_X(x)\log \frac1{p_X(x)}-\log |\mcX| & = \sum_{x\in X}p_X(x)\log \frac1{p_X(x)}-\sum_{x\in \mcX}p_X(x)\log|\mcX| \\ 
-	& = \sum_{x\in \mcX}p_X(x)\log \frac{1}{|\mcX|p_X(x)} \\
-	& \leq \sum_{x\in \mcX} p_X(x)\lt[ \frac1{|\mcX|p_X(x)}-1 \rt] & [\text{Using Part (1)}]\\
-	& =\sum_{x\in \mcX}\lt[  \frac{1}{|\mcX|}-p_X(x)\rt] =1-1=0
+		\sum_{x\in \mcX}p_X(x)\log \frac1{p_X(x)}-\log |\mcX| & = \sum_{x\in X}p_X(x)\log \frac1{p_X(x)}-\sum_{x\in \mcX}p_X(x)\log|\mcX| &  \\
+		                                                      & = \sum_{x\in \mcX}p_X(x)\log \frac{1}{|\mcX|p_X(x)}                       &                         \\
+		                                                      & \leq \sum_{x\in \mcX} p_X(x)\lt[ \frac1{|\mcX|p_X(x)}-1 \rt]              & [\text{Using Part (1)}] \\
+		                                                      & =\sum_{x\in \mcX}\lt[  \frac{1}{|\mcX|}-p_X(x)\rt] =1-1=0                 &
 	\end{align*}
 	Hence we get $$	\sum_{x\in \mcX}p_X(x)\log \frac1{p_X(x)}-\log |\mcX| \iff 	\sum_{x\in \mcX}p_X(x)\log \frac1{p_X(x)}\leq \log |\mcX| $$
 	\item \begin{align*}
-		H(X)+H(Y)-H(X,Y) & = -\sum_{x\in \mcX}p_X(x)\log p_X(x)-\sum_{y\in mcY}p_Y(y)\log p_Y(y)\\
-	& \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad	+\sum_{(x,y)\in \mcX\times \mcY}p_{XY}(x,y)\log p_{XY}(x,y)                                             \\
-		& = -\sum_{x\in \mcX}\sum_{y\in \mcY}p_{XY}(x,y)\log p_X(x)-\sum_{y\in \mcY}\sum_{x\in \mcX}p_{XY}(x,y)\log p_Y(y)\\
-		& \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad+\sum_{(x,y)\in \mcX\times \mcY}p_{XY}(x,y)\log p_{XY}(x,y) \\
-		& = -\sum_{(x,y)\in \mcX\times \mcY}p_{XY}(x,y)\log \frac{p_X(x)p_Y(y)}{p_{XY}(x,y)}\\
-		& = \sum_{(x,y)\in \mcX\times \mcY}p_{XY}(x,y)\log \frac{p_{XY}(x,y)}{p_X(x)p_Y(y)}\\
-		& \geq \sum_{(x,y)\in \mcX\times \mcY}p_{XY}(x,y)\lt[ 1-\frac{p_X(x)p_Y(y)}{p_{XY}(x,y)} \rt] \qquad\qquad\qquad\qquad \lt[\text{Using Part (1)}\rt]\\
-		& = \sum_{(x,y)\in \mcX\times \mcY}p_{XY}(x,y) - \sum_{(x,y)\in \mcX\times \mcY}p_{XY}(x,y)\frac{p_X(x)p_Y(y)}{p_{XY}(x,y)}\\
-		& = 1-\sum_{x\in \mcX}p_X(x)\lt[  \sum_{y\in \mcY}p_Y(y)\rt]\\
-		& = 1-\sum_{x\in \mcX}p_X(x)=1-1=0\\
+		H(X)+H(Y)-H(X,Y) & = -\sum_{x\in \mcX}p_X(x)\log p_X(x)-\sum_{y\in \mcY}p_Y(y)\log p_Y(y)                                                                             \\
+		                 & \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad	+\sum_{(x,y)\in \mcX\times \mcY}p_{XY}(x,y)\log p_{XY}(x,y)                                       \\
+		                 & = -\sum_{x\in \mcX}\sum_{y\in \mcY}p_{XY}(x,y)\log p_X(x)-\sum_{y\in \mcY}\sum_{x\in \mcX}p_{XY}(x,y)\log p_Y(y)                                   \\
+		                 & \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad+\sum_{(x,y)\in \mcX\times \mcY}p_{XY}(x,y)\log p_{XY}(x,y)                                        \\
+		                 & = -\sum_{(x,y)\in \mcX\times \mcY}p_{XY}(x,y)\log \frac{p_X(x)p_Y(y)}{p_{XY}(x,y)}                                                                 \\
+		                 & = \sum_{(x,y)\in \mcX\times \mcY}p_{XY}(x,y)\log \frac{p_{XY}(x,y)}{p_X(x)p_Y(y)}                                                                  \\
+		                 & \geq \sum_{(x,y)\in \mcX\times \mcY}p_{XY}(x,y)\lt[ 1-\frac{p_X(x)p_Y(y)}{p_{XY}(x,y)} \rt] \qquad\qquad\qquad\qquad \lt[\text{Using Part (1)}\rt] \\
+		                 & = \sum_{(x,y)\in \mcX\times \mcY}p_{XY}(x,y) - \sum_{(x,y)\in \mcX\times \mcY}p_{XY}(x,y)\frac{p_X(x)p_Y(y)}{p_{XY}(x,y)}                          \\
+		                 & = 1-\sum_{x\in \mcX}p_X(x)\lt[  \sum_{y\in \mcY}p_Y(y)\rt]                                                                                         \\
+		                 & = 1-\sum_{x\in \mcX}p_X(x)=1-1=0
 	\end{align*}
 	Hence we got $H(X)+H(Y)\geq H(X,Y)$.
 		\end{enumerate}
 	}
-	
+
+\pagebreak
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	% Problem 2
@@ -125,7 +126,7 @@ Let $\mcX$ be a finite		set and $p_X$ be a probability distribution or a probabi
 	\begin{problem}{%problem statement
 	}{p1% problem reference text
 	}
-	Let $p_X(x)$ be a PMF on $\mcX$. For $n\in bbN$, $\delta>0$, let $$T_{\delta}^n(p_X)\triangleq \lt\{ x^n\in \mcX^n\mid  \lt| \frac{N(a|x^n)}{n}-p_X(a) \rt| \leq \frac{\delta p_X(a)}{\log |\mcX|}\ \forall \ a\in \mcX \rt\}$$ where $N(a|x^n)=\sum\limits_{i=1}^n\mathbbm{1}_{\{x_i=a\}}$ denotes the number of occurrences of $a$ in the sequences $x_1x_2\cdots x_n$.
+	Let $p_X(x)$ be a PMF on $\mcX$. For $n\in \bbN$, $\delta>0$, let $$T_{\delta}^n(p_X)\triangleq \lt\{ x^n\in \mcX^n\mid  \lt| \frac{N(a|x^n)}{n}-p_X(a) \rt| \leq \frac{\delta p_X(a)}{\log |\mcX|}\ \forall \ a\in \mcX \rt\}$$ where $N(a|x^n)=\sum\limits_{i=1}^n\mathbbm{1}_{\{x_i=a\}}$ denotes the number of occurrences of $a$ in the sequences $x_1x_2\cdots x_n$.
 	\begin{enumerate}
 		\item Prove that $$\sum_{x^n\notin T_{\delta}^n(p_X)} \prod_{i=1}^n p_X(x_i)\leq \exp \lt[ -\frac{2n\delta^2\eta^2_{p_X}}{(\log |\mcX|)^2} \rt]$$ where $\eta_{p_X}=\min\limits_{a\in \mcX}\{p_X(a)\mid 0<p_X(a)<1\}$
 		\item Prove that $$\lt[1-   \exp \lt( \frac{2n\delta^2\eta^2_{p_X}}{(\log |\mcX|)^2}  \rt) \rt] \exp\lt[  n(H(p_X)-\delta)\rt]\leq |T_{\delta}^n(p_X)|\leq \exp\lt[n(H(p_X)+\delta)\rt] $$
@@ -136,7 +137,34 @@ Let $\mcX$ be a finite		set and $p_X$ be a probability distribution or a probabi
 
 \solve{
 	%Solution
+	\begin{enumerate}
+		\item $\sum\limits_{x^n\notin T_{\delta}^n(p_X)} \prod\limits_{i=1}^n p_X(x_i)=\sum\limits_{x^n\notin T_{\delta}^n(p_X)} p_X^n(x^n)=Pr[x^n\notin T_{\delta}^n(p_X)]$. If $x^n\notin T_{\delta}^n(p_X)$ then there exists $a\in \mcX$ such that $\lt| \frac{N(a|x^n)}{n}-p_X(a) \rt| \geq \frac{\delta p_X(a)}{\log |\mcX|}$. 
+		Now $N(a|x^n)=\sum\limits_{i=1}^n\mathbbm{1}_{x_i=a}$. Hence take the indicator random variables $\mathbbm{1}_{x_i=a}$ for $a$ then $\bbE\lt[ \mathbbm{1}_{x_i=a} \rt]=p_X(a)$. Then by Hoeffding Inequality we get $$Pr\lt[  \lt| \frac1n\sum_{i=1}^n\mathbbm{1}_{x_i=1}-p_X(a)\rt|>\frac{\delta p_X(a)}{\log |\mcX|}  \rt]\leq 2\exp\lt[ -2n\lt( \frac{\delta p_X(a)}{\log |\mcX|}\rt)^2\rt]\leq 2\exp\lt[ -2n\lt( \frac{\delta \eta_{p_X}}{\log |\mcX|}\rt)^2\rt]$$ So \begin{align*}
+			Pr[x^n\notin T_{\delta}^n(p_X)] & \leq \sum_{a\in \mcX}Pr\lt[  \lt| \frac1n\sum_{i=1}^n\mathbbm{1}_{x_i=1}-p_X(a)\rt|>\frac{\delta p_X(a)}{\log |\mcX|}  \rt]                               \\
+			                                & \leq \sum_{a\in \mcX} 2\exp\lt[ -2n\lt( \frac{\delta p_X(a)}{\log |\mcX|}\rt)^2\rt]\leq 2\exp\lt[ -2n\lt( \frac{\delta \eta_{p_X}}{\log |\mcX|}\rt)^2\rt] \\
+			                                & =2|\mcX|\exp\lt[ -\frac{2n\delta^2 \eta^2_{p_X}}{\log^2 |\mcX|}\rt]
+		\end{align*}
+		\item Using part (3) of we have In the previous part we have $$1\geq \sum\limits_{x^n\in T_{\delta}^n(p_X)} p_X^n(x^n) \geq \sum\limits_{x^n\in T_{\delta}^n(p_X)} \exp[-n(H(p_X)+\delta)]\geq T_{\delta}^n(p_X)|\exp[-n(H(p_X)+\delta)]$$Therefore we obtain $$|T_{\delta}^n(p_X)|\leq \exp[n(H(p_X)+\delta)]$$Now  
+		$$Pr[x^n\notin T_{\delta}^n(p_X)]\leq  2|\mcX|\exp\lt[ -\frac{2n\delta^2 \eta^2_{p_X}}{\log^2 |\mcX|}\rt]\implies Pr[x^n\in T_{\delta}]\geq 1-2|\mcX|\exp\lt[ -\frac{2n\delta^2 \eta^2_{p_X}}{\log^2 |\mcX|}\rt]$$And again using part (3) $$ Pr[x^n\in T_{\delta}]=\sum\limits_{x^n\in T_{\delta}^n(p_X)} p_X^n(x^n) \leq \sum\limits_{x^n\in T_{\delta}^n(p_X)} \exp[-n(H(p_X)-\delta)]\leq T_{\delta}^n(p_X)|\exp[-n(H(p_X)-\delta)]$$
+		Therefore we have $$|T_{\delta}^n(p_X)|\geq \lt[1-2|\mcX|\exp\lt( -\frac{2n\delta^2 \eta^2_{p_X}}{\log^2 |\mcX|}\rt)\rt]\exp[n(H(p_X)-\delta)]$$Hence we finally obtain $$\lt[1- 2|\mcX|\exp \lt( \frac{2n\delta^2\eta^2_{p_X}}{(\log |\mcX|)^2}  \rt) \rt] \exp\lt[  n(H(p_X)-\delta)\rt]\leq |T_{\delta}^n(p_X)|\leq \exp\lt[n(H(p_X)+\delta)\rt] $$
+		\item 
+		$p_X(x^n)=\prod\limits_{i=1}^np_X(x_i)=\prod\limits_{a\in \mcX}p_X(a)^{N(a|x^n)}$. Now from the definition we get for all $a\in \mcX$ if $x^n\in T_{\delta}^n(p_X)$
+$$
+	 -\frac{\delta p_X(a)}{\log |\mcX|}\leq \frac{N(a|x^n)}{n}-p_X(a)\leq \frac{\delta p_X(a)}{\log |\mcX|}
+	\implies  np_X(a)\lt[ 1-\frac{\delta}{\log |\mcX|} \rt]\leq N(a|x^n)\leq np_X(a)\lt[ 1+\frac{\delta}{\log |\mcX|} \rt]$$Now we get \begin{align*}
+		\prod_{a\in \mcX}p_X(a)^{N(a|x^n)} & \leq \prod_{a\in \mcX}p_X(a)^{ np_X(a)\lt[ 1-\frac{\delta}{\log |\mcX|} \rt]}            \\
+		                                   & =\prod_{x\in\mcX}\exp[ np_X(a)\lt[ 1+\frac{\delta}{\log |\mcX|} \rt]\log p_X(a)  ]       \\
+		                                   & =\exp\lt[ \sum_{x\in\mcX} np_X(a)\lt( 1+\frac{\delta}{\log |\mcX|} \rt)\log p_X(a)  \rt] \\
+		                                   & =\exp\lt[ n\lt( 1+\frac{\delta}{\log |\mcX|} \rt) \sum_{x\in\mcX}p_X(a)\log p_X(a)\rt]   \\
+		                                   & = \exp\lt[- n\lt( 1+\frac{\delta}{\log |\mcX|} \rt)H(p_X)\rt]
+	\end{align*}
+Similarly we get $$\prod_{a\in \mcX}p_X(a)^{N(a|x^n)}\geq \exp\lt[- n\lt( 1-\frac{\delta}{\log |\mcX|} \rt)H(p_X)\rt]$$
+
+By Problem 1.(2) we have $H(p_X)\leq \log |\mcX|$. Hence $$- n\lt( H(p_X)+\frac{\delta H(p_X)}{\log |\mcX|} \rt)\geq -n(H(p_X)+\delta)$$ $$- n\lt( H(p_X)-\frac{\delta H(p_X)}{\log |\mcX|} \rt)\leq -n(H(p_X)-\delta)$$Therefore we get $$\exp[-n(H(p_X)+\delta)]\leq \prod_{i=1}^np_X(x_i)\leq \exp[-n(H(p_X)-\delta)]$$
+	\end{enumerate}
 }
+
+\pagebreak
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 3
@@ -145,7 +173,8 @@ Let $\mcX$ be a finite		set and $p_X$ be a probability distribution or a probabi
 \parinn 
  or a pair $(x^n,y^n)\in \mcX^n\times \mcY^n$ of sequences we define $N(a,b\mid x^n,y^n)=\sum\limits_{i=1}^n\mathbbm{1}_{\{(x_i,y_i)=(a,b)\}}$ as the number of occurances of $(a,b)$ in $(x^n,y^n)$. 
  
- Next the joint typical set wrt $p_{XY}$ is defined as $$T_{\delta}^n(p_{XY})\triangleq \lt\{ (x^n,y^n)\in \mcX^n\times \mcY^n\mid \lt|\frac{N(a,b\mid x^n,y^n)}{n}-p_{XY}(a,b)  \rt| \leq \frac{\delta p_{XY}(a,b)}{\log |\mcX||mcY|}\ \forall \ (a,b)\in \mcX\times \mcY\rt\}$$
+ Next the joint typical set wrt $p_{XY}$ is defined as $$T_{\delta}^n(p_{XY})\triangleq \lt\{ (x^n,y^n)\in \mcX^n\times \mcY^n\mid \lt|\frac{N(a,b\mid x^n,y^n)}{n}-p_{XY}(a,b)  \rt| \leq \frac{\delta p_{XY}(a,b)}{\log |\mcX||\mcY|}\ \forall \ (a,b)\in \mcX\times \mcY\rt\}$$
+ 
 \begin{problem}{%problem statement
 }{p1% problem reference text
 }
@@ -164,19 +193,22 @@ Let $\mcX$ be a finite		set and $p_X$ be a probability distribution or a probabi
 \solve{
 	%Solution
 }
+
+\pagebreak
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 4
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- \parinf \textbf{Definitions:} Suppose $p_{XY}$ is a probability distribution (probability mass function (PMF)) on $|mmcX\times \mcY$. We recall the condition distribution $p_{Y|X}(y|x)=\frac{p_{XY}(x,y)}{p_X(x)}$ and  for a pair $(x^n,y^n)\in \mcX^n\times \mcY^n$ of sequence $(x^n,y^n)\i \mcX^n\times \mcY^n$ of sequences $p_{Y|X}^n(y^n|x^n)=\prod\limits_{i=1}^np_{Y|X}(y_i|x_i)$\parinn
+ \parinf \textbf{Definitions:} Suppose $p_{XY}$ is a probability distribution (probability mass function (PMF)) on $\mcX\times \mcY$. We recall the condition distribution $p_{Y|X}(y|x)=\frac{p_{XY}(x,y)}{p_X(x)}$ and  for a pair $(x^n,y^n)\in \mcX^n\times \mcY^n$ of sequence $(x^n,y^n)\in \mcX^n\times \mcY^n$ of sequences $p_{Y|X}^n(y^n|x^n)=\prod\limits_{i=1}^np_{Y|X}(y_i|x_i)$\parinn
  	
- We define $$H(Y|X=x)\triangleq H(p_{XY}|X=x)=-\sum_{y\in \mcY}p_{Y|X}(y|x)\log p_{Y|X}(y|x)$$ and $$H(Y|X)=H(p_{Y|X}|p_X)\triangleq \sum_{x\in \mcX}p_X(x)h9Y|X=x)$$
+ We define $$H(Y|X=x)\triangleq H(p_{XY}|X=x)=-\sum_{y\in \mcY}p_{Y|X}(y|x)\log p_{Y|X}(y|x)$$ and $$H(Y|X)=H(p_{Y|X}|p_X)\triangleq \sum_{x\in \mcX}p_X(x)h(Y|X=x)$$
  
  For any $x^n\in \mcX^n$ define the conditional typical set of $x^n$ as $$T_{\delta}^n(p_{Y|X})=\lt\{ y^n\in \mcY^n\mid (x^n,y^n)\in T_{\delta}^n(p_{XY}) \rt\}$$
 \begin{problem}{%problem statement
 	}{p1% problem reference text
 	}
 	\begin{enumerate}
-		\item Prove that $\sum\limits_{y\in \mcY}p_{Y|X)(y|x)=1}$
+		\item Prove that $\sum\limits_{y\in \mcY}p_{Y|X}(y|x)=1$
 		\item Prove that  $H(Y|X)=H(X,Y)-H(X)$ and $H(Y|X)\geq 0$
 		\item Prove that Verify that if $x^n\notin T_{\delta}^n(p_X)$ then $T_{\delta}^n(p_{XY}|x^n)=\phi$
 		\item Suppose $x^n\in T_{\delta}^n(p_X)$ and $y^n\in T_{\delta}^n(p_{XY}|x^n)$ prove that $$2^{-n[H(Y|X)+2\delta]}\leq p^n_{Y|X}(y^n|x^n)\leq 2^{-n[H(Y|X)-2\delta]}$$
