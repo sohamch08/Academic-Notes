@@ -282,7 +282,7 @@ $$ 2^{-n(H(p_{XY})+\delta)} \leq p^n_{XY}(x^n,y^n)\leq 2^{-n(H(p_{XY})-\delta)}$
 		\item Prove that  $H(Y|X)=H(X,Y)-H(X)$ 
 		\item Prove that $H(Y|X)\geq 0$
 		\item Prove that Verify that if $x^n\notin T_{\delta}^n(p_X)$ then $T_{\delta}^n(p_{XY}|x^n)=\emptyset$
-		\item Suppose $x^n\in T_{\delta}^n(p_X)$ and $y^n\in T_{\delta}^n(p_{XY}|x^n)$ prove that $$\exp[-n[H(Y|X)+2\delta]]\leq p^n_{Y|X}(y^n|x^n)\leq \exp[{-n[H(Y|X)-2\delta]}]$$
+		\item Suppose $x^n\in T_{\delta}^n(p_X)$ and $y^n\in T_{\delta}^n(p_{XY}|x^n)$ prove that $$2^{-n[H(Y|X)+2\delta]}\leq p^n_{Y|X}(y^n|x^n)\leq 2^{-n[H(Y|X)-2\delta]}$$
 		\item Prove that if $x^n\in T_{\delta}^n(p_{X})$ then $$\sum_{y^n\in T_{2\delta}^n(p_{XY}|x^n)}p_{Y|X}^n(y^n|x^n)\geq 1-2|\mcX||\mcY|\exp\lt[ -\frac{2n\delta^2}{(\log |\mcX||\mcY|)^2} \eta_{p_{Y|X}}\rt]$$ where $\eta_{p_{Y|X}}=\min\limits_{(x,y)\in \mcX\times \mcY}\lt\{ p_{Y|X}(y|x)\mid 0<p_{Y|X}(y|x)<1 \rt\}$
 		\item Suppose $x^n\in T_{\delta}^n(p_X)$ then $$(1-\tilde{\delta})2^{n[H(Y|X)-4\delta]}\leq |T_{\delta}^n(p_{XY}|x^n)|\leq 2^{n[H(Y|X)+4\delta]}$$ where $\tilde{\delta}=2|\mcX||\mcY|\exp\lt[ -\frac{2n\delta^2}{(\log |\mcX||\mcY|)^2} \eta_{p_{Y|X}}\rt]$
 	\end{enumerate}
@@ -313,19 +313,27 @@ $$ 2^{-n(H(p_{XY})+\delta)} \leq p^n_{XY}(x^n,y^n)\leq 2^{-n(H(p_{XY})-\delta)}$
 		\item  By Problem 3.(5) we have if $(x^n,y^n)\in T_{\delta}^n(p_{XY})$ then $x^n\in T_{\delta}^n(p_X)$ and $y^n\in T_{\delta}^n(p_Y)$. Hence if $x^n\notin T_{\delta}^n(p_X)$ or $y^n\notin T_{\delta}^n(p_Y)$ then $(x^n,y^n)\notin  T_{\delta}^n(p_{XY})$. Since we are given that $x^n\notin T_{\delta}^n(p_X)$ then for all $y^n\in \mcY^n$, $(x^n,y^n)\notin T_{\delta}^n(p_{XY})$ because otherwise by Problem 3.(5) $x^n\in T_{\delta}^n(p_X)$ which is false. Hence for all $y^n\in \mcY^n$, $(x^n,y^n)\notin T_{\delta}^n(p_{XY})$ therefore $T_{\delta}^n(p_{XY}|x^n)=\emptyset$
 		
 		
-		\item $p_{Y|X}^n(y^n|x^n)=\prod\limits_{i=1}^np_{Y|X}(y_i|x_i)=\dfrac{p_{XY}^n(x,y)}{p_X^n(x^n)}$. Now from Problem 3.(3) we have $$\exp[{-n[H(X,Y)+\delta]}]\leq p_{XY}^n(x^n,y^n)\leq \exp[{-n[H(X,Y)-\delta]}]$$ and from Problem 2.(3) we get 
-		$$x^n\in T_{\delta}^n(p_X)\implies \exp[-n(H(X)+\delta)]\leq \prod_{i=1}^np_X(x_i)\leq \exp[-n(H(X)-\delta)]$$Therefore we have $$\frac{\exp[{-n[H(X,Y)+\delta]}]}{\exp[-n(H(X)-\delta)]}\leq \dfrac{p_{XY}^n(x,y)}{p_X^n(x^n)}\leq \frac{\exp[{-n[H(X,Y)-\delta]}]}{\exp[-n(H(X)+\delta)]}$$Now \begin{multline*}
-			\frac{\exp[{-n[H(X,Y)+\delta]}]}{\exp[-n(H(X)-\delta)]} = \exp[-n((H(X,Y)+\delta)-(H(X)-\delta))]\\
-			=\exp[-n(H(X,Y)-H(X)+2\delta)]=\exp[-n(H(Y|X)+2\delta)]
+		\item $p_{Y|X}^n(y^n|x^n)=\prod\limits_{i=1}^np_{Y|X}(y_i|x_i)=\dfrac{p_{XY}^n(x,y)}{p_X^n(x^n)}$. Now from Problem 3.(3) we have $$2^{-n[H(X,Y)+\delta]}\leq p_{XY}^n(x^n,y^n)\leq 2^{-n[H(X,Y)-\delta]}$$ and from Problem 2.(3) we get 
+		$$x^n\in T_{\delta}^n(p_X)\implies 2^{-n(H(X)+\delta)}\leq \prod_{i=1}^np_X(x_i)\leq 2^{-n(H(X)-\delta)}$$Therefore we have $$\frac{2^{-n[H(X,Y)+\delta]}}{2^{-n(H(X)-\delta)}}\leq \dfrac{p_{XY}^n(x,y)}{p_X^n(x^n)}\leq \frac{2^{-n[H(X,Y)-\delta]}}{2^{-n(H(X)+\delta)}}$$Now \begin{multline*}
+			\frac{2^{-n[H(X,Y)+\delta]}}{2^{-n(H(X)-\delta)}} = 2^{-n((H(X,Y)+\delta)-(H(X)-\delta))}
+			=2^{-n(H(X,Y)-H(X)+2\delta)}=2^{-n(H(Y|X)+2\delta)}
 		\end{multline*}Similarly \begin{multline*}
-		\frac{\exp[{-n[H(X,Y)-\delta]}]}{\exp[-n(H(X)+\delta)]} = \exp[-n((H(X,Y)-\delta)-(H(X)+\delta))]\\
-		=\exp[-n(H(X,Y)-H(X)-2\delta)]=\exp[-n(H(Y|X)+2\delta)]
-		\end{multline*}Therefore we get $$\exp[-n(H(Y|X)+2\delta)]\leq p_{Y|X}^n(y^n|x^n)\leq \exp[-n(H(Y|X)+2\delta)]$$
-		
-		\item Given that $x^n\in T_{\delta}^n(p_{X}(x))$ and $T_{\delta}^n(p_{XY})=\{y^n\mcY^n\mid (x^n,y^n)\in T_{\delta}^n(p_{XY}(x,y))\}$.
-		
+		\frac{2^{-n[H(X,Y)-\delta]}}{2^{-n(H(X)+\delta)]}} = 2^{-n((H(X,Y)-\delta)-(H(X)+\delta))}
+		=2^{-n(H(X,Y)-H(X)-2\delta)}=2^{-n(H(Y|X)+2\delta)}
+		\end{multline*}Therefore we get $$2^{-n(H(Y|X)+2\delta)}\leq p_{Y|X}^n(y^n|x^n)\leq 2^{-n(H(Y|X)+2\delta)}$$
 		
 		\item 
+		
+	
+		\item Using part (4) we have 
+		$$ 1\geq \sum_{y^n\in T_{2\delta}^n(p_{XY}|x^n)}p^n_{Y|X}(y|x)\geq \sum_{y^n\in T_{2\delta}^n(p_{XY}|x^n)}2^{-n(H(Y|X)+2\delta)}=|T_{2\delta}^n(p_{XY}|x^n)|2^{-n(H(Y|X)+2\delta)}$$Therefore we get $$|T_{2\delta}^n(p_{XY}|x^n)|\leq 2^{n(H(Y|X)+2\delta)}$$
+		Now in part (5) we proved that $$Pr[y^n\in T_{2\delta}^n(p_{XY}|x^n)]\geq 1-2|\mcX||\mcY|\exp\lt[ -\frac{2n\delta^2}{(\log |\mcX||\mcY|)^2} \eta_{p_{Y|X}}\rt]$$Also \begin{multline*}
+			Pr[y^n\in T_{2\delta}^n(p_{XY}|x^n)]=\sum_{y^n\in T_{2\delta}^n(p_{XY}|x^n)}p_{Y|X}^n(y^n|x^n)\\
+			\leq \sum_{y^n\in T_{2\delta}^n(p_{XY}|x^n)}2^{-n(H(Y|X)+2\delta)}=|T_{2\delta}^n(p_{XY}|x^n)|2^{-n(H(Y|X)+2\delta)}
+		\end{multline*}Hence we get \begin{align*}
+		&|T_{2\delta}^n(p_{XY}|x^n)|2^{-n(H(Y|X)+2\delta)}\geq 1-2|\mcX||\mcY|\exp\lt[ -\frac{2n\delta^2}{(\log |\mcX||\mcY|)^2} \eta_{p_{Y|X}}\rt]\\
+		\implies & |T_{2\delta}^n(p_{XY}|x^n)|\geq \lt[ 1-2|\mcX||\mcY|\exp\lt( -\frac{2n\delta^2}{(\log |\mcX||\mcY|)^2} \eta_{p_{Y|X}}\rt) \rt]2^{n(H(Y|X)+2\delta)}
+		\end{align*}Therefore we finally get $$\lt[ 1-2|\mcX||\mcY|\exp\lt( -\frac{2n\delta^2}{(\log |\mcX||\mcY|)^2} \eta_{p_{Y|X}}\rt) \rt]2^{n(H(Y|X)+2\delta)}2\leq  |T_{2\delta}^n(p_{XY}|x^n)|\leq 2^{n(H(Y|X)+2\delta)}$$
 	\end{enumerate}
 }
 \pagebreak
