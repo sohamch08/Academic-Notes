@@ -322,7 +322,7 @@ $$ 2^{-n(H(p_{XY})+\delta)} \leq p^n_{XY}(x^n,y^n)\leq 2^{-n(H(p_{XY})-\delta)}$
 		=\exp[-n(H(X,Y)-H(X)-2\delta)]=\exp[-n(H(Y|X)+2\delta)]
 		\end{multline*}Therefore we get $$\exp[-n(H(Y|X)+2\delta)]\leq p_{Y|X}^n(y^n|x^n)\leq \exp[-n(H(Y|X)+2\delta)]$$
 		
-		\item 
+		\item Given that $x^n\in T_{\delta}^n(p_{X}(x))$ and $T_{\delta}^n(p_{XY})=\{y^n\mcY^n\mid (x^n,y^n)\in T_{\delta}^n(p_{XY}(x,y))\}$.
 		
 		
 		\item 
@@ -330,7 +330,12 @@ $$ 2^{-n(H(p_{XY})+\delta)} \leq p^n_{XY}(x^n,y^n)\leq 2^{-n(H(p_{XY})-\delta)}$
 }
 \pagebreak
 
-	
+Given that $x^n\in T_{\delta}^n(p_{X}(x))$ and $T_{\delta}^n(p_{XY})=\{y^n\in \mcY^n\mid (x^n,y^n)\in T_{\delta}^n(p_{XY}(x,y))\}$. Now for any $a\in \mcX$ let $S_a=\{i\in [n]\mid x_i=a\}$. Then naturally $|S_a|=N(a|x^n)$. Now consider the projection of $y^n$ on to $S_a$. Let's denote it by $y^n|\st_{S_a}$. Since $(x^n,y^n)\in T_{\delta}^n(p_{XY})$ we have $y^n|\st_{S_a}\in T_{\delta}^{N(a|x^n)}(p_{Y|X=a})$ where $P_{Y|X=a}(y)$ is the probability distribution over $y\in \mcY$. Ans since $a$ is any arbitrary element of $\mcX$, $y^n|\st_{S_a}\in T_{\delta}^{N(a|x^n)}(p_{Y|X=a})$ should be true for all $a\in \mcX$. Hence $$y^n\in T_{\delta}^n(p_{XY}|x^n)\iff \forall\ a\in \mcX, \ y^{N(a|x^n)}_a\in T_{\delta}^{N(a|x^n)}(p_{Y|X=a})$$where when going from left to right we mean $y^{N(a|x^n)}_a\coloneqq y^n|\st_{S_a}$ and when going from right to left $y^n$ is constructed by putting the elements in each $y^{N(a|x^n)}_a$ in their corresponding positions according to $x^n$.
+
+Therefore $$y^n\notin T_{\delta}^n(p_{XY}|x^n)\iff \exs\ a\in\mcX,\ y^{N(a|x^n)}_a\notin T_{\delta}^{N(a|x^n)}(p_{Y|X=a})$$
+Now $$ T_{\delta}^{N(a|x^n)}(p_{Y|X=a})=\lt\{ \lt|\frac{N(b|y^{N(a|x^n)}_a)}{N(a|x^n)}-p_{Y|X=a}(b)\rt|\leq \frac{\delta p_{Y|X=a}}{\log |\mcY|} \rt\}$$
+By Hoeffding inequality take the $\mathbbm{1}_{y_i=b}$ for $i\in [N(a|x^n)]$ as random variables then 
+$$Pr\lt[ \lt| \frac1{N(a|x^n)}\sum_{i=1}^{N(a|x^n)}\mathbbm{1}_{y_i=b} -p_{Y|X=a}(b)\rt|>\frac{\delta p_{Y|X=a}}{\log |\mcY|} \rt]\leq 2\exp\lt[ -2N(a|x^n)\frac{\delta^2p_{Y|X=a}^2(b)}{\log^2|\mcY|} \rt]$$
 
 	
 \end{document}
