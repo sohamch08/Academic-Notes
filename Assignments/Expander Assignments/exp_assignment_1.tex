@@ -1,0 +1,169 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage{amsmath,mathtools,mathdots}
+\usepackage{amssymb,amsthm}  % assumes amsmath package installed
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=blue!70!red,
+	pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
+}
+\usepackage[most,many,breakable]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing,angles,quotes,patterns}
+\usepackage{caption}
+\usepackage{bbm}
+\usepackage{mathpazo}
+\usepackage{libertine}
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+
+
+\tcbuselibrary{theorems,skins,hooks}
+\newtcbtheorem{problem}{Problem}
+{%
+	enhanced,
+	breakable,
+	colback = mytheorembg,
+	frame hidden,
+	boxrule = 0sp,
+	borderline west = {2pt}{0pt}{mytheoremfr},
+	sharp corners,
+	detach title,
+	before upper = \tcbtitle\par\smallskip,
+	coltitle = mytheoremfr,
+	fonttitle = \bfseries\sffamily,
+	description font = \mdseries,
+	separator sign none,
+	segmentation style={solid, mytheoremfr},
+}
+{p}
+
+% To give references for any problem use like this
+% suppose the problem number is p3 then 2 options either 
+% \hyperref[p:p3]{<text you want to use to hyperlink> \ref{p:p3}}
+%                  or directly 
+%                   \ref{p:p3}
+
+
+
+\input{../../letterfonts}
+
+\input{../../macros}
+
+\setlength{\parindent}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 1}\\
+		Email: \href{sohamc@cmi.ac.in}{sohamc@cmi.ac.in} \hfill Roll: BMC202175\\
+		\normalsize Course: Expander Graphs and Applications \hfill Date: March 5, 2024}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+\begin{problem}{%problem statement
+		Problem 4.9 (The Replacement Product): Pseudorandomness By Salil Vadhan
+	}{p1% problem reference text
+}
+Given a $D_1$-regular graph $G_1$ on $N_1$ vertices and a $D_2$-regular graph $G_2$ on $D_1$ vertices consider the following graph $G_1\textcircled{r}G_2$ on vertex set $[N_1]\times [D_1]$: vertex $(u,i)$ is connected to $(v,j)$ iff \begin{enumerate}[label=(\alph*)]
+	\item $u=v$ and $(i,j)$ is an edge in $G_2$ or,
+	\item $v$ is the $i$'th neighbour of $u$ in $G_1$ and $u$ is the $j$th neighbour of $v$. 
+\end{enumerate}
+That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associating edge incident to $v$ with one vertex of $G_2$.
+\begin{enumerate}
+	\item Prove that there is a function $g$ such that if $G_1$ has spectral expansion $\gm_1>0$ and $G_2$ has spectral expansion $\gm_2>0$ (and both graphs are undirected) then $G_1\textcircled{r}G_2$ has spectral expansion $g(\gm_1,\gm_2,D_2)>0$.
+	
+	[Hint: Note that $(G_1\textcircled{r}G_2)^3$ has $G_1\textcircled{z}G_2$ as a subgraph]
+	\item Show how to convert an explicit construction of constant degree (spectral) expanders into an explicit construction of degree 3 (spectral) expanders.
+	\item Without using Theorem 4.14, prove an analogye of Part 1 for edge expansion. That is, there is a function $h$ such that if $G_1$ is an $\lt(\frac{N_1}2,\eps_1\rt)$ edge expander and $G_2$ is a $\lt(\frac{D_1}2,\eps_2\rt)$ edge expander then $G_1\textcircled{r}G_2$ is a $\lt(\frac{N_1D_1}{2},h(\eps_1,\eps_2,D_2)\rt)$ edge expander where $h(\eps_1,\eps_2,D_2)>0$ if $\eps_1,\eps_2>0$. 
+	
+	[Hint: Given any set $S$ of vertices of $G_1\textcircled{r}G_2$, partition $S$ into the clouds that are more than ``half-full" and those that are not]
+	\item Prove that the functions $g(\gm_1,\gm_2,D_2)$ and $h(\eps_1,\eps_2,D_2)$ must depend on $D_2$ by showing that $G_1\textcircled{r}G_2$ cannot be a $\lt(\frac{N_1D_1}2,\eps\rt)$ edge expander if $\eps>\frac1{D_1+1}$ and $N_1\geq 2$
+\end{enumerate}
+\end{problem}
+\solve{
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		Problem 4.10 (Unbalanced Vertex Expanders and Data Structures): Pseudorandomness By Salil Vadhan
+	}{p2% problem reference text
+	}
+	Consider a $(K,(1-\eps)D)$ bipartite vertex expander $G$ with $N$ left vertices, $M$ right vertices and left degree $D$.
+	\begin{enumerate}
+		\item For a set $S$ of left vertices, a $y\in N(S)$ is called a \textit{unique} neighbor of $S$ if $y$ is incident to exactly one edge from $S$. Prove that every left-set $S$ of size at most $K$ has at least $(1-2\eps)D|S|$ unique neighbors.
+		\item For a set $S$ of size at most $\frac{K}2$, prove that at most $\frac{|S|}2$ vertices outside $S$ have at least $\delta D$ neighbors in $N(S)$ for $\delta=O(\eps)$.
+	\end{enumerate}
+\end{problem}
+\solve{
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		Problem 5.5 (LDPC Codes): Pseudorandomness By Salil Vadhan
+	}{p1% problem reference text
+	}
+	Given a $D_1$-regular graph $G_1$ on $N_1$ vertices and a $D_2$-regular graph $G_2$ on $D_1$ vertices consider the following graph $G_1\textcircled{r}G_2$ on vertex set $[N_1]\times [D_1]$: vertex $(u,i)$ is connected to $(v,j)$ iff \begin{enumerate}[label=(\alph*)]
+		\item $u=v$ and $(i,j)$ is an edge in $G_2$ or,
+		\item $v$ is the $i$'th neighbor of $u$ in $G_1$ and $u$ is the $j$th neighbor of $v$. 
+	\end{enumerate}
+	That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associating edge incident to $v$ with one vertex of $G_2$.
+	\begin{enumerate}
+		\item Prove that there is a function $g$ such that if $G_1$ has spectral expansion $\gm_1>0$ and $G_2$ has spectral expansion $\gm_2>0$ (and both graphs are undirected) then $G_1\textcircled{r}G_2$ has spectral expansion $g(\gm_1,\gm_2,D_2)>0$.
+		
+		[Hint: Note that $(G_1\textcircled{r}G_2)^3$ has $G_1\textcircled{z}G_2$ as a subgraph]
+		\item Show how to convert an explicit construction of constant degree (spectral) expanders into an explicit construction of degree 3 (spectral) expanders.
+		\item Without using Theorem 4.14, prove an analogue of Part 1 for edge expansion. That is, there is a function $h$ such that if $G_1$ is an $\lt(\frac{N_1}2,\eps_1\rt)$ edge expander and $G_2$ is a $\lt(\frac{D_1}2,\eps_2\rt)$ edge expander then $G_1\textcircled{r}G_2$ is a $\lt(\frac{N_1D_1}{2},h(\eps_1,\eps_2,D_2)\rt)$ edge expander where $h(\eps_1,\eps_2,D_2)>0$ if $\eps_1,\eps_2>0$. 
+		
+		[Hint: Given any set $S$ of vertices of $G_1\textcircled{r}G_2$, partition $S$ into the clouds that are more than ``half-full" and those that are not]
+		\item Prove that the functions $g(\gm_1,\gm_2,D_2)$ and $h(\eps_1,\eps_2,D_2)$ must depend on $D_2$ by showing that $G_1\textcircled{r}G_2$ cannot be a $\lt(\frac{N_1D_1}2,\eps\rt)$ edge expander if $\eps>\frac1{D_1+1}$ and $N_1\geq 2$
+	\end{enumerate}
+\end{problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p1% problem reference text
+	}
+	Given a $D_1$-regular graph $G_1$ on $N_1$ vertices and a $D_2$-regular graph $G_2$ on $D_1$ vertices consider the following graph $G_1\textcircled{r}G_2$ on vertex set $[N_1]\times [D_1]$: vertex $(u,i)$ is connected to $(v,j)$ iff \begin{enumerate}[label=(\alph*)]
+		\item $u=v$ and $(i,j)$ is an edge in $G_2$ or,
+		\item $v$ is the $i$'th neighbour of $u$ in $G_1$ and $u$ is the $j$th neighbour of $v$. 
+	\end{enumerate}
+	That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associating edge incident to $v$ with one vertex of $G_2$.
+	\begin{enumerate}
+		\item Prove that there is a function $g$ such that if $G_1$ has spectral expansion $\gm_1>0$ and $G_2$ has spectral expansion $\gm_2>0$ (and both graphs are undirected) then $G_1\textcircled{r}G_2$ has spectral expansion $g(\gm_1,\gm_2,D_2)>0$.
+		
+		[Hint: Note that $(G_1\textcircled{r}G_2)^3$ has $G_1\textcircled{z}G_2$ as a subgraph]
+		\item Show how to convert an explicit construction of constant degree (spectral) expanders into an explicit construction of degree 3 (spectral) expanders.
+		\item Without using Theorem 4.14, prove an analogye of Part 1 for edge expansion. That is, there is a function $h$ such that if $G_1$ is an $\lt(\frac{N_1}2,\eps_1\rt)$ edge expander and $G_2$ is a $\lt(\frac{D_1}2,\eps_2\rt)$ edge expander then $G_1\textcircled{r}G_2$ is a $\lt(\frac{N_1D_1}{2},h(\eps_1,\eps_2,D_2)\rt)$ edge expander where $h(\eps_1,\eps_2,D_2)>0$ if $\eps_1,\eps_2>0$. 
+		
+		[Hint: Given any set $S$ of vertices of $G_1\textcircled{r}G_2$, partition $S$ into the clouds that are more than ``half-full" and those that are not]
+		\item Prove that the functions $g(\gm_1,\gm_2,D_2)$ and $h(\eps_1,\eps_2,D_2)$ must depend on $D_2$ by showing that $G_1\textcircled{r}G_2$ cannot be a $\lt(\frac{N_1D_1}2,\eps\rt)$ edge expander if $\eps>\frac1{D_1+1}$ and $N_1\geq 2$
+	\end{enumerate}
+\end{problem}
+\end{document}
