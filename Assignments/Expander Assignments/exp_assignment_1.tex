@@ -12,9 +12,10 @@
 \usepackage{hyperref}
 \hypersetup{
 	colorlinks=true,
-	linkcolor=blue,
+	linkcolor=doc!80,
+	citecolor=myr
 	filecolor=magenta,      
-	urlcolor=blue!70!red,
+	urlcolor=doc!80,
 	pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
 }
 \usepackage[most,many,breakable]{tcolorbox}
@@ -26,7 +27,10 @@
 \usepackage{libertine}
 \definecolor{mytheorembg}{HTML}{F2F2F9}
 \definecolor{mytheoremfr}{HTML}{00007B}
-
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
 
 \tcbuselibrary{theorems,skins,hooks}
 \newtcbtheorem{problem}{Problem}
@@ -105,17 +109,38 @@ That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associatin
 	
 	Now notice the graph $(G_1\textcircled{r}G_2)^3$ contains the graph $G_1\textcircled{z}G_2$ as a subgraph. Hence $$M^3=\lt[\frac{A+D_2B}{D_2+1}\rt]^3=\frac{D_2^2}{(D_2+1)^3}BAB+\lt[1-\frac{D_2^2}{(D_2+1)^3}\rt]C$$ for some matrix $C$. Lets denote $p\coloneqq \frac{D_2^2}{(D_2+1)^3}$. Then $M^3=pBAB+(1-p)C$. Hence for any $v\perp u$ where $u$ is the uniform vector we have $$\|M^3v\|\leq p\|BABv\|+(1-p)\|Cv\|$$
 	
-	Now we can think as $C$ is a normalized adjacency matrix of an undirected graph. Hence for all $v\perp u$ we have $\|Cv\|\leq \|v\|$. Now we know for all $v\perp u$ $$\|BABv\|\leq (\lm_1+\lm_2+\lm_2^2)\|v\|$$ where $\lm_1=1-\gm_1$ and $\lm_2=1-\gm_2$. Hence $$\|M^3v\|\leq p(\lm_1+\lm_2+\lm_2^2)\|v\|+(1-p)\|v\|=[p(\lm_1+\lm_2+\lm_2^2)+(1-p)]\|v\|$$
+	Now we can think as $C$ is a normalized adjacency matrix of an undirected graph. Hence for all $v\perp u$ we have $\|Cv\|\leq \|v\|$. Now we know for all $v\perp u$ $$\|BABv\|\leq (\lm_1+\lm_2+\lm_2^2)\|v\|$$ where $\lm_1=1-\gm_1$ and $\lm_2=1-\gm_2$. Hence $$\|M^3v\|\leq p(\lm_1+\lm_2+\lm_2^2)\|v\|+(1-p)\|v\|=[p(\lm_1+\lm_2+\lm_2^2)+(1-p)]\|v\|$$Suppose $\max\limits_{v\perp u}\frac{\|M^3v\|}{\|v\|}=\lm$. Then we have $\lm=(1-g(\gm_1,\gm_2,D_2))^3$. Therefore we have 
+	\begin{multline*}
+		\lm=\max\limits_{v\perp u}\frac{\|M^3v\|}{\|v\|}\leq \max\limits_{v\perp u}\frac{\|(pBAB+(1-p)C)v\|}{\|v\|}\\
+		\leq \max\limits_{v\perp u}\frac{[p(\lm_1+\lm_2+\lm_2^2)+(1-p)]\|v\|}{\|v\|}=[p(\lm_1+\lm_2+\lm_2^2)+(1-p)]
+	\end{multline*}
+	Hence 
+	 $$(1-g(\gm_1,\gm_2,D_2))^3\leq=[p(\lm_1+\lm_2+\lm_2^2)+(1-p)] $$
 	
 	Now\begin{align*}
 		1-[p(\lm_1+\lm_2+\lm_2^2)+(1-p)] & = 1-(1-p)-p(\lm_1+\lm_2+\lm_2^2)\\
 		& =p-p(\lm_1+\lm_2+\lm_2^2)\\
 		& =p[1-(\lm_1+\lm_2+\lm_2^2)]
-	\end{align*}Now we know $$\lm_1+\lm_2+\lm_2^2<1\iff 0<1-(\lm_1+\lm_2+\lm_2^2)<1\qquad \text{and}\qquad 0<p<1$$Then $0<p[1-(\lm_1+\lm_2+\lm_2^2)]<1$. Hence $$0<p(\lm_1+\lm_2+\lm_2^2)+(1-p)<1$$ Therefore for all $v\perp u$, $$\|Mv\|\leq \lt[  p(\lm_1+\lm_2+\lm_2^2)+(1-p)\rt]^{\frac13}\|v\|$$ Now 
+	\end{align*}Now we know $$\lm_1+\lm_2+\lm_2^2<1\iff 0<1-(\lm_1+\lm_2+\lm_2^2)<1\qquad \text{and}\qquad 0<p<1$$Then $0<p[1-(\lm_1+\lm_2+\lm_2^2)]<1$. Hence $$0<p(\lm_1+\lm_2+\lm_2^2)+(1-p)<1$$ Now 
 	\begin{align*}
-		\lt[p(\lm_1+\lm_2+\lm_2^2)+(1-p)\rt]^{\frac13} & = \lt[1- p[1-(\lm_1+\lm_2+\lm_2^2)] \rt]^{\frac13}\\
-		& \leq 1-\frac13 p[1-(\lm_1+\lm_2+\lm_2^2)]<1
+		1-g(\gm_1,\gm_2,D_2) & =\lt[p(\lm_1+\lm_2+\lm_2^2)+(1-p)\rt]^{\frac13}    \\
+		                     & = \lt[1- p[1-(\lm_1+\lm_2+\lm_2^2)] \rt]^{\frac13} \\
+		                     & \leq 1-\frac13 p[1-(\lm_1+\lm_2+\lm_2^2)]<1
 	\end{align*}So $$g(\gm_1,\gm_2,D_2)=1-	\lt[p(\lm_1+\lm_2+\lm_2^2)+(1-p)\rt]^{\frac13} >0$$
+	\item First we will prove some  lemmas
+	
+	\textbf{\textit{Lemma 1:}} Eigenvalues of the permutation $\sg\in S_n$ where $\sg=(12\cdots n)$ are all the $n$-th roots of unity.
+	
+	\textbf{\textit{Proof:}} The permutation matrix of $\sg$ is $$P=\mat{0& 1\\ I_{n-1} & 0}$$
+	Now by \href{https://en.wikipedia.org/wiki/Circulant_matrix}{Wikipedia: Circulant Matrix} Any circulant matrix looks like $${\displaystyle C={\begin{bmatrix}c_{0}&c_{n-1}&\cdots &c_{2}&c_{1}\\c_{1}&c_{0}&c_{n-1}&&c_{2}\\\vdots &c_{1}&c_{0}&\ddots &\vdots \\c_{n-2}&&\ddots &\ddots &c_{n-1}\\c_{n-1}&c_{n-2}&\cdots &c_{1}&c_{0}\\\end{bmatrix}}}$$Hence $P$ is a circulant matrix with $c_0=0$, $c_1=1$ and for all $i\in [n]-\{1\}$, $c_i=0$. Hence from the same reference we get that for all $j\in [n-1]\cup \{0\}$, the  $j$th eigenvalue $\lm_j$ is $${\displaystyle \lambda _{j}=c_{0}+c_{1}\omega ^{j}+c_{2}\omega ^{2j}+\dots +c_{n-1}\omega ^{(n-1)j}}=\om^j$$ where $\om=e^{\frac{2\pi i}{n}}$. Hence the eigenvalues of $P$ are the $n$-th roots of unity.\qed
+	
+	\textbf{\textit{Lemma 2:}} A $k$-cycle graph is a $\lt(k,2,1-\Theta\lt(\frac1{k^2}\rt)\rt)$-expander.
+	
+	\textbf{\textit{Proof:}} Let $P_k$ denote the matrix  $$P_k=\mat{0& 1\\ I_{k-1} & 0}$$The the adjacency matrix of $k$-cycle is just $M=P_k+P_k^T$. Since $P_k$ is unitary matrix Let $S$ be the matrix such that $SP_kS^{\dagger}$ is diagonalized. Let's denote that $D$.  Then $$SMS^{\dagger}=S(P_k+P_k^{\dagger})S^{\dagger}=SP_kS^{\dagger}+SP_k^{\dagger}S^{\dagger}=D+S(SP_k)^{\dagger}=D+(SP_kS^{\dagger})^{\dagger}=D+D^{\dagger}$$Hence the eigenvalues of $M$ are $2\Re(\om^j)$ for all $j\in [n]$ where $\om = e^{\frac{2\pi i}{k}}$
+	
+	Now the normalized adjacency matrix for the $k$-cycle is $\frac12M$. Hence the eigenvalues for the normalized adjacency matrix are $\Re(\om^j)=\cos\frac{2j\pi}{k}$ for all $j\in [k]$. Hence the second largest eigenvalue is when $j=1$ i.e.  $$ \cos\frac{2\pi}{k}\geq 1-\frac12\lt(\frac{2\pi}{k}\rt)^2=1-\frac{2\pi^2}{k^2}=1-\frac{1}{\Theta(k^2)}$$Therefore $k$-cycle is $1-\frac{1}{\Theta(k^2)}$ expander. \qed
+	
+	\parinn Now we will show an explicit construction of degree 3 expanders from an constant degree expanders. Let $G$ be an $(N,D,\lm)$-expander. Take $H$ to be a $D$-cycle. Hence by the Lemma 2 we have $H$ is a $\lt(D,2,1-\frac1{\Theta(D^2)}\rt)$-expander. Take the graph $G'=G\textcircled{r}H$. $G'$ is a $3$ regular graph. Hence $G'$ is a $(ND,3,\lm')$-expander where $1-\lm'>0$ by part (1). Hence $G'$ is a degree 3 expander.
 	\item 
 \end{enumerate}
 }
