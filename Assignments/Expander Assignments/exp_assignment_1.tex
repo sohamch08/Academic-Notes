@@ -82,7 +82,7 @@
 }
 Given a $D_1$-regular graph $G_1$ on $N_1$ vertices and a $D_2$-regular graph $G_2$ on $D_1$ vertices consider the following graph $G_1\textcircled{r}G_2$ on vertex set $[N_1]\times [D_1]$: vertex $(u,i)$ is connected to $(v,j)$ iff \begin{enumerate}[label=(\alph*)]
 	\item $u=v$ and $(i,j)$ is an edge in $G_2$ or,
-	\item $v$ is the $i$'th neighbour of $u$ in $G_1$ and $u$ is the $j$th neighbour of $v$. 
+	\item $v$ is the $i$'th neighbour of $u$ in $G_1$ and $u$ is the $j$th neighbor of $v$. 
 \end{enumerate}
 That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associating edge incident to $v$ with one vertex of $G_2$.
 \begin{enumerate}
@@ -90,14 +90,34 @@ That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associatin
 	
 	[Hint: Note that $(G_1\textcircled{r}G_2)^3$ has $G_1\textcircled{z}G_2$ as a subgraph]
 	\item Show how to convert an explicit construction of constant degree (spectral) expanders into an explicit construction of degree 3 (spectral) expanders.
-	\item Without using Theorem 4.14, prove an analogye of Part 1 for edge expansion. That is, there is a function $h$ such that if $G_1$ is an $\lt(\frac{N_1}2,\eps_1\rt)$ edge expander and $G_2$ is a $\lt(\frac{D_1}2,\eps_2\rt)$ edge expander then $G_1\textcircled{r}G_2$ is a $\lt(\frac{N_1D_1}{2},h(\eps_1,\eps_2,D_2)\rt)$ edge expander where $h(\eps_1,\eps_2,D_2)>0$ if $\eps_1,\eps_2>0$. 
+	\item Without using Theorem 4.14, prove an analogue of Part 1 for edge expansion. That is, there is a function $h$ such that if $G_1$ is an $\lt(\frac{N_1}2,\eps_1\rt)$ edge expander and $G_2$ is a $\lt(\frac{D_1}2,\eps_2\rt)$ edge expander then $G_1\textcircled{r}G_2$ is a $\lt(\frac{N_1D_1}{2},h(\eps_1,\eps_2,D_2)\rt)$ edge expander where $h(\eps_1,\eps_2,D_2)>0$ if $\eps_1,\eps_2>0$. 
 	
 	[Hint: Given any set $S$ of vertices of $G_1\textcircled{r}G_2$, partition $S$ into the clouds that are more than ``half-full" and those that are not]
 	\item Prove that the functions $g(\gm_1,\gm_2,D_2)$ and $h(\eps_1,\eps_2,D_2)$ must depend on $D_2$ by showing that $G_1\textcircled{r}G_2$ cannot be a $\lt(\frac{N_1D_1}2,\eps\rt)$ edge expander if $\eps>\frac1{D_1+1}$ and $N_1\geq 2$
 \end{enumerate}
 \end{problem}
 \solve{
-
+\begin{enumerate}
+	\item Let $A_1$ and $A_2$ denote the normalized adjacency matrices of $G_1$ and $G_2$ respectively. The degree of the new graph $G_1\textcircled{r}G_2$ is $D_2+1$. Now denote $B\triangleq I_{N_1}\otimes A_2$ and $A$ be a $N_1\cdot D_1\times N_1\cdot D_1$ matrix where $$A[(u,i),(v,j)]=\begin{cases}
+		1 & \text{when $i$th neighbor of $u$ is $v$ and $j$th neighbor of $v$ is $u$ in $G_1$}\\
+		0 & \text{otherwise}
+	\end{cases}$$Therefore the adjacency matrix of the graph $G_1\textcircled{r}G_1$ is $A+D_2B$. Therefore the normalized adjacency matrix, $M$ $$M\triangleq \frac{A+D_2B}{D_2+1}$$
+	
+	Now notice the graph $(G_1\textcircled{r}G_2)^3$ contains the graph $G_1\textcircled{z}G_2$ as a subgraph. Hence $$M^3=\lt[\frac{A+D_2B}{D_2+1}\rt]^3=\frac{D_2^2}{(D_2+1)^3}BAB+\lt[1-\frac{D_2^2}{(D_2+1)^3}\rt]C$$ for some matrix $C$. Lets denote $p\coloneqq \frac{D_2^2}{(D_2+1)^3}$. Then $M^3=pBAB+(1-p)C$. Hence for any $v\perp u$ where $u$ is the uniform vector we have $$\|M^3v\|\leq p\|BABv\|+(1-p)\|Cv\|$$
+	
+	Now we can think as $C$ is a normalized adjacency matrix of an undirected graph. Hence for all $v\perp u$ we have $\|Cv\|\leq \|v\|$. Now we know for all $v\perp u$ $$\|BABv\|\leq (\lm_1+\lm_2+\lm_2^2)\|v\|$$ where $\lm_1=1-\gm_1$ and $\lm_2=1-\gm_2$. Hence $$\|M^3v\|\leq p(\lm_1+\lm_2+\lm_2^2)\|v\|+(1-p)\|v\|=[p(\lm_1+\lm_2+\lm_2^2)+(1-p)]\|v\|$$
+	
+	Now\begin{align*}
+		1-[p(\lm_1+\lm_2+\lm_2^2)+(1-p)] & = 1-(1-p)-p(\lm_1+\lm_2+\lm_2^2)\\
+		& =p-p(\lm_1+\lm_2+\lm_2^2)\\
+		& =p[1-(\lm_1+\lm_2+\lm_2^2)]
+	\end{align*}Now we know $$\lm_1+\lm_2+\lm_2^2<1\iff 0<1-(\lm_1+\lm_2+\lm_2^2)<1\qquad \text{and}\qquad 0<p<1$$Then $0<p[1-(\lm_1+\lm_2+\lm_2^2)]<1$. Hence $$0<p(\lm_1+\lm_2+\lm_2^2)+(1-p)<1$$ Therefore for all $v\perp u$, $$\|Mv\|\leq \lt[  p(\lm_1+\lm_2+\lm_2^2)+(1-p)\rt]^{\frac13}\|v\|$$ Now 
+	\begin{align*}
+		\lt[p(\lm_1+\lm_2+\lm_2^2)+(1-p)\rt]^{\frac13} & = \lt[1- p[1-(\lm_1+\lm_2+\lm_2^2)] \rt]^{\frac13}\\
+		& \leq 1-\frac13 p[1-(\lm_1+\lm_2+\lm_2^2)]<1
+	\end{align*}So $$g(\gm_1,\gm_2,D_2)=1-	\lt[p(\lm_1+\lm_2+\lm_2^2)+(1-p)\rt]^{\frac13} >0$$
+	\item 
+\end{enumerate}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -115,16 +135,24 @@ That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associatin
 	\end{enumerate}
 \end{problem}
 \solve{
-
+\begin{enumerate}
+	\item Let $U$ be the set of unique neighbors in $N(S)$. Denote $T=\Gm(S)-U$. Then we have $|U\cup T|\geq (1-\eps)D|S|$. Now we will count the number of edges between $S$ and $\Gm(S)$. From each vertex in $S$ there are $D$ edges going out. Hence total $D|S|$ many edges are going out from $S$. Now in $\Gm(S)$ for each vertex in $U$ there is exactly one edge coming from $S$ and for each edge in $T$ there are at least 2 edges coming from $S$. Hence there are at least $|U|+2|T|$ many edges are coming towards $\Gm(S)$. Hence we have:
+	
+	\begin{multline*}
+		|U|+2|T|\leq D|S|\iff |U|+2(|\Gm(S)|-|U|)\leq D|S|\\
+		\iff |U|\geq 2|\Gm(S)|-D|S|\geq (1-\eps)D|S|-D|S|=(1-2\eps)D|S|
+	\end{multline*}Hence there are at least  $(1-2\eps)D|S|$ unique neighbors.
+	\item 
+\end{enumerate}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Problem 1
+% Problem 3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement
 		Problem 5.5 (LDPC Codes): Pseudorandomness By Salil Vadhan
-	}{p1% problem reference text
+	}{p3% problem reference text
 	}
 	Given a $D_1$-regular graph $G_1$ on $N_1$ vertices and a $D_2$-regular graph $G_2$ on $D_1$ vertices consider the following graph $G_1\textcircled{r}G_2$ on vertex set $[N_1]\times [D_1]$: vertex $(u,i)$ is connected to $(v,j)$ iff \begin{enumerate}[label=(\alph*)]
 		\item $u=v$ and $(i,j)$ is an edge in $G_2$ or,
@@ -152,7 +180,7 @@ That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associatin
 	}
 	Given a $D_1$-regular graph $G_1$ on $N_1$ vertices and a $D_2$-regular graph $G_2$ on $D_1$ vertices consider the following graph $G_1\textcircled{r}G_2$ on vertex set $[N_1]\times [D_1]$: vertex $(u,i)$ is connected to $(v,j)$ iff \begin{enumerate}[label=(\alph*)]
 		\item $u=v$ and $(i,j)$ is an edge in $G_2$ or,
-		\item $v$ is the $i$'th neighbour of $u$ in $G_1$ and $u$ is the $j$th neighbour of $v$. 
+		\item $v$ is the $i$'th neighbor of $u$ in $G_1$ and $u$ is the $j$th neighbour of $v$. 
 	\end{enumerate}
 	That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associating edge incident to $v$ with one vertex of $G_2$.
 	\begin{enumerate}
@@ -160,7 +188,7 @@ That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associatin
 		
 		[Hint: Note that $(G_1\textcircled{r}G_2)^3$ has $G_1\textcircled{z}G_2$ as a subgraph]
 		\item Show how to convert an explicit construction of constant degree (spectral) expanders into an explicit construction of degree 3 (spectral) expanders.
-		\item Without using Theorem 4.14, prove an analogye of Part 1 for edge expansion. That is, there is a function $h$ such that if $G_1$ is an $\lt(\frac{N_1}2,\eps_1\rt)$ edge expander and $G_2$ is a $\lt(\frac{D_1}2,\eps_2\rt)$ edge expander then $G_1\textcircled{r}G_2$ is a $\lt(\frac{N_1D_1}{2},h(\eps_1,\eps_2,D_2)\rt)$ edge expander where $h(\eps_1,\eps_2,D_2)>0$ if $\eps_1,\eps_2>0$. 
+		\item Without using Theorem 4.14, prove an analogue of Part 1 for edge expansion. That is, there is a function $h$ such that if $G_1$ is an $\lt(\frac{N_1}2,\eps_1\rt)$ edge expander and $G_2$ is a $\lt(\frac{D_1}2,\eps_2\rt)$ edge expander then $G_1\textcircled{r}G_2$ is a $\lt(\frac{N_1D_1}{2},h(\eps_1,\eps_2,D_2)\rt)$ edge expander where $h(\eps_1,\eps_2,D_2)>0$ if $\eps_1,\eps_2>0$. 
 		
 		[Hint: Given any set $S$ of vertices of $G_1\textcircled{r}G_2$, partition $S$ into the clouds that are more than ``half-full" and those that are not]
 		\item Prove that the functions $g(\gm_1,\gm_2,D_2)$ and $h(\eps_1,\eps_2,D_2)$ must depend on $D_2$ by showing that $G_1\textcircled{r}G_2$ cannot be a $\lt(\frac{N_1D_1}2,\eps\rt)$ edge expander if $\eps>\frac1{D_1+1}$ and $N_1\geq 2$
