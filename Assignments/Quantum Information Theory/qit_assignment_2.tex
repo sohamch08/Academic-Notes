@@ -20,38 +20,21 @@
 }
 \usepackage[most,many,breakable]{tcolorbox}
 \usepackage{tikz}
-\usetikzlibrary{decorations.pathreplacing,angles,quotes,patterns}
 \usepackage{caption}
-\usepackage{bbm}
 \usepackage{mathpazo}
 \usepackage{libertine}
+\usepackage{physics}
+\usepackage{mathrsfs}
+
+
 \definecolor{mytheorembg}{HTML}{F2F2F9}
 \definecolor{mytheoremfr}{HTML}{00007B}
-\usepackage{mathrsfs}
 \definecolor{doc}{RGB}{0,60,110}
 \definecolor{myg}{RGB}{56, 140, 70}
 \definecolor{myb}{RGB}{45, 111, 177}
 \definecolor{myr}{RGB}{199, 68, 64}
-\usepackage{physics}
-\tcbuselibrary{theorems,skins,hooks}
-\newtcbtheorem{problem}{Problem}
-{%
-	enhanced,
-	breakable,
-	colback = mytheorembg,
-	frame hidden,
-	arc=5pt,
-	boxrule = 0sp,
-	borderline west = {2pt}{0pt}{mytheoremfr},
-	detach title,
-	before upper = \tcbtitle\par\smallskip,
-	coltitle = mytheoremfr,
-	fonttitle = \bfseries\sffamily,
-	description font = \mdseries,
-	separator sign none,
-	segmentation style={solid, mytheoremfr},
-}
-{p}
+
+\input{../assignment-problem-box}
 
 % To give references for any problem use like this
 % suppose the problem number is p3 then 2 options either 
