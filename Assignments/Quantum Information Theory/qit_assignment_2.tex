@@ -47,7 +47,10 @@
 \input{../../letterfonts}
 
 \input{../../macros}
-
+\newcommand{\fdcps}{finite dimensional complex inner product space}
+\newcommand{\fdcpss}{finite dimensional complex inner product spaces}
+\newcommand{\Fdcps}{Finite dimensional complex inner product space}
+\newcommand{\Fdcpss}{Finite dimensional complex inner product spaces}
 \setlength{\parindent}{0pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -61,7 +64,13 @@
 		\normalsize Course: Quantum Information Theory \hfill Date: February 29, 2024}
 \vspace{1cm}
 
-For all the questions $[k]\coloneqq \{1,2,\dots,k\}$ where $k\in\bbN$
+For all the questions \begin{itemize}
+	\item $[k]\coloneqq \{1,2,\dots,k\}$ where $k\in\bbN$.
+	\item $\sL(\mcH)\coloneqq $ Linear operators on $\mcH$
+	\item $\sR(\mcH)\coloneqq $ Self-adjoint or hermitian operators on $\mcH$
+	\item $\sP(\mcH)\coloneqq $ Positive semi-definite operators on $\mcH$
+	\item $\sD(\mcH)\coloneqq $ Density operators on $\mcH$
+\end{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -95,13 +104,128 @@ If $\{\ket{e_i}\in \mcH_1\mid 1\leq i\leq d\}$ and $\{\ket{f_i}\in \mcH_2\mid 1\
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Problem 2
+% Problem 3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement
 	}{p3% problem reference text
 	}
 	Let $\{\ket{g_k}\mid 1\leq i\leq d_2\}\subseteq \mcH_2$ be ONB. For $T\in \sL(\mcH_1\tensor \mcH_2)$, let  $tr_2(T)\in \sL(\mcH_1)$ denote the operator  satisfying $$\bra{u}tr_2(T)\ket{v}= \sum_{k}\bra{u\tensor g_k}T\ket{v\tensor g_k}$$ for any choice $\ket{u},\ket{v}\in \mcH_1$. Prove that $\sum\limits_{k}\bra{u\tensor g_k}T\ket{v\tensor g_k}$ is invariant. 
+	%Problem		
+\end{problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p4% problem reference text
+	}
+	Show that the Pauli matrices are all Hermitian, unitary, they square to the identity, and their eigenvalues are $\pm 1$
+	%Problem		
+\end{problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		Mark Wilde: Exercise 3.3.3
+	}{p5% problem reference text
+	}
+For $S,T\in \sL(\mcH)$, show that $$tr(T)=tr(T^+),\qquad tr(ST)=tr(TS)$$ [Recall $T^+$ denotes adjoint of $T$]. For $\ket{x},\ket{y}\in\mcH$ show $$tr(\ket{x}\bra{y}T)=tr(T\ket{x}\bra{y})=\bra{y}\ket{Tx}$$
+%Problem		
+\end{problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 6
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p6% problem reference text
+	}
+	Suppose $\mcH$ is \fdcps with $\dim(\mcH)=d$. Show complex dimensionality of $\sL(\mcH)$ is $d^2$, real dimensionality of $\sR(\mcH)$ is $d^2$.\parinn
+	
+	Suppose $\mcH$ is a real inner product space of $\dim$ $d$, show $\sL(\mcH)$ has dimension $d$ and  the space of all symmetric operators  is a real vector space of dimension $\frac{d(d+1)}{2}$.
+	%Problem		
+\end{problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 7
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p7% problem reference text
+	}
+Show that $\sD(\mcH)$ is a convex subset of the real vector space of all Hermitian operators on $\mcH$. Show that the extreme points of $\sD(\mcH)$ are pure states, i.e.  rank 1 projection operators.
+	%Problem		
+\end{problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 8
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p8% problem reference text
+	}
+Show that if $\dim(\mcH)=d$, then $\sD(\mcH)$ can be embedded  into a real vector space  of dimension $n=d^2-1$
+	%Problem		
+\end{problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 9
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p9% problem reference text
+	}
+Prove the Singular value decomposition theorem stated in class.	%Problem		
+\end{problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 10
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p10% problem reference text
+	}
+	Suppose $\ket{\psi}_{AR_1}\in \mcH_{A}\tensor \mcH_{R_1}$, $\ket{\psi}_{AR_2}\in \mcH_A\tensor \mcH_{R_2}$ are purifications of  $\rho_A\in \sD(\mcH_A)$ and $\dim(\mcH_{R_2})\geq \dim(\mcH_{R_1})$, then show that  there exists an isometry $V:\mcH_{R_1}\to \mcH_{R_2}$  such that $$\ket{\psi}_{AR_2}=(V\tensor I)\ket{\psi}_{AR_1}$$
+	%Problem		
+\end{problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 11
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		Mark Wilde: Exercise 3.6.5
+	}{p11% problem reference text
+	}
+	Show that the Bell states form an orthonormal basis: $$\bra{\Phi^{z_1x_1}}\ket{\Phi^{z_2x_2}}=\delta_{z_1,z_2}\,\delta_{x_1,x_2}$$
+	%Problem		
+\end{problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 12
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		Mark Wilde: Exercise 3.7.11
+	}{p12% problem reference text
+	}
+	 Show that the set of states $\{\ket{\Phi^{x,z}}_{AB}\}^{d-1}_{x,z=0}$ forms a complete, orthonormal basis:$$\bra{\Phi^{x_1,z_1}}\ket{\Phi^{x_2,z_2}}=\delta_{x_1,x_2}\,\delta_{z_1,z_2}\qquad \sum_{x,z=0}^d\ket{\Phi^{x,z}}\bra{\Phi^{x,z}}=I_{AB}$$
+	%Problem		
+\end{problem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 13
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		Mark Wilde: Exercise 4.1.5
+	}{p13% problem reference text
+	}
+	 Show that the following ensembles have the same density operator: $\lt\{\lt\{\frac12,\ket{0}\rt\},\lt\{\frac12,\ket{1}\rt\}\rt\}$ and $\lt\{\lt\{\frac12,\ket{+}\rt\},\lt\{\frac12,\ket{-}\rt\}\rt\}$
 	%Problem		
 \end{problem}
 
