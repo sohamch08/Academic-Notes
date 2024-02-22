@@ -149,6 +149,11 @@ For $S,T\in \sL(\mcH)$, show that $$tr(T)=tr(T^+),\qquad tr(ST)=tr(TS)$$ [Recall
 	Suppose $\mcH$ is a real inner product space of $\dim$ $d$, show $\sL(\mcH)$ has dimension $d$ and  the space of all symmetric operators  is a real vector space of dimension $\frac{d(d+1)}{2}$.
 	%Problem		
 \end{problem}
+\solve{
+	 Suppose $\{\ket{e_i}\in\mcH\mid 1\leq i\leq d\}$ is an ONB of $\mcH$. Let $T\in\sL(\mcH)$. Then for all $i\in [d]$ $$T\ket{e_i}=\sum_{j=1}^d\alpha_{i,j}\ket{e_j}$$ where $\alpha_{i,j}\in \bbC$. Hence the map $T$ is uniquely decided by the numbers $\alpha_{i,j}\in \bbC$ for all $i,j\in [d]$. Hence there are $d^2$ many numbers which uniquely decides $T$. Therefore $\dim(\sL(\mcH))= d^2$. 
+	 
+	Now let $T\in\sR(\mcH)$. Then $T^{\dagger}=T$. Again suppose $\{\ket{e_i}\in\mcH\mid 1\leq i\leq d\}$ is an ONB of $\mcH$. Let $(i,j)$th element of $T$ is denoted by $t_{i,j}$. Then for all $i\in [d]$, $T_{i,i}\in \bbR$ since $T^{\dagger}=T$. Now for all off diagonal entries $t_{j,i}=t^*_{i,j}$. So there are $\frac{n^2-n}2$ many complex numbers which decides $T$ uniquely apart from the $n$ real entries in the diagonal. Now for each $i,j\in[d]$ let  $t_{i,j}=x_{i,j}+iy_{i,j}$ where $x_{i,j},y_{i,j}\in  \bbR$. Therefore $$t_{j,i}=t^*_{i,j}=x_{i,j}-iy_{i,j}$$So for each off-diagonal entries there are corresponding 2 real numbers. And there are total $\frac{n^2-n}2$ many off-diagonal entries which participates in uniquely deciding $T$. Hence there are total $2\times \frac{n^2-n}2+n=n^2$ real numbers which uniquely decides $T$. Hence $\dim(\sR(\mcH))= d^2$. 
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 7
