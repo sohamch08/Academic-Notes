@@ -131,13 +131,54 @@ Hence $\sum\limits_{k}\bra{u\tensor g_k}T\ket{v\tensor g_k}$ is invariant.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement
+		Mark Wilde: Exercise 3.3.3
 	}{p4% problem reference text
 	}
 	Show that the Pauli matrices are all Hermitian, unitary, they square to the identity, and their eigenvalues are $\pm 1$
 	%Problem		
 \end{problem}
 \solve{
-Fuck you arun
+Pauli matrices are 
+$$
+X\ket{0}=\ket{1},X\ket{1}=\ket{0}\qquad 
+Y\ket{0}=-i\ket{1},Y\ket{1}=i\ket{0}\qquad 
+Z\ket{0}=\ket{0},Z\ket{1}=-\ket{1}$$
+Therefore we have 
+$$
+X=\ket{1}\bra{0}+\ket{0}\bra{1}\qquad 
+Y=i[\ket{0}\bra{1}-\ket{1}\bra{0}]\qquad 
+Z=\ket{0}\bra{0}-\ket{1}\bra{1}$$
+Hence 
+\begin{align*}
+	X^{\dagger} & =(\ket{1}\bra{0})^{\dagger}+(\ket{0}\bra{1})^{\dagger}=\ket{0}\bra{1}+\ket{1}\bra{0}=X       \\
+	Y^{\dagger} & =(i\ket{0}\bra{1})^{\dagger}+(-i\ket{1}\bra{0})^{\dagger}=-i\ket{1}\bra{0}+i\ket{0}\bra{1}=Y \\
+	Z^{\dagger} & =(\ket{0}\bra{0})^{\dagger}-(\ket{1}\bra{1})^{\dagger}=\ket{0}\bra{0}-\ket{1}\bra{1}=Z
+\end{align*}
+Therefore they are Hermitian. 
+
+Now \begin{align*}
+	X^{\dagger}X=XX^{\dagger}=X^2& =\lt[ \ket{1}\bra{0}+\ket{0}\bra{1} \rt]\lt[ \ket{1}\bra{0}+\ket{0}\bra{1}  \rt]\\
+	& = \ket{1}\bra{0}\ket{1}\bra{0}+\ket{1}\bra{0}\ket{0}\bra{1}+\ket{0}\bra{1}\ket{1}\bra{0}+\ket{0}\bra{1}\ket{0}\bra{1} \\
+	& = \ket{1}\bra{1}+\ket{0}\bra{0}=I
+\end{align*}
+\begin{align*}
+	Y^{\dagger}Y=Y^{\dagger}=Y^2& =\lt[ i(\ket{0}\bra{1}-\ket{1}\bra{0}) \rt]\lt[ i(\ket{0}\bra{1}-\ket{1}\bra{0})  \rt]\\
+	&=-\lt[ \ket{0}\bra{1}\ket{0}\bra{1}-\ket{0}\bra{1}\ket{1}\bra{0}-\ket{1}\bra{0}\ket{0}\bra{1}+\ket{1}\bra{0}\ket{1}\bra{0}\rt] \\
+	& = \ket{0}\bra{0}+\ket{1}\bra{1}=I
+\end{align*}
+\begin{align*}
+	Z^{\dagger}Z=Z^{\dagger}=Z^2& =\lt[ \ket{0}\bra{0}-\ket{1}\bra{1} \rt]\lt[ \ket{0}\bra{0}-\ket{1}\bra{1} \rt]\\
+	& =\ket{0}\bra{0}\ket{0}\bra{0}-\ket{0}\bra{0}\ket{1}\bra{1}-\ket{1}\bra{1} \ket{0}\bra{0}+\ket{1}\bra{1} \ket{1}\bra{1} \\
+	& =\ket{0}\bra{0}+ \ket{1}\bra{1}=I
+\end{align*}Therefore $X,Y,Z$ are unitary and they square to the identity.
+
+Since $X\ket{0}=\ket{1}$ and $X\ket{1}=\ket{0}$ we have 
+$$X\frac1{\sqrt{2}}\lt(\ket{0}+\ket{1}\rt)=\frac1{\sqrt{2}}\lt(\ket{1}+\ket{0}\rt)\quad X\frac1{\sqrt{2}}\lt(\ket{0} -\ket{1}\rt)=\frac1{\sqrt{2}}\lt(\ket{1}-\ket{0}\rt)=-\frac1{\sqrt{2}}\lt(\ket{0}-\ket{1}\rt)$$So the for the eigenvalue $1$ the corresponding eignevector is $\ket{+}=\frac1{\sqrt{2}}\lt(\ket{0}+\ket{1}\rt)$ and for the eigenvalue $-1$ the corresponding eigenvalue is $\frac1{\sqrt{2}}\lt(\ket{0}-\ket{1}\rt)$.
+
+Since $Y\ket{0}=-i\ket{1}$ and $Y\ket{1}=i\ket{0}$ we have 
+$$Y\frac1{\sqrt{2}}\lt(\ket{0}+i\ket{1}\rt)=\frac1{\sqrt{2}}\lt(-i\ket{1}+i^2\ket{0}\rt) = -\frac1{\sqrt{2}}\lt(i\ket{1}+\ket{0}\rt)$$ $$ Y\frac1{\sqrt{2}}\lt(\ket{0} -i\ket{1}\rt)=\frac1{\sqrt{2}}\lt(-i\ket{1}-i^2\ket{0}\rt)=\frac1{\sqrt{2}}\lt(\ket{0}-i\ket{1}\rt)$$So the for the eigenvalue $1$ the corresponding eigenvector is $\ket{0} -i\ket{1}$ and for the eigenvalue $-1$ the corresponding eigenvalue is $\ket{0}+i\ket{1}$.
+
+Since $Z\ket{0}=\ket{0}$ and $Z\ket{1}=-\ket{1}$. So the for the eigenvalue $1$ the corresponding eigenvector is $\ket{0}$ and for the eigenvalue $-1$ the corresponding eigenvalue is $\ket{1}$.
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -145,12 +186,26 @@ Fuck you arun
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement
-		Mark Wilde: Exercise 3.3.3
 	}{p5% problem reference text
 	}
-For $S,T\in \sL(\mcH)$, show that $$tr(T)=tr(T^+),\qquad tr(ST)=tr(TS)$$ [Recall $T^+$ denotes adjoint of $T$]. For $\ket{x},\ket{y}\in\mcH$ show $$tr(\ket{x}\bra{y}T)=tr(T\ket{x}\bra{y})=\bra{y}\ket{Tx}$$
+For $S,T\in \sL(\mcH)$, show that $$tr(T)=tr(T^{\dagger})^*,\qquad tr(ST)=tr(TS)$$ [Recall $T^+$ denotes adjoint of $T$]. For $\ket{x},\ket{y}\in\mcH$ show $$tr(\ket{x}\bra{y}T)=tr(T\ket{x}\bra{y})=\bra{y}\ket{Tx}$$
 %Problem		
 \end{problem}
+\solve{
+\begin{itemize}
+	\item $tr(T)$ is the summation of the diagonal entries of $T$. Now $T^{\dagger}=(T^t)^*$. Now the diagonal elements of $T$ remains in the same same position even after transpose. Hence the diagonal elements of $T^{\dagger}$ are the complex conjugate of the diagonal elements of $T$. Hence sum of the diagonal entries of $T^{\dagger}$ will also be the complex conjugate of the sum of the diagonal entries of $T$. Therefore we get $$tr(T)=tr(T^{\dagger})^*$$
+	\item Let $\dim\mcH-d$. Suppose $\{\ket{e_k}\mid k\in [d]\}\subseteq \mcH$ be an ONB of $\mcH$\begin{align*}
+		tr(ST) & = \sum_{k=1}^d\bra{e_k}ST\ket{e_k} = \sum_{k=1}^d\bra{e_k}SIT\ket{e_k}\\
+		& = \sum_{k=1}^d\bra{e_k}S\lt[ \sum_{i=1}^d \ket{e_i}\bra{e_i} \rt]\ket{e_k}\\
+		& = \sum_{k-1}^{d}\sum_{i=1}^d\bra{e_k}S\ket{e_i} \bra{e_i}T\ket{e_k}\\
+		& =\sum_{i=1}^d\sum_{k=1}^d\bra{e_i}T\ket{e_k}\bra{e_k}S\ket{e_i}\\
+		& = \sum_{i=1}^d \bra{e_i}T\lt[ \sum_{k=1}^d \ket{e_k}\bra{e_k} \rt]S\ket{e_i}\\
+		& = \sum_{i=1}^d\bra{e_i}TIS\ket{e_i} = \sum_{i=1}^d\bra{e_i}TS\ket{e_i}=tr({TS})
+	\end{align*}
+	\item $tr(\ket{x}\bra{y}T)=tr([\ket{x}\bra{y}]T)=tr(T[\ket{x}\bra{y}])=tr(T\ket{x}\bra{y})$
+
+\end{itemize}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 6
@@ -161,13 +216,17 @@ For $S,T\in \sL(\mcH)$, show that $$tr(T)=tr(T^+),\qquad tr(ST)=tr(TS)$$ [Recall
 	}
 	Suppose $\mcH$ is \fdcps with $\dim(\mcH)=d$. Show complex dimensionality of $\sL(\mcH)$ is $d^2$, real dimensionality of $\sR(\mcH)$ is $d^2$.\parinn
 	
-	Suppose $\mcH$ is a real inner product space of $\dim$ $d$, show $\sL(\mcH)$ has dimension $d$ and  the space of all symmetric operators  is a real vector space of dimension $\frac{d(d+1)}{2}$.
+	Suppose $\mcH$ is a real inner product space of $\dim$ $d$, show $\sL(\mcH)$ has dimension $d^2$ and  the space of all symmetric operators  is a real vector space of dimension $\frac{d(d+1)}{2}$.
 	%Problem		
 \end{problem}
 \solve{
-	 Suppose $\{\ket{e_i}\in\mcH\mid 1\leq i\leq d\}$ is an ONB of $\mcH$. Let $T\in\sL(\mcH)$. Then for all $i\in [d]$ $$T\ket{e_i}=\sum_{j=1}^d\alpha_{i,j}\ket{e_j}$$ where $\alpha_{i,j}\in \bbC$. Hence the map $T$ is uniquely decided by the numbers $\alpha_{i,j}\in \bbC$ for all $i,j\in [d]$. Hence there are $d^2$ many numbers which uniquely decides $T$. Therefore $\dim(\sL(\mcH))= d^2$. 
+	 \begin{itemize}
+	 	\item Suppose $\{\ket{e_i}\in\mcH\mid 1\leq i\leq d\}$ is an ONB of $\mcH$. Let $T\in\sL(\mcH)$. Then for all $i\in [d]$ $$T\ket{e_i}=\sum_{j=1}^d\alpha_{i,j}\ket{e_j}$$ where $\alpha_{i,j}\in \bbC$. Hence, the map $T$ is uniquely decided by the numbers $\alpha_{i,j}\in \bbC$ for all $i,j\in [d]$. Hence, there are $d^2$ many numbers which uniquely decides $T$. Therefore $\dim(\sL(\mcH))= d^2$. 
 	 
-	Now let $T\in\sR(\mcH)$. Then $T^{\dagger}=T$. Again suppose $\{\ket{e_i}\in\mcH\mid 1\leq i\leq d\}$ is an ONB of $\mcH$. Let $(i,j)$th element of $T$ is denoted by $t_{i,j}$. Then for all $i\in [d]$, $T_{i,i}\in \bbR$ since $T^{\dagger}=T$. Now for all off diagonal entries $t_{j,i}=t^*_{i,j}$. So there are $\frac{n^2-n}2$ many complex numbers which decides $T$ uniquely apart from the $n$ real entries in the diagonal. Now for each $i,j\in[d]$ let  $t_{i,j}=x_{i,j}+iy_{i,j}$ where $x_{i,j},y_{i,j}\in  \bbR$. Therefore $$t_{j,i}=t^*_{i,j}=x_{i,j}-iy_{i,j}$$So for each off-diagonal entries there are corresponding 2 real numbers. And there are total $\frac{n^2-n}2$ many off-diagonal entries which participates in uniquely deciding $T$. Hence there are total $2\times \frac{n^2-n}2+n=n^2$ real numbers which uniquely decides $T$. Hence $\dim(\sR(\mcH))= d^2$. 
+	\item Now let $T\in\sR(\mcH)$. Then $T^{\dagger}=T$. Again suppose $\{\ket{e_i}\in\mcH\mid 1\leq i\leq d\}$ is an ONB of $\mcH$. Let $(i,j)$th element of $T$ is denoted by $t_{i,j}$. Then for all $i\in [d]$, $T_{i,i}\in \bbR$ since $T^{\dagger}=T$. Now for all off diagonal entries $t_{j,i}=t^*_{i,j}$. So there are $\frac{n^2-n}2$ many complex numbers which decides $T$ uniquely apart from the $n$ real entries in the diagonal. Now for each $i,j\in[d]$ let  $t_{i,j}=x_{i,j}+iy_{i,j}$ where $x_{i,j},y_{i,j}\in  \bbR$. Therefore, $$t_{j,i}=t^*_{i,j}=x_{i,j}-iy_{i,j}$$So for each off-diagonal entries there are corresponding 2 real numbers. And there are total $\frac{d^2-d}2$ many off-diagonal entries which participates in uniquely deciding $T$. Hence there are total $$2\times \frac{d^2-d}2+d=d^2$$ real numbers which uniquely decides $T$. Hence $\dim(\sR(\mcH))= d^2$. 
+	\item Suppose $\{\ket{e_i}\in\mcH\mid 1\leq i\leq d\}$ is a basis of $\mcH$. Let $T\in\sL(\mcH)$. Then for all $i\in [d]$ $$T\ket{e_i}=\sum_{j=1}^d\alpha_{i,j}\ket{e_j}$$ where $\alpha_{i,j}\in \bbR$. Hence, the map $T$ is uniquely decided by the numbers $\alpha_{i,j}\in \bbC$ for all $i,j\in [d]$. Since there are $d^2$ many numbers which uniquely decides $T$, $\dim(\sL(\mcH))= d^2$. 
+	\item Let $T\in\sR(\mcH)$. Then $T^t=T$. Again suppose $\{\ket{e_i}\in\mcH\mid 1\leq i\leq d\}$ is an basis of $\mcH$. Let $(i,j)$th element of $T$ is denoted by $T_{i,j}$. Now for all off diagonal entries $T_{j,i}=T_{i,j}$. So there are $\frac{d^2-d}2$ many real numbers which decides $T$ uniquely apart from the $d$ entries in the diagonal. Therefore,  there are total $\frac{d^2-d}2$ many off-diagonal entries which participates in uniquely deciding $T$. Hence there are total $$ \frac{d^2-d}2+d=\frac{d^2+d}{2}=\frac{d(d+1)}2$$ real numbers which uniquely decides $T$. Hence $\dim(\sR(\mcH))= d^2$. 
+	 \end{itemize}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
