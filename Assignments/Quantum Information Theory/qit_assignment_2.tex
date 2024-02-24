@@ -83,7 +83,7 @@ For $T:\mcH\to \mcH$, prove that  $$\sum_{i=1}^d\la e_i\ket{Te_i}=\sum_{i=1}^d \
 \end{problem}
 	
 \solve{
-	Let $S:\mcH\to \mcH$ where it maps the basis vectors from $\ket{e_i}\to \ket{f_i}$. Then $S\ket{e_i}=\ket{f_i}$. Hence $S$ is an orthonormal matrix since $$\bra{e_j}S^{\dagger}S\ket{e_i}=\bra{f_j}f_i\ra=\delta_{ji}\quad \text{and} \quad \bra{f_j}SS^{\dagger}\ket{f_i}=\bra{e_j}e_i\ra=\delta_{ji}$$Hence $$\sum_{i=1}^d \la f_i|Tf_i\ra =\sum_{i=1}^d \la e_i|S^{\dagger}TS\ket{e_i}=tr{(S^{\dagger}TS)}=tr(SS^{\dagger}T)=tr(T)=\sum_{i=1}^d\la e_i\ket{Te_i}$$Therefore we have $$\sum_{i=1}^d\la e_i\ket{Te_i}=\sum_{i=1}^d \la f_i\ket{Tf_i}$$
+	Let $S:\mcH\to \mcH$ where it maps the basis vectors from $\ket{e_i}\to \ket{f_i}$. Then $S\ket{e_i}=\ket{f_i}$. Hence $S$ is an unitary matrix since $$\bra{e_j}S^{\dagger}S\ket{e_i}=\bra{f_j}f_i\ra=\delta_{ji}\quad \text{and} \quad \bra{f_j}SS^{\dagger}\ket{f_i}=\bra{e_j}e_i\ra=\delta_{ji}$$Hence $$\sum_{i=1}^d \la f_i|Tf_i\ra =\sum_{i=1}^d \la e_i|S^{\dagger}TS\ket{e_i}=tr{(S^{\dagger}TS)}=tr(SS^{\dagger}T)=tr(T)=\sum_{i=1}^d\la e_i\ket{Te_i}$$Therefore we have $$\sum_{i=1}^d\la e_i\ket{Te_i}=\sum_{i=1}^d \la f_i\ket{Tf_i}$$
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 2
@@ -110,9 +110,21 @@ If $\{\ket{e_i}\in \mcH_1\mid 1\leq i\leq d\}$ and $\{\ket{f_i}\in \mcH_2\mid 1\
 \begin{problem}{%problem statement
 	}{p3% problem reference text
 	}
-	Let $\{\ket{g_k}\mid 1\leq i\leq d_2\}\subseteq \mcH_2$ be ONB. For $T\in \sL(\mcH_1\tensor \mcH_2)$, let  $tr_2(T)\in \sL(\mcH_1)$ denote the operator  satisfying $$\bra{u}tr_2(T)\ket{v}= \sum_{k}\bra{u\tensor g_k}T\ket{v\tensor g_k}$$ for any choice $\ket{u},\ket{v}\in \mcH_1$. Prove that $\sum\limits_{k}\bra{u\tensor g_k}T\ket{v\tensor g_k}$ is invariant. 
+	Let $\{\ket{g_k}\mid 1\leq k\leq d_2\}\subseteq \mcH_2$ be ONB. For $T\in \sL(\mcH_1\tensor \mcH_2)$, let  $tr_2(T)\in \sL(\mcH_1)$ denote the operator  satisfying $$\bra{u}tr_2(T)\ket{v}= \sum_{k}\bra{u\tensor g_k}T\ket{v\tensor g_k}$$ for any choice $\ket{u},\ket{v}\in \mcH_1$. Prove that $\sum\limits_{k}\bra{u\tensor g_k}T\ket{v\tensor g_k}$ is invariant. 
 	%Problem		
 \end{problem}
+\solve{
+	Let $\{\ket{f_k}\mid 1\leq k\leq d_2\}\subseteq \mcH_2$ be another ONB.  Suppose $S:\mcH_2\to \mcH$ be a map such that $S\ket{g_k}=\ket{f_k}$. As we previously showed in \hyperref[p:p1]{Problem \ref{p:p1}}, $S$ is unitary. Then for all $k\in [d_2]$ we have $$\ket{f_k}=\sum_{i=1}^{d_2}w_{i,k}\ket{e_i}$$ where $w_{i,k}\in\bbC$. Hence $$\bra{f_i}S^{\dagger}S\ket{f_j}=\sum_{k=1}^{d_2} w_{i,k}^*w_{j,k}=\delta_{i,j}$$Now for any $\ket{u},\ket{v}\in \mcH_1$ we have \begin{align*}
+	\bra{u}tr_2(T)\ket{v}_{\{\ket{f_k}\}} & = \bra{u}\lt[ \sum\limits_{k=1}^{d_2}(I\tensor \bra{f_k})T(I\tensor \ket{f_k}) \rt]\ket{v}\\
+	& = \bra{u}\lt[ \sum\limits_{k=1}^{d_2}\lt(I\tensor \lt(\sum_{i=1}^{d_2}w^*_{i,k}\bra{g_i}\rt)\rt)T\lt(I\tensor \lt(\sum_{j=1}^{d_2}w_{j,k}\ket{g_j}\rt)\rt) \rt]\ket{v}\\
+	& = \sum_{k=1}^{d_2}\sum_{i=1}^{d_2}\sum_{j=1}^{d_2}\bra{u}\Big[ w_{i,k}^*w_{j,k} (I\tensor \bra{g_i})T(I\tensor \ket{g_j})  \Big]\ket{v}\\
+	& = \sum_{i=1}^{d_2}\sum_{j=1}^{d_2}\bra{u}\lt[\lt(\sum_{k=1}^{d_2} w_{i,k}^*w_{j,k} \rt)(I\tensor \bra{g_i})T(I\tensor \ket{g_j})  \rt]\ket{v}\\
+	& = \sum_{i=1}^{d_2}\sum_{j=1}^{d_2}\bra{u}\lt[\delta_{i,j}(I\tensor \bra{g_i})T(I\tensor \ket{g_j})  \rt]\ket{v}\\
+	& = \sum_{i=1}^{d_2}\bra{u}\lt[(I\tensor \bra{g_i})T(I\tensor \ket{g_i})  \rt]\ket{v}\\
+	& = \bra{u}tr_2(T)\ket{v}_{\{\ket{g_k}\}}
+\end{align*}
+Hence $\sum\limits_{k}\bra{u\tensor g_k}T\ket{v\tensor g_k}$ is invariant.
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 4
@@ -124,6 +136,9 @@ If $\{\ket{e_i}\in \mcH_1\mid 1\leq i\leq d\}$ and $\{\ket{f_i}\in \mcH_2\mid 1\
 	Show that the Pauli matrices are all Hermitian, unitary, they square to the identity, and their eigenvalues are $\pm 1$
 	%Problem		
 \end{problem}
+\solve{
+Fuck you arun
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 5
