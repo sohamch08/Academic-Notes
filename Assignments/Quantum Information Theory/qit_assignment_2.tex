@@ -140,7 +140,7 @@ Hence $\sum\limits_{k}\bra{u\tensor g_k}T\ket{v\tensor g_k}$ is invariant.
 \solve{
 Pauli matrices are 
 $$
-X\ket{0}=\ket{1},X\ket{1}=\ket{0}\qquad 
+	X\ket{0}=\ket{1},X\ket{1}=\ket{0}\qquad 
 Y\ket{0}=-i\ket{1},Y\ket{1}=i\ket{0}\qquad 
 Z\ket{0}=\ket{0},Z\ket{1}=-\ket{1}$$
 Therefore we have 
@@ -239,6 +239,7 @@ For $S,T\in \sL(\mcH)$, show that $$tr(T)=tr(T^{\dagger})^*,\qquad tr(ST)=tr(TS)
 Show that $\sD(\mcH)$ is a convex subset of the real vector space of all Hermitian operators on $\mcH$. Show that the extreme points of $\sD(\mcH)$ are pure states, i.e.  rank 1 projection operators.
 	%Problem		
 \end{problem}
+\solve{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 8
@@ -250,6 +251,9 @@ Show that $\sD(\mcH)$ is a convex subset of the real vector space of all Hermiti
 Show that if $\dim(\mcH)=d$, then $\sD(\mcH)$ can be embedded  into a real vector space  of dimension $n=d^2-1$
 	%Problem		
 \end{problem}
+\solve{
+In any operator of $\sD(\mcH)$ there are $^2$ entries in the matrix of the operator. But density operator also has one extra condition which is its trace equal's to 1. Hence sum of the diagonal entries is 1. Hence for the diagonal entries it is enough to know about the $d-1$ entries instead of the all $d$ entries because the last entry will be decided by the other $d-1$ entries as their sum is 1. Except the diagonal there are total $d^2-d$ many off diagonal entries. Hence to uniquely characterize a operator in $\sD(\mcH)$ at most $(d^2-d)+(d-1)=d^2-1$ many numbers are needed. Therefore the set of operators, $\sD(\mcH)$ can be embedded into a real vector space of dimension $n=d^2-1$.
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 9
@@ -260,6 +264,18 @@ Show that if $\dim(\mcH)=d$, then $\sD(\mcH)$ can be embedded  into a real vecto
 	}
 Prove the Singular value decomposition theorem stated in class.	%Problem		
 \end{problem}
+\solve{We will first state the singular value decomposition theorem then we will prove it. \parinf 
+	
+\textbf{\textit{Singular Value Decomposition Theorem:}} Suppose $T:\mcH\to \mcH$ and $\dim(\mcH)=s$ then $\exs\ U,V\in \sL(H)$ which are unitary and diagonal $D\in \sL(\mcH)$  with non-negative entries so that $$T=UDV$$ 
+
+\textbf{\textit{Proof:}} \parinn Suppose we have an ONB of $\mcH$, $\{\ket{e_i}\mid i\in[d]\}$ of $\mcH$. Let's denote $S=T^{\dagger}T$. Now $S$ is hermitian. Hence by spectral theorem there are unitary matrix $W$ and a diagonal matrix $\Lm$ such that $$S=W\Lm W^{\dagger}$$and also we get an orthonormal eigen basis $\{\ket{v_i}\mid i\in [d]\}\subseteq \mcH$ of $\mcH$ with corresponding eigenvalues $\{\lm_i\mid i\in [d]\}$ of $S$ which are the diagonal entries of $\Lm$. 
+
+Now if $\lm$ is an eigenvalue of $S$ with corresponding eigenvector $\ket{v}$ then $$S\ket{v}=\lm \ket{v}\implies \lm \bra{v}\ket{v}=\bra{v}Sv=(Sv)^{\dagger}\ket{v}=\lm^{\dagger}\bra{v}\ket{v}$$Therefore the eigenvalues are real. Also since $$\lm \bra{v}\ket{v}=\bra{v}S\ket{v}=\bra{v}T^{\dagger}T\ket{v}=(T\ket{v})^{\dagger}(T\ket{v})\geq0$$ we have $\lm\geq 0$ since $\bra{v}\ket{v}\geq0$. Therefore eigenvalues of $S$ are real and non-negative. Therefore entries of $\Lm$ are non-negative.
+
+Let us denote the $i$th eigenvalue of $\Lm$ as $\lm_i$. So now take $\sg_i=\triangleq \sqrt{\lm_i}$. Now create the diagonal matrix $\Sg$ with $i$th eigenvalue of $\Sg$ is $\sg_i$.  Define the vectors $\ket{u_i}=\frac{1}{\sg_i}T\ket{v_i}$ for all $i\in [d]$. Then $$\bra{u_i}\ket{u_j}=\frac1{\sg_i\sg_j}\bra{v_i}T^{\dagger}T\ket{v_j}=\frac1{\sg_i\sg_j}\bra{v_i}S\ket{v_j}=\frac1{\sg_i\sg_j}\bra{v_i}\lm_j\ket{v_j}=\frac{\lm_j}{\sg_i\sg_j}\bra{v_i}\ket{v_j}=\delta_{i,j}$$Hence $\{\ket{u_i}\mid i\in [d]\}$ also forms an orthonormal basis. 
+
+Now we have two maps $V:\mcH\to \mcH$ and $U:\mcH\to \mcH$ which send the orthonormal basis $\{\ket{e_i}\mid i\in [d]\}$ to $\{\ket{v_i}\mid i\in [d]\}$ by $V\ket{e_i}=\ket{v_i}$ and $\{\ket{e_i}\mid i\in [d]\}$ to $\{\ket{u_i}\mid i\in [d]\}$ by $U\ket{e_i}=\ket{u_i}$. Therefore we have the matrix of $U,V$ are orthonormal. By definition of $u_i$ we have  $Tv_i=\sg_iu_i$ for all $i\in[d]$. Hence we have $$TV=U\Sg\implies T=U\Sg V^{\dagger}$$ 
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 10
@@ -283,6 +299,13 @@ Prove the Singular value decomposition theorem stated in class.	%Problem
 	Show that the Bell states form an orthonormal basis: $$\bra{\Phi^{z_1x_1}}\ket{\Phi^{z_2x_2}}=\delta_{z_1,z_2}\,\delta_{x_1,x_2}$$
 	%Problem		
 \end{problem}
+\solve{By definition we have
+$$\ket{\Phi^{z,x}}=(Z^z\tensor I)(X^x\tensor I)\ket{\Phi^+}=(Z^zX^x\tensor I)\ket{\Phi^+}$$Therefore \begin{align*}
+	\bra{\Phi^{z_1x_1}}\ket{\Phi^{z_2x_2}} & = \bra{\Phi^{+}}(X^{x_1}Z^{z_1}\tensor I)(Z^{z_2}X^{x_2}\tensor I)\ket{\Phi^{+}}\\
+	& = \bra{\Phi^{+}}(X^{x_1}Z^{z_1}Z^{z_2}X^{x_2})\tensor I\ket{\Phi^{+}}\\
+	& = \bra{\Phi^{+}}(X^{x_1}Z^{z_1\oplus z_2}X^{x_2})\tensor I\ket{\Phi^{+}}
+\end{align*}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 12
