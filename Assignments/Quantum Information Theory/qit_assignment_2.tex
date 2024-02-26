@@ -25,7 +25,7 @@
 \usepackage{libertine}
 \usepackage{physics}
 \usepackage{mathrsfs}
-
+\usepackage{tikz-cd}
 
 \definecolor{mytheorembg}{HTML}{F2F2F9}
 \definecolor{mytheoremfr}{HTML}{00007B}
@@ -239,7 +239,26 @@ For $S,T\in \sL(\mcH)$, show that $$tr(T)=tr(T^{\dagger})^*,\qquad tr(ST)=tr(TS)
 Show that $\sD(\mcH)$ is a convex subset of the real vector space of all Hermitian operators on $\mcH$. Show that the extreme points of $\sD(\mcH)$ are pure states, i.e.  rank 1 projection operators.
 	%Problem		
 \end{problem}
-\solve{}
+\solve{
+\begin{itemize}
+	\item Let $\rho_1\rho_2\in \sD(\mcH)$. Suppose $\lm\in [0,1]$. Then denote $$\rho=\lm\rho_1+(1-\lm)\rho_2$$Now $\rho\in \sD(\mcH)$ if $\rho\geq 0$ and $tr(\rho)=1$. Now $$tr(\rho)=tr(\lm\rho_1+(1-\lm)\rho_2)=\lm tr(\rho_1)+(1-\lm)tr(\rho_2)=\lm+(1-\lm)=1$$Hence we only need to show that for all $\ket{u}\in \mcH$ we have $\bra{u}\rho\ket{u}\geq 0$. Now $$\bra{u}\rho\ket{u}=\bra{u}(\lm\rho_1+(1-\lm)\rho_2)ket{u}=\lm\bra{u}\rho_1\ket{u}+(1-\lm)\bra{u}\rho_2\ket{u}$$ Now since $\rho_1,\rho_2\in \sD(\mcH)$ we have $\bra{u}\rho_1\ket{u}\geq 0$, $\bra{u}\rho_2\ket{u}\geq 0$. We also have $\lm\geq 0$. Hence, $1-\lm\geq 0$. Therefore, $=\lm\bra{u}\rho_1\ket{u}+(1-\lm)\bra{u}\rho_2\ket{u}\geq 0$. Therefore we got $\bra{u}\rho\ket{u}\geq 0$. Since $\ket{u}$ is any arbitrary vector of $\mcH$, we have $\rho \geq 0$. Hence, $rho\in \sD(\mcH)$. Therefore $\sD(\mcH)$ is convex.
+
+\item $\rho\in \sD(\mcH)$ is an extreme point if a strict convex combination $\rho=\lm\rho_1+(1-\lm)\rho_2$ with $\rho_1,\rho_2\in\sD(\mcH)$ and $\lm\in (0,1)$ is possible only if $\rho=\rho_1=\rho_2$. Suppose $\rho$ is not a pure state. Then $\rho$ represents an ensemble $\{p_X(x),\ket{x}\mid x\in X\}\subseteq \mcH$. By assumption $|X|\geq 2$.  Then $$\rho=\sum_{x\in X}p_X(x)\ket{x}\bra{x}$$Since $|X|\geq 2$ we can partition $X$ into two disjoint sets $U,V$ such that $U\sqcup V=X$. Then take $a=\sum\limits_{x\in U}p_X(x)$. Certainly $a\in (0,1)$. Then take the ensembles $\mcF_1=\lt\{\frac{p_X(x)}{a},\ket{x}\mid x\in U\rt\}$ and  $\mcF_2=\lt\{\frac{p_X(x)}{1-a},\ket{x}\mid x\in V\rt\}$. Certainly $$\sum_{x\in U}\frac{p_X(x)}{a}=\frac{1}{a}\sum_{x\in U}p_X(x)=\frac1a\, a=1$$and$$\sum_{x\in V}\frac{p_X(x)}{1-a}=\frac{1}{1-a}\sum_{x\in V}p_X(x)=\frac1{1-a}\lt[ 1-\sum_{x\in U}p_X(x) \rt] =\frac1{1-a}[1-a]=1$$Hence $\mcF_1$ and $\mcF_2$ are in fact ensembles. Then their corresponding density matrices are $$\rho_1=\frac1a\sum_{x\in U}p_X(x)\ket{x}\bra{x}\qquad \rho_2=\frac1{1-a}\sum_{x\in V}p_X(x)\ket{x}\bra{x}$$Then we have \begin{align*}
+	a\rho_1+(1-a)\rho_2&=a\lt[\frac1a\sum_{x\in U}p_X(x)\ket{x}\bra{x}\rt]+(1-a)\lt[\frac1{1-a}\sum_{x\in V}p_X(x)\ket{x}\bra{x}\rt]\\
+	& =\sum_{x\in U}p_X(x)\ket{x}\bra{x}+\sum_{x\in V}p_X(x)\ket{x}\bra{x}\\
+	& = \sum_{x\in X}p_X(x)\ket{x}\bra{x}=\rho
+\end{align*}We can write $\rho$ as a strictly convex sum of two density operators but none of them are equal to $\rho$. Hence contradiction. Hence $\rho$ is a pure state, a rank 1 operator. \parinn
+
+For the other direction let $\rho$ is a pure state. Suppose $$\rho=\lm\rho_1+(1-\lm)\rho_2$$ with $\rho_1,\rho_2\in\sD(\mcH)$ and $\lm\in (0,1)$. Since $\rho=\ket{\phi}\bra{\phi}$ for some $\ket{\phi}\in \mcH$ we have $\rho^2=\rho$. Then  by Cauchy-Schwartz Inequality we have \begin{align*}
+	tr(\rho) & =\tr(\rho^2)                                                                       \\
+	         & = \lm^2tr(\rho_1^2)+2\lm(1-\lm)tr(\rho_1\rho_2)+(1-\lm)^2tr(\rho_2^2)              \\
+	         & \leq\lm^2tr(\rho_1)+(1-\lm)^2tr(\rho_2)+2\lm(1-\lm)\sqrt{tr(\rho_1^2)tr(\rho_2^2)} \\
+	         & =\lm^2tr(\rho_1)+(1-\lm)^2tr(\rho_2)+2\lm(1-\lm)\sqrt{tr(\rho_1)tr(\rho_2)}        \\
+	         & = \lm^2+(1-\lm)^2+2\lm(1-\lm)=1
+\end{align*}
+But we know $tr(\rho)=1$. Hence equality is attained. Therefore, in Cauchy-Schwartz Inequality equality is attained. Therefore $tr(\rho_1\rho_2)=\sqrt{tr(\rho_1)tr(\rho_2)}$ i.e. $\rho_1=\rho_2$. Hence $\rho$ is a extreme point. Therefore, pure states are extreme points in $\sD(\mcH)$. 
+\end{itemize}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 8
@@ -300,11 +319,43 @@ Now we have two maps $V:\mcH\to \mcH$ and $U:\mcH\to \mcH$ which send the orthon
 	%Problem		
 \end{problem}
 \solve{By definition we have
-$$\ket{\Phi^{z,x}}=(Z^z\tensor I)(X^x\tensor I)\ket{\Phi^+}=(Z^zX^x\tensor I)\ket{\Phi^+}$$Therefore \begin{align*}
+$$\ket{\Phi^{z,x}}=(Z^z\tensor I)(X^x\tensor I)\ket{\Phi^+}=(Z^zX^x\tensor I)\ket{\Phi^+}$$We have $\ket{\Phi^+}=\frac1{\sqrt{2}}(\ket{00}+\ket{11})$. Therefore, \begin{align*}
 	\bra{\Phi^{z_1x_1}}\ket{\Phi^{z_2x_2}} & = \bra{\Phi^{+}}(X^{x_1}Z^{z_1}\tensor I)(Z^{z_2}X^{x_2}\tensor I)\ket{\Phi^{+}}\\
 	& = \bra{\Phi^{+}}(X^{x_1}Z^{z_1}Z^{z_2}X^{x_2})\tensor I\ket{\Phi^{+}}\\
-	& = \bra{\Phi^{+}}(X^{x_1}Z^{z_1\oplus z_2}X^{x_2})\tensor I\ket{\Phi^{+}}
+	& = \bra{\Phi^{+}}(X^{x_1}Z^{z_1\oplus z_2}X^{x_2})\tensor I\ket{\Phi^{+}}\\
+	& = \frac12 \Big[\bra{0}X^{x_1}Z^{z_1\oplus z_2}X^{x_2}\ket{0}\bra{0}\ket{0}+\bra{1}X^{x_1}Z^{z_1\oplus z_2}X^{x_2}\ket{1}\bra{1}\ket{1}\Big]\\
+	& = \frac12 \Big[\bra{0}X^{x_1}Z^{z_1\oplus z_2}X^{x_2}\ket{0}+\bra{1}X^{x_1}Z^{z_1\oplus z_2}X^{x_2}\ket{1}\Big]
 \end{align*}
+Now we will do case wise analysis. 
+\subsection*{Case 1: $\boldsymbol{z_1\oplus z_2=0}$}
+Then $Z^{z_1\oplus z_2}=I$. Therefore $$X^{x_1}Z^{z_1\oplus z_2}X^{x_2}=X^{x_1}X^{x_2}=X^{x_1\oplus x_2}$$ Hence \begin{align*}
+	 & \frac12\Big[   \bra{0}X^{x_1\oplus x_2}\ket{0}+  \bra{1}X^{x_1\oplus x_2}\ket{1} \Big]=\delta_{0,x_1\oplus x_2}=\delta_{x_1,x_2}   =\delta_{x_1,x_2}\times 1=\delta_{0,z_1\oplus z_2}\delta_{x_1,x_2}=\delta_{z_1,z_2}\delta_{x_1,x_2}
+\end{align*}
+\subsection*{Case 2: $\boldsymbol{z_1\oplus z_2=1}$}
+So now $Z^{z_1\xor z_2}=Z$. Now we will  analyze  all possible cases
+\subsubsection*{Case 2.I: $\boldsymbol{x_1=0,x_2=0}$}
+Then $X^{x_1}Z^{z_1\oplus z_2}X^{x_2}=Z$. Hence \begin{align*}
+	& \frac12 \Big[ \bra{0}Z\ket{0}+\bra{1}Z\ket{1}  \Big]\\
+	& = \frac12 \Big[ \bra{0}\ket{0}-\bra{1}\ket{1}   \Big]\\
+	& = 0 = \delta_{z_1,z_2}=\delta_{z_1,z_2}\times 1=\delta_{z_1,z_2}\delta_{x_1,x_2}
+\end{align*}
+\subsubsection*{Case 2.II: $\boldsymbol{x_1=0,x_2=1}$}
+Now $X^{x_1}Z^{z_1\oplus z_2}X^{x_2}=ZX$. 
+So \begin{align*}
+	&\frac12 \Big[\bra{0}ZX\ket{0}+\bra{1}ZX\ket{1}\Big] =\frac12 \Big[\bra{0}Z\ket{1}+\bra{1}Z\ket{0}\Big]=\frac12 \Big[-\bra{0}\ket{1}+\bra{1}\ket{0}\Big]	= 0=\delta_{z_1,z_2}\delta_{x_1,x_2}
+\end{align*}
+\subsubsection*{Case 2.III: $\boldsymbol{x_1=1,x_2=0}$}
+Now $X^{x_1}Z^{z_1\oplus z_2}X^{x_2}=XZ$. 
+So \begin{align*}
+	&\frac12 \Big[\bra{0}XZ\ket{0}+\bra{1}ZX\ket{1}\Big] =\frac12 \Big[\bra{0}X\ket{0}-\bra{1}X\ket{1}\Big]=\frac12 \Big[\bra{0}\ket{1}-\bra{1}\ket{0}\Big]	= 0 = 0\times 0=\delta_{z_1,z_2}\delta_{x_1,x_2}
+\end{align*}
+\subsubsection*{Case 2.IV: $\boldsymbol{x_1=1,x_2=1}$}
+Now $X^{x_1}Z^{z_1\oplus z_2}X^{x_2}=XZX$. 
+So \begin{align*}
+	&\frac12 \Big[\bra{0}XZX\ket{0}+\bra{1}ZX\ket{1}\Big]=\frac12 \Big[\bra{0}XZ\ket{1}+\bra{1}XZ\ket{0}\Big]= \frac12 \Big[-\bra{0}X\ket{1}+\bra{1}X\ket{0}\Big]\\
+	=& \frac12 \Big[-\bra{0}\ket{0}+\bra{1}\ket{1}\Big]	=  \frac12[-1+1]= 0 = 0\times 1 =\delta_{z_1,z_2}\delta_{x_1,x_2}
+\end{align*}Therefore we can say $$\bra{\Phi^{z_1x_1}}\ket{\Phi^{z_2x_2}}=\delta_{z_1,z_2}\,\delta_{x_1,x_2}$$Hence Bell States form an orthonormal basis.
+
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -318,6 +369,37 @@ $$\ket{\Phi^{z,x}}=(Z^z\tensor I)(X^x\tensor I)\ket{\Phi^+}=(Z^zX^x\tensor I)\ke
 	 Show that the set of states $\{\ket{\Phi^{x,z}}_{AB}\}^{d-1}_{x,z=0}$ forms a complete, orthonormal basis:$$\bra{\Phi^{x_1,z_1}}\ket{\Phi^{x_2,z_2}}=\delta_{x_1,x_2}\,\delta_{z_1,z_2}\qquad \sum_{x,z=0}^d\ket{\Phi^{x,z}}\bra{\Phi^{x,z}}=I_{AB}$$
 	%Problem		
 \end{problem}
+\solve{
+We have $$X(x)\ket{j}=\ket{j\xor x}\qquad Z(z)\ket{j}=\exp{\frac{2\pi izj}{d}}$$Therefore $$X(x)Z(z)\ket{j}=\exp{\frac{2\pi izj}{d}}\ket{j\xor x}$$Now 
+\begin{align*}
+	\ket{\Phi^{x,z}}_{AB}&=(X_A(x)Z_A(z)\tensor I_B)\ket{\Phi}_{AB}\qquad \ket{\Phi}_{AB}=\frac1{\sqrt{d}}\sum_{j=0}^{d-1}\ket{j}_A\ket{j}_B
+\end{align*}Therefore we have 
+\begin{align*}
+	\ket{\Phi^{x,z}}_{AB} & =X_A(x)Z_A(z)\tensor I_B\ket{\Phi}_{AB}                                                    \\
+	                      & =\frac1{\sqrt{d}}\sum_{j=0}^{d-1}X_A(x)Z_A(z)\ket{j}_A\tensor \ket{j}_B                    \\
+	                      & =\frac1{\sqrt{d}}\sum_{j=0}^{d-1}\exp{\frac{2\pi ijzj}{d}}\ket{j\xor x}_A\tensor \ket{j}_B
+\end{align*}
+Hence \begin{align*}
+	\bra{\Phi^{x_1,z_1}}\ket{\Phi^{x_2,z_2}} & = \frac1d\lt[\sum_{j=0}^{d-1}\exp{-\frac{2\pi iz_1j}{d}}\bra{j\xor x_1}_A\tensor \bra{j}_B\rt]\lt[ \sum_{k=0}^{d-1}\exp{\frac{2\pi iz_2k}{d}}\ket{k\xor x_2}_A\tensor \ket{k}_B \rt]\\
+	& = \frac1d\lt[   \sum_{j=0}^{d-1}\sum_{k=1}^{d-1} \exp{\frac{2\pi i}{d}(kz_2-jz_1)}\bra{j\xor x_1}_A\ket{k\xor x_2}_A\bra{j}_B\ket{k}_B   \rt]\\
+	& = \frac1d\lt[   \sum_{j=0}^{d-1}  \exp{\frac{2\pi ij}{d}(z_2-z_1)}\bra{j\xor x_1}_A\ket{j\xor x_2}_A   \rt]\\
+	& = \frac1d\lt[\delta_{x_1,x_2} \sum_{i=0}^{d-1} \exp{\frac{2\pi ij}{d}(z_2-z_1)}\rt]\\[3mm]
+	& = \begin{cases}
+		\dfrac{1}{d}\, d\,\delta_{x_1,x_2}=\delta_{x_1,x_2} & \text{when $z_1=z_2$}\\
+		\dfrac{1}{d}\, \delta_{x_1,x_2}\,\dfrac{1-\exp{\frac{2\pi i d}{d}}}{1-\exp{\frac{2\pi i}{d}}}= \dfrac{1}{d}\, \delta_{x_1,x_2}\,\dfrac{1-\exp{2\pi i d}}{1-\exp{\frac{2\pi i}{d}}}=0 & \text{when $z_1\neq z_2$}
+	\end{cases}\\[3mm]
+	& = \delta_{x_1,x_2}\delta_{z_1,z_2}
+\end{align*}Also 
+\begin{align*}
+\sum_{x,z=0}^d\ket{\Phi^{x,z}} 	\bra{\Phi^{x,z}} & = \frac1d \sum_{x,z=0}^d\lt[ \sum_{j=0}^{d-1}\exp{\frac{2\pi izj}{d}}\ket{j\xor x}_A\tensor \ket{j}_B \rt]\lt[\sum_{k=0}^{d-1}\exp{-\frac{2\pi izk}{d}}\bra{k\xor x}_A\tensor \bra{k}_B\rt]\\
+& = \frac1d\sum_{x,z=0}^d\lt[   \sum_{j=0}^{d-1}\sum_{k=1}^{d-1} \exp{\frac{2\pi iz}{d}(k-j)}\ket{j\xor x}_A\bra{k\xor x}_A\tensor\ket{j}_B\bra{k}_B   \rt]\\
+& = \frac1d\sum_{x=0}^d\sum_{j=0}^{d-1}\sum_{k=1}^{d-1} \lt[  \sum_{z=0}^d \exp{\frac{2\pi iz}{d}(k-j)} \rt]\ket{j\xor x}_A\bra{k\xor x}_A\tensor\ket{j}_B\bra{k}_B  \\
+& = \frac1d\sum_{x=0}^d\sum_{j=0}^{d-1} d\ket{j\xor x}_A\bra{k\xor x}_A\tensor\ket{j}_B\bra{k}_B \\
+& =  \sum_{x=0}^d\sum_{j=0}^{d-1} \ket{j\xor x}_A\bra{j\xor x}_A\tensor\ket{j}_B\bra{j}_B\\
+& = \sum_{j=0}^{d-1} \lt[ \sum_{x=0}^d]\ket{j\xor x}_A\bra{j\xor x}_A\rt]\tensor\ket{j}_B\bra{j}_B\\
+& = \sum_{j=0}^{d-1} I_A\tensor\ket{j}_B\bra{j}_B= I_A\tensor I_B=I_{A,B}
+\end{align*}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 13
@@ -330,6 +412,18 @@ $$\ket{\Phi^{z,x}}=(Z^z\tensor I)(X^x\tensor I)\ket{\Phi^+}=(Z^zX^x\tensor I)\ke
 	 Show that the following ensembles have the same density operator: $\lt\{\lt\{\frac12,\ket{0}\rt\},\lt\{\frac12,\ket{1}\rt\}\rt\}$ and $\lt\{\lt\{\frac12,\ket{+}\rt\},\lt\{\frac12,\ket{-}\rt\}\rt\}$
 	%Problem		
 \end{problem}
+\solve{
+The density operator of the ensemble $\lt\{\lt\{\frac12,\ket{0}\rt\},\lt\{\frac12,\ket{1}\rt\}\rt\}$ is $$\rho_1=\frac12\ket{0}\bra{0}+\frac12\ket{1}\bra{1}=\frac12\Big[ \ket{0}\bra{0}+\ket{1}\bra{1} \Big]$$
+
+Now$$\ket{+}\bra{+}=\frac12\Big[ \ket{0}+\ket{1} \Big]\Big[ \bra{0}+\bra{1} \Big]=\frac12\Big[\ket{0}\bra{0}+\ket{0}\bra{1}+\ket{1}\bra{0}+\ket{1}\bra{1}   \Big]$$and similarly $$\ket{-}\bra{-}=\frac12\Big[ \ket{0}-\ket{1} \Big]\Big[ \bra{0}-\bra{1} \Big]=\frac12\Big[\ket{0}\bra{0}-\ket{0}\bra{1}-\ket{1}\bra{0}-\ket{1}\bra{1}   \Big]$$
+The density operator of the ensemble $\lt\{\lt\{\frac12,\ket{+}\rt\},\lt\{\frac12,\ket{-}\rt\}\rt\}$ is 
+\begin{align*}
+	\rho_2 &= \frac12\ket{+}\bra{+}+\frac12\ket{-}\bra{-}\\
+	& = \frac14\Big[\ket{0}\bra{0}+\ket{0}\bra{1}+\ket{1}\bra{0}+\ket{1}\bra{1}   \Big]+\frac14\Big[\ket{0}\bra{0}-\ket{0}\bra{1}-\ket{1}\bra{0}-\ket{1}\bra{1}   \Big]\\
+	& = \frac14\Big[2\ket{0}\bra{0}+2\ket{1}\bra{1}\Big]=\frac12\Big[\ket{0}\bra{0}+\ket{1}\bra{1}\Big]=\rho_1
+\end{align*} 
+Hence both the ensembles have the same density operator. 
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 14
@@ -338,7 +432,10 @@ $$\ket{\Phi^{z,x}}=(Z^z\tensor I)(X^x\tensor I)\ket{\Phi^+}=(Z^zX^x\tensor I)\ke
 \begin{problem}{%problem statement
 	}{p14% problem reference text
 	}
-	Show that the set of states $\{\ket{\Phi^{x,z}}_{AB}\}^{d-1}_{x,z=0}$ forms a complete, orthonormal basis:$$\bra{\Phi^{x_1,z_1}}\ket{\Phi^{x_2,z_2}}=\delta_{x_1,x_2}\,\delta_{z_1,z_2}\qquad \sum_{x,z=0}^d\ket{\Phi^{x,z}}\bra{\Phi^{x,z}}=I_{AB}$$
+	For $T\in \sL(\mcH_A\tensor \mcH_B)$ specified through $T=\sum\limits_{i,j}\gm_{i,j}A_i\tensor B_j$, where $A_i\in \sL(\mcH_A)$, $B_i\in \sL(\mcH_B)$, $\gm_{i,j}\in \bbC$ we define $$f(T)=\sum_{i,j}\gm_{i,j}tr(B_j)A_i$$Let $g:\sL(\mcH_A\tensor \mcH_B) \to \sL(\mcH_A)$ be defined as a map satisfying $$\bra{u}g(Z)\ket{v}=\sum_k\bra{u\tensor e_k}Z\ket{v\tensor e_k}$$ for any ONB $\{\ket{e_k}\mid 1\leq k\leq K\}\subseteq \mcH_B$. \begin{enumerate}
+		\item Prove that $f(T)=g(T)$ and both are well defined. \parinn
+		\item Prove if $\{M_r\mid 1\leq r\leq R\}\subseteq \sL(\mcH_A)$ is a measurement then $$tr(M_rg(Z)M^{\dagger}_r)=tr[(M_r\tensor I_B)Z(M^{\dagger}_r\tensor I_B)]$$
+	\end{enumerate}
 	%Problem		
 \end{problem}
 
@@ -350,9 +447,16 @@ $$\ket{\Phi^{z,x}}=(Z^z\tensor I)(X^x\tensor I)\ket{\Phi^+}=(Z^zX^x\tensor I)\ke
 		Mark Wilde: Exercise 4.1.3
 	}{p15% problem reference text
 	}
-	Show that the following ensembles have the same density operator: $\lt\{\lt\{\frac12,\ket{0}\rt\},\lt\{\frac12,\ket{1}\rt\}\rt\}$ and $\lt\{\lt\{\frac12,\ket{+}\rt\},\lt\{\frac12,\ket{-}\rt\}\rt\}$
+	 Prove the following equality:$$tr(A)=\bra{\Gm}_{RS}I_R\tensor A_S\ket{\Gm}_S$$where $A$ is a square operator acting on a Hilbert space $\mcH_S$, $I_R$  is the operator acting on a Hilbert space $\mcH_R$ isormorphic to $\mcH_S$ and $\ket{\Gm}_{RS}$ is the unnormalized  maximally entangled  vector $$\ket{\Gm}_{RS}=\sum_{i=0}^{d-1}\ket{i}_R\ket{i}_S$$
 	%Problem		
 \end{problem}
+\solve{
+\begin{align*}
+	\bra{\Gm}_{RS}I_R\tensor A_S\ket{\Gm}_S & = \lt[\sum_{i=0}^{d-1}\bra{i}_R\bra{i}_S   \rt]I_R\tensor A_S\lt[ \sum_{j=0}^{d-1}\ket{j}_R\ket{j}_S \rt]\\ 
+	& = \sum_{i=0}^{d-1}\sum_{j=0}^{d-1}\bra{i}_R\ket{j}_R \bra{i}_SA_S\ket{j}_S\\
+	& = \sum_{i=0}^{d-1}\bra{i}_SA_S\ket{i}_S= tr(A)
+\end{align*}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 16
@@ -362,9 +466,23 @@ $$\ket{\Phi^{z,x}}=(Z^z\tensor I)(X^x\tensor I)\ket{\Phi^+}=(Z^zX^x\tensor I)\ke
 		Mark Wilde: Exercise 3.7.12
 	}{p16% problem reference text
 	}
-	Show that the following ensembles have the same density operator: $\lt\{\lt\{\frac12,\ket{0}\rt\},\lt\{\frac12,\ket{1}\rt\}\rt\}$ and $\lt\{\lt\{\frac12,\ket{+}\rt\},\lt\{\frac12,\ket{-}\rt\}\rt\}$
+	Show that the following ``transpose trick” or ``ricochet” property holds for a maximally entangled state $\ket{\Phi}_{AB}$ defined as $$\ket{\Phi}_{AB}=\frac1{\sqrt{d}}\sum_{i=0}^{d-1}\ket{i}_A\ket{i}_B$$ and any $d \times d$ matrix $M$ $$(M_A\tensor I_B)\ket{\Phi}_{AB}=(I_A\tensor M_B^t)\ket{\Phi}_{AB}$$where $M^t$ is the transpose of the operator $M$ with respect to the basis $\{\ket{i}_B\}$ from  the definition of $\ket{\Phi}_{AB}$. The implication is that some local action of Alice on $\ket{\Phi}_{AB}$ is equivalent to Bob performing the transpose of this action on his share of the state.
+	Of course, the same equality is true for the unnormalized maximally entangled
+	vector  $\ket{\Gm}_{AB}$ of the from \hyperref[p:p15]{Problem \ref{p:p15}}$$(M_A\tensor I_B)\ket{\Gm}_{AB}=(I_A\tensor M_B^t)\ket{\Gm}_{AB}$$
 	%Problem		
 \end{problem}
+\solve{$M_{i,j}$ denotes the $(i,j)$th entry of $M$ and $M^t_{i,j}$ denotes the $(i,j)$th entry of $M^t$ which is equal to $M_{j,i}$. Then we can say $$M\ket{i}=\sum_{j=0}^{d-1}M_{i,j}\ket{j}$$\begin{align*}
+		(M_A\tensor I_B)\ket{\Phi}_{AB}&=\frac{1}{\sqrt{d}}\sum_{i=0}^{d-1}M_A\ket{i}_A \tensor \ket{i}_B\\
+		& = \frac{1}{\sqrt{d}}\sum_{i=0}^{d-1}\sum_{j=0}^{d-1}M_{{i,j}}\ket{j}_A\tensor \ket{i}_B\\
+		& = \frac{1}{\sqrt{d}}\sum_{i=0}^{d-1}\sum_{j=0}^{d-1}M_{{j,i}}^t\ket{j}_A\tensor \ket{i}_B\\
+		& = \frac{1}{\sqrt{d}}\sum_{i=0}^{d-1}\sum_{j=0}^{d-1}\ket{j}_A\tensor M_{{j,i}}^t\ket{i}_B\\
+		& = \frac{1}{\sqrt{d}}\sum_{j=0}^{d-1}\ket{j}_A\tensor \sum_{i=0}^{d-1}M_{{j,i}}^t\ket{i}_B\\		
+		& = \frac1{\sqrt{d}}\sum_{j=0}^{d-1}\ket{j}_A\tensor M^t_B\ket{j}_B\\
+		& = (I_A\tensor M^t_B)\frac1{\sqrt{d}}\sum_{j=0}^{d-1}\ket{j}_A\tensor \ket{j}_B\\
+		& = (I_A\tensor M^t_B)\ket{\Phi}_{AB}
+	\end{align*}
+
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 17
@@ -373,7 +491,27 @@ $$\ket{\Phi^{z,x}}=(Z^z\tensor I)(X^x\tensor I)\ket{\Phi^+}=(Z^zX^x\tensor I)\ke
 \begin{problem}{%problem statement
 	}{p17% problem reference text
 	}
-	Show that the following ensembles have the same density operator: $\lt\{\lt\{\frac12,\ket{0}\rt\},\lt\{\frac12,\ket{1}\rt\}\rt\}$ and $\lt\{\lt\{\frac12,\ket{+}\rt\},\lt\{\frac12,\ket{-}\rt\}\rt\}$
+	For each of the maps \begin{enumerate}[label=(\roman*)]
+		\item State whether the map is a quantum evolution i.e. a CPTP linear map
+		\item If the answer to (i) is `Yes' then identify the Choi-Krous Operators specifying the map
+		\item Identify the components - reference Hilbert Space, isometry - that specify the map through Shine spring citation i.e. if the map $\sE:\sL(\mcH)\to \sL(\mcH_B)$ is a CPTP map. Identify a Hilbert space $\mcH_R$ and an isometry $V:\mcH_A\to \mcH_R\tensor \mcH_A\tensor \mcH_B$ so that $\sE(S)=tr_{RA}(VSV^{\dagger})$
+	\end{enumerate}
+		\begin{enumerate}[label=(\arabic*)]
+			\item $\sE:\bbC\to \sD(\mcH)$, where $1\mapsto \rho$
+			\item $\sE:\sL(\mcH_A)\to \sL(\mcH_A\tensor \mcH_B)$, where $S\mapsto S\tensor \rho_B$ where $\rho_B\in \sD(\mcH_B)$ is a fixed density operator.
+			\item $\sE:\sL(\mcH_A)\to \sL(\mcH_A\tensor \mcH_B)$ where $S\mapsto tr_B(S)$
+			\item $\sE:\sL(\mcH_A)\to \sL(\mcH_A\tensor \mcH_B)$ where $S\mapsto VSV^{\dagger}$ where $V:\mcH_A\to\mcH_A\tensor \mcH_B$ is an isometry
+			\item Suppose $\mcH_x=span\{\ket{x}\mid x\in \mcX\}$ where $\mcX$ is a finite set such that $$\bra{\tilde{x}}ket{x}=\delta_{\tilde{x},x}$$and similarly $\mcH_y = span\{\ket{y}\mid y\in \mcY\}$ where $\mcY$ is a finite set and $$\bra{\tilde{y}}\ket{y}=\delta_{\tilde{y},y}$$Suppose $p_{Y|X}(y|x)$, $(x,y)\in \mcX\times \mcY$ is a stochastic matrix i.e. $\sum\limits_{y\in \mcY}p_{Y|X}(y|x)=1$ for all $x\in \mcX$ and $p_{Y|X}(y|x)\geq 0$.
+				
+			Then consider the maps \begin{center}
+				\begin{tikzcd}
+					\sum\limits_{x\in \mcX}p_X(x)\ket{x}\bra{x}\arrow[r] & \sum\limits_{x,y}p_X(x)p_{Y|X}(y|x)\ket{xy}\bra{xy}\\
+					\sum\limits_{x\in \mcX}p_X(x)\ket{x}\bra{x}\arrow[r] & \sum\limits_{y\in \mcY}p_Y(y)\ket{y}\bra{y}
+				\end{tikzcd}
+			\end{center}where $p_Y(y)=\sum\limits_{x\in \mcX}p_X(x)p_{Y|X}(y|x)$.
+			\item Suppose $\{M_k\mid 1\leq k\leq K\}$ form a measurement, then $$S\mapsto \sum_{k=1}^KM_kSM_k^{\dagger}\tensor \ket{k}\bra{k}$$
+		\end{enumerate}
+
 	%Problem		
 \end{problem}
 
@@ -384,7 +522,9 @@ $$\ket{\Phi^{z,x}}=(Z^z\tensor I)(X^x\tensor I)\ket{\Phi^+}=(Z^zX^x\tensor I)\ke
 \begin{problem}{%problem statement
 	}{p18% problem reference text
 	}
-	Show that the following ensembles have the same density operator: $\lt\{\lt\{\frac12,\ket{0}\rt\},\lt\{\frac12,\ket{1}\rt\}\rt\}$ and $\lt\{\lt\{\frac12,\ket{+}\rt\},\lt\{\frac12,\ket{-}\rt\}\rt\}$
+	If $A\in \sL(\mcH_1)$, $B\in \sL(\mcH_2)$ and $A\geq 0$, $B\geq 0$ prove or disprove (with counter example) $A\tensor B\geq 0$.
+	
+	[Recall that for any operator $S\in \sL(\mcH)$ we say $S\geq 0$ if $\bra{u}S\ket{S}\geq 0$ $\forall\ \ket{u}\in \mcH$]
 	%Problem		
 \end{problem}
 
@@ -395,7 +535,9 @@ $$\ket{\Phi^{z,x}}=(Z^z\tensor I)(X^x\tensor I)\ket{\Phi^+}=(Z^zX^x\tensor I)\ke
 \begin{problem}{%problem statement
 	}{p19% problem reference text
 	}
-	Show that the following ensembles have the same density operator: $\lt\{\lt\{\frac12,\ket{0}\rt\},\lt\{\frac12,\ket{1}\rt\}\rt\}$ and $\lt\{\lt\{\frac12,\ket{+}\rt\},\lt\{\frac12,\ket{-}\rt\}\rt\}$
+	Suppose $\mcH_A$, $\mcH_B$ are Hilbert spaces. State the definition of when a map $\sE:\sL(\mcH_A)\to \sL(\mcH_B)$ is a completely positive map. Let us say a map $\sF:\sL(\mcH_A)\to \sL(\mcH_B)$ is positive if whenever $X\in \sP(\mcH_A)$ is positive semidefinite, we have $\sF(X)\in \sP(\mcH_B)$ is positive definite. Provide an example of $\mcH_A$, $\mcH_B$ and a map $\sF:\sL(\mcH_A)\to \sL(\mcH_B)$ is positive by not completely positive.\parinn
+	
+	Identify $\rho\in \sD(\mcH_A)$, a density operator, so that $(i_R\tensor \sF)(\ket{\phi_{\rho}}\bra{\phi_{\rho}})$ is not positive semi-definite, wherein $\ket{\phi_{\rho}}\in \mcH_R\tensor \mcH_A$ is a purification of $\rho$.
 	%Problem		
 \end{problem}
 
