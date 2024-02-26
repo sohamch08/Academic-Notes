@@ -202,7 +202,16 @@ For $S,T\in \sL(\mcH)$, show that $$tr(T)=tr(T^{\dagger})^*,\qquad tr(ST)=tr(TS)
 		& = \sum_{i=1}^d \bra{e_i}T\lt[ \sum_{k=1}^d \ket{e_k}\bra{e_k} \rt]S\ket{e_i}\\
 		& = \sum_{i=1}^d\bra{e_i}TIS\ket{e_i} = \sum_{i=1}^d\bra{e_i}TS\ket{e_i}=tr({TS})
 	\end{align*}
-	\item $tr(\ket{x}\bra{y}T)=tr([\ket{x}\bra{y}]T)=tr(T[\ket{x}\bra{y}])=tr(T\ket{x}\bra{y})$
+	\item Let $\{\ket{e_i}\mid 1\leq i\leq d\}$ is an ONB of $\mcH$. Then $\ket{x}=\sum\limits_{i=1}^d\alpha_i\ket{e_i}$ and $\ket{y}=\sum\limits_{i=1}^d \beta_i\ket{e_i}$ where $\alpha_i,\beta_i\in \bbC$ for all $i\in [d]$. Now \begin{align*}
+		tr(\ket{x}\bra{y}T)&=\sum_{k=1}^d\bra{e_i}\ket{x}\bra{y}T\ket{e_i}\\
+		& = \sum_{k=1}^d \bra{y}T\ket{e_i}\bra{e_i}\ket{x}\\
+		& = \bra{y}T\lt[ \sum_{k=1}^d\ket{e_i}\bra{e_i} \rt]\ket{x}\\
+		& = \bra{y}TI\ket{x}=\bra{y}T\ket{x}
+	\end{align*}
+	Now 
+	$$tr(\ket{x}\bra{y}T)=tr([\ket{x}\bra{y}]T)=tr(T[\ket{x}\bra{y}])$$Therefore we have
+	$$tr(\ket{x}\bra{y}T)=tr(T\ket{x}\bra{y})=\bra{y}\ket{Tx}$$
+	
 
 \end{itemize}
 }
@@ -225,10 +234,10 @@ For $S,T\in \sL(\mcH)$, show that $$tr(T)=tr(T^{\dagger})^*,\qquad tr(ST)=tr(TS)
 	 
 	\item Now let $T\in\sR(\mcH)$. Then $T^{\dagger}=T$. Again suppose $\{\ket{e_i}\in\mcH\mid 1\leq i\leq d\}$ is an ONB of $\mcH$. Let $(i,j)$th element of $T$ is denoted by $t_{i,j}$. Then for all $i\in [d]$, $T_{i,i}\in \bbR$ since $T^{\dagger}=T$. Now for all off diagonal entries $t_{j,i}=t^*_{i,j}$. So there are $\frac{n^2-n}2$ many complex numbers which decides $T$ uniquely apart from the $n$ real entries in the diagonal. Now for each $i,j\in[d]$ let  $t_{i,j}=x_{i,j}+iy_{i,j}$ where $x_{i,j},y_{i,j}\in  \bbR$. Therefore, $$t_{j,i}=t^*_{i,j}=x_{i,j}-iy_{i,j}$$So for each off-diagonal entries there are corresponding 2 real numbers. And there are total $\frac{d^2-d}2$ many off-diagonal entries which participates in uniquely deciding $T$. Hence there are total $$2\times \frac{d^2-d}2+d=d^2$$ real numbers which uniquely decides $T$. Hence $\dim(\sR(\mcH))= d^2$. 
 	\item Suppose $\{\ket{e_i}\in\mcH\mid 1\leq i\leq d\}$ is a basis of $\mcH$. Let $T\in\sL(\mcH)$. Then for all $i\in [d]$ $$T\ket{e_i}=\sum_{j=1}^d\alpha_{i,j}\ket{e_j}$$ where $\alpha_{i,j}\in \bbR$. Hence, the map $T$ is uniquely decided by the numbers $\alpha_{i,j}\in \bbC$ for all $i,j\in [d]$. Since there are $d^2$ many numbers which uniquely decides $T$, $\dim(\sL(\mcH))= d^2$. 
-	\item Let $T\in\sR(\mcH)$. Then $T^t=T$. Again suppose $\{\ket{e_i}\in\mcH\mid 1\leq i\leq d\}$ is an basis of $\mcH$. Let $(i,j)$th element of $T$ is denoted by $T_{i,j}$. Now for all off diagonal entries $T_{j,i}=T_{i,j}$. So there are $\frac{d^2-d}2$ many real numbers which decides $T$ uniquely apart from the $d$ entries in the diagonal. Therefore,  there are total $\frac{d^2-d}2$ many off-diagonal entries which participates in uniquely deciding $T$. Hence there are total $$ \frac{d^2-d}2+d=\frac{d^2+d}{2}=\frac{d(d+1)}2$$ real numbers which uniquely decides $T$. Hence $\dim(\sR(\mcH))= d^2$. 
+	\item Let $T\in\sR(\mcH)$. Then $T^t=T$. Again suppose $\{\ket{e_i}\in\mcH\mid 1\leq i\leq d\}$ is an basis of $\mcH$. Let $(i,j)$th element of $T$ is denoted by $T_{i,j}$. Now for all off diagonal entries $T_{j,i}=T_{i,j}$. So there are $\frac{d^2-d}2$ many real numbers which decides $T$ uniquely apart from the $d$ entries in the diagonal. Therefore,  there are total $\frac{d^2-d}2$ many off-diagonal entries which participates in uniquely deciding $T$. Hence there are total $$ \frac{d^2-d}2+d=\frac{d^2+d}{2}=\frac{d(d+1)}2$$ real numbers which uniquely decides $T$. Hence $\dim(\sR(\mcH))= \frac{d(d+1)}2$. 
 	 \end{itemize}
 }
-
+\pagebreak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 7
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
