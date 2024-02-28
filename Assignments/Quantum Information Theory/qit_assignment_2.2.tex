@@ -251,7 +251,6 @@ For $S,T\in \sL(\mcH)$, show that $$tr(T)=tr(T^{\dagger})^*,\qquad tr(ST)=tr(TS)
 	\item Let $T\in\sR(\mcH)$. Then $T^t=T$. Again suppose $\{\ket{e_i}\in\mcH\mid 1\leq i\leq d\}$ is an basis of $\mcH$. Let $(i,j)$th element of $T$ is denoted by $T_{i,j}$. Now for all off diagonal entries $T_{j,i}=T_{i,j}$. So there are $\frac{d^2-d}2$ many real numbers which decides $T$ uniquely apart from the $d$ entries in the diagonal. Therefore,  there are total $\frac{d^2-d}2$ many off-diagonal entries which participates in uniquely deciding $T$. Hence there are total $$ \frac{d^2-d}2+d=\frac{d^2+d}{2}=\frac{d(d+1)}2$$ real numbers which uniquely decides $T$. Hence $\dim(\sR(\mcH))= \frac{d(d+1)}2$. 
 	 \end{itemize}
 }
-\pagebreak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 7
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -415,9 +414,7 @@ We have $$X(x)\ket{j}=\ket{j\xor x}\qquad Z(z)\ket{j}=\exp{\frac{2\pi izj}{d}}\k
 	\ket{\Phi^{x,z}}_{AB}&=(X_A(x)Z_A(z)\tensor I_B)\ket{\Phi}_{AB}\qquad \ket{\Phi}_{AB}=\frac1{\sqrt{d}}\sum_{j=0}^{d-1}\ket{j}_A\ket{j}_B
 \end{align*}Therefore we have 
 \begin{align*}
-	\ket{\Phi^{x,z}}_{AB} & =X_A(x)Z_A(z)\tensor I_B\ket{\Phi}_{AB}                                                    \\
-	                      & =\frac1{\sqrt{d}}\sum_{j=0}^{d-1}X_A(x)Z_A(z)\ket{j}_A\tensor \ket{j}_B                    \\
-	                      & =\frac1{\sqrt{d}}\sum_{j=0}^{d-1}\exp{\frac{2\pi ijzj}{d}}\ket{j\xor x}_A\tensor \ket{j}_B
+	\ket{\Phi^{x,z}}_{AB} & =X_A(x)Z_A(z)\tensor I_B\ket{\Phi}_{AB}                            	   =\frac1{\sqrt{d}}\sum_{j=0}^{d-1}X_A(x)Z_A(z)\ket{j}_A\tensor \ket{j}_B       =\frac1{\sqrt{d}}\sum_{j=0}^{d-1}\exp{\frac{2\pi ijzj}{d}}\ket{j\xor x}_A\tensor \ket{j}_B
 \end{align*}
 Hence \begin{align*}
 	\bra{\Phi^{x_1,z_1}}\ket{\Phi^{x_2,z_2}} & = \frac1d\lt[\sum_{j=0}^{d-1}\exp{-\frac{2\pi iz_1j}{d}}\bra{j\xor x_1}_A\tensor \bra{j}_B\rt]\lt[ \sum_{k=0}^{d-1}\exp{\frac{2\pi iz_2k}{d}}\ket{k\xor x_2}_A\tensor \ket{k}_B \rt]\\
