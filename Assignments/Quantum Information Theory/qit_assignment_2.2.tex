@@ -110,20 +110,30 @@ If $\{\ket{e_i}\in \mcH_1\mid 1\leq i\leq d\}$ and $\{\ket{f_i}\in \mcH_2\mid 1\
 \begin{problem}{%problem statement
 	}{p3% problem reference text
 	}
-	Let $\{\ket{g_k}\mid 1\leq k\leq d_2\}\subseteq \mcH_2$ be ONB. For $T\in \sL(\mcH_1\tensor \mcH_2)$, let  $tr_2(T)\in \sL(\mcH_1)$ denote the operator  satisfying $$\bra{u}tr_2(T)\ket{v}= \sum_{k}\bra{u\tensor g_k}T\ket{v\tensor g_k}$$ for any choice $\ket{u},\ket{v}\in \mcH_1$. Prove that $\sum\limits_{k}\bra{u\tensor g_k}T\ket{v\tensor g_k}$ is invariant. 
+	Let $\{\ket{g_k}\mid 1\leq k\leq d_2\}\subseteq \mcH_2$ be ONB. For $T\in \sL(\mcH_1\tensor \mcH_2)$, let  $tr_2(T)\in \sL(\mcH_1)$ denote the operator  satisfying $$\bra{u}tr_2(T)\ket{v}= \sum_{k}\bra{u\tensor g_k}T\ket{v\tensor g_k}$$ for any choice $\ket{u},\ket{v}\in \mcH_1$. Prove that $\sum\limits_{k}\bra{u\tensor g_k}T\ket{v\tensor g_k}$ is invariant with choice  of ONB $\{\ket{g_k}\mid 1\leq k\leq K\}\subseteq \mcH_2$. Prove that $tr_2(T)$ is well defined. Specify $tr_2(T)$ by choosing ONB  on $\mcH_1$, $\mcH_2$ respectively. 
 	%Problem		
 \end{problem}
 \solve{
-	Let $\{\ket{f_k}\mid 1\leq k\leq d_2\}\subseteq \mcH_2$ be another ONB.  Suppose $S:\mcH_2\to \mcH$ be a map such that $S\ket{g_k}=\ket{f_k}$. As we previously showed in \hyperref[p:p1]{Problem \ref{p:p1}}, $S$ is unitary. Then for all $k\in [d_2]$ we have $$\ket{f_k}=\sum_{i=1}^{d_2}w_{i,k}\ket{e_i}$$ where $w_{i,k}\in\bbC$. Hence $$\bra{f_i}S^{\dagger}S\ket{f_j}=\sum_{k=1}^{d_2} w_{i,k}^*w_{j,k}=\delta_{i,j}$$Now for any $\ket{u},\ket{v}\in \mcH_1$ we have \begin{align*}
-	\bra{u}tr_2(T)\ket{v}_{\{\ket{f_k}\}} & = \bra{u}\lt[ \sum\limits_{k=1}^{d_2}(I\tensor \bra{f_k})T(I\tensor \ket{f_k}) \rt]\ket{v}\\
-	& = \bra{u}\lt[ \sum\limits_{k=1}^{d_2}\lt(I\tensor \lt(\sum_{i=1}^{d_2}w^*_{i,k}\bra{g_i}\rt)\rt)T\lt(I\tensor \lt(\sum_{j=1}^{d_2}w_{j,k}\ket{g_j}\rt)\rt) \rt]\ket{v}\\
-	& = \sum_{k=1}^{d_2}\sum_{i=1}^{d_2}\sum_{j=1}^{d_2}\bra{u}\Big[ w_{i,k}^*w_{j,k} (I\tensor \bra{g_i})T(I\tensor \ket{g_j})  \Big]\ket{v}\\
-	& = \sum_{i=1}^{d_2}\sum_{j=1}^{d_2}\bra{u}\lt[\lt(\sum_{k=1}^{d_2} w_{i,k}^*w_{j,k} \rt)(I\tensor \bra{g_i})T(I\tensor \ket{g_j})  \rt]\ket{v}\\
-	& = \sum_{i=1}^{d_2}\sum_{j=1}^{d_2}\bra{u}\lt[\delta_{i,j}(I\tensor \bra{g_i})T(I\tensor \ket{g_j})  \rt]\ket{v}\\
-	& = \sum_{i=1}^{d_2}\bra{u}\lt[(I\tensor \bra{g_i})T(I\tensor \ket{g_i})  \rt]\ket{v}\\
-	& = \bra{u}tr_2(T)\ket{v}_{\{\ket{g_k}\}}
-\end{align*}
-Hence $\sum\limits_{k}\bra{u\tensor g_k}T\ket{v\tensor g_k}$ is invariant.
+	\begin{itemize}
+		\item Let $\{\ket{f_k}\mid 1\leq k\leq d_2\}\subseteq \mcH_2$ be another ONB.  Suppose $S:\mcH_2\to \mcH$ be a map such that $S\ket{g_k}=\ket{f_k}$. As we previously showed in \hyperref[p:p1]{Problem \ref{p:p1}}, $S$ is unitary. Then for all $k\in [d_2]$ we have $$\ket{f_k}=\sum_{i=1}^{d_2}w_{i,k}\ket{e_i}$$ where $w_{i,k}\in\bbC$. Hence $$\bra{f_i}S^{\dagger}S\ket{f_j}=\sum_{k=1}^{d_2} w_{i,k}^*w_{j,k}=\delta_{i,j}$$Now for any $\ket{u},\ket{v}\in \mcH_1$ we have \begin{align*}
+			\bra{u}tr_2(T)\ket{v}_{\{\ket{f_k}\}} & = \bra{u}\lt[ \sum\limits_{k=1}^{d_2}(I\tensor \bra{f_k})T(I\tensor \ket{f_k}) \rt]\ket{v}\\
+			& = \bra{u}\lt[ \sum\limits_{k=1}^{d_2}\lt(I\tensor \lt(\sum_{i=1}^{d_2}w^*_{i,k}\bra{g_i}\rt)\rt)T\lt(I\tensor \lt(\sum_{j=1}^{d_2}w_{j,k}\ket{g_j}\rt)\rt) \rt]\ket{v}\\
+			& = \sum_{k=1}^{d_2}\sum_{i=1}^{d_2}\sum_{j=1}^{d_2}\bra{u}\Big[ w_{i,k}^*w_{j,k} (I\tensor \bra{g_i})T(I\tensor \ket{g_j})  \Big]\ket{v}\\
+			& = \sum_{i=1}^{d_2}\sum_{j=1}^{d_2}\bra{u}\lt[\lt(\sum_{k=1}^{d_2} w_{i,k}^*w_{j,k} \rt)(I\tensor \bra{g_i})T(I\tensor \ket{g_j})  \rt]\ket{v}\\
+			& = \sum_{i=1}^{d_2}\sum_{j=1}^{d_2}\bra{u}\lt[\delta_{i,j}(I\tensor \bra{g_i})T(I\tensor \ket{g_j})  \rt]\ket{v}\\
+			& = \sum_{i=1}^{d_2}\bra{u}\lt[(I\tensor \bra{g_i})T(I\tensor \ket{g_i})  \rt]\ket{v}\\
+			& = \bra{u}tr_2(T)\ket{v}_{\{\ket{g_k}\}}
+		\end{align*}
+		Hence $\sum\limits_{k}\bra{u\tensor g_k}T\ket{v\tensor g_k}$ is invariant.
+		\item Let $T=\sum\limits_{i,j}\gm_{i,j}A_i\tensor B_j$ where $\gm_{i,j}\in\bbC$ and $A_i\in \sL(\mcH_1)$, $B_j\in\sL(\mcH_2)$. Then \begin{align*}
+			tr_2(T) & = tr_2\lt( \sum\limits_{i,j}\gm_{i,j}A_i\tensor B_j \rt)=\sum\limits_{i,j}\gm_{i,j}tr_2(A_i\tensor B_j)\\
+			& = \sum\limits_{i,j}\gm_{i,j}A_i tr( B_j)\\
+			& = \sum_{i,j}A_i\sum_k\bra{g_k}B_j\ket{g_k}\\
+			& = \sum_{i,j}\sum_k\gm_{i,j}(I\tensor \bra{g_k})A_i\tensor B_j(I\tensor \ket{g_K})\\
+			& = \sum_k(I\tensor \bra{g_k})\lt[ \sum_{i,j}\gm_{i,j}A_i\tensor B_j\rt](I\tensor \ket{g_K})\\
+			& = \sum_k(I\tensor \bra{g_k})T(I\tensor \ket{g_k})
+		\end{align*}Now take $\ket{u},\ket{v
+	\end{itemize}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -458,7 +468,7 @@ Hence both the ensembles have the same density operator.
 \begin{problem}{%problem statement
 	}{p14% problem reference text
 	}
-	For $T\in \sL(\mcH_A\tensor \mcH_B)$ specified through $T=\sum\limits_{i,j}\gm_{i,j}A_i\tensor B_j$, where $A_i\in \sL(\mcH_A)$, $B_i\in \sL(\mcH_B)$, $\gm_{i,j}\in \bbC$ we define $$f(T)=\sum_{i,j}\gm_{i,j}tr(B_j)A_i$$Let $g:\sL(\mcH_A\tensor \mcH_B) \to \sL(\mcH_A)$ be defined as a map satisfying $$\bra{u}g(Z)\ket{v}=\sum_k\bra{u\tensor e_k}Z\ket{v\tensor e_k}$$ for any ONB $\{\ket{e_k}\mid 1\leq k\leq K\}\subseteq \mcH_B$. \begin{enumerate}
+	For $T\in \sL(\mathcal{H}_A\tensor \mathcal{H}_B)$ specified through $T=\sum\limits_{i,j}\gm_{i,j}A_i\tensor B_j$, where $A_i\in \sL(\mathcal{H}_A)$, $B_i\in \sL(\mathcal{H}_B)$, $\gm_{i,j}\in \bbC$ we define $$f(T)=\sum_{i,j}\gm_{i,j}tr(B_j)A_i$$Let $g:\sL(\mathcal{H}_A\tensor \mathcal{H}_B) \to \sL(\mathcal{H}_A)$ be defined as a map satisfying $$\bra{u}g(Z)\ket{v}=\sum_k\bra{u\tensor e_k}Z\ket{v\tensor e_k}$$ for any ONB $\{\ket{e_k}\mid 1\leq k\leq K\}\subseteq \mathcal{H}_B$. \begin{enumerate}
 		\item Prove that $f(T)=g(T)$ and both are well defined. \parinn
 		\item Prove if $\{M_r\mid 1\leq r\leq R\}\subseteq \sL(\mcH_A)$ is a measurement then $$tr(M_rg(Z)M^{\dagger}_r)=tr[(M_r\tensor I_B)Z(M^{\dagger}_r\tensor I_B)]$$
 	\end{enumerate}
@@ -554,7 +564,7 @@ Hence both the ensembles have the same density operator.
 			\item $\sE:\sL(\mcH_A)\to \sL(\mcH_A\tensor \mcH_B)$, where $S\mapsto S\tensor \rho_B$ where $\rho_B\in \sD(\mcH_B)$ is a fixed density operator.
 			\item $\sE:\sL(\mcH_A)\to \sL(\mcH_A\tensor \mcH_B)$ where $S\mapsto tr_B(S)$
 			\item $\sE:\sL(\mcH_A)\to \sL(\mcH_A\tensor \mcH_B)$ where $S\mapsto VSV^{\dagger}$ where $V:\mcH_A\to\mcH_A\tensor \mcH_B$ is an isometry
-			\item Suppose $\mcH_x=span\{\ket{x}\mid x\in \mcX\}$ where $\mcX$ is a finite set such that $$\bra{\tilde{x}}ket{x}=\delta_{\tilde{x},x}$$and similarly $\mcH_y = span\{\ket{y}\mid y\in \mcY\}$ where $\mcY$ is a finite set and $$\bra{\tilde{y}}\ket{y}=\delta_{\tilde{y},y}$$Suppose $p_{Y|X}(y|x)$, $(x,y)\in \mcX\times \mcY$ is a stochastic matrix i.e. $\sum\limits_{y\in \mcY}p_{Y|X}(y|x)=1$ for all $x\in \mcX$ and $p_{Y|X}(y|x)\geq 0$.
+			\item Suppose $\mcH_x=span\{\ket{x}\mid x\in \mcX\}$ where $\mcX$ is a finite set such that $$\bra{\tilde{x}}\ket{x}=\delta_{\tilde{x},x}$$and similarly $\mcH_y = span\{\ket{y}\mid y\in \mcY\}$ where $\mcY$ is a finite set and $$\bra{\tilde{y}}\ket{y}=\delta_{\tilde{y},y}$$Suppose $p_{Y|X}(y|x)$, $(x,y)\in \mcX\times \mcY$ is a stochastic matrix i.e. $\sum\limits_{y\in \mcY}p_{Y|X}(y|x)=1$ for all $x\in \mcX$ and $p_{Y|X}(y|x)\geq 0$.
 				
 			Then consider the maps \begin{center}
 				\begin{tikzcd}
