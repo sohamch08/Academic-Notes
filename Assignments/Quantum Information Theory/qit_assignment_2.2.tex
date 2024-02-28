@@ -132,7 +132,11 @@ If $\{\ket{e_i}\in \mcH_1\mid 1\leq i\leq d\}$ and $\{\ket{f_i}\in \mcH_2\mid 1\
 			& = \sum_{i,j}\sum_k\gm_{i,j}(I\tensor \bra{g_k})A_i\tensor B_j(I\tensor \ket{g_K})\\
 			& = \sum_k(I\tensor \bra{g_k})\lt[ \sum_{i,j}\gm_{i,j}A_i\tensor B_j\rt](I\tensor \ket{g_K})\\
 			& = \sum_k(I\tensor \bra{g_k})T(I\tensor \ket{g_k})
-		\end{align*}Now take $\ket{u},\ket{v}\in \mcH_1$. 
+		\end{align*}So if we get two different representations of $T$, $T=\sum\limits_{i,j}\gm_{i,j}A_i\tensor B_j$ and $T=\sum\limits_{i,j}\gm'_{i,j}A_i'\tensor B_j'$ still for each of them $tr_2(T)$ will be same since it doesn't matter which representation is finally taken. Therefore $tr_2(T)$ is well defined.
+		\item  Now take $\ket{u},\ket{v}\in \mcH_1$. Then \begin{multline*}
+			\bra{u}tr_2(T)\ket{v}=\bra{u}\lt[\sum_k(I\tensor \bra{g_k})T(I\tensor \ket{g_k}) \rt]\ket{v}\\
+			= \sum_k\bra{u}(I\tensor \bra{g_k})T(I\tensor \ket{ g_k})\ket{v}=\sum_k\bra{u\tensor g_k}T \ket{v\tensor g_k}
+		\end{multline*}
 	\end{itemize}
 }
 
