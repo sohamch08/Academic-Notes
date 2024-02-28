@@ -194,7 +194,7 @@ For $S,T\in \sL(\mcH)$, show that $$tr(T)=tr(T^{\dagger})^*,\qquad tr(ST)=tr(TS)
 \solve{
 \begin{itemize}
 	\item $tr(T)$ is the summation of the diagonal entries of $T$. Now $T^{\dagger}=(T^t)^*$. Now the diagonal elements of $T$ remains in the same same position even after transpose. Hence the diagonal elements of $T^{\dagger}$ are the complex conjugate of the diagonal elements of $T$. Hence sum of the diagonal entries of $T^{\dagger}$ will also be the complex conjugate of the sum of the diagonal entries of $T$. Therefore we get $$tr(T)=tr(T^{\dagger})^*$$
-	\item Let $\dim\mcH-d$. Suppose $\{\ket{e_k}\mid k\in [d]\}\subseteq \mcH$ be an ONB of $\mcH$\begin{align*}
+	\item Let $\dim\mcH=d$. Suppose $\{\ket{e_k}\mid k\in [d]\}\subseteq \mcH$ be an ONB of $\mcH$\begin{align*}
 		tr(ST) & = \sum_{k=1}^d\bra{e_k}ST\ket{e_k} = \sum_{k=1}^d\bra{e_k}SIT\ket{e_k}\\
 		& = \sum_{k=1}^d\bra{e_k}S\lt[ \sum_{i=1}^d \ket{e_i}\bra{e_i} \rt]\ket{e_k}\\
 		& = \sum_{k-1}^{d}\sum_{i=1}^d\bra{e_k}S\ket{e_i} \bra{e_i}T\ket{e_k}\\
@@ -261,11 +261,11 @@ Show that $\sD(\mcH)$ is a convex subset of the real vector space of all Hermiti
 For the other direction let $\rho$ is a pure state. Suppose $$\rho=\lm\rho_1+(1-\lm)\rho_2$$ with $\rho_1,\rho_2\in\sD(\mcH)$ and $\lm\in (0,1)$. Since $\rho=\ket{\phi}\bra{\phi}$ for some $\ket{\phi}\in \mcH$ we have $\rho^2=\rho$. Then  by Cauchy-Schwartz Inequality we have \begin{align*}
 	tr(\rho) & =\tr(\rho^2)                                                                       \\
 	         & = \lm^2tr(\rho_1^2)+2\lm(1-\lm)tr(\rho_1\rho_2)+(1-\lm)^2tr(\rho_2^2)              \\
-	         & \leq\lm^2tr(\rho_1)+(1-\lm)^2tr(\rho_2)+2\lm(1-\lm)\sqrt{tr(\rho_1^2)tr(\rho_2^2)} \\
-	         & =\lm^2tr(\rho_1)+(1-\lm)^2tr(\rho_2)+2\lm(1-\lm)\sqrt{tr(\rho_1)tr(\rho_2)}        \\
+	         & \leq\lm^2tr(\rho_1^2)+(1-\lm)^2tr(\rho_2^2)+2\lm(1-\lm)\sqrt{tr(\rho_1^2)tr(\rho_2^2)} \\
+	         & =\lm^2+(1-\lm)^2+2\lm(1-\lm)\sqrt{1\times 1}        \\
 	         & = \lm^2+(1-\lm)^2+2\lm(1-\lm)=1
 \end{align*}
-But we know $tr(\rho)=1$. Hence equality is attained. Therefore, in Cauchy-Schwartz Inequality equality is attained. Therefore $tr(\rho_1\rho_2)=\sqrt{tr(\rho_1)tr(\rho_2)}$ i.e. $\rho_1=\rho_2$. Hence $\rho$ is a extreme point. Therefore, pure states are extreme points in $\sD(\mcH)$. 
+But we know $tr(\rho)=1$. Hence equality is attained. Therefore, in Cauchy-Schwartz Inequality equality is attained. Therefore $tr(\rho_1\rho_2)=\sqrt{tr(\rho_1^2)tr(\rho_2^2)}$ i.e. $\rho_1=\rho_2$. Hence $\rho$ is a extreme point. Therefore, pure states are extreme points in $\sD(\mcH)$. 
 \end{itemize}
 }
 
@@ -312,9 +312,26 @@ Now we have two maps $V:\mcH\to \mcH$ and $U:\mcH\to \mcH$ which send the orthon
 \begin{problem}{%problem statement
 	}{p10% problem reference text
 	}
-	Suppose $\ket{\psi}_{AR_1}\in \mcH_{A}\tensor \mcH_{R_1}$, $\ket{\psi}_{AR_2}\in \mcH_A\tensor \mcH_{R_2}$ are purifications of  $\rho_A\in \sD(\mcH_A)$ and $\dim(\mcH_{R_2})\geq \dim(\mcH_{R_1})$, then show that  there exists an isometry $V:\mcH_{R_1}\to \mcH_{R_2}$  such that $$\ket{\psi}_{AR_2}=(V\tensor I)\ket{\psi}_{AR_1}$$
+	Suppose $\ket{\psi}_{AR_1}\in \mcH_{A}\tensor \mcH_{R_1}$, $\ket{\psi}_{AR_2}\in \mcH_A\tensor \mcH_{R_2}$ are purifications of  $\rho_A\in \sD(\mcH_A)$ and $\dim(\mcH_{R_2})\geq \dim(\mcH_{R_1})$, then show that  there exists an isometry $V:\mcH_{R_1}\to \mcH_{R_2}$  such that $$\ket{\psi}_{AR_2}=(I\tensor V)\ket{\psi}_{AR_1}$$
 	%Problem		
 \end{problem}
+\solve{
+Let $\dim(\mcH_A)=d$, $\dim(\mcH_{R_1})=d_1$ and $\dim(\mcH_{R_2})=d_2$. Then suppose $\{\ket{a_i}\mid i\in [d]\}$is an ONB and eigenbasis of $\mcH_{A}$ with corresponding eigenvalues are $\{\alpha_i\mid i\in[d]\}$. Also suppose $\{\ket{e_i}\mid i\in [d_1] \}$ is an ONB of $\mcH_{R_1}$ and $\{ \ket{f_i}\mid i\in[d_2] \}$ is an ONB of $\mcH_{R_2}$. We can express $$\rho_A=\sum_{i=1}^d\alpha_i\ket{a_i}\bra{a_i}$$
+
+For now we assume $K=L=d$.  Now take $\min\{d,d_1\}=K$ and $\min\{d,d_2\}=L$. Therefore $K\leq L$ since $d_1\leq d_2$. Then by Schmidt Decomposition there exists $\lm_j\in \bbC$ $\forall\ j\in[k]$ and $\gm_j\in\bbC$, $\forall\ j\in [L]$ such that $$\ket{\psi}_{AR_1}=\sum_{i=1}^K\lm_i\ket{a_i}_A\tensor \ket{e_i}_{R_1}\qquad\text{and}\qquad  \ket{\psi}_{AR_2}=\sum_{i=1}^L\gm_i\ket{a_i}_A\tensor \ket{f_i}_{R_2}$$Then we have 
+Since \begin{align*}
+	tr_{R_1}(\ket{\psi}\bra{\psi}_{AR_1}) & = tr_{R_1}\lt[\lt( \sum_{i=1}^K\sqrt{p_X(x)}\ket{e_x}_{R_1}\tensor \ket{x}_A \rt)\lt(\sum_{j=1}^K\sqrt{p_X(x')}\bra{e_{x'}}_{R_1}\tensor \bra{x'}_A \rt)\rt]\\
+	& = tr_{R_1}\lt[\sum_{i=1}^K\sum_{j=1}^K\sqrt{p_X(x)p_X(x')}\ket{e_x}\bra{e_{x'}}_{R_1}\tensor \ket{x}\bra{x'}_A  \rt]\\
+	& =\sum_{i=1}^K\sum_{j=1}^K\sqrt{p_X(x)p_X(x')}\ket{x}\bra{x'}_A tr(\ket{e_x}\bra{e_{x'}}_{R_1}) \\
+	& = \sum_{i=1}^K\sqrt{p_X(x)p_X(x)}\ket{x}\bra{x}_A  =\sum\limits_{i=1}p_X(x)\ket{x}\bra{x}_A=\rho_A
+\end{align*}
+Similarly\begin{align*}
+	tr_{R_2}(\ket{\psi}\bra{\psi}_{AR_2}) & = tr_{R_2}\lt[\lt( \sum_{i=1}^K\sqrt{p_X(x)}\ket{f_x}_{R_2}\tensor \ket{x}_A \rt)\lt( \sum_{j=1}^K\sqrt{p_X(x')}\bra{f_{x'}}_{R_2}\tensor \bra{x'}_A \rt)\rt]\\
+	& = tr_{R_2}\lt[\sum_{i=1}^K\sum_{j=1}^K\sqrt{p_X(x)p_X(x')}\ket{f_x}\bra{f_{x'}}_{R_2}\tensor \ket{x}\bra{x'}_A  \rt]\\
+	& = \sum_{i=1}^K\sum_{j=1}^K\sqrt{p_X(x)p_X(x')}\ket{x}\bra{x'}_A  tr(\ket{f_x}\bra{f_{x'}}_{R_2}) \\
+	& = \sum_{i=1}^K\sqrt{p_X(x)p_X(x)}\ket{x}\bra{x}_A  =\sum\limits_{x\in \mcX}p_X(x)\ket{x}\bra{x}_A=\rho_A
+\end{align*}Now take the isometry $V$ to be $$V=\sum_{i=1}^d\ket{e_i}_{R_1}\bra{f_i}_{R_2}$$
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 11
@@ -447,6 +464,33 @@ Hence both the ensembles have the same density operator.
 	\end{enumerate}
 	%Problem		
 \end{problem}
+\solve{
+\begin{enumerate}
+	\item Let $\{\ket{c_l}\mid 1\leq l\leq L\}$ be an ONB of $\mcH_A$. Since $g(Z)\in \sL(\mcH_A)$ we the $(i,j)$th element of $g(Z)$ with respect to the basis $\{\ket{c_l}\mid 1\leq l\leq L\}$ is the value of $\bra{c_i}g(Z)\ket{c_j}$. Now Let $T=\sum\limits_{i,j}\gm_{i,j}A_i\tensor B_j$ then $\forall\ m,m\in [d_A]$ \begin{align*}
+		\bra{c_m}g(T)\ket{c_n} & = \sum_k\bra{c_m\tensor e_k}T\ket{c_n\tensor e_k}                                           \\
+		                       & = \sum_k\bra{c_m\tensor e_k}\lt[ \sum_{i,j}\gm_{i,j}A_i\tensor B_j \rt]\ket{c_n\tensor e_k} \\
+		                       & = \sum_k\sum_{i,j}\gm_{i,j}\bra{c_m}A_i\ket{c_n}\bra{e_k}B_j\ket{e_k}                       \\
+		                       & =\sum_{i,j}\gm_{i,j}\bra{c_m}A_i\ket{c_n} \sum_k\bra{e_k}B_j\ket{e_k}                       \\
+		                       & = \sum_{i,j}\gm_{i,j}\bra{c_m}A_i\ket{c_n} tr(B_j)                                          \\
+		                       & = \bra{c_m}\lt[ \sum_{i,j}\gm_{i,j}tr(B_j)A_i \rt]\ket{c_n}                                 \\
+		                       & = \bra{c_m}f(T)\ket{c_n}
+	\end{align*}Hence for all $m,n\in [d_A]$ we have $$\bra{c_m}g(T)\ket{c_n}=\bra{c_m}f(T)\ket{c_n}$$Hence $g(T)=f(T)$. Since $T$ is any arbitrary operator in $\sL(\mcH_A\tensor \mcH_B)$. Therefore we have $g(T)=f(T)$ for all $T\in \sL(\mcH_A\tensor \mcH_B)$. 
+	\item Let $Z=\sum\limits_{i,j}\gm_{i,j}A_i\tensor B_j$ where $\gm_{i,j}\in \bbC$ and $A_i\in \sL(\mcH_A)$, $B_j\in\sL(\mcH_B)$. Now 
+		\begin{align*}
+			tr(M_rg(Z)M_r^{\dagger}) & = tr(M_rf(Z)M_r^{\dagger})\\
+		& = tr\lt(M_r\lt[ \sum_{i,j}\gm_{i,j}tr(B_j)A_i \rt]M_r^{\dagger}\rt)\\
+		& = \sum_{l}\bra{f_l}M^r\lt[ \sum_{i,j}\gm_{i,j}A_itr(B_j) \rt]M_r^{\dagger}\ket{f_l}\\
+		& = \sum_{l}\bra{f_l}M^r\lt[ \sum_{i,j}\gm_{i,j}A_i\lt(\sum_k\bra{e_k}B_j\ket{e_k}\rt) \rt]M_r^{\dagger}\ket{f_l}\\
+		& = \sum_{i,j}\gm_{i,j}\lt(\sum_{l}\bra{f_l}M^r A_iM_r^{\dagger}\ket{f_l}\rt)\lt(\sum_k\bra{e_k}B_j\ket{e_k}\rt)\\
+		& = \sum_{i,j}\gm_{i,j}\sum_{k,l}\bra{f_l}M^r A_iM_r^{\dagger}\ket{f_l}\bra{e_k}B_j\ket{e_k}\\
+		& = \sum_{i,j}\gm_{i,j}\sum_{k,l}\bra{f_l\tensor e_k}(M^r A_iM_r^{\dagger})\tensor B_j\ket{f_l\tensor e_k}\\
+		& = \sum_{i,j}\gm_{i,j}\sum_{k,l}\bra{f_l\tensor e_k}(M^r\tensor I) A_i\tensor B_j(M_r^{\dagger}\tensor I)\ket{f_l\tensor e_k}\\
+		& = \sum_{k,l}\bra{f_l\tensor e_k}(M^r\tensor I)\lt[\sum_{i,j}\gm_{i,j} A_i\tensor B_j\rt](M_r^{\dagger}\tensor I)\ket{f_l\tensor e_k}\\
+		& = \sum_{k,l}\bra{f_l\tensor e_k}(M^r\tensor I)f(Z)(M_r^{\dagger}\tensor I)\ket{f_l\tensor e_k}\\
+		& = tr\lt[ (M^r\tensor I)f(Z)(M_r^{\dagger}\tensor I) \rt]
+		\end{align*}
+\end{enumerate}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 15
