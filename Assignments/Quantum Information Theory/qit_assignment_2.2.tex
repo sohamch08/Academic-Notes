@@ -314,7 +314,7 @@ Prove the Singular value decomposition theorem stated in class.	%Problem
 
 Now if $\lm$ is an eigenvalue of $S$ with corresponding eigenvector $\ket{v}$ then $$S\ket{v}=\lm \ket{v}\implies \lm \bra{v}\ket{v}=\bra{v}Sv=(Sv)^{\dagger}\ket{v}=\lm^{\dagger}\bra{v}\ket{v}$$Therefore the eigenvalues are real. Also since $$\lm \bra{v}\ket{v}=\bra{v}S\ket{v}=\bra{v}T^{\dagger}T\ket{v}=(T\ket{v})^{\dagger}(T\ket{v})\geq0$$ we have $\lm\geq 0$ since $\bra{v}\ket{v}\geq0$. Therefore eigenvalues of $S$ are real and non-negative. Therefore entries of $\Lm$ are non-negative.
 
-Let us denote the $i$th eigenvalue of $\Lm$ as $\lm_i$. So now take $\sg_i=\triangleq \sqrt{\lm_i}$. Now create the diagonal matrix $\Sg$ with $i$th eigenvalue of $\Sg$ is $\sg_i$.  Define the vectors $\ket{u_i}=\frac{1}{\sg_i}T\ket{v_i}$ for all $i\in [d]$. Then $$\bra{u_i}\ket{u_j}=\frac1{\sg_i\sg_j}\bra{v_i}T^{\dagger}T\ket{v_j}=\frac1{\sg_i\sg_j}\bra{v_i}S\ket{v_j}=\frac1{\sg_i\sg_j}\bra{v_i}\lm_j\ket{v_j}=\frac{\lm_j}{\sg_i\sg_j}\bra{v_i}\ket{v_j}=\delta_{i,j}$$Hence $\{\ket{u_i}\mid i\in [d]\}$ also forms an orthonormal basis. 
+Let us denote the $i$th eigenvalue of $\Lm$ as $\lm_i$. So now take $\sg_i\triangleq \sqrt{\lm_i}$ . Now create the diagonal matrix $\Sg$ with $i$th eigenvalue of $\Sg$ is $\sg_i$.  Define the vectors $\ket{u_i}=\frac{1}{\sg_i}T\ket{v_i}$ if $\sg_i\neq 0$ and if $\sg_i=0$ then denote $\frac1{\sg_i}=0$ for all $i\in [d]$. So when $\sg_i=0$, $\frac1{\sg_i}$ is a notation for 0. Then $$\bra{u_i}\ket{u_j}=\frac1{\sg_i\sg_j}\bra{v_i}T^{\dagger}T\ket{v_j}=\frac1{\sg_i\sg_j}\bra{v_i}S\ket{v_j}=\frac1{\sg_i\sg_j}\bra{v_i}\lm_j\ket{v_j}=\lm_j\frac{1}{\sg_i}\frac1{\sg_j}\bra{v_i}\ket{v_j}$$Therefore if $\sg_i,\sg_j\neq 0$ then $\bra{u_i}\ket{u_j}=\delta_{i,j}$ otherwise is $0$ which we can imagine $0\times 1$ where $0=\lm_j\frac{1}{\sg_i}\frac1{\sg_j}$ and $1=\bra{v_i}\ket{v_j}$. In this way we conclude $\{\ket{u_i}\mid i\in [d]\}$ also forms an orthonormal basis. 
 
 Now we have two maps $V:\mcH\to \mcH$ and $U:\mcH\to \mcH$ which send the orthonormal basis $\{\ket{e_i}\mid i\in [d]\}$ to $\{\ket{v_i}\mid i\in [d]\}$ by $V\ket{e_i}=\ket{v_i}$ and $\{\ket{e_i}\mid i\in [d]\}$ to $\{\ket{u_i}\mid i\in [d]\}$ by $U\ket{e_i}=\ket{u_i}$. Therefore we have the matrix of $U,V$ are orthonormal. By definition of $u_i$ we have  $Tv_i=\sg_iu_i$ for all $i\in[d]$. Hence we have $$TV=U\Sg\implies T=U\Sg V^{\dagger}$$ 
 }
@@ -586,7 +586,7 @@ Hence both the ensembles have the same density operator.
 		\begin{enumerate}[label=(\arabic*)]
 			\item $\sE:\bbC\to \sD(\mcH)$, where $1\mapsto \rho$
 			\item $\sE:\sL(\mcH_A)\to \sL(\mcH_A\tensor \mcH_B)$, where $S\mapsto S\tensor \rho_B$ where $\rho_B\in \sD(\mcH_B)$ is a fixed density operator.
-			\item $\sE:\sL(\mcH_A)\to \sL(\mcH_A\tensor \mcH_B)$ where $S\mapsto tr_B(S)$
+			\item $\sE:\sL(\mcH_A\tensor \mcH_B)\to\sL(\mcH_A) $ where $S\mapsto tr_B(S)$
 			\item $\sE:\sL(\mcH_A)\to \sL(\mcH_A\tensor \mcH_B)$ where $S\mapsto VSV^{\dagger}$ where $V:\mcH_A\to\mcH_A\tensor \mcH_B$ is an isometry
 			\item Suppose $\mcH_x=span\{\ket{x}\mid x\in \mcX\}$ where $\mcX$ is a finite set such that $$\bra{\tilde{x}}\ket{x}=\delta_{\tilde{x},x}$$and similarly $\mcH_y = span\{\ket{y}\mid y\in \mcY\}$ where $\mcY$ is a finite set and $$\bra{\tilde{y}}\ket{y}=\delta_{\tilde{y},y}$$Suppose $p_{Y|X}(y|x)$, $(x,y)\in \mcX\times \mcY$ is a stochastic matrix i.e. $\sum\limits_{y\in \mcY}p_{Y|X}(y|x)=1$ for all $x\in \mcX$ and $p_{Y|X}(y|x)\geq 0$.
 				
@@ -605,16 +605,70 @@ Hence both the ensembles have the same density operator.
 \begin{enumerate}[label=(\arabic*)]
 	\item $\sE:\bbC\to \sD(\mcH)$ where $1\mapsto \rho$. This is indeed a CPTP map. Let $\rho = \sum\limits_{t=1}^d\lm_t\ket{v_t}\bra{v_t}$. the Choi-Kraus Operator is $$E_t:\bbC\to \sL(\mcH), \ 1\mapsto \sum_{t=1}^d\sqrt{\lm_t}\ket{v_t}$$
 		Then \begin{align*}
-			\sum_{t=1}^dE_tE_t^{\dagger}&= \sum_{t=1}^dE_tE_t^{\dagger}=\sum_{t=1}^dE_t^{\dagger}1E_t\\
-			& = \sum_{t=1}^d \sqrt{\lm_t}\ket{v_t}\sum_{t'=1}^d \sqrt{\lm_{t'}}\bra{v_{t'}}\\
-			& = \sum_{t=1}^d \lm_t\ket{v_t}\bra{v_t}=\rho=\sE(1)
+			\sum_{t=1}^dE_txE_t^{\dagger} & =\sum_{t=1}^dE_txE_t^{\dagger}=\sum_{t=1}^dE_txE_t^{\dagger} = x\sum_{t=1}^d \sqrt{\lm_t}\ket{v_t}\sum_{t'=1}^d \sqrt{\lm_{t'}}\bra{v_{t'}} = x\sum_{t=1}^d \lm_t\ket{v_t}\bra{v_t}=x\rho=\sE(x)
 		\end{align*}And 
 \begin{align*}
-	\sum_{t=1}^dE_t^{\dagger}E_t&= \sum_{t=1}^dE_t^{\dagger}E_t=\sum_{t=1}^dE_t1E_t\\
-	& = \sum_{t=1}^d \sqrt{\lm_t}\bra{v_t}\sum_{t'=1}^d \sqrt{\lm_{t'}}\ket{v_{t'}}\\
-	& = \sum_{t=1}^d \lm_t\bra{v_t}\ket{v_t}=1=I_{\bbC}
+	\sum_{t=1}^dE_t^{\dagger}E_t & =\sum_{t=1}^dE_t1E_t = \sum_{t=1}^d \sqrt{\lm_t}\bra{v_t}\sum_{t'=1}^d \sqrt{\lm_{t'}}\ket{v_{t'}} = \sum_{t=1}^d \lm_t\bra{v_t}\ket{v_t}=1=I_{\bbC}
 \end{align*}
-Now take $|mcH_A=\bbC$ and $\mcH_R=\bbC^m$ where $m\leq \dim(\mcH)$. Let $\{\ket{g_k}\mid 1\leq k\leq m\}$ is an ONB of $\mcH_R$. Hence  take the isometry $V:\mcH_A\to \mcH_A\tensor \mcH_R$,  where for any $\ket{v}\in \mcH_A$, $\ket{v}\mapsto \sum_{k=1}^m E_t\ket{v}\tensor ket{g_k} $
+Now take $\mcH_A=\bbC$, $\mcH_B=\mcH$ and $\mcH_R=\bbC^m$ where $m= \dim(\mcH)$. Let $\{\ket{g_t}\mid 1\leq t\leq d\}$ is an ONB of $\mcH_R$. Hence  take the isometry $V:\mcH_A\to \mcH_R\tensor \mcH_A\tensor \mcH_B$,  where for any $x\in \mcH_A$, $$
+	x\mapsto  \sum_{t=1}^d x\tensor\sqrt{\lm_t}\ket{v_t} =\sum_{t=1}^d x\sqrt{\lm_t}\ket{g_t}\tensor\ket{v_t}$$Hence $V=\sum\limits_{t=1}^d\sqrt{\lm_t}\ket{g_t}\tensor\ket{v_t}$. Now $$V^{\dagger}V=\lt[\sum\limits_{t=1}^d\sqrt{\lm_t}\bra{g_t}\tensor\bra{v_t}\rt]\lt[\sum\limits_{t'=1}^d\sqrt{\lm_{t'}}\ket{g_{t'}}\tensor\ket{v_{t'}}\rt]
+	 = \sum\limits_{t=1}^d\lm_t\bra{g_t}\ket{g_t}\bra{v_t}\ket{v_t}=\sum_{t=1}^d\lm_t=1$$Hence $V$ is an isometry.Now let$S\in \bbC=\mcH_A$. Then\begin{align*}
+	 	tr_{RA}(VSV^{\dagger}) & =tr_{RA}\lt(\lt[\sum\limits_{t=1}^d\sqrt{\lm_{t}}\ket{g_{t}}\tensor\ket{v_{t}}\rt]S \lt[\sum\limits_{t'=1}^d\sqrt{\lm_{t'}}\bra{g_{t'}}\tensor\bra{v_{t'}}\rt] \rt) \\
+	 	& = tr_{RA}\lt[\sum\limits_{t=1}^d\sum\limits_{t'=1}^d\sqrt{\lm_t\lm_{t'}}S\ket{g_t}\bra{g_{t'}}\tensor \ket{v_t}\bra{v_{t'}}\rt]                       \\
+	 	                       & = \sum\limits_{t=1}^d\sum\limits_{t'=1}^dS\sqrt{\lm_t\lm_{t'}}\ tr(\ket{g_t}\bra{g_{t'}})\tensor \ket{v_t}\bra{v_{t'}}\\
+	 	                       & = S\sum\limits_{t=1}^d\lm_t \bra{g_{t}}\ket{g_t} \ket{v_t}\bra{v_{t}}\\
+	 	                       & = S\sum\limits_{t=1}^d\lm_t \ket{v_t}\bra{v_{t}}=S\rho=\sE(S)\\
+	 \end{align*}
+	Hence we got $tr_RA(VSV^{\dagger})=\sE(S)$ for all $S\in\bbC$.
+	
+	
+	\item $\sE:\sL(\mcH_A)\to \sL(\mcH_A\tensor \mcH_B)$ where $S\mapsto S\tensor \rho_B$. In this case we will denote $\mcH_c=\mcH_A\tensor \mcH_B$. This is indeed a CPTP map. Let $\rho_B=\sum\limits_{i=1}^{d_B}\lm_i\ket{v_i}\bra{v_i}$ where $\{\ket{v_i}\mid i\in[d_B]\}$ is ONB of $\mcH_B$. 
+	
+	The Choi-Kraus Operator $$E_t=\sum_{i=1}^{d_A}\sqrt{\lm_t}\ket{e_i}\bra{e_i}\tensor \ket{v_t}$$Let $S\in\sl(\mcH_A)$. Then we can write Then\begin{align*}
+		\sum_{t=1}^{d_B}E_t^{\dagger}E_t & =\sum_{t=1}^{d_B}\lt[\sum_{i=1}^{d_A}\sqrt{\lm_t}\ket{e_i}\bra{e_i}\tensor \bra{v_t}\rt]\lt[\sum_{j=1}^{d_A}\sqrt{\lm_t}\ket{e_j}\ket{e_j}\tensor \bra{v_t}\rt]                                               \\
+		                                & =\sum_{t=1}^{d_B}\sum_{i=1}^{d_A}\sum_{j=1}^{d_A}\lm_t\ket{e_i}\bra{e_i}\ket{e_j}\bra{e_j} \bra{v_t}\ket{v_t}                                                                                          \\
+		                                & =\sum_{t=1}^{d_B}\sum_{i=1}^{d_A}{\lm_t}\ket{e_i}\bra{e_i}   =\lt[\sum_{i=1}^{d_A}\ket{e_i}\bra{e_i}\rt]\lt[\sum_{t=1}^{d_B}\lm_t  \rt]=I
+	\end{align*}Let $S\in\sl(\mcH_A)$. Then we can write $$S=\sum_{i,j}\gm_{i,j}\ket{e_i}\bra{e_j}$$Then\begin{align*}
+		\sum_{t=1}^{d_B}E_tSE_t^{\dagger} & =\sum_{t=1}^{d_B}\lt[\sum_{i=1}^{d_A}\sqrt{\lm_t}\ket{e_i}\bra{e_i}\tensor \ket{v_t}\rt]\lt[\sum_{i,j}\gm_{i,j}\ket{e_i}\bra{e_j}\rt]\lt[\sum_{j=1}^{d_A}\sqrt{\lm_t}\ket{e_j}\bra{e_j}\tensor \bra{v_t}\rt]                                               \\
+		                                & =\sum_{t=1}^{d_B}\sum_{i=1}^{d_A}\sum_{j=1}^{d_A}\lm_t\gm_{i,j}\ket{e_i}\bra{e_j}\tensor  \ket{v_t}\bra{v_t}                                                                                          \\
+		                                & =\sum_{t=1}^{d_B}\sum_{i,j=1}^{d_A}{\lm_t}\gm_{i,j}\ket{e_i}\bra{e_j}\tensor  \ket{v_t}\bra{v_t}               =\lt[\sum_{i,j=1}^{d_A}\gm_{i,j}\ket{e_i}\bra{e_j}\rt] \lt[\sum_{t=1}^{d_B}\lm_t \ket{v_t}\bra{v_t}               \rt]=S\tensor \rho_B=\sE(S)
+	\end{align*}Now take $\mcH_R$. Let its dimension is $d_R=d_B$. Then suppose $\{\ket{e_i}\mid i\in[d_A]\}$ is an ONB of $\mcH_A$ and $\{\ket{g_i}\mid i\in[d_R]\}$ is an ONB of $\mcH_R$. Take the $V:\mcH_A\to  ( \mcH_A\tensor \mcH_B)\tensor \mcH_A\tensor \mcH_R$ to be $$V=\sum_{t}E_t\tensor \sum_{i}\ket{e_i}\tensor \ket{g_t}$$Now 
+	$$V^{\dagger}V= \sum_{t,t'}E_t^{\dagger}E_{t'}\sum_{i,i'}\bra{e_i}\ket{e_{i'}}\bra{g_t}\ket{g_{t'}}=\sum_tE_t^{\dagger}E_t=I$$Now \begin{align*}
+		tr_{RA}(VSV^{\dagger}) & = tr_{RA}\lt\{   \lt[\sum_{t}E_t\tensor \sum_{i}\ket{e_i}\tensor \ket{g_t}\rt]S\lt[\sum_{t}E_t^{\dagger}\tensor \sum_{i}\bra{e_i}\tensor \bra{g_t}\rt]  \rt\}                                                            \\
+		                       & =tr_{RA}\lt\{   \sum_{t,t'}E_tSE_{t'}^{\dagger}\tensor \sum_{i,i'}\bra{e_i}\ket{e_{i'}}\tensor \bra{g_t}\ket{g_{t'}} \rt\}                                                      \\
+		                       & =  \sum_{t,t'}E_tSE_{t'}^{\dagger}\sum_{i,i'}tr(\bra{e_i}\ket{e_{i'}})tr(\bra{g_t}\ket{g_{t'}})\\
+		                       & = \sum_tE_tSE_t^{\dagger}=\sE(S)
+	\end{align*}
+	
+	
+	
+	\item $\sE:\sL(\mcH_A\tensor \mcH_B)\to \sL(\mcH_A)$ where $S\mapsto tr_B(S)$. This is indeed a CPTP map. Let $\{\ket{e_k}\mid 1\leq k\leq d_A\}$ is ONB for $\mcH_A$ and $\{\ket{f_t}\mid 1\leq t\leq d_B\}$ is ONB for $\mcH_B$. 
+	
+	Now the Choi-Kraus operator for $\sE$, $E_t=I\tensor \bra{f_t}$. Then $$\sum_{t}E_t^{\dagger}E_t=\sum_{t}[I\tensor \ket{f_t}][I\tensor \bra{f_t}]=\sum_tI\ket{f_t}\bra{f_t}=I_{A\tensor B}$$Let $S\in \sL(\mcH_a\tensor \mcH_B)$ then $$\sum_{t}E_tSE_t^{\dagger}=\sum_t(I\tensor \bra{f_t})S(I\tensor \ket{f_t})=tr_B(S)=\sE(S)$$Denote, $\mcH_C=\mcH_A\tensor \mcH_B$. Take $\mcH_R=\mcH_A$. Now we will take  the isometry $V:\mcH_A\tensor \mcH_B\to(\mcH_A\tensor \mcH_B)\tensor \mcH_A\tensor \mcH_R$ where $$V=\sum_tE_t\tensor \sum_i\ket{e_i}\tensor \ket{f_t}$$ Then $$V^{\dagger}V=\sum_{t,t'}E_tE_{t'}^{\dagger}\sum_{i,i'}\bra{e_i}\ket{e_{i'}}\bra{f_t}\ket{f_{t'}}=\sum_tE_tE^{\dagger}_t=I$$And \begin{align*}
+		tr_{CR}(VSV^{\dagger}) & = tr_{CR}\lt\{  \lt[\sum_tE_t\tensor \sum_i\ket{e_i}\tensor \ket{f_t}\rt]S\lt[ \sum_tE_t^{\dagger}\tensor \sum_i\bra{e_i}\tensor \bra{f_t}\rt]   \rt\}\\
+		& = 	 tr_{CR}\lt[\sum_{t,t'}E_tSE_{t'}^{\dagger}\tensor \sum_{i,i'}\ket{e_i}\bra{e_{i'}}\tensor \ket{f_t}\bra{f_{t'}}\rt]\\
+		& = \sum_{t,t'} E_tSE_{t'}^{\dagger}\sum_{i,i'}tr(\ket{e_i}\bra{e_{i'}}) tr(\ket{f_t}\bra{f_{t'}})\\
+		& = \sum_tE_tSE_t^{\dagger}=\sE(S)
+	\end{align*}
+	
+	\item $\sE:\sL(\mcH_A)\to \sL(\mcH_A\tensor \mcH_B)$ where $S\mapsto VSV^{\dagger}$ where $V:\mcH_A\to\mcH_A\tensor \mcH_B$ is an isometry.  This is indeed a CPTP map.  Let $\{\ket{e_k}\mid 1\leq k\leq d_A\}$ is ONB for $\mcH_A$ and $\{\ket{f_t}\mid 1\leq t\leq d_B\}$ is ONB for $\mcH_B$. The choi kraus operator $E_t=V$. Then take $E_t=\frac1{\sqrt{d_B}}V$. Then $$\sum_{t}E_t^{\dagger}E_t=\sum_t\frac1{d_B}V^{\dagger}V=V^{\dagger}V=I$$Also $$\sum_tE_tSE_t^{\dagger}=\sum_t\frac1{d_B}VSV^{\dagger}=\sE(S)\sum_t\frac1{d_B}=\sE(S)$$Now take $\mcH_R=\mcH_B$. Also denote $\mcH_C=\mcH_A\tensor \mcH_B$.  Then take the isometry $M:\mcH_A\tensor \mcH_B\to \mcH_C\tensor \mcH_A\tensor \tensor \mcH_R=(\mcH_A\tensor \mcH_B)\tensor \mcH_A\tensor \mcH_R$ $$M=\sum_tE_t\tensor \sum_i\ket{e_i}\tensor \ket{f_t}$$Then $$M^{\dagger}M=\lt[ \sum_tE_t^{\dagger}\tensor \sum_i\bra{e_i}\tensor \bra{f_t} \rt]\lt[\sum_tE_t\tensor \sum_i\ket{e_i}\tensor \ket{f_t}  \rt]=\sum_{t,t'}E_t^{\dagger}E_{t'}\sum_{i,i'}\bra{e_i}\ket{e_{i'}}\bra{g_t}\ket{g_{t'}}=\sum_tE_tE_t^{\dagger}=I$$And\begin{align*}
+			tr_{CR}(VSV^{\dagger}) & = tr_CR\lt\{\lt[ \sum_tE_t^{\dagger}\tensor \sum_i\bra{e_i}\tensor \bra{f_t} \rt]S\lt[\sum_tE_t\tensor \sum_i\ket{e_i}\tensor \ket{f_t}  \rt]   \rt\}\\
+			& = tr_{CR}\lt\{   \sum_{t,t'}E_tSE_{t'}\sum_{i,i'}^{\dagger}\sum_{i,i'}\ket{e_i}\bra{e_{i'}}\ket{g_t}\bra{g_{t'}}  \rt\}\\
+			& = \sum_{t,t'} E_tSE_{t'}^{\dagger}\sum_{i,i'}tr(\ket{e_i}\bra{e_{i'}}) tr(\ket{f_t}\bra{f_{t'}})\\
+			& = \sum_tE_tSE_t^{\dagger}=\sE(S)
+	\end{align*}
+	\item We denote the stochastic matrix for $p_{Y|X}(y|x)$ to be $$\bbW_{Y|X}=\sum\limits_{(x,y)\in\mcX\times \mcY}p_{Y|X}(y|x)\ket{x}\bra{x}\tensor \ket{y}\bra{y}$$
+	
+	
+	
+	
+	\item $\sE:\sL(\mcH_A)\to \sL(\mcH_A\tensor \mcH_B)$ where $S\mapsto \sum\limits_{k=1}^KM_kSM_k^{\dagger}\tensor \ket{k}\bra{k}$. Let $\{\ket{e_i}\mid 1\leq i\leq d\}$ be an ONB of $\mcH_A$ and  $\{\ket{k}\mid 1\leq k\leq K\}$ is an ONB of $\mcH_B$. Now this is indeed a CPTP map. The choi kraus operator $E_k=M_k\tensor \ket{k}$. Then $$\sum_kE_k^{\dagger}E_k=\sum_k M_k^{\dagger}M_k \bra{k}\ket{k}=\sum_kM_k^{\dagger}M_k=I$$And $$\sum_tE_kSE_k^{\dagger}=\sum_kM_kSM_k\tensor \ket{k}\bra{k}=\sE(S)$$Now take $\mcR=\mcB$. Denote $\mcH_C=\mcH_A\tensor \mcH_B$. Then take the isometry $V:\mcH_A\to\mcH_C\tensor \mcH_A\tensor \mcH_R$ $$V=\sum_kE_k\tensor \ket{e_i}\tensor \ket{k}$$Then 
+	$$V^{\dagger}V=\sum_{k,k'}E_kE_{k'}^{\dagger}\sum_{i,i'}\bra{e_i}\ket{e_{i'}}\bra{k}\ket{k'}=\sum_kE_kE^{\dagger}_k=I$$And \begin{align*}
+	tr_{CR}(VSV^{\dagger}) & = tr_{CR}\lt\{  \lt[\sum_kE_k\tensor \sum_i\ket{e_i}\tensor \ket{k}\rt]S\lt[ \sum_kE_k^{\dagger}\tensor \sum_i\bra{e_i}\tensor \bra{k}\rt]   \rt\}\\
+	& = 	 tr_{CR}\lt[\sum_{k,k'}E_kSE_{k'}^{\dagger}\tensor \sum_{i,i'}\ket{e_i}\bra{e_{i'}}\tensor \ket{k}\bra{k'}\rt]\\
+	& = \sum_{t,k'} E_kSE_{k'}^{\dagger}\sum_{i,i'}tr(\ket{e_i}\bra{e_{i'}}) tr(\ket{k}\bra{k'})\\
+	& = \sum_kE_kSE_k^{\dagger}=\sE(S)
+\end{align*}
 	
 \end{enumerate}
 
@@ -660,14 +714,14 @@ Given that $A,B\geq 0$. Therefore $A,B$ are hermitian.  Hence there exists ortho
 	
 	Now take $\ket{\phi_{\rho}}=\frac1{\sqrt{2}}[\ket{00}+\ket{11}]$ where the  density matrix, $\rho=\frac12[\ket{0}\bra{0}+\ket{1}\bra{1}]$. $\ket{\psi_{\rho}}$ is the purification of $\rho$.  
 	Therefore \begin{align*}
-		&(i_R\tensor \sF)(\ket{\phi_{\rho}}\bra{\phi_{\rho}})\\
-		=&\frac12(i_R\tensor \sF)\lt[\ket{0}\bra{0}\tensor \ket{0}\bra{0}+\ket{0}\bra{1}\tensor \ket{0}\bra{1}+\ket{1}\bra{0}\tensor \ket{1}\bra{0}+\ket{1}\bra{1}\tensor \ket{1}\bra{1}  \rt]\\
-		=& \frac12\lt[\ket{0}\bra{0}\tensor \ket{0}\bra{0}+\ket{0}\bra{1}\tensor \ket{1}\bra{0}+\ket{1}\bra{0}\tensor \ket{0}\bra{1}+\ket{1}\bra{1}\tensor \ket{1}\bra{1}  \rt]
+		  & (i_R\tensor \sF)(\ket{\phi_{\rho}}\bra{\phi_{\rho}})                                                                                                                                 \\
+		= & \frac12(i_R\tensor \sF)\lt[\ket{0}\bra{0}\tensor \ket{0}\bra{0}+\ket{0}\bra{1}\tensor \ket{0}\bra{1}+\ket{1}\bra{0}\tensor \ket{1}\bra{0}+\ket{1}\bra{1}\tensor \ket{1}\bra{1}  \rt] \\
+		= & \frac12\lt[\ket{0}\bra{0}\tensor \ket{0}\bra{0}+\ket{0}\bra{1}\tensor \ket{1}\bra{0}+\ket{1}\bra{0}\tensor \ket{0}\bra{1}+\ket{1}\bra{1}\tensor \ket{1}\bra{1}  \rt]
 	\end{align*}
 	This operator has a eigenvector $\frac{1}{\sqrt{2}}\lt[  \ket{01}-\ket{10}\rt]$ with negative eigenvalue
 	\begin{align*}
-		&\lt(\frac12\lt[\ket{0}\bra{0}\tensor \ket{0}\bra{0}+\ket{0}\bra{1}\tensor \ket{1}\bra{0}+\ket{1}\bra{0}\tensor \ket{0}\bra{1}+\ket{1}\bra{1}\tensor \ket{1}\bra{1}  \rt]\rt)\frac{1}{\sqrt{2}}\lt[  \ket{01}-\ket{10}\rt]\\
-		=&\frac12\frac{1}{\sqrt{2}}\lt[ \ket{0}\bra{1}\tensor \ket{1}\bra{0}+\ket{1}\bra{0}\tensor \ket{0}\bra{1} \rt]\lt[  \ket{01}-\ket{10}\rt]\\
+		  & \lt(\frac12\lt[\ket{0}\bra{0}\tensor \ket{0}\bra{0}+\ket{0}\bra{1}\tensor \ket{1}\bra{0}+\ket{1}\bra{0}\tensor \ket{0}\bra{1}+\ket{1}\bra{1}\tensor \ket{1}\bra{1}  \rt]\rt)\frac{1}{\sqrt{2}}\lt[  \ket{01}-\ket{10}\rt] \\
+		= & \frac12\frac{1}{\sqrt{2}}\lt[ \ket{0}\bra{1}\tensor \ket{1}\bra{0}+\ket{1}\bra{0}\tensor \ket{0}\bra{1} \rt]\lt[  \ket{01}-\ket{10}\rt]                                                                                   \\
 		= & \frac{1}{2\sqrt{2}}\lt[ \ket{10}-\ket{01} \rt]=  \lt(-\frac{1}{2}\rt)\lt( \frac{1}{\sqrt{2}}\lt[  \ket{01}-\ket{10}\rt] \rt)
 	\end{align*}Hence 
 \end{itemize}Here $(i_R\tensor \sF)(\ket{\phi_{\rho}}\bra{\phi_{\rho}})$ has a negative eigenvalue, $-\frac12$. Therefore $(i_R\tensor \sF)(\ket{\phi_{\rho}}\bra{\phi_{\rho}})$ is not positive. Hence $\sF$ is positive but not completely positive.
