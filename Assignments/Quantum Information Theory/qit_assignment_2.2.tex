@@ -264,7 +264,7 @@ Show that $\sD(\mcH)$ is a convex subset of the real vector space of all Hermiti
 \end{problem}
 \solve{
 \begin{itemize}
-	\item Let $\rho_1\rho_2\in \sD(\mcH)$. Suppose $\lm\in [0,1]$. Then denote $$\rho=\lm\rho_1+(1-\lm)\rho_2$$Now $\rho\in \sD(\mcH)$ if $\rho\geq 0$ and $tr(\rho)=1$. Now $$tr(\rho)=tr(\lm\rho_1+(1-\lm)\rho_2)=\lm tr(\rho_1)+(1-\lm)tr(\rho_2)=\lm+(1-\lm)=1$$Hence we only need to show that for all $\ket{u}\in \mcH$ we have $\bra{u}\rho\ket{u}\geq 0$. Now $$\bra{u}\rho\ket{u}=\bra{u}(\lm\rho_1+(1-\lm)\rho_2)ket{u}=\lm\bra{u}\rho_1\ket{u}+(1-\lm)\bra{u}\rho_2\ket{u}$$ Now since $\rho_1,\rho_2\in \sD(\mcH)$ we have $\bra{u}\rho_1\ket{u}\geq 0$, $\bra{u}\rho_2\ket{u}\geq 0$. We also have $\lm\geq 0$. Hence, $1-\lm\geq 0$. Therefore, $=\lm\bra{u}\rho_1\ket{u}+(1-\lm)\bra{u}\rho_2\ket{u}\geq 0$. Therefore we got $\bra{u}\rho\ket{u}\geq 0$. Since $\ket{u}$ is any arbitrary vector of $\mcH$, we have $\rho \geq 0$. Hence, $rho\in \sD(\mcH)$. Therefore $\sD(\mcH)$ is convex.
+	\item Let $\rho_1\rho_2\in \sD(\mcH)$. Suppose $\lm\in [0,1]$. Then denote $$\rho=\lm\rho_1+(1-\lm)\rho_2$$Now $\rho\in \sD(\mcH)$ if $\rho\geq 0$ and $tr(\rho)=1$. Now $$tr(\rho)=tr(\lm\rho_1+(1-\lm)\rho_2)=\lm tr(\rho_1)+(1-\lm)tr(\rho_2)=\lm+(1-\lm)=1$$Hence we only need to show that for all $\ket{u}\in \mcH$ we have $\bra{u}\rho\ket{u}\geq 0$. Now $$\bra{u}\rho\ket{u}=\bra{u}(\lm\rho_1+(1-\lm)\rho_2)ket{u}=\lm\bra{u}\rho_1\ket{u}+(1-\lm)\bra{u}\rho_2\ket{u}$$ Now since $\rho_1,\rho_2\in \sD(\mcH)$ we have $\bra{u}\rho_1\ket{u}\geq 0$, $\bra{u}\rho_2\ket{u}\geq 0$. We also have $\lm\geq 0$. Hence, $1-\lm\geq 0$. Therefore, $=\lm\bra{u}\rho_1\ket{u}+(1-\lm)\bra{u}\rho_2\ket{u}\geq 0$. Therefore we got $\bra{u}\rho\ket{u}\geq 0$. Since $\ket{u}$ is any arbitrary vector of $\mcH$, we have $\rho \geq 0$. Hence, $\rho\in \sD(\mcH)$. Therefore $\sD(\mcH)$ is convex.
 
 \item $\rho\in \sD(\mcH)$ is an extreme point if a strict convex combination $\rho=\lm\rho_1+(1-\lm)\rho_2$ with $\rho_1,\rho_2\in\sD(\mcH)$ and $\lm\in (0,1)$ is possible only if $\rho=\rho_1=\rho_2$. Suppose $\rho$ is not a pure state. Then $\rho$ represents an ensemble $\{p_X(x),\ket{x}\mid x\in X\}\subseteq \mcH$. By assumption $|X|\geq 2$.  Then $$\rho=\sum_{x\in X}p_X(x)\ket{x}\bra{x}$$Since $|X|\geq 2$ we can partition $X$ into two disjoint sets $U,V$ such that $U\sqcup V=X$. Then take $a=\sum\limits_{x\in U}p_X(x)$. Certainly $a\in (0,1)$. Then take the ensembles $\mcF_1=\lt\{\frac{p_X(x)}{a},\ket{x}\mid x\in U\rt\}$ and  $\mcF_2=\lt\{\frac{p_X(x)}{1-a},\ket{x}\mid x\in V\rt\}$. Certainly $$\sum_{x\in U}\frac{p_X(x)}{a}=\frac{1}{a}\sum_{x\in U}p_X(x)=\frac1a\, a=1$$and$$\sum_{x\in V}\frac{p_X(x)}{1-a}=\frac{1}{1-a}\sum_{x\in V}p_X(x)=\frac1{1-a}\lt[ 1-\sum_{x\in U}p_X(x) \rt] =\frac1{1-a}[1-a]=1$$Hence $\mcF_1$ and $\mcF_2$ are in fact ensembles. Then their corresponding density matrices are $$\rho_1=\frac1a\sum_{x\in U}p_X(x)\ket{x}\bra{x}\qquad \rho_2=\frac1{1-a}\sum_{x\in V}p_X(x)\ket{x}\bra{x}$$Then we have \begin{align*}
 	a\rho_1+(1-a)\rho_2&=a\lt[\frac1a\sum_{x\in U}p_X(x)\ket{x}\bra{x}\rt]+(1-a)\lt[\frac1{1-a}\sum_{x\in V}p_X(x)\ket{x}\bra{x}\rt]\\
@@ -449,13 +449,13 @@ Hence \begin{align*}
 	& = \delta_{x_1,x_2}\delta_{z_1,z_2}
 \end{align*}Also 
 \begin{align*}
-\sum_{x,z=0}^d\ket{\Phi^{x,z}} 	\bra{\Phi^{x,z}} & = \frac1d \sum_{x,z=0}^d\lt[ \sum_{j=0}^{d-1}\exp{\frac{2\pi izj}{d}}\ket{j\xor x}_A\tensor \ket{j}_B \rt]\lt[\sum_{k=0}^{d-1}\exp{-\frac{2\pi izk}{d}}\bra{k\xor x}_A\tensor \bra{k}_B\rt]\\
-& = \frac1d\sum_{x,z=0}^d\lt[   \sum_{j=0}^{d-1}\sum_{k=1}^{d-1} \exp{\frac{2\pi iz}{d}(k-j)}\ket{j\xor x}_A\bra{k\xor x}_A\tensor\ket{j}_B\bra{k}_B   \rt]\\
-& = \frac1d\sum_{x=0}^d\sum_{j=0}^{d-1}\sum_{k=1}^{d-1} \lt[  \sum_{z=0}^d \exp{\frac{2\pi iz}{d}(k-j)} \rt]\ket{j\xor x}_A\bra{k\xor x}_A\tensor\ket{j}_B\bra{k}_B  \\
-& = \frac1d\sum_{x=0}^d\sum_{j=0}^{d-1} d\ket{j\xor x}_A\bra{k\xor x}_A\tensor\ket{j}_B\bra{k}_B \\
-& =  \sum_{x=0}^d\sum_{j=0}^{d-1} \ket{j\xor x}_A\bra{j\xor x}_A\tensor\ket{j}_B\bra{j}_B\\
-& = \sum_{j=0}^{d-1} \lt[ \sum_{x=0}^d]\ket{j\xor x}_A\bra{j\xor x}_A\rt]\tensor\ket{j}_B\bra{j}_B\\
-& = \sum_{j=0}^{d-1} I_A\tensor\ket{j}_B\bra{j}_B= I_A\tensor I_B=I_{A,B}
+	\sum_{x,z=0}^d\ket{\Phi^{x,z}} 	\bra{\Phi^{x,z}} & = \frac1d \sum_{x,z=0}^{d-1}\lt[ \sum_{j=0}^{d-1}\exp{\frac{2\pi izj}{d}}\ket{j\xor x}_A\tensor \ket{j}_B \rt]\lt[\sum_{k=0}^{d-1}\exp{-\frac{2\pi izk}{d}}\bra{k\xor x}_A\tensor \bra{k}_B\rt] \\
+	                                                 & = \frac1d\sum_{x,z=0}^{d-1}\lt[   \sum_{j=0}^{d-1}\sum_{k=1}^{d-1} \exp{\frac{2\pi iz}{d}(k-j)}\ket{j\xor x}_A\bra{k\xor x}_A\tensor\ket{j}_B\bra{k}_B   \rt]                                       \\
+	                                                 & = \frac1d\sum_{x=0}^{d-1}\sum_{j=0}^{d-1}\sum_{k=1}^{d-1} \lt[  \sum_{z=0}^{d-1} \exp{\frac{2\pi iz}{d}(k-j)} \rt]\ket{j\xor x}_A\bra{k\xor x}_A\tensor\ket{j}_B\bra{k}_B                               \\
+	                                                 & = \frac1d\sum_{x=0}^{d-1}\sum_{j=0}^{d-1} d\ket{j\xor x}_A\bra{k\xor x}_A\tensor\ket{j}_B\bra{k}_B                                                                                                  \\
+	                                                 & =  \sum_{x=0}^{d-1}\sum_{j=0}^{d-1} \ket{j\xor x}_A\bra{j\xor x}_A\tensor\ket{j}_B\bra{j}_B                                                                                                         \\
+	                                                 & = \sum_{j=0}^{d-1} \lt[ \sum_{x=0}^{d-1}]\ket{j\xor x}_A\bra{j\xor x}_A\rt]\tensor\ket{j}_B\bra{j}_B                                                                                                \\
+	                                                 & = \sum_{j=0}^{d-1} I_A\tensor\ket{j}_B\bra{j}_B= I_A\tensor I_B=I_{A,B}
 \end{align*}
 }
 
@@ -534,12 +534,12 @@ Hence both the ensembles have the same density operator.
 		Mark Wilde: Exercise 4.1.3
 	}{p15% problem reference text
 	}
-	 Prove the following equality:$$tr(A)=\bra{\Gm}_{RS}I_R\tensor A_S\ket{\Gm}_S$$where $A$ is a square operator acting on a Hilbert space $\mcH_S$, $I_R$  is the operator acting on a Hilbert space $\mcH_R$ isormorphic to $\mcH_S$ and $\ket{\Gm}_{RS}$ is the unnormalized  maximally entangled  vector $$\ket{\Gm}_{RS}=\sum_{i=0}^{d-1}\ket{i}_R\ket{i}_S$$
+	 Prove the following equality:$$tr(A)=\bra{\Gm}_{RS}I_R\tensor A_S\ket{\Gm}_{RS}$$where $A$ is a square operator acting on a Hilbert space $\mcH_S$, $I_R$  is the operator acting on a Hilbert space $\mcH_R$ isormorphic to $\mcH_S$ and $\ket{\Gm}_{RS}$ is the unnormalized  maximally entangled  vector $$\ket{\Gm}_{RS}=\sum_{i=0}^{d-1}\ket{i}_R\ket{i}_S$$
 	%Problem		
 \end{problem}
 \solve{
 \begin{align*}
-	\bra{\Gm}_{RS}I_R\tensor A_S\ket{\Gm}_S & = \lt[\sum_{i=0}^{d-1}\bra{i}_R\bra{i}_S   \rt]I_R\tensor A_S\lt[ \sum_{j=0}^{d-1}\ket{j}_R\ket{j}_S \rt]\\ 
+	\bra{\Gm}_{RS}I_R\tensor A_S\ket{\Gm}_{RS} & = \lt[\sum_{i=0}^{d-1}\bra{i}_R\bra{i}_S   \rt]I_R\tensor A_S\lt[ \sum_{j=0}^{d-1}\ket{j}_R\ket{j}_S \rt]\\ 
 	& = \sum_{i=0}^{d-1}\sum_{j=0}^{d-1}\bra{i}_R\ket{j}_R \bra{i}_SA_S\ket{j}_S\\
 	& = \sum_{i=0}^{d-1}\bra{i}_SA_S\ket{i}_S= tr(A)
 \end{align*}
@@ -601,7 +601,24 @@ Hence both the ensembles have the same density operator.
 
 	%Problem		
 \end{problem}
+\solve{Let $\dim(\mcH)=d$. Let $\{\ket{v_t}\mid 1\leq t\leq d\}$ is an ONB of $\mcH$.
+\begin{enumerate}[label=(\arabic*)]
+	\item $\sE:\bbC\to \sD(\mcH)$ where $1\mapsto \rho$. This is indeed a CPTP map. Let $\rho = \sum\limits_{t=1}^d\lm_t\ket{v_t}\bra{v_t}$. the Choi-Kraus Operator is $$E_t:\bbC\to \sL(\mcH), \ 1\mapsto \sum_{t=1}^d\sqrt{\lm_t}\ket{v_t}$$
+		Then \begin{align*}
+			\sum_{t=1}^dE_tE_t^{\dagger}&= \sum_{t=1}^dE_tE_t^{\dagger}=\sum_{t=1}^dE_t^{\dagger}1E_t\\
+			& = \sum_{t=1}^d \sqrt{\lm_t}\ket{v_t}\sum_{t'=1}^d \sqrt{\lm_{t'}}\bra{v_{t'}}\\
+			& = \sum_{t=1}^d \lm_t\ket{v_t}\bra{v_t}=\rho=\sE(1)
+		\end{align*}And 
+\begin{align*}
+	\sum_{t=1}^dE_t^{\dagger}E_t&= \sum_{t=1}^dE_t^{\dagger}E_t=\sum_{t=1}^dE_t1E_t\\
+	& = \sum_{t=1}^d \sqrt{\lm_t}\bra{v_t}\sum_{t'=1}^d \sqrt{\lm_{t'}}\ket{v_{t'}}\\
+	& = \sum_{t=1}^d \lm_t\bra{v_t}\ket{v_t}=1=I_{\bbC}
+\end{align*}
+Now take $|mcH_A=\bbC$ and $\mcH_R=\bbC^m$ where $m\leq \dim(\mcH)$. Let $\{\ket{g_k}\mid 1\leq k\leq m\}$ is an ONB of $\mcH_R$. Hence  take the isometry $V:\mcH_A\to \mcH_A\tensor \mcH_R$,  where for any $\ket{v}\in \mcH_A$, $\ket{v}\mapsto \sum_{k=1}^m E_t\ket{v}\tensor ket{g_k} $
+	
+\end{enumerate}
 
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 18
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -615,16 +632,13 @@ Hence both the ensembles have the same density operator.
 	%Problem		
 \end{problem}
 \solve{
-	Let $\{\ket{e_k}\mid 1\leq k\leq K\}$ be an ONB of $\mcH_1$ and $\{\ket{f_l}\mid 1\leq l\leq L\}$ be an ONB of $\mcH_2$. Now given that $A\geq 0, B\geq 0$. By \pref{2} we have that $\{\ket{e_k}\tensor \ket{f_l}\mid k\in[K], l\in[L]\}$ is an ONB of  $\mcH_1\tensor \mcH_2$. Then for any $k\in[K]$ and $l\in[L]$ we have $$\bra{e_k\tensor f_l}A\tensor B\ket{e_k\tensor f_l}=\bra{e_k}A\ket{e_k}\bra{f_l}B\ket{f_l}\geq 0$$Now let 
-	$$A\ket{e_i}=\sum_{j=1}^K\alpha_{i,j}\ket{e_j}\qquad\text{and}\qquad B\ket{f_i}=\sum_{j=1}^L\beta_{i,j}\ket{f_j}$$
-	
-	Given that for all $\ket{\phi}\in\mcH_1$, $\bra{\phi}A\ket{\phi}\geq 0$ and for all $\ket{\psi}\in\mcH_2$, $\bra{\psi}B\ket{\psi}\geq0$. Now let $\ket{u}\in\mcH_1\tensor \mcH_2$. Then we can write $$\ket{u}=\sum_{k=1}^K\sum_{l=1}^L\gm_{k,l}\ket{e_k}\tensor \ket{f_l}$$
-	Then \begin{align*}
-		\bra{u}A\tensor B\ket{u} & = \lt[ \sum_{k=1}^K\sum_{l=1}^L\gm_{k,l}^*\bra{e_k}\tensor \bra{f_l} \rt]A\tensor B\lt[ \sum_{k'=1}^K\sum_{l'=1}^L\gm_{k',l'}\ket{e_{k'}}\tensor \ket{f_{l'}} \rt]\\
-		& = \sum_{k=1}^K\sum_{l=1}^L\sum_{k'=1}^K\sum_{l'=1}^L\gm_{k,l}^*\gm_{k',l'}\bra{e_k}A\ket{e_{k'}}\bra{f_l}B\ket{f_{l'}}\\
-		& = \sum_{k=1}^K\sum_{l=1}^L\sum_{k'=1}^K\sum_{l'=1}^L\gm_{k,l}^*\gm_{k',l'}\bra{e_k}\lt[\sum_{j=1}^K\alpha_{k',j}\ket{e_j}\rt]\bra{f_l}\lt[ \sum_{j=1}^L\beta_{l',j}\ket{f_j} \rt]\\
-		& = \sum_{k=1}^K\sum_{l=1}^L\sum_{k'=1}^K\sum_{l'=1}^L\gm_{k,l}^*\gm_{k',l'}\alpha_{k',k}\bra{e_k}\ket{e_k}\beta_{l',l}\bra{f_l} \ket{f_l} 
-	\end{align*}
+Given that $A,B\geq 0$. Therefore $A,B$ are hermitian.  Hence there exists orthonormal eigen basis of $A$, $\{\ket{e_k}\mid 1\leq k\leq K\}$ for $\mcH_A$ with corresponding eigenvalues $\{\lm_k\mid 1\leq k\leq K\}$ and orthonormal eigen basis of $B$, $\{\ket{f_l}\mid 1\leq l\leq L\}$ with corresponding eigenvalues $\{\gm_l\mid 1\leq l\leq L\}$ for $\mcH_B$ respectively.  Hence $$A=\sum_{k=1}^K\lm_k\ket{e_k}\bra{e_k}\qquad B =\sum_{l=1}^L\gm_l\ket{f_l}\bra{f_l} $$Since $A,B\geq 0$ we have $\forall\ k\in [K]$ and $l\in[L]$ we have $\lm_k\geq0$ and $\gm_l\geq 0$. Now by \pref{2}, $\{\ket{e_k}\tensor \ket{f_l}\mid k\in [K],l\in[L] \}$ is an ONB $\mcH_A\tensor \mcH_B$. Let $\ket{u}\in\mcH_A\tensor \mcH_B$. Then $\exs\ \sg_{k,l}\in\bbC$ $\forall\ k\in[K],l\in[L]$ such that $$\ket{u}=\sum_{k=1}^K\sum_{l=1}^L\sg_{k,l}^*\ket{e_k}\tensor \ket{f_l}$$Now \begin{align*}
+	\bra{u}A\tensor B\ket{u} & = \lt[ \sum_{k=1}^K\sum_{l=1}^L\sg_{k,l}^*\bra{e_k}\tensor \bra{f_l} \rt]A\tensor B\lt[ \sum_{k=1}^K\sum_{l=1}^L\sg_{k,l}\ket{e_k}\tensor \ket{f_l}\rt]\\
+	& =   \sum_{k=1}^K\sum_{l=1}^L\sum_{k'=1}^K\sum_{l'=1}^L\sg_{k,l}^*\sg_{k',l'}\bra{e_k}A\ket{e_{k'}}\bra{f_l}B\ket{f_{l'}}\\
+	& =\sum_{k=1}^K\sum_{l=1}^L\sum_{k'=1}^K\sum_{l'=1}^L\sg_{k,l}^*\sg_{k',l'}\bra{e_k}\lm_{k'}\ket{e_{k'}}\bra{f_l}\gm_{l'}\ket{f_{l'}}\\
+	& =\sum_{k=1}^K\sum_{l=1}^L\sum_{k'=1}^K\sum_{l'=1}^L\sg_{k,l}^*\sg_{k',l'}\lm_{k'}\gm_{l'}\bra{e_k}\ket{e_{k'}}\bra{f_l}\ket{f_{l'}}\\
+	& =\sum_{k=1}^K\sum_{l=1}^L|\sg_{k,l}|^2\lm_{k}\gm_{l}\bra{e_k}\ket{e_{k}}\bra{f_l}\ket{f_{l}}\geq 0
+\end{align*}Therefore $\forall, \ket{u}\in\mcH_A\tensor\mcH_B$ we have $\bra{u}A\tensor B\ket{u}\geq 0$. Hence $A\tensor B\geq 0$.
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
