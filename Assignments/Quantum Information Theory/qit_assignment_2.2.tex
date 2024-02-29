@@ -51,6 +51,7 @@
 \newcommand{\fdcpss}{finite dimensional complex inner product spaces}
 \newcommand{\Fdcps}{Finite dimensional complex inner product space}
 \newcommand{\Fdcpss}{Finite dimensional complex inner product spaces}
+\newcommand{\pref}[1]{\hyperref[p:p#1]{Problem \ref{p:p#1}}}
 \setlength{\parindent}{0pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -125,7 +126,7 @@ If $\{\ket{e_i}\in \mcH_1\mid 1\leq i\leq d\}$ and $\{\ket{f_i}\in \mcH_2\mid 1\
 			& = \bra{u}tr_2(T)\ket{v}_{\{\ket{g_k}\}}
 		\end{align*}
 		Hence $\sum\limits_{k}\bra{u\tensor g_k}T\ket{v\tensor g_k}$ is invariant.
-		\item Let $T=\sum\limits_{i,j}\gm_{i,j}A_i\tensor B_j$ where $\gm_{i,j}\in\bbC$ and $A_i\in \sL(\mcH_1)$, $B_j\in\sL(\mcH_2)$. Then \begin{align*}
+		\item \label{p3.2}Let $T=\sum\limits_{i,j}\gm_{i,j}A_i\tensor B_j$ where $\gm_{i,j}\in\bbC$ and $A_i\in \sL(\mcH_1)$, $B_j\in\sL(\mcH_2)$. Then \begin{align*}
 			tr_2(T) & = tr_2\lt( \sum\limits_{i,j}\gm_{i,j}A_i\tensor B_j \rt)=\sum\limits_{i,j}\gm_{i,j}tr_2(A_i\tensor B_j)\\
 			& = \sum\limits_{i,j}\gm_{i,j}A_i tr( B_j)\\
 			& = \sum_{i,j}A_i\sum_k\bra{g_k}B_j\ket{g_k}\\
@@ -321,6 +322,7 @@ Now we have two maps $V:\mcH\to \mcH$ and $U:\mcH\to \mcH$ which send the orthon
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 10
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
 
 \begin{problem}{%problem statement
 	}{p10% problem reference text
@@ -329,21 +331,40 @@ Now we have two maps $V:\mcH\to \mcH$ and $U:\mcH\to \mcH$ which send the orthon
 	%Problem		
 \end{problem}
 \solve{
-Let $\dim(\mcH_A)=d$, $\dim(\mcH_{R_1})=d_1$ and $\dim(\mcH_{R_2})=d_2$. Then suppose $\{\ket{a_i}\mid i\in [d]\}$is an ONB and eigenbasis of $\mcH_{A}$ with corresponding eigenvalues are $\{\alpha_i\mid i\in[d]\}$. Also suppose $\{\ket{e_i}\mid i\in [d_1] \}$ is an ONB of $\mcH_{R_1}$ and $\{ \ket{f_i}\mid i\in[d_2] \}$ is an ONB of $\mcH_{R_2}$. We can express $$\rho_A=\sum_{i=1}^d\alpha_i\ket{a_i}\bra{a_i}$$
+Let $\dim(\mcH_A)=d$, $\dim(\mcH_{R_1})=d_1$ and $\dim(\mcH_{R_2})=d_2$. Then suppose $\{\ket{a_i}\mid i\in [d]\}$is an ONB and eigenbasis of $\mcH_{A}$ with corresponding eigenvalues are $\{\alpha_i\mid i\in[d]\}$. Also suppose $\{\ket{e_i}\mid i\in [d_1] \}$ is an ONB of $\mcH_{R_1}$ and $\{ \ket{f_i}\mid i\in[d_2] \}$ is an ONB of $\mcH_{R_2}$. We can express $$\rho_A=\sum_{i=1}^d\alpha_i\ket{a_i}\bra{a_i}$$Now we will prove a lemma:\parinf
 
-For now we assume $K=L=d$.  Now take $\min\{d,d_1\}=K$ and $\min\{d,d_2\}=L$. Therefore $K\leq L$ since $d_1\leq d_2$. Then by Schmidt Decomposition there exists $\lm_j\in \bbC$ $\forall\ j\in[k]$ and $\gm_j\in\bbC$, $\forall\ j\in [L]$ such that $$\ket{\psi}_{AR_1}=\sum_{i=1}^K\lm_i\ket{a_i}_A\tensor \ket{e_i}_{R_1}\qquad\text{and}\qquad  \ket{\psi}_{AR_2}=\sum_{i=1}^L\gm_i\ket{a_i}_A\tensor \ket{f_i}_{R_2}$$Then we have 
-Since \begin{align*}
-	tr_{R_1}(\ket{\psi}\bra{\psi}_{AR_1}) & = tr_{R_1}\lt[\lt( \sum_{i=1}^K\sqrt{p_X(x)}\ket{e_x}_{R_1}\tensor \ket{x}_A \rt)\lt(\sum_{j=1}^K\sqrt{p_X(x')}\bra{e_{x'}}_{R_1}\tensor \bra{x'}_A \rt)\rt]\\
-	& = tr_{R_1}\lt[\sum_{i=1}^K\sum_{j=1}^K\sqrt{p_X(x)p_X(x')}\ket{e_x}\bra{e_{x'}}_{R_1}\tensor \ket{x}\bra{x'}_A  \rt]\\
-	& =\sum_{i=1}^K\sum_{j=1}^K\sqrt{p_X(x)p_X(x')}\ket{x}\bra{x'}_A tr(\ket{e_x}\bra{e_{x'}}_{R_1}) \\
-	& = \sum_{i=1}^K\sqrt{p_X(x)p_X(x)}\ket{x}\bra{x}_A  =\sum\limits_{i=1}p_X(x)\ket{x}\bra{x}_A=\rho_A
-\end{align*}
-Similarly\begin{align*}
-	tr_{R_2}(\ket{\psi}\bra{\psi}_{AR_2}) & = tr_{R_2}\lt[\lt( \sum_{i=1}^K\sqrt{p_X(x)}\ket{f_x}_{R_2}\tensor \ket{x}_A \rt)\lt( \sum_{j=1}^K\sqrt{p_X(x')}\bra{f_{x'}}_{R_2}\tensor \bra{x'}_A \rt)\rt]\\
-	& = tr_{R_2}\lt[\sum_{i=1}^K\sum_{j=1}^K\sqrt{p_X(x)p_X(x')}\ket{f_x}\bra{f_{x'}}_{R_2}\tensor \ket{x}\bra{x'}_A  \rt]\\
-	& = \sum_{i=1}^K\sum_{j=1}^K\sqrt{p_X(x)p_X(x')}\ket{x}\bra{x'}_A  tr(\ket{f_x}\bra{f_{x'}}_{R_2}) \\
-	& = \sum_{i=1}^K\sqrt{p_X(x)p_X(x)}\ket{x}\bra{x}_A  =\sum\limits_{x\in \mcX}p_X(x)\ket{x}\bra{x}_A=\rho_A
-\end{align*}Now take the isometry $V$ to be $$V=\sum_{i=1}^d\ket{e_i}_{R_1}\bra{f_i}_{R_2}$$
+\textbf{\textit{Lemma:}} Suppose $d_1<d$. Take $\min\{d,d_2\}=N$. Then by Schmidt Decomposition$$\ket{\psi}_{AR_1}=\sum_{i=1}^{d_1}\lm_i\ket{a_i}\tensor \ket{e_i}\qquad \ket{\psi}_{AR_2}=\sum_{j=1}^N\gm_j\ket{a_j}_A\tensor \ket{f_j}_{R_2}$$where $\lm_i,\gm_j\in\bbC$. Then $$\{\ket{a_i}\mid i\in[d_1],\lm_i\neq 0\}=\{\ket{a_j}\mid j\in [N],\gm_j\neq 0\}$$
+
+\textbf{\textit{Proof:}} Suppose not. 
+\begin{align*}
+	tr_{R_1}(\ket{\psi}\bra{\psi}_{AR_1}) & = tr_{R_1}\lt[\lt( \sum_{i=1}^{d_1}\lm_i\ket{a_i}_A\tensor \ket{e_i}_{R_1} \rt)\lt(\sum_{j=1}^{d_1}\lm_j^*\bra{a_j}_A\tensor \bra{e_j}_{R_1} \rt)\rt]         \\
+	                                      & = tr_{R_1}\lt[\sum_{i=1}^{d_1}\sum_{j=1}^{d_1}\lm_i\lm_j^*\ket{a_i}\bra{a_j}_A\tensor \ket{e_i}\bra{e_j}_{R_1}  \rt]                                  \\
+	                                      & =\sum_{i=1}^{d_1}\sum_{j=1}^{d_1}\lm_i\lm_j^*\ket{a_i}\bra{a_j}_A tr(\ket{e_i}\bra{e_i}_{R_1}) = \sum_{i=1}^{d_1}|\lm_i|^2\ket{a_i}\bra{a_j}_A  =\rho_A
+\end{align*}Similarly we get \begin{align*}
+tr_{R_2}(\ket{\psi}\bra{\psi}_{AR_2}) & = tr_{R_2}\lt[\lt( \sum_{i=1}^{N}\gm_i\ket{a_i}_A\tensor \ket{e_i}_{R_2} \rt)\lt(\sum_{j=1}^{N}\gm_j^*\bra{a_j}_A\tensor \bra{e_j}_{R_2} \rt)\rt]\\
+& = tr_{R_2}\lt[\sum_{i=1}^{N}\sum_{j=1}^{N}\gm_i\gm_j^*\ket{a_i}\bra{a_j}_A\tensor \ket{e_i}\bra{e_j}_{R_2}  \rt]\\
+& =\sum_{i=1}^{N}\sum_{j=1}^{N}\gm_i\gm_j^*\ket{a_i}\bra{a_j}_A tr(\ket{e_i}\bra{e_j}_{R_2})  = \sum_{i=1}^{N}|\gm_i|^2\ket{a_i}\bra{a_i}_A  =\rho_A
+\end{align*}Hence if there is an vector $\ket{a}$ in one of the sets $\{\ket{a_i}\mid i\in[d_1],\lm_i\neq 0\}$ and $\{\ket{a_j}\mid j\in [N],\gm_j\neq 0\}$ since $\ket{a_i}\bra{a_i}$ for all $i\in [d]$ it will not be possible to satisfy $$ \sum_{i=1}^{d_1}|\lm_i|^2\ket{a_i}\bra{a_j} =\rho_A=\sum_{i=1}^{N}|\gm_i|^2\ket{a_i}\bra{a_i} $$since one of the LHS and RHS as the term $\ket{a}\bra{a}$ where the other don't. Hence contradiction. So we have $$\{\ket{a_i}\mid i\in[d_1],\lm_i\neq 0\}=\{\ket{a_j}\mid j\in [N],\gm_j\neq 0\}$$ \Qed
+
+
+
+
+\parinn
+
+Now take $\min\{d,d_1\}=K$ and $\min\{d,d_2\}=L$. Therefore $K\leq L$ since $d_1\leq d_2$. Then by Schmidt Decomposition there exists $\lm_j\in \bbC$ $\forall\ j\in[k]$ and $\gm_j\in\bbC$, $\forall\ j\in [L]$ such that $$\ket{\psi}_{AR_1}=\sum_{i=1}^K\lm_i\ket{a_i}_A\tensor \ket{e_i}_{R_1}\qquad\text{and}\qquad  \ket{\psi}_{AR_2}=\sum_{i=1}^L\gm_i\ket{a_i}_A\tensor \ket{f_i}_{R_2}$$Then if $K,L=d$ and $K<d$ both cases we have the same $\ket{a_i}$'s appearing in the representation of $\ket{\psi}_{AR_1}=\sum\limits_{i=1}^K\lm_i\ket{a_i}_A\tensor \ket{e_i}_{R_1}$ as well as $\ket{\psi}_{AR_2}=\sum\limits_{i=1}^L\gm_i\ket{a_i}_A\tensor \ket{f_i}_{R_2}$. Hence in the schmidt decomposition of $\ket{\psi_{AR_1}}$ and $\ket{\psi_{AR_2}}$ the number of nonzero Schmidt Coefficients is always same and they take the same take the same orthonormal vectors from the given orthonormal basis of $\mcH_A$. So WLOG we can assume the first $K$ vectors in the Schmidt Decomposition of $\ket{\psi}_{AR_2}$ here is the vectors having nonzero Schmidt Coefficients and instead of writing $L$ we can write $K$ as well. This will help us create the isometry $V:\mcH_{R_1}\to \mcH_{R_2}$.
+
+Now $$\rho_A=\sum_{i=1}^d\alpha_i\ket{a_i}\bra{a_i}$$ where $\alpha_i\in \bbR$ and $\alpha_i\geq 0$ for all $i\in [d]$. Now\begin{align*}
+	tr_{R_1}(\ket{\psi}\bra{\psi}_{AR_1}) & = tr_{R_1}\lt[\lt( \sum_{i=1}^{d_1}\lm_i\ket{a_i}_A\tensor \ket{e_i}_{R_1} \rt)\lt(\sum_{j=1}^{d_1}\lm_j^*\bra{a_j}_A\tensor \bra{e_j}_{R_1} \rt)\rt]   \\
+	                                      & = tr_{R_1}\lt[\sum_{i=1}^{d_1}\sum_{j=1}^{d_1}\lm_i\lm_j^*\ket{a_i}\bra{a_j}_A\tensor \ket{e_i}\bra{e_j}_{R_1}  \rt]                                    \\
+	                                      & =\sum_{i=1}^{d_1}\sum_{j=1}^{d_1}\lm_i\lm_j^*\ket{a_i}\bra{a_j}_A tr(\ket{e_i}\bra{e_i}_{R_1}) = \sum_{i=1}^{d_1}|\lm_i|^2\ket{a_i}\bra{a_j}_A  =\rho_A
+\end{align*}Similarly we get \begin{align*}
+tr_{R_2}(\ket{\psi}\bra{\psi}_{AR_2}) & = tr_{R_2}\lt[\lt( \sum_{i=1}^{K}\gm_i\ket{a_i}_A\tensor \ket{e_i}_{R_2} \rt)\lt(\sum_{j=1}^{K}\gm_j^*\bra{a_j}_A\tensor \bra{e_j}_{R_2} \rt)\rt]\\
+& = tr_{R_2}\lt[\sum_{i=1}^{K}\sum_{j=1}^{K}\gm_i\gm_j^*\ket{a_i}\bra{a_j}_A\tensor \ket{e_i}\bra{e_j}_{R_2}  \rt]\\
+& =\sum_{i=1}^{K}\sum_{j=1}^{K}\gm_i\gm_j^*\ket{a_i}\bra{a_j}_A tr(\ket{e_i}\bra{e_j}_{R_2})  = \sum_{i=1}^{K}|\gm_i|^2\ket{a_i}\bra{a_i}_A  =\rho_A
+\end{align*} From this we get $\lm_i=\gm_i=\sqrt{\alpha_i}$. So we take the isometry $V$ to be $$V=\sum_{i=1}^K\ket{f_i}_{R_1}\bra{e_i}_{R_2}$$Clearly $V^{\dagger}V=I$ and \begin{multline*}
+(I\tensor V)\ket{\psi_{AR_1}}=(I\tensor V)\lt[\sum_{i=1}^{K}\lm_i\ket{a_i}\tensor \ket{e_i}\rt]=\sum_{i=1}^{K}\lm_iI\ket{a_i}\tensor V\ket{e_i}\\
+=\sum_{i=1}^{K}\lm_i\ket{a_i}\tensor\lt[  \sum_{i=1}^K\ket{f_i}_{R_2}\bra{e_i}_{R_1}\rt] \ket{e_i}=\sum_{i=1}^{K}\gm_i\ket{a_i}\tensor\ket{f_i}=\ket{\psi}_{AR_2}
+\end{multline*}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -477,7 +498,9 @@ Hence both the ensembles have the same density operator.
 \end{problem}
 \solve{
 \begin{enumerate}
-	\item Let $\{\ket{c_l}\mid 1\leq l\leq L\}$ be an ONB of $\mcH_A$. Since $g(Z)\in \sL(\mcH_A)$ we the $(i,j)$th element of $g(Z)$ with respect to the basis $\{\ket{c_l}\mid 1\leq l\leq L\}$ is the value of $\bra{c_i}g(Z)\ket{c_j}$. Now Let $T=\sum\limits_{i,j}\gm_{i,j}A_i\tensor B_j$ then $\forall\ m,m\in [d_A]$ \begin{align*}
+	\item Now in the \hyperref[p3.2]{proof} of \pref{3} we showed that $tr_B(T)$ is well defined. Since $$f(T)= \sum\limits_{i,j}\gm_{i,j}tr(B_j)A_i=\sum\limits_{i,j}\gm_{i,j}tr_B(A_i\tensor B_j)=tr_B\lt(\sum\limits_{i,j}\gm_{i,j}A_i\tensor B_j\rt)=tr_B(T)$$So $f(T)$ is also well defined. Let $\{\ket{c_l}\mid 1\leq l\leq L\}$ be an ONB of $\mcH_A$. Since $g(Z)\in \sL(\mcH_A)$ we the $(i,j)$th element of $g(Z)$ with respect to the basis $\{\ket{c_l}\mid 1\leq l\leq L\}$ is the value of $\bra{c_i}g(Z)\ket{c_j}$. Since for each $i,j\in [L]$ $$\bra{c_i}g(Z)\ket{c_j}=\sum_k\bra{c_i\tensor e_k}Z\ket{c_j\tensor e_k}$$So each of the values $\bra{c_i}g(Z)\ket{c_j}$ are well defined. And therefore $g(Z)$ is also well defined.\parinn
+	
+	Let $\{\ket{c_l}\mid 1\leq l\leq L\}$ be an ONB of $\mcH_A$. Since $g(Z)\in \sL(\mcH_A)$ we the $(i,j)$th element of $g(Z)$ with respect to the basis $\{\ket{c_l}\mid 1\leq l\leq L\}$ is the value of $\bra{c_i}g(Z)\ket{c_j}$. Now Let $T=\sum\limits_{i,j}\gm_{i,j}A_i\tensor B_j$ then $\forall\ m,m\in [d_A]$ \begin{align*}
 		\bra{c_m}g(T)\ket{c_n} & = \sum_k\bra{c_m\tensor e_k}T\ket{c_n\tensor e_k}                                           \\
 		                       & = \sum_k\bra{c_m\tensor e_k}\lt[ \sum_{i,j}\gm_{i,j}A_i\tensor B_j \rt]\ket{c_n\tensor e_k} \\
 		                       & = \sum_k\sum_{i,j}\gm_{i,j}\bra{c_m}A_i\ket{c_n}\bra{e_k}B_j\ket{e_k}                       \\
@@ -588,9 +611,21 @@ Hence both the ensembles have the same density operator.
 	}
 	If $A\in \sL(\mcH_1)$, $B\in \sL(\mcH_2)$ and $A\geq 0$, $B\geq 0$ prove or disprove (with counter example) $A\tensor B\geq 0$.
 	
-	[Recall that for any operator $S\in \sL(\mcH)$ we say $S\geq 0$ if $\bra{u}S\ket{S}\geq 0$ $\forall\ \ket{u}\in \mcH$]
+	[Recall that for any operator $S\in \sL(\mcH)$ we say $S\geq 0$ if $\bra{u}S\ket{u}\geq 0$ $\forall\ \ket{u}\in \mcH$]
 	%Problem		
 \end{problem}
+\solve{
+	Let $\{\ket{e_k}\mid 1\leq k\leq K\}$ be an ONB of $\mcH_1$ and $\{\ket{f_l}\mid 1\leq l\leq L\}$ be an ONB of $\mcH_2$. Now given that $A\geq 0, B\geq 0$. By \pref{2} we have that $\{\ket{e_k}\tensor \ket{f_l}\mid k\in[K], l\in[L]\}$ is an ONB of  $\mcH_1\tensor \mcH_2$. Then for any $k\in[K]$ and $l\in[L]$ we have $$\bra{e_k\tensor f_l}A\tensor B\ket{e_k\tensor f_l}=\bra{e_k}A\ket{e_k}\bra{f_l}B\ket{f_l}\geq 0$$Now let 
+	$$A\ket{e_i}=\sum_{j=1}^K\alpha_{i,j}\ket{e_j}\qquad\text{and}\qquad B\ket{f_i}=\sum_{j=1}^L\beta_{i,j}\ket{f_j}$$
+	
+	Given that for all $\ket{\phi}\in\mcH_1$, $\bra{\phi}A\ket{\phi}\geq 0$ and for all $\ket{\psi}\in\mcH_2$, $\bra{\psi}B\ket{\psi}\geq0$. Now let $\ket{u}\in\mcH_1\tensor \mcH_2$. Then we can write $$\ket{u}=\sum_{k=1}^K\sum_{l=1}^L\gm_{k,l}\ket{e_k}\tensor \ket{f_l}$$
+	Then \begin{align*}
+		\bra{u}A\tensor B\ket{u} & = \lt[ \sum_{k=1}^K\sum_{l=1}^L\gm_{k,l}^*\bra{e_k}\tensor \bra{f_l} \rt]A\tensor B\lt[ \sum_{k'=1}^K\sum_{l'=1}^L\gm_{k',l'}\ket{e_{k'}}\tensor \ket{f_{l'}} \rt]\\
+		& = \sum_{k=1}^K\sum_{l=1}^L\sum_{k'=1}^K\sum_{l'=1}^L\gm_{k,l}^*\gm_{k',l'}\bra{e_k}A\ket{e_{k'}}\bra{f_l}B\ket{f_{l'}}\\
+		& = \sum_{k=1}^K\sum_{l=1}^L\sum_{k'=1}^K\sum_{l'=1}^L\gm_{k,l}^*\gm_{k',l'}\bra{e_k}\lt[\sum_{j=1}^K\alpha_{k',j}\ket{e_j}\rt]\bra{f_l}\lt[ \sum_{j=1}^L\beta_{l',j}\ket{f_j} \rt]\\
+		& = \sum_{k=1}^K\sum_{l=1}^L\sum_{k'=1}^K\sum_{l'=1}^L\gm_{k,l}^*\gm_{k',l'}\alpha_{k',k}\bra{e_k}\ket{e_k}\beta_{l',l}\bra{f_l} \ket{f_l} 
+	\end{align*}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 19
@@ -604,5 +639,24 @@ Hence both the ensembles have the same density operator.
 	Identify $\rho\in \sD(\mcH_A)$, a density operator, so that $(i_R\tensor \sF)(\ket{\phi_{\rho}}\bra{\phi_{\rho}})$ is not positive semi-definite, wherein $\ket{\phi_{\rho}}\in \mcH_R\tensor \mcH_A$ is a purification of $\rho$.
 	%Problem		
 \end{problem}
+\solve{
+\begin{itemize}
+	\item A linear map $\sE:\sL(\mcH_A)\to \sL(\mcH_B)$ is completely positive if $id_R\tensor \sE$ is a positive map for a reference system $R$ of arbitrary size.
+	\item Take first $\mcH_A=\mcH_B=\mcH_R=\mcH=\bbC^2$. Then $\forall\ S\in \sL(\mcH)$, take $\sF(S)=S^{\dagger}$. Suppose $S$ is an positive operator. Then for any $\ket{u}\in\mcH$ we have $$\bra{u}S^{\dagger}\ket{u}=\lt[\bra{u}S\ket{u}\rt]^*, \bra{u}S\ket{u}\geq 0 \implies\lt[\bra{u}S\ket{u}\rt]^*\geq 0$$Hence $\bra{u}S^{\dagger}\ket{u}\geq 0$. Therefore $\sF$ is positive map. 
+	
+	Now take $\ket{\phi_{\rho}}=\frac1{\sqrt{2}}[\ket{00}+\ket{11}]$ where the  density matrix, $\rho=\frac12[\ket{0}\bra{0}+\ket{1}\bra{1}]$. $\ket{\psi_{\rho}}$ is the purification of $\rho$.  
+	Therefore \begin{align*}
+		&(i_R\tensor \sF)(\ket{\phi_{\rho}}\bra{\phi_{\rho}})\\
+		=&\frac12(i_R\tensor \sF)\lt[\ket{0}\bra{0}\tensor \ket{0}\bra{0}+\ket{0}\bra{1}\tensor \ket{0}\bra{1}+\ket{1}\bra{0}\tensor \ket{1}\bra{0}+\ket{1}\bra{1}\tensor \ket{1}\bra{1}  \rt]\\
+		=& \frac12\lt[\ket{0}\bra{0}\tensor \ket{0}\bra{0}+\ket{0}\bra{1}\tensor \ket{1}\bra{0}+\ket{1}\bra{0}\tensor \ket{0}\bra{1}+\ket{1}\bra{1}\tensor \ket{1}\bra{1}  \rt]
+	\end{align*}
+	This operator has a eigenvector $\frac{1}{\sqrt{2}}\lt[  \ket{01}-\ket{10}\rt]$ with negative eigenvalue
+	\begin{align*}
+		&\lt(\frac12\lt[\ket{0}\bra{0}\tensor \ket{0}\bra{0}+\ket{0}\bra{1}\tensor \ket{1}\bra{0}+\ket{1}\bra{0}\tensor \ket{0}\bra{1}+\ket{1}\bra{1}\tensor \ket{1}\bra{1}  \rt]\rt)\frac{1}{\sqrt{2}}\lt[  \ket{01}-\ket{10}\rt]\\
+		=&\frac12\frac{1}{\sqrt{2}}\lt[ \ket{0}\bra{1}\tensor \ket{1}\bra{0}+\ket{1}\bra{0}\tensor \ket{0}\bra{1} \rt]\lt[  \ket{01}-\ket{10}\rt]\\
+		= & \frac{1}{2\sqrt{2}}\lt[ \ket{10}-\ket{01} \rt]=  \lt(-\frac{1}{2}\rt)\lt( \frac{1}{\sqrt{2}}\lt[  \ket{01}-\ket{10}\rt] \rt)
+	\end{align*}Hence 
+\end{itemize}Here $(i_R\tensor \sF)(\ket{\phi_{\rho}}\bra{\phi_{\rho}})$ has a negative eigenvalue, $-\frac12$. Therefore $(i_R\tensor \sF)(\ket{\phi_{\rho}}\bra{\phi_{\rho}})$ is not positive. Hence $\sF$ is positive but not completely positive.
+}
 
 \end{document}
