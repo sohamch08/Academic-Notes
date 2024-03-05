@@ -23,6 +23,7 @@
 \usetikzlibrary{decorations.pathreplacing,angles,quotes,patterns}
 \usepackage{caption}
 \usepackage{bbm}
+\usepackage[ruled,vlined]{algorithm2e}
 \usepackage{mathpazo}
 \usepackage{libertine}
 \definecolor{mytheorembg}{HTML}{F2F2F9}
@@ -180,44 +181,141 @@ That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associatin
 		Problem 5.5 (LDPC Codes): Pseudorandomness By Salil Vadhan
 	}{p3% problem reference text
 	}
-	Given a $D_1$-regular graph $G_1$ on $N_1$ vertices and a $D_2$-regular graph $G_2$ on $D_1$ vertices consider the following graph $G_1\textcircled{r}G_2$ on vertex set $[N_1]\times [D_1]$: vertex $(u,i)$ is connected to $(v,j)$ iff \begin{enumerate}[label=(\alph*)]
-		\item $u=v$ and $(i,j)$ is an edge in $G_2$ or,
-		\item $v$ is the $i$'th neighbor of $u$ in $G_1$ and $u$ is the $j$th neighbor of $v$. 
-	\end{enumerate}
-	That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associating edge incident to $v$ with one vertex of $G_2$.
-	\begin{enumerate}
-		\item Prove that there is a function $g$ such that if $G_1$ has spectral expansion $\gm_1>0$ and $G_2$ has spectral expansion $\gm_2>0$ (and both graphs are undirected) then $G_1\textcircled{r}G_2$ has spectral expansion $g(\gm_1,\gm_2,D_2)>0$.
+	Given a bipartite multigraph $G$ with $N$ left-vertices and $M$ right-vertices, we can obtain a linear code $\mcC\subseteq \{0,1\}^N$ (where we view $\{0,1\}$ as the fiels of two elements): $$\mcC=\lt\{c\in \{0,1\}^N:\ \forall\ j\in[M]\ \bigoplus\limits_{i\in \Gm(j)}c_i=0\rt\}$$where $\Gm (j)$ denotes the set of neighbors of vertex $j$. When $G$ has small left-degree $D$ (e.g. $D=O(1)$), then $\mcC$ is called a \textit{low-density parity check (LDPC) code}.\begin{enumerate}
+		\item Show that $\mcC$ has rate at least $1-\frac{M}{N}$.
+		\item Show that if $G$ is a $(K,A)$ expander $A>\frac{D}2$, then $\mcC$ has minimum distance at least $\delta=\frac{K}{N}$.
+		\item Show that if $G$ is a $(K,(1-\eps)D)$ expander for a  sufficiently small constant $\eps$, then $\mcC$ has a polynomial-time $(1-3\eps)\frac{K}{N}$-decoder. Assume that $G$ is given as input to the decoder. 
 		
-		[Hint: Note that $(G_1\textcircled{r}G_2)^3$ has $G_1\textcircled{z}G_2$ as a subgraph]
-		\item Show how to convert an explicit construction of constant degree (spectral) expanders into an explicit construction of degree 3 (spectral) expanders.
-		\item Without using Theorem 4.14, prove an analogue of Part 1 for edge expansion. That is, there is a function $h$ such that if $G_1$ is an $\lt(\frac{N_1}2,\eps_1\rt)$ edge expander and $G_2$ is a $\lt(\frac{D_1}2,\eps_2\rt)$ edge expander then $G_1\textcircled{r}G_2$ is a $\lt(\frac{N_1D_1}{2},h(\eps_1,\eps_2,D_2)\rt)$ edge expander where $h(\eps_1,\eps_2,D_2)>0$ if $\eps_1,\eps_2>0$. 
-		
-		[Hint: Given any set $S$ of vertices of $G_1\textcircled{r}G_2$, partition $S$ into the clouds that are more than ``half-full" and those that are not]
-		\item Prove that the functions $g(\gm_1,\gm_2,D_2)$ and $h(\eps_1,\eps_2,D_2)$ must depend on $D_2$ by showing that $G_1\textcircled{r}G_2$ cannot be a $\lt(\frac{N_1D_1}2,\eps\rt)$ edge expander if $\eps>\frac1{D_1+1}$ and $N_1\geq 2$
+		[Hint: Given a received word $r\in\{0,1\}^n$, flip all coordinates of $r$ for which at least $\frac23$ of the neighboring parity checks are not satisfied, and argue that the number of errors decreases by a constant factor. It may be useful to use the results of \hyperref[p:p2]{Problem \ref{p:p2}}]
 	\end{enumerate}
 \end{problem}
+\solve{
+\begin{enumerate}
+	\item Suppose $A$ be the $M\times N$ adjacency matrix for the bipartite graph. Then we can say $$\mcC=\{x\in\{0,1\}^N\mid Ax\equiv 0\bmod2\}$$Because $$\forall\ j\in[M], \bigoplus\limits_{i\in \Gm(j)}x_i=0\iff \sum_{j\in\Gm(j)}x_i\equiv 0\bmod 2$$and $A$ contains 1's in $j$th row at $i$th column if $i$th left-vertex is an neighbor of $j$th right-vertex. Hence $x\in \mcC\iff Ax\equiv 0\bmod 2$.
+	
+	Now by Rank-Nullity Theorem we have $$rank(A)+\dim(\ker(A))=N$$Now $rank(A)\leq M$. So $$\dim(\ker(A))=N-rank(A)\geq N-M$$Hence $$|\mcC|\geq 2^{N-M}\implies \log|\mcC|\geq N-M$$Hence rate of the code $\geq \frac{N-M}{N}=1-\frac{M}{N}$.
+	
+	\item By the above part we get $\mcC=\ker(A)$. Hence $\mcC$ is a linear code. Hence it is enough to show that $\forall\ c\in\mcC$, $wt(c)\geq {K}$. So assume the contrary. Let $\exs\ c\in\mcC$ where $c=(c_1,\dots, c_N)$ such that $wt(c)\leq K$. Now we take the set $S_c=\{i\mid c_i=1\}$. Hence by the assumption $|S_c|\leq K$. Now take $\eps=1-\frac{A}{D}$. Then $A=(1-\eps)D$. Since $A>\frac{D}2$ have $\eps<\frac12$. By \hyperref[p:p2]{Problem \ref{p:p2}} part (1) we have the number of unique neighbors of $S_c$ is at least $(1-2\eps)D|S_c|$. Since $\eps<\frac12$ we have $(1-2\eps)D|S_c|>0$. Hence there exists one unique neighbor $i\in[M]$. which is neighbor of only one $v\in S_c$. So the constraint at $i$ is not satisfied since $i$ has only one neighbor in $S_c$. So $i$th coordinate of $Ac$ is not 0. But we took $c\in \mcC\iff Ac=0\bmod 2$. Hence contradiction.
+	
+	Therefore $\forall \ c\in\mcC$, $wt(c)\geq K$. Hence the distance of the code $\mcC$ is at least $\frac{K}{N}$. 
+	
+	\item First we introduce two notions which we will use. Let $G=(L,R,E)$ be an left $D$-regular $(K,(1-\eps)D)$ bipartite expander, then we define 
+	$$\Gm^{odd}(S)=\{j\in R\mid |\Gm(j)\cap S|=\text{odd}\}\quad \Gm^{+}(S)=\{j\in R\mid |\Gm(j)\cap S|=1\}$$So $\Gm^{odd}(S)$ is the set of vertices of $R$ which have odd neighbors in $S$ and  $\Gm^{+}(S)$ is the set of unique neighbors of $S$.	Now we will prove a lemma for distance of the code.
+	
+	\textbf{\textit{Lemma 1:}} $G=(L,R,E)$ is left $D$-regular  $(K,(1-\eps)D)$-expander for some $\eps\in \lt(0,\frac12\rt)$ then $$\delta(\mcC(G))>2\delta(1-\eps)$$ where $\delta=\frac{K}{N}$
+	
+	
+	\textbf{\textit{Proof:}} 	Let $c$ is the min weight nonzero codeword. Take $S=\{i\in L\mid c_i=1\}$. From the previous part we have $|S|\geq \delta n$. Suppose $|S|<2\delta(1-\eps)n$ for contradiction. So we have $$\delta n\leq |S|< 2\delta(1-\eps)n$$ Fix any subset $T\subseteq S$ such that $|T|=\delta n$. Now 
+	
+	\begin{minipage}{0.40\textwidth}
+		\begin{align*}
+			|\Gm^{odd}(S)| & \geq |\Gm^+(S)|                               \\
+			               & \geq |\Gm^+(T)|-|\Gm(S\setminus T)|           \\
+			               & \geq (D(1-2\eps)\delta n)-D|S\setminus T|     \\
+			               & > (D(1-2\eps)\delta n)-D(\delta (1-2\eps))n=0
+		\end{align*}
+	\end{minipage}
+	\hspace{2cm}
+	\begin{minipage}{0.40\textwidth}
+		\begin{tikzpicture}
+			\draw (0,0) ellipse (1cm and 2cm) ;
+			\draw[blue] (0,-0.5) ellipse (0.5cm and 1cm) node[yshift=1.2cm] {$S$};
+			\draw[red] (0,-0.8) ellipse (0.3cm and 0.5cm) node {$T$};
+			%			\draw[blue] (0,0.5) -- (3,1.5);
+			\draw[blue] (3,0) ellipse (0.7cm and 1.5cm) node[yshift=1.7cm] {$\Gm(S)$} ;
+			\draw[red] (3,-0.5) ellipse (0.45cm and 0.7cm) node {$\Gm(T)$};
+		\end{tikzpicture}
+	\end{minipage}
+	\vspace{0.5cm}
+	
+	So $|\Gm^{odd}(S)|>0$. Hence there is a vertex $v\in R$ such that there is odd number of neighbors in $S$. Hence the constraint $v$ is not satisfied. Hence contradiction.\Qed
+	
+	\parinn
+	
+	Now let $r$ be the received word and $c\in \mcC(G)$ be the unique codeword such that $\delta(r,c)<\delta(1-2\eps)N$. Denote $$S^{(k)}=\{i\in L\mid x_i^{(k)}\neq c_i\}$$Hence we have $|S^{(0)}|<\delta(1-2\eps)N$. Also we will use the set $\mathsf{UNSAT}^{(k)}$ to denote the set of unsatisfied right constraints at $k$th step. Similarly for $\mathsf{SAT}^{(k)}$. Now we will state the decoding algorithm then we will analyze the algorithm to show the given statement.
+		\pagebreak
+\section{Decoding Algorithm}
+	\begin{algorithm}
+		\caption{Linear Time Decoding Algorithm for Expander Code}
+		\DontPrintSemicolon
+		\KwIn{$r=(r_1,\dots, r_n)$ with promise $\exs!\ c\in \mcC(G)$ such that $\delta(r,c)<\delta(1-2\eps)n$}
+		\Begin{
+			$k\longleftarrow 0$\;
+			$x^{(k)}\longleftarrow r$\;
+			\ForEach{$j\in R$}{
+				\If{$\sum\limits_{i\in \Gm(j)}x_i=0$}{label $j$ as ``SAT"}
+				\Else{label $j$ as ``UNSAT"}
+			}
+			\ForEach{$i\in L$}{
+				$\mathsf{SAT}_i^{(k)}=\{j\in \Gm(i)\mid j\text{ labeled ``SAT"}\}$\;
+				$\mathsf{UNSAT}_i^{(k)}=\{j\in \Gm(i)\mid j\text{ labeled ``UNSAT"}\}$\;
+			}
+			\While{$\exs\ i\in L$  s.t. $|\mathsf{UNSAT}^{(k)}_i|>\frac23|\Gm(i)|$}{
+				$x_i^{(k+1)}\longleftarrow 1-x_i^{(k)}$\;
+				$x_{i'}^{(k+1)}\longleftarrow x_{i}^{(k)}$ for all $i'\neq i$\;
+				Update $\mathsf{SAT}_i^{(k)}$ and $\mathsf{UNSAT}_i^{(k)}$\;
+				$k\longleftarrow k+1$\;
+			}
+			\Return $x^{k}$
+		}	
+	\end{algorithm}
+	
+\section{Analysis}
+\parinf	
+\textbf{\textit{Lemma 2:}} \label{exdecodelem1}
+	If $\eps\in\lt( 0,\frac16\rt)$ and $0<|S^{(k)}|\leq \delta N$ then $\exs\ i\in L$ such that $|\mathsf{UNSAT}_i^{(k)}|>\frac23|\Gm(i)|$.
+
+
+\textbf{\textit{Proof:}} \parinn First notice that all unique neighbors of $S^{(k)}$ are unsatisfied at $k$th iteration. $\eps\in \lt(0,\frac16\rt)$ hence  the graph has $(1-2\eps)D|S|$ unique neighbors for any $S\subseteq L$ with $|S|\leq \delta N$ by \hyperref[p:p2]{Problem \ref{p:p2}} part (1). Hence $$|\mathsf{UNSAT}^{(k)}|\geq |\Gm^+(S^{(k)})|\geq (1-2\eps)D|S^{(k)}|> \frac{2D}{3}|S^{(k)}|$$Hence, $\exs\ i\in S^{(k)}$ such that $|\mathsf{UNSAT}_i^{(k)}|>\frac{2D}3$. Now the degree of $i$ is $D\implies |\Gm(i)|=D$. Hence $|\mathsf{UNSAT}_i^{(k)}|>\frac23|\Gm(i)|$. \Qed
+
+
+
+
+Now in the algorithm there are two things to observe.
+	
+\parinf
+
+\textbf{\textit{Observation:}} \begin{itemize}
+	\item The number of unsatisfied right constraints is always decreasing.
+	\item $|S^{(k)}-S^{(k+1)}|=1$
+\end{itemize}
+
+\parinf	
+
+\textbf{\textit{Lemma 3:}}\label{exdecodelem2} $|S^{(0)}|<\delta(1-2\eps)N\implies |S^{(k)}|<\delta N$.
+
+
+\textbf{\textit{Proof:}} \parinn Initially $\mathsf{UNSAT}^{(0)}\subseteq {\Gm(S^{(0)})}$ since the unsatisfied constraints are the subset of the neighbors of errors. Hence $$|\mathsf{UNSAT}^{(0)}|\leq|{\Gm(S^{(0)})}|\leq D|S^{(0)}|<D|S^{(0)}|<\delta(1-2\eps)DN$$
+	
+Suppose there exists a $k'$ such that $|S^{(k')}|\geq \delta N$. By the observation there exists $k\leq k'$ such that $|S^{(k)}|=\delta N$. Hence $$|\mathsf{UNSAT}^{(k)}|>|\Gm^+(S^{(k)})|\geq \delta N\cdot (1-2\eps)D$$But the $|\mathsf{UNSAT}^{(k)}|$ keeps decreasing so it can not start with less than $\delta(1-2\eps)DN$ and after that at some point is $\geq \delta N\cdot (1-2\eps)D$. Hence contradiction. \Qed
+
+Since for each iteration the distance between $x^{(k)}$ and $c$ is at most $\delta N$, $c$ is the only codeword which is nearest to $x^{(k)}$. Hence the nearest codeword for each iteration stays the same.
+
+At $k$th iteration  suppose the  number of unsatisfied constraints is nonzero and $|S^{(k)}|<\delta n$. Since number of  unsatisfied constraints is nonzero $|S^{(k)}|> 0$. By \lmref{exdecodelem1}  there exists an $i\in L$ such that $|\mathsf{UNSAT}_i^{(k)}|>\frac23|\Gm(i)|$. Hence the algorithm will find some vertex which has more unsatisfied constraints than satisfied constraints and flip its bit and proceed to the next iteration. With this process the number of unsatisfied constraints reduced by at least 1. Thus the algorithm will keep reducing the number of unsatisfied constraints till it becomes zero because if its not zero at any $j$th iteration and then $|S^{(j)}|>0$ and hence by the above argument it will proceed. Once the  number of unsatisfied constraints becomes zero cause then the final output, suppose $x$ satisfies all the right constraints. Hence it is indeed a codeword and since the nearest codeword at each iteration stays the same $x=c$. 
+
+Therefore the above algorithm can decode with $(1-2\eps)\frac{K}{N}$ fraction errors. Since $(1-3\eps)\frac{K}{N}< (1-2\eps)\frac{K}{N}$ as $\eps\in\lt(0,\frac16\rt)$ as in \lmref{exdecodelem1} we have a $(1-3\eps)\frac{K}{N}$-decoder algorithm. Now in the next section we will prove that it is a polynomial time (in fact linear time) algorithm.
+
+\section{Time Complexity}
+\begin{enumerate}
+	\item Preprocessing Stage: For each $j\in R$ to check $\sum\limits_{i\in \Gm(j)}x_i=0$ it takes $O(d)$ time. Hence the first for loop takes $O(md)$ time. Now for each vertex in $L$ we keep the number of unsatisfied constraints which are neighbor of that vertex. We also keep a list of vertices in $L$ which have more unsatisfied constraints than satisfied constraints. This can be done in $O(cn)$ time.
+	\item In each iteration of the while loop instead of searching for a vertex with more unsatisfied constraints than satisfied constraints we remove an element of $Q$. \parinn
+	
+	After flipping the vertex we update the list of unsatisfied constraints in $R$ in $O(c)$ time. Then we  will update the number of unsatisfied constraints associated with each element of in $L$ which are neighbors of the neighbors of $i$ i.e. the vertices in  $\Gm(\Gm(i))$ in $O(cd)$ time. Since after the bit flip the previously unsatisfied constraints are satisfied in $\Gm(i)$ and the previously satisfied constraints are now unsatisfied. For each vertex $j\in\Gm(i)$ if $j$ was previously unsatisfied then we will subtract 1 from the number of unsatisfied constrains of the neighbors of $j$ and if $j$ was previously satisfied then we will add 1 for any previously satisfied constraint to the number of unsatisfied constrains of the neighbors of $j$. Now from $Q$ we will remove the elements which have lesser unsatisfied constraints than satisfied constraints and add the.
+	
+	After updating the number of unsatisfied constraints of each vertex in $\Gm(\Gm(i))$ we will add the vertices which have more unsatisfied constraints than satisfied constraints into $Q$ and remove the vertices which have lesser unsatisfied constrains than satisfied constraints. This all can be done in $O(cd)$ time since $|\Gm(\Gm(i))|\leq cd$. Since $c,d$ are constants every thing inside each iteration can be done in constant time.
+	\item In each iteration the number of unsatisfied constraints reduces by at least 1. The original number of unsatisfied constraints is at most $c\delta (1-2\eps)n$. (\lmref{exdecodelem2}). Then the total number of iterations is at most $c\delta(1-2\eps)n=O(n)$.
+\end{enumerate}
+Hence the algorithm decodes the received word in $O(n)$ time.
+\end{enumerate}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement
-	}{p1% problem reference text
+	}{p4% problem reference text
 	}
-	Given a $D_1$-regular graph $G_1$ on $N_1$ vertices and a $D_2$-regular graph $G_2$ on $D_1$ vertices consider the following graph $G_1\textcircled{r}G_2$ on vertex set $[N_1]\times [D_1]$: vertex $(u,i)$ is connected to $(v,j)$ iff \begin{enumerate}[label=(\alph*)]
-		\item $u=v$ and $(i,j)$ is an edge in $G_2$ or,
-		\item $v$ is the $i$'th neighbor of $u$ in $G_1$ and $u$ is the $j$th neighbour of $v$. 
-	\end{enumerate}
-	That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associating edge incident to $v$ with one vertex of $G_2$.
-	\begin{enumerate}
-		\item Prove that there is a function $g$ such that if $G_1$ has spectral expansion $\gm_1>0$ and $G_2$ has spectral expansion $\gm_2>0$ (and both graphs are undirected) then $G_1\textcircled{r}G_2$ has spectral expansion $g(\gm_1,\gm_2,D_2)>0$.
-		
-		[Hint: Note that $(G_1\textcircled{r}G_2)^3$ has $G_1\textcircled{z}G_2$ as a subgraph]
-		\item Show how to convert an explicit construction of constant degree (spectral) expanders into an explicit construction of degree 3 (spectral) expanders.
-		\item Without using Theorem 4.14, prove an analogue of Part 1 for edge expansion. That is, there is a function $h$ such that if $G_1$ is an $\lt(\frac{N_1}2,\eps_1\rt)$ edge expander and $G_2$ is a $\lt(\frac{D_1}2,\eps_2\rt)$ edge expander then $G_1\textcircled{r}G_2$ is a $\lt(\frac{N_1D_1}{2},h(\eps_1,\eps_2,D_2)\rt)$ edge expander where $h(\eps_1,\eps_2,D_2)>0$ if $\eps_1,\eps_2>0$. 
-		
-		[Hint: Given any set $S$ of vertices of $G_1\textcircled{r}G_2$, partition $S$ into the clouds that are more than ``half-full" and those that are not]
-		\item Prove that the functions $g(\gm_1,\gm_2,D_2)$ and $h(\eps_1,\eps_2,D_2)$ must depend on $D_2$ by showing that $G_1\textcircled{r}G_2$ cannot be a $\lt(\frac{N_1D_1}2,\eps\rt)$ edge expander if $\eps>\frac1{D_1+1}$ and $N_1\geq 2$
-	\end{enumerate}
+	Write a short analysis of the Zig-Zag product construction the way we used int he algorithm of Reingold
 \end{problem}
 \end{document}
