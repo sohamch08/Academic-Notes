@@ -203,9 +203,9 @@ That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associatin
 	
 	\item We will start by first assigning 1 to all of the vertices in $N(S)$ and 0 to all the other vertices.\parinn
 	
-	Since the error probability is $\delta$ then for all $u\in S$ less than $\delta D$ locations in $N(u)$ should be assigned 0 and  $u\notin S$ less than $\delta D$ locations in $N(u)$ should be assigned 1 . Therefore we have the condition:$$ \forall\ S\subseteq L,|S|=n,\ \forall u\in L-S,\ |N(u)-N(S)|>(1-\delta)D$$for the set of left vertices of $G$ are denoted by $L$.  
+	Since the error probability is $\delta$ then for all $u\in S$ at least $(1-\delta )D$ locations in $N(u)$ should be assigned 1 and  $u\notin S$ at least $(1-\delta )D$ locations in $N(u)$ should be assigned 0.
 	
-	 Now if we have $\delta > 3\eps$ then there are at most $\frac{|S|}2$ many vertices outside $S$ which has at least $\delta D$ many neighbors in $N(S)$  using part (2). So all other vertices has less than $\delta D$ neighbors which are in $N(S)$. Hence for all these vertices the probability of accepting them is $\delta $ since less than $\delta D$ many neighbors are colored 1. So the bad set of neighbors.
+	 Now if we have $\delta > 3\eps$ then there are at most $\frac{|S|}2$ many vertices outside $S$ which has at least $\delta D$ many neighbors in $N(S)$  using part (2). So all other vertices has less than $\delta D$ neighbors which are in $N(S)$. Hence for all these vertices less than $\delta D$ vertices are assigned to 1. Therefore at least $|L|-|S|-\frac{|S|}2$ many vertices are following the constraint. 
 	 
 	 We will call let $S\sqcup T=L$. Then  by $\eps$\textit{-intersection property} of $S,T$ we mean to say \begin{itemize}
 	 	\item $\forall\ S'\subseteq S, |\{v\in T\mid N(v)\cap N(S')|>\eps D\}|< |S'|$
@@ -358,4 +358,13 @@ Hence the algorithm decodes the received word in $O(n)$ time.
 	}
 	Write a short analysis of the Zig-Zag product construction the way we used int he algorithm of Reingold
 \end{problem}
+\solve{
+We will show that USTCONN is in log-space. The main observation used here is 
+
+For expander graphs the diameter of the graph is $O(\log N)$ where $N$ is the number of vertices. Then to check $s-t$ connectivity we can start from $s$ and then take all possible $O(\log N)$ length step walks and output `YES' if any of the walks reaches $t$. This uses $O(\log N)$ space as only the index of the vertex for the next step in the current $O(\log N)$ length walk is need to be stored.
+
+For any given graph $G$ we will first convert $F$ to $G'$ which is non-bipartite by just adding self loops for all vertices of $G$. Now if $G'$ is non-regular then we will make the graph 3-regular. For each vertex $v$ in the graph let $d_v$ is the degree of the vertex then we will replace $v$ with a $d_v$ cycle. Now the graph is 3-regular. Let the final graph is $G''$. 
+
+At this point suppose the graph $G''$ is now $D$ regular. Then we take an expander graph $H$ which is $\lt(D^4,D,\frac34\rt)$. Now we will recursively define a graph family$$G_0=G'',\qquad G_{k}=(G_{k-1}\textcircled{z}H)^8$$
+}
 \end{document}
