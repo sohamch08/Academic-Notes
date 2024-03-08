@@ -13,8 +13,8 @@
 \hypersetup{
 	colorlinks=true,
 	linkcolor=doc!80,
-	citecolor=myr
-	filecolor=magenta,      
+	citecolor=myr,
+	filecolor=myr,      
 	urlcolor=doc!80,
 	pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
 }
@@ -203,14 +203,11 @@ That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associatin
 	
 	\item We will start by first assigning 1 to all of the vertices in $N(S)$ and 0 to all the other vertices.\parinn
 	
-	Since the error probability is $\delta$ then for all $u\in S$ at least $(1-\delta )D$ locations in $N(u)$ should be assigned 1 and  $u\notin S$ at least $(1-\delta )D$ locations in $N(u)$ should be assigned 0.
-	
-	 Now if we have $\delta > 3\eps$ then there are at most $\frac{|S|}2$ many vertices outside $S$ which has at least $\delta D$ many neighbors in $N(S)$  using part (2). So all other vertices has less than $\delta D$ neighbors which are in $N(S)$. Hence for all these vertices less than $\delta D$ vertices are assigned to 1. Therefore at least $|L|-|S|-\frac{|S|}2$ many vertices are following the constraint. 
+	 Now if we have $\delta > 3\eps$ then there are at most $\frac{|S|}2$ many vertices outside $S$ which has at least $\delta D$ many neighbors in $N(S)$  using part (2). Call these set of vertices as $S_1$. So all other vertices outside $S$ has less than $\delta D$ neighbors which are in $N(S)$. Hence for all these vertices less than $\delta D$ vertices are assigned to 1. So the bad set of vertices are $S_1$ with $|S_1|\leq \frac{|S|}2$. So we will assign 0 to the set $N(S_1)$. 
 	 
-	 We will call let $S\sqcup T=L$. Then  by $\eps$\textit{-intersection property} of $S,T$ we mean to say \begin{itemize}
-	 	\item $\forall\ S'\subseteq S, |\{v\in T\mid N(v)\cap N(S')|>\eps D\}|< |S'|$
-	 	\item $\forall\ T'\subseteq T, |\{u\in S\mid N(u)\cap N(T')|>\eps D\}|< |T'|$
-	 \end{itemize}
+	 Now we will take $S_1$, with the same $\delta$ there are at most $\frac{|S_1|}2\leq \frac{|S|}{4}$ many vertices which has at least $\delta D$ many neighbors inside $N(S_1)$. Therefore at least $\frac{|S_1|}2$ many vertices outside $S_1$ and but inside $S$ which has less than $\delta D$ many neighbors inside $N(S_1)$. Hence for these are in $S$ and at most $\delta D$ many locations are assigned to 1. Again we will take the set of vertices in $S\cap S_1$ with at least $\delta D$ many vertices in $N(S_1)$ to be $S_2$. So we will assign $N(S_2)$ to be 1.
+	 
+	 We will keep doing this and notice each time the size of the bad sets are reducing by a factor 2. Hence at the end we will get an assignment such that for all vertex $v$, at least $(1-\delta)D$ many vertices are assigned the value $\chi_S(v)$. 
 \end{enumerate}
 }
 \pagebreak
@@ -365,6 +362,16 @@ For expander graphs the diameter of the graph is $O(\log N)$ where $N$ is the nu
 
 For any given graph $G$ we will first convert $F$ to $G'$ which is non-bipartite by just adding self loops for all vertices of $G$. Now if $G'$ is non-regular then we will make the graph 3-regular. For each vertex $v$ in the graph let $d_v$ is the degree of the vertex then we will replace $v$ with a $d_v$ cycle. Now the graph is 3-regular. Let the final graph is $G''$. 
 
-At this point suppose the graph $G''$ is now $D$ regular. Then we take an expander graph $H$ which is $\lt(D^4,D,\frac34\rt)$. Now we will recursively define a graph family$$G_0=G'',\qquad G_{k}=(G_{k-1}\textcircled{z}H)^8$$
+At this point suppose the graph $G''$ is now $D$ regular. Then we take an expander graph $H$ which is $\lt(D^{16},D,\frac12\rt)$. Now we will recursively define a graph family$$G_0=G'',\qquad G_{k}=(G_{k-1}\textcircled{z}H)^8$$Now suppose $\lm_k$ denote the second larges value of $G_k$. And $\lm_H$ denote the second largest eigenvalue of $H$ i.e. $\lm_H=\frac12$. Initially we have by a result of Alon and Sudakov is $\lm_0\leq  1-\frac1{D^{16}N^2}$. Now we have a claim:\parinf
+
+\textbf{\textit{Claim:}} For any $i$, $\lm_i\leq \min\{\lm_{i-1}^2,\frac12\}$.
+
+\textbf{\textit{Proof:}} Using \cite[Theorem 4.3]{reingold2004entropy} we have  $$\lm_{A\textcircled{z}B}\leq \frac12(1-\lm_B^2)\lm_A+\frac12\sqrt{(1-\lm_B^2)^2\lm_A^2+4\lm_2^2}$$In our case $\lm_H\leq \frac12$. So we will have $$\lm_k\leq 1-\frac12(1-\lm_{i-1})(1-\lm_H^2)$$
+
+So we have $$\lm_{G_{i-1}\textcircled{z}H}\leq 1-\frac12(1-\lm_{i-1})(1-\lm_H^2)\leq 1-\frac12\lt(1-\lm_{i-1}\rt)\lt(1-\frac14\rt)\leq 1-\frac12\lm_{i-1}\leq 1-\frac38(1-\lm_{i-1}^2)$$Hence we have $$\lm_i=(\lm_{G_{i-1}\textcircled{z}H})^8\leq \lt(1- \frac38(1-\lm_{i-1}^2)  \rt)$$Now if $\lm_i\leq \frac12$ then $\lm_{i+1}\leq \lt(1-\frac3{16}\rt)^7\leq \frac 12$. And if $\lm_i>\frac12$ then for $x\in\lt[\frac12,1  \rt]$ we have $$\lt(1-\frac38(1-x)\rt)^8\leq \lt( 1-\frac{3}8\times 4(1-x)\rt)^2\leq \lt(1-\frac32(1-x)\rt)^2\leq (1-(1-x))^2= x^2$$Therefore $\lm_i\leq \lm_{i-1}^2$. Hence we always have $\lm_i\leq \min \{\lm_{i-1}^2,\frac12\}$.\Qed
+
+Now $\lm_i\leq \lm_{i-1}^2$. Therefore we have $$\lm_i\leq \lm_0^{2^i}\leq \lt( 1-\frac1{D^{16}N^2}  \rt)^{2^i}\leq \frac 12$$ Hence it is enough to have $i\geq \log (D^{16}N^2\log 2)=O(\log N)$. Therefore if we do this above process $O(\log N)$ many times we will have a good expander then we have the diameter $O(\log N)$.
 }
+\bibliographystyle{alpha}
+\bibliography{refs}
 \end{document}
