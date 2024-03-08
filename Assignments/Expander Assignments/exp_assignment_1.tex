@@ -20,12 +20,14 @@
 }
 \usepackage[most,many,breakable]{tcolorbox}
 \usepackage{tikz}
-\usetikzlibrary{decorations.pathreplacing,angles,quotes,patterns}
 \usepackage{caption}
-\usepackage{bbm}
-\usepackage[ruled,vlined]{algorithm2e}
 \usepackage{mathpazo}
 \usepackage{libertine}
+\usepackage{physics}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+
 \definecolor{mytheorembg}{HTML}{F2F2F9}
 \definecolor{mytheoremfr}{HTML}{00007B}
 \definecolor{doc}{RGB}{0,60,110}
@@ -33,25 +35,9 @@
 \definecolor{myb}{RGB}{45, 111, 177}
 \definecolor{myr}{RGB}{199, 68, 64}
 
-\tcbuselibrary{theorems,skins,hooks}
-\newtcbtheorem{problem}{Problem}
-{%
-	enhanced,
-	breakable,
-	colback = mytheorembg,
-	frame hidden,
-	boxrule = 0sp,
-	borderline west = {2pt}{0pt}{mytheoremfr},
-	sharp corners,
-	detach title,
-	before upper = \tcbtitle\par\smallskip,
-	coltitle = mytheoremfr,
-	fonttitle = \bfseries\sffamily,
-	description font = \mdseries,
-	separator sign none,
-	segmentation style={solid, mytheoremfr},
-}
-{p}
+\input{../assignment-problem-box}
+
+
 
 % To give references for any problem use like this
 % suppose the problem number is p3 then 2 options either 
@@ -98,7 +84,7 @@ That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associatin
 	\item Without using Theorem 4.14, prove an analogue of Part 1 for edge expansion. That is, there is a function $h$ such that if $G_1$ is an $\lt(\frac{N_1}2,\eps_1\rt)$ edge expander and $G_2$ is a $\lt(\frac{D_1}2,\eps_2\rt)$ edge expander then $G_1\textcircled{r}G_2$ is a $\lt(\frac{N_1D_1}{2},h(\eps_1,\eps_2,D_2)\rt)$ edge expander where $h(\eps_1,\eps_2,D_2)>0$ if $\eps_1,\eps_2>0$. 
 	
 	[Hint: Given any set $S$ of vertices of $G_1\textcircled{r}G_2$, partition $S$ into the clouds that are more than ``half-full" and those that are not]
-	\item Prove that the functions $g(\gm_1,\gm_2,D_2)$ and $h(\eps_1,\eps_2,D_2)$ must depend on $D_2$ by showing that $G_1\textcircled{r}G_2$ cannot be a $\lt(\frac{N_1D_1}2,\eps\rt)$ edge expander if $\eps>\frac1{D_1+1}$ and $N_1\geq 2$
+	\item Prove that the functions $g(\gm_1,\gm_2,D_2)$ and $h(\eps_1,\eps_2,D_2)$ must depend on $D_2$ by showing that $G_1\textcircled{r}G_2$ cannot be a $\lt(\frac{N_1D_1}2,\eps\rt)$ edge expander if $\eps>\frac1{D_2+1}$ and $N_1\geq 2$
 \end{enumerate}
 \end{problem}
 \solve{
@@ -142,10 +128,29 @@ That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associatin
 	Now the normalized adjacency matrix for the $k$-cycle is $\frac12M$. Hence the eigenvalues for the normalized adjacency matrix are $\Re(\om^j)=\cos\frac{2j\pi}{k}$ for all $j\in [k]$. Hence the second largest eigenvalue is when $j=1$ i.e.  $$ \cos\frac{2\pi}{k}\geq 1-\frac12\lt(\frac{2\pi}{k}\rt)^2=1-\frac{2\pi^2}{k^2}=1-\frac{1}{\Theta(k^2)}$$Therefore $k$-cycle is $1-\frac{1}{\Theta(k^2)}$ expander. \qed
 	
 	\parinn Now we will show an explicit construction of degree 3 expanders from an constant degree expanders. Let $G$ be an $(N,D,\lm)$-expander. Take $H$ to be a $D$-cycle. Hence by the Lemma 2 we have $H$ is a $\lt(D,2,1-\frac1{\Theta(D^2)}\rt)$-expander. Take the graph $G'=G\textcircled{r}H$. $G'$ is a $3$ regular graph. Hence $G'$ is a $(ND,3,\lm')$-expander where $1-\lm'>0$ by part (1). Hence $G'$ is a degree 3 expander.
-	\item 
-	\item 
+	
+	\item Suppose $V_1$, $V_2$ denote the vertex sets of $G_1$ and $G_2$ respectively. Hence we can denote the vertex set of $G_1\textcircled{r} G_2$ to be $V_1\times V_2$. Now Let $S$ is a vertex subset of $G_1\textcircled{r}G_2$. Now we will partition $S$ into two groups of vertices $A$ and $B$. Here $A$ contains all the at least half filled clouds of vertices of $V_1$ i.e. $$(u,v)\in S,\ (u,v)\in A\iff |\{v\mid (u,v)\in S\}|\geq \frac{D_1}2$$ then take $B=S-A$. Clearly $B$ is the set of all at least half empty clouds of vertices of $V_2$. Also take $C=\{u\mid \exs v\in V_2, (u,v)\in A\}$. Therefore finally we get this relation $$|S|\leq |B|+|C|D_1\implies |C|\geq \frac{|S|-|B|}{D_1}$$Now we will consider a relation between $|B|$ and $|S|$ of the factor $\frac{\eps_1}{\eps_1+x}$ where we will choose $x$. Now we will consider 5 cases:
+	\subsection*{Case I: $|B|>\frac{\eps_1}{\eps_1+x}|S|$}
+	Now we have all the half filled clouds of $S$ in $B$. So by only the $G_2$ edge expansion there are at least $D_2\eps_2|B|$ many edges from $S$ to $\bar{S}$. Since $|B|>\frac{\eps_1}{\eps_1+x}|S|$ we have at least $\frac{D_2\eps_1\eps_2}{\eps_1+x}|S|$ many edges from $S$ to $\bar{S}$. So the edge expansion here is $$\frac{\frac{D_2\eps_1\eps_2}{\eps_1+x}|S|}{(D_2+1)|S|}=\frac{D_2\eps_1\eps_2}{(D_2+1)(\eps_1+x)}$$
+	\subsection*{Case I: $|B|\leq\frac{\eps_1}{\eps_1+x}|S|$ and $|C|\leq \frac{N_1}{2}$}
+	Now suppose the set of edges going from $C$ to $\bar{C}$ is $E_C$. Then some of these edges are going to $B$ also and in $G_1\textcircled{r}G_2$ each of the edges in $E_C$ have exactly one neighbor in $G_1$. Hence at least $|E_C|-|B|$ many edges are between $S$ and $\bar{S}$ in $G_1\textcircled{r}G_2$. Now there are at least $|C|\eps_1 D_1$ many edges from $C$ to $\bar{C}$ in $G_1$. Hence $$|C|\eps_1 D_1\geq \frac{|S|-|B|}{D_1}\eps _1D_1\geq |S|\lt( 1-\frac{\eps_1}{\eps_1+x} \rt)\eps_1=x|S|\frac{\eps_1}{\eps_1+x}> 2|B|$$For the last step we want $\boxed{x>2}$.Therefore the the number of edges between $S$ and $\bar{S}$ is at least $$|C|\eps_1 D_1-|B|>\frac{|S|-|B|}{D_1}\eps_1D_1-|B|\geq |S|-(1+\eps_1)|B|\geq |S|\lt(1- \frac{(1+\eps_1)\eps_1}{\eps_1+x}  \rt)\geq |S|\frac{x-\eps_1}{x+\eps_1}$$Therefore the edge expansion is $$\frac{|S|\frac{x-\eps_1}{x+\eps_1}}{|S|(D_2+1)}=\frac{x-\eps_1}{(x+\eps_1)(D_2+1)}$$	
+	\subsection*{Case I: $|B|\leq\frac{\eps_1}{\eps_1+x}|S|$  and $\frac{3N_1}{4}\geq |C|\geq \frac{N_1}{2}$}
+	In this case we have $|C|\geq \frac{N_1}{2}$. Therefore $|\bar{C}|\leq \frac{N_1}{2}$. Therefore the number of edges between $C$ and $\bar{C}$ is at least $$|\bar{C}|\eps_1D_1\geq \frac{N_1\eps_1 D_1}{4}\geq \frac{3N_1\eps_1D_1}{3\times 4}\geq \frac{|C|\eps_1D_1}{3}\geq \frac{(|S|-|B|)\eps_1}{3}\geq x|S|\frac{\eps_1}{3(\eps_1+x)}>2|B|$$Hence we want $\frac{x}{3}>2\iff \boxed{x\geq 6}$. Hence like the earlier case we have the edges between $S$ and $\bar{S}$ is at least 
+	
+	$$|\bar{C}|\eps_1D_1-|B|\geq \frac{(|S|-|B|)\eps_1}{3}-|B|\geq \frac13|S|-\frac{3+\eps_1}3|B|\geq |S|\lt(\frac13- \frac{(3+\eps_1)\eps_1}{3(\eps_1+x)}  \rt)\geq |S|\frac{x-3\eps_1}{3(x+\eps_1)}$$Therefore the edge expansion is $$\frac{|S|\frac{x-3\eps_1}{3(x+\eps_1)}}{(D_2+1)|S|}=\frac{x-3\eps_1}{3(x+\eps_1)(D_2+1)}$$
+	
+
+	\subsection*{Case I: $|B|\leq\frac{\eps_1}{\eps_1+x}|S|$ and  $\frac{3N_1}{4}\leq |C|$} 
+	For this case suppose $x$ be the number of clouds in $C$ which have at most $\frac{3D_1}4$ many pairs from $V_2$ inside $S$. Then \begin{align*}
+		x\frac{D_1}2+(|C|-x)\frac{3D_1}{4}\leq |S|\leq \frac{N_1D_1}2\implies \frac{N_1D_11}2+x\frac{D_1}4\geq |C|\frac{3D_1}{4}\geq \frac{9N_1D_1}{16}\implies x\geq \frac{N_1}{4}
+	\end{align*}Hence there are at least $\frac{N_1}4$ clouds in $C$ which have at most $\frac{3D_1}4$ many pairs from $V_2$. Now for any such $v$ denote the set of parirs as $T_v$. Then $|T_v|\leq \frac{3D_1}{4}$. So the number of edges between $T_v$ and $\bar{T_v}$ is at least $|\bar{T_v}|\eps_2D_2\geq \frac{D_1}{4}D_2\eps_2$ and all these edges will be present in $G_1\textcircled{r}G_2$. So the number of edges between $S$ and $\bar{S}$ is at least $\frac{\eps_2D_2D_1N_1}{4}\geq \frac{|S|\eps_2D_2}{2}$. Hence edge expansion is $\frac{\eps_2D_2}{2(D_2+1)}$. 
+	
+	After all this analysis we can take $x$ to be something big for example 10. Then the corresponding edge expansion function will be $$h(\eps_1,\eps_2,D_2)\equiv \min\lt\{\frac{D_2\eps_1\eps_2}{(D_2+1)(\eps_1+10)}, \frac{10-\eps_1}{(10+\eps_1)(D_2+1)},      \frac{10-3\eps_1}{3(10+\eps_1)(D_2+1)},   \frac{\eps_2D_2}{2(D_2+1)}   \rt\}$$
+	
+	\item We will create $S$ where it contains full cloud vertices. Then all the edges of $G_2$ are not  going outwards from $S$ only the edge corresponding to $G_1$ is going outside. Hence only the $G_1$ edges are going outside of $S$. So the number of edges going outside of $S$ $\leq $ the number of $G_1$ edges of $S=|S|$ therefore $\eps_2\leq \frac1{D_2+1}$. So it is not an $\eps>\frac1{D_2+1}$ edge expander
 \end{enumerate}
 }
+\pagebreak
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 2
@@ -159,6 +164,15 @@ That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associatin
 	\begin{enumerate}
 		\item For a set $S$ of left vertices, a $y\in N(S)$ is called a \textit{unique} neighbor of $S$ if $y$ is incident to exactly one edge from $S$. Prove that every left-set $S$ of size at most $K$ has at least $(1-2\eps)D|S|$ unique neighbors.
 		\item For a set $S$ of size at most $\frac{K}2$, prove that at most $\frac{|S|}2$ vertices outside $S$ have at least $\delta D$ neighbors in $N(S)$ for $\delta=O(\eps)$.
+		\end{enumerate}	
+		
+		\textbf{Property $\Pi$:} For all left vertices $x$, all but a $\delta=O(\eps)$ fraction of neighbors of $x$ are assigned the value $\chi_S(x)$ (where $\chi_S(x)=1$ iff $x\in S$).
+		\begin{enumerate}
+		\addtocounter{enumi}{2}
+		\item Show that if we store an assignment satisfying Property $\Pi$ then we can probabilistically test membership in $S$ with error probability $\delta$ by reading just one bit of the data structure.
+		\item Show that an assignment satisfying Property $\Pi$ exists provided $|S|\leq\frac{K}2$
+		
+		[Hint: First assign 1 to all of $S$'s neighbors and 0 to all its non-neighbors, then try to correct the errors.]
 	\end{enumerate}
 \end{problem}
 \solve{
@@ -169,9 +183,37 @@ That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associatin
 		|U|+2|T|\leq D|S|\iff |U|+2(|\Gm(S)|-|U|)\leq D|S|\\
 		\iff |U|\geq 2|\Gm(S)|-D|S|\geq (1-\eps)D|S|-D|S|=(1-2\eps)D|S|
 	\end{multline*}Hence there are at least  $(1-2\eps)D|S|$ unique neighbors.
-	\item 
+	
+	
+	
+	\item Let $S$ be a set of left vertices with $|S|\leq \frac{K}2$. Assume the contrary. There exists a set of vertices, $T$ more than $\frac{|S|}2$ outside $S$ such that they have at lest $\delta D$ neighbors in $N(S)$. Suppose $V\subseteq T$ such that $|V|=\frac{|S|}2+1$. Then We can take $|S\cup V|\leq K$. All vertices in $V$ has at least $\delta D$ many common neighbors with $N(S)$. Hence all vertices have at most $(1-\delta)D$ many neighbors which are not in $S$. Therefore $$|N(S\cup V)|\leq |N(S)|+(1-\delta)D|V|\leq D|S|+(1-\delta )D|V|$$Since $|S\cup V|\leq K$ we have $$|N(S\cup V)|\geq D(1-\eps)|S\cup V|=(|S|+|V|)(1-\eps)D$$Therefore we have \begin{align*}
+		& D(|S|+|V|)(1-\eps)\leq D|S|+(1-\delta)D|V|\\
+		\iff & (1-\eps)(|S|+|V|)\leq |S|+(1-\delta)|V|\\
+		\iff & (\delta-\eps)|V|\leq \eps|S|\\
+		\iff & (\delta-\eps)\frac{|S|}2\leq (\delta-\eps)|V|\leq \eps|S| & \lt[|S|\geq \frac{|V|}2\rt]\\
+		\iff & \delta\leq 3\eps
+	\end{align*}
+	Therefore if we take $\delta > 3\eps $ then we will not satisfy the inequality above. This choice of delta will lead to contradiction. Hence for $\delta > 3\eps$ we have at most $\frac{|S|}2$ many vertices outside $S$ which have at least $\delta D$ many common neighbors with $N(S)$.  
+	
+	
+	
+	\item For any $x$ we have to decide if $x\in S$ with error probability $\delta$ by reading just one bit of the data structure. We will do the following, given $x$, we will pick any random neighbor $v\in_R N(x)$ then output the value assigned to $v$.
+	
+	In this algorithm all but $\delta$ fraction of the neighbors of $x$ are assigned the value of $\chi_S(x)$. Hence error happens when we sample the random neighbor of $x$ from the $\delta$ fraction of the neighbors of $x$ which are not assigned the value of $\chi_S(x)$. Therefore with this algorithm the error probability is $\delta $ and we only read one bit of the data structure.
+	
+	\item We will start by first assigning 1 to all of the vertices in $N(S)$ and 0 to all the other vertices.\parinn
+	
+	Since the error probability is $\delta$ then for all $u\in S$ less than $\delta D$ locations in $N(u)$ should be assigned 0 and  $u\notin S$ less than $\delta D$ locations in $N(u)$ should be assigned 1 . Therefore we have the condition:$$ \forall\ S\subseteq L,|S|=n,\ \forall u\in L-S,\ |N(u)-N(S)|>(1-\delta)D$$for the set of left vertices of $G$ are denoted by $L$.  
+	
+	 Now if we have $\delta > 3\eps$ then there are at most $\frac{|S|}2$ many vertices outside $S$ which has at least $\delta D$ many neighbors in $N(S)$  using part (2). So all other vertices has less than $\delta D$ neighbors which are in $N(S)$. Hence for all these vertices the probability of accepting them is $\delta $ since less than $\delta D$ many neighbors are colored 1. So the bad set of neighbors.
+	 
+	 We will call let $S\sqcup T=L$. Then  by $\eps$\textit{-intersection property} of $S,T$ we mean to say \begin{itemize}
+	 	\item $\forall\ S'\subseteq S, |\{v\in T\mid N(v)\cap N(S')|>\eps D\}|< |S'|$
+	 	\item $\forall\ T'\subseteq T, |\{u\in S\mid N(u)\cap N(T')|>\eps D\}|< |T'|$
+	 \end{itemize}
 \end{enumerate}
 }
+\pagebreak
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 3
@@ -268,10 +310,6 @@ That is, we ``replace" each vertex $v$ in $G_1$ with a copy of $G_2$, associatin
 
 \textbf{\textit{Proof:}} \parinn First notice that all unique neighbors of $S^{(k)}$ are unsatisfied at $k$th iteration. $\eps\in \lt(0,\frac16\rt)$ hence  the graph has $(1-2\eps)D|S|$ unique neighbors for any $S\subseteq L$ with $|S|\leq \delta N$ by \hyperref[p:p2]{Problem \ref{p:p2}} part (1). Hence $$|\mathsf{UNSAT}^{(k)}|\geq |\Gm^+(S^{(k)})|\geq (1-2\eps)D|S^{(k)}|> \frac{2D}{3}|S^{(k)}|$$Hence, $\exs\ i\in S^{(k)}$ such that $|\mathsf{UNSAT}_i^{(k)}|>\frac{2D}3$. Now the degree of $i$ is $D\implies |\Gm(i)|=D$. Hence $|\mathsf{UNSAT}_i^{(k)}|>\frac23|\Gm(i)|$. \Qed
 
-
-
-
-Now in the algorithm there are two things to observe.
 	
 \parinf
 
@@ -297,7 +335,7 @@ Therefore the above algorithm can decode with $(1-2\eps)\frac{K}{N}$ fraction er
 
 \section{Time Complexity}
 \begin{enumerate}
-	\item Preprocessing Stage: For each $j\in R$ to check $\sum\limits_{i\in \Gm(j)}x_i=0$ it takes $O(d)$ time. Hence the first for loop takes $O(md)$ time. Now for each vertex in $L$ we keep the number of unsatisfied constraints which are neighbor of that vertex. We also keep a list of vertices in $L$ which have more unsatisfied constraints than satisfied constraints. This can be done in $O(cn)$ time.
+	\item Preprocessing Stage: For each $j\in R$ to check $\sum_{i\in \Gm(j)}x_i=0$ it takes $O(d)$ time. Hence the first for loop takes $O(md)$ time. Now for each vertex in $L$ we keep the number of unsatisfied constraints which are neighbor of that vertex. We also keep a list of vertices in $L$ which have more unsatisfied constraints than satisfied constraints. This can be done in $O(cn)$ time.
 	\item In each iteration of the while loop instead of searching for a vertex with more unsatisfied constraints than satisfied constraints we remove an element of $Q$. \parinn
 	
 	After flipping the vertex we update the list of unsatisfied constraints in $R$ in $O(c)$ time. Then we  will update the number of unsatisfied constraints associated with each element of in $L$ which are neighbors of the neighbors of $i$ i.e. the vertices in  $\Gm(\Gm(i))$ in $O(cd)$ time. Since after the bit flip the previously unsatisfied constraints are satisfied in $\Gm(i)$ and the previously satisfied constraints are now unsatisfied. For each vertex $j\in\Gm(i)$ if $j$ was previously unsatisfied then we will subtract 1 from the number of unsatisfied constrains of the neighbors of $j$ and if $j$ was previously satisfied then we will add 1 for any previously satisfied constraint to the number of unsatisfied constrains of the neighbors of $j$. Now from $Q$ we will remove the elements which have lesser unsatisfied constraints than satisfied constraints and add the.
@@ -309,8 +347,10 @@ Hence the algorithm decodes the received word in $O(n)$ time.
 \end{enumerate}
 }
 
+\pagebreak
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Problem 1
+% Problem 4
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement
