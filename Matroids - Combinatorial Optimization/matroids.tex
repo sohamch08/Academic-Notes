@@ -1,3 +1,4 @@
+
 \documentclass{article}
 \usepackage{url}
 
@@ -15,7 +16,7 @@
 	\newlength{\drop}
 	\setlength{\drop}{0.1\textheight}
 	\centering
-	\settowidth{\unitlength}{\Huge\scshape #1 \hspace{10pt}}
+	\settowidth{\unitlength}{\Huge\scshape\bfseries #1 \hspace{10pt}}
 	\vspace*{\baselineskip}
 	\rule{\unitlength}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
 	\rule{\unitlength}{0.4pt}\\[\baselineskip]
@@ -134,21 +135,65 @@ The downward closure property trivially holds. For extension property is $S|<|S'
 Assume we have a matroid $M=(E,I)$. 
 \dfn{Circuit}{A minimal dependent set $C$ such that $\forall\ e\in C$, $C-e$ is an independent set.}
 \thm{}{Let $S\in I$. $S+e\notin I$. Then $\exs!$ $C\subseteq S+e$.}
-
+\begin{proof}
+	Given $S+e\notin I$. Take the set $\Sg$ where $T\in \Sg$ if $t\notin I$ and $T\subseteq S+e$. $\Sg$ is nonempty since $S+e\in \Sg$. Now under the ordering of inclusion $T$ has a minimal element. Hence this minimal element is the desired circuit $C$ which is minimal dependent set contained in $S+e$.
+	
+	Now suppose it is not unique. Let $C_1,C_2\subseteq S+e$ be circuits. Suppose $f\in C_1-C_2$. Then $S-e+f$ will still be dependent since $C_2\subseteq S-e+f$. Now by definition we get that $C_1-f$ is independent. Therefore we extend $C_1-f$ to an independent set by adding the elements of $S$ till we reach same size as $|S|$. Now $e\in C$ since $C_1$ was formed because of addition of $e$. Hence if we extend $C_1-f$ till same cardinality as $S$ we will add all the edges of $S$ not in $C_1-f$ except $f$ since adding $f$ will make $C$ be a dependent subset of an independent set which is not possible. Hence $C_1-f$ will be extended to $S-f+e$. Therefore $S+e-f$ is independent which contradicts our previous conclusion that $S+e-f$ is dependent. Hence contradiction.
+\end{proof}
 
 \section{Finding Max Weight Base}
+The problem is given a matroid $M=(E,I)$ and a weight function $W:E\to \bbR$ find the maximum weight base of the matroid. We will solve this using basic greedy algorithm. 
 \subsection{Algorithm}
+\begin{algorithm}
+	\KwIn{A matroid $M=(E,I)$ is given as an input as an oracle and a weight function $W:E\to \bbR$.}
+	\KwOut{Find the maximum weight base of the matroid}
+	\DontPrintSemicolon
+	\Begin{
+		Assume $w(1)\geq \cdots \geq w(n)$\;
+		$S\leftarrow \emptyset$\;
+		$I\leftarrow \{S\}$\;
+		\For{$i=1$ to $n$}{\If{$S+i\in I$}{$S\leftarrow S+i$}}
+		\Return{S}
+	}
+	\caption{Algorithm for Finding Max Weight Base}
+\end{algorithm}
 \subsection{Correctness Analysis}
+\thm{}{The above algorithm outputs a maximum weight base iff $M$ is a matroid}
+\begin{proof}
+	$\Leftarrow:$\parinf
+	
+	Let $M$ be a matroid. We will prove that this greedy algorithm works by inducting on $i$. At any iteration $i$ we need to prove the following claim:
+	
+	\textbf{\textit{Claim:}} At any iteration $i$ there is a max weight base $B_i$ such that $S_i\subseteq B_i$ and $B_i\setminus S_i\subseteq \{i+1,\dots, n\}$.
+	
+	\textbf{\textit{Proof:}} Base case: $S=\emptyset$. So for base case the statement is true trivially. Assume that the statement is true up to $(i-1)$ iterations.\parinn
+	
+	Now $S_{i-1}\subseteq B_{i-1}$ where $B_{i-1}$ is a maximum weight base and $B_{i-1}-S_{i-1}\subseteq \{i,\dots, n\}$. Now three cases arise:
+	\begin{enumerate}[label=\bfseries Case \arabic*:,leftmargin=1.5cm]
+		\item If $i\in B_{i-1}$ then $S_{i-1}+i\subseteq B_{i-1}$. Therefore $S_{i-1}+i$ is independent. So now $B_i=B_{i-1}$ and $S_i=S_{i-1}+i$ and $B_i-S_i\subseteq \{i+1,\dots, n\}$.
+		\item If $i\notin B_{i-1}$ and $S_{i-1}+i\notin I$. Then $S_i=S_{i-1}$ and $B_i=B_{i-1}$. And $B_i-S_i\subseteq \{i+1,\dots , n\}$.
+		\item If $i\notin B_{i-1}$ but $S_{i-1}+i\in I$. Then $S_i=S_{i-1}+i$. Now $S_i$ can be extended to a $B'$ by adding all but one element of $B_{i-1}$. So $|B'|=|B_{i-1}|$. Let the element which is not added is $j\in B_{i-1}$. So $B'=B_{i-1}+i-j$. $$wt(B')=Wt(B_{i-1})-wt()+wt(i)$$But we have $wt(i)\geq wt(j)$. So $wt(B')\geq wt(B_{i-1})$. Now since $B_{i-1}$ has maximum weight we have $wt(B')=wt(B_{i-1})$. Then our $B_i=B'$. So $B_i-S_i\subseteq \{i+1,\dots, n\}$.
+	\end{enumerate}
+	Hence the claim is true for the $i$th stage as well. Therefore the claim is true.\Qed
+	
+	Therefore using the claim, after the algorithm finished we have no elements left to check, so the current set has the maximum weight which is also an independent set. So the algorithm successfully returns a maximum weight base.\parinf
+	
+	$\Rightarrow:$
+	
+	Assume $M$ is not a matroid.
+	
+\end{proof}
 \section{Some Matroid Properties}
 \subsection{Strong Base Exchange Property}
-\subsection{Exchange Graph of a Matroid wrt $\boldsymbol{S\in I}$}
+\subsection{Exchange Graph of a Matroid wrt ${S\in I}$}
 
-\section{Using Matroid Intersection to Solve Problems}
-\subsection{Bipartite Matching}
-\subsection{Colorful Spanning Tree}
-\subsection{Min-Max Relation for Colorful Spanning Tree}
-\subsection{Arborescence}
-\section{Solving Matroid Intersection Problem}
+\section{Matroid Intersection}
+\subsection{Using Matroid Intersection to Solve Problems}
+\subsubsection{Bipartite Matching}
+\subsubsection{Colorful Spanning Tree}
+\subsubsection{Min-Max Relation for Colorful Spanning Tree}
+\subsubsection{Arborescence}
+\subsection{Algorithm}
 
 
 

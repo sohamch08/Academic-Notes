@@ -1,0 +1,61 @@
+\documentclass{article}
+\usepackage{url}
+
+\usepackage[nottoc,numbib]{tocbibind}
+\input{preamble-formal}
+\input{letterfonts}
+\input{macros}
+
+\input{titlepage}
+
+
+\usepackage{tocloft}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\begin{document}
+	
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+\thispagestyle{empty}
+
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture,overlay]
+        \node [xshift=\paperwidth/2,yshift=\paperheight/2] at (current page.south west)[minimum width=\paperwidth,minimum height=\paperheight,top color=mycolor1,bottom color=mycolor2]{};
+    \end{tikzpicture}\\[3\baselineskip]
+
+    \titre{Logconcave Polynomials 2:\\[5mm] FPRAS Matroid Base Counting Report}{Partha Mukhopadhyay}{Soham Chatterjee, Saswata Mukherjee}
+\end{titlepage}
+	
+%----------------------------------------------------------------------------------------
+%	ABSTRACT
+%----------------------------------------------------------------------------------------
+
+\begin{abstract}
+	This is a report for the paper \cite{logconcave2} which was covered in the second half of the course `Expander Graphs and Its Application' instructed by \href{https://www.cmi.ac.in/~partham/}{Partha Mukhopadhyay} in the Jan-May, 2024 semester in Chennai Mathematical Institute.
+\end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	CONTENTS
+%----------------------------------------------------------------------------------------
+
+\pagebreak
+\tableofcontents 
+\pagebreak
+
+%----------------------------------------------------------------------------------------
+%	REPORT CONTENT
+%----------------------------------------------------------------------------------------
+% For each person's part add the part of the paper as a separate file in the sections folder then add like bottom.
+\include{sections/sec2-prelim}
+
+
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\pagebreak
+\bibliographystyle{alpha}
+\bibliography{refs}
+\end{document}
+

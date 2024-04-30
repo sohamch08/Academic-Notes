@@ -1,0 +1,20 @@
+\definecolor{mycolor1}{HTML}{194baa}
+\definecolor{mycolor2}{HTML}{00C1D0}
+
+
+\newcommand*{\titre}[3]{\begingroup
+	\newlength{\drop}
+	\setlength{\drop}{0.1\textheight}
+	\centering
+	\settowidth{\unitlength}{\Huge\scshape\bfseries FPRAS Matroid Base Counting Report \hspace{10pt}}
+	\vspace*{\baselineskip}
+	\rule{\unitlength}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
+	\rule{\unitlength}{0.4pt}\\[\baselineskip]
+	{\Huge\scshape\color{white} #1}\\[\baselineskip]
+	{\Large\itshape Instructor: #2}\\[0.2\baselineskip]
+	\rule{\unitlength}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}
+	\rule{\unitlength}{1.6pt}\\[4\baselineskip]
+	{\Large\scshape #3}\par%Website: \href{https://sohamch08.github.io/}{\textcolor{black}{sohamch08.github.io}} }\par
+	\vfill
+	{\Large\scshape 2024}\par
+	\endgroup}
