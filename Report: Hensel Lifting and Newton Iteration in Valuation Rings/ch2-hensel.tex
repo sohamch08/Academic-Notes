@@ -1,5 +1,35 @@
 \chapter{Hensel Lifting}
-The hensel method described here will lift an approximate factorization of a polynomial over a Hensel Ring $R$ with valuation $v$ where the factors are relatively prime. We will show a linear convergence and a quadratic convergence behavior for the liftings. \nt{From the valuation $v$ over $R$ we naturally get a valuation $v$ over the polynomial ring $R[x]$ by defining $$\forall\ f\in R[x],\ \text{let }f=\sum_{i=0}^nf_ix^i,\text{ then } v\lt(\sum_{i=0}^nf_ix^i\rt)=\max_{i}\{v(f_i)\}$$}
+The hensel method described here will lift an approximate factorization of a polynomial over a Hensel Ring $R$ with valuation $v$ where the factors are relatively prime. We will show a linear convergence and a quadratic convergence behavior for the liftings.
+\section{Hensel Ring}
+\dfn{Hensel Ring}{
+A ring with valuation $v:R\to \bbR_{\geq 0}$ is called a Hensel Ring if:\begin{enumerate}[label=(\roman*)]
+	\item $\forall\ a\in R$, $v(a)\leq 1$
+	\item $\forall\ a,b\in R$, $\forall\ \eps>0$, $\exs\ c\in R$ such that $(v(a)\leq v(b)\implies v(a-bc)\leq \eps)$
+\end{enumerate}
+}
+In other words $R$ is Hensel iff it is contained and dense in the valuation ring of its quotient field (with respect to the unique extension of $v$). We sometimes call such $v$ a Hensel Valuation. 
+
+In condition (ii) we assume we can compute the $c$ efficiently.
+\begin{Theorem}{}{}
+	Condition (i) of Hensel Ring $\implies v$ is Non-Archimedean.
+\end{Theorem}
+\begin{proof}
+	Let $a,b\in R$. Now \begin{align*}
+		v(a+b)^k & = v((a+b)^k)\\
+		& = v\lt(\sum_{i=0}^k{{k}\choose{i}}a^{n-i}b^i  \rt)\leq \sum_{i=0}^kv\lt(\binom{k}{i}\rt)v(a)^{n-i}v(b)^i\\
+		&\leq \sum_{i=0}^kv(a)^{n-i}v(b)^i\leq \sum_{i=0}^kM^{n-i}M^i &[m=\max{v(a),v(b)}]\\
+		&=\sum_{i=0}^kM^k=M^k(k+1)
+	\end{align*}Hence $$\lt(\frac{v(a+b)}{M}\rt)^k\leq (k+1)\iff \frac{v(a+b)}{M}\leq (1+k)^{\frac1k}$$As $k\to \infty$ the RHS approaches 1 so $v(a+b)\leq M$. 
+\end{proof}
+
+\begin{example}{$p-$adic Valuations}{}
+	\begin{itemize}
+		\item $\bbZ$ with $p-$adic valution $v_p$ where $p\in\bbN$ is prime is a Hensel ring. Here $v_p(a)=p^{-n}$ where $n=\max\{k\geq 0\mid p^k\mid a\}$
+		\item $\bbF[y]$ with $p-$adic valutaion $v_p$ where $p\in \bbF[y]$ is an irreducible polynomial is a Hensel Ring. Here $v_p(f)=2^{-n\deg p}$ where $n=\max\{k\geq 0\mid p^k\mid f\}$
+	\end{itemize}
+\end{example}
+
+ \nt{From the valuation $v$ over $R$ we naturally get a valuation $v$ over the polynomial ring $R[x]$ by defining $$\forall\ f\in R[x],\ \text{let }f=\sum_{i=0}^nf_ix^i,\text{ then } v\lt(\sum_{i=0}^nf_ix^i\rt)=\max_{i}\{v(f_i)\}$$}
 \section{Conditions related to Hensel's Lemma}
 We will define 5 conditinos. First suppose we have:
 \begin{flushleft}
@@ -56,7 +86,7 @@ As you can see the set $\mcF^*$ basically represents the lift of $\mcF$ but here
 		\item $\forall\ i\in[p]$ we have $v(\ovf_i-F_i^*)\leq \eps^*$.
 	\end{enumerate}
 \end{itemize}
-The first 3 conditions here togather imply that: From $H_1$ we get that $f_0\cdots f_m$ is a good approximation of factorization of $f$ with $\eps$-precision, $H_2\implies z$ plays a similar role to the gcd of $f_0,\dots,f_m$ and it shows the generalized bezout's identity for gcd  for multiple elements.
+The first 3 conditions here togather imply that: From $H_1$ we get that $f_0\cdots f_m$ is a good approximation of factorization of $f$ with $\eps$-precision, $H_2\implies z$ plays a similar role to the gcd of $f_0,\dots,f_m$ and it shows the generalized bezout's identity for gcd  for multiple elements. In the usual treatment of Hensel's Lemma $f_0,\dots, f_m$ are relatively prime (more precisely their images in the residue class field or $R$ modulo the maximal ideal $\la a\in R\mid v(a)<1\ra$ satisfy the assumption then one can find $s_0,\dots,s_m,\delta$ satisfying $H_2$ with $z=1$. One can set $\alpha=1$ or in general one can choose $\alpha=\frac1{v(z)}$. Thus $H_2$ staes that $f_0,\dots, f_m$ are approximately pairwise relatively prime.
 
 $H_4$ shows the connection between the lifts $f_i^*,s_i^*$ and $f_i,s_i$.
 
@@ -64,12 +94,34 @@ $H_5$ basically states that the lifts are unique in the sense that one can group
 
 Now we will state the Hensel's Lemma and will later give the algorithm to obtain the lifts.
 \section{Hensel's Lemma}
+First we will prove a helping lemma which will be very much usefull in the proof of Hensel's Lemma  then we will state the actual theorem.
+\thm[hlm]{}{
+\begin{enumerate}[label=(\roman*)]
+	\item Let $a,f,p,s\in R[x]$ such that $f$ is monic and $s=pf+a$ with $\deg a<\deg f$. Then we have $v(p)\leq v(s) \text{ and } v(a)\leq v(s)$
+	\item Let $h_0,\dots, h_m\in R[x]$ and $h_o^*,\dots,h_m^*\in R[x]$ such that we have $v(h_i^*-h_i)\leq \eps$ for all $0\leq i\leq m$. Then we have $v\lt( \prod\limits_{i=0}^m h_i-\prod\limits_{i=0}^mh_i^*\rt)\leq \eps$
+\end{enumerate}
+}
 \thm[hslem]{Hensel's Lemma}{
 Assume that we have $f\in R[x]$, $\mcF=\{f_0,\dots,f_m\}\subseteq R[x]$, $\mcS=\{s_0,\dots, s_m\}\subseteq R[x]$, $z\in R$ and $\alpha,\delta,\eps\in \bbR$ which satisfy:\begin{enumerate}
 	\item $H_1(m,f,\mcF,\mcS,\eps)$
 	\item $H_2(m,f,\mcF,\mcS,z,\delta)$
 	\item $H_3(m,f,\mathcal{F},S,z,\alpha,\delta,\epsilon)$
 \end{enumerate}Then we can compute efficiently $$\mcF^*=\{f^*_i\colon 0\leq i\leq m\}\qquad \text{and}\qquad T=\{t_0,\dots, t_m\}$$ such that \begin{enumerate}[label=(\roman*)]
-\item \textbf{Linear Case}: 
+\item \textbf{Linear Case}: $\mcS^*=\mcS$ and $\delta^*=\gm$, $\eps^*=\alpha\gm\eps$. Then we have the following conditions hold:\begin{enumerate}[label=(\alph*)]
+	\item $H_1(m,f,\mcF^*,\mcS^*,\eps^*)$
+	\item $H_2(m,f,\mcF^*,\mcS^*,z,\delta^*)$
+	\item $H_3(m,f,\mcF^*,\mcS^*,z,\alpha,\delta^*,\eps^*)$
+	\item $H_4(m,f,\mcF,\mcF^*,\mcS,\mcS^*,\alpha,\delta,\eps)$
+	\item $H_5(m,f,\mcF,\mcF^*,\mcS,\mcS^*,\alpha,\delta,\eps,\delta^*)$
+\end{enumerate}
+\item \textbf{Quadratic Case}: $\mcS^*=T$ and $\delta^*=\alpha\gm^2$, $\eps^*=\alpha\gm\eps$. Assume that $\deg s_i>\deg f_i$ for $0\leq i\leq m$. Then we have the following conditions hold:\begin{enumerate}[label=(\alph*)]
+	\item $H_1(m,f,\mcF^*,\mcS^*,\eps^*)$
+	\item $H_2(m,f,\mcF^*,\mcS^*,z,\delta^*)$
+	\item $H_3(m,f,\mcF^*,\mcS^*,z,\alpha,\delta^*,\eps^*)$
+	\item $H_4(m,f,\mcF,\mcF^*,\mcS,\mcS^*,\alpha,\delta,\eps)$
+	\item $H_5(m,f,\mcF,\mcF^*,\mcS,\mcS^*,\alpha,\delta,\eps,\delta^*)$
+\end{enumerate}
 \end{enumerate}
 }
+\section{Hensel's Algorithm}
+\section{Proof of Hensel's Lemma}
