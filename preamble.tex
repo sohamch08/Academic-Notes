@@ -6,7 +6,7 @@
 \usepackage[tmargin=2cm,rmargin=1in,lmargin=1in,margin=0.85in,bmargin=2cm,footskip=.2in]{geometry} % I woulld suggest dont play with the margin. It kind of ruins the contents page.
 \usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
 \usepackage{bookmark}
-\usepackage{enumitem}
+\usepackage[inline]{enumitem}
 \usepackage{hyperref,theoremref}
 \hypersetup{
 	colorlinks=true, linkcolor=doc!80, urlcolor=doc!80, citecolor=myr,
@@ -24,10 +24,11 @@
 \usepackage{tikz-cd}
 \usepackage{cancel}
 \usepackage{pgfplots}
-\usepackage[Sonny]{fncychap}
+%\usepackage[Sonny]{fncychap}
 \usepackage{mathpazo}
 \usepackage{libertine}
-\usepackage[T1]{fontenc}
+\usepackage{mathrsfs} 
+%\usepackage[T1]{fontenc}
 \usepackage[ruled,vlined]{algorithm2e}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SELF MADE COLORS
@@ -613,27 +614,27 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TABLE OF CONTENTS 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%
 %\usepackage{framed}
 %\usepackage{titletoc}
 %\usepackage{etoolbox}
 %\usepackage{lmodern}
-
-
+%
+%
 %\patchcmd{\tableofcontents}{\contentsname}{\sffamily\contentsname}{}{}
-
+%
 %\renewenvironment{leftbar}
 %{\def\FrameCommand{\hspace{6em}%
-		%		{\color{myyellow}\vrule width 2pt depth 6pt}\hspace{1em}}%
-	%	\MakeFramed{\parshape 1 0cm \dimexpr\textwidth-6em\relax\FrameRestore}\vskip2pt%
-	%}
+%				{\color{myyellow}\vrule width 2pt depth 6pt}\hspace{1em}}%
+%		\MakeFramed{\parshape 1 0cm \dimexpr\textwidth-6em\relax\FrameRestore}\vskip2pt%
+%	}
 %{\endMakeFramed}
-
+%
 %\titlecontents{chapter}
 %[0em]{\vspace*{2\baselineskip}}
 %{\parbox{4.5em}{%
-		%		\hfill\Huge\sffamily\bfseries\color{myred}\thecontentspage}%
-	%	\vspace*{-2.3\baselineskip}\leftbar\textsc{\small\chaptername~\thecontentslabel}\\\sffamily}
+%				\hfill\Huge\sffamily\bfseries\color{myred}\thecontentspage}%
+%		\vspace*{-2.3\baselineskip}\leftbar\textsc{\small\chaptername~\thecontentslabel}\\\sffamily}
 %{}{\endleftbar}
 %\titlecontents{section}
 %[8.4em]
@@ -652,7 +653,7 @@
 
 \usepackage{tikz}
 \usetikzlibrary{shapes, positioning}
-\usepackage{titletoc}
+\usepackage{titletoc,titlesec}
 \contentsmargin{0cm}
 \titlecontents{chapter}[3.7pc]
 {\addvspace{30pt}%
@@ -678,6 +679,8 @@
 {}
 {\hfill\small \thecontentspage}
 [ \textbullet\ ]
+
+
 %{\addvspace{-1pt}\small}
 %{}
 %{}
@@ -696,7 +699,8 @@
 	\end{tikzpicture}}%
 	\@starttoc{toc}}
 \makeatother
-
+\titleformat{\chapter}[display]
+{\normalfont\Huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
 
 	
 \newcommand\colorlink[3]{\href{#2}{\color{#1}#3}}
