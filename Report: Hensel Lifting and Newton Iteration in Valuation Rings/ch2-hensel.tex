@@ -123,5 +123,32 @@ Assume that we have $f\in R[x]$, $\mcF=\{f_0,\dots,f_m\}\subseteq R[x]$, $\mcS=\
 \end{enumerate}
 \end{enumerate}
 }
-\section{Hensel's Algorithm}
+\pagebreak 
+\section{Hensel's Computation}
+\begin{algorithm}
+	\KwIn{\begin{enumerate}
+			\item $f\in R[x]$, $\mcF=\{f_0,\dots, f_m\}\subseteq R[x]$, $\mcS=\{s_0,\dots, s_m\}\subseteq R[x]$
+			\item  $z\in R$ 
+			\item  $\alpha,\delta,\eps\in \bbR$\end{enumerate}
+	}
+	\KwOut{$\mcF^*=\{f_0^*,\dots, f_m^*\}$, $T=\{t_0,\dots, t_m\}$}
+	\DontPrintSemicolon
+	\Begin{
+		Set $\gm=\max\{\delta,\alpha\eps\}$, $\alpha^*=\alpha$, $\eps^*=\alpha\gm\eps$ and $e=f-\prod\limits_{i=0}^mf_i$\;
+		\For{$1\leq i\leq m$}{
+		Compute $a_i,b_i,p_i\in R[x]$ such that $$s_ie=p_if_i+a_i, \qquad v(zb_i-a_i)\leq \eps\gm,\qquad \deg b_i\leq \deg a_i< \deg f_i$$
+		}
+		Compute $a_0,b_0\o=in R[x]$ such that $$a_0=s_0e+f_0\sum\limits_{i=1}^m p_i,\qquad v(zb_0-a_0)\leq \eps\gm,\qquad  \deg b_0\leq \deg f-\def \prod\limits_{i=1}^m f_i$$\;
+		\For{$0\leq i\leq m$}{
+		$f_i^*=f_i+b_i$
+		}
+		\For{$1\leq i\leq m$}{
+		Compute $c_i,d_i,g_i^*q_i\in R[x]$ such that $$g_i^*=\prod_{j\neq i}f_j^*,\qquad s_i(s_ig_i^*-z)=q_if_i^*+c_i\qquad v(zd_i-c_i)\leq \gm^2\qquad \deg d_i\leq \deg c_i<\deg f_i^*$$}
+		Compute $g_0^*=\prod\limits_{i=1}^mf_i^*$ and $c_0,d_0\in R[x]$ such that $$c_0=s_o\lt(\sum_{i=0}^m s_ig_i^*-z  \rt)+f_0^*\sum_{i=1}^m\lt[ q_i+s_i\lt(\sum_{j\neq i} s_j\frac{g_j^*}{f_j^*} \rt)\rt],\quad v(zd_0-c_0)\leq \gm^2,\quad \deg d_0\leq \deg f-\deg g_0$$\;
+		\For{$0\leq i\leq m$}{$t_i=s_i-d_i$}
+		\Return{$\mcF^*=\{f_i^*\colon 0\leq i\leq m\}$, $T=\{t_i\colon 0\leq i\leq m\}$}
+		
+	}
+	\caption{Hensel's Computation}
+\end{algorithm}
 \section{Proof of Hensel's Lemma}
