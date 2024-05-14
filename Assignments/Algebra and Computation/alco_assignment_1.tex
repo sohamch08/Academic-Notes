@@ -37,8 +37,8 @@
 
 \input{../assignment-problem-box}
 
-
-
+\newtheorem{lemma}{Lemma}
+\renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\qed\bigskip\\}
 % To give references for any problem use like this
 % suppose the problem number is p3 then 2 options either 
 % \hyperref[p:p3]{<text you want to use to hyperlink> \ref{p:p3}}
@@ -61,7 +61,7 @@
 	
 	\textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 1}\\
 		Email: \href{sohamc@cmi.ac.in}{sohamc@cmi.ac.in} \hfill Roll: BMC202175\\
-		\normalsize Course: Algebra and Computation \hfill Date: March 5, 2024}
+		\normalsize Course: Algebra and Computation \hfill Date: \today}
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 1
@@ -74,6 +74,82 @@
 For a prime $p$ and a positive integer $e$, prove that $\bbZ_{p^e}^*$ is cyclic.
 \end{problem}
 \solve{
+	We will prove this in 3 stages: $e=1$, $e=2$, $e> 2$.
+	
+	\section*{Case 1: $e=1$}
+	\begin{lemma}\label{totprop}
+		$\sum\limits_{d\mid n} \varphi(d)=n$
+	\end{lemma}
+	\begin{proof}
+		Consider the list of numbers $S=\lt\{\frac1n,\frac2n,\dots,\frac{n}{n}\rt\}$. If we express every number in $S$ as simplified form i.e. $\frac{p}{q}$ form where $gcd(p,q)=1$. Then the denominators are all the divisors of $n$. 
+		
+		
+		Then for any $k\in[n]$ we have $$\frac{k}{n}=\frac{\frac{k}{gcd(k,n)}}{\frac{n}{gcd(k,n)}}$$Denote $d_k\coloneqq\frac{n}{gcd(k,n)}$ then $d_k$ is a factor of $n$. And since $gcd\lt( \frac{k}{gcd(k,n)}, \frac{n}{gcd(k,n)} \rt)=1$ we have $\frac{k}{gcd(k,n)}\in \bbZ_{d_k}^*$. Let $k\in\bbZ_{d}^*$ then suppose $l$ is such that $d\times l=n$ then the fraction $\frac{k}{d}=\frac{k\times l}{n}\in S$ and its simplified form is infact $\frac{k}{d}$.
+		
+		Hence for any $d\mid n$, the number of fractions with denominator $d$ is $\varphi(d)$, since for all such fractions the numerators are the elements of $\bbZ_{d}^*$. Therefore we have $\sum\limits_{d\mid n} \varphi(d)=n$.
+	\end{proof}
+	
+	Now define for $d$ such that $d\mid p-1$, $S_d=\{a\in \bbZ_p^*\mid ord(a)=d\}$. Then we have the following lemma:
+	
+	\begin{lemma}
+		$|S_d|=\varphi(d)$
+	\end{lemma}
+	\begin{proof}
+		First we will show that $|S_d|\in\{0,\varphi(d)\}$ then we will show that $|S_d|=\varphi(d)$. Now if $|S_d|\neq 0$ then $\exs\ a\in S_d$ such that $ord(a)=d$. Then consider the polynomial $x^d-1$ over $\bbF_p$. $1,a,a^2,\dots,a^{p-1}$ are its distinct roots. Since the degree is $d$ these are the only roots of the polynomial. Now $a^k$ has order $\frac{d}{gcd(d,k)}$. Then the elements which has order $d$ are $a^k$ where $gcd(k,d)=1$. Hence there are $\varphi(d)$ many powers of $a$ which has order $d$. Therefore $|S_d|\in\{0,\varphi(d)\}$.
+		
+		Now we have by \lmref{totprop} $$\sum_{d\mid p-1}\varphi(d)=p-1$$Now $\{S_d\mid d\mid p-1\}$ is a partition of $\bbZ_P^*$. Therefore $\sum\limits_{d\mid p-1}|S_d|=p-1$. Hence $$p-1=\sum\limits_{d\mid p-1}|S_d|\leq \sum\limits_{d\mid p-1}\varphi(d)=p-1\iff |S_d|=\varphi(d)\ \forall\ d\text{ such that } d\mid p-1$$
+	\end{proof}
+	
+	Hence the number of elements in $\bbZ_p^*$ which has order $d$ such that $d\mid p-1$
+	
+	Now we will introduce another definition. Let $H$ be a group. Then Exponent of $H$ is the smallest number $n$ such that $\forall a\in H$, $a^n=1$. Now we will show that every finite abelian group has an element which has the order to be exponent of the group. Then we will show that $\bbZ_p^*$ has exponent $p-1$. With that we can say $\bbZ_p^*$ has an element which has order $p-1$. Therefore $\bbZ_p^*$ is cyclic since $|\bbZ_p^*|=p-1$ because $\bbZ_p^*$ is a finite abelian group.
+	\begin{lemma}
+		If $G$ is a finite abelian group with exponent $n$ then $\exs\ g\in G$ such that $ord(g)=n$.
+	\end{lemma}
+	\begin{proof}
+		By structure theorem we have $$G\cong \bbZ_{q_1}\times \cdots \times \bbZ_{q_m}$$ where $q_1,\dots, q_m$ are primes powers. Now $\forall\ g\in G$, $ord(g)\mid lcm(q_1,\dots,q_m)$. The element in $\bbZ_{q_1}\times \cdots \times \bbZ_{q_m}$, $(1,1,\dots, 1)$ has order $lcm(q_1,\dots,q_m)$. So the exponent of $G$ is $lcm(q_1,\dots,q_m)$ and the corresponding element of $(1,\dots,1)$ has order $lcm(q_1,\dots,q_m)$.
+	\end{proof}
+	\begin{lemma}
+		$\bbZ_p^*$ has exponent $p-1$.
+	\end{lemma}
+	\begin{proof}
+		Over $\bbF_p$ the equation $x^{p-1}-1$ has $p-1$ roots which are all the elements of $\bbZ_p^*$. There does not exists any polynomial of lower degree which satisfies this property. Hence the exponent of $\bbZ_p^*$ is $p-1$.
+	\end{proof}
+	
+	Therefore there exists an element of $\bbZ_p^*$ which has order $p-1$. Therefore the group $\bbZ_p^*$ is cyclic.
+	\section*{Case 2: $e=2$}
+	\begin{lemma}
+		Let $g$ be generator of the group $\bbZ_p^*$. Then either $g$ or $g+p$ is generator for $\bbZ_{p^2}^*$.
+	\end{lemma}
+	
+	\begin{proof}
+		We have $|\bbZ_{p^2}^*|\varphi(p^2)=p(p-1)$. Let $g$ has order $m$ in $\bbZ_{p^2}^*$. Then $g^p\equiv 1\bmod p$. Hence $p-1\mid m$. Therefore $m=p(p-1)$ or $m=p-1$ since $m\mid p(p-1)$. If its the first case then we are done. For the later take the element $g+p$. Again let its order is $m'$. Then $(g+p)^{m'}\equiv 1\bmod p$. So $p-1\mid m'$. Hence $m'$ can be either $p-1$ or $p(p-1)$. If it is also $p-1$ then we have \begin{align*}
+			1\equiv (g+p)^{p-1} & \equiv g^{p-1}+(p-1)g^{p-2}p+p^2(\cdots)\bmod {p^2}\\
+			& \equiv g^{p-1}+p(p-1)g^{p-2}\bmod {p^2}\\
+			& \equiv 1+p(p-1)g^{p-2}\bmod {p^2}
+		\end{align*}
+		Therefore $$p(p-1)g^{p-2}\equiv 0\bmod{p^2}\iff p\mid (p-1)g^{p-2}$$ which is not possible since $gcd(p,p-1)=1$ and $gcd(p,g)=1$. Contradiction. Hence at least one of $g$ and $g+p$ has order $p(p-1)$.  
+	\end{proof}
+	
+	With this lemma we have an element of $\bbZ_{p^2}^*$ which has order $p(p-1)=|\bbZ_{p^2}^*|$. So $\bbZ_{p^2}^*$ is cyclic.
+	
+	
+	
+	
+	\section*{Case 3: $e> 2$}
+	\begin{lemma}
+		$(1+p)^{p^k}\equiv 1+p^{k+1}\bmod {p^{k+2}}$
+	\end{lemma}
+	\begin{proof}
+		\begin{align*}
+			(1-p)^{p^k}& \equiv \lt((1+p)^p   \rt)^{p^{k-1}}\\
+			& \equiv \lt( 1+p^2+\binom{p}{2}p^2 \rt)^{p^{k-1}}\bmod {p^{k+2}}\\
+			& \equiv 1+p^2\times p^{k-1}\bmod p^{k+2}\\
+			&\equiv 1+p^{k+1}\bmod{p^{k+2}}
+		\end{align*}
+	\end{proof}
+	
+	
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 2

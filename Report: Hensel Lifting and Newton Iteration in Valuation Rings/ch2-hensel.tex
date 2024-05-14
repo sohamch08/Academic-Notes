@@ -48,8 +48,8 @@ We will define 5 conditinos. First suppose we have:
 As you can see the set $\mcF^*$ basically represents the lift of $\mcF$ but here since we are saying the conditions in more generality we are not assuming any relations among them and we define some conditions involving them.
 \begin{itemize}
 	\item $\boldsymbol{H_1(m,f,\mcF,\mcS,\eps)}\coloneqq v\lt(f-\prod\limits_{i=0}^mf_i\rt)\leq\eps<1$ 
-	\item $\boldsymbol{H_2(m,f,\mcF,\mcS,z,\delta)}\coloneqq v\lt(\sum\limits_{i=0}^m s_i\prod\limits_{j\neq i}f_i -z   \rt)<leq \delta<1$
-	\item $\boldsymbol{H_3(m,f,\mathcal{F},S,z,\alpha,\delta,\epsilon)}\coloneqq$ 
+	\item $\boldsymbol{H_2(m,f,\mcF,\mcS,z,\delta)}\coloneqq v\lt(\sum\limits_{i=0}^m s_i\prod\limits_{j\neq i}f_i -z   \rt)\leq \delta<1$
+	\item $\boldsymbol{H_3(m,f,\mathcal{F},\mcS,z,\alpha,\delta,\epsilon)}\coloneqq$ 
 	$\begin{array}[t]{@{}rl@{}}
 		(1) &f_1,\dots,f_m \text{ are monic}\\
 		(2) &\deg\left(\prod\limits_{i=0}^mf_i\right)\leq \deg f\\
@@ -101,6 +101,54 @@ First we will prove a helping lemma which will be very much usefull in the proof
 	\item Let $h_0,\dots, h_m\in R[x]$ and $h_o^*,\dots,h_m^*\in R[x]$ such that we have $v(h_i^*-h_i)\leq \eps$ for all $0\leq i\leq m$. Then we have $v\lt( \prod\limits_{i=0}^m h_i-\prod\limits_{i=0}^mh_i^*\rt)\leq \eps$
 \end{enumerate}
 }
+
+\begin{proof}
+	\begin{enumerate}[label=(\roman*)]
+		\item \parinn Suppose $\deg s \geq\deg f \geq 0$ otherwise $\deg s< \deg f$ Then $s= 0\times f + a=a$ so we get $v(a)=v(s)$ and $v(p)=v(0)=0\leq v(s)$. Hence assume $l=\deg s-\deg f\geq 0$. Then $p=\sum\limits_{i=0}^l p_ix^i$ where $p_i\in R$ for all $0\leq i\leq l$.
+		
+		Now we will induct on $l-i$. Let $\deg f=n$ and $\deg s=m$. Hence assume $f=\sum\limits_{i=0}^n f_ix^i$ and $s=\sum\limits_{i=0}^m s_ix^i$ where for all $0\leq i\leq n$ and $0\leq j\leq m$, $f_i,s_j\in R$. Since $f$ is monic $f_n=1$
+		
+		\underline{Base Case ($i=l$)} : $$v(p_l)= v(p_l)v(f_n)= v(p_lf_n)=v(s_m)\leq v(s)$$ 
+		
+		\underline{Inductive Step} : $v(p_i)\leq v(s)$ for all $l-k\leq i\leq l$. Now coefficient of $x^{(l-k-1)+n}$ in $S$ is $$s_{l-k-1+n}=\sum\limits_{i=l-k-1}^{l}p_if_{l-k-1+n-i}$$Therefore $p_{l-k-1}f_n=s_{l-k-1+n}-\sum\limits_{i=l-k}^l p_if_{l-k-1+n-i}$. Therefore 
+		\begin{align*}
+			v(p_{l-k-1})=v(p_{l-k-1}f_n) & \leq \max\{  v(s_{l-k-1+n}), v(p_if_{l-k-1+n-i})\mid l-k\leq i\leq l  \} \\
+			                             & \leq \max\{v(s_{l-k-1+n}), v(p_i)\mid l-k\leq i\leq l\}                  \\
+			                             & \leq v(s)
+		\end{align*}
+		Therefore by induction we have $v(p_i)\leq v(s)$ for all $0\leq i\leq l$. Then $v(p)\leq v(s)$.
+		
+		Hence $$v(a)=v(s-pf)\leq \max\{v(s),v(pf)\}\leq \max\{v(s),v(p)\}\leq v(s)$$Therefore we have $v(a)\leq v(s)$.
+		\item \parinn We will induct on $0\leq i\leq m$. 
+		
+		\underline{Base Case} : $v(h_0-g_0^*)\leq \eps$ Given
+		
+		\underline{Inductive Step} : Let this is true for $i=k$ i.e.$$v\lt(\prod_{j=0}^kh_j-\prod_{j=0}^k h_j^*  \rt)\leq \eps$$Now\begin{align*}
+			\prod_{j=0}^kh_j(h_{k+1}-h_{k+1}^*)+\prod_{j=0}^kh_j^*(h_{k+1}-h_{k+1}^*) &=\lt[\prod_{j=0}^{k+1}h_j-\prod_{j=0}^{k+1}h_j^*\rt] -\lt[ h_{k+1}^*\prod_{j=0}^kh_j-h_{k+1}\prod_{j=0}^{k}h_j^*  \rt]
+		\end{align*}Therefore we have $$\prod_{j=0}^{k+1}h_j-\prod_{j=0}^{k+1}h_j^*=	\prod_{j=0}^kh_j(h_{k+1}-h_{k+1}^*)+\prod_{j=0}^kh_j^*(h_{k+1}-h_{k+1}^*)+ \lt[ h_{k+1}^*\prod_{j=0}^kh_j-h_{k+1}\prod_{j=0}^{k}h_j^*  \rt]  $$
+	\end{enumerate}Hence we have \begin{align*}
+	v\lt(  \prod_{j=0}^{k+1}h_j-\prod_{j=0}^{k+1}h_j^* \rt)& \leq \max\lt\{ v\lt(\prod_{j=0}^kh_j\rt)v(h_{k+1}-h_{k+1}^*), v\lt(\prod_{j=0}^kh_j^*\rt)v(h_{k+1}-h_{k+1}^*),v\lt( h_{k+1}^*\prod_{j=0}^kh_j-h_{k+1}\prod_{j=0}^{k}h_j^*  \rt)  \rt\}\\
+	& \leq \max \lt\{v(h_{k+1}-h_{k+1}^*), v\lt( h_{k+1}^*\prod_{j=0}^kh_j-h_{k+1}\prod_{j=0}^{k}h_j^*  \rt)  \rt\}\\
+	& \leq \max\lt\{ \eps, v\lt( h_{k+1}^*\prod_{j=0}^kh_j-h_{k+1}\prod_{j=0}^{k}h_j^*  \rt)   \rt\}
+	\end{align*}Now we need to show that $$ v\lt( h_{k+1}^*\prod\limits_{j=0}^kh_j-h_{k+1}\prod\limits_{j=0}^{k}h_j^*  \rt)  \leq \eps$$Now
+	\begin{align*}
+		 h_{k+1}^*\prod_{j=0}^kh_j-h_{k+1}\prod_{j=0}^{k}h_j^*   & = \lt( h_{k+1}^*\prod_{j=0}^k h_j-h_{k+1}^*h_k^*\prod_{j=0}^{k-1}h_j \rt)         +         \lt( \lt[\prod_{j=k}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{k-1}h_j  \rt]-\lt[\prod_{j=k-1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{k-2}h_j  \rt]\rt)\\
+		 & + \lt( \lt[\prod_{j=k-1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{k-2}h_j  \rt]-\lt[\prod_{j=k-2}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{k-3}h_j  \rt]\rt)\\
+		 & \qquad\qquad \qquad\vdots\qquad\qquad \qquad\qquad\qquad\vdots\\
+		 &+ \lt( \lt[\prod_{j=t+1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{t}h_j  \rt]-\lt[\prod_{j=t}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{t-1}h_j  \rt]\rt)\\
+		 & \qquad\qquad \qquad\vdots\qquad\qquad \qquad\qquad\quad\vdots\\
+		 & + \lt( \lt[\prod_{j=1}^{k+1}h_j^*\rt]h_0  -\prod_{j=0}^{k+1}h_j^*\rt)+\lt(\prod_{j=0}^{k+1}h_j^*  -\lt[\prod_{j=0}^{k}h_j^*\rt]h_{k+1}  \rt)\\
+		 & = h_{k+1}^*\prod_{j=0}^{k-1}h_j^*(h_{k}-h_k^*)+\lt[\prod_{j=k}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{k-2}h_j  \rt](h_{k-1}-h_{k-1}^*) \\
+		 & +\lt[\prod_{j=k-1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{k-3}h_j  \rt](h_{k-2}-h_{k-2}^*)\\
+		 & \qquad\qquad\qquad\vdots\\
+		 & +\lt[\prod_{j=t+1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{t-1}h_j  \rt](h_{t}-h_{t}^*)\\
+		  & \qquad\qquad\qquad\vdots\\
+		  & + \lt[\prod_{j=1}^{k+1}h_j^*\rt](h_0-h_0^*)+  \lt[\prod_{j=1}^{k}h_j^*\rt](h_{k+1}^*-h_{k+1})
+	\end{align*}
+	Now for each $0\leq t\leq k$ we have $$v\lt(  \lt[\prod_{j=t+1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{t-1}h_j  \rt](h_{t}-h_{t}^*)\rt)\leq v(h_t-h_t^*)\leq\eps, \qquad v\lt(  \lt[\prod_{j=1}^{k}h_j^*\rt](h_{k+1}^*-h_{k+1})  \rt)\leq v(h_{k+1}^*-h_{k+1})\leq \eps$$Hence $$v\lt( h_{k+1}^*\prod\limits_{j=0}^kh_j-h_{k+1}\prod\limits_{j=0}^{k}h_j^*  \rt)\leq \max_{0\leq t\leq k}\lt\{  v\lt(  \lt[\prod_{j=t+1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{t-1}h_j  \rt](h_{t}-h_{t}^*)\rt),  v\lt(  \lt[\prod_{j=1}^{k}h_j^*\rt](h_{k+1}^*-h_{k+1})  \rt)\rt\}\leq \eps$$Therefore we have  $$ v\lt( h_{k+1}^*\prod\limits_{j=0}^kh_j-h_{k+1}\prod\limits_{j=0}^{k}h_j^*  \rt)  \leq \eps\implies 	v\lt(  \prod_{j=0}^{k+1}h_j-\prod_{j=0}^{k+1}h_j^* \rt)\leq \eps$$Hence by induction we have $$	v\lt(  \prod_{j=0}^{m}h_j-\prod_{j=0}^{m}h_j^* \rt)\leq \eps$$
+\end{proof}
+
+
 \thm[hslem]{Hensel's Lemma}{
 Assume that we have $f\in R[x]$, $\mcF=\{f_0,\dots,f_m\}\subseteq R[x]$, $\mcS=\{s_0,\dots, s_m\}\subseteq R[x]$, $z\in R$ and $\alpha,\delta,\eps\in \bbR$ which satisfy:\begin{enumerate}
 	\item $H_1(m,f,\mcF,\mcS,\eps)$
@@ -138,7 +186,7 @@ Assume that we have $f\in R[x]$, $\mcF=\{f_0,\dots,f_m\}\subseteq R[x]$, $\mcS=\
 		\For{$1\leq i\leq m$}{
 		Compute $a_i,b_i,p_i\in R[x]$ such that $$s_ie=p_if_i+a_i, \qquad v(zb_i-a_i)\leq \eps\gm,\qquad \deg b_i\leq \deg a_i< \deg f_i$$
 		}
-		Compute $a_0,b_0\o=in R[x]$ such that $$a_0=s_0e+f_0\sum\limits_{i=1}^m p_i,\qquad v(zb_0-a_0)\leq \eps\gm,\qquad  \deg b_0\leq \deg f-\def \prod\limits_{i=1}^m f_i$$\;
+		Compute $a_0,b_0\in R[x]$ such that $$a_0=s_0e+f_0\sum\limits_{i=1}^m p_i,\qquad v(zb_0-a_0)\leq \eps\gm,\qquad  \deg b_0\leq \deg f-\def \prod\limits_{i=1}^m f_i$$\;
 		\For{$0\leq i\leq m$}{
 		$f_i^*=f_i+b_i$
 		}
