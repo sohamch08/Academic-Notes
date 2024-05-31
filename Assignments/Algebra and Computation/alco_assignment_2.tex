@@ -1,0 +1,208 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage{amsmath,mathtools,mathdots}
+\usepackage{amssymb,amsthm}  % assumes amsmath package installed
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=doc!80,
+	citecolor=myr,
+	filecolor=myr,      
+	urlcolor=doc!80,
+	pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
+}
+\usepackage[most,many,breakable]{tcolorbox}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{kpfonts}
+\usepackage{libertine}
+\usepackage{physics}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+\usepackage{float}
+
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+
+\input{../assignment-problem-box}
+
+\newtheorem{lemma}{Lemma}
+\renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\qed\bigskip\\}
+% To give references for any problem use like this
+% suppose the problem number is p3 then 2 options either 
+% \hyperref[p:p3]{<text you want to use to hyperlink> \ref{p:p3}}
+%                  or directly 
+%                   \ref{p:p3}
+
+
+
+\input{../../letterfonts}
+
+\input{../../macros}
+
+\setlength{\parindent}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{filecontents}{refs.bib}
+	@article{lenstra1991finding,
+		title={Finding isomorphisms between finite fields},
+		author={Lenstra, Hendrik W},
+		journal={mathematics of computation},
+		volume={56},
+		number={193},
+		pages={329--347},
+		year={1991}
+	}
+\end{filecontents}
+
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 2}\\
+		Email: \href{sohamc@cmi.ac.in}{sohamc@cmi.ac.in} \hfill Roll: BMC202175\\
+		\normalsize Course: Algebra and Computation \hfill Date: \today}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+\begin{problem}{%problem statement
+		Problem Set 2: P1
+	}{p1% problem reference text
+}
+Let $p$ be a prime number and $n$ a positive integer. Then by \textit{explicit data} for $\bbF_{p^n}$ we mean a set of $n^3$ elements $(a_{i,j,k})^n_{i,j,k=1}$ of the prime field $\bbF_p$ such that $\bbF_{p^n}$ becomes a field with the ordinary addition and multiplication by elements of $\bbF_p$ and the multiplication determined by $$e_ie_j=\sum_{k=1}^na_{i,j,k}e_k$$ where $e_1,e_2,\dots, e_n$ denotes the standard basis of $\bbF_{p^n}$ over $\bbF_p$. If we know an irreducible polynomial of degree $n$, then such explicit data for $\bbF_{p^n}$ can be directly computed. Show conversely. given explicit data for $\bbF_{p^n}$ one can find an irreducble polynomial over $\bbF_{p}[x]$ of degree $n$ via a dieterministic polynomial-time (in $\log p$ and $n$) algorithm.
+
+Lenstra gave a deterministic polynomial time to \textit{find} an isomorphism between two explicitly given
+finite fields of the same cardinality. Till date, we do not know any deterministic polynomial time
+(in $\log p$, $n$) algorithm to find an irreducible polynomial in $\bbF_p[x]$ of degree $n$.
+\end{problem}
+\solve{We will use the paper \cite{lenstra1991finding}. Suppose $n=\prod\limits_{i=1}^kp_i^{t_i}$. Suppose $\gm_i$ be an $t_i$ degree an element of $\bbF_q$ where $q=p^n$  over $\bbF_p$. Then we can say $$\bbF_p\subset\bbF_p(\gm_1)\subset \bbF_p(\gm_1,\gm_2)\subset \cdots \subset \bbF_p(\gm_1,\dots, \gm_k)=\bbF_{p^n}$$where $\gm_i$ has minimal polynomial $p_i^{t_i}$. Hence finding these $\gm_i$ and their minimal polynomials will help us find the polynomial $f$ such that $\bbF_{p^n}\cong \bbF_p[x]/\la f\ra$. 
+\section*{1. Finding Minimal Polynomial of $\gm=\sum\limits_{i=1}^k \gm_i$ from Minimal Polynomial of $\gm_i$'s}
+Now suppose $g_i$ is the minimal polynomial of $\gm_i$ of degree $p_i^{t_i}$. Then we have to find the minimal polynomial of $\gm=\sum\limits_{i=1}^k \gm_i$. Now if $\alpha,\beta $ are numbers with minimal polynomial $h_1(x)=\sum\limits_{l=0}^m a_lx^l$ and $h_2(x)=\sum\limits_{l=0}^nb_lx^l$ then $\alpha$ is eigen values of the corresponding matrix $A=\lt[\begin{tabular}{ccc|c}
+		 & 0 &  & $-a_0$\\ \hline
+		 & $I_{m-2}$ &  & \vdots\\
+		 & & & $-a_{m-1}$
+	\end{tabular}\rt]$ since the characteristic polynomial of $A$ is $h_1(x)$. Similarly we obtain $B$ for $\beta$. Let $u_1$ and $u_2$ are the eigen vectors of $A$ and $B$. Then the matrix $A\tensor I+I\tensor B$ has eigen vector $u_1\tensor u_2$ with eigen value $\alpha+\beta$ since $$(A\tensor I+I\tensor B)(u_1\tensor u_2)=Au_1\tensor Iu_2+Iu_1\tensor Bu_2=\alpha(u_1\tensor u_2)+\beta(u_1\tensor u_2)$$So $\alpha+\beta $ root of the characteristic polynomial of $A\tensor I+I\tensor B$ and since $\alpha+\beta$ should have minimal polynomial $mn$ and degree of characteristic polynomial of $A\tensor I+I\tensor B$ is $mn$ we have the characteristic polynomial as the minimal polynomial of $\alpha+\beta$. Using this way we can obtain the minimal polynomial of $\gm=\sum\limits_{i=1}^k \gm_i$.
+	
+	\section*{2. Finding $g_i$ from $\gm_i$ for $i\in[k]$}
+	Suppose we have $\gm_i$. It has a $p_i^{t_i}$ degree minimal polynomial over $\bbF_p$. $\gm_i$ is an element of degree $p_i^{t_i}$ over $\bbF_p$. So let $$\gm_i^{{p_i^{t_i}}}=\sum_{k=0}^{p_i^{t_i}-1}c_k\gm_i^k$$ with $c_k\in\bbF_p$. Then the polynomial $\tdg_i=x^{p_i^{t_i}}-\sum_{k=0}^{p_i^{t_i}}c_k\gm_i^k$ is minimal polynomial of $\gm_i$. So $\tdg_i=g_i$. This we can do in $poly(n,\log p)$ steps.
+	\section*{3. Finding $\gm_i$ for $i\in[k]$}
+	Now all is left to find $\gm_i$. Define the map $\phi_d:\alpha\mapsto \alpha^d$. Denote the numbers $\delta_i=p^{p_i^{t_i}}$. Then $\gm_i\in \ker\lt(\phi_{\delta_i}-id\rt)$. We create the matrix for frobenius Map i.e. the map $x\mapsto x^p$ and compose it with itself $p_i^{t_i}$ times which gives us the map for $\phi_{\delta_i}$, $T_i$ which we can compute in $poly(n,\log p)$ steps. Then we compute the matrix $T_i-I$ and by guassian elimination we compute the basis of a kernel and find a basis element which is in $\bbF_{p^{p_i^{t_i}}}-\bbF_{p^{p_i^{t_i}-1}}$ which again we can do in $poly(\log p, n)$ steps. 
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		Problem Set 2: P5
+	}{p2% problem reference text
+	}
+Let $q$ be a prime power and $f\in \mathbb{F}_q[x]$ squarefree of degree $n$ with $r\geq 2$ irreducible factors $f_1,\dots,f_r$, each of degree $d=\frac{n}{r}$. We let $R\coloneqq \mathbb{F}_q[x]/\la f\ra$, $R_1=\mathbb{F}_q[x]/\langle f_1\rangle, \dots ,R_r= \mathbb{F}_q[x]/\langle f_r\rangle$ and the Chinese Remainder Isomorphism $\chi=\chi_1\times \cdots \times \chi_r$ where $\chi(a\bmod f)=(a\bmod {f_1},\dots, a\bmod{f_r})=(\chi_1(a),\dots, \chi_r(a))$. The norm on $R_i\cong \mathbb{F}_{q^d}$ is defined by $N(\alpha)=\alpha \alpha^q\alpha^{q^2}\cdots\alpha^{q^{d-1}}=\alpha^{\frac{q^d-1}{q-1}}$.\begin{enumerate}[label=(\alph*)]
+	\item Let $\alpha\in R^{\times}$ be a uniform random element, $\beta=N(\alpha)$ and $1\leq i\leq r$. Show that $\chi_i(\beta)$ is a root of $x^{q-1}-1$ and conclude that $\chi_i(\beta)$ is a uniform random element in $\mathbb{F}_q^{\times}$.
+	\item Provided that $q>r$, what is the probability that with the $\chi_i(\beta)$ are distinct for $1\leq i\leq r$? Prove that the probability is at least $\frac12$ if $q-1\geq 2(r-1)^2$.
+	\item Let $u,v\in \mathbb{F}_q$ be distinct. Prove that probability at least $\frac12$, $u+t$ is a square (quadratic residue) and $v+t$ is a nonsquare or vice versa, for a uniformly random $t\in \mathbb{F}_q$.
+	\item Use the above exercise to come up with a variant of Cantor-Zassenhaus’s equal-degree splitting
+	algorithm to factorize a squarefree monic polynomial $f\in\mathbb{F}_q[x]$ of degree $n$, where all the irredicble factors of $f$ have degree $d$. 
+	
+	Hint: Use a polynomial $a\in \bbF_q[x]$ of degree less than $n$ with $\chi_i(a)\in \bbF_q$ for all $i$. Choose $t\in \bbF_q$ at random. Take gcd of $f$ with $(a+t)^{\frac{q-1}{2}}-1$. Prove that the failure probability of the algorithm is at most $\frac12$ if $a\neq \bbF_q$.
+\end{enumerate}
+\end{problem}
+\solve{
+\begin{enumerate}[label=(\alph*)]
+	\item We know for any $i\in [r]$, $R_i=\bbF_q[x]/\langle f_i\rangle \cong  \bbF_{q^d}$. For any element $\alpha\in R^{\times}$, $$\chi_i(N(\alpha))=N(\chi_i(\alpha))=\lt[\alpha \bmod{f_i}\rt]^{\frac{q^d-1}{q-1}}\equiv \alpha^{\frac{q^d-1}{q-1}}\bmod{f_i}$$ Now for all $a\in R_i$, it is a root of the polynomial $x^{q^d-1}-1$ or $a^{q^n-1}\equiv 1\bmod f_i$. Now $$\lt[\alpha^{\frac{q^d-1}{q-1}}\rt]^{q-1}-1\equiv\alpha^{q^d-1}-1\equiv 1-1\equiv 0\bmod f_i$$ Hence $\chi_i(\beta)$ is a root of $x^{q-1}-1$
+	
+	In the field $\bbF_{q^d}$ we take the endomorphism $\phi_k: x\mapsto x^{k}$. Then the $\ker\phi_k=\{a\in \bbF_{q^d}\mid a^{k}\equiv 1\}$ which is set of all roots of the equation $x^{k}-1$ which can have at most $k$ many roots. So $|\ker\phi_k|\leq k$. Let $S=\lt\{a^{\frac{q^d-1}{q-1}}\mid a\in \bbF_{q^d}\rt\}$. Then $S\subseteq \ker\psi$ where $\psi=\phi_{q-1}$. Hence $|S|\leq |\ker\psi|\leq q-1$. Now $$q^d-1=|\bbF_{q^d}^{\times}|=\lt|\ker\psi\rt|\cdot \lt|\text{im}\psi\rt|=\lt|\ker\psi\rt| \cdot |S|\leq \frac{q^d-1}{q-1}\times (q-1)=q^d-1$$Therefore $|S|=q-1$. Since $S$ exactly the nonzero elements of $\bbF_q^{\times}$ each element of $S$ occurs in different coset of $\bbF_{q^d}^{\times}/\ker\psi$. Then $$\underset{a\in\bbF_{q^d}^{\times} }{Pr}{\lt[a^{\frac{q^d-1}{q-1}}=\alpha\mid \alpha\in S\rt]}=\frac{\frac{q^d-1}{q-1}}{q^d-1}=\frac1{q-1}$$Hence if we pick $\alpha$ uniformly at random then taking $\alpha^{\frac{q^d-1}{q-1}}$ is a  uniformly random element of $\bbF_q^{\times}$. 
+	\item we know $\chi_i(\beta)$ is an uniformly random element of $\bbF_q^{\times}$. Now $$Pr[\chi_i(\beta)\neq \chi_j(\beta)\ \forall\ i,j\in[r], i\neq j]=\frac{(q-1)(q-2)\cdots (q-r)}{(q-1)^r}=\prod_{i=0}^{r-1}\lt(1-\frac{i}{q-1}\rt)=\prod_{i=1}^{r-1}\lt(1-\frac{i}{q-1}\rt)$$Given $$q-1\geq 2(r-1)^2\implies \frac1{2(r-1)}\geq \frac{r-1}{q-1}\geq \frac{i}{q-1}\text{ where }i\in[r-1]$$Hence $1-\frac{k}{q-1}\geq 1-\frac{r-1}{q-1}\geq 1-\frac{1}{2(r-1)}$. Therefore $$Pr[\chi_i(\beta)\neq \chi_j(\beta)\ \forall\ i,j\in[r], i\neq j]\geq \lt[1-\frac1{2(r-1)}\rt]^{r-1}\geq 1-\frac{r-1}{2(r-1)}=\frac12$$
+	\item Since $t$ is a uniformly random element of $\bbF_q$. Hence $u+t$ and $v+t$ is are uniformly random element of $\bbF_q$. Thereofore $$\underset{t\in\bbF_q}{Pr}[u+t\text{ is QR }\& v+t\text{ is NQR}]=Pr[u+t]=\underset{t\in\bbF_q}{Pr}[{u+t\text{ is QR}}]\underset{t\in\bbF_q}{Pr}[{v+t\text{ is NQR}}]=\frac12\cdot \frac12=\frac14$$Similarly $\underset{t\in\bbF_q}{Pr}[u+t\text{ is NQR }\& v+t\text{ is QR}]=\frac14$. Hence probability that one of $u+t,v+t$ is QR and other one is NQR is $\frac12$.
+	\item We give the algorithm first then we will show the correctness and calculate the probability
+	
+	\begin{algorithm}[H]
+		\KwIn{Squarefree monic polynomial $f$ of degree $n$ with $r$ irreducible  factors of degree $d$ with $q-1\geq 2(r-1)^2$}
+		\KwOut{Factor of $f$ if exists otherwise `FAIL'}
+		\Begin{
+		Take $a\in\bbF_q[x]-\bbF_q$ uniformly at random\;
+		Compute $\beta\longleftarrow N(a)\bmod f$ using Repeated-Squaring\;
+		Take $t\in \bbF_q$ uniformly at random\;
+		Compute $g\longleftarrow(\beta+t)^{\frac{q-1}{2}}\bmod f$ using Repeated-Squaring\;
+		Compute $h\longleftarrow gcd(f,g)$\;
+		\If{$h\neq 1$ and $h$ is nontrivial}{\Return{h}}
+		\Else{\Return{`FAIL'}}
+		}
+		\caption{A Different Variant of Cantor-Zassenhaus Algorithm}
+		\end{algorithm}
+		
+		We know by part (a) for all $i\in[r]$ $\chi_i(\beta)$ is an uniformly random element of $\bbF_q^{\times}$. Now By part (b) with probability $\geq \frac12$ for $i\neq j$, $i,j\in[r]$ we have $\chi_i(\beta)\neq \chi_j(\beta)$. So By part (c) with probability $\frac12$, one of $\lt[\chi_i(\beta)+t\rt]^{\frac{q-1}2}$ and $\lt[\chi_j(\beta)+t\rt]^{\frac{q-1}2}$ is QR and other one is NQR. Suppose $\lt[\chi_i(\beta)+t\rt]^{\frac{q-1}2}$ is QR. Then $$f_i\mid \lt[\chi_i(\beta)+t\rt]^{\frac{q-1}2}-1\qquad\text{but}\qquad f_j\nmid \lt[\chi_i(\beta)+t\rt]^{\frac{q-1}2}-1$$Hence $f_i\mid gcd\lt(f,\lt[\chi_i(\beta)+t\rt]^{\frac{q-1}2}  \rt)$ but not $f_j$. Therefore the gcd is nontrivial. Hence the gcd $h$ yields a nontrivial factor of $f$.
+		
+\end{enumerate}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		Problem Set 2: P6
+	}{p3% problem reference text
+	}
+	Finding roots of a polynomial is clearly a special case of polynomial factorization. This exercise
+	shows conversely how factoring over $\bbF_{p^k}$ can be reduced to root finding over $\bbF_p$. Let $q=p^k$ be a prime power for some positive $k\in \bbN$, $f\in \bbF_q[x]$ monic squarefree of degree $n$, $R=\bbF_q[x]/\langle f\rangle$ and $\mcB=\{a\bmod f\in R\colon a^p\equiv a\bmod f\}$
+	\begin{enumerate}[label=(\alph*)]
+		\item Let $b\in \bbF_q[x]$ such that $b\bmod f\in\mcB$. Prove that $f=\prod\limits_{a\in \bbF_p}gcd(f,b-a)$
+		\item Let $y$ be a new indeterminate and $r=\res_x(f,b-y)\in \bbF_q[x,y]$. Show that $r$ has some roots in $\bbF_p$ and that any root of $r$ in $\bbF_p$ leads to a nontrivial factor of $f$ if $b\notin \bbF_p$.
+		\item Make this to a deterministic polynomial time reduction from factoring in $\bbF_q[x]$ to root finding in $\bbF_p[x]$
+	\end{enumerate}
+\end{problem}
+\solve{
+	\begin{enumerate}[label=(\alph*)]
+		\item $b\bmod f\in \mcB$. Hence $$b^p- b\equiv 0\bmod f\implies\prod_{a\in\bbF_p}(b-a)\equiv 0\bmod f$$Hence $gcd\lt(f,\prod\limits_{a\in\bbF_p}(b-a)\rt)=f$. Now for any two $a,a'\in \bbF_p$, $a\neq a'$, we have  $gcd(b-a,b-a')=1$ as $(a'-a)^{-1}((g-a)-(g-a'))=1$. Hence $gcd\lt(f,\prod_{a\in\bbF_p}(b-a)\rt)=\prod\limits_{a\in\bbF_p}gcd(f,b-a)$. Therefore $$f=gcd\lt(f,\prod\limits_{a\in\bbF_p}(b-a)\rt)=\prod\limits_{a\in\bbF_p}gcd(f,b-a)$$
+		\item Since $f=\prod\limits_{a\in\bbF_p}gcd(f,b-a)$ there exists at least one $a\in\bbF_p$ such that $gcd(f,b-a)\neq 1$. Hence we have $\res(f,b-a)=0$ in $\bbF_q[x]$. Now we can say $$\res(f,b-a)= 0 \iff \res_x(f,b-y)\equiv 0\pmod {y-a}$$where the RHS is in the ring $\bbF_q[x,y]$. Hence we can say $\res_x(f,b-y)$ has a root at $y=a$ where $a\in\bbF_p$ in $\bbF_q[x,y]$. Therefore $\res_x(f,b-y)$ has some roots in $\bbF_p$.
+		
+		Now we can assume $\deg b<\deg f$ since otherwise we can write $b=qf+r$ where $\deg r<\deg f$ and now $gcd(f,b-a)=gcd(f,r-a)$. If $b\notin\bbF_p$. Then $\deg(b-r)<\deg f$ for any $r\in\bbF_p$. Hence if $\res_x(f,b-a)=0$ for some $a\in \bbF_p$ since $b-a\neq 0$ we have $gcd(f,b-a)$ nontrivial which actually gives a factor of $f$. Hence finding a root leads to a anontrivial factor of $f$ if $b\notin \bbF_p$
+		\item So given $f$ we have to find a nontrivial solution for the map $h^p-h\bmod f$. Now the map $T:h\mapsto h^p-h$ for $h\in\bbF_q[x]$ is a linear map over $\bbF_p$. So we create the matrix for $T$ modulo $f$. with respect to the polynomials basis $x^{n-1}\bmod f, \dots,x\bmod f, 1\bmod f$.  Now we will compute the basis of the kernel of this map using guassian elemination. Now $$f\text{ is irreducible}\iff\rank T=n-1$$So if the computed basis has a non-constant polynomial $g$ then that is our desired polynomial for a nontrivial solution of $h^p-h\equiv \bmod f$. Using this $g$ now we can try to find a root of the polynomial $\res_x(f,g-y)$ in $\bbF_p$ which will help us to find a factor as discussed in the part (b).
+	\end{enumerate}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		Problem Set 2: P9
+	}{p4% problem reference text
+	}
+	Every prime $p\equiv 1\pmod 4$ can be expressed as a sum of two squares. Give an efficient algorithm to find two integers $x$ and $y$ such that $p=x^2+y^2$. Here \textit{efficient} means randomized or deterministic polynomial time in the input size (number of bits to represent the given prime in binary).
+	
+	Helpful keywords: Fermat sum of squares, quadratic non-residue, Euclid’s GCD algorithm/Gauss-
+	Lagrange 2-dimensional lattice reduction algorithm.
+\end{problem}
+\solve{
+	\begin{lemma}
+		Let $c = \sqrt{-1}\pmod{p} $ and $gcd(p,c-i) =  a+bi$.  Then $ p = a^2 + b^2$
+	\end{lemma}
+	\begin{proof}
+		First we will show if we find a nontrivial guassian integer whcih divides $p$ then we can get the integers $a,b$. Let $\alpha\mid p$ completely. Then by conjugating we have $\ov{\alpha}\mid p$. Hence $\alpha\ove{\alpha}\mid p^2$. Now $\alpha\ov{\alpha}\in\bbZ$. So $\alpha\ove{\alpha}$ is a nontrivial factor of $p$. And the only nontrivial factor of $p^2$ is $p$. So $p=\alpha\ove{\alpha}$. Let $\alpha=a+ib$. Then $\alpha\ov{\alpha}=a^2+b^2$. So $p=a^2+b^2$. Hence finding a nontrivial guassian integer which divides $p$ is enough to find the integers whose square sum is $p$.
+		
+		Now suppose we found $\alpha,\beta $ nontrivial guassian integers such that  $pq=\alpha\beta$ and $p\nmid \alpha,\beta$. Then $gcd(\alpha,p)$ divides $p$ completely. We will show if this is the case then $gcd(\alpha,p)\neq 1,p$. If gcd was $p$ then $p\mid \alpha$ which contradicts the assumption that $p\nmid \alpha$. Hence the gcd is 1. Then $\alpha \mid q$. Therefore $\frac{q}{\alpha}=\frac{\beta}{p}$. Hence $p$ divides $\beta$ completely but that contradicts the assumption. So $gcd(\alpha,p)\neq 1,p$. So the gcd gives a nontrivial factor of $p$.
+		
+		Now if we found $c\bmod p$ such that $c^2\equiv 1\bmod p$ or we can say $c^2-1+pg=0$ for some $g\in\bbZ[i]$. Then $c^2+1+pg=(c+i)(c-i)+pg=0$ in $\bbZ[i]$. Therefore $$(c+i)(c-i)=-pg$$ Now $p\nmid c\pm i$. Hence by the above proof we have $gcd(p,c+i)$ nontrivial factor of $p$ in $\bbZ[i]$. From that we get the integers $a,b$ such that $p=a^2+b^2$ 
+	\end{proof}
+	So now we have to find an element of $a<p$ such that $a^2\equiv -1\bmod p$. If we can find a quadratic non-residue $a \in \bbZ_p$ then we have $a^{\frac{p-1}{2}}\equiv -1\bmod p$ then we can take $a^{\frac{p-1}{4}}$ to be the desired element. Now in the group $\bbZ_p$ we can select a non quadratic residue by picking an element uniformly at random and with probability $\frac12$ we can obtain a quadratic non residue.
+ }
+\bibliographystyle{alpha}
+\bibliography{refs}
+\end{document}
