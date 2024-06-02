@@ -1,0 +1,204 @@
+\chapter{Hensel Lifting in Valuation Rings}
+Now we will work with Valuation Rings. Till now we were assuming we can do $a+b, ab, a^{-1}$ in a ring or field in $O(1)$ time but for that we should have the whole table of addition, multiplication and inverse as in input which is not always possible if the ring or field is very big. That is why here we will describe Hensel Lifting for general Hensel Rings where we have an algorithm to efficiently find out a close enough element with respect to the given valuation. We will follow the paper from \cite{hensel-newton-valring}.
+
+The hensel method described here will lift an approximate factorization of a polynomial over a Hensel Ring $R$ with valuation $v$ where the factors are relatively prime. We will show a linear convergence and a quadratic convergence behavior for the liftings.
+\section{Hensel Ring}
+\dfn{Hensel Ring}{
+A ring with valuation $v:R\to \bbR_{\geq 0}$ is called a Hensel Ring if:\begin{enumerate}[label=(\roman*)]
+	\item $\forall\ a\in R$, $v(a)\leq 1$
+	\item $\forall\ a,b\in R$, $\forall\ \eps>0$, $\exs\ c\in R$ such that $(v(a)\leq v(b)\implies v(a-bc)\leq \eps)$
+\end{enumerate}
+}
+In other words $R$ is Hensel iff it is contained and dense in the valuation ring of its quotient field (with respect to the unique extension of $v$). We sometimes call such $v$ a Hensel Valuation. 
+
+In condition (ii) we assume we can compute the $c$ efficiently.
+\begin{Theorem}{}{}
+	Condition (i) of Hensel Ring $\implies v$ is Non-Archimedean.
+\end{Theorem}
+\begin{proof}
+	Let $a,b\in R$. Now \begin{align*}
+		v(a+b)^k & = v((a+b)^k)\\
+		& = v\lt(\sum_{i=0}^k{{k}\choose{i}}a^{n-i}b^i  \rt)\leq \sum_{i=0}^kv\lt(\binom{k}{i}\rt)v(a)^{n-i}v(b)^i\\
+		&\leq \sum_{i=0}^kv(a)^{n-i}v(b)^i\leq \sum_{i=0}^kM^{n-i}M^i &[m=\max{v(a),v(b)}]\\
+		&=\sum_{i=0}^kM^k=M^k(k+1)
+	\end{align*}Hence $$\lt(\frac{v(a+b)}{M}\rt)^k\leq (k+1)\iff \frac{v(a+b)}{M}\leq (1+k)^{\frac1k}$$As $k\to \infty$ the RHS approaches 1 so $v(a+b)\leq M$. 
+\end{proof}
+
+\begin{example}{$p-$adic Valuations}{}
+	\begin{itemize}
+		\item $\bbZ$ with $p-$adic valution $v_p$ where $p\in\bbN$ is prime is a Hensel ring. Here $v_p(a)=p^{-n}$ where $n=\max\{k\geq 0\mid p^k\mid a\}$
+		\item $\bbF[y]$ with $p-$adic valutaion $v_p$ where $p\in \bbF[y]$ is an irreducible polynomial is a Hensel Ring. Here $v_p(f)=2^{-n\deg p}$ where $n=\max\{k\geq 0\mid p^k\mid f\}$
+	\end{itemize}
+\end{example}
+
+ \nt{From the valuation $v$ over $R$ we naturally get a valuation $v$ over the polynomial ring $R[x]$ by defining $$\forall\ f\in R[x],\ \text{let }f=\sum_{i=0}^nf_ix^i,\text{ then } v\lt(\sum_{i=0}^nf_ix^i\rt)=\max_{i}\{v(f_i)\}$$}
+\section{Conditions related to Hensel's Lemma}
+We will define 5 conditinos. First suppose we have:
+\begin{flushleft}
+	\begin{tabular}{rll}
+		(1) & $f\in R[x]$ & \\
+		(2) & $f_0,\dots, f_m\in R[x]$ & $\mcF=\{f_i\colon 0\leq i\leq m\}$\\
+		(3) & $f^*_0,\dots, f^*_m\in R[x]$ & $\mcF^*=\{f^*_i\colon 0\leq i\leq m\}$\\
+		(4) & $s_0,\dots, s_m\in R[x]$ & $\mcS=\{s_i\colon 0\leq i\leq m\}$\\
+		(5) & $s^*_0,\dots, s^*_m\in R[x]$ & $\mcS^*=\{s^*_i\colon 0\leq i\leq m\}$\\
+		(6) & $z\in R$ & \\
+		(7) & $\alpha,\delta,\eps\in \bbR$ & \\
+		(8) & $\delta ^*\in \bbR$ & \\
+		(9) & $\gm=\max\{\delta,\alpha \eps\}$		
+	\end{tabular}
+\end{flushleft}
+As you can see the set $\mcF^*$ basically represents the lift of $\mcF$ but here since we are saying the conditions in more generality we are not assuming any relations among them and we define some conditions involving them.
+\begin{itemize}
+	\item $\boldsymbol{H_1(m,f,\mcF,\mcS,\eps)}\coloneqq v\lt(f-\prod\limits_{i=0}^mf_i\rt)\leq\eps<1$ 
+	\item $\boldsymbol{H_2(m,f,\mcF,\mcS,z,\delta)}\coloneqq v\lt(\sum\limits_{i=0}^m s_i\prod\limits_{j\neq i}f_i -z   \rt)\leq \delta<1$
+	\item $\boldsymbol{H_3(m,f,\mathcal{F},\mcS,z,\alpha,\delta,\epsilon)}\coloneqq$ 
+	$\begin{array}[t]{@{}rl@{}}
+		(1) &f_1,\dots,f_m \text{ are monic}\\
+		(2) &\deg\left(\prod\limits_{i=0}^mf_i\right)\leq \deg f\\
+		(3) &\deg s_i\leq \deg f_i \ \forall\  i\in[m]\\
+		(4) &\alpha\delta\leq 1, \alpha\epsilon^2\leq 1\\
+		(5) &1\leq \alpha v(z)
+	\end{array}$
+	\item $\boldsymbol{H_4(m,\mcF,\mcF^*,\mcS,\mcS^*,\alpha,\delta,\eps)}\coloneqq$ $\begin{array}[t]{@{}rll@{}}
+		(1) & v(f^*_i-f_i)\leq \alpha\eps\ &\forall\ 0\leq i\leq m\\
+		(2) & v(s^*_i-s_i)\leq \alpha\eps\ &\forall\ 0\leq i\leq m\\
+		(3) &\deg f_i^*= \deg f_i\ &\forall \ i\in[m]\\
+		(4) &\deg s_i<\deg f_i\implies \deg s_i^*<\deg f_i^*\ &\forall\ i\in [m]
+	\end{array}$
+	\item $\boldsymbol{H_5(m,f,\mcF,\mcF^*,\mcS,\mcS^*, \alpha,\delta,\eps,\delta^*)}\coloneqq $ Let $p\in[m]$. Then suppose
+	\begin{itemize}
+		\item $\mcI_p=\{I_0,I_1,\dots,I_p\}$ be a partition of $\{0,\dots,m\}$ with $o\in I_0$. 
+		\item $\overline{\mcF}_p^m=\{\ovf_i\colon i\in[p]\}\subseteq R[x]$ be a set of monic polynomials
+	\end{itemize}
+	Then define: $$F_i=\prod_{j\in I_i} f_j,\qquad F_i^*=\prod_{j\in I_i}f_j^*,\qquad \mfs_i^*=\sum_{j\in I_i} s_j\frac{F_i^*}{f_i^*}$$So now we denote:$$\sF=\{F_i\colon 0\leq i\leq p\},\qquad \sF^*=\{F_i\colon 0\leq^* i\leq p\}, \qquad \sS=\{\mfs_i^*\colon 0\leq i\leq p\} $$
+	Assume:\begin{enumerate}
+		\item $v(\ovf_i-F_i)\leq \alpha \eps $ $\forall \ i\in[p]$
+		\item $\alpha v(s_i)\leq 1$ $\forall\ 0\leq i\leq m$
+		\item $\alpha\delta <1$, $\alpha^2\delta \leq 1$
+		\item $\alpha^2\eps<1$, $\alpha^3\eps\leq 1$
+	\end{enumerate}Then the following are equivalent:
+	\begin{enumerate}[label=(\roman*)]
+		\item $\exs$ $\ovf_0,$ $\ovs_0,\dots,\ovs_p\in R[x]$ denote $$\overline{\mcF}=\{\ovf_i\colon 0\leq i\leq p\},\qquad \overline{\mcS}=\{\ovs_i\colon 0\leq i\leq p\}$$then the following conditions are true:\begin{enumerate}
+			\item $H_1(p,f,\overline{\mcF},\overline{\mcS},\eps^*)$
+			\item $H_2(p,f,\overline{\mcF},\overline{\mcS},z,\delta^*)$
+			\item $H_3(p,f,\overline{\mcF},\overline{\mcS},z,\alpha^*, \delta^*,\eps^*)$
+			\item $H_4(p,f,\sF,\overline{\mcF},\sS, \overline{\mcS},z,\alpha^*,\delta^*,\eps^*)$
+		\end{enumerate}where $\alpha^*=\alpha$, $\eps^*=\alpha\eps\gm$
+		\item $\exs$ $\ovf_0\in R[x]$ such that $H_1(p,f,\overline{\mcF},\overline{\mcS},\eps^*)$ is true
+		\item $\forall\ i\in[p]$ we have $v(\ovf_i-F_i^*)\leq \eps^*$.
+	\end{enumerate}
+\end{itemize}
+The first 3 conditions here togather imply that: From $H_1$ we get that $f_0\cdots f_m$ is a good approximation of factorization of $f$ with $\eps$-precision, $H_2\implies z$ plays a similar role to the gcd of $f_0,\dots,f_m$ and it shows the generalized bezout's identity for gcd  for multiple elements. In the usual treatment of Hensel's Lemma $f_0,\dots, f_m$ are relatively prime (more precisely their images in the residue class field or $R$ modulo the maximal ideal $\la a\in R\mid v(a)<1\ra$ satisfy the assumption then one can find $s_0,\dots,s_m,\delta$ satisfying $H_2$ with $z=1$. One can set $\alpha=1$ or in general one can choose $\alpha=\frac1{v(z)}$. Thus $H_2$ staes that $f_0,\dots, f_m$ are approximately pairwise relatively prime.
+
+$H_4$ shows the connection between the lifts $f_i^*,s_i^*$ and $f_i,s_i$.
+
+$H_5$ basically states that the lifts are unique in the sense that one can group some of the $f_i's$ to form $F_0,\dots, F_p$ and change $F_i$ to $\ovf_i$ with precision $\eps^*$ and still one will have the factorization of $f$ with precision $\eps^*$. $H_5$ is very important for the factorization algorithm in chapter 6. 
+
+Now we will state the Hensel's Lemma and will later give the algorithm to obtain the lifts.
+\section{Hensel's Lemma}
+First we will prove a helping lemma which will be very much usefull in the proof of Hensel's Lemma  then we will state the actual theorem.
+\thm[hlm]{}{
+\begin{enumerate}[label=(\roman*)]
+	\item Let $a,f,p,s\in R[x]$ such that $f$ is monic and $s=pf+a$ with $\deg a<\deg f$. Then we have $v(p)\leq v(s) \text{ and } v(a)\leq v(s)$
+	\item Let $h_0,\dots, h_m\in R[x]$ and $h_o^*,\dots,h_m^*\in R[x]$ such that we have $v(h_i^*-h_i)\leq \eps$ for all $0\leq i\leq m$. Then we have $v\lt( \prod\limits_{i=0}^m h_i-\prod\limits_{i=0}^mh_i^*\rt)\leq \eps$
+\end{enumerate}
+}
+
+\begin{proof}
+	\begin{enumerate}[label=(\roman*)]
+		\item \parinn Suppose $\deg s \geq\deg f \geq 0$ otherwise $\deg s< \deg f$ Then $s= 0\times f + a=a$ so we get $v(a)=v(s)$ and $v(p)=v(0)=0\leq v(s)$. Hence assume $l=\deg s-\deg f\geq 0$. Then $p=\sum\limits_{i=0}^l p_ix^i$ where $p_i\in R$ for all $0\leq i\leq l$.
+		
+		Now we will induct on $l-i$. Let $\deg f=n$ and $\deg s=m$. Hence assume $f=\sum\limits_{i=0}^n f_ix^i$ and $s=\sum\limits_{i=0}^m s_ix^i$ where for all $0\leq i\leq n$ and $0\leq j\leq m$, $f_i,s_j\in R$. Since $f$ is monic $f_n=1$
+		
+		\underline{Base Case ($i=l$)} : $$v(p_l)= v(p_l)v(f_n)= v(p_lf_n)=v(s_m)\leq v(s)$$ 
+		
+		\underline{Inductive Step} : $v(p_i)\leq v(s)$ for all $l-k\leq i\leq l$. Now coefficient of $x^{(l-k-1)+n}$ in $S$ is $$s_{l-k-1+n}=\sum\limits_{i=l-k-1}^{l}p_if_{l-k-1+n-i}$$Therefore $p_{l-k-1}f_n=s_{l-k-1+n}-\sum\limits_{i=l-k}^l p_if_{l-k-1+n-i}$. Therefore 
+		\begin{align*}
+			v(p_{l-k-1})=v(p_{l-k-1}f_n) & \leq \max\{  v(s_{l-k-1+n}), v(p_if_{l-k-1+n-i})\mid l-k\leq i\leq l  \} \\
+			                             & \leq \max\{v(s_{l-k-1+n}), v(p_i)\mid l-k\leq i\leq l\}                  \\
+			                             & \leq v(s)
+		\end{align*}
+		Therefore by induction we have $v(p_i)\leq v(s)$ for all $0\leq i\leq l$. Then $v(p)\leq v(s)$.
+		
+		Hence $$v(a)=v(s-pf)\leq \max\{v(s),v(pf)\}\leq \max\{v(s),v(p)\}\leq v(s)$$Therefore we have $v(a)\leq v(s)$.
+		\item \parinn We will induct on $0\leq i\leq m$. 
+		
+		\underline{Base Case} : $v(h_0-g_0^*)\leq \eps$ Given
+		
+		\underline{Inductive Step} : Let this is true for $i=k$ i.e.$$v\lt(\prod_{j=0}^kh_j-\prod_{j=0}^k h_j^*  \rt)\leq \eps$$Now\begin{align*}
+			\prod_{j=0}^kh_j(h_{k+1}-h_{k+1}^*)+\prod_{j=0}^kh_j^*(h_{k+1}-h_{k+1}^*) &=\lt[\prod_{j=0}^{k+1}h_j-\prod_{j=0}^{k+1}h_j^*\rt] -\lt[ h_{k+1}^*\prod_{j=0}^kh_j-h_{k+1}\prod_{j=0}^{k}h_j^*  \rt]
+		\end{align*}Therefore we have $$\prod_{j=0}^{k+1}h_j-\prod_{j=0}^{k+1}h_j^*=	\prod_{j=0}^kh_j(h_{k+1}-h_{k+1}^*)+\prod_{j=0}^kh_j^*(h_{k+1}-h_{k+1}^*)+ \lt[ h_{k+1}^*\prod_{j=0}^kh_j-h_{k+1}\prod_{j=0}^{k}h_j^*  \rt]  $$
+	\end{enumerate}Hence we have \begin{align*}
+	v\lt(  \prod_{j=0}^{k+1}h_j-\prod_{j=0}^{k+1}h_j^* \rt)& \leq \max\lt\{ v\lt(\prod_{j=0}^kh_j\rt)v(h_{k+1}-h_{k+1}^*), v\lt(\prod_{j=0}^kh_j^*\rt)v(h_{k+1}-h_{k+1}^*),v\lt( h_{k+1}^*\prod_{j=0}^kh_j-h_{k+1}\prod_{j=0}^{k}h_j^*  \rt)  \rt\}\\
+	& \leq \max \lt\{v(h_{k+1}-h_{k+1}^*), v\lt( h_{k+1}^*\prod_{j=0}^kh_j-h_{k+1}\prod_{j=0}^{k}h_j^*  \rt)  \rt\}\\
+	& \leq \max\lt\{ \eps, v\lt( h_{k+1}^*\prod_{j=0}^kh_j-h_{k+1}\prod_{j=0}^{k}h_j^*  \rt)   \rt\}
+	\end{align*}Now we need to show that $$ v\lt( h_{k+1}^*\prod\limits_{j=0}^kh_j-h_{k+1}\prod\limits_{j=0}^{k}h_j^*  \rt)  \leq \eps$$Now
+	\begin{align*}
+		 h_{k+1}^*\prod_{j=0}^kh_j-h_{k+1}\prod_{j=0}^{k}h_j^*   & = \lt( h_{k+1}^*\prod_{j=0}^k h_j-h_{k+1}^*h_k^*\prod_{j=0}^{k-1}h_j \rt)         +         \lt( \lt[\prod_{j=k}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{k-1}h_j  \rt]-\lt[\prod_{j=k-1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{k-2}h_j  \rt]\rt)\\
+		 & + \lt( \lt[\prod_{j=k-1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{k-2}h_j  \rt]-\lt[\prod_{j=k-2}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{k-3}h_j  \rt]\rt)\\
+		 & \qquad\qquad \qquad\vdots\qquad\qquad \qquad\qquad\qquad\vdots\\
+		 &+ \lt( \lt[\prod_{j=t+1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{t}h_j  \rt]-\lt[\prod_{j=t}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{t-1}h_j  \rt]\rt)\\
+		 & \qquad\qquad \qquad\vdots\qquad\qquad \qquad\qquad\quad\vdots\\
+		 & + \lt( \lt[\prod_{j=1}^{k+1}h_j^*\rt]h_0  -\prod_{j=0}^{k+1}h_j^*\rt)+\lt(\prod_{j=0}^{k+1}h_j^*  -\lt[\prod_{j=0}^{k}h_j^*\rt]h_{k+1}  \rt)\\
+		 & = h_{k+1}^*\prod_{j=0}^{k-1}h_j^*(h_{k}-h_k^*)+\lt[\prod_{j=k}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{k-2}h_j  \rt](h_{k-1}-h_{k-1}^*) \\
+		 & +\lt[\prod_{j=k-1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{k-3}h_j  \rt](h_{k-2}-h_{k-2}^*)\\
+		 & \qquad\qquad\qquad\vdots\\
+		 & +\lt[\prod_{j=t+1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{t-1}h_j  \rt](h_{t}-h_{t}^*)\\
+		  & \qquad\qquad\qquad\vdots\\
+		  & + \lt[\prod_{j=1}^{k+1}h_j^*\rt](h_0-h_0^*)+  \lt[\prod_{j=1}^{k}h_j^*\rt](h_{k+1}^*-h_{k+1})
+	\end{align*}
+	Now for each $0\leq t\leq k$ we have $$v\lt(  \lt[\prod_{j=t+1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{t-1}h_j  \rt](h_{t}-h_{t}^*)\rt)\leq v(h_t-h_t^*)\leq\eps, \qquad v\lt(  \lt[\prod_{j=1}^{k}h_j^*\rt](h_{k+1}^*-h_{k+1})  \rt)\leq v(h_{k+1}^*-h_{k+1})\leq \eps$$Hence $$v\lt( h_{k+1}^*\prod\limits_{j=0}^kh_j-h_{k+1}\prod\limits_{j=0}^{k}h_j^*  \rt)\leq \max_{0\leq t\leq k}\lt\{  v\lt(  \lt[\prod_{j=t+1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{t-1}h_j  \rt](h_{t}-h_{t}^*)\rt),  v\lt(  \lt[\prod_{j=1}^{k}h_j^*\rt](h_{k+1}^*-h_{k+1})  \rt)\rt\}\leq \eps$$Therefore we have  $$ v\lt( h_{k+1}^*\prod\limits_{j=0}^kh_j-h_{k+1}\prod\limits_{j=0}^{k}h_j^*  \rt)  \leq \eps\implies 	v\lt(  \prod_{j=0}^{k+1}h_j-\prod_{j=0}^{k+1}h_j^* \rt)\leq \eps$$Hence by induction we have $$	v\lt(  \prod_{j=0}^{m}h_j-\prod_{j=0}^{m}h_j^* \rt)\leq \eps$$
+\end{proof}
+
+
+\thm[hslem]{Hensel's Lemma}{
+Assume that we have $f\in R[x]$, $\mcF=\{f_0,\dots,f_m\}\subseteq R[x]$, $\mcS=\{s_0,\dots, s_m\}\subseteq R[x]$, $z\in R$ and $\alpha,\delta,\eps\in \bbR$ which satisfy:\begin{enumerate}
+	\item $H_1(m,f,\mcF,\mcS,\eps)$
+	\item $H_2(m,f,\mcF,\mcS,z,\delta)$
+	\item $H_3(m,f,\mathcal{F},S,z,\alpha,\delta,\epsilon)$
+\end{enumerate}Then we can compute efficiently $$\mcF^*=\{f^*_i\colon 0\leq i\leq m\}\qquad \text{and}\qquad T=\{t_0,\dots, t_m\}$$ such that \begin{enumerate}[label=(\roman*)]
+\item \textbf{Linear Case}: $\mcS^*=\mcS$ and $\delta^*=\gm$, $\eps^*=\alpha\gm\eps$. Then we have the following conditions hold:\begin{enumerate}[label=(\alph*)]
+	\item $H_1(m,f,\mcF^*,\mcS^*,\eps^*)$
+	\item $H_2(m,f,\mcF^*,\mcS^*,z,\delta^*)$
+	\item $H_3(m,f,\mcF^*,\mcS^*,z,\alpha,\delta^*,\eps^*)$
+	\item $H_4(m,f,\mcF,\mcF^*,\mcS,\mcS^*,\alpha,\delta,\eps)$
+	\item $H_5(m,f,\mcF,\mcF^*,\mcS,\mcS^*,\alpha,\delta,\eps,\delta^*)$
+\end{enumerate}
+\item \textbf{Quadratic Case}: $\mcS^*=T$ and $\delta^*=\alpha\gm^2$, $\eps^*=\alpha\gm\eps$. Assume that $\deg s_i>\deg f_i$ for $0\leq i\leq m$. Then we have the following conditions hold:\begin{enumerate}[label=(\alph*)]
+	\item $H_1(m,f,\mcF^*,\mcS^*,\eps^*)$
+	\item $H_2(m,f,\mcF^*,\mcS^*,z,\delta^*)$
+	\item $H_3(m,f,\mcF^*,\mcS^*,z,\alpha,\delta^*,\eps^*)$
+	\item $H_4(m,f,\mcF,\mcF^*,\mcS,\mcS^*,\alpha,\delta,\eps)$
+	\item $H_5(m,f,\mcF,\mcF^*,\mcS,\mcS^*,\alpha,\delta,\eps,\delta^*)$
+\end{enumerate}
+\end{enumerate}
+}
+\pagebreak 
+\subsection{Hensel's Computation}
+\begin{algorithm}
+	\KwIn{\begin{enumerate}
+			\item $f\in R[x]$, $\mcF=\{f_0,\dots, f_m\}\subseteq R[x]$, $\mcS=\{s_0,\dots, s_m\}\subseteq R[x]$
+			\item  $z\in R$ 
+			\item  $\alpha,\delta,\eps\in \bbR$\end{enumerate}
+	}
+	\KwOut{$\mcF^*=\{f_0^*,\dots, f_m^*\}$, $T=\{t_0,\dots, t_m\}$}
+	\DontPrintSemicolon
+	\Begin{
+		Set $\gm=\max\{\delta,\alpha\eps\}$, $\alpha^*=\alpha$, $\eps^*=\alpha\gm\eps$ and $e=f-\prod\limits_{i=0}^mf_i$\;
+		\For{$1\leq i\leq m$}{
+		Compute $a_i,b_i,p_i\in R[x]$ such that $$s_ie=p_if_i+a_i, \qquad v(zb_i-a_i)\leq \eps\gm,\qquad \deg b_i\leq \deg a_i< \deg f_i$$
+		}
+		Compute $a_0,b_0\in R[x]$ such that $$a_0=s_0e+f_0\sum\limits_{i=1}^m p_i,\qquad v(zb_0-a_0)\leq \eps\gm,\qquad  \deg b_0\leq \deg f-\def \prod\limits_{i=1}^m f_i$$\;
+		\For{$0\leq i\leq m$}{
+		$f_i^*=f_i+b_i$
+		}
+		\For{$1\leq i\leq m$}{
+		Compute $c_i,d_i,g_i^*q_i\in R[x]$ such that $$g_i^*=\prod_{j\neq i}f_j^*,\qquad s_i(s_ig_i^*-z)=q_if_i^*+c_i\qquad v(zd_i-c_i)\leq \gm^2\qquad \deg d_i\leq \deg c_i<\deg f_i^*$$}
+		Compute $g_0^*=\prod\limits_{i=1}^mf_i^*$ and $c_0,d_0\in R[x]$ such that $$c_0=s_o\lt(\sum_{i=0}^m s_ig_i^*-z  \rt)+f_0^*\sum_{i=1}^m\lt[ q_i+s_i\lt(\sum_{j\neq i} s_j\frac{g_j^*}{f_j^*} \rt)\rt],\quad v(zd_0-c_0)\leq \gm^2,\quad \deg d_0\leq \deg f-\deg g_0$$\;
+		\For{$0\leq i\leq m$}{$t_i=s_i-d_i$}
+		\Return{$\mcF^*=\{f_i^*\colon 0\leq i\leq m\}$, $T=\{t_i\colon 0\leq i\leq m\}$}
+		
+	}
+	\caption{Hensel's Computation}
+\end{algorithm}
+\subsection{Proof of Hensel's Lemma}
