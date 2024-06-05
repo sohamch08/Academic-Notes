@@ -1,0 +1,56 @@
+\chapter{Fractional Matroid Matching}
+Fractional Matroid Matchings generalizes the case for Matroid Matching or Matroid Parity problem with allowing fractional solutions for the polytope which we will show below. We start with the same kind of state like Matroid Parity Problem
+\section{Fractional Matroid Matchings Polytope}
+Let $M=(E,\mcI)$ is a matroid  with ground set $E$ of even cardinality and with elements $E$ is partitioned  into lines or pairs. Let $L$ is the  set of lines.  Let $r:\mcP(E)\to \bbZ$ be the rank function and $sp:\mcP(E)\to \mcP(E)$ be the span function. Assume that $\forall\ l\in L$, $r(L)=2$. With this setting (same as matroid parity problem) we now define the polytope following \cite{fraclinmat}
+\dfn[fracmatmatch]{Fractional Matroid Matching Polytope}{Let $\sL$ denote the lattice of flats  in $M$ wtih  $S_1\wedge S_2=S_1\cap S_2$ and $S_1\vee S_2 = sp(S_1\cup S_2)$  and for each line $l\in L$  let $a_l:\sL\to \{0,1,2\}$ be the function $a_l(S)=r(sp(l)\cap S)$. Now for any $S\in \sL$ and $x\in \bbR^{|L|}_+$ let $a(S)\cdot x$ denote the vector $(a(S)\cdot x)_l=a_l(S)x_l$ for any $l\in L$. Then the set $$FP(M)=\{x\in \bbR^{|L|}_+\mid \colon a(S)\cdot x\leq r(S) \text{ for each }S\in\sL\}$$ is fractional matroid matching polytope for $M$ and each vector $x\in FP(M)$ is called a fractional matroid matching. }
+Now we can also allow $x$ to be from $\bbR^{|L|}$, not restricting only to positive vectors. This polytope is a subset of $[0,1]^m$. We will explain the setting wtih the following example:
+\begin{example}{}{}
+	Consider the matroid $M$ with ground set $$E=\{a_1,a_2,b_1,b_2,c_1,c_2,d_1,d_2\}$$where every 4 element subset of $E$ is a base except these 4 sets \begin{align*}
+		\{a_1,a_2,b_1,b_2\}, && \{a_1,a_2,c_1,c_2\}, && \{a_1,a_2,d_1,d_2\},\\
+		\{b_1,b_2,c_1,c_2\}, && \{b_1,b_2,d_1,d_2\}, && \{c_1,c_2,d_1,d_2\}
+	\end{align*}Now the lines are  defined to be \begin{align*}
+	l_1=\{a_1,a_2\} && l_2=\{b_1,b_2\}, && l_3=\{c_1,c_2\}, && l_4=\{d_1,d_2\}
+	\end{align*} Now the flats of $M$ are empty set, individual elements, every pair of elements, set consists of one element from each of three lines, pair of line and $E$. Hence $FP(M)$ is the set of $x\in\bbR^{|L|}_+$ satisfying \begin{align*}
+	2x_1+2x_2\leq 3 && 2x_1+2x_3\leq 3 && 2x_1+2x_4\leq 3\\
+	2x_2+2x_3\leq 3 && 2x_2+2x_4\leq 3 && 2x_3+2x_4\leq 3\\
+	\shortintertext{\centering $2x_1+2x_2+2x_3+2x_4\leq 4$} \\
+	\shortintertext{\centering $2x_i\leq 2\quad \text{for each $i\in[4]$}$}
+	\end{align*}
+\end{example}
+Now the we show the theorem \thrmref{fracmatmatch-matparity} which states that the fractional matroid matching polytope arises
+as a linear relaxation of the matroid matching problem. 
+\begin{Theorem}{\cite[Theoerm 2.1]{fraclinmat}}{fracmatmatch-matparity}
+	An integer vector $x\in\bbR^{|L|}_+$ is the incidence  vector of a matroid matching iff $x$ is a fractional matroid matching. 
+\end{Theorem}
+You can clearly see this theorem by comparing the Matroid Matching Polytope and Fractional Matroid Matching Polytope so we are omitting the proof.
+\begin{Theorem}{\cite[Theorem 1]{weightedfracmatmatch}}{weighted-fracmatmatch}
+	The vertices of the fractional matroid matching are half-integral
+\end{Theorem}
+\dfn{Weighted Fractional Linear Matroid Matching Problem}{It is to find a fractional matroid matching $x$ that maximizes $w\cdot x$ for a non-negative weight assignment $w:L\to \bbZ_+$
+
+For plain Fractional Linear Matroid Matching Problem we need to find a fractional matroid matching $x$ which maximizes the size i.e. $L_1$ norm of $x$ which is  $\sum\limits_{l\in L}|x_l|$.}
+Gijswijt and Pap in \cite{weightedfracmatmatch} gave a polynomial time algorithm for weighted fractional linear matroid matching. They also gave the following characterization for maximizing face of the polytope with respect to a weight function.
+\begin{Theorem}{\cite[Prood of Theorem 1]{weightedfracmatmatch}}{fracmatmatch-matrixcharac}
+	Let $L=\{l_1,\dots, l_m\}$ be a set of lines with $l_i\subseteq \bbF^n$ and $w:L\to \bbZ$ be a weight assignment on $L$. Let $F$ denote the set of fractional linear matroid matchings maximizing and $S\subseteq [m]$ such that every $x\in F$ has $y_e=0$ for all $e\in S$. Then for some $k\leq n$, $\exs$ a $k\times m$ matrix $D_F$ and $b_F\in \bbZ^k$ such that \begin{itemize}
+		\item $D_F\in\{0,1,2\}^{k\times m}$
+		\item The sum of entries in any column of $D_F$ is exactly 2
+		\item A fractional matroid matching $x$ is in $F$ iff $y_e=0$ for $e\in S$ and $D_F=x=b_F$.
+	\end{itemize}
+\end{Theorem}
+\section{Isolating Weight Assignment for Fractional Matroid Matching}
+In this section we will describe how we can construct an isolating weight assignment for fractional matroid matching with just the number of lines as input.
+
+Now for a face $F$ of a polytope, let $\mcL_F$ denote the lattice $$\mcL_F=\{v\in\bbZ^{|L|}\mid v=\alpha(x_1-x_2)\text{  for some $x_1,x_2\in F$ and $\alpha\in\bbR$}\}$$and $\lm(\mcL_F)$ denote the length of the shortest vector of $\mcL_F$. Hence $\mcL_F$ consistes of all integral vectors parallel to the face $F$.
+
+Now by \thrmref{fracmatmatch-matrixcharac} the face maximizing the size is described by the equation $D_Fx=b_F$ where $D_F\in \{0,1,2\}^{k\times |L|}$ with column sum 2. Hence $\mcL_F$ is exactly the set of integral vectors in the null space of $D_F$. Therefore $$\mcL_F=\{v\in\bbZ^{|L|}\mid D_Fv=0\}$$So we will prove the following theorem which shows the number of vectors in $\mcL_F$ with size less than twice the length of shortest vector is polynomially bounded.
+\begin{Theorem}{\cite{gurjarfrac}}{}
+	Let $D\in \{0,1,2\}^{p\times m}$ be a matroix such that the sum of entries of each column equals 2. Let $\mcL_D$ denote the lattice $\{v\in\bbZ^m\mid Dv=0\}$. Then it holds that $$|\{v\in \mcL_D\mid |v|<2\lm(\mcL_D)\}|\leq m^{O(1)}$$
+\end{Theorem}
+
+With this theorem we have \begin{Theorem}{\cite[Theorem 2.5]{gurjarisolating}}{}
+	Let $k$ be a positive integer and $P\subseteq \bbR^{m}$ a polytope such that its extreme ppoints are in $\lt\{0,\frac1k,\frac2k,\dots,1\rt\}^m$ and there exists a constant $c>1$ with $$|\{v\in \mcL_F\colon |v|<c\lm(\mcL_F)\}|\leq m^{O(1)}$$ for any face $F$ of $P$. Then there exists an algorithm that, given $k$ and $m$, outputs a set $\mcW\subseteq \bbZ^m$ of $m^{O(\log km)}$ weight assignments with weights bounded by $m^{O(\log km)}$ such that there exists at least one $w\in \mcW$ that is isolating for $P$, in time $polylog(km)$ using $m^{O(\log km)}$ many parallel processors.
+\end{Theorem}
+Using this we finally have an algorithm for isolating a fractional matroid matching polytope:
+\begin{Theorem}{\cite[Theorem 3.1]{gurjarfrac}}{}
+	There exists an algorithm that given $m\in \bbZ_+$ outputs a set $\mcW\subseteq \bbZ^m_+$ of $m^{O(\log m)}$ weight assignments with weights bounded by $m^{O(\log m)}$ such that, for any fractional matroid matching polytope $P$ of $m$ lines, there exists at least one $w\in \mcW$ that is isolating for $P$, in time $polylog(m)$ usign $m^{O(\log m)}$ many parallel processors.
+\end{Theorem}
