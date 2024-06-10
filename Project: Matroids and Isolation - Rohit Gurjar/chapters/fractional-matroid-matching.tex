@@ -3,7 +3,7 @@ Fractional Matroid Matchings generalizes the case for Matroid Matching or Matroi
 \section{Fractional Matroid Matchings Polytope}
 Let $M=(E,\mcI)$ is a matroid  with ground set $E$ of even cardinality and with elements $E$ is partitioned  into lines or pairs. Let $L$ is the  set of lines.  Let $r:\mcP(E)\to \bbZ$ be the rank function and $sp:\mcP(E)\to \mcP(E)$ be the span function. Assume that $\forall\ l\in L$, $r(L)=2$. With this setting (same as matroid parity problem) we now define the polytope following \cite{fraclinmat}
 \dfn[fracmatmatch]{Fractional Matroid Matching Polytope}{Let $\sL$ denote the lattice of flats  in $M$ wtih  $S_1\wedge S_2=S_1\cap S_2$ and $S_1\vee S_2 = sp(S_1\cup S_2)$  and for each line $l\in L$  let $a_l:\sL\to \{0,1,2\}$ be the function $a_l(S)=r(sp(l)\cap S)$. Now for any $S\in \sL$ and $x\in \bbR^{|L|}_+$ let $a(S)\cdot x$ denote the vector $(a(S)\cdot x)_l=a_l(S)x_l$ for any $l\in L$. Then the set $$FP(M)=\{x\in \bbR^{|L|}_+\mid \colon a(S)\cdot x\leq r(S) \text{ for each }S\in\sL\}$$ is fractional matroid matching polytope for $M$ and each vector $x\in FP(M)$ is called a fractional matroid matching. }
-Now we can also allow $x$ to be from $\bbR^{|L|}$, not restricting only to positive vectors. This polytope is a subset of $[0,1]^m$. We will explain the setting wtih the following example:
+We take $|L|=m$ to imply that originally the ground set has $2m$ elements. Now we can also allow $x$ to be from $\bbR^{m}$, not restricting only to positive vectors. This polytope is a subset of $[0,1]^m$. We will explain the setting wtih the following example:
 \begin{example}{}{}
 	Consider the matroid $M$ with ground set $$E=\{a_1,a_2,b_1,b_2,c_1,c_2,d_1,d_2\}$$where every 4 element subset of $E$ is a base except these 4 sets \begin{align*}
 		\{a_1,a_2,b_1,b_2\}, && \{a_1,a_2,c_1,c_2\}, && \{a_1,a_2,d_1,d_2\},\\
@@ -20,13 +20,14 @@ Now we can also allow $x$ to be from $\bbR^{|L|}$, not restricting only to posit
 Now the we show the theorem \thrmref{fracmatmatch-matparity} which states that the fractional matroid matching polytope arises
 as a linear relaxation of the matroid matching problem. 
 \begin{Theorem}{\cite[Theoerm 2.1]{fraclinmat}}{fracmatmatch-matparity}
-	An integer vector $x\in\bbR^{|L|}_+$ is the incidence  vector of a matroid matching iff $x$ is a fractional matroid matching. 
+	An integer vector $x\in\bbR^{m}_+$ is the incidence  vector of a matroid matching iff $x$ is a fractional matroid matching. 
 \end{Theorem}
 You can clearly see this theorem by comparing the Matroid Matching Polytope and Fractional Matroid Matching Polytope so we are omitting the proof.
 \begin{Theorem}{\cite[Theorem 1]{weightedfracmatmatch}}{weighted-fracmatmatch}
 	The vertices of the fractional matroid matching are half-integral
 \end{Theorem}
-\dfn{Weighted Fractional Linear Matroid Matching Problem}{It is to find a fractional matroid matching $x$ that maximizes $w\cdot x$ for a non-negative weight assignment $w:L\to \bbZ_+$
+\subsection{Weighted Fractional Matroid Matching}
+\dfn{Weighted Fractional Matroid Matching Problem}{It is to find a fractional matroid matching $x$ that maximizes $w\cdot x$ for a non-negative weight assignment $w:L\to \bbZ_+$.\parinn
 
 For plain Fractional Linear Matroid Matching Problem we need to find a fractional matroid matching $x$ which maximizes the size i.e. $L_1$ norm of $x$ which is  $\sum\limits_{l\in L}|x_l|$.}
 Gijswijt and Pap in \cite{weightedfracmatmatch} gave a polynomial time algorithm for weighted fractional linear matroid matching. They also gave the following characterization for maximizing face of the polytope with respect to a weight function.
@@ -34,19 +35,105 @@ Gijswijt and Pap in \cite{weightedfracmatmatch} gave a polynomial time algorithm
 	Let $L=\{l_1,\dots, l_m\}$ be a set of lines with $l_i\subseteq \bbF^n$ and $w:L\to \bbZ$ be a weight assignment on $L$. Let $F$ denote the set of fractional linear matroid matchings maximizing and $S\subseteq [m]$ such that every $x\in F$ has $y_e=0$ for all $e\in S$. Then for some $k\leq n$, $\exs$ a $k\times m$ matrix $D_F$ and $b_F\in \bbZ^k$ such that \begin{itemize}
 		\item $D_F\in\{0,1,2\}^{k\times m}$
 		\item The sum of entries in any column of $D_F$ is exactly 2
-		\item A fractional matroid matching $x$ is in $F$ iff $y_e=0$ for $e\in S$ and $D_F=x=b_F$.
+		\item A fractional matroid matching $x$ is in $F$ iff $y_e=0$ for $e\in S$ and $D_Fx=b_F$.
 	\end{itemize}
 \end{Theorem}
 \section{Isolating Weight Assignment for Fractional Matroid Matching}
 In this section we will describe how we can construct an isolating weight assignment for fractional matroid matching with just the number of lines as input.
 
-Now for a face $F$ of a polytope, let $\mcL_F$ denote the lattice $$\mcL_F=\{v\in\bbZ^{|L|}\mid v=\alpha(x_1-x_2)\text{  for some $x_1,x_2\in F$ and $\alpha\in\bbR$}\}$$and $\lm(\mcL_F)$ denote the length of the shortest vector of $\mcL_F$. Hence $\mcL_F$ consistes of all integral vectors parallel to the face $F$.
+Now for a face $F$ of a polytope, let $\mcL_F$ denote the lattice $$\mcL_F=\{v\in\bbZ^{m}\mid v=\alpha(x_1-x_2)\text{  for some $x_1,x_2\in F$ and $\alpha\in\bbR$}\}$$and $\lm(\mcL_F)$ denote the length of the shortest vector of $\mcL_F$. Hence $\mcL_F$ consistes of all integral vectors parallel to the face $F$.
 
-Now by \thrmref{fracmatmatch-matrixcharac} the face maximizing the size is described by the equation $D_Fx=b_F$ where $D_F\in \{0,1,2\}^{k\times |L|}$ with column sum 2. Hence $\mcL_F$ is exactly the set of integral vectors in the null space of $D_F$. Therefore $$\mcL_F=\{v\in\bbZ^{|L|}\mid D_Fv=0\}$$So we will prove the following theorem which shows the number of vectors in $\mcL_F$ with size less than twice the length of shortest vector is polynomially bounded.
-\begin{Theorem}{\cite{gurjarfrac}}{}
-	Let $D\in \{0,1,2\}^{p\times m}$ be a matroix such that the sum of entries of each column equals 2. Let $\mcL_D$ denote the lattice $\{v\in\bbZ^m\mid Dv=0\}$. Then it holds that $$|\{v\in \mcL_D\mid |v|<2\lm(\mcL_D)\}|\leq m^{O(1)}$$
+Now by \thrmref{fracmatmatch-matrixcharac} the face maximizing the size is described by the equation $D_Fx=b_F$ where $D_F\in \{0,1,2\}^{k\times m}$ with column sum 2. Hence $\mcL_F$ is exactly the set of integral vectors in the null space of $D_F$. Therefore $$\mcL_F=\{v\in\bbZ^{m}\mid D_Fv=0\}$$So we will prove that the number of vectors in $\mcL_F$ with size less than twice the length of shortest vector is polynomially bounded.
+
+Before going to the proof of \thrmref{latticevector-polybounded} first we will show how we can interpret $D_F$ an incidence matrix for a graph instead of general matrix. $D_F\in \{0,1,2\}^{k\times m}$ where every column sum is 2. Hence we can thing of a graph $G_D$ with vertex set $[k]$ and the $m$ edges defined as follows: for every $e\in [m]$ the $e$-th edge of $G_D$ is drawn between the vertices $s,t\in[k]$ if $D_F[s,e]=D_F[t,e]=1$ and $e$-th edge is a self look on the vertex $s\in[k]$ if $D_F[s,e]=2$.  
+\subsection{Alternating Circuits}
+We will define alternating indicator vetors and alternating circuits following the \cite{generalmatchingola}
+\dfn[altcircuit]{Alternating Indicator Vector \& Alternating Circuit}{Let $C=v_0\xrightarrow{e_0}v_1\xrightarrow{e_1}v_2\cdots \xrightarrow{e_{k-2}}v_{k-1}\xrightarrow{e_{k-1}}v_0$ be a closed walk of even length in a multigraph $G$ with loops. Then the \textit{Alternating Indicator Vector} of $C$ denoted by $(\pm \mathbbm{1})_C$ is the vector $$(\pm \mathbbm{1})_C\coloneqq \sum_{i=0}^{k-1}(-1)^i\mathbbm{1}_{e_i}$$
+
+$C$ is called \textit{Altenating Circuit} if its alternating indicator vector is nonzero}
+We can use the parity for $(-1)^{i}$ as direction of movement in $C$. So a closed walk $C$ is a alternating circuti if there exists at least one edge $e\in C$ for which $C$ has moved through $e$ more time in one direction than the other.
+\begin{observation*}
+	$|(\pm \mathbbm{1})_C|\leq |C|$ for any even length closed walk $C$.
+\end{observation*}
+
+
+Now we will prove a property for all alternating circuits in $G_D$
+\begin{lemma}{\cite[Proof of Claim 1, Proof of Theorem 3.4]{gurjarfrac}}{altcircuit-in-lattice}
+	For any alternating circuit $C$ we have $D_F\cdot (\pm \mathbbm{1})_C=0$
+\end{lemma}
+\begin{proof}
+	Suppose $C=v_0\xrightarrow{e_0}v_1\xrightarrow{e_1}v_2\cdots \xrightarrow{e_{k-2}}v_{k-1}\xrightarrow{e_{k-1}}v_0$. We denote the $i$-th column of $D_F$ is denoted by $D_i$. Now $$D_i\cdot (\pm \mathbb{1})_C=\sum_{j=0}^{k-1}(-1)^jD_F[i,e_j]=\sum_{e_j: i\in e_j\in C}(-1)^j D_F[i,e_j]$$Hence only the edges in $C$ which are incident on $i$ contributes to the above sum. Therefore the whole sum is partitioned into distinct subparts of walks where each subpart is of the form $$v_s\xrightarrow{e_s}\underbrace{i \xrightarrow{e_{s+1}}i\xrightarrow{e_{s+2}}\cdots \xrightarrow{e_{s+k-1}}i}_{k\text{ times}}\xrightarrow{e_{s+k}}v_t\qquad \text{where $v_s,v_t\neq i$}$$i.e. the part starts from a vertex not equal to $i$ then goes to $i$ and after looping in $i$ for some times the walk goes to another vertex not equal to $i$. We will show that for each of these parts the contribution to the sum is 0.
+	
+	Now for such a subpart their contribution to the sum is $$\delta=(-1)^s+2\sum_{j=1}^{k-1}(-1)^{s+i}+(-1)^{s+k}$$ We will analyze case wise:\parinf
+	
+	\textbf{Case 1: $k$ is odd:} Then $k-1$ is even. Hence $$\sum_{j=1}^{k-1}(-1)^{s+i}=(-1)^s\sum_{j=1}^{k-1}(-1)^{i}=0$$Therefore $$\delta=(-1)^s+(-1)^{s+k}=(-1)^s[1+(-1)^k]=0$$ as $k$ is odd.
+	
+	\textbf{Case 2: $k$ is even:} Then $k-2$ is even. Hence $$\sum_{j=1}^{k-1}(-1)^{s+i}=\lt[\sum_{j=1}^{k-2}(-1)^{s+i}\rt]+(-1)^{s+k-1}=(-1)^{s+k-1}$$Hence $$\delta=(-1)^s+2(-1)^{s+k-1}+(-1)^{s+k}=(-1)^s[1+2(-1)^{k-1}+(-1)^k]=0$$\parinn
+	
+	Therefore we showed that for each such parts their contribution to the sum is 0. Therefore the total sum is 0 i.e. $D_i\cdot (\pm\mathbbm{1})_C=0$. Since this is true for all $i\in[k]$ we have $D_F\cdot (\pm \mathbbm{1})_C=0$. 
+\end{proof}
+Now we will show that any vector in the lattice $\mcL_F$ can be decomposed into finite sum of alternating indicator vectors of alternating circuits with the property that for each such alternating circuit $C$, $|(\pm \mathbbm{1})_C|=|C|$. Before that we introduce a relation between two vectors in $\bbR^m$ this will come in handy for the decomposition.
+
+\dfn[conformal]{Conformal}{For $x,y\in \bbR^m$, $x$ is said to be conformal to $y$ if $x_iy_i\geq 0$ and $|x_i|\leq |y_i|$ $\forall \ i\in[m]$ and it is denoted by $x\sqsubseteq y$}
+
+
+\begin{lemma}{\cite[Claim 1, Proof of Theorem 3.4]{gurjarfrac}}{}
+For any $x\in\mcL_F$, $\exs$ alternating circuits $C_1,C_2,\dots, C_t$ in $G_D$ such that $$x=\sum_{i=1}^t(\pm \mathbbm{1})_{C_i}$$where $\forall\ i\in[t]$, $(\pm \mathbbm{1})_{C_i}\sqsubseteq x$ and $|(\pm\mathbbm{1})_{C_i}|=|C_i|$.
+\end{lemma}
+\begin{proof}
+	We will decompose a given $x$ into alternating indicator vectors by the following iterative algorithm:
+	
+	
+	\begin{algorithm}[H]
+		\KwIn{$x\in \mcL_F$}
+		\KwOut{$\mcY=\{y_i\}$ where $|\mcY|<\infty$ and $\forall \ y_i\in \mcY$ are alternating indicator vectors}
+		\DontPrintSemicolon
+		\Begin{
+			\While{$|x|\neq 0$}{
+				$y\longleftarrow 0$, $j\longleftarrow 1$\;
+				Let $e_0\in[m]$ such that $x_{e_0}>0$\;
+				$y_{e_0}\longleftarrow 1$ and let $e_0$-th edge in $G_D$ be $\{v_0,v_1\}$\;
+				\While{True}{
+					\If{$\exs\ e\in[m]$ such that $e$-th edge is $\{v_j,u\}$, $|x_e|>|y_e|$ and $(-1)^jx_e>0$}{
+						$y_e\longleftarrow y_e+(-1)^j$, $e_j\longleftarrow e$\;
+						$v_{j+1}\longleftarrow u$\;
+						 $j\longleftarrow j+1$\;
+					}
+					\Else{\Return{$x\notin \mcL_F$}}
+					\If{$j\equiv 0\pmod 2$ and $v_j=v_0$}{$x\longleftarrow x-y$\;
+						\Return{$y$} and exit inner while loop}
+				}
+			}
+		}
+		\caption{Decomposition of a Lattice Vector}	
+	\end{algorithm}
+Now suppose $x$ denote the vector at some iteration of the outer while loop. Now forall $e\in[m]$, let at $j$th and $l$th iteration of the inner while loop $(-1)^j$ and $(-1)^l$ are added to $y_e$ respectively. Now both $j$ and $l$ has same parity because since the edge is not changing both times $(-1)^jx_e>0$ and $(-1)^lx_e>0$ has to be satisfies. Therefore we get $j$ and $l$ have same parity. Hence for a full run of the inner while loop for any $e\in[m]$ everytime $y_e$ is changed the same $(-1)^j$ is added. Hence whenever $y_e$ is changed $|y_e|$ is increased. Therefore $|y|$ increases for each iteration of the inner while loop. But $|y|$ cannot exceed $|x|$ since as the addition step works when $\exs \ e\in[m]$ with $|x_e|>|y_e|$ and $(-1)^jx_e>0$, after addition $|y_e+(-1)^j|\leq |y_e|+1\leq |x|$. So if we start with $|y|\leq |x|$ after addition with each iteration of inner while loop we still have $|y|\leq |x|$.  Also since for every such edge we add $(-1)^j$ to $y_e$ when $(-1)^jx_e>0$ and $|x_e|>|y_e|$. So by the first condition we have $y_e$ and $x_e$ has the same sign i.e. $x_ey_e>0$. And we also have $|x_e|\geq |y_e|$. Therefore we have $y\sqsubseteq x$.
+
+Now since we start the algorithm by adding 1 to $y_{e_0}$ at Line 5 we have initially $|y|>0$ and afterwards with each iteration of the inner while loop $|y|$ increases so we have $|y|>0$.Now if the current iteration of the inner while loop ends at Line 13 then we get a closed walk $C$ since in each iteration of the inner while loop the algorithm follows a walk in $G_D$. So $C$ is an alternating circuit and  we have $|y|=|C|$. Now since $y\sqsubseteq x$ we have $|x-y|=|x|-|y|<|x|$. Since $C$ is alternating circuit by \lemref{altcircuit-in-lattice} we have $y\in \mcL_F$. Hence we have $x-y\in\mcL_F$.
+
+Now all that remains is to show that the algorithm never goes to Line 11 if $x\in\mcL_F$. The only reason the algorithm can go to Line 11 if at some iteration of the inner while loop can not find an edge $e\in [m]$ such that $|x_e|>|y_e|$ and $(-1)^jx_e>0$ where $e\in \delta(v_j)$ where $\delta(v_j)$ denotes te set of edges incident on $v_j$. Suppose at this point we have the walk $$\mcP=v_0\xrightarrow{e_0}v_1\xrightarrow{e_1}\cdots \xrightarrow{e_{j-1}}v_j$$Now by following the proof of \lemref{altcircuit-in-lattice} we have that $D_iy=0$ forall $i\in[k]$ except $i\notin \{v_0.v_j\}$.\parinf
+
+\textbf{\textit{Claim:}} If $j$ is odd then $D_{v_j}y>0$ and if $j$ is even then $D_{v_j}y<0$.
+
+\textit{Proof:} We will prove the case for $j$ is odd. The even case will follow similarly.
+
+\end{proof}
+
+\subsection{Bounding vectors in $\mcL_F$ with Small Size}
+\begin{Theorem}{\cite{gurjarfrac}}{latticevector-polybounded}
+	Let $D\in \{0,1,2\}^{p\times m}$ be a matrix such that the sum of entries of each column equals 2. Let $\mcL_D$ denote the lattice $\{v\in\bbZ^m\mid Dv=0\}$. Then it holds that $$|\{v\in \mcL_D\mid |v|<2\lm(\mcL_D)\}|\leq m^{O(1)}$$
 \end{Theorem}
+\begin{proof}
+	First we will show how we can interpret $D_F$ an incidence matrix for a graph instead of general matrix. $D_F\in \{0,1,2\}^{p\times m}$ where every column sum is 2. Hence we can thing of a graph $G_D$ with vertex set $[p]$ and the $m$ edges defined as follows: for every $e\in [m]$ the $e$-th edge of $G_D$ is drawn between the vertices $s,t\in[p]$ if $D_F[s,e]=D_F[t,e]=1$ and $e$-th edge is a self loop on the vertex $s\in[p]$ if $D_F[s,e]=2$. 
+\end{proof}
 
+\begin{Theorem}{\cite[Lemma 5.4]{generalmatchingola}}{ola-altcircuitn17}
+	Let $G$ be a graph on $n$ vertices such that the size of the smallest alternating circuit $\lm$. Then the cardinality of the set $$\{(\pm \mathbbm{1})_C\mid C\text{ is an alternating circuit in $G$ of size at most $2\lm$}\}$$is at most $n^{17}$.
+\end{Theorem}
+\begin{proof}
+	content...
+\end{proof}
+\subsection{Algorithm for Finding Isolating Weight Assignment}
 With this theorem we have \begin{Theorem}{\cite[Theorem 2.5]{gurjarisolating}}{}
 	Let $k$ be a positive integer and $P\subseteq \bbR^{m}$ a polytope such that its extreme ppoints are in $\lt\{0,\frac1k,\frac2k,\dots,1\rt\}^m$ and there exists a constant $c>1$ with $$|\{v\in \mcL_F\colon |v|<c\lm(\mcL_F)\}|\leq m^{O(1)}$$ for any face $F$ of $P$. Then there exists an algorithm that, given $k$ and $m$, outputs a set $\mcW\subseteq \bbZ^m$ of $m^{O(\log km)}$ weight assignments with weights bounded by $m^{O(\log km)}$ such that there exists at least one $w\in \mcW$ that is isolating for $P$, in time $polylog(km)$ using $m^{O(\log km)}$ many parallel processors.
 \end{Theorem}
