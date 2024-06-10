@@ -43,11 +43,11 @@ In this section we will describe how we can construct an isolating weight assign
 
 Now for a face $F$ of a polytope, let $\mcL_F$ denote the lattice $$\mcL_F=\{v\in\bbZ^{m}\mid v=\alpha(x_1-x_2)\text{  for some $x_1,x_2\in F$ and $\alpha\in\bbR$}\}$$and $\lm(\mcL_F)$ denote the length of the shortest vector of $\mcL_F$. Hence $\mcL_F$ consistes of all integral vectors parallel to the face $F$.
 
-Now by \thrmref{fracmatmatch-matrixcharac} the face maximizing the size is described by the equation $D_Fx=b_F$ where $D_F\in \{0,1,2\}^{k\times m}$ with column sum 2. Hence $\mcL_F$ is exactly the set of integral vectors in the null space of $D_F$. Therefore $$\mcL_F=\{v\in\bbZ^{m}\mid D_Fv=0\}$$So we will prove that the number of vectors in $\mcL_F$ with size less than twice the length of shortest vector is polynomially bounded.
+Now by \thrmref{fracmatmatch-matrixcharac} the face maximizing the size is described by the equation $D_Fx=b_F$ where $D_F\in \{0,1,2\}^{k\times m}$ with column sum 2. Hence $\mcL_F$ is exactly the set of integral vectors in the null space of $D_F$. Therefore $$\mcL_F=\{v\in\bbZ^{m}\mid D_Fv=0\}$$So we will prove that the number of vectors in $\mcL_F$ with size less than twice the length of shortest vector is polynomially bounded in Subsection 1.2.2.
 
-Before going to the proof of \thrmref{latticevector-polybounded} first we will show how we can interpret $D_F$ an incidence matrix for a graph instead of general matrix. $D_F\in \{0,1,2\}^{k\times m}$ where every column sum is 2. Hence we can thing of a graph $G_D$ with vertex set $[k]$ and the $m$ edges defined as follows: for every $e\in [m]$ the $e$-th edge of $G_D$ is drawn between the vertices $s,t\in[k]$ if $D_F[s,e]=D_F[t,e]=1$ and $e$-th edge is a self look on the vertex $s\in[k]$ if $D_F[s,e]=2$.  
+First we will show how we can interpret $D_F$ an incidence matrix for a graph instead of general matrix. $D_F\in \{0,1,2\}^{k\times m}$ where every column sum is 2. Hence we can thing of a graph $G_D$ with vertex set $[k]$ and the $m$ edges defined as follows: for every $e\in [m]$ the $e$-th edge of $G_D$ is drawn between the vertices $s,t\in[k]$ if $D_F[s,e]=D_F[t,e]=1$ and $e$-th edge is a self look on the vertex $s\in[k]$ if $D_F[s,e]=2$.  
 \subsection{Alternating Circuits}
-We will define alternating indicator vetors and alternating circuits following the \cite{generalmatchingola}
+First we will define some elements called alternating indicator vetors and alternating circuits following the \cite{generalmatchingola} for the proof of \thrmref{latticevector-polybounded}.
 \dfn[altcircuit]{Alternating Indicator Vector \& Alternating Circuit}{Let $C=v_0\xrightarrow{e_0}v_1\xrightarrow{e_1}v_2\cdots \xrightarrow{e_{k-2}}v_{k-1}\xrightarrow{e_{k-1}}v_0$ be a closed walk of even length in a multigraph $G$ with loops. Then the \textit{Alternating Indicator Vector} of $C$ denoted by $(\pm \mathbbm{1})_C$ is the vector $$(\pm \mathbbm{1})_C\coloneqq \sum_{i=0}^{k-1}(-1)^i\mathbbm{1}_{e_i}$$
 
 $C$ is called \textit{Altenating Circuit} if its alternating indicator vector is nonzero}
@@ -77,7 +77,7 @@ Now we will show that any vector in the lattice $\mcL_F$ can be decomposed into 
 \dfn[conformal]{Conformal}{For $x,y\in \bbR^m$, $x$ is said to be conformal to $y$ if $x_iy_i\geq 0$ and $|x_i|\leq |y_i|$ $\forall \ i\in[m]$ and it is denoted by $x\sqsubseteq y$}
 
 
-\begin{lemma}{\cite[Claim 1, Proof of Theorem 3.4]{gurjarfrac}}{}
+\begin{lemma}{\cite[Claim 1, Proof of Theorem 3.4]{gurjarfrac}}{latiice-vector-decomposition}
 For any $x\in\mcL_F$, $\exs$ alternating circuits $C_1,C_2,\dots, C_t$ in $G_D$ such that $$x=\sum_{i=1}^t(\pm \mathbbm{1})_{C_i}$$where $\forall\ i\in[t]$, $(\pm \mathbbm{1})_{C_i}\sqsubseteq x$ and $|(\pm\mathbbm{1})_{C_i}|=|C_i|$.
 \end{lemma}
 \begin{proof}
@@ -111,12 +111,25 @@ Now suppose $x$ denote the vector at some iteration of the outer while loop. Now
 
 Now since we start the algorithm by adding 1 to $y_{e_0}$ at Line 5 we have initially $|y|>0$ and afterwards with each iteration of the inner while loop $|y|$ increases so we have $|y|>0$.Now if the current iteration of the inner while loop ends at Line 13 then we get a closed walk $C$ since in each iteration of the inner while loop the algorithm follows a walk in $G_D$. So $C$ is an alternating circuit and  we have $|y|=|C|$. Now since $y\sqsubseteq x$ we have $|x-y|=|x|-|y|<|x|$. Since $C$ is alternating circuit by \lemref{altcircuit-in-lattice} we have $y\in \mcL_F$. Hence we have $x-y\in\mcL_F$.
 
-Now all that remains is to show that the algorithm never goes to Line 11 if $x\in\mcL_F$. The only reason the algorithm can go to Line 11 if at some iteration of the inner while loop can not find an edge $e\in [m]$ such that $|x_e|>|y_e|$ and $(-1)^jx_e>0$ where $e\in \delta(v_j)$ where $\delta(v_j)$ denotes te set of edges incident on $v_j$. Suppose at this point we have the walk $$\mcP=v_0\xrightarrow{e_0}v_1\xrightarrow{e_1}\cdots \xrightarrow{e_{j-1}}v_j$$Now by following the proof of \lemref{altcircuit-in-lattice} we have that $D_iy=0$ forall $i\in[k]$ except $i\notin \{v_0.v_j\}$.\parinf
+Now all that remains is to show that the algorithm never goes to Line 11 if $x\in\mcL_F$. The only reason the algorithm can go to Line 11 if at some iteration of the inner while loop can not find an edge $e\in [m]$ such that $|x_e|>|y_e|$ and $(-1)^jx_e>0$ where $e\in \delta(v_j)$ where $\delta(v_j)$ denotes te set of edges incident on $v_j$. Suppose at this point we have the walk $$\mcP=v_0\xrightarrow{e_0}v_1\xrightarrow{e_1}\cdots \xrightarrow{e_{j-1}}v_j$$Now by following the proof of \lemref{altcircuit-in-lattice} we have that $D_iy=0$ forall $i\in[k]$ except $i\notin \{v_0.v_j\}$.\parinf \vspace*{5mm}
 
 \textbf{\textit{Claim:}} If $j$ is odd then $D_{v_j}y>0$ and if $j$ is even then $D_{v_j}y<0$.
 
-\textit{Proof:} We will prove the case for $j$ is odd. The even case will follow similarly.
+\begin{proof} We will prove the case for $j$ is odd. The even case will follow similarly. Since $j$ is odd we have $j-1$ even. Therefore $x_{e_{j-1}}>0$ as $(-1)^{j-1}x_{e_{j-1}}>0$. Therefore for both $e_0$ and $e_{j-1}$, $x_{e_0},x_{e_{j-1}}$ positive. Now take the partitions as described in the proof of \lemref{altcircuit-in-lattice}. Now we analyze case wise:\parinf
 
+\textbf{Case 1: $v_0\neq v_j$:} Then only the partition containing $v_{e_j}$ might contribute something nonzero because other partitions contributes 0 to the sum $D_{v_j}y$. Let the partition be $$v_s\xrightarrow{e_{j-k-1}}\underbrace{v_j \xrightarrow{e_{j-k}}v_j\xrightarrow{e_{j-k+1}}\cdots \xrightarrow{e_{j-1}}v_j}_{k+1\text{ times}}\qquad \text{where $v_s\neq v_{j}$}$$Now $k$ can not be more than 1 since if $e_{j-1}$ and $e_{j-2}$ are both loops in $v_j$ then for $e_{j-1}$, $x_{e_{j-1}}>0$ but $x_{e_{j-2}}<0$ but  $e_{j-1}=e_{j-2}\implies 0<x_{e_{j-1}}=x_{e_{j-2}}<0$. Then this partition contributes $\delta=(-1)^{j-2}+2(-1)^{j-1}=-1+2>0$ to $D_{v_j}y$ if there is a loop and if there is no loop then it also contributes 1 as then the contribution will be only $(-1)^{j-1}=1>0$.
+
+\textbf{Case 2: $v_0=v_j$:} If $v_0$ and $v_j$ is in same partition i.e. $j=1$ then the it contributes $(-1)^0=1>0$ to the sum. Otherwise $v_0$ is in different partition. By the above case we know that the value contributed by the partition containing $v_j$ is 1. So we have to only find the contribution by the partition containing $v_0$. Again by same logic as the above case from $v_0$ at most one loop starting from $v_0$ and then it moves to some other vertex. Hence the sum contributed is $2(-1)^0+(-1)^1=2-1=1$ if there is a loop and if there is no loop then it contributes $(-1)^0=1$. Hence in both cases the contribution of the partition containing $v_0$ to the sum $D_{v_j}y$ is 1. Hence we have $D_{v_j}y>0$.\parinn
+
+Hence by above we get that if $j$ is odd then the value $D_{v_j}y>0$. Similarly following the same process in the case of $j$ is even we get $D_{v_j}y<0$.\end{proof}
+
+\vspace*{5mm}
+
+Hence by the lemma we have that if $j$ is odd $D_{v_j}y>0$ and if $j$ is even then $D_{v_j}y<0$. So WLOG suppose $j$ is odd. Now define $$\supp^+(x)=\{i\in [m]\mid x_i>0\}\qquad \text{and}\qquad \supp^-(x)=\{i\in[m]\mid x_i<0\}$$Then we have \begin{align*}
+	0=D_{v_j}x & = \sum_{e\in \supp^+(x)\cap \dl(v_j)} D_F[v_j,e]\cdot |x_e| -\sum_{e\in \supp^-(x)\cap \dl(v_j)}D_F[v_j,e]\cdot|x_e| \\
+	0<D_{v_j}y & = \sum_{e\in \supp^+(x)\cap \dl(v_j)} D_F[v_j,e]\cdot |y_e| -\sum_{e\in \supp^-(x)\cap \dl(v_j)}D_F[v_j,e]\cdot|y_e|
+\end{align*}
+Now be construction of $y$ we have $y\sqsubseteq x\implies |x_e|\geq |y_e|, x_ey_e>0\forall\ e\in[m]$. The algorithm stopped at Line 13 since $\not\exs\ e\in \dl(v_j)$ such that $|x_e|>|y_e|$ and $(-1)^jx_e=-x_e>0$. Therefore $|x_e|=|y_e| $ for all $e\in \supp^+(x)\cap \dl(v_j)$ otherwise the algorithm would have proceeded one more step and $\supp^-(x)\cap\dl(v_j)=\supp^-(y)\cap \dl(v_j)$ since for any $e\in[m]$, $x_ey_e>0$. Therefore $\supp^+(x)\cap \dl(v_j)=\supp^+(y)\cap \dl(v_j)$. Now for all $e\in \supp^+(x)\cap \dl(v_j)$ we have $|x_e|\geq |y_e|$. Hence we have $$0=D_{v_j}y\geq D_{v_j}y>0$$It is a contradiction. Hence if $x\in \mcL_F$ the algorithm never goes to Line 13. And therefore the algorithm successfully decomposes $x$ into sum of alternating circuits.
 \end{proof}
 
 \subsection{Bounding vectors in $\mcL_F$ with Small Size}
@@ -124,7 +137,16 @@ Now all that remains is to show that the algorithm never goes to Line 11 if $x\i
 	Let $D\in \{0,1,2\}^{p\times m}$ be a matrix such that the sum of entries of each column equals 2. Let $\mcL_D$ denote the lattice $\{v\in\bbZ^m\mid Dv=0\}$. Then it holds that $$|\{v\in \mcL_D\mid |v|<2\lm(\mcL_D)\}|\leq m^{O(1)}$$
 \end{Theorem}
 \begin{proof}
-	First we will show how we can interpret $D_F$ an incidence matrix for a graph instead of general matrix. $D_F\in \{0,1,2\}^{p\times m}$ where every column sum is 2. Hence we can thing of a graph $G_D$ with vertex set $[p]$ and the $m$ edges defined as follows: for every $e\in [m]$ the $e$-th edge of $G_D$ is drawn between the vertices $s,t\in[p]$ if $D_F[s,e]=D_F[t,e]=1$ and $e$-th edge is a self loop on the vertex $s\in[p]$ if $D_F[s,e]=2$. 
+	For the given $D$ consider the graph $G_D$ obtained from $D$ as explained at the start of Section 1.2. to show that the number of  vectors in $\mcL_D$ with size less than twice the size of shortest vector in $\mcL_D$ we will show that for any such lattice vector there is only one alternating circuit in the decomposition of the vector in \lemref{latiice-vector-decomposition}.\parinf\vspace*{5mm}
+	
+	\textbf{\textit{Claim:}} Any lattice vector $x\in \mcL_D$ with $|x|<2\lm(\mcL_D)$ is an alternating vector $(\pm\mathbbm{1})_C$ of some alternating circuit $C$ in $G_D$ such that $|x|=|C|$
+	
+	\begin{proof}
+		Suppose the contrary. Since $x\in \mcL_D$ by \lemref{latiice-vector-decomposition} $\exs\ C_1,\dots, C_t$ with $t\geq 2$ such that $x=\sum\limits_{i=1}^t (\pm\mathbbm{1})_C$ with $(\pm \mathbbm{1})_C\sqsubseteq x$ and $|(\pm \mathbbm{1})_{C_i}|=|C_i|$ for all $i\in[t]$. Then we have $$|x|=\sum_{i=1}^t|(\pm \mathbbm{1})_{C_i}|\geq t\lm(\mcL_D)\geq 2\lm(\mcL_D)$$which is a contradiction since we assumed that $|x|<2\lm(\mcL_D)$. Hence $t=1$ i.e. $x=(\pm\mathbbm{1})_C$ for some alternating circuit $C$ with $|x|=|C|$.
+	\end{proof}
+\vspace*{5mm}
+
+Hence the Claim implies that $\lm(\mcL_D)$ is equal to the size of the smallest alternating circuit of $G_D$. And it also implies that we only need to bound the number of alternating indicator vectors that correspond to alternating circuit of size at most $2\lm(\mcL_D)$ to prove the lemma. For that by the \thrmref{ola-altcircuitn17} we get that the number of such alternating indicator vectors are polynomially bounded by $n$.
 \end{proof}
 
 \begin{Theorem}{\cite[Lemma 5.4]{generalmatchingola}}{ola-altcircuitn17}
