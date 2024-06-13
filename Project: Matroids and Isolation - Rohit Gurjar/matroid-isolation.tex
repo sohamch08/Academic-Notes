@@ -81,7 +81,9 @@
 {\normalfont\Huge\bfseries}{}{0pt}{\Huge}
 
 
-\tableofcontents 
+%{\pagestyle{empty} 
+\tableofcontents
+%\clearpage}
 \vfill
 
 \pagebreak
@@ -90,15 +92,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% Body
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\setcounter{page}{1}
 %\input{chapters/intro}
+%\input{chapters/matroid-prop}
+%\input{chapters/matroid-intersection}
+%\input{chapters/matroid-union}
+\input{chapters/linear-programming}
 %\input{chapters/isolation-lemma}
 %\input{chapters/matroid-polytope}
 %\input{chapters/matroid-parity-prob}
+\input{chapters/perfect-matching-polytope}
+\input{chapters/bipartite-perfect-matching}
 \input{chapters/fractional-matroid-matching}
 %gdf
 
 %\printbibliography[heading=none]
 %\addcontentsline{toc}{chapter}{Bibliography}
 \bibliographystyle{alpha}
-\bibliography{../JTE_bib}
+\bibliography{../refs_bib}
 \end{document}
