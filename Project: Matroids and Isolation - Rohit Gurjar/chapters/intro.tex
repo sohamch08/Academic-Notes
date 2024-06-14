@@ -2,7 +2,7 @@
 \section{Some Basics of Graph Theory}
 \dfn{Incidence Matrix}{For an undirected graph $G=(V,E)$ the Incidence Matrix, $M$ of $G$ is the $|V|\times |E|$ matrix where for every $v\in V$ and $e\in E$, the entry $M[v,e]=1$ if the edge $e$ is incident on $v$ and otherwise 0}
 \begin{Theorem}{}{}
-	If $G=(V,E)$ is an undirected graph with $|V|=n$ then $G$ is connected if and only if $\rk(M)=n-1$
+	If $G=(V,E)$ is an undirected graph with $|V|=n$ then $G$ is connected if and only if $\rk(M)=n-1$ over $\bbF_2$.
 \end{Theorem}
 \begin{proof}
 	% http://compalg.inf.elte.hu/~tony/Oktatas/TDK/FINAL/Chap%2010.PDF
@@ -16,3 +16,9 @@
 \begin{Theorem}{}{}
 	The Incidence vectors of the  fundamental cycles for a spanning tree in the graph forms a basis of the null space of the incidence matrix
 \end{Theorem}
+\section{Nice Cycles and Circulation}
+Let $G=(V,E)$ be a graph with a perfect matching. 
+\dfn[nice-cycle]{Nice Cycle}{A cycle $C$ in $G$ is a nice cycle if it has even length and the subgraph $G-C$ still has a perfect matching}\parinf In other words a nice cycle can be obtained from the symmetric difference of two perfect matchings.\parinn
+
+Now suppose we have a weight function $w\colon E\to \bbR$ on the edges of a graph $G$. Let we have an even length cycle $C=v_0\overset{e_0}{\longrightarrow}v_1\overset{e_1}{\longrightarrow}\cdots \overset{e_{2k-2}}{\longrightarrow}v_{2k}\overset{e_{2k-1}}{\longrightarrow}v_0$ in $G$ for some $k\in \bbN$.
+\dfn{Circulation of Cycle}{For a weight assignment $w$ on the edges the circulation $c_w(C)$ of an even length cycle is defined the alternating sum of the edge weights of $C$ i.e. $$c_w(C)=\lt| \sum_{i=0}^{2k-1} (-1)^i w(e_{i}) \rt|$$}The definition of circulations is independent of the edge we start with because we take the absolute value of the alternating sum.

@@ -1,1 +1,18 @@
 \chapter{Bipartite Perfect Matching}
+\section{Matching and Complexity}
+\section{A \textsc{RNC} Algorithm for \textsc{Search-PM}}
+\section{A \textsc{Quasi-NC} Algorithm using Isolation}
+We will construct an isolating weight function for bipartite graphs. The idea is to create a weight function which ensures nonzero circulations for a small set of cycles in a black-box way i.e. without having being able to compute the set efficiently. Then we will show that if we construct a smaller graph wrt this weight function then we don't have those small cycles with nonzero circulations then we have the number of cycles with twice the size of the previous ones are polynomially bounded. Then we proceed to create a new weight function which will give nonzero circulations to all the cycles with twice the size. And this way we will continue. This same type of idea we will repeatedly use with necessary modifications in \autoref{linear-matroid-intersection} and \autoref{fractional-matroid-matching}.
+
+
+\subsection{Isolation in Bipartite Graphs}
+The following lemma describes a standard trick to create a weight function for a small set of cycles in graph.
+\begin{lemma}{\cite{ChariRohatgiSrinivasan_1993_Rou_CONF}}{}
+	Let $G$ be a graph with $n$ vertices. Then for any number $s$, one can construct a set of $O(n^2s)$ weight assignments with weights bounded by $O(n^2s)$, such that for any set of $s$ cycles, one of the weight assignments gives nonzero circulation to each of the $s$ cycles.
+\end{lemma}
+\begin{proof}
+	Let us first assign exponentially large weights. Let $e_1, e_2,\dots , e_m$ be some enumeration of the edges of $G$. Define  a weight function $w$ by $w(e_i)=2^{i-1}$ for $i\in [m]$. Then clearly every cycle has a nonzero circulation. However we want to achieve this with small weights.
+\end{proof}
+\subsection{Union of Minimum Weight Perfect Matchings}
+
+\subsection{Constructing Weight Assignment}
