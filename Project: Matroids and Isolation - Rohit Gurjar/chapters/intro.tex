@@ -1,2 +1,18 @@
 \chapter{Introduction}
 \section{Some Basics of Graph Theory}
+\dfn{Incidence Matrix}{For an undirected graph $G=(V,E)$ the Incidence Matrix, $M$ of $G$ is the $|V|\times |E|$ matrix where for every $v\in V$ and $e\in E$, the entry $M[v,e]=1$ if the edge $e$ is incident on $v$ and otherwise 0}
+\begin{Theorem}{}{}
+	If $G=(V,E)$ is an undirected graph with $|V|=n$ then $G$ is connected if and only if $\rk(M)=n-1$
+\end{Theorem}
+\begin{proof}
+	% http://compalg.inf.elte.hu/~tony/Oktatas/TDK/FINAL/Chap%2010.PDF
+	% https://math.stackexchange.com/questions/2015688/rank-of-an-incidence-matrix-of-a-graph-g-with-n-vertices-is-n-1-implies-that-g-i
+	% https://fedelebron.com/an-introduction-to-incidence-matrices
+\end{proof}
+\begin{corolary}{}{}
+	If $G=(V,E)$ is an undirected graph with $k$ connected components then $\rk(M)=n-k$
+\end{corolary}
+\dfn{Fundamental Cycles}{}
+\begin{Theorem}{}{}
+	The Incidence vectors of the  fundamental cycles for a spanning tree in the graph forms a basis of the null space of the incidence matrix
+\end{Theorem}
