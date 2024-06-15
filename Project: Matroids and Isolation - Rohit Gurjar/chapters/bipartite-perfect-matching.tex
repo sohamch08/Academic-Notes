@@ -6,16 +6,7 @@ Let $G=(V,E)$ be given bipartite graph. In the following discussion we will assu
 
 We will construct an isolating weight function for bipartite graphs. The idea is to create a weight function which ensures nonzero circulations for a small set of cycles in a black-box way i.e. without having being able to compute the set efficiently. Then we will show that if we construct a smaller graph wrt this weight function then we don't have those small cycles with nonzero circulations then we have the number of cycles with twice the size of the previous ones are polynomially bounded. Then we proceed to create a new weight function which will give nonzero circulations to all the cycles with twice the size. And this way we will continue. This same type of idea we will repeatedly use with necessary modifications in \autoref{linear-matroid-intersection} and \autoref{fractional-matroid-matching}.
 
-The idea above to create a weight function which gives nonzero circulation to every nice cycles in $G$ actually works because  then we have unique perfect matching.
-\begin{lemma}{\cite[Lemma 3.2]{DattaKulkarniRoy_2009_DIa}}{}
-	Let $G$ be a graph with a perfect matching, and let $w$ be a weight function such that all nice cycles in $G$ have nonzero circulations. Then the minimum perfect matching is unique i.e. $w$ is isolating
-\end{lemma}
-\begin{proof}
-	Suppose  not, then we have two minimum weight perfect matchings $M_1$ and $M_2$ with minimum weight w.r.t $w$. Now we take their disjoint union $M_1\sqcup M_2$ i.e. if there is an common edge then we take two copies of that edge connecting same two vertices. Now it is a cycle cover of the vertices with nice cycles except the one's with copies. 
-	
-	Consider any one nice cycle from the cycle cover. We will form a new perfect matching $M$. Since the circulation of an nice cycle is nonzero either the part of it which is in
-	$M_1$ is lighter or the part of it which is in $M_2$ is lighter. Either way we take the lighter part in $M$ and we do this for all . So we take the part from $M_1$ from this cycle. Now we do this for all the nice cycles in the cycle cover. Now for the cycles with two copies of same edge we take one of them into $M$. Now since $M_1\neq M_2$ there exists at least one edge in $M_1$ which is not in $M_2$ and one edge in $M_2$ which is not in $M_1$. Hence $M_1\sqcup M_2$ has at least one nice cycle, hence the way we constructed $w(M)<w(M_i)$ for some $i\in \{1,2\}$ which contradicts the minimality of both $M_1$ and $M_2$
-\end{proof}
+The idea above to create a weight function which gives nonzero circulation to every nice cycles in $G$ actually works because  then we have unique perfect matching by \lemref{all-nice-cycles-nonzero-circulation-unique-perfect-matching}
 \subsection{Isolating Small Cycles}
 
 The following lemma describes a standard trick to create a weight function for a small set of cycles in graph.
@@ -34,6 +25,78 @@ We consider the weight assignment modulo small numbers i.e. the weight function 
 
 \subsection{Union of Minimum Weight Perfect Matchings}
 Let us assign a weight function for bipartite graph $G$ which gives nonzero circulations to all small cycles. Consider a new graph $G_1$ which obtained by the union of minimum weight perfect matchings in $G$. Out hope is that $G_1$ is significantly smaller than $G$.
-\nt{We don't know if $G_1$ can be efficiently created from $G$ as determinant of the bi-adjacency matrix with weights in the {like in the RNC algorithm} be zero and therefore we can not use that way to obtain perfect matchings. We will show we don't need to construct $G_1$}
+\nt{We don't know if $G_1$ can be efficiently created from $G$ as determinant of the bi-adjacency matrix with weights in the {like in the RNC algorithm} be zero and therefore we can not use that way to obtain perfect matchings. We will show we don't need to construct $G_1$. It is just used n the argument. Our final weight assignment will be completely black-box}
 
+We will also show by the following lemma that why this technique only works for biparitte graphs, not in general graphs i.e. $G_1$ constructed from minimum weight perfect matchings in $G$ contains no other prefect matching than these. For general graph this does not hold:
+
+\begin{center}
+	\begin{minipage}{0.3\textwidth}
+		\begin{center}
+			\begin{tikzpicture}
+			\draw (-2,1) node[above]{$a$} -- node[midway,above] {1} (2,1)node[above]{$b$} --node[midway,right]{0}  (2,-1)node[below]{$c$} --node[midway,above]{1} (-2,-1)node[below]{$d$} --node[midway,left]{0} cycle;
+			\draw (-2,1) --node[midway,left]{0} (-1,0) --node[midway,left]{0} (-2,-1);
+			\draw (2,1) --node[midway,right]{0} (1,0) --node[midway,right]{0} (2,-1);
+			\draw (1,0)node[below]{$f$} --node[midway,above]{1}  (-1,0)node[below]{$e$};
+			\filldraw (-2,1) circle (1.5pt);
+			\filldraw (-2,-1) circle (1.5pt);
+			\filldraw (2,-1) circle (1.5pt);
+			\filldraw (2,1) circle (1.5pt);
+			\filldraw (1,0) circle (1.5pt);
+			\filldraw (-1,0) circle (1.5pt);
+		\end{tikzpicture}
+		\end{center}
+	\end{minipage}\hspace{1cm}
+	\begin{minipage}{0.6\textwidth}
+		In this graph we will denote the edge connected vertices $a,b$ to be $e_{ab}$. And this way we will denote all the edges. Then the minimum weight perfect matchings have weight 1 and they are $$\{e_{ad},e_{bc},e_{ef}\}, \quad \{e_{ac}, e_{bf}, e_{cd}\},\quad \{e_{de}, e_{cf}, e_{ab}\}$$Then their union has the perfect matching $\{e_{ab},e_{cd},e_{ef}\}$ which has weight 3 and not a minimum weight perfect matching.
+	\end{minipage}
+\end{center}
+
+The fact that $G_1$ has only minimum weight perfect matching is equivalent to saying that every nice cycle has zero circulation. The following lemma proves even stronger statement that every cycles has zero circulation (not necessarily nice cycles.)
+\begin{Lemma}{\cite[Lemma 3.2]{FennerGurjarThierauf_2016_Bpm_CONF}}{nozero-circulation-notin-minimum-weight-perfect-matching-graph}
+	Let $G=(V,E)$ be a bipartite graph with weight function $w$. et $C$ be a cycle in $G$ such that $c_w(C)\neq 0$. Let $E_1$ be the union of all minimum weight perfect matchings in $G$. Then the graph $G_1=(V,E_1)$ does not contain $C$.
+\end{Lemma}
+\begin{proof}
+	Consider the perfect matching polytope of $G$, $PM(G)$. Let the weight of the minimum weight perfect matching in $G$ be $q$. Let $x_1,x_2,\dots,x_t$ be all the minimum weight perfect matching points of $G$ i.e. corners of $PM(G)$ corresponding to weight $q$. Consider the average point $x\in PM(G)$ of these perfect matching points, $x=\frac{x_1+x_2+\cdots+x_t}{t}$. Clearly we have $w(x)=q$. And since each edge of $G_1$ participates in a minimum weight perfect matching for $x=(x_e)_{e\in E}$ we have $x_e\neq 0$ $\forall\ e\in E$. 
+	
+	Now consider a cycle $C$ with $c_w(C)\neq 0$. Suppose $C=(e_1,e_2,\dots, e_{k})$ and all the edges of $C$ are in $E_1$. We will show that if we move from point $x$ along the cycle $C$ we reach a point in $PM(G)$ with a weight smaller than $q$.
+	
+	Consider the point $y$ defined as $$\forall\ e\in E,\quad y_e=\begin{cases}
+		x_e+(-1)^i\eps\& \text{if $e=e_i$ for some $i\in[k]$}\\
+		x_e& \text{o/w}
+	\end{cases}$$for some $\eps\neq 0$. Clearly $x-y$ has nonzero coordinates only on the edges of the cycle $C$, by alternating between $\eps$ and $-\eps$. Hence $$w(x)-w(y)=w(x-y)=\pm c_w(C)\neq 0$$
+
+Now we take $\eps$ in the following way:
+\begin{itemize}
+	\item Take $sgn(\eps)$ such that $w(x-y)>0$.
+	\item Take $\eps$ small enough such that $y_e\geq 0\ \forall\ e\in E$.
+\end{itemize}
+
+After choosing such $\eps$ since $w(x)-w(y)=w(x-y)>0$ we have $q=w(x)>w(y)$. Now we will show that $y\in PM(G)$. To show that we will sow that $y$ fulfills the conditions of \thrmref{bipartite-polytope-equations}. Now the second condition that $y_e\geq 0$ for all $e\in E$ is already satisfied by the choice of $\eps$. So we only need to show that for any $v\in V$ $$\sum_{e\in \delta(v)}y_e=1$$To show this we consider 2 cases:
+\begin{enumerate}[label=\bfseries Case \arabic*:,leftmargin=1.7cm]
+	\item $v\notin C$. Then $\forall \ e\in \dl(v)$ we have $e\notin C$. So $y_e=x_e$. Since $x\in PM(G)$ we have $$\sum_{e\in\dl(v)}x_e=1\implies \sum_{e\in \dl(v)}y_e=1$$
+	\item $v\in C$. Let $e_j$ and $e_{j+1}$ are the edges incident on $v$ in $C$. Then $$y_{e_j}=x_{e_j}+(-1)^{j}\eps\qquad \text{and}\qquad y_{e_{j+1}}=x_{e_{j+1}}+(-1)^{j+1}\eps\qquad \forall\ e\in \dl(v)-\{e_{j},e_{j+1}\},\ y_e=x_e$$So\begin{align*}
+		\sum_{e\in \dl(v)}y_e & = \lt[\sum_{e\in \dl(v)-\{e_j,e_{j+1}\}}x_e\rt]+\lt[x_{e_j}+(-1)^j\eps\rt]+\lt[x_{e_{j+1}}+(-1)^{j+1}\eps\rt]\\
+		& = \lt[\sum_{e\in \dl(v)}x_e\rt]+(-1)^j\eps+(-1)^{j+1}\eps = \sum_{e\in \dl(v)}x_e=1
+	\end{align*}
+\end{enumerate}
+So the point $y$ satisfies the property $\sum\limits_{e\in\dl(v)}=1$ forall $v\in V$. Hence $y\in PM(G)$. Now since $w(y)<q$ there must be a corner point of the polytope which corresponds to a perfect matching in $G$ with weight less than $q$. This contradicts the minimality of $q$. Hence $C$ is not in $G_1$.
+\end{proof}
+This technique of moving along the cycle has been used by Mahajan and Varadarajan in \cite{MahajanVaradarajan_2000_AnN_CONF}. Now We will show another proof of this lemma by Rao, Shpilka  and Wigderson in \cite{GoldwasserGrossman_2017_BPM}.\vspace*{\baselineskip}
+
+
+\begin{alternate-proof}[{\cite[Proof of Lemma 6]{GoldwasserGrossman_2017_BPM}}]
+		Let $G'$ be the multigraph obtained by taking disjoint union of all minimum weight perfect matchings (i.e. if an edge appears in $k$ many minimum weight perfect matchings of $G$ then $G'$ contains  $k$ copies of the edge.
+		\nt{$G'$ is a regular graph since it is a disjoint union of matchings and matchings are regular graph of degree 1.}
+		
+		
+		Suppose there exists a cycle $C$ of non zero circulation in $G_1$. Since the cycle is in $G_1$ then this cycle is also in $G'$. WLOG  assume that the sum of the weights of the odd edges of $C$ is larger than the sum of the weights of the even edges. Then we can remove a single copy of each odd edges of $C$ from $G'$ and add a single copy of each even edges of $C$ to $G'$ and we call this new graph $G''$
+		
+		Suppose $q$ be the minimum weight of a matching in $G$. Suppose $G$ has $d$ minimum weight matchings. Then sum of the weights of the edges in $G'$ is $qd$.	However, the total weight of all edges in in $G''$ is lower than the total weight of all edges in $G'$. We know  that $G''$ is a regular bipartite graph of degree $d$ and therefore by \lemref{regular-bipartite-graph-union-pm} it is an union of $d$ perfect matchings.
+		
+		If we decompose $G''$ into $d$ perfect matchings, it is impossible that they all have weight at least $q$ as $G''$ has total weight less than $qd$. Therefore $G''$ has a matching of weight less than $q$, which contradicts the minimality of $q$. 
+\end{alternate-proof}
+A consequence of this lemma is that $G_1$ has no other perfect matchings than the ones used to define $G_1$ cause if $M_0$ and $M_1$ be two different perfect matchings in $G_1$ then $M_0\triangle M_1$ forms a set of nice cycles and by the \lemref{nozero-circulation-notin-minimum-weight-perfect-matching-graph} the circulations  all of these cycles are 0 and therefore $M_0$ and $M_1$ have same weight and hence they both are minimum weight perfect matchings.
+\begin{corolary}{}{}
+	Let $G=(V,E)$ be a bipartite graph with weight function $w$. Let $E_1$ be the union of all minimum weight perfect matchings in $G$. Then every perfect matching in the graph $G_1=(V,E_1)$ has the same weight, the minimum weight of any perfect matching in $G$.
+\end{corolary}
 \subsection{Constructing Weight Assignment}

@@ -9,9 +9,9 @@
 % https://courses.engr.illinois.edu/cs598csc/sp2010/Lectures/Lecture9.pdf
 \section{Bipartite Perfect Matching Polytope}
 It also defined like the perfect matching polytope where we just take the graph to be a bipartite graph. The following lemma form \cite{LovaszPlummer_1986_BOOK} gives a simple description of the perfect matching polytope of a bipartite graph $G$ 
-\begin{lemma}{\cite{LovaszPlummer_1986_BOOK}}{}
+\begin{Theorem}{\cite{LovaszPlummer_1986_BOOK}}{bipartite-polytope-equations}
 	Let $G=(V,E)$ be a bipartite graph and $x=(x_e)_{e\in E}\in \bbR^E$. Then $x\in PM(G)$ if and only if \begin{align*}
 		\sum_{e\in\dl(v)}x_e=1 &\quad v\in V,\\
 		x_e\geq 0&\quad e\in E
 	\end{align*}where for any $v\in V$, $\delta(v)$ denotes the set of edges incident on the vertex $v$.
-\end{lemma}
+\end{Theorem}
