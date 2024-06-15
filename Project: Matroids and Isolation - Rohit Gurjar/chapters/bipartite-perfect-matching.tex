@@ -2,17 +2,38 @@
 \section{Matching and Complexity}
 \section{A \textsc{RNC} Algorithm for \textsc{Search-PM}}
 \section{A \textsc{Quasi-NC} Algorithm using Isolation}
+Let $G=(V,E)$ be given bipartite graph. In the following discussion we will assume that $G$ has perfect matchings. Our goal is to isolate one of the perfect matchings in $G$ by any appropriate weight function. We will also show that if $G$ does not have any perfect matchings then our algorithm will detect this.
+
 We will construct an isolating weight function for bipartite graphs. The idea is to create a weight function which ensures nonzero circulations for a small set of cycles in a black-box way i.e. without having being able to compute the set efficiently. Then we will show that if we construct a smaller graph wrt this weight function then we don't have those small cycles with nonzero circulations then we have the number of cycles with twice the size of the previous ones are polynomially bounded. Then we proceed to create a new weight function which will give nonzero circulations to all the cycles with twice the size. And this way we will continue. This same type of idea we will repeatedly use with necessary modifications in \autoref{linear-matroid-intersection} and \autoref{fractional-matroid-matching}.
 
+The idea above to create a weight function which gives nonzero circulation to every nice cycles in $G$ actually works because  then we have unique perfect matching.
+\begin{lemma}{\cite[Lemma 3.2]{DattaKulkarniRoy_2009_DIa}}{}
+	Let $G$ be a graph with a perfect matching, and let $w$ be a weight function such that all nice cycles in $G$ have nonzero circulations. Then the minimum perfect matching is unique i.e. $w$ is isolating
+\end{lemma}
+\begin{proof}
+	Suppose  not, then we have two minimum weight perfect matchings $M_1$ and $M_2$ with minimum weight w.r.t $w$. Now we take their disjoint union $M_1\sqcup M_2$ i.e. if there is an common edge then we take two copies of that edge connecting same two vertices. Now it is a cycle cover of the vertices with nice cycles except the one's with copies. 
+	
+	Consider any one nice cycle from the cycle cover. We will form a new perfect matching $M$. Since the circulation of an nice cycle is nonzero either the part of it which is in
+	$M_1$ is lighter or the part of it which is in $M_2$ is lighter. Either way we take the lighter part in $M$ and we do this for all . So we take the part from $M_1$ from this cycle. Now we do this for all the nice cycles in the cycle cover. Now for the cycles with two copies of same edge we take one of them into $M$. Now since $M_1\neq M_2$ there exists at least one edge in $M_1$ which is not in $M_2$ and one edge in $M_2$ which is not in $M_1$. Hence $M_1\sqcup M_2$ has at least one nice cycle, hence the way we constructed $w(M)<w(M_i)$ for some $i\in \{1,2\}$ which contradicts the minimality of both $M_1$ and $M_2$
+\end{proof}
+\subsection{Isolating Small Cycles}
 
-\subsection{Isolation in Bipartite Graphs}
 The following lemma describes a standard trick to create a weight function for a small set of cycles in graph.
 \begin{lemma}{\cite{ChariRohatgiSrinivasan_1993_Rou_CONF}}{}
 	Let $G$ be a graph with $n$ vertices. Then for any number $s$, one can construct a set of $O(n^2s)$ weight assignments with weights bounded by $O(n^2s)$, such that for any set of $s$ cycles, one of the weight assignments gives nonzero circulation to each of the $s$ cycles.
 \end{lemma}
 \begin{proof}
 	Let us first assign exponentially large weights. Let $e_1, e_2,\dots , e_m$ be some enumeration of the edges of $G$. Define  a weight function $w$ by $w(e_i)=2^{i-1}$ for $i\in [m]$. Then clearly every cycle has a nonzero circulation. However we want to achieve this with small weights.
+	
+We consider the weight assignment modulo small numbers i.e. the weight function is $\{w\bmod j\mid 2\leq j\leq t\}$ for some appropriately chosen $t$. We want to show that for any fixed set of $s$ cycles $\{C_1,\dots, C_s\}$ one of these assignments will work when $t$ is chosen large enough. 
+	
+	Now we want $$\exs\ j\leq t,\ \forall\ i\leq s,\ c_w(S_i)\neq 0\iff \exs\ j\leq t,\ \prod_{i=1}^s c_w(C_i)\neq 0\bmod j$$In other words we want $$lcm(2,3,\dots, t)\nmid \prod_{i=1}^t c_w(C_i)$$Hence if we take $t$ such that $lcm(2,3,\dots, t)> \prod\limits_{i=1}^t c_w(C_i)$ then we are done. 
+	
+	Now the product $\prod\limits_{i=1}^t c_w(C_i)$ is bounded by $2^{n^2s}$. This is because with exponential weights {like in the RNC algorithm} we have an isolating perfect matching so we need weights less than that and therefore the new weights are bounded by the exponential weights for which weight of a cycle can at most be $2^{n^2}$ and since there are $s$ many cycle we have the bound $2^{n^2s}$. So if we have $t$ such that $lcm(2,3,\dots, t)>2^{n^2s}$ then we are done. Now $lcm(2,3,\dots,t)>2^t$ for $t\geq 7$. Thus choosing $t=n^2s$ suffices. Clearly the weights are bounded by $t=n^2s$.
 \end{proof}
+
 \subsection{Union of Minimum Weight Perfect Matchings}
+Let us assign a weight function for bipartite graph $G$ which gives nonzero circulations to all small cycles. Consider a new graph $G_1$ which obtained by the union of minimum weight perfect matchings in $G$. Out hope is that $G_1$ is significantly smaller than $G$.
+\nt{We don't know if $G_1$ can be efficiently created from $G$ as determinant of the bi-adjacency matrix with weights in the {like in the RNC algorithm} be zero and therefore we can not use that way to obtain perfect matchings. We will show we don't need to construct $G_1$}
 
 \subsection{Constructing Weight Assignment}
