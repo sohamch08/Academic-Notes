@@ -95,17 +95,29 @@ This technique of moving along the cycle has been used by Mahajan and Varadaraja
 		
 		If we decompose $G''$ into $d$ perfect matchings, it is impossible that they all have weight at least $q$ as $G''$ has total weight less than $qd$. Therefore $G''$ has a matching of weight less than $q$, which contradicts the minimality of $q$. 
 \end{alternate-proof}
-A consequence of this lemma is that $G_1$ has no other perfect matchings than the ones used to define $G_1$ cause if $M_0$ and $M_1$ be two different perfect matchings in $G_1$ then $M_0\triangle M_1$ forms a set of nice cycles and by the \lemref{nozero-circulation-notin-minimum-weight-perfect-matching-graph} the circulations  all of these cycles are 0 and therefore $M_0$ and $M_1$ have same weight and hence they both are minimum weight perfect matchings.
+A consequence of this lemma is that $G_1$ has no other perfect matchings than the ones used to define $G_1$ cause if $M_0$ and $M_1$ be two different perfect matchings in $G_1$ then $M_0\triangle M_1$ forms a set of nice cycles and by the \lemref{nozero-circulation-notin-minimum-weight-perfect-matching-graph} the circulations all of these cycles are 0 and therefore $M_0$ and $M_1$ have same weight and hence they both are minimum weight perfect matchings.
 \begin{corolary}{}{}
 	Let $G=(V,E)$ be a bipartite graph with weight function $w$. Let $E_1$ be the union of all minimum weight perfect matchings in $G$. Then every perfect matching in the graph $G_1=(V,E_1)$ has the same weight, the minimum weight of any perfect matching in $G$.
 \end{corolary}
-\subsection{Constructing Weight Assignment}
-By our weight function in \lemref{weight-for-all-s-cycles-to-have-nonzero-circulations} each small cycles in $G$ has a nonzero circulations. Hence by \lemref{nozero-circulation-notin-minimum-weight-perfect-matching-graph} $G_1$ has no small cycles. Now we want to repeat this procedure with $G_1$ with a new weight function. $G_1$ has no small cycles. Hence we look at slightly larger cycles (twice larger) and we will argue that their number remains polynomially bounded.
+\subsection{Bounding Number of Cycles with Length Twice Large of The Smallest Cycle}
+By our weight function in \lemref{weight-for-all-s-cycles-to-have-nonzero-circulations} each small cycles in $G$ has a nonzero circulation. Hence, by \lemref{nozero-circulation-notin-minimum-weight-perfect-matching-graph} $G_1$ has no small cycles. Now we want to repeat this procedure with $G_1$ with a new weight function. $G_1$ has no small cycles. Hence, we look at slightly larger cycles (twice larger) and we will argue that their number remains polynomially bounded.
 
 Teo and Koe in \cite{TeoKoh_1992_Tno_CONF} showed that the number of the shortest cycles in a graph with $m$ edges is bounded by $m^2$. In te following lemma we extend their argument and give a bound on the number of cycles that have length at most twice the length of the shortest cycles.
-\begin{lemma}{\cite[Lemma 3.4]{FennerGurjarThierauf_2016_Bpm_CONF}}{}
+\begin{lemma}{\cite[Lemma 3.4]{FennerGurjarThierauf_2016_Bpm_CONF}}{twice-size-cycles-arepolynomially-bounded}
 	Let $G=(V,E)$ be a graph with $n$ nodes that has no cycles of length $\leq r$. Let $r'=2r$ if $r$ is even and $r'=2r-2$ otherwise. Then $H$ has $\leq n^4$ cycles of length $\leq r'$.
 \end{lemma}
 \begin{proof}
-	Let $$C=v_0\overset{\longrightarrow}{e_0}v_1\overset{\longrightarrow}{e_1}\cdots \overset{\longrightarrow}{e_{l-2}}v_{l-1}\overset{\longrightarrow}{e_{l-1}}v_1$$be a cycle of length $l\leq r'$ in $G$. Now we successively choose 4 nodes in $C$ $(u_0,u_1,u_2,u_3)$ where $$u_i=v_{\lfloor \frac{il}4\rfloor}\quad \forall\ i\in \{0,1,2,3\}$$dsfsd fsdfds sdfsd. 
+	Let $$C=v_0\overset{e_0}{\longrightarrow}v_1\overset{e_1}{\longrightarrow}\cdots \overset{e_{l-2}}{\longrightarrow}v_{l-1}\overset{e_{l-1}}{\longrightarrow}v_1$$be a cycle of length $l\leq r'$ in $G$. Now we successively choose 4 nodes in $C$ $(u_0,u_1,u_2,u_3)$ where $$u_i=v_{\lfloor \frac{il}4\rfloor}\quad \forall\ i\in \{0,1,2,3\}$$Now observe the distance between two successive nodes is $\leq \lfloor \frac{l}{4}\rfloor \leq \frac{r}{2}$. and therefore distance between the nodes $u_3$ and $u_0$ is  also $\leq \lfloor \frac{l}4\rfloor\leq \frac{r}{2}$.
+
+	Since any node of $C$ can be chosen as a starting point $u_0$, the four nodes $(u_0,u_1,u_2,u_3)$ associated with $C$ are not uniquely defined. But by the following claim we will show they uniquely define $C$.\parinf\vspace*{2mm}
+
+	\textbf{\textit{Claim:}} Cycle $C$ is the only cycle in $G$ of length $\leq r'$ that is associated with $(u_0,u_1,u_2,u_3)$.\parinn
+
+	\begin{proof}
+		Suppose $C'\neq C$ be a cycle of length $\leq r'$ such that both $C$ and $C'$ are associated with same $(u_0, u_1,u_2, u_3)$. Consider the paths between two successive nodes in both $C$ and $C'$. Since $C\neq C'$ there exists a path $p$ and $p'$ following $C$ and $C'$ respectively connecting two same successive nodes in both $C$ and $C'$ such that $p\neq p'$. Now $p$ and $p'$ form a cycle in $H$ of length $$|p|+|p'|\leq\frac{r}{2}+\frac{r}{2}=r$$which is not possible as there are no cycles of length $\leq r$ in $G$. Hence, contradiction.
+	\end{proof}
+Hence by the claim each tuple of $4$ nodes uniquely defines a cycle $C$ in $H$. There are $\leq n^4$ ways to choose $4$ nodes and their order. Hence the number of cycles of length $\leq r'$ is at most $n^4$.
 \end{proof}
+
+\lemref{twice-size-cycles-arepolynomially-bounded} suggests that we continue form $G_1$ and in each successive round, we double the length of cycles and adapt the weight function to give nonzero circulations to these slightly longer cycles (twice larger). By \lemref{nozero-circulation-notin-minimum-weight-perfect-matching-graph} these cycles will disappear from the new graph $G_2$ obtained by taking only minimum weight perfect matching from $G_1$. This way in $\log n$ rounds we reach a graph with no cycles i.e. with a unique perfect matching. In the following section we show how to construct the weight assignment.
+\subsection{Constructing Weight Assignment}
