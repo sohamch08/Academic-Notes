@@ -6,7 +6,7 @@ Let $G=(V,E)$ be given bipartite graph. In the following discussion we will assu
 
 We will construct an isolating weight function for bipartite graphs. The idea is to create a weight function which ensures nonzero circulations for a small set of cycles in a black-box way i.e. without having being able to compute the set efficiently. Then we will show that if we construct a smaller graph wrt this weight function then we don't have those small cycles with nonzero circulations then we have the number of cycles with twice the size of the previous ones are polynomially bounded. Then we proceed to create a new weight function which will give nonzero circulations to all the cycles with twice the size. And this way we will continue. This same type of idea we will repeatedly use with necessary modifications in \autoref{linear-matroid-intersection} and \autoref{fractional-matroid-matching}.
 
-The idea above to create a weight function which gives nonzero circulation to every nice cycles in $G$ actually works because  then we have unique perfect matching by \lemref{all-nice-cycles-nonzero-circulation-unique-perfect-matching}
+The idea above to create a weight function which gives nonzero circulation to every nice cycles in $G$ actually works because  then we have unique perfect matching by \lemref{th:all-nice-cycles-nonzero-circulation-unique-perfect-matching}
 \subsection{Isolating Small Cycles}
 
 The following lemma describes a standard trick to create a weight function for a small set of cycles in graph.
@@ -71,7 +71,7 @@ Now we take $\eps$ in the following way:
 	\item Take $\eps$ small enough such that $y_e\geq 0\ \forall\ e\in E$.
 \end{itemize}
 
-After choosing such $\eps$ since $w(x)-w(y)=w(x-y)>0$ we have $q=w(x)>w(y)$. Now we will show that $y\in PM(G)$. To show that we will sow that $y$ fulfills the conditions of \thrmref{bipartite-polytope-equations}. Now the second condition that $y_e\geq 0$ for all $e\in E$ is already satisfied by the choice of $\eps$. So we only need to show that for any $v\in V$ $$\sum_{e\in \delta(v)}y_e=1$$To show this we consider 2 cases:
+After choosing such $\eps$ since $w(x)-w(y)=w(x-y)>0$ we have $q=w(x)>w(y)$. Now we will show that $y\in PM(G)$. To show that we will sow that $y$ fulfills the conditions of \thrmref{th:bipartite-polytope-equations}. Now the second condition that $y_e\geq 0$ for all $e\in E$ is already satisfied by the choice of $\eps$. So we only need to show that for any $v\in V$ $$\sum_{e\in \delta(v)}y_e=1$$To show this we consider 2 cases:
 \begin{enumerate}[label=\bfseries Case \arabic*:,leftmargin=1.7cm]
 	\item $v\notin C$. Then $\forall \ e\in \dl(v)$ we have $e\notin C$. So $y_e=x_e$. Since $x\in PM(G)$ we have $$\sum_{e\in\dl(v)}x_e=1\implies \sum_{e\in \dl(v)}y_e=1$$
 	\item $v\in C$. Let $e_j$ and $e_{j+1}$ are the edges incident on $v$ in $C$. Then $$y_{e_j}=x_{e_j}+(-1)^{j}\eps\qquad \text{and}\qquad y_{e_{j+1}}=x_{e_{j+1}}+(-1)^{j+1}\eps\qquad \forall\ e\in \dl(v)-\{e_{j},e_{j+1}\},\ y_e=x_e$$So\begin{align*}
@@ -91,16 +91,16 @@ This technique of moving along the cycle has been used by Mahajan and Varadaraja
 		
 		Suppose there exists a cycle $C$ of non zero circulation in $G_1$. Since the cycle is in $G_1$ then this cycle is also in $G'$. WLOG  assume that the sum of the weights of the odd edges of $C$ is larger than the sum of the weights of the even edges. Then we can remove a single copy of each odd edges of $C$ from $G'$ and add a single copy of each even edges of $C$ to $G'$ and we call this new graph $G''$
 		
-		Suppose $q$ be the minimum weight of a matching in $G$. Suppose $G$ has $d$ minimum weight matchings. Then sum of the weights of the edges in $G'$ is $qd$.	However, the total weight of all edges in in $G''$ is lower than the total weight of all edges in $G'$. We know  that $G''$ is a regular bipartite graph of degree $d$ and therefore by \lemref{regular-bipartite-graph-union-pm} it is an union of $d$ perfect matchings.
+		Suppose $q$ be the minimum weight of a matching in $G$. Suppose $G$ has $d$ minimum weight matchings. Then sum of the weights of the edges in $G'$ is $qd$.	However, the total weight of all edges in in $G''$ is lower than the total weight of all edges in $G'$. We know  that $G''$ is a regular bipartite graph of degree $d$ and therefore by \lemref{th:regular-bipartite-graph-union-pm} it is an union of $d$ perfect matchings.
 		
 		If we decompose $G''$ into $d$ perfect matchings, it is impossible that they all have weight at least $q$ as $G''$ has total weight less than $qd$. Therefore $G''$ has a matching of weight less than $q$, which contradicts the minimality of $q$. 
 \end{alternate-proof}
-A consequence of this lemma is that $G_1$ has no other perfect matchings than the ones used to define $G_1$ cause if $M_0$ and $M_1$ be two different perfect matchings in $G_1$ then $M_0\triangle M_1$ forms a set of nice cycles and by the \lemref{nozero-circulation-notin-minimum-weight-perfect-matching-graph} the circulations all of these cycles are 0 and therefore $M_0$ and $M_1$ have same weight and hence they both are minimum weight perfect matchings.
-\begin{corolary}{}{}
+A consequence of this lemma is that $G_1$ has no other perfect matchings than the ones used to define $G_1$ cause if $M_0$ and $M_1$ be two different perfect matchings in $G_1$ then $M_0\triangle M_1$ forms a set of nice cycles and by the \lemref{th:nozero-circulation-notin-minimum-weight-perfect-matching-graph} the circulations all of these cycles are 0 and therefore $M_0$ and $M_1$ have same weight and hence they both are minimum weight perfect matchings.
+\begin{corolary}{}{minimum-weight-perfect-matching-graph-only-those-minimum-weight-pm-indef}
 	Let $G=(V,E)$ be a bipartite graph with weight function $w$. Let $E_1$ be the union of all minimum weight perfect matchings in $G$. Then every perfect matching in the graph $G_1=(V,E_1)$ has the same weight, the minimum weight of any perfect matching in $G$.
 \end{corolary}
 \subsection{Bounding Number of Cycles with Length Twice Large of The Smallest Cycle}
-By our weight function in \lemref{weight-for-all-s-cycles-to-have-nonzero-circulations} each small cycles in $G$ has a nonzero circulation. Hence, by \lemref{nozero-circulation-notin-minimum-weight-perfect-matching-graph} $G_1$ has no small cycles. Now we want to repeat this procedure with $G_1$ with a new weight function. $G_1$ has no small cycles. Hence, we look at slightly larger cycles (twice larger) and we will argue that their number remains polynomially bounded.
+By our weight function in \lemref{th:weight-for-all-s-cycles-to-have-nonzero-circulations} each small cycles in $G$ has a nonzero circulation. Hence, by \lemref{th:nozero-circulation-notin-minimum-weight-perfect-matching-graph} $G_1$ has no small cycles. Now we want to repeat this procedure with $G_1$ with a new weight function. $G_1$ has no small cycles. Hence, we look at slightly larger cycles (twice larger) and we will argue that their number remains polynomially bounded.
 
 Teo and Koe in \cite{TeoKoh_1992_Tno_CONF} showed that the number of the shortest cycles in a graph with $m$ edges is bounded by $m^2$. In te following lemma we extend their argument and give a bound on the number of cycles that have length at most twice the length of the shortest cycles.
 \begin{lemma}{\cite[Lemma 3.4]{FennerGurjarThierauf_2016_Bpm_CONF}}{twice-size-cycles-arepolynomially-bounded}
@@ -119,5 +119,20 @@ Teo and Koe in \cite{TeoKoh_1992_Tno_CONF} showed that the number of the shortes
 Hence by the claim each tuple of $4$ nodes uniquely defines a cycle $C$ in $H$. There are $\leq n^4$ ways to choose $4$ nodes and their order. Hence the number of cycles of length $\leq r'$ is at most $n^4$.
 \end{proof}
 
-\lemref{twice-size-cycles-arepolynomially-bounded} suggests that we continue form $G_1$ and in each successive round, we double the length of cycles and adapt the weight function to give nonzero circulations to these slightly longer cycles (twice larger). By \lemref{nozero-circulation-notin-minimum-weight-perfect-matching-graph} these cycles will disappear from the new graph $G_2$ obtained by taking only minimum weight perfect matching from $G_1$. This way in $\log n$ rounds we reach a graph with no cycles i.e. with a unique perfect matching. In the following section we show how to construct the weight assignment.
+\lemref{th:twice-size-cycles-arepolynomially-bounded} suggests that we continue form $G_1$ and in each successive round, we double the length of cycles and adapt the weight function to give nonzero circulations to these slightly longer cycles (twice larger). By \lemref{th:nozero-circulation-notin-minimum-weight-perfect-matching-graph} these cycles will disappear from the new graph $G_2$ obtained by taking only minimum weight perfect matching from $G_1$. This way in $\log n$ rounds we reach a graph with no cycles i.e. with a unique perfect matching. In the following section we show how to construct the weight assignment.
 \subsection{Constructing Weight Assignment}
+Let $G=(V,E)=G_0$ be bipartite graph with $n$ nodes that has a perfect mathcing. Define $k=\lfloor \log n\rfloor -1$ which is the number of successive rounds we will need. Note that the shortest cycles in $G$ have length $4$. Then suppose we have defined subgraphs $w_i$ and $G_i$ for $0\leq i\leq k$ when define \begin{itemize}
+	\item [$G_{i+1}$ :] The union of minimum weight perfect matchings in $G_i$ according to weight $w_i$
+	\item [$w_{i+1}$ :] A weight function on $G_{i+1}$ such that all cycles in $G_{i+1}$ of length $2^{(i+1)+2}$ have nonzero circulations by \lemref{th:weight-for-all-s-cycles-to-have-nonzero-circulations}
+\end{itemize}
+By the definition of $G_i$ any two perfect matchings in $G_i$ have the same weight, not only according to $w_i$ but also $w_j$ for all $j<i$ for any $i\in[k]$. By \lemref{th:nozero-circulation-notin-minimum-weight-perfect-matching-graph} graph $G_i$ does not have any cycles of length $\leq 2^{i+1}$ for each $i\in[k]$. In particular $G_k$ does not have any cycles since $2^{k+1}\geq n$. Therefore, $G_k$ has a unique perfect matching.
+
+Our  final weight function $w$ will be a combination of $w_0,\dots, w_{k-1}$. We combine them in a way that the weight assignment in a later round does not interfere with the order of perfect matchings given by earlier round weights. Let $B$ be a number greater thatn the weight of any edge under any of these weight assignments. Then define $$w=w_0B^{k-1}+w_1B^{k-2}+\cdots + w_{k-1}B^0$$In the definition of $w$, the precedence decreases from $w_0$ to $w_{k-1}$ since once two perfect matchings have same minimum weight with restpect to $w_i$, $w_i$ doesn't participate in the calculations for $w_{j}$ in $G_{j}$ with $j>i$. Therefore, for any two perfect matchings $M_1$ and $M_2$ in $G_0$ we have $w(M_1)<w(M_2)$ if and only if there exists an $0\leq i\leq k-1$ such that $$w_j(M_1)=w_j(M_2),\ \text{for $j<i$},\quad w_i(M_1)<w_i(M_2)$$
+
+As a consequence, the prefect matchings left in $G_i$ have a strictly smaller weight with respect to $w$ than the ones in $G_{i-1}$ that did not make it to $G_i$.
+\begin{lemma}{\cite[Lemma 3.5]{FennerGurjarThierauf_2016_Bpm_CONF}}{}
+	For any $i\in[k]$ let $M_1$ be a perfect matching in $G_i$ and $M_2$ be a perfect matching in $G_{i-1}$ which is not in $G_i$. Then $w(M_1)<w(M_2)$
+\end{lemma}
+\begin{proof}
+	Since $M_1$ and $M_2$ are prefect matchings in $G_{i-1}$ we have $w_{j}(M_1)=w_{j}(M_2)$ for all $j<i-1$. From the definition of $G_i$ and \corrref{th:minimum-weight-perfect-matching-graph-only-those-minimum-weight-pm-indef} we have $w_{i-1}(M_1)<w_{i-1}(M_2)$. Hence we have $w(M_1)<w(M_2)$.
+\end{proof}
