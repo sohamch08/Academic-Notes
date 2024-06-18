@@ -10,7 +10,7 @@ The idea above to create a weight function which gives nonzero circulation to ev
 \subsection{Isolating Small Cycles}
 
 The following lemma describes a standard trick to create a weight function for a small set of cycles in graph.
-\begin{lemma}{\cite{ChariRohatgiSrinivasan_1993_Rou_CONF}}{}
+\begin{lemma}{\cite{ChariRohatgiSrinivasan_1993_Rou_CONF}}{weight-for-all-s-cycles-to-have-nonzero-circulations}
 	Let $G$ be a graph with $n$ vertices. Then for any number $s$, one can construct a set of $O(n^2s)$ weight assignments with weights bounded by $O(n^2s)$, such that for any set of $s$ cycles, one of the weight assignments gives nonzero circulation to each of the $s$ cycles.
 \end{lemma}
 \begin{proof}
@@ -100,3 +100,12 @@ A consequence of this lemma is that $G_1$ has no other perfect matchings than th
 	Let $G=(V,E)$ be a bipartite graph with weight function $w$. Let $E_1$ be the union of all minimum weight perfect matchings in $G$. Then every perfect matching in the graph $G_1=(V,E_1)$ has the same weight, the minimum weight of any perfect matching in $G$.
 \end{corolary}
 \subsection{Constructing Weight Assignment}
+By our weight function in \lemref{weight-for-all-s-cycles-to-have-nonzero-circulations} each small cycles in $G$ has a nonzero circulations. Hence by \lemref{nozero-circulation-notin-minimum-weight-perfect-matching-graph} $G_1$ has no small cycles. Now we want to repeat this procedure with $G_1$ with a new weight function. $G_1$ has no small cycles. Hence we look at slightly larger cycles (twice larger) and we will argue that their number remains polynomially bounded.
+
+Teo and Koe in \cite{TeoKoh_1992_Tno_CONF} showed that the number of the shortest cycles in a graph with $m$ edges is bounded by $m^2$. In te following lemma we extend their argument and give a bound on the number of cycles that have length at most twice the length of the shortest cycles.
+\begin{lemma}{\cite[Lemma 3.4]{FennerGurjarThierauf_2016_Bpm_CONF}}{}
+	Let $G=(V,E)$ be a graph with $n$ nodes that has no cycles of length $\leq r$. Let $r'=2r$ if $r$ is even and $r'=2r-2$ otherwise. Then $H$ has $\leq n^4$ cycles of length $\leq r'$.
+\end{lemma}
+\begin{proof}
+	Let $$C=v_0\overset{\longrightarrow}{e_0}v_1\overset{\longrightarrow}{e_1}\cdots \overset{\longrightarrow}{e_{l-2}}v_{l-1}\overset{\longrightarrow}{e_{l-1}}v_1$$be a cycle of length $l\leq r'$ in $G$. Now we successively choose 4 nodes in $C$ $(u_0,u_1,u_2,u_3)$ where $$u_i=v_{\lfloor \frac{il}4\rfloor}\quad \forall\ i\in \{0,1,2,3\}$$dsfsd fsdfds sdfsd. 
+\end{proof}
