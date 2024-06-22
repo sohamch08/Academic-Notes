@@ -1,8 +1,11 @@
 \chapter{Bipartite Perfect Matching}
 \section{Matching and Complexity}
-\section{A \textsc{RNC} Algorithm for \textsc{Search-PM}}
+\section{A \textsc{RNC} Algorithm for \textsc{Search-PM}}\label{rnc-bipartite-pm}
 \section{A \textsc{Quasi-NC} Algorithm using Isolation}
-Let $G=(V,E)$ be given bipartite graph. In the following discussion we will assume that $G$ has perfect matchings. Our goal is to isolate one of the perfect matchings in $G$ by any appropriate weight function. We will also show that if $G$ does not have any perfect matchings then our algorithm will detect this.
+Let $G=(V,E)$ be given bipartite graph. In the following discussion we will assume that $G$ has perfect matchings. Our goal is to isolate one of the perfect matchings in $G$ by any appropriate weight function. We will also show that if $G$ does not have any perfect matchings then our algorithm will detect this. In the following discussion we will prove this theorem
+\begin{Theorem}{\cite[Theorem 3.1]{FennerGurjarThierauf_2016_Bpm_CONF}}{pm-searchpm-in-quasinc}
+	For bipartite graphs, \textsc{PM} and \textsc{Search-PM} are in $\textsc{Quasi-NC}^2$
+\end{Theorem}
 
 We will construct an isolating weight function for bipartite graphs. The idea is to create a weight function which ensures nonzero circulations for a small set of cycles in a black-box way i.e. without having being able to compute the set efficiently. Then we will show that if we construct a smaller graph wrt this weight function then we don't have those small cycles with nonzero circulations then we have the number of cycles with twice the size of the previous ones are polynomially bounded. Then we proceed to create a new weight function which will give nonzero circulations to all the cycles with twice the size. And this way we will continue. This same type of idea we will repeatedly use with necessary modifications in \autoref{linear-matroid-intersection} and \autoref{fractional-matroid-matching}.
 
@@ -136,3 +139,23 @@ As a consequence, the prefect matchings left in $G_i$ have a strictly smaller we
 \begin{proof}
 	Since $M_1$ and $M_2$ are prefect matchings in $G_{i-1}$ we have $w_{j}(M_1)=w_{j}(M_2)$ for all $j<i-1$. From the definition of $G_i$ and \corrref{th:minimum-weight-perfect-matching-graph-only-those-minimum-weight-pm-indef} we have $w_{i-1}(M_1)<w_{i-1}(M_2)$. Hence we have $w(M_1)<w(M_2)$.
 \end{proof}
+
+Therefore by the lemma it follows that the unique perfect matching in $G_k$ has strictly smaller weight with respect to $w$ than all other perfect matchings.
+\begin{corolary}{}{}
+	The weight assignment $w$ defined  $$w=w_0B^{k-1}+w_1+B^{k-2}+\cdots +w_{k-1}B^0$$ is isolating for $G_0$.
+\end{corolary}
+
+Now all it remains is to bound the values of the weight assigned. First we will look at the number of the cycles which need to be assigned a nonzero circulations in each round. So in first round, we give nonzero circulations to every cycle of length 4. Clearly the number of such cycles is $\leq n^4$. By \lemref{th:weight-for-all-s-cycles-to-have-nonzero-circulations} there are a set of $O(n^6)$ weight assignments with weights bounded by $O(n^6)$ as $s\leq n^4$. So $G_1$ does not have any cycles of length $4$. In $i$-th round we have the graph $G_i$ that does not have any cycles of length $\leq 2^{i+1}$. Now by \lemref{th:twice-size-cycles-arepolynomially-bounded} the number of cycles of length $\leq 2^{i+2}$ is bounded by $n^4$. So by \lemref{th:weight-for-all-s-cycles-to-have-nonzero-circulations} we give a set of $O(n^6)$ weight assignments with weights bounded by $O(n^6)$ whcih gives nonzero circulations to all $\leq n^4$ cycles of length $\leq 2^{i+2}$. Now the length of the largest cycle can be at most $n$. Hence we only have to iterate like this $O(\log n)$ times to have all cycles.
+
+Recall that the number $B$ used in defining $w$ is the highest weight assigned by any $w_i$. Hence $B=O(n^6)$ as for all each round each set of weight assignments have their weights bounded by $O(n^6)$. Therefore the weihts in the assignment $w$ are bounded by $B^k=O(n^{6\log n})$. Or we can say the weights have $O(\log^2n)$ bits.
+
+For each $w_i$ there are at most $O(n^6)$ possibilities. We don't know which one would work. Therefore we try all of them and take all possible combinations to create $w$ and then we try all of them. In total we need to try $O(n^{6\log n})$ weight assignments. This can be done in parallel. Hence clearly every weight assignment can be constructed in $\textsc{Quasi-NC}^1$. Therefore we proved:
+\begin{Theorem}{\cite[Lemma 3.7]{FennerGurjarThierauf_2016_Bpm_CONF}}{}
+In $\textsc{Quasi-NC}^1$ one can construct a set of $O(n^{6\log n})$ integer weight functions on $\lt[\frac{n}{2}\rt]\times \lt[\frac{n}2\rt]$ where the weights have $O(\log ^2 n)$ bits, such that for any given bipartite graphs with $n$ nodes, one of the weight functions is isolating.
+\end{Theorem}
+
+With this construction of weight assignments, we can decide the existsence of a perfect matching in a bipartite graph in $\textsc{Quasi-NC}^2$ as follows: We take the biadjacency matrix $A$ from \autoref{rnc-bipartite-pm} ehich has entry $2^{w(e)}$ for edge $e$. We compute $\det(A)$ for each of the constructed weight funcions in parallel. If the given graph has a perfect matching, then one of the weight functions isolates a perfect matching. As we discussed in \autoref{rnc-bipartite-pm} for this weight function $\det(A)$ will be nonzero. When there is no perfect matching, then $\det(A)$ will be zero for any weight function.
+
+As our weight function have $O(\log^2n)$ bits, the determinant entries have quasi-polynomial bits. The deteminant can still be computed in parallel with circuits of quasi polynomial of size $2^{O(\log^2 n)}$ by the algorithm of Berkowitz \cite{Berkowitz_1984_Oct}. As we need to compute $2^{O(\log^2n)}$-many determinants in parallel, our algorithm is in $\textsc{Quasi-NC}^2$ with circuit size $2^{O(\log^2 n)}$.
+
+To construct a perfect matching we follow the algorithm of Mulmuley in \cite{MulmuleyVaziraniVazirani_1987_Mia_CONF} from \autoref{rnc-bipartite-pm} with each of our weight functions. For a weight function $w$ which is isolating, the algorithm outputs the unique minimum weight perfect matching $M$. If we have a weight function $w'$ which is not isolating, still $\det (A)$ might be non-zero  with respect to $w'$ then the algorithm computes a set of edges $M'$ that might or might not be a perfect matching. However, it is easy to verify if $M'$ is indeed a perfect matching and in this case, we will output $M'$. As the algorithm involves computation of similar determinants as in the decision algorithm, it is in $\textsc{Quas-NC}^2$ with circuit size $2^{O(\log ^2 n)}$. This finishes the proof of the \thrmref{th:pm-searchpm-in-quasinc}.
