@@ -43,14 +43,5 @@ Let $G=(V,E)$ be a graph with a perfect matching.
 Now suppose we have a weight function $w\colon E\to \bbR$ on the edges of a graph $G$. Let we have an even length cycle $C=v_0\overset{e_0}{\longrightarrow}v_1\overset{e_1}{\longrightarrow}\cdots \overset{e_{2k-2}}{\longrightarrow}v_{2k}\overset{e_{2k-1}}{\longrightarrow}v_0$ in $G$ for some $k\in \bbN$.
 \dfn{Circulation of Cycle}{For a weight assignment $w$ on the edges the circulation $c_w(C)$ of an even length cycle is defined the alternating sum of the edge weights of $C$ i.e. $$c_w(C)=\lt| \sum_{i=0}^{2k-1} (-1)^i w(e_{i}) \rt|$$}The definition of circulations is independent of the edge we start with because we take the absolute value of the alternating sum. Below we show a property for cycles in a graph having nonzero circulations lead to a unique minimum weight perfect matching.
 
-\begin{lemma}{\cite[Lemma 3.2]{DattaKulkarniRoy_2009_DIa}}{all-nice-cycles-nonzero-circulation-unique-perfect-matching}
-	Let $G$ be a graph with a perfect matching, and let $w$ be a weight function such that all nice cycles in $G$ have nonzero circulations. Then the minimum perfect matching is unique i.e. $w$ is isolating
-\end{lemma}
-\begin{proof}
-	Suppose  not, then we have two minimum weight perfect matchings $M_1$ and $M_2$ with minimum weight w.r.t $w$. Now we take their disjoint union $M_1\sqcup M_2$ i.e. if there is an common edge then we take two copies of that edge connecting same two vertices. Now it is a cycle cover of the vertices with nice cycles except the one's with copies. 
-	
-	Consider any one nice cycle from the cycle cover. We will form a new perfect matching $M$. Since the circulation of an nice cycle is nonzero either the part of it which is in
-	$M_1$ is lighter or the part of it which is in $M_2$ is lighter. Either way we take the lighter part in $M$ and we do this for all . So we take the part from $M_1$ from this cycle. Now we do this for all the nice cycles in the cycle cover. Now for the cycles with two copies of same edge we take one of them into $M$. Now since $M_1\neq M_2$ there exists at least one edge in $M_1$ which is not in $M_2$ and one edge in $M_2$ which is not in $M_1$. Hence $M_1\sqcup M_2$ has at least one nice cycle, hence the way we constructed $w(M)<w(M_i)$ for some $i\in \{1,2\}$ which contradicts the minimality of both $M_1$ and $M_2$
-\end{proof}
 
 

@@ -1,1 +1,43 @@
 \chapter{Isolation Lemma}
+We say a weight assignment is isolating if there exists unique minimum weight subset. Isolation Lemma plays an important role in randomized computation. It was first introduced by \cite{ValiantVazirani_1986_Nia} not under that name. In many areas it is a big open question how to derandomize isolation lemma efficiently. In this report we have derandomization of isolation lemma in some of those settings. 
+\begin{theorem}{Isolation Lemma}{isolation-lemma}
+    Fix a finite set $S\subseteq \bbR$ be a finite set and let $T_1,\dots, T_k\in 2^{[n]}$. For each $i\in [n]$ independently assign a uniformly random weight from $S$.  Let $$w(T_i)=\sum_{x\in T_i}w(i)$$Then we have $$Pr[\exs!\ \text{$T_i$ of minimum weight}]\geq 1-\frac{n}{|S|}$$
+\end{theorem}
+
+\begin{proof}
+    Suppose $E_i$ be the event that $$\min\{w(T_j)\colon i\notin T_j\}=\min \{w(T_j)\colon i\in T_j\} $$\parinf\vspace*{2mm}
+
+    \textbf{\textit{Claim 1:}} If none of the $E_i$ occur, then the minimum weight is unique. 
+    
+    \begin{proof}
+        We will proof the contrapositive statement. Suppose $T_i$ and $T_j$ are distinct minimum-weight sets. Then there exists at least one element $x\in T_i$ such that $x\notin T_j$. Since $T_i$ and $T_j$ have minimum weights, the even $E_x$ occurs. 
+    \end{proof}\vspace*{2mm}\parinn
+
+    Proving this now notice that $$Pr\lt[ \bigcap\limits_{i\in [n]} \neg E_i \rt]=1-Pr\lt[\bigcap\limits_{i\in[n]} E_i\rt]\geq 1-\sum\limits_{i\in [n]}Pr[E_i]$$Therefore in the following claim we will bound $Pr[E_i]$. \parinf\vspace*{2mm}
+
+    \textbf{\textit{Claim 2:}} $Pr[E_i]\leq \frac{1}{|S|}$ 
+    
+    \begin{proof}
+        Now fix all weights, $w(j)$ except the weight $w(i)$. Let 
+        \begin{align*}
+        &L =\min\{w(T_j-i)\mid i\notin T_j\}=\min\{w(T_j)\mid i\notin T_j\}\\
+         &R =\min \{w(T_j-i)\mid i\in T_j \}
+        \end{align*}
+        Since $$E_i:\quad \min\{w(T_j)\colon i\notin T_j\}=\min \{w(T_j)\colon i\in T_j\} $$
+        we have that $$ E_i\text{ occurs}\iff L=R+wt(i)$$Hence there is at most  one option for $wt(i)$ to choose from $S$ so that this equation holds. Therefore $Pr[E_i]=\underset{w\in S }{Pr} [L=R+w\wedge w=wt(i)]\leq \frac1{|S|}$
+    \end{proof}
+
+Therefore by claim 2 we have $\forall\ i\in [n]$, $Pr[E_i]\leq\frac{1}{|S|}$. Hence $$Pr\lt[ \bigcap\limits_{i\in[n]} \neg E_i \rt]\geq 1-\sum\limits_{i\in[n]}^{} Pr[E_i]\geq 1-\frac{n}{|S|}$$ 
+\end{proof}
+
+Now we will show an example of when  a weight assignment becomes isolating. 
+
+\begin{Lemma}{\cite[Lemma 3.2]{DattaKulkarniRoy_2009_DIa}}{all-nice-cycles-nonzero-circulation-unique-perfect-matching}
+	Let $G$ be a graph with a perfect matching, and let $w$ be a weight function such that all nice cycles in $G$ have nonzero circulations. Then the minimum perfect matching is unique i.e. $w$ is isolating
+\end{Lemma}
+\begin{proof}
+	Suppose  not, then we have two minimum weight perfect matchings $M_1$ and $M_2$ with minimum weight w.r.t $w$. Now we take their disjoint union $M_1\sqcup M_2$ i.e. if there is an common edge then we take two copies of that edge connecting same two vertices. Now it is a cycle cover of the vertices with nice cycles except the one's with copies. 
+	
+	Consider any one nice cycle from the cycle cover. We will form a new perfect matching $M$. Since the circulation of an nice cycle is nonzero either the part of it which is in
+	$M_1$ is lighter or the part of it which is in $M_2$ is lighter. Either way we take the lighter part in $M$ and we do this for all . So we take the part from $M_1$ from this cycle. Now we do this for all the nice cycles in the cycle cover. Now for the cycles with two copies of same edge we take one of them into $M$. Now since $M_1\neq M_2$ there exists at least one edge in $M_1$ which is not in $M_2$ and one edge in $M_2$ which is not in $M_1$. Hence $M_1\sqcup M_2$ has at least one nice cycle, hence the way we constructed $w(M)<w(M_i)$ for some $i\in \{1,2\}$ which contradicts the minimality of both $M_1$ and $M_2$
+\end{proof}

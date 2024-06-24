@@ -1,0 +1,45 @@
+\section{Isolation Lemma}
+\begin{theorem}[Isolation Lemma]\label{isolation-lemma}
+    Fix a finite set $S\subseteq \bbR$ be a finite set and let $T_1,\dots, T_k\in 2^{[n]}$. For each $i\in [n]$ independently assign a uniformly random weight from $S$.  Let $$w(T_i)=\sum_{x\in T_i}w(i)$$Then we have $$Pr[\exs!\ \text{$T_i$ of minimum weight}]\geq 1-\frac{n}{|S|}$$
+\end{theorem}
+
+\begin{proof}
+    Suppose $E_i$ be the event that $$\min\{w(T_j)\colon i\notin T_j\}=\min \{w(T_j)\colon i\in T_j\} $$\parinf\vspace*{2mm}
+
+    \textbf{\textit{Claim 1:}} If none of the $E_i$ occur, then the minimum weight is unique. 
+    
+    \begin{proof}
+        We will proof the contrapositive statement. Suppose $T_i$ and $T_j$ are distinct minimum-weight sets. Then there exists at least one element $x\in T_i$ such that $x\notin T_j$. Since $T_i$ and $T_j$ have minimum weights, the event $E_x$ occurs. Therefore we have if none of the $E_i$ occur, then the minimum weight set is uniques.
+    \end{proof}\vspace*{2mm}\parinn
+
+    Proving this now notice that $$Pr\lt[ \bigcap\limits_{i\in [n]} \neg E_i \rt]=1-Pr\lt[\bigcap\limits_{i\in[n]} E_i\rt]\geq 1-\sum\limits_{i\in [n]}Pr[E_i]$$Therefore in the following claim we will bound $Pr[E_i]$. \parinf\vspace*{2mm}
+
+    \textbf{\textit{Claim 2:}} $Pr[E_i]\leq \frac{1}{|S|}$ 
+    
+    \begin{proof}
+        Now fix all weights, $w(j)$ except the weight $w(i)$. Let 
+        \begin{align*}
+        &L =\min\{w(T_j-i)\mid i\notin T_j\}=\min\{w(T_j)\mid i\notin T_j\}\\
+         &R =\min \{w(T_j-i)\mid i\in T_j \}
+        \end{align*}
+        Since $$E_i:\quad \min\{w(T_j)\colon i\notin T_j\}=\min \{w(T_j)\colon i\in T_j\} $$
+        we have that $$ E_i\text{ occurs}\iff L=R+wt(i)$$Hence there is at most  one option for $wt(i)$ to choose from $S$ so that this equation holds. Therefore $Pr[E_i]=\underset{w\in S }{Pr} [L=R+w\wedge w=wt(i)]\leq \frac1{|S|}$
+    \end{proof}
+
+Therefore by claim 2 we have $\forall\ i\in [n]$, $Pr[E_i]\leq\frac{1}{|S|}$. Hence $$Pr\lt[ \bigcap\limits_{i\in[n]} \neg E_i \rt]\geq 1-\sum\limits_{i\in[n]}^{} Pr[E_i]\geq 1-\frac{n}{|S|}$$ 
+\end{proof}
+
+\section{Perfect Matching in Bipartite Planar Graph}
+\subsection{Nice Cycles and Circulation}
+Let $G=(V,E)$ be a graph with a perfect matching. 
+\begin{definition}[Nice Cycle]\label{nice-cycle}
+    A cycle $C$ in $G$ is a nice cycle if it has even length and the subgraph $G-C$ still has a perfect matching
+\end{definition}\parinf
+In other words a nice cycle can be obtained from the symmetric difference of two perfect matchings.\parinn
+
+Now suppose we have a weight function $w\colon E\to \bbR$ on the edges of a graph $G$. Let we have an even length cycle $$C=v_0\overset{e_0}{\longrightarrow}v_1\overset{e_1}{\longrightarrow}\cdots \overset{e_{2k-2}}{\longrightarrow}v_{2k}\overset{e_{2k-1}}{\longrightarrow}v_0$$ in $G$ for some $k\in \bbN$.
+\begin{definition}[Circulation of Cycle]
+    For a weight assignment $w$ on the edges the circulation $c_w(C)$ of an even length cycle is defined the alternating sum of the edge weights of $C$ i.e. $$c_w(C)=\lt| \sum_{i=0}^{2k-1} (-1)^i w(e_{i}) \rt|$$
+\end{definition}
+
+The definition of circulations is independent of the edge we start with because we take the absolute value of the alternating sum. Below we show a property for cycles in a graph having nonzero circulations lead to a unique minimum weight perfect matching.
