@@ -1,0 +1,43 @@
+\centering
+    \begin{tcolorbox}[Baystyle,]
+        {\begin{center}
+        \vspace*{0.14\textheight}
+        \fontsize{45}{45}\scshape Book Title\\        
+        \vspace*{0.018\textheight}
+        \vspace*{0.2\textheight}
+        % Big Logo\\
+        \vspace*{0.2\textheight}
+        {\fontsize{12}{12}\calligra A original story of\\}
+        \fontsize{28}{28}\scshape Author Name\\
+        \vspace*{0.1\textheight}
+        \centering
+        \begin{tikzpicture}[
+        start chain=main going right,
+          ]
+
+             \node[on chain,align=center,draw=none] (a1){{\fontsize{12}{12}\calligra Illustrations by} \\
+             {\Large Designer}
+             }; 
+             { [start branch=A going below]
+             \node[on chain,align=center,draw=none,scale=0.01](d1){};
+             \node[on chain,align=center,draw=none,](d2){\Huge Press logo};
+             %\node[on chain,align=center,draw=none,scale=0.01](d3){};
+             }
+             \node[on chain,align=center,draw=none] (a2){\psvectorian[]{148}}; 
+             { [start branch=B going below]
+             \node[on chain,align=center,draw=none,scale=0.01](s1){};
+             \node[on chain,align=center,draw=none,](s2){};
+             %\node[on chain,align=center,draw=none,scale=0.01](s3){}; 
+             }
+             \node[on chain,align=center,draw=none]  (a3){{\fontsize{12}{12}\calligra Final review by} \\
+             {\Large Revisor}
+             };          
+             { [start branch=C going below]
+             \node[on chain,align=center,draw=none,scale=0.01](e1){};
+             \node[on chain,align=center,draw=none,](e2){\Huge Other Logo};
+             %\node[on chain,align=center,draw=none,scale=0.01](e3){}; 
+        }
+        \draw[black] (s2.north) -- (s2.south);
+        \end{tikzpicture}
+            \end{center}}
+    \end{tcolorbox}

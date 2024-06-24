@@ -153,12 +153,16 @@ Hence the Claim implies that $\lm(\mcL_D)$ is equal to the size of the smallest 
 	Let $G$ be a graph on $n$ vertices such that the size of the smallest alternating circuit $\lm$. Then the cardinality of the set $$\{(\pm \mathbbm{1})_C\mid C\text{ is an alternating circuit in $G$ of size at most $2\lm$}\}$$is at most $n^{17}$.
 \end{Theorem}
 \begin{proof}
-	content...
+	Like in the proof of \lemref{th:twice-size-cycles-arepolynomially-bounded} we will associate a small signature $\sg(C)$ with each alternating circuit $C$ in $G$ of size at most $2\lm$. The signatures have the property that alternating circuits with different alternating indicator vectors are assigned to different signatures. This will prove that the number of alternating circuits in $G$ of size at most $2\lm$ is  at most the number of possible signatures which we will show polynomially bounded. 
+
+	
 \end{proof}
 \subsection{Algorithm for Finding Isolating Weight Assignment}
 With this theorem we have \begin{Theorem}{\cite[Theorem 2.5]{GurjarThieraufVishnoi_2021_IaV}}{}
 	Let $k$ be a positive integer and $P\subseteq \bbR^{m}$ a polytope such that its extreme ppoints are in $\lt\{0,\frac1k,\frac2k,\dots,1\rt\}^m$ and there exists a constant $c>1$ with $$|\{v\in \mcL_F\colon |v|<c\lm(\mcL_F)\}|\leq m^{O(1)}$$ for any face $F$ of $P$. Then there exists an algorithm that, given $k$ and $m$, outputs a set $\mcW\subseteq \bbZ^m$ of $m^{O(\log km)}$ weight assignments with weights bounded by $m^{O(\log km)}$ such that there exists at least one $w\in \mcW$ that is isolating for $P$, in time $polylog(km)$ using $m^{O(\log km)}$ many parallel processors.
 \end{Theorem}
+
+
 Using this we finally have an algorithm for isolating a fractional matroid matching polytope:
 \begin{Theorem}{\cite[Theorem 3.1]{GurjarOkiRaj_2024_Flm}}{}
 	There exists an algorithm that given $m\in \bbZ_+$ outputs a set $\mcW\subseteq \bbZ^m_+$ of $m^{O(\log m)}$ weight assignments with weights bounded by $m^{O(\log m)}$ such that, for any fractional matroid matching polytope $P$ of $m$ lines, there exists at least one $w\in \mcW$ that is isolating for $P$, in time $polylog(m)$ usign $m^{O(\log m)}$ many parallel processors.
