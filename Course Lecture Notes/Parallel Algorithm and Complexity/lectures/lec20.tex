@@ -1,1 +1,24 @@
 \section{Razborov-Smolensky Lower Bound}
+\begin{definition}[Approximation of a function]
+    $p(x_1,\dots, x_n)$ approximated $f(x_1,\dots, x_n)$ if \[
+         \underset{\ovx}{Pr}[p(x_1,\dots,x_n)=f(x_1,\dots, x_n)]\geq \frac34
+    \]
+    
+\end{definition}
+\begin{lemma}\label{ac0p-poly-degree-ub}
+    Any \textsc{AC}$^0[p]$ circuit of depth $d$ can be approximated by a polynomial over $\bbF_p$ of degree $O(\log^d n)$.
+\end{lemma}
+
+\begin{lemma}\label{parity-poly-degree-lb}
+    Suupose Parity (denoted by $\oplus$) can be approximated by an polynomial over $\bbF_p$ then degree of the polynomial is $\Om(\sqrt{n})$.
+\end{lemma}
+
+
+\begin{theorem}
+$\oplus\notin \textsc{AC}^0[p]$
+\end{theorem}
+\begin{proof}
+     If $\oplus\in \textsc{AC}^0[p]$ then by \lmref{ac0p-poly-degree-ub}, $\oplus$ can be approximated by an polynomial of degree $O(\log^d n)$. By \lmref{parity-poly-degree-lb} the degree of the polynomial is $\Om(\sqrt{n})$. Hence we have \begin{align*}
+     & \log^dn\geq c\sqrt{n}\implies d\log\log n\geq \frac{c}2\log n\implies \log\log n \geq \log^{\frac{c}{2d}}n\implies n\geq 2^{n^{\frac{c}{2d}}}\implies n\geq 2^{n^{\Om\lt(\frac1{2d}\rt)}}
+     \end{align*}Which is not possible. Hence $\oplus\notin \textsc{AC}^0[p]$.
+\end{proof}
