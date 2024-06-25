@@ -1,6 +1,6 @@
-\section{Maximal Independent Set ($MIS$)}
+\section{Maximal Independent Set ($\textsc{MIS}$)}
 \begin{theorem}
-	$MIS\in P$
+	$\textsc{MIS}\in \textsc{P}$
 \end{theorem}
 
 \subsection{Matching and Independent Set of Line Graph}
@@ -23,13 +23,13 @@
 \end{fact}
 
 \subsection{Luby's Algorithm (Randomized Algorithms)}
-\begin{definition}[$RNC^{k}$]
-	The class $RNC^{k}$ is the class of problems that can be solved by a randomized algorithm that runs in $O(\log^k n)$ time with a polynomial number of processors. 
+\begin{definition}[$\textsc{RNC}^{k}$]
+	The class $\textsc{RNC}^{k}$ is the class of problems that can be solved by a randomized algorithm that runs in $O(\log^k n)$ time with a polynomial number of processors. 
 \end{definition}
 \begin{remark}
-	Therefore $RNC$ is the randomized counterpart of NC.\parinn
+	Therefore $\textsc{RNC}$ is the randomized counterpart of NC.\parinn
 \end{remark}
-Luby's Algorithm puts $MIS$ in $RNC^2$. The main steps or the ideas of the algorithm are:\begin{itemize}
+Luby's Algorithm puts $\textsc{MIS}$ in $\textsc{RNC}^2$. The main steps or the ideas of the algorithm are:\begin{itemize}
 	\item The algorithm tries to find $I$ in each stage.
 	\item Each stage finds an independent set $I$ in parallel, using calls on a 
 	\item Create a set $S$ of candidates for $I$ as follows: For each vertex $v$ in parallel, include $v\in S$ with probability $\frac1{2d(v)}$
@@ -62,7 +62,7 @@ Here we denote for any $v\in V$ $d(v)\coloneqq \deg(v)$.
 		}
 	\Return $A$\;		
 	}
-	\caption{Luby's Randomized Algorithm on $MIS$\label{lubymis}}
+	\caption{Luby's Randomized Algorithm on $\textsc{MIS}$\label{lubymis}}
 \end{algorithm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -170,7 +170,7 @@ Therefore we have $d^+(v)+d^-(v)=d(v)$.
 \end{proof}
 
 \begin{theorem}
-	Luby's Algorithm puts $MIS\in RNC^2$
+	Luby's Algorithm puts $\textsc{MIS}\in \textsc{RNC}^2$
 \end{theorem}
 \subsection{Derandomization}
 \begin{theorem}{Bertrand's Postulate}\label{bertrand}
@@ -192,5 +192,5 @@ So we in parallel  consider all possible strings of $O(\log n)$ length represent
 
 For each stage we choose different the prime $p$ and then do the process as discussed above.
 \begin{theorem}
-	Derandomization of Luby's Algorithm puts $MIS\in NC^2$
+	Derandomization of Luby's Algorithm puts $\textsc{MIS}\in NC^2$
 \end{theorem}

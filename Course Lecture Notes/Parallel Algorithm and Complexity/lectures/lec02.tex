@@ -1,48 +1,48 @@
 \parinf
 
-\textbf{Problem:} $SORT$\\
+\textbf{Problem:} $\textsc{SORT}$\\
 \textbf{Input:} $n$ numbers with $n$ bits each\\
 \textbf{Output:} The sequence of the input numbers in non-decreasing order.
 \begin{definition}
 	We define $un_n(k)\triangleq 1^k0^{n-k}$ where $k\in\{0,\dots,n\}$
 \end{definition}
 \parinf
-\textbf{Problem:} $UCOUNT$\\
+\textbf{Problem:} $\textsc{UCOUNT}$\\
 \textbf{Input:} $a_0,\dots,a_{n-1}\in \{0,1\}$\\[2mm]
 \textbf{Output:} $un_n\lt(\sum\limits_{i=0}^{n-1}a_i \rt)$\parinn
 \begin{lemma}
-	$BCOUNT\leq UCOUNT$
+	$\textsc{BCOUNT}\leq \textsc{UCOUNT}$
 \end{lemma}
 \begin{proof}
-	Given $a_0,\dots, a_{n-1}$ suppose $b_1\dots b_n=un_n\lt( \sum\limits_{i=0}^{n-1}a_i\rt)$. Also let $b_0=1$ and $b_{n+1}=1$. Then in the number $b_0b_1\dots b_nb_{n+1}$ there is at least one 1 from left and at least one 0 from right. Now take $$d_j=b_j\wedge \neg(b_{j+1})$$ for all $0\leq j\leq n$. Then if $d_j=1$ that means $b_j=1$ and $b_{j+1}=0$ hence $b_j$ is the last bit which is 1 afterwards every bit is 0. Hence there are in total $j$ many 1's except $b_0$. Therefore $\sum\limits_{i=0}^{n-1}a_i=j$. So we take all $r\in {0,\dots, n}$ such that the $j$th bit of $r$ is on then define $$c_j=\bigwedge_{i\in R_j}d_i$$Hence if $c_j=1$ then we can say $\sum\limits_{i=0}^{n-1}a_i$ is such a number whose $j$th bit is 1. Thus we take $BCOUNT(a_0,\dots, a_{n-1})=c_{\log n-1}\cdots c_1c_0$
+	Given $a_0,\dots, a_{n-1}$ suppose $b_1\dots b_n=un_n\lt( \sum\limits_{i=0}^{n-1}a_i\rt)$. Also let $b_0=1$ and $b_{n+1}=1$. Then in the number $b_0b_1\dots b_nb_{n+1}$ there is at least one 1 from left and at least one 0 from right. Now take $$d_j=b_j\wedge \neg(b_{j+1})$$ for all $0\leq j\leq n$. Then if $d_j=1$ that means $b_j=1$ and $b_{j+1}=0$ hence $b_j$ is the last bit which is 1 afterwards every bit is 0. Hence there are in total $j$ many 1's except $b_0$. Therefore $\sum\limits_{i=0}^{n-1}a_i=j$. So we take all $r\in {0,\dots, n}$ such that the $j$th bit of $r$ is on then define $$c_j=\bigwedge_{i\in R_j}d_i$$Hence if $c_j=1$ then we can say $\sum\limits_{i=0}^{n-1}a_i$ is such a number whose $j$th bit is 1. Thus we take $\textsc{BCOUNT}(a_0,\dots, a_{n-1})=c_{\log n-1}\cdots c_1c_0$
 \end{proof}
 
 \begin{theorem}
-	$UCOUNT\equiv BCOUNT$
+	$\textsc{UCOUNT}\equiv \textsc{BCOUNT}$
 \end{theorem}
 
 \begin{theorem}
-	$UCOUNT\leq SORT\leq UCOUNT$
+	$\textsc{UCOUNT}\leq \textsc{SORT}\leq \textsc{UCOUNT}$
 \end{theorem}
-\begin{proof} $UCOUNT\leq SORT$: 	Given $a_0,\dots, a_{n-1}$ define $A_i=a_i\underbrace{0\cdots,0}_{n-1}$ for all $0\leq i\leq n-1$. Sorting these numbers the sequence of most significant bits in the ordered sequence is the $un_n\lt( \sum\limits_{i=0}^{n-1}a_i\rt)$ reversed.
+\begin{proof} $\textsc{UCOUNT}\leq \textsc{SORT}$: 	Given $a_0,\dots, a_{n-1}$ define $A_i=a_i\underbrace{0\cdots,0}_{n-1}$ for all $0\leq i\leq n-1$. Sorting these numbers the sequence of most significant bits in the ordered sequence is the $un_n\lt( \sum\limits_{i=0}^{n-1}a_i\rt)$ reversed.
 
-$SORT\leq UCOUNT$: Given $a_i=a_{i,n-1}\cdots, a_{i,1}a_{0,0}$ for all $1\leq i\leq n$.  Define $$c_{i,j}\triangleq\lt\llbracket(a_i<a_j)\vee ((a_i=a_j)\wedge i\leq j)\rt\rrbracket$$ $\forall\ 0\leq i,j\leq n-1$. Now we define for all $1\leq j\leq n$ $$c_j\triangleq UCOUNT(c_{0,j}\dots c_{n-1,j})$$Hence first of all the number of 1's in $c_{0,j}\dots c_{n-1,j}$ is the number of $a_i$'s with value strictly less than $a_j$ or if equal then index is less than or equal to $j$. Hence it represents the position of $a_j$ when the numbers are sorted. Therefore $c_j$ is the $n$-bit unary representation of the position of $a_j$ in the ordered output sequence. If the ordered sequence is $a'_{1}, \dots, a'_{n}$ then $a'_{c_j}=a_j$. Let $a'_i=a'_{i,n-1}\cdots a'_{i,0}a'_{i,1}a'_{i,0}$ for $1\leq i\leq n$. Then $$a'_{i,k}=1\iff \llbracket a'_{i}=a_j\rrbracket \wedge \llbracket a_{j,k}=1\rrbracket$$ Hence $a'_{i,k}=\bigwedge\limits_{1\leq j\leq n}\lt(\lt\llbracket c_j=1^i0^{n-i}\rt\rrbracket \wedge a_{j,k}  \rt)$.
+$\textsc{SORT}\leq \textsc{UCOUNT}$: Given $a_i=a_{i,n-1}\cdots, a_{i,1}a_{0,0}$ for all $1\leq i\leq n$.  Define $$c_{i,j}\triangleq\lt\llbracket(a_i<a_j)\vee ((a_i=a_j)\wedge i\leq j)\rt\rrbracket$$ $\forall\ 0\leq i,j\leq n-1$. Now we define for all $1\leq j\leq n$ $$c_j\triangleq \textsc{UCOUNT}(c_{0,j}\dots c_{n-1,j})$$Hence first of all the number of 1's in $c_{0,j}\dots c_{n-1,j}$ is the number of $a_i$'s with value strictly less than $a_j$ or if equal then index is less than or equal to $j$. Hence it represents the position of $a_j$ when the numbers are sorted. Therefore $c_j$ is the $n$-bit unary representation of the position of $a_j$ in the ordered output sequence. If the ordered sequence is $a'_{1}, \dots, a'_{n}$ then $a'_{c_j}=a_j$. Let $a'_i=a'_{i,n-1}\cdots a'_{i,0}a'_{i,1}a'_{i,0}$ for $1\leq i\leq n$. Then $$a'_{i,k}=1\iff \llbracket a'_{i}=a_j\rrbracket \wedge \llbracket a_{j,k}=1\rrbracket$$ Hence $a'_{i,k}=\bigwedge\limits_{1\leq j\leq n}\lt(\lt\llbracket c_j=1^i0^{n-i}\rt\rrbracket \wedge a_{j,k}  \rt)$.
 \end{proof}
 
 \begin{corollary}
-	$SORT\in TC^0$
+	$\textsc{SORT}\in \textsc{TC}^0$
 \end{corollary}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Connection of PRAMs and CLASSES
+%% Connection of \textsc{PRAM}s and CLASSES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Parallel Random-Access Machine (PRAM)}
+\section{Parallel Random-Access Machine (\textsc{PRAM})}
 In \cite{karpramachandran} many Parallel Machine Models are very well written and explained
-\begin{definition}[PRAM]
-	A PRAM consists of an infinite sequence of processors $P_1,P_2,\dots$. Each processor $P_i$ has its local memory realized as an infinite sequence $R_{i,0},R_{i,1},R_{i,2},\dots$ of registers. Additionally there is a common (or global) memory given by the infinite sequence $C_0,C_1,C_2,\dots$ of registers. Each register can hold as value a natural number, stored in binary as a bit string.
+\begin{definition}[\textsc{PRAM}]
+	A \textsc{PRAM} consists of an infinite sequence of processors $P_1,P_2,\dots$. Each processor $P_i$ has its local memory realized as an infinite sequence $R_{i,0},R_{i,1},R_{i,2},\dots$ of registers. Additionally there is a common (or global) memory given by the infinite sequence $C_0,C_1,C_2,\dots$ of registers. Each register can hold as value a natural number, stored in binary as a bit string.
 	
-	A particular PRAM $M$ is specified by a program and a processor bound. The program is a sequence of instructions $S_1,S_2,\dots, S_s$ and the processor bound is a function $p:\bbN\to \bbN$
+	A particular \textsc{PRAM} $M$ is specified by a program and a processor bound. The program is a sequence of instructions $S_1,S_2,\dots, S_s$ and the processor bound is a function $p:\bbN\to \bbN$
 	
 	\textbf{Workflow:} Initially the input is distributed over the lowest numbered global memory cells. Then all the processors $P_1,\dots,P_{p(n)}$ start the execution of the program with the first instruction $S_1$. Each instruction $S_m$ is one of the following 9 types. 
 	
@@ -60,12 +60,12 @@ In \cite{karpramachandran} many Parallel Machine Models are very well written an
 The computation of $M$ stops when all the processors $R_1,\dots, R_{p(n)}$ have halted
 \end{definition}
 
-Let $f:\bbN^*\to \bbN^*$. We say that a PRAM $M$ computes $f$ if the following holds: Given an input $(x_1,\dots,x_n)\in \bbN^n$ (input length: $n$) the $x_i$ are first distributed in global memory cells $C_1,\dots, C_n$ i.e. $C_i$ is initialized to $x_i$ for $1\leq i\leq n$. Additionally $C_0$ is initialized to $n$. Then the computation of $M$ is started. Let $m$ be the contents of register $C_0$ after the computation stops. Then $f(x_1,\dots, x_n)$ is the vector from $\bbN^m$ whose components are the numbers in the global register $C_1,\dots, C_m$
-\begin{definition}[EREW-PRAM]
+Let $f:\bbN^*\to \bbN^*$. We say that a \textsc{PRAM} $M$ computes $f$ if the following holds: Given an input $(x_1,\dots,x_n)\in \bbN^n$ (input length: $n$) the $x_i$ are first distributed in global memory cells $C_1,\dots, C_n$ i.e. $C_i$ is initialized to $x_i$ for $1\leq i\leq n$. Additionally, $C_0$ is initialized to $n$. Then the computation of $M$ is started. Let $m$ be the contents of register $C_0$ after the computation stops. Then $f(x_1,\dots, x_n)$ is the vector from $\bbN^m$ whose components are the numbers in the global register $C_1,\dots, C_m$
+\begin{definition}[\textsc{EREW-PRAM}]
 	E$\coloneqq$ Exclusive, $R\coloneqq$ Read, W $\coloneqq $ Write 
 \end{definition}
 \begin{question}
-	Can $n$, $n$-bit numbers be sorted in $O(\log n)$ time on an EREW-PRAM? Bir arithmetic is allowed and each with polynomially many processors. Bit operation takes $O(1)$ time. Hence is $SORT\in EREW[\log n,poly(n)]$?
+	Can $n$, $n$-bit numbers be sorted in $O(\log n)$ time on an \textsc{EREW-PRAM}? Bit arithmetic is allowed and each with polynomially many processors. Bit operation takes $O(1)$ time. Hence is $\textsc{SORT}\in \textsc{EREW}[\log n,poly(n)]$?
 \end{question}
 
 \begin{question}
@@ -81,44 +81,44 @@ Let $f:\bbN^*\to \bbN^*$. We say that a PRAM $M$ computes $f$ if the following h
 \begin{question}
 	If number of processors is $O(n)$ what can be said?
 \end{question}
-There are also other parallel machine models: CRCW (C$\coloneqq$ Concurrent), CREW, CROW (O$\coloneqq$ Owner), OROW. Concurrent means everyone can access the memory concurrently. Owner means only the processor who is the owner of a memory can access it. 
+There are also other parallel machine models: \textsc{CRCW} (C$\coloneqq$ Concurrent), \textsc{CREW}, \textsc{CROW} (O$\coloneqq$ Owner), \textsc{OROW}. Concurrent means everyone can access the memory concurrently. Owner means only the processor who is the owner of a memory can access it. 
 
-In CRCW allows simultaneous read and writes. Hence we have to resolve write conflicts. Some commonly used methods of resolving write conflicts are $COMMON$, $ARBITRARY$, $PRIORITY$ models.  
+In \textsc{CRCW} allows simultaneous read and writes. Hence we have to resolve write conflicts. Some commonly used methods of resolving write conflicts are $\textsc{COMMON}$, $\textsc{ARBITRARY}$, $\textsc{PRIORITY}$ models.  
 
-\begin{definition}[$NC^1$]
+\begin{definition}[$\textsc{NC}^1$]
 	Class of languages accepted by circuits of depth $O(\log n)$  and size $n^{O(1)}$ and fanin 2
 \end{definition}
 \begin{definition}
 	Formulas are trees i.e. circuits with fanout 1
 \end{definition}
 \begin{theorem}
-	In $NC^1$ formulas and circuits are equivalent.
+	In $\textsc{NC}^1$ formulas and circuits are equivalent.
 \end{theorem}
 \begin{theorem}
-	$NC^1\subseteq OROW[\log n, poly(n)]$
+	$\textsc{NC}^1\subseteq \textsc{OROW}[\log n, poly(n)]$
 \end{theorem}
 \begin{proof}
-	For any circuit $C\in NC^1$  we create the OROW PRAM where each gate of $C$ is a processor in the PRAM and each processor has the writing access of their own memory and for any edge $u\to v$ in $C$ processor $v$ has the reading access of the memory of $u$. With this OROW PRAM each processor can read memory from its children then writes the computed value in his memory location thus it computes $C$. Since $C$ has size $n^{O(1)}$ the PRAM has $n^{O(1)}$ many processors and since the circuit has depth $O(\log n)$ the OROW PRAM takes $O(\log n)$ time to compute. 
+	For any circuit $C\in \textsc{NC}^1$  we create the \textsc{OROW-PRAM} where each gate of $C$ is a processor in the \textsc{PRAM} and each processor has the writing access of their own memory and for any edge $u\to v$ in $C$ processor $v$ has the reading access of the memory of $u$. With this \textsc{OROW-PRAM} each processor can read memory from its children then writes the computed value in his memory location thus it computes $C$. Since $C$ has size $n^{O(1)}$ the \textsc{PRAM} has $n^{O(1)}$ many processors and since the circuit has depth $O(\log n)$ the \textsc{OROW-PRAM} takes $O(\log n)$ time to compute. 
 \end{proof}
 \begin{open}
-	$NC^1\overset{?}{\supseteq} OROW[\log n,poly(n)]$
+	$\textsc{NC}^1\overset{?}{\supseteq} \textsc{OROW}[\log n,poly(n)]$
 \end{open}
-\begin{definition}[$AC^k$, $NC^k$]
+\begin{definition}[$\textsc{AC}^k$, $\textsc{NC}^k$]
 		The class of circuits consists of the gates $(\vee,\wedge,\neg)$ (The subscript $n$ or $1$ denotes the fanin) of polynomial size and depth $O(1)=O(\log^k n)$ 
 		
-		Similarly for $NC^k$ but with fanin 2
+		Similarly for $\textsc{NC}^k$ but with fanin 2
 \end{definition}
 \begin{theorem}
-	$AC^1=CRCW[\log n,poly(n)]$
+	$\textsc{AC}^1=\textsc{CRCW}[\log n,poly(n)]$
 \end{theorem}
-\begin{proof} $AC^1\subseteq CRCW[\log n,poly(n)]$: (COMMON) For any gate all its parents have similarly reading  access of the memory of the gate and all its childs has writing access. But we use COMMON model to resolve write conflicts. For an $OR$ gate if anyone evaluates to be 0 then it ignores and if its 1 then it writes 1. Thus everybody writes 1. Every $OR$ gate by  has 0 previously in the memory. Similarly for $AND$ gate its the opposite. 
+\begin{proof} $\textsc{AC}^1\subseteq \textsc{CRCW}[\log n,poly(n)]$: (\textsc{COMMON}) For any gate all its parents have similarly reading  access of the memory of the gate and all its children has writing access. But we use \textsc{COMMON} model to resolve write conflicts. For an $\textsc{OR}$ gate if anyone evaluates to be 0 then it ignores and if its 1 then it writes 1. Thus everybody writes 1. Every $\textsc{OR}$ gate by  has 0 previously in the memory. Similarly for $\textsc{AND}$ gate its the opposite. 
 
 
-$AC^1\supseteq CRCW[\log n,poly(n)]$: \thmref{volthm2.56}, \cite{ac1crcwstockmeyervishkin}
+$\textsc{AC}^1\supseteq \textsc{CRCW}[\log n,poly(n)]$: \thmref{volthm2.56}, \cite{ac1crcwstockmeyervishkin}
 \end{proof}
 
 \begin{theorem}\label{volthm2.56}
-Let $f:\{0,1\}^*\to \{0,1\}^*$ be a length-respecting function computed by the CRCW PRAM $M$ in time $t(n)$. Let the processor bound of $M$ be $p(n)$. The there is a family $\mcC$ of circuits that computes $f$ where the depth of $\mcC$ is $O(t(n))$ and size is polynomial in $n+t(n)+p(n)$.
+Let $f:\{0,1\}^*\to \{0,1\}^*$ be a length-respecting function computed by the  \textsc{CRCW-PRAM} $M$ in time $t(n)$. Let the processor bound of $M$ be $p(n)$. The there is a family $\mcC$ of circuits that computes $f$ where the depth of $\mcC$ is $O(t(n))$ and size is polynomial in $n+t(n)+p(n)$.
 \end{theorem}
 \begin{proof}
 See \cite[Theorem 2.56, Page  70]{VollmerCh2}
@@ -126,48 +126,48 @@ See \cite[Theorem 2.56, Page  70]{VollmerCh2}
 
 \section{Some Circuit Complexity Class Relations}
 \begin{theorem}
-	$AC^0\subseteq NC^1$
+	$\textsc{AC}^0\subseteq \textsc{NC}^1$
 \end{theorem}
 \begin{proof}
-	For all unbounded gate in $AC^1$ circuit $C$ with fanin $s$ we can replace each gate with $s$ many same gates fo fanin 2 and depth log s. Thus we have $AC^0\subseteq NC^1$
+	For all unbounded gate in $\textsc{AC}^1$ circuit $C$ with fanin $s$ we can replace each gate with $s$ many same gates fo fanin 2 and depth log s. Thus we have $\textsc{AC}^0\subseteq \textsc{NC}^1$
 \end{proof}
 
 \begin{theorem}
-	$TC^0\subseteq NC^1$
+	$\textsc{TC}^0\subseteq \textsc{NC}^1$
 \end{theorem}
 \begin{proof}
-	We will first show that using Redundant Algebra $ADD_{2n}\in NC^0$. In Redundant Algebra with base 4 while adding two digits the result can be at most in normal integers $-6,\dots, 6$. We only have to check for $\pm 6,\pm 5,\pm 3$. Other case we dont have to watch out. 
+	We will first show that using Redundant Algebra $\textsc{ADD}_{2n}\in \textsc{NC}^0$. In Redundant Algebra with base 4 while adding two digits the result can be at most in normal integers $-6,\dots, 6$. We only have to check for $\pm 6,\pm 5,\pm 3$. Other case we dont have to watch out. 
 	
 	\begin{align*}
 		6&=12 & 5&=11 & 3&=1\overline{1}\\
 		\overline{6}&=\overline{12} & \overline{5}&=\overline{11} & \overline{3}&=\overline{1}1
 	\end{align*}
-	For $\pm 4$ it is the normal representation in this system ie $10$ and $\overline{1}0$ respectively. Now whenever we add two digits in this system in the sum result can be at most 2 digits. Among them we call the right most digit the sum digit or $s$ and the left digit the carry digit $c$ becasue it becomes the carry for the addition. Now see in all of the numbers the sum digit $|s|\leq 2$ and carry digit $|c|\leq 1$ So whenever we add a carry generated before to the current sum no new carry is generated becasue of the carry. So We dont have to look for carry generation and propagation. The carry generated at the previous position will add to the sum digit in the current position after getting added to that it will not further propagate after getting added the final digit at the current place will be between $3$ and $\overline{3}$ So we proved that addition of two $n$-bit numbers using Redundant algebra is in $NC^0$
+	For $\pm 4$ it is the normal representation in this system ie $10$ and $\overline{1}0$ respectively. Now whenever we add two digits in this system in the sum result can be at most 2 digits. Among them we call the right most digit the sum digit or $s$ and the left digit the carry digit $c$ becasue it becomes the carry for the addition. Now see in all of the numbers the sum digit $|s|\leq 2$ and carry digit $|c|\leq 1$ So whenever we add a carry generated before to the current sum no new carry is generated becasue of the carry. So We dont have to look for carry generation and propagation. The carry generated at the previous position will add to the sum digit in the current position after getting added to that it will not further propagate after getting added the final digit at the current place will be between $3$ and $\overline{3}$ So we proved that addition of two $n$-bit numbers using Redundant algebra is in $\textsc{NC}^0$
 	
-	Now we will show converting a number $n$ from base 2 to base 4 is in $NC^0$. let $$n=\sum_{k=0}^{m}a_k2^k=\sum_{k=0}^{\lfloor \frac{m}2\rfloor}\lt(a_{2k+1}\times 2+a_{2k}\rt)4^k\qquad \text{if }m\text{ is odd then } a_{m+1}=0$$ So we just take two bits in binary multiply the left one with 2 and add to the right one and we have the digit at base 4 in that position. So we can change base in $NC^0$. From now on we will by default assume all the addition is done using Redundant Algebra.
+	Now we will show converting a number $n$ from base 2 to base 4 is in $\textsc{NC}^0$. let $$n=\sum_{k=0}^{m}a_k2^k=\sum_{k=0}^{\lfloor \frac{m}2\rfloor}\lt(a_{2k+1}\times 2+a_{2k}\rt)4^k\qquad \text{if }m\text{ is odd then } a_{m+1}=0$$ So we just take two bits in binary multiply the left one with 2 and add to the right one and we have the digit at base 4 in that position. So we can change base in $\textsc{NC}^0$. From now on we will by default assume all the addition is done using Redundant Algebra.
 	
-	Then we are done in showing $TC^0\subseteq NC^1$. We will first show that adding $n$ bits is in $NC^1$ ie $BCOUNT\in NC^1$. So we have $n$ bits $a_n,a_{n-1},\dots, a_1$. We will group the bits into groups of two bits and add the two bits in each group. We can do the addition for all groups in parallel. And since we have already shown addition of two $k$-bit numbers is in $NC^0$ this takes constant depth and size since we are adding two bits. Now the number of bits are halved. We do tha same process again and again. Each time it takes $poly(n)$ size and constant depth and at each iteration the number of numbers becomes half. So this whole process takes $O(\log n)$ many iterations. So adding $n$ bits takes $poly(n)$ size and depth $O(\log n)$. So $BCOUNT\in NC^1$
+	Then we are done in showing $\textsc{TC}^0\subseteq \textsc{NC}^1$. We will first show that adding $n$ bits is in $\textsc{NC}^1$ ie $\textsc{BCOUNT}\in \textsc{NC}^1$. So we have $n$ bits $a_n,a_{n-1},\dots, a_1$. We will group the bits into groups of two bits and add the two bits in each group. We can do the addition for all groups in parallel. And since we have already shown addition of two $k$-bit numbers is in $\textsc{NC}^0$ this takes constant depth and size since we are adding two bits. Now the number of bits are halved. We do tha same process again and again. Each time it takes $poly(n)$ size and constant depth and at each iteration the number of numbers becomes half. So this whole process takes $O(\log n)$ many iterations. So adding $n$ bits takes $poly(n)$ size and depth $O(\log n)$. So $\textsc{BCOUNT}\in NC^1$
 	
 	
 	
-	Now We will show that $Majority\in NC^1$. Let the addition of $n$ bits we got is $a$ and the Redundant Algebra representation of $\lceil\frac{n}2\rceil$ is $b$. Now we can calculate $-b$ with reversing the sign of every digit in $b$ ie if $b=\sum\limits_{i=0}^{m}a_k\times 4^k$ then $-b=\sum\limits_{i=0}^m\overline{a_k}\times 4^k$. Now we add $a$ and $-b$ which can be done in $NC^0$. And now we will look for the left most negative digit. If there is nonw we output 1 i.e. majority of the bits are 1 and if there exists a negative bit then output is 0. Hence we have $Majority\in TC^0$. So $TC^0\subseteq NC^1$.
+	Now We will show that $\textsc{Majority}\in NC^1$. Let the addition of $n$ bits we got is $a$ and the Redundant Algebra representation of $\lceil\frac{n}2\rceil$ is $b$. Now we can calculate $-b$ with reversing the sign of every digit in $b$ ie if $b=\sum\limits_{i=0}^{m}a_k\times 4^k$ then $-b=\sum\limits_{i=0}^m\overline{a_k}\times 4^k$. Now we add $a$ and $-b$ which can be done in $NC^0$. And now we will look for the left most negative digit. If there is nonw we output 1 i.e. majority of the bits are 1 and if there exists a negative bit then output is 0. Hence we have $\textsc{Majority}\in \textsc{TC}^0$. So $\textsc{TC}^0\subseteq \textsc{NC}^1$.
 \end{proof}
 
-\begin{definition}[$SAC^k$]
+\begin{definition}[$\textsc{SAC}^k$]
 	The class of circuits consists of the gates $(\vee,\wedge,\neg)$  of polynomial size and depth $O(1)=O(\log^k n)$ but semi unbounded fanin i.e either $\wedge$ gates have unbounded fanin and $\vee$ gate have bounded fanin or $\wedge$ gates have bounded fanin and $\vee$ gates have unbounded fanin.
 \end{definition}
 \begin{theorem}
-	$AC^0\subseteq TC^0\subseteq NC^1\subseteq L\subseteq NL\subseteq  SAC^1\subseteq AC^1\subseteq NC^2\subseteq AC^2\subseteq \cdots \subseteq NC^i\subseteq AC^i\subseteq \cdots \subseteq NC=AC\subseteq P$
+	$\textsc{AC}^0\subseteq \textsc{TC}^0\subseteq \textsc{NC}^1\subseteq \textsc{L}\subseteq \textsc{\textsc{NL}}\subseteq  \textsc{SAC}^1\subseteq \textsc{AC}^1\subseteq \textsc{NC}^2\subseteq \textsc{AC}^2\subseteq \cdots \subseteq \textsc{NC}^i\subseteq \textsc{AC}^i\subseteq \cdots \subseteq \textsc{NC}=\textsc{AC}\subseteq \textsc{P}$
 \end{theorem}
 \begin{proof}
-	$NC^1\subseteq L$: The idea is to simply evaluate the circuit using a depth-first search, which can be defined inductively as follows: visit the output gate of the circuit, visit the gates of the left subcircuit, visit the gates of the right subcircuit. At any moment, we store the number of the current gate, the path that led us there (as a sequence of left’s and right’s) and any partial values that were already computed. For example, we could have $L$, $R$ (0), $R$ (1), $L$, $L$, 347. This would mean that we are visiting gate 347 and we got there by going left, right, right, left and left. The 0 after the first R indicates that the left input of the second gate on the path evaluated to 0. When we are done visiting a gate (and computed its value), we return to the previous gate on the path. Note that we can recompute the number of that gate by following the path from the beginning. The space requirements of this algorithm are therefore determined by the maximum length of the path, which is equal to the depth of the circuit. The uniformity of the circuit is used when traveling through the circuit and evaluating its gates. 
+	$\textsc{NC}^1\subseteq \textsc{L}$: The idea is to simply evaluate the circuit using a depth-first search, which can be defined inductively as follows: visit the output gate of the circuit, visit the gates of the left subcircuit, visit the gates of the right subcircuit. At any moment, we store the number of the current gate, the path that led us there (as a sequence of left’s and right’s) and any partial values that were already computed. For example, we could have $L$, $R$ (0), $R$ (1), $L$, $L$, 347. This would mean that we are visiting gate 347 and we got there by going left, right, right, left and left. The 0 after the first R indicates that the left input of the second gate on the path evaluated to 0. When we are done visiting a gate (and computed its value), we return to the previous gate on the path. Note that we can recompute the number of that gate by following the path from the beginning. The space requirements of this algorithm are therefore determined by the maximum length of the path, which is equal to the depth of the circuit. The uniformity of the circuit is used when traveling through the circuit and evaluating its gates. 
 	
-	$NL\subseteq SAC^1$: We know $PATH$ is $NL-complete$. Let there is a path $s\rightsquigarrow t$  of length $d$. Then there exists a vertex $x$ in between $s$ and $t$ such that there exists a path of length $\frac{d}{2}$ from $s\rightsquigarrow x$ and $x\rightsquigarrow t$. 
+	$\textsc{NL}\subseteq \textsc{SAC}^1$: We know $\textsc{PATH}$ is $\textsc{NL-complete}$. Let there is a path $s\rightsquigarrow t$  of length $d$. Then there exists a vertex $x$ in between $s$ and $t$ such that there exists a path of length $\frac{d}{2}$ from $s\rightsquigarrow x$ and $x\rightsquigarrow t$. 
 	\begin{center}
 		\begin{tikzcd}
 			& \la s,t,d\ra \arrow[ld] \arrow[rd]& \\
 			\lt\la s,x,\frac{d}{2}\rt\ra & & \lt\la s,t,\frac{d}{2}\rt\ra
 		\end{tikzcd}
 	\end{center}
-	Since there exists one such vertex $x$ and in circuit we will add all this in a big $\vee$ gate for all vertices in the graph. We can represent this as a circuit$$\lt\la s,t,d\rt\ra=\bigvee_{x\in V}\lt(\lt\la s,x,\frac{d}{2}\rt\ra \wedge \lt\la s,t,\frac{d}{2}\rt\ra\rt)$$Like this we extend it to 1 length paths. In this circuit we are using $\vee$ gates with unbounded fanin and $\wedge$ gates with 2 fanin. Hence we have $NL\subseteq SAC^1$
+	Since there exists one such vertex $x$ and in circuit we will add all this in a big $\vee$ gate for all vertices in the graph. We can represent this as a circuit$$\lt\la s,t,d\rt\ra=\bigvee_{x\in V}\lt(\lt\la s,x,\frac{d}{2}\rt\ra \wedge \lt\la s,t,\frac{d}{2}\rt\ra\rt)$$Like this we extend it to 1 length paths. In this circuit we are using $\vee$ gates with unbounded fanin and $\wedge$ gates with 2 fanin. Hence we have $\textsc{NL}\subseteq \textsc{SAC}^1$
 \end{proof}
