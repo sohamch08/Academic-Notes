@@ -19,7 +19,7 @@ Given an isolating weight assignment for $G$, one can construct the minimum weig
 
 By \thrmref{th:isolation-lemma}	we have an isolating weight with high probability. Moreover the weights chosen by the isolation lemma are polynomially bounded. Therefore the entries of in matrix $A$ have polynomially many bits. Hence it suffices to compute the determinant in $\textsc{NC}^2$ \cite{Berkowitz_1984_Oct}. Also the construction is in $\textsc{NC}^2$. There fore this yields an $\textsc{RNC}$-algorithm for $\textsc{Search-PM}$.
 
-\section{A \textsc{Quasi-NC} Algorithm using Isolation}
+\section{A \textsc{Quasi-NC} Algorithm using Isolation}\label{quasinc-bipartite-pm}
 Let $G=(V,E)$ be given bipartite graph. In the following discussion we will assume that $G$ has perfect matchings. Our goal is to isolate one of the perfect matchings in $G$ by any appropriate weight function. We will also show that if $G$ does not have any perfect matchings then our algorithm will detect this. In the following discussion we will prove this theorem
 \begin{Theorem}{\cite[Theorem 3.1]{FennerGurjarThierauf_2016_Bpm_CONF}}{pm-searchpm-in-quasinc}
 	For bipartite graphs, \textsc{PM} and \textsc{Search-PM} are in $\textsc{Quasi-NC}^2$
@@ -41,12 +41,12 @@ We consider the weight assignment modulo small numbers i.e. the weight function 
 	
 	Now we want $$\exs\ j\leq t,\ \forall\ i\leq s,\ c_w(S_i)\neq 0\iff \exs\ j\leq t,\ \prod_{i=1}^s c_w(C_i)\neq 0\bmod j$$In other words we want $$lcm(2,3,\dots, t)\nmid \prod_{i=1}^t c_w(C_i)$$Hence if we take $t$ such that $lcm(2,3,\dots, t)> \prod\limits_{i=1}^t c_w(C_i)$ then we are done. 
 	
-	Now the product $\prod\limits_{i=1}^t c_w(C_i)$ is bounded by $2^{n^2s}$. This is because with exponential weights {like in the RNC algorithm} we have an isolating perfect matching so we need weights less than that and therefore the new weights are bounded by the exponential weights for which weight of a cycle can at most be $2^{n^2}$ and since there are $s$ many cycle we have the bound $2^{n^2s}$. So if we have $t$ such that $lcm(2,3,\dots, t)>2^{n^2s}$ then we are done. Now $lcm(2,3,\dots,t)>2^t$ for $t\geq 7$. Thus choosing $t=n^2s$ suffices. Clearly the weights are bounded by $t=n^2s$.
+	Now the product $\prod\limits_{i=1}^t c_w(C_i)$ is bounded by $2^{n^2s}$. This is because with exponential weights {like in the RNC algorithm} of \autoref{rnc-bipartite-pm} we have an isolating perfect matching so we need weights less than that and therefore the new weights are bounded by the exponential weights for which weight of a cycle can at most be $2^{n^2}$ and since there are $s$ many cycle we have the bound $2^{n^2s}$. So if we have $t$ such that $lcm(2,3,\dots, t)>2^{n^2s}$ then we are done. Now $lcm(2,3,\dots,t)>2^t$ for $t\geq 7$. Thus choosing $t=n^2s$ suffices. Clearly the weights are bounded by $t=n^2s$.
 \end{proof}
 
 \subsection{Union of Minimum Weight Perfect Matchings}
 Let us assign a weight function for bipartite graph $G$ which gives nonzero circulations to all small cycles. Consider a new graph $G_1$ which obtained by the union of minimum weight perfect matchings in $G$. Out hope is that $G_1$ is significantly smaller than $G$.
-\nt{We don't know if $G_1$ can be efficiently created from $G$ as determinant of the bi-adjacency matrix with weights in the {like in the RNC algorithm} be zero and therefore we can not use that way to obtain perfect matchings. We will show we don't need to construct $G_1$. It is just used n the argument. Our final weight assignment will be completely black-box}
+\nt{We don't know if $G_1$ can be efficiently created from $G$ as determinant of the bi-adjacency matrix with weights in the {like in the RNC algorithm} of \autoref{rnc-bipartite-pm} be zero and therefore we can not use that way to obtain perfect matchings. We will show we don't need to construct $G_1$. It is just used n the argument. Our final weight assignment will be completely black-box}
 
 We will also show by the following lemma that why this technique only works for biparitte graphs, not in general graphs i.e. $G_1$ constructed from minimum weight perfect matchings in $G$ contains no other prefect matching than these. For general graph this does not hold:
 
@@ -180,6 +180,25 @@ To construct a perfect matching we follow the algorithm of Mulmuley in \cite{Mul
 
 
 \section{\textsc{RNC} Algorithm with Fewer Random Bits}
+We can also present the bipartite matching algorithm in \autoref{quasinc-bipartite-pm} in an alternate way i.e. instead of \textsc{Quasi-NC} we wil get an \textsc{RNC} circuit but with only oly-logarithmically many, namely $O(\log^2 n)$ random bits. 
+
+\nt{For complete derandomization, it would suffice to bring the number of random bits down to $O(\log n)$. Then there are only polynomially many random strings which can all be tested in \textsc{NC}. Hence this method is only a log-factor away from derandomization}
+
 \subsection{Decision Version}
+There are two reasons that we need quasi-polynomially large circuits:\begin{enumerate}[label=(\roman*)]
+\item We need to try quasi-polynomially many different weight assignments. 
+\item Each weight assignment has quasi-polynomially large weights
+\end{enumerate}
+For the first problem we modify the \lemref{th:weight-for-all-s-cycles-to-have-nonzero-circulations} to get a random weight assignment which works with high probability.
+
+\begin{lemma}{\cite{ChariRohatgiSrinivasan_1993_Rou_CONF},\cite{KlivansSpielman_2001_Rei_CONF}}{}
+	Let $G$ be a graph with $n$ nodes and $s\geq 1$. There is a random weight assignment $w$ which uses $O(\log ns)$ random bits and assigns weights bounded by $O(n^3s\log ns)$ i.e. with $O(\log ns)$ bits such that for any set of $s$, cycles $w$ gives nonzero circulation to each of the $s$ cycles with probability at least $1-\frac{1}{n}$
+\end{lemma}
+\begin{proof}
+	We will follow the process of \lemref{th:weight-for-all-s-cycles-to-have-nonzero-circulations} and give exponential weights modulo small numbers. Here we will use prime numbers as moduli. Recall that the weight function $w$ defined by $w(e_i)=2^{i-1}$. Let us choose a random prime $p$ among the first $t$ primes. We take our random weight assignment to be $w\bmod p$. We want to show that with high probability this weight function gives nonzero circulation to every cycle in $\{C_1,\dots, C_s\}$ In other words \[
+		 \prod\limits_{i=1}^{s} c_w(C_i)\not\equiv 0\bmod p			 
+	\]
+	as the product is bounded by $2^{n^2s}$ it has at most $n^2s$ prime factors. Let us choose $t=n^3s$. This would mean that a random prime works with probability at least $\left(1-\frac1n\right)$. As the $t-$th prime can only be as large as $2t\log t$, the weights are bounded by $2t\log t=O(n^3s\log ns)$ and hense $O(\log ns)$ bits. A prime with $O(\log ns)$ bits can be constructed using $O(\log ns)$ random bits (see \cite{KlivansSpielman_2001_Rei_CONF})
+\end{proof}
 
 \subsection{Search Version}
