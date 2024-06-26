@@ -25,7 +25,7 @@ as a linear relaxation of the matroid matching problem.
 You can clearly see this theorem by comparing the Matroid Matching Polytope and Fractional Matroid Matching Polytope so we are omitting the proof.
 \begin{Theorem}{\cite[Theorem 1]{GijswijtPap_2013_Aaf}}{weighted-fracmatmatch}
 	The vertices of the fractional matroid matching are half-integral
-\end{Theorem}
+\end{Theorem}\parinn
 \subsection{Weighted Fractional Matroid Matching}
 \dfn{Weighted Fractional Matroid Matching Problem}{It is to find a fractional matroid matching $x$ that maximizes $w\cdot x$ for a non-negative weight assignment $w:L\to \bbZ_+$.\parinn
 
@@ -106,7 +106,7 @@ Now we will show that any vector in the lattice $\mcL_F$ can be decomposed into 
 			}
 		}
 		\caption{Decomposition of a Lattice Vector}
-	\end{algorithm}
+	\end{algorithm}\parinn
 	Now suppose $x$ denote the vector at some iteration of the outer while loop. Now forall $e\in[m]$, let at $j$th and $l$th iteration of the inner while loop $(-1)^j$ and $(-1)^l$ are added to $y_e$ respectively. Now both $j$ and $l$ has same parity because since the edge is not changing both times $(-1)^jx_e>0$ and $(-1)^lx_e>0$ has to be satisfies. Therefore we get $j$ and $l$ have same parity. Hence for a full run of the inner while loop for any $e\in[m]$ everytime $y_e$ is changed the same $(-1)^j$ is added. Hence whenever $y_e$ is changed $|y_e|$ is increased. Therefore $|y|$ increases for each iteration of the inner while loop. But $|y|$ cannot exceed $|x|$ since as the addition step works when $\exs \ e\in[m]$ with $|x_e|>|y_e|$ and $(-1)^jx_e>0$, after addition $|y_e+(-1)^j|\leq |y_e|+1\leq |x|$. So if we start with $|y|\leq |x|$ after addition with each iteration of inner while loop we still have $|y|\leq |x|$.  Also since for every such edge we add $(-1)^j$ to $y_e$ when $(-1)^jx_e>0$ and $|x_e|>|y_e|$. So by the first condition we have $y_e$ and $x_e$ has the same sign i.e. $x_ey_e>0$. And we also have $|x_e|\geq |y_e|$. Therefore we have $y\sqsubseteq x$.
 
 	Now since we start the algorithm by adding 1 to $y_{e_0}$ at Line 5 we have initially $|y|>0$ and afterwards with each iteration of the inner while loop $|y|$ increases so we have $|y|>0$.Now if the current iteration of the inner while loop ends at Line 13 then we get a closed walk $C$ since in each iteration of the inner while loop the algorithm follows a walk in $G_D$. So $C$ is an alternating circuit and  we have $|y|=|C|$. Now since $y\sqsubseteq x$ we have $|x-y|=|x|-|y|<|x|$. Since $C$ is alternating circuit by \lemref{th:altcircuit-in-lattice} we have $y\in \mcL_F$. Hence we have $x-y\in\mcL_F$.

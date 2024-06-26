@@ -141,7 +141,7 @@ Hence by the claim each tuple of $4$ nodes uniquely defines a cycle $C$ in $H$. 
 \end{proof}
 
 \lemref{th:twice-size-cycles-arepolynomially-bounded} suggests that we continue form $G_1$ and in each successive round, we double the length of cycles and adapt the weight function to give nonzero circulations to these slightly longer cycles (twice larger). By \lemref{th:nozero-circulation-notin-minimum-weight-perfect-matching-graph} these cycles will disappear from the new graph $G_2$ obtained by taking only minimum weight perfect matching from $G_1$. This way in $\log n$ rounds we reach a graph with no cycles i.e. with a unique perfect matching. In the following section we show how to construct the weight assignment.
-\subsection{Constructing Weight Assignment}
+\subsection{Constructing Weight Assignment}\label{constructing-weight-assignment}
 Let $G=(V,E)=G_0$ be bipartite graph with $n$ nodes that has a perfect mathcing. Define $k=\lfloor \log n\rfloor -1$ which is the number of successive rounds we will need. Note that the shortest cycles in $G$ have length $4$. Then suppose we have defined subgraphs $w_i$ and $G_i$ for $0\leq i\leq k$ when define \begin{itemize}
 	\item [$G_{i+1}$ :] The union of minimum weight perfect matchings in $G_i$ according to weight $w_i$
 	\item [$w_{i+1}$ :] A weight function on $G_{i+1}$ such that all cycles in $G_{i+1}$ of length $2^{(i+1)+2}$ have nonzero circulations by \lemref{th:weight-for-all-s-cycles-to-have-nonzero-circulations}
@@ -191,7 +191,7 @@ There are two reasons that we need quasi-polynomially large circuits:\begin{enum
 \end{enumerate}
 For the first problem we modify the \lemref{th:weight-for-all-s-cycles-to-have-nonzero-circulations} to get a random weight assignment which works with high probability.
 
-\begin{lemma}{\cite{ChariRohatgiSrinivasan_1993_Rou_CONF},\cite{KlivansSpielman_2001_Rei_CONF}}{}
+\begin{lemma}{\cite{ChariRohatgiSrinivasan_1993_Rou_CONF, KlivansSpielman_2001_Rei_CONF}}{random-weight-for-all-s-cycles-to-have-nonzero-circulation}
 	Let $G$ be a graph with $n$ nodes and $s\geq 1$. There is a random weight assignment $w$ which uses $O(\log ns)$ random bits and assigns weights bounded by $O(n^3s\log ns)$ i.e. with $O(\log ns)$ bits such that for any set of $s$, cycles $w$ gives nonzero circulation to each of the $s$ cycles with probability at least $1-\frac{1}{n}$
 \end{lemma}
 \begin{proof}
@@ -201,4 +201,28 @@ For the first problem we modify the \lemref{th:weight-for-all-s-cycles-to-have-n
 	as the product is bounded by $2^{n^2s}$ it has at most $n^2s$ prime factors. Let us choose $t=n^3s$. This would mean that a random prime works with probability at least $\left(1-\frac1n\right)$. As the $t-$th prime can only be as large as $2t\log t$, the weights are bounded by $2t\log t=O(n^3s\log ns)$ and hense $O(\log ns)$ bits. A prime with $O(\log ns)$ bits can be constructed using $O(\log ns)$ random bits (see \cite{KlivansSpielman_2001_Rei_CONF})
 \end{proof}
 
+We will do the same as in \autoref{constructing-weight-assignment}. However we use the random scheme \lemref{th:random-weight-for-all-s-cycles-to-have-nonzero-circulation} to choose each of the weight functions $w_0,w_1,\dots, w_{k-1}$ independently. The probability that all of them provide nonzero circulations on their respective set of cycles $\geq \lt(1-\frac1n \rt)^k\geq 1-\frac{k}{n}\geq 1-\frac{\log n}{n}$ using the union bound. 
+
+Now instead of combining them to form a single weight assignment like in \autoref{constructing-weight-assignment} we use a different variable for each weight assignment. We modify the construction of matrix $A$ from \autoref{rnc-bipartite-pm}. Let $L=\{u_1,\dots, u_{\frac{n}2}\}$ and $R=\{v_1,\dots, v_{\frac{n}2}\}$ be the vertex partition of $G$. For variables $x_0,x_1,\dots, x_{k-1}$ define an $\frac{n}2\times \frac{n}2$ matrix $A$ by \[
+	 A(i,j)=\begin{cases}
+		\prod\limits_{i=0}^{k-1} x_i^{w_i(e)} & \text{if $e=(u_i,v_j)\in E$}\\ 
+		0 & \text{otherwise}
+	 \end{cases}
+\]
+And therefore we have $$\det(A)=\sum\limits_{M: \text{pm in $G$}}^{} sgn(M)\prod\limits_{i=0}^{k-1} x_i^{w_i(M)}  $$ where $sgn(M)$ is the sign of the corresponding permutation. From the construction of weight assignments it follows that if a graph has a perfect matching then lexicographically minimum term in $\det(A)$ with respect to the exponents of variables $x_0,\dots, x_{k-1}$ in this precedence order, comes from a unique perfect matching. Therefore we have the following lemma:
+\begin{lemma}{}{}
+	$\det(A)\neq 0\iff G$ has a perfect matching
+\end{lemma}
+
+Since each $w_i$ needs to give nonzero circulations to $n^4	$ cycles the weights obtained by the scheme of \lemref{th:random-weight-for-all-s-cycles-to-have-nonzero-circulation} will be bounded by $O(n^7\log n)$. This means the weight of a matching will be bounded by $O(n^8\log n)$. Hence $\det(A)$ is a polynomial of individual degree $O(n^8\log n)$ with $\log n)$ variables. To test if $\det(A)$ is nonzero one can apply the standard randomized polynomial identity test
+\begin{Theorem}{Schwartz-Zippel Lemma: \cite{Schwartz_1980_FPA,Zippel_1979}}{}
+Let $P(x_1,\dots, x_n)$ be a nonzero polynomial of $n$ variables with degree $d$ over field $\bbF$.  Let $S$ be a finite subset of $\bbF$  with at least $d$ elements in it. Then we have: \[
+\underset{\alpha_1,\dots, \alpha_n\in S}{Pr}[{p(\alpha_1,\alpha_2,\dots,\alpha_n)=0}]\leq \frac{d}{|S|}
+\]
+\end{Theorem}
+Hence if we plug in random values for variables $x_i$ independently from $\{1,2,\dots, n^9\}$ and if $\det(A)\neq 0$ then the evaluation is nonzero with high probability.\parinf\vspace{2mm}
+
+\textbf{Number of Random Bits:}	For a weight assignment $w_i$ we need $O(\log ns)$ random bits from \lemref{th:random-weight-for-all-s-cycles-to-have-nonzero-circulation} where $s=n^4$ by \lemref{th:twice-size-cycles-arepolynomially-bounded}. Thud the number of random bits required for all $w_i's$ togather is $O(k\log n)=O(\log^2 n)$. Finally we need to plug in $O(\log n)$ random bits for each $x_i$. This again requires $O(\log ^2n)$ random bits, as discussed above.\vspace{2mm}
+
+\textbf{Complexity:} The weight construction involves taking exponential modulo small primes by \lemref{th:random-weight-for-all-s-cycles-to-have-nonzero-circulation}. Primality testing can be done by brute force algorithm in $\textsc{NC}^2$, as the numbers involved have $O(\log n)$ bits. Thus the weight assignments can be constructed in $NC^2$. Moreover, the determinant with polynomially bounded entries can be computed in $\textsc{NC}^2$ \cite{Berkowitz_1984_Oct} 
 \subsection{Search Version}
