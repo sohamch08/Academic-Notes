@@ -1,6 +1,24 @@
 \chapter{Bipartite Perfect Matching}
-\section{Matching and Complexity}
 \section{A \textsc{RNC} Algorithm for \textsc{Search-PM}}\label{rnc-bipartite-pm}
+We will recall the \textsc{RNC} algorithm of Mulmuley, Vazirani and Vazirani \cite{MulmuleyVaziraniVazirani_1987_Mia_CONF} for the construction of a perfect matching (\textsc{Search-PM}). Though the algorithm works for any graph, we will only consider the bipartite graphs here.
+
+Let $G=(V,E)$ be a bipartite graph with vertex partitions $L=\{u_1,\dots, u_{\frac{n}{2}}\}$ and $R=\{v_1,\dots, v_{\frac{n}2}\}$ and a weight function $w$. Consider the following $\frac{n}2\times \frac{n}{2}$ matrix $A$ associated with $G$, \[
+	 A(i,j)=\begin{cases}
+	 2^{w(e)} & \text{if $e=(u_i,u_j)\in E$}\\
+	 0 & \text{otherwise}
+	 \end{cases}
+\]
+The algorithm then computes the determinant of $A$. Now \begin{align*}
+\det(A) & = \sum\limits_{\pi\in S_{\frac{n }{2}}}^{} sgn(\pi)\prod_{i=1}^{\frac{n }{2}} A(i,\pi(i))\\ & = \sum\limits_{M:\text{PM in $G$}}^{}sgn(M)2^{w(M)} 
+\end{align*}
+The second equation holds since the product $\prod\limits_{i=1}^{\frac{n}2} A(i,\pi(i))$ is nonzero if and only if the permuation $\pi$ corresponds to a perfect matching. Here $sgn(M)$ is the sign of the corresponding permutation. 
+
+If the graph $G$ does not have a perfect matching then we have $\det(A)=0$. However if the graph $G$ has perfect matchings, $\det(A)$ maight equal to 0 due to cancellation due to $sgn(M)$. To avoid such cancellations, one needs to design the weight function $w$ cleverly. In particular if $G$ has a perfect matching and $w$ is isolating then the  minimum weight perfect matching can not be canceled with other terms as there is unique minimum weight perfect matching. 
+
+Given an isolating weight assignment for $G$, one can construct the minimum weight perfect matching in \textsc{NC}. Let $M^*$ be the unique minimum weight perfect matching in $G$ w.r.t $w$. First we find $w(M^*)$ be finding out the highest power of $2$ that divides $\det(A)$ since  after $2^{w(M^*)}$ will not divide the monomial corresponding to $M^*$ and that monomial survives in $\det(A)$. So more that after $2^{w(M^*)}$ it will not divide $\det(A)$. Now choose an $(u_i,u_j)=e\in E$ then compute the determinant of the minor $A_{i,j}$ which is basically associated with $G-e$. If the highest power of 2 that divides $\det(A_{i,j})$ is larger than the $2^{w(M^*)}$ then $e\in M^*$. Doing this in parallel for each edge, we can find all the edges in $M^*$. 
+
+By \thrmref{th:isolation-lemma}	we have an isolating weight with high probability. Moreover the weights chosen by the isolation lemma are polynomially bounded. Therefore the entries of in matrix $A$ have polynomially many bits. Hence it suffices to compute the determinant in $\textsc{NC}^2$ \cite{Berkowitz_1984_Oct}. Also the construction is in $\textsc{NC}^2$. There fore this yields an $\textsc{RNC}$-algorithm for $\textsc{Search-PM}$.
+
 \section{A \textsc{Quasi-NC} Algorithm using Isolation}
 Let $G=(V,E)$ be given bipartite graph. In the following discussion we will assume that $G$ has perfect matchings. Our goal is to isolate one of the perfect matchings in $G$ by any appropriate weight function. We will also show that if $G$ does not have any perfect matchings then our algorithm will detect this. In the following discussion we will prove this theorem
 \begin{Theorem}{\cite[Theorem 3.1]{FennerGurjarThierauf_2016_Bpm_CONF}}{pm-searchpm-in-quasinc}
@@ -159,3 +177,9 @@ With this construction of weight assignments, we can decide the existsence of a 
 As our weight function have $O(\log^2n)$ bits, the determinant entries have quasi-polynomial bits. The deteminant can still be computed in parallel with circuits of quasi polynomial of size $2^{O(\log^2 n)}$ by the algorithm of Berkowitz \cite{Berkowitz_1984_Oct}. As we need to compute $2^{O(\log^2n)}$-many determinants in parallel, our algorithm is in $\textsc{Quasi-NC}^2$ with circuit size $2^{O(\log^2 n)}$.
 
 To construct a perfect matching we follow the algorithm of Mulmuley in \cite{MulmuleyVaziraniVazirani_1987_Mia_CONF} from \autoref{rnc-bipartite-pm} with each of our weight functions. For a weight function $w$ which is isolating, the algorithm outputs the unique minimum weight perfect matching $M$. If we have a weight function $w'$ which is not isolating, still $\det (A)$ might be non-zero  with respect to $w'$ then the algorithm computes a set of edges $M'$ that might or might not be a perfect matching. However, it is easy to verify if $M'$ is indeed a perfect matching and in this case, we will output $M'$. As the algorithm involves computation of similar determinants as in the decision algorithm, it is in $\textsc{Quas-NC}^2$ with circuit size $2^{O(\log ^2 n)}$. This finishes the proof of the \thrmref{th:pm-searchpm-in-quasinc}.
+
+
+\section{\textsc{RNC} Algorithm with Fewer Random Bits}
+\subsection{Decision Version}
+
+\subsection{Search Version}

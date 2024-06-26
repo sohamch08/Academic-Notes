@@ -15,18 +15,6 @@ abstract = {Publisher Summary
 This chapter discusses parallel algorithms for shared-memory machines. Parallel computation is rapidly becoming a dominant theme in all areas of computer science and its applications. It is estimated that, within a decade, virtually all developments in computer architecture, systems programming, computer applications and the design of algorithms will be taking place within the context of parallel computation. In preparation for this revolution, theoretical computer scientists have begun to develop a body of theory centered on parallel algorithms and parallel architectures. As there is no consensus yet on the appropriate logical organization of a massively parallel computer, and as the speed of parallel algorithms is constrained as much by limits on interprocessor communication as it is by purely computational issues, it is not surprising that a variety of abstract models of parallel computation have been pursued. Closest to the hardware level are the VLSI models, which focus on the technological limits of today's chips, in which gates and wires are packed into a small number of planar layers.}
 }
 
-@Inbook{akssortparallel,
-	editor="Padua, David",
-	title="Ajtai--Koml{\'o}s--Szemer{\'e}di Sorting Network",
-	bookTitle="Encyclopedia of Parallel Computing",
-	year="2011",
-	publisher="Springer US",
-	address="Boston, MA",
-	pages="16--16",
-	isbn="978-0-387-09766-4",
-	doi="10.1007/978-0-387-09766-4_2379",
-	url="https://doi.org/10.1007/978-0-387-09766-4_2379"
-}
 @Inbook{VollmerCh2,
 	author="Vollmer, Heribert",
 	title="Relations to Other Computation Models",
@@ -40,18 +28,19 @@ This chapter discusses parallel algorithms for shared-memory machines. Parallel 
 	doi="10.1007/978-3-662-03927-4_3",
 	url="https://doi.org/10.1007/978-3-662-03927-4_3"
 }
-@article{ac1crcwstockmeyervishkin,
-	author = {Stockmeyer, Larry and Vishkin, Uzi},
-	title = {Simulation of Parallel Random Access Machines by Circuits},
-	journal = {SIAM Journal on Computing},
-	volume = {13},
-	number = {2},
-	pages = {409-422},
-	year = {1984},
-	doi = {10.1137/0213027},
-	URL = {https://doi.org/10.1137/0213027},
-	eprint = {https://doi.org/10.1137/0213027},
-	abstract = { A relationship is established between (i) parallel random-access machines that allow many processors to concurrently read from or write into a common memory including simultaneous reading or writing into the same memory location (CROW PRAM), and (ii) combinational logic circuits that contain AND’s, OR’s and NOT’s, with no bound placed on the fan-in of AND-gates and OR-gates. Parallel time and number of processors for CROW PRAM’s are shown to correspond respectively (and simultaneously) to depth and size for circuits, where the time-depth correspondence is to within a constant factor and the processors-size correspondence is to within a polynomial. By applying a recent result of Furst, Saxe and Sipser, we obtain the corollary that parity, integer multiplication, graph transitive closure and integer sorting cannot be computed in constant time by a CROW PRAM with a polynomial number of processors. This is the first nonconstant lower bound on the parallel time required to solve these problems by a CROW PRAM with a polynomial number of processors. We also state and outline the proof of a similar result, due to W. L. Ruzzo and M. Tompa, that relates time and processor bounds for CRCW PRAM’S to alternation and space bounds for alternating Turing machines. }
+
+@Article{ac1crcwstockmeyervishkin,
+  author   = {Stockmeyer, Larry and Vishkin, Uzi},
+  journal  = {SIAM Journal on Computing},
+  title    = {Simulation of Parallel Random Access Machines by Circuits},
+  year     = {1984},
+  number   = {2},
+  pages    = {409-422},
+  volume   = {13},
+  abstract = {A relationship is established between (i) parallel random-access machines that allow many processors to concurrently read from or write into a common memory including simultaneous reading or writing into the same memory location (CROW PRAM), and (ii) combinational logic circuits that contain AND’s, OR’s and NOT’s, with no bound placed on the fan-in of AND-gates and OR-gates. Parallel time and number of processors for CROW PRAM’s are shown to correspond respectively (and simultaneously) to depth and size for circuits, where the time-depth correspondence is to within a constant factor and the processors-size correspondence is to within a polynomial. By applying a recent result of Furst, Saxe and Sipser, we obtain the corollary that parity, integer multiplication, graph transitive closure and integer sorting cannot be computed in constant time by a CROW PRAM with a polynomial number of processors. This is the first nonconstant lower bound on the parallel time required to solve these problems by a CROW PRAM with a polynomial number of processors. We also state and outline the proof of a similar result, due to W. L. Ruzzo and M. Tompa, that relates time and processor bounds for CRCW PRAM’S to alternation and space bounds for alternating Turing machines.},
+  doi      = {10.1137/0213027},
+  eprint   = {https://doi.org/10.1137/0213027},
+  url      = {https://doi.org/10.1137/0213027},
 }
 
 @article{dyckbarrington,
@@ -68,6 +57,7 @@ This chapter discusses parallel algorithms for shared-memory machines. Parallel 
 	keywords = {Computational complexity, formal languages},
 	abstract = {We consider the relative complexity of a number of languages known to be in uniform NC1, using the descriptive framework of Barrington, Immerman, and Straubing (1988). In particular, we sharpen several results of Ibarra, Jiang, and Ravikumar (1988). We show that the one-sided Dyck languages, structured CFL's, and bracketed CFL's are recognizable by very uniform families of threshold circuits (are in DLOGTIME-uniform TC0). We show that a large class of deterministic linear CFL's are in uniform TC0, but that some are complete for uniform NC1 (and thus not in uniform TC0 unless TC0 = NC1 in the uniform setting).}
 }
+
 @article{AJTAIapproximatemaj,
 	title = {{$\Sigma_1^1$}-Formulae on finite structures},
 	journal = {Annals of Pure and Applied Logic},
@@ -80,6 +70,7 @@ This chapter discusses parallel algorithms for shared-memory machines. Parallel 
 	url = {https://www.sciencedirect.com/science/article/pii/0168007283900386},
 	author = {M. Ajtai}
 }
+
 @article{barringtoncorebettdyckk,
 	title = {On the relative complexity of some languages in NC1},
 	journal = {Information Processing Letters},
@@ -94,6 +85,7 @@ This chapter discusses parallel algorithms for shared-memory machines. Parallel 
 	keywords = {Computational complexity, formal languages},
 	abstract = {We consider the relative complexity of a number of languages known to be in uniform NC1, using the descriptive framework of Barrington, Immerman, and Straubing (1988). In particular, we sharpen several results of Ibarra, Jiang, and Ravikumar (1988). We show that the one-sided Dyck languages, structured CFL's, and bracketed CFL's are recognizable by very uniform families of threshold circuits (are in DLOGTIME-uniform TC0). We show that a large class of deterministic linear CFL's are in uniform TC0, but that some are complete for uniform NC1 (and thus not in uniform TC0 unless TC0 = NC1 in the uniform setting).}
 }
+
 @article{ganradilohrey,
 	author = {Ganardi, Moses and Lohrey, Markus},
 	title = {A Universal Tree Balancing Theorem},
@@ -113,6 +105,7 @@ This chapter discusses parallel algorithms for shared-memory machines. Parallel 
 	numpages = {25},
 	keywords = {tree contraction, Depth reduction, tree evaluation}
 }
+
 @inproceedings{formulavalprob,
 	author = {Buss, S. R.},
 	title = {The Boolean Formula Value Problem is in ALOGTIME},
@@ -128,6 +121,7 @@ This chapter discusses parallel algorithms for shared-memory machines. Parallel 
 	location = {New York, New York, USA},
 	series = {STOC '87}
 }
+
 @inproceedings{bipartiteplanerpm,
 	author = {Mahajan, Meena and Varadarajan, Kasturi R.},
 	title = {A New NC-Algorithm for Finding a Perfect Matching in Bipartite Planar and Small Genus Graphs (Extended Abstract)},
@@ -143,6 +137,7 @@ This chapter discusses parallel algorithms for shared-memory machines. Parallel 
 	location = {Portland, Oregon, USA},
 	series = {STOC '00}
 }
+
 @article{planegraphpfaffian,
 	author = {Kasteleyn, P. W.},
 	title = "{Dimer Statistics and Phase Transitions}",
@@ -158,6 +153,7 @@ This chapter discusses parallel algorithms for shared-memory machines. Parallel 
 	url = {https://doi.org/10.1063/1.1703953},
 	eprint = {https://pubs.aip.org/aip/jmp/article-pdf/4/2/287/8168891/287\_1\_online.pdf},
 }
+
 @article{Cayley+1849+93+96,
 	url = {https://doi.org/10.1515/crll.1849.38.93},
 	title = {Sur les déterminants gauches. (Suite du Mémoire T. XXXII. p. 119).},
@@ -171,3 +167,16 @@ This chapter discusses parallel algorithms for shared-memory machines. Parallel 
 	year = {1849},
 	lastchecked = {2023-10-02}
 }
+
+@InBook{KarmaniAghaSquillanteSeiferasBrezinaHuTuminaroSandersTraeffeGeijnTraeffGeijnSanderGustafsonDrorYoungShawLinLeeChangKuanKolliasGramaLiWhaleyVuduc_2011,
+  author    = {Karmani, Rajesh K. and Agha, Gul and Squillante, Mark S. and Seiferas, Joel and Brezina, Marian and Hu, Jonathan and Tuminaro, Ray and Sanders, Peter and Träffe, Jesper Larsson and Geijn, Robert A. and Träff, Jesper Larsson and Geijn, Robert A. and Sander, MS Benjamin and Gustafson, John L. and Dror, Ron O. and Young, Cliff and Shaw, David E. and Lin, Calvin and Lee, Jenq-Kuen and Chang, Rong-Guey and Kuan, Chi-Bang and Kollias, Giorgos and Grama, Ananth Y. and Li, Zhiyuan and Whaley, R. Clint and Vuduc, Richard W.},
+  pages     = {16--16},
+  publisher = {Springer US},
+  title     = {Ajtai–Komlós–Szemerédi Sorting Network},
+  year      = {2011},
+  isbn      = {9780387097664},
+  booktitle = {Encyclopedia of Parallel Computing},
+  doi       = {10.1007/978-0-387-09766-4_2379},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}

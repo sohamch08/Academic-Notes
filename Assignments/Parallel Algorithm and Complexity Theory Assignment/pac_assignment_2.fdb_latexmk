@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1718712362 "/home/sohamch/Arna/academic-notes/Assignments/Parallel Algorithm and Complexity Theory Assignment/pac_assignment_2.tex" "pac_assignment_2.pdf" "pac_assignment_2" 1718712363 2
-  "/etc/texmf/web2c/texmf.cnf" 1707341451 475 c0e671620eb5563b2130f56340a5fde8 ""
+["pdflatex"] 1719408742 "/home/sohamch/Arna/academic-notes/Assignments/Parallel Algorithm and Complexity Theory Assignment/pac_assignment_2.tex" "pac_assignment_2.pdf" "pac_assignment_2" 1719408743 2
+  "/etc/texmf/web2c/texmf.cnf" 1719406645 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/sohamch/Arna/academic-notes/Assignments/Parallel Algorithm and Complexity Theory Assignment/pac_assignment_2.tex" 1707340884 7791 ebfa25ee14c1d8e2156015d37a396aab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr10.tfm" 1136768653 1296 45809c5a464d5f32c8f98ba97c1bb47f ""
@@ -175,9 +175,9 @@
   "/usr/share/texlive/texmf-dist/tex/latex/zref/zref-base.sty" 1649363507 20785 71a3d72ab517959a6979c27e6176bec1 ""
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1681034085 39561 34c98e380bf7c7201ee6a7909aff625a ""
   "/usr/share/texmf/web2c/texmf.cnf" 1681034085 39561 34c98e380bf7c7201ee6a7909aff625a ""
-  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1707341548 7879945 0e137c0f5f52d2c531366831f0246a26 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1719408079 7879361 4802ede1818b0837c2047d8c2f988ec9 ""
   "letterfonts.tex" 0 -1 0 ""
-  "pac_assignment_2.aux" 1718712362 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "pac_assignment_2.aux" 1719408742 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
   "pac_assignment_2.tex" 1707340884 7791 ebfa25ee14c1d8e2156015d37a396aab ""
   (generated)
   "pac_assignment_2.aux"

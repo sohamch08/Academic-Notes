@@ -132,9 +132,9 @@ Now we will show that any vector in the lattice $\mcL_F$ can be decomposed into 
 	Now be construction of $y$ we have $y\sqsubseteq x\implies |x_e|\geq |y_e|, x_ey_e>0\forall\ e\in[m]$. The algorithm stopped at Line 13 since $\not\exs\ e\in \dl(v_j)$ such that $|x_e|>|y_e|$ and $(-1)^jx_e=-x_e>0$. Therefore $|x_e|=|y_e| $ for all $e\in \supp^+(x)\cap \dl(v_j)$ otherwise the algorithm would have proceeded one more step and $\supp^-(x)\cap\dl(v_j)=\supp^-(y)\cap \dl(v_j)$ since for any $e\in[m]$, $x_ey_e>0$. Therefore $\supp^+(x)\cap \dl(v_j)=\supp^+(y)\cap \dl(v_j)$. Now for all $e\in \supp^+(x)\cap \dl(v_j)$ we have $|x_e|\geq |y_e|$. Hence we have $$0=D_{v_j}y\geq D_{v_j}y>0$$It is a contradiction. Hence if $x\in \mcL_F$ the algorithm never goes to Line 13. And therefore the algorithm successfully decomposes $x$ into sum of alternating circuits.
 \end{proof}
 
-\subsection{Bounding vectors in $\mcL_F$ with Small Size}
+\subsection{Bounding vectors in \texorpdfstring{$\mcL_F$}{Lf} with Small Size}
 \begin{Theorem}{\cite{GurjarOkiRaj_2024_Flm}}{latticevector-polybounded}
-	Let $D\in \{0,1,2\}^{p\times m}$ be a matrix such that the sum of entries of each column equals 2. Let $\mcL_D$ denote the lattice $\{v\in\bbZ^m\mid Dv=0\}$. Then it holds that $$|\{v\in \mcL_D\mid |v|<2\lm(\mcL_D)\}|\leq m^{O(1)}$$
+	Let $D\in \{0,1,2\}^{pimes m}$ be a matrix such that the sum of entries of each column equals 2. Let $\mcL_D$ denote the lattice $\{v\in\bbZ^m\mid Dv=0\}$. Then it holds that $$|\{v\in \mcL_D\mid |v|<2\lm(\mcL_D)\}|\leq m^{O(1)}$$
 \end{Theorem}
 \begin{proof}
 	For the given $D$ consider the graph $G_D$ obtained from $D$ as explained at the start of Section 1.2. to show that the number of  vectors in $\mcL_D$ with size less than twice the size of shortest vector in $\mcL_D$ we will show that for any such lattice vector there is only one alternating circuit in the decomposition of the vector in \lemref{th:latiice-vector-decomposition}.\parinf\vspace*{5mm}
