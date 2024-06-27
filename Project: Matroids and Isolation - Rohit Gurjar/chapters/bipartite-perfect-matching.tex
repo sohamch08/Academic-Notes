@@ -184,7 +184,7 @@ We can also present the bipartite matching algorithm in \autoref{quasinc-biparti
 
 \nt{For complete derandomization, it would suffice to bring the number of random bits down to $O(\log n)$. Then there are only polynomially many random strings which can all be tested in \textsc{NC}. Hence this method is only a log-factor away from derandomization}
 
-\subsection{Decision Version}
+\subsection{Decision Version}\label{rnc-few-random-decision}
 There are two reasons that we need quasi-polynomially large circuits:\begin{enumerate}[label=(\roman*)]
 \item We need to try quasi-polynomially many different weight assignments. 
 \item Each weight assignment has quasi-polynomially large weights
@@ -220,9 +220,33 @@ Let $P(x_1,\dots, x_n)$ be a nonzero polynomial of $n$ variables with degree $d$
 \underset{\alpha_1,\dots, \alpha_n\in S}{Pr}[{p(\alpha_1,\alpha_2,\dots,\alpha_n)=0}]\leq \frac{d}{|S|}
 \]
 \end{Theorem}
-Hence if we plug in random values for variables $x_i$ independently from $\{1,2,\dots, n^9\}$ and if $\det(A)\neq 0$ then the evaluation is nonzero with high probability.\parinf\vspace{2mm}
+Hence if we plug in random values for variables $x_i$ independently from $\{1,2,\dots, n^9\}$ and if $\det(A)\neq 0$ then the evaluation is nonzero with high probability.\parinf\vspace{3mm}
 
-\textbf{Number of Random Bits:}	For a weight assignment $w_i$ we need $O(\log ns)$ random bits from \lemref{th:random-weight-for-all-s-cycles-to-have-nonzero-circulation} where $s=n^4$ by \lemref{th:twice-size-cycles-arepolynomially-bounded}. Thud the number of random bits required for all $w_i's$ togather is $O(k\log n)=O(\log^2 n)$. Finally we need to plug in $O(\log n)$ random bits for each $x_i$. This again requires $O(\log ^2n)$ random bits, as discussed above.\vspace{2mm}
+\textbf{Number of Random Bits:}	For a weight assignment $w_i$ we need $O(\log ns)$ random bits from \lemref{th:random-weight-for-all-s-cycles-to-have-nonzero-circulation} where $s=n^4$ by \lemref{th:twice-size-cycles-arepolynomially-bounded}. Thud the number of random bits required for all $w_i's$ togather is $O(k\log n)=O(\log^2 n)$. Finally, we need to plug in $O(\log n)$ random bits for each $x_i$. This again requires $O(\log ^2n)$ random bits, as discussed above.\vspace{3mm}
 
-\textbf{Complexity:} The weight construction involves taking exponential modulo small primes by \lemref{th:random-weight-for-all-s-cycles-to-have-nonzero-circulation}. Primality testing can be done by brute force algorithm in $\textsc{NC}^2$, as the numbers involved have $O(\log n)$ bits. Thus the weight assignments can be constructed in $NC^2$. Moreover, the determinant with polynomially bounded entries can be computed in $\textsc{NC}^2$ \cite{Berkowitz_1984_Oct} 
-\subsection{Search Version}
+\textbf{Complexity:} The weight construction involves taking exponential modulo small primes by \lemref{th:random-weight-for-all-s-cycles-to-have-nonzero-circulation}. Primality testing can be done by brute force algorithm in $\textsc{NC}^2$, as the numbers involved have $O(\log n)$ bits. Thus the weight assignments can be constructed in $NC^2$. Moreover, the determinant with polynomially bounded entries can be computed in $\textsc{NC}^2$ \cite{Berkowitz_1984_Oct}. \parinn
+
+In summery we get the following theorem,
+
+\begin{Theorem}{\cite[Theorem 4.1]{FennerGurjarThierauf_2016_Bpm_CONF}}{}
+	For bipartite graphs, there is an $\textsc{RNC}^2$-algorithm for \textsc{PM} which uses $O(\log ^2 n)$ random bits.
+\end{Theorem}
+\subsection{Search Version}\parinn
+Here we get a similar algorithm for \prb{Search-PM} using also only $O(\log^2 n)$ random bits. This result in \cite{FennerGurjarThierauf_2016_Bpm_CONF} improves the \cls{RNC} algorithm of Goldwasser and Grossman \cite{GoldwasserGrossman_2017_BPM} based on an earlier version of \cite{FennerGurjarThierauf_2016_Bpm_CONF} that uses $O(\log ^4n)$ random bits. Their \cls{RNC} algorithm has an additional property that it is \textit{pseudo-deterministic} i.e. it outputs the same perfect matching for almost all choice of random bits. The following algorithm does not have that property.
+
+Suppose again $G=(V,E)$ be a bipartite graph with vertex partitions $L=\{u_1,\dots, u_{\frac{n}{2}}\}$ and $R=\{v_1,\dots,v_{\frac{n }{2}}\}$. Now we will have the weight functions $w_0,\dots, w_{k-1}$ same as in \autoref{rnc-few-random-decision} by the \lemref{th:random-weight-for-all-s-cycles-to-have-nonzero-circulation}. In this case we will combine the weight functions like in \autoref{constructing-weight-assignment} to obtain $w$. Let $M^*$ be the unique minimum weight perfect matching in $G$ with respect to the combined weight assignment $w$. 
+
+Now in \autoref{constructing-weight-assignment} of the \cls{Quasi-NC} algorithm we had a sequence of graph $G_1,G_2,\dots, G_{k}$ with $G=G_0$ where we took $G_{i+1}$ to be the graph constructed by taking only the minimum weight perfect matchings in $G_{i}$ with respect to $w_{i}$. Now instead of computing $G_1,\dots, G_k$ in $O(\log^2n)$ random bits (which is not clear anyway) we will compute a sequence of graphs $H_1,\dots, H_k$ where $H_{i}$ will be a subgraph of $G_{i}$ for each $i\in[k]$. And also each $H_i$ will contain $M^*$ (obviously since we have to find $M^*$). Hence, once we have $H_k=G_k$ we are done.
+
+So we start with $H_0=G_0=G$ and let $0\leq i<k$. We will describe the $i$th round. So suppose we have constructed $H_i=(V,E_i)$. Now we want to compute $H_{i+1}$. Now an edge of $E_i$ will appear in $H_{i+1}$ only if it participates in a matching $M$ with $w_i(M)=w_i(M^*)$. Therefore, $H_{i+1}$ is a subgraph of $G_{i+1}$ as $H_i$ is a subgraph of $G_{i+1}$. Now for an edge $e$ denote the product $\bbX_i^{w(e)}$:\[
+	 \mathbb{X}_i^{w(e)}= \prod_{j=o}^{k-1-r}x_{r+j}^{w_i(e)}
+\]For a matching $M$ the term $\bbX^{w(M)}_i$ is defined similarly. Now let $N(e)$ denote the set of edges which are neighbors of an edge in $G_i$ i.e. all edges $e'\neq e$ such that $e'\cap e\neq \emptyset$. Also for an edge $e\in E_i$, define the $\frac{n}{2}\times \frac{n}{2}$ matrix $A_e$ as:\[
+	 A_e(i,j)=\begin{cases}
+	 \bbX^{w(e')}_i & \text{f $e'=(u_i,u_j)\in E_i-N(e)$}\\ 
+	 0 & \text{otherwise}	 
+	 \end{cases}
+\]
+Now the matrix has $0$ entry for each neighboring edge of $e$. Thus its determinant is a sum over all perfect matchings which contain $e$. That is\[
+	 \det(A_e)= \sum\limits_{M:\text{PM in $H_i$}}^{} sgn(M)\bbX_{i+1}^{w(M)} 
+\]Consider the coefficient $c_e$ of $x_i^{w_i(M^*)}$ in $\det(A_e)$ 
+
