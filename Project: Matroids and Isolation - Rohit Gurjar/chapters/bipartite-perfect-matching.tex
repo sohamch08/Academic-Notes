@@ -241,35 +241,35 @@ Here we get a similar algorithm for \prb{Search-PM} using also only $O(\log^2 n)
 \begin{proof}
 	Suppose again $G=(V,E)$ be a bipartite graph with vertex partitions $L=\{u_1,\dots, u_{\frac{n}{2}}\}$ and $R=\{v_1,\dots,v_{\frac{n }{2}}\}$. Now we will have the weight functions $w_0,\dots, w_{k-1}$ same as in \autoref{rnc-few-random-decision} by the \lemref{th:random-weight-for-all-s-cycles-to-have-nonzero-circulation}. In this case we will combine the weight functions like in \autoref{constructing-weight-assignment} to obtain $w$. Let $M^*$ be the unique minimum weight perfect matching in $G$ with respect to the combined weight assignment $w$.
 
-Now in \autoref{constructing-weight-assignment} of the \cls{Quasi-NC} algorithm we had a sequence of graph $G_1,G_2,\dots, G_{k}$ with $G=G_0$ where we took $G_{i+1}$ to be the graph constructed by taking only the minimum weight perfect matchings in $G_{i}$ with respect to $w_{i}$. Now instead of computing $G_1,\dots, G_k$ in $O(\log^2n)$ random bits (which is not clear anyway) we will compute a sequence of graphs $H_1,\dots, H_k$ where $H_{i}$ will be a subgraph of $G_{i}$ for each $i\in[k]$. And also each $H_i$ will contain $M^*$ (obviously since we have to find $M^*$). Hence, once we have $H_k=G_k$ we are done.
+	Now in \autoref{constructing-weight-assignment} of the \cls{Quasi-NC} algorithm we had a sequence of graph $G_1,G_2,\dots, G_{k}$ with $G=G_0$ where we took $G_{i+1}$ to be the graph constructed by taking only the minimum weight perfect matchings in $G_{i}$ with respect to $w_{i}$. Now instead of computing $G_1,\dots, G_k$ in $O(\log^2n)$ random bits (which is not clear anyway) we will compute a sequence of graphs $H_1,\dots, H_k$ where $H_{i}$ will be a subgraph of $G_{i}$ for each $i\in[k]$. And also each $H_i$ will contain $M^*$ (obviously since we have to find $M^*$). Hence, once we have $H_k=G_k$ we are done.
 
-So we start with $H_0=G_0=G$ and let $0\leq i<k$. We will describe the $i$th round. So suppose we have constructed $H_i=(V,E_i)$. Now we want to compute $H_{i+1}$. Now an edge of $E_i$ will appear in $H_{i+1}$ only if it participates in a matching $M$ with $w_i(M)=w_i(M^*)$. Therefore, $H_{i+1}$ is a subgraph of $G_{i+1}$ as $H_i$ is a subgraph of $G_{i+1}$. Now for an edge $e$ denote the product $\bbX_i^{w(e)}$:\[
-	\mathbb{X}_i^{w(e)}= \prod_{j=0}^{k-1-i}x_{i+j}^{w_i(e)}
-\]For a matching $M$ the term $\bbX^{w(M)}_i$ is defined similarly. Now let $N(e)$ denote the set of edges which are neighbors of an edge in $G_i$ i.e. all edges $e'\neq e$ such that $e'\cap e\neq \emptyset$. Also for an edge $e\in E_i$, define the $\frac{n}{2}\times \frac{n}{2}$ matrix $A_e$ as:\[
-	A_e(k,l)=\begin{cases}
-		\bbX^{w(e')}_i & \text{If $e'=(u_k,v_l)\in E_i-N(e)$} \\
-		0              & \text{otherwise}
-	\end{cases}
-\]
-Now the matrix has $0$ entry for each neighboring edge of $e$. Thus its determinant is a sum over all perfect matchings which contain $e$. That is\[
-	\det(A_e)= \sum\limits_{M:\text{PM in $H_i$}}^{} sgn(M)\,\bbX_{i+1}^{w(M)}
-\]Consider the coefficient $c_e$ of $x_i^{w_i(M^*)}$ in $\det(A_e)$, \[
-	 c_e=\sum\limits_{\substack{M:\text{PM in $H_i$} \\ w_i(M)=w_i(M^*),e\in M}}^{}sgn(M)\,\bbX_{i+1}^{w_i(M)}
-\]Now define $H_{i+1}$ to be the union of all the edges $e$ for which $c_e\neq 0$.\parinf
+	So we start with $H_0=G_0=G$ and let $0\leq i<k$. We will describe the $i$th round. So suppose we have constructed $H_i=(V,E_i)$. Now we want to compute $H_{i+1}$. Now an edge of $E_i$ will appear in $H_{i+1}$ only if it participates in a matching $M$ with $w_i(M)=w_i(M^*)$. Therefore, $H_{i+1}$ is a subgraph of $G_{i+1}$ as $H_i$ is a subgraph of $G_{i+1}$. Now for an edge $e$ denote the product $\bbX_i^{w(e)}$:\[
+		\mathbb{X}_i^{w(e)}= \prod_{j=0}^{k-1-i}x_{i+j}^{w_i(e)}
+	\]For a matching $M$ the term $\bbX^{w(M)}_i$ is defined similarly. Now let $N(e)$ denote the set of edges which are neighbors of an edge in $G_i$ i.e. all edges $e'\neq e$ such that $e'\cap e\neq \emptyset$. Also for an edge $e\in E_i$, define the $\frac{n}{2}\times \frac{n}{2}$ matrix $A_e$ as:\[
+		A_e(k,l)=\begin{cases}
+			\bbX^{w(e')}_i & \text{If $e'=(u_k,v_l)\in E_i-N(e)$} \\
+			0              & \text{otherwise}
+		\end{cases}
+	\]
+	Now the matrix has $0$ entry for each neighboring edge of $e$. Thus its determinant is a sum over all perfect matchings which contain $e$. That is\[
+		\det(A_e)= \sum\limits_{M:\text{PM in $H_i$}}^{} sgn(M)\,\bbX_{i+1}^{w(M)}
+	\]Consider the coefficient $c_e$ of $x_i^{w_i(M^*)}$ in $\det(A_e)$, \[
+		c_e=\sum\limits_{\substack{M:\text{PM in $H_i$} \\ w_i(M)=w_i(M^*),e\in M}}^{}sgn(M)\,\bbX_{i+1}^{w_i(M)}
+	\]Now define $H_{i+1}$ to be the union of all the edges $e$ for which $c_e\neq 0$.\parinf
 
-\textbf{\textit{Claim:} }$M^*\subseteq E_{i+1}$ i.e. all edges of $M^*$ appears in $H_{i+1}$. 
+	\textbf{\textit{Claim:} }$M^*\subseteq E_{i+1}$ i.e. all edges of $M^*$ appears in $H_{i+1}$.
 
-\begin{proof}
-	For any edge $e\in M^*$, the polynomial $c_e$ will contain the term $\bbX_{i+1}^{w_i(M^*)}$. As the matching $M^*$ is isolated in $H_i$ with respect to the weight vector $\{w_{i+1},\dots, w_{k-1}\}$ the polynomial $c_e$ is nonzero.
-\end{proof}\parinn
+	\begin{proof}
+		For any edge $e\in M^*$, the polynomial $c_e$ will contain the term $\bbX_{i+1}^{w_i(M^*)}$. As the matching $M^*$ is isolated in $H_i$ with respect to the weight vector $\{w_{i+1},\dots, w_{k-1}\}$ the polynomial $c_e$ is nonzero.
+	\end{proof}\parinn
 
-For construction of $H_{i+1}$ we need to test if $c_e$ is nonzero for each edge $e\in E_i$. As argued above in the decision part (in \autoref{rnc-few-random-decision}) the degree of $c_e$ is $O(n^7\log^2n)$. We apply the standard identity testing \thrmref{th:th:schwatz-zippel} and we plug in random values for the variables $x_{i+1},\dots, x_{k-1}$ independently from $[n^{11}]$. The probability that the evaluation will be nonzero is at least $1-O\lt( \frac{\log^2n }{n^3} \rt)$. 
+	For construction of $H_{i+1}$ we need to test if $c_e$ is nonzero for each edge $e\in E_i$. As argued above in the decision part (in \autoref{rnc-few-random-decision}) the degree of $c_e$ is $O(n^7\log^2n)$. We apply the standard identity testing \thrmref{th:th:schwatz-zippel} and we plug in random values for the variables $x_{i+1},\dots, x_{k-1}$ independently from $[n^{11}]$. The probability that the evaluation will be nonzero is at least $1-O\lt( \frac{\log^2n }{n^3} \rt)$.
 
-To compute the evaluation, we plug in values of $x_{i+1},\dots, x_{k-1}$ in $\det(A_e)$ in $\det(A_e)$ and find the coefficient of $x_i^{w_i(M^*)}$. This can be done in $\cls{NC}^2$ by \cite[Corollary 4.4]{BorodinCookPippenger_1983_Pcf}. For all the edges we use the same random values for the variables $x_{i+1},\dots, x_{k-1}$ in each identity test. The probability that e test works successfully for each edge is at least $1-O\lt( \frac{\log^2n}{n}\rt)$ by the union bound. We continue this for $k$ rounds to find $H_i$, which is a perfect matching. 
+	To compute the evaluation, we plug in values of $x_{i+1},\dots, x_{k-1}$ in $\det(A_e)$ in $\det(A_e)$ and find the coefficient of $x_i^{w_i(M^*)}$. This can be done in $\cls{NC}^2$ by \cite[Corollary 4.4]{BorodinCookPippenger_1983_Pcf}. For all the edges we use the same random values for the variables $x_{i+1},\dots, x_{k-1}$ in each identity test. The probability that e test works successfully for each edge is at least $1-O\lt( \frac{\log^2n}{n}\rt)$ by the union bound. We continue this for $k$ rounds to find $H_i$, which is a perfect matching.
 
 
-We need again $O(\log^2 n)$ random bits for the weight assignments $w_0,\dots, w_{k-1}$ and the values for the $x_i's$. Note that we use the same random bits for $x_i$ in all $k$ rounds. This decreases the success probability, which is now at least $1-O\lt( \frac{\log^3n}{n} \rt)$ by the union bound. 
+	We need again $O(\log^2 n)$ random bits for the weight assignments $w_0,\dots, w_{k-1}$ and the values for the $x_i's$. Note that we use the same random bits for $x_i$ in all $k$ rounds. This decreases the success probability, which is now at least $1-O\lt( \frac{\log^3n}{n} \rt)$ by the union bound.
 
-In $\cls{NC}^2$ we can construct the weight asssignments and compute the determinants in each round. As we have $k=O(\log n)$ rounds, the overall complexity becomes $\cls{NC}^3$.
+	In $\cls{NC}^2$ we can construct the weight asssignments and compute the determinants in each round. As we have $k=O(\log n)$ rounds, the overall complexity becomes $\cls{NC}^3$.
 
 \end{proof}
