@@ -191,7 +191,7 @@ Assume that we have $f\in R[x]$, $\mcF=\{f_0,\dots,f_m\}\subseteq R[x]$, $\mcS=\
 		$f_i^*=f_i+b_i$
 		}
 		\For{$1\leq i\leq m$}{
-		Compute $c_i,d_i,g_i^*q_i\in R[x]$ such that $$g_i^*=\prod_{j\neq i}f_j^*,\qquad s_i(s_ig_i^*-z)=q_if_i^*+c_i\qquad v(zd_i-c_i)\leq \gm^2\qquad \deg d_i\leq \deg c_i<\deg f_i^*$$}
+		Compute $c_i,d_i,g_i^*q_i\in R[x]$ such that $$g_i^*=\prod_{j\neq i}f_j^*,\qquad s_i(s_ig_i^*-z)=q_if_i^*+c_i,\qquad v(zd_i-c_i)\leq \gm^2,\qquad \deg d_i\leq \deg c_i<\deg f_i^*$$}
 		Compute $g_0^*=\prod\limits_{i=1}^mf_i^*$ and $c_0,d_0\in R[x]$ such that $$c_0=s_o\lt(\sum_{i=0}^m s_ig_i^*-z  \rt)+f_0^*\sum_{i=1}^m\lt[ q_i+s_i\lt(\sum_{j\neq i} s_j\frac{g_j^*}{f_j^*} \rt)\rt],\quad v(zd_0-c_0)\leq \gm^2,\quad \deg d_0\leq \deg f-\deg g_0$$\;
 		\For{$0\leq i\leq m$}{$t_i=s_i-d_i$}
 		\Return{$\mcF^*=\{f_i^*\colon 0\leq i\leq m\}$, $T=\{t_i\colon 0\leq i\leq m\}$}
