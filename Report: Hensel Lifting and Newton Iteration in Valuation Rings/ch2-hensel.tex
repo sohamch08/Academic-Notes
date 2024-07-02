@@ -239,12 +239,10 @@ In the following section we will prove that the algorithm described in the above
 	\vspace{3mm}
 	
 	Now $g_i=\prod\limits_{j\neq i}f_i$ for $0\leq i\leq m$.  Then  we have \begin{align*}
-		a_0g_0=s_0g_0+f_0g_0\sum_{i=1}^mp_i & = s_0g_0e+\prod_{i=0}^mf_i \sum_{i=1}^mp_i\\
-		& = s_0g_0e+\sum_{i=1}^m g_if_ip_i\\
-		& = s_0g_0e+\sum_{i=1}^m g_i(s_e-a_i)\\
-		& = e\sum_{i=0}^, s_ig_i-\sum_{i=1}^ma_ig_i\\
+		a_0g_0=s_0g_0+f_0g_0\sum_{i=1}^mp_i & = s_0g_0e+\prod_{i=0}^mf_i \sum_{i=1}^mp_i = s_0g_0e+\sum_{i=1}^m g_if_ip_i\\
+		& = s_0g_0e+\sum_{i=1}^m g_i(s_i-a_i) = e\sum_{i=0}^, s_ig_i-\sum_{i=1}^ma_ig_i\\
 		& =e\underbrace{\lt[ \sum_{i=0}^ms_ig_i-z \rt]}_{u_1}+\underbrace{\lt[ ze-\sum_{i=1}^ma_ig_i \rt]}_{u_2}
 	\end{align*}
-Given $v\lt(  \sum\limits_{i=0}^ms_ig_i-z\rt)\leq \delta$ by $H_2(m,f,\mcF,\mcS,z,\delta)$. So we have $$v\lt(  e\sum\limits_{i=0}^ms_ig_i-z\rt)=v(e)v\lt(  \sum\limits_{i=0}^ms_ig_i-z\rt)\leq \eps\delta$$
+Given $v\lt(  \sum\limits_{i=0}^ms_ig_i-z\rt)\leq \delta$ by $H_2(m,f,\mcF,\mcS,z,\delta)$. So we have $$v\lt(  e\sum\limits_{i=0}^ms_ig_i-z\rt)=v(e)v\lt(  \sum\limits_{i=0}^ms_ig_i-z\rt)\leq \eps\delta\implies v(u_1)\leq \eps\delta$$Now for the second summand $u_2$ $\deg e\leq \deg f$, $\deg g_i\leq \sum\limits_{j\neq i}\deg(f_j)$ and $\deg a_i\leq \deg f_i$. Hence we have $\deg u_2\leq \deg f\leq k+\deg g_0$ where $k=\deg f-\deg g_0+1$.  Now let $a_0=u_3x^k+u_4$ where $\deg u_4<k$. So $$u_1=a_0g_0-u_2=u_3(g_0x^k)+u_4g_0-u_2$$ Now $$\deg (u_4g_0)<\deg (g_0x^k)\implies \deg(u_4g_0-u_2)<\deg(g_0x^k)$$Since $g_0$ is monic, $g_0x^k$ is also monic and $\deg(u_4g_0)<\deg (g_0x^k)$. Hence by \thrmref{th:hlm} we have $$v(u_3)\leq v(u_1)\leq \eps\delta\leq \eps \gm\qquad v(u_4g_0-u_2)\leq v(u_1)\leq \eps\gm$$
 	
 \end{proof-of-theorem}
