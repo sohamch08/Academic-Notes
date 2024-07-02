@@ -145,8 +145,9 @@ First we will prove a helping lemma which will be very much usefull in the proof
 		  & \qquad\qquad\qquad\vdots\\
 		  & + \lt[\prod_{j=1}^{k+1}h_j^*\rt](h_0-h_0^*)+  \lt[\prod_{j=1}^{k}h_j^*\rt](h_{k+1}^*-h_{k+1})
 	\end{align*}
-	Now for each $0\leq t\leq k$ we have $$v\lt(  \lt[\prod_{j=t+1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{t-1}h_j  \rt](h_{t}-h_{t}^*)\rt)\leq v(h_t-h_t^*)\leq\eps, \qquad v\lt(  \lt[\prod_{j=1}^{k}h_j^*\rt](h_{k+1}^*-h_{k+1})  \rt)\leq v(h_{k+1}^*-h_{k+1})\leq \eps$$Hence $$v\lt( h_{k+1}^*\prod\limits_{j=0}^kh_j-h_{k+1}\prod\limits_{j=0}^{k}h_j^*  \rt)\leq \max_{0\leq t\leq k}\lt\{  v\lt(  \lt[\prod_{j=t+1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{t-1}h_j  \rt](h_{t}-h_{t}^*)\rt),  v\lt(  \lt[\prod_{j=1}^{k}h_j^*\rt](h_{k+1}^*-h_{k+1})  \rt)\rt\}\leq \eps$$Therefore we have  $$ v\lt( h_{k+1}^*\prod\limits_{j=0}^kh_j-h_{k+1}\prod\limits_{j=0}^{k}h_j^*  \rt)  \leq \eps\implies 	v\lt(  \prod_{j=0}^{k+1}h_j-\prod_{j=0}^{k+1}h_j^* \rt)\leq \eps$$Hence by induction we have $$	v\lt(  \prod_{j=0}^{m}h_j-\prod_{j=0}^{m}h_j^* \rt)\leq \eps$$
+	Now for each $0\leq t\leq k$ we have $$v\lt(  \lt[\prod_{j=t+1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{t-1}h_j  \rt](h_{t}-h_{t}^*)\rt)\leq v(h_t-h_t^*)\leq\eps, \qquad v\lt(  \lt[\prod_{j=1}^{k}h_j^*\rt](h_{k+1}^*-h_{k+1})  \rt)\leq v(h_{k+1}^*-h_{k+1})\leq \eps$$Hence $$v\lt( h_{k+1}^*\prod\limits_{j=0}^kh_j-h_{k+1}\prod\limits_{j=0}^{k}h_j^*  \rt)\leq \max_{0\leq t\leq k}\lt\{  v\lt(  \lt[\prod_{j=t+1}^{k+1}h_j^*\rt]\lt[\prod_{j=0}^{t-1}h_j  \rt](h_{t}-h_{t}^*)\rt),  v\lt(  \lt[\prod_{j=1}^{k}h_j^*\rt](h_{k+1}^*-h_{k+1})  \rt)\rt\}\leq \eps$$Therefore we have  $$ v\lt( h_{k+1}^*\prod\limits_{j=0}^kh_j-h_{k+1}\prod\limits_{j=0}^{k}h_j^*  \rt)  \leq \eps\implies 	v\lt(  \prod_{j=0}^{k+1}h_j-\prod_{j=0}^{k+1}h_j^* \rt)\leq \eps$$Hence by induction we have $	v\lt(  \prod\limits_{j=0}^{m}h_j-\prod\limits_{j=0}^{m}h_j^* \rt)\leq \eps$
 \end{proof}
+
 
 
 \thm[hslem]{Hensel's Lemma}{
@@ -186,7 +187,7 @@ Assume that we have $f\in R[x]$, $\mcF=\{f_0,\dots,f_m\}\subseteq R[x]$, $\mcS=\
 		\For{$1\leq i\leq m$}{
 		Compute $a_i,b_i,p_i\in R[x]$ such that $$s_ie=p_if_i+a_i, \qquad v(zb_i-a_i)\leq \eps\gm,\qquad \deg b_i\leq \deg a_i< \deg f_i$$
 		}
-		Compute $a_0,b_0\in R[x]$ such that $$a_0=s_0e+f_0\sum\limits_{i=1}^m p_i,\qquad v(zb_0-a_0)\leq \eps\gm,\qquad  \deg b_0\leq \deg f-\def \prod\limits_{i=1}^m f_i$$\;
+		Compute $a_0,b_0\in R[x]$ such that $$a_0=s_0e+f_0\sum\limits_{i=1}^m p_i,\qquad v(zb_0-a_0)\leq \eps\gm,\qquad  \deg b_0\leq \deg f- \deg\prod\limits_{i=1}^m f_i$$\;
 		\For{$0\leq i\leq m$}{
 		$f_i^*=f_i+b_i$
 		}
@@ -200,3 +201,50 @@ Assume that we have $f\in R[x]$, $\mcF=\{f_0,\dots,f_m\}\subseteq R[x]$, $\mcS=\
 	\caption{Hensel's Computation}
 \end{algorithm}
 \section{Proof of Hensel's Lemma}
+In the following section we will prove that the algorithm described in the above section gives us the $\mcF^*$ and $T$ which if you put in the Hensel Lemma  for Linear Case and Quadratic Case the conditions are hold.
+
+\begin{proof-of-theorem}{th:hslem}
+	Given that $v(e)\leq \eps$. For $i\in [m]$ we have \[
+		 s_ie=p_if_i+a_i
+	\]where $f_i$ is monic and $\deg a_i\leq \deg f_i$. By \thmref{th:hlm} $v(s_ie)\geq v(a_i)$, and $v(s_i)\geq v(p_i)$. And \[
+		 v(s_ie)=v(s_i)v(e)\leq v(e)\leq \eps
+	\]
+	Hence we have $v(a_i)\leq \eps$. Since $\alpha^2 \eps \leq 1$, $\alpha v(z)\geq 1$ we have \[
+		 v(a_i)\leq \eps \leq \alpha^{-2}\leq v(z)^2\leq v(z)
+	\]
+	
+	For $i=0$ \[
+		 v(a_0)\leq s_0e+f_0\sum\limits_{i=1}^{m } p_i
+	\]	
+	Hence\begin{align*}
+	v(a_0) & \leq \max\lt\{v(s_0)v(e),v(f_o)v\lt( \sum\limits_{i=1}^{m } p_i \rt)\rt\}\\ 
+	& \leq \max \{v(s_0)v(e),v(f_0)v(p_i)\mid i\in[m] \}\\ 
+	& \max \{v(e),v(p_i)\mid i\in[m]\} \\  
+	& v(e)\leq \eps\leq v(z)
+	\end{align*}
+	So for $0\leq i\leq m$ we have $v(a_i)\leq \eps\leq v(z)$. 
+	
+	Now in step 6 we have $f_i^*=f_i+b_i$ for $0\leq i\leq m$. Therefore we have $v(f^*_i-f_i)=v(b_i)$ for $0\leq i\leq m$. Now $b_i$ is such that $v(zb_i-a)i)\leq\eps\gm$. Therefore \[
+		 v(zb_i)=v(zb_i-a_i+a_i)\leq\max\{v(zb_i-a_i),v(a_i)\}\leq \max \{\eps\gm,\eps\}
+	\]Hence $$v(b_i)\leq v(z)^{-1}\max\{\eps\gm,\eps\}\leq \alpha\max \{\eps\gm,\eps\}\leq \eps\max\{\alpha\gm,\alpha\}\leq \alpha$$The last inequality holds since $\alpha v(z)>1$ and $v(r)\leq 1$ forall $r\in R$ implies $\alpha\geq 1$ and $\alpha\gm=\max\{\alpha\delta,\alpha\eps^2\}\leq 1$
+	So now we have \begin{itemize}
+		\item $v(e)\leq \eps$
+		\item $v(a_i)\leq \eps\leq v(z)$ 
+		\item $v(f_i^*-f_i)=v(b_i)\leq \alpha\eps$
+	\end{itemize}
+	\nt{	This proves:\begin{itemize}
+			\item  	$H_3(m,f,\mcF^*,\mcS^*,z,\alpha,\delta^*,\eps^*)$ for both Linear and Quadratic case 
+			\item $H_4(m,f,\mcF,\mcF^*,\mcS,\mcS^*,\alpha,\delta,\eps)$ for Linear Case.
+		\end{itemize}}
+	\vspace{3mm}
+	
+	Now $g_i=\prod\limits_{j\neq i}f_i$ for $0\leq i\leq m$.  Then  we have \begin{align*}
+		a_0g_0=s_0g_0+f_0g_0\sum_{i=1}^mp_i & = s_0g_0e+\prod_{i=0}^mf_i \sum_{i=1}^mp_i\\
+		& = s_0g_0e+\sum_{i=1}^m g_if_ip_i\\
+		& = s_0g_0e+\sum_{i=1}^m g_i(s_e-a_i)\\
+		& = e\sum_{i=0}^, s_ig_i-\sum_{i=1}^ma_ig_i\\
+		& =e\underbrace{\lt[ \sum_{i=0}^ms_ig_i-z \rt]}_{u_1}+\underbrace{\lt[ ze-\sum_{i=1}^ma_ig_i \rt]}_{u_2}
+	\end{align*}
+Given $v\lt(  \sum\limits_{i=0}^ms_ig_i-z\rt)\leq \delta$ by $H_2(m,f,\mcF,\mcS,z,\delta)$. So we have $$v\lt(  e\sum\limits_{i=0}^ms_ig_i-z\rt)=v(e)v\lt(  \sum\limits_{i=0}^ms_ig_i-z\rt)\leq \eps\delta$$
+	
+\end{proof-of-theorem}
