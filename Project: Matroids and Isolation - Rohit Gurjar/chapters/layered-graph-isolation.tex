@@ -1,2 +1,6 @@
 \chapter{Isolation of Paths in Layered Graph}
 \cite{MelkebeekPrakriya_2019_DIi}
+In this chapter we will restrict our attention to layered digraphs. Here for any $k\in\bbZ_{\geq 0}$ we denote $\llbracket k\rrbracket=\{0,1,\dots, k\}$.
+\dfn[layered-graph]{Layered Digraph}{
+    For $n=|V|$ we have $V\subseteq [n]\times \llbracket d\rrbracket$ and $E\subseteq \bigcup\limits_{i\in[d]}(V_{i-1}\times V_i)$ for $i\in[d]$ with $V_i\coloneqq V\cap [n]\times\{i\}$ i.e. the $i$th layer in $G$
+}Basically a layered graph $G=(V,E)$ of depth $d$ consists of $d+1$ layers of vertices such that the edges only go from one layer to the next.

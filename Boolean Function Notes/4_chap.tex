@@ -1,0 +1,91 @@
+\chapter{Lecture 5}
+
+
+Recall the definition of the linear threshold function:
+
+\begin{definition}[Linear Threshold Function]
+    $\func{Threshold_a}{\rbool^n}{\rbool}$, given an $a \in \R^n$, is defined as $Threshold_a(x) = sign(\inn{a}{x})$.
+\end{definition}
+
+Similarly, we can define an affine threshold function and general threshold function.
+
+\begin{definition}[Affine Threshold Function]
+    $\func{Threshold_{(a,b}}{\rbool^n}{\rbool}$, given an $a \in \R^n$ and $b \in \R$, is defined as $Threshold_{(a,b)}(x) = sign(\inn{a}{x}+b)$.
+\end{definition}
+
+\begin{definition}[General Threshold Function]
+    $\func{Threshold_{f}}{\rbool^n}{\rbool}$, given a function $\func{f}{\R^n}{\R}$, is defined as $Threshold_f(x) = sign(f(x))$.
+\end{definition}
+
+
+\begin{question}[Can we write \emph{OR} as an affine threshold function?]
+    
+\end{question}
+
+\textbf{Whether functions are good voting rules: }
+
+\begin{itemize}
+    \item \textbf{Tribe:}
+        \begin{itemize}
+            \item It is a monotone function
+            \item It is not symmetric
+            \item It is not odd 
+            \item So in this case the $Aut(f)$ is essentially the blockwise permutations and intrablock permutations. In this case, we can exchange any $(i,j)$ through this permutations. [If $i,j$ are in same block, perform intrablock permutation. If not, then first perform blockwise permutation.]
+        \end{itemize}
+\end{itemize}
+
+Let us now move on to the problem of measuring the \emph{significance} of individual bits of the input w.r.t. a boolean function. Formally,
+
+\begin{definition}[Sensitive bit]
+    For a function $\func{f}{\rbool^n}{\rbool}$, we define $i \in [n]$ to be a sensitive bit for particular $x \in \rbool^n$ if $f(x) \neq f(x^{\xor i})$.
+\end{definition}
+
+\begin{definition}[Influence]
+    For a function $\func{f}{\rbool^n}{\rbool}$ and an $i \in [n]$, we define its influence, denoted $Inf_i(f)$ as:
+    \[Inf_i(f) = \Pr[f(x) \neq f(x^{\xor i})]\]
+\end{definition}
+
+\begin{definition}[Edges in Direction of i]
+    Given an hypercube $\rbool^n$ and an $i \in [n]$, we define edges in direction of $i$ to be the edges between $x$ and $x^{\xor i}$.
+\end{definition}
+
+\begin{definition}[Sensitive Edges w.r.t. $i$ for $f$]
+    Given an hypercube $\rbool^n$ and an $i \in [n]$ and a function $\func{f}{\rbool^n}{\rbool}$, we define sensitive edges w.r.t. $i$ to be the edges between $x$ and $x^{\xor i}$ such that $f(x) \neq f(x^{\xor i}$.
+\end{definition}
+
+\begin{lemma}
+    For a function $\func{f}{\rbool^n}{\rbool}$, we have for any $i \in [n]$,
+    \[Inf_i(f) = \frac{\text{Number of sensitive edges w.r.t. $i$ for $f$}}{\text{Number of edges in direction of $i$}}\]
+
+    \begin{proof}
+        Multiply both the numerator and denominator by 2.
+    \end{proof}
+\end{lemma}
+
+\begin{question}[Calculate $Inf_i(Maj_n)$]
+
+    When does a bit matter? Only when the other bits cause a tie. In that case, we have:
+    
+    $Inf_i(Maj_n) = Inf_1(Maj_n) = \Pr[x_2+x_3+...+x_n = 0] \sim \sqrt{\frac{2}{\pi n}}$.
+\end{question}
+
+\begin{definition}[Effect of $i$ in $f$]
+    Given a function $\func{f}{\rbool^n}{\rbool}$ and an $i \in [n]$, we define the effect of $i$ in $f$, denoted $Eff_i(f)$ to be:
+    \[Eff_i(f) = \Pr[f(x) = 1| x_i = 1] - \Pr[f(x) = 1|x_i = -1]\]
+\end{definition}
+
+\begin{lemma}
+    $Eff_i(f) = \fhat(\{i\})$
+
+    \begin{proof}
+        We know that $\fhat(\{i\}) = \inn{f}{\chi_{\{i\}}}$. Also, note that any function $f$ can be written as $f = 2\indicator_{f = 1} - 1$. Then, we have:
+        \begin{align*}
+            \fhat(\{i\}) &= \E[f\chi_{\{i\}}]\\
+                         &= \frac{1}{2} \E[f|\chi_{\{i\}} = 1] - \frac{1}{2} \E[f|\chi_{\{i\}} = -1]\\
+                         &= \E[2\indicator_{f = 1}|\chi_{\{i\}} = 1] - \E[2\indicator_{f = 1}|\chi_{\{i\}} = -1]\\
+                         &= Eff_i(f)
+        \end{align*}    
+    \end{proof}
+\end{lemma}
+
+

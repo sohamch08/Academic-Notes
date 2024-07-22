@@ -1,0 +1,164 @@
+\chapter{Lecture 2: Introduction}
+
+Recall the following facts that will be relevant to our class today:
+
+\begin{itemize}
+    \item Every real-valued boolean function $\func{f}{\{-1,1\}^\R}{\R}$ can be written as a linear combination of monomials of the form $\{X^S\}_{S\subseteq [n]}$.
+    \item $\{X^S\}_{S\subseteq [n]}$ forms an orthonormal basis for $\func{f}{\{-1,1\}^\R}{\R}$.
+    \item $X^SX^T = X^{S\Delta T}$
+\end{itemize}
+
+Let us now consider the setup of $\func{f}{\rbool^n}{\rbool}$ to the setup of $\func{f}{\fbool^n}{\fbool}$. We consider the functions $\sF_R =\{f|\func{f}{\{-1,1\}^n}{\{-1,1\}}\}$ and $\sF_F = \{f|\func{f}{\{0,1\}^n}{\{0,1\}}\}$. We consider the following bijection between $f\in\sF_R$ and $\fhat \in \sF_F$ as:
+\[
+\fhat(x_1,x_2,...,x_n) = f((-1)^{x_1},(-1)^{x_2},...,(-1)^{x_n}). 
+\]
+
+Now from a fourier analysis on this transofrmed function yields:
+\begin{align*}
+    &f((-1)^{x_1},(-1)^{x_2},...,(-1)^{x_n})\\
+    =&\sum_{S \subseteq [n]} \fhat(S)\Pi_{i\in S}(-1)^{x_i}\\
+    =&\sum_{S \subseteq [n]} \fhat(S) (-1)^{\sum_{i \in S} x_i}
+\end{align*}
+
+We can also represent the set $S$ as an indicator vector $\alpha_S \in \F_2^n$. We remove the subscript $S$ when it is clear from the context. Then, we can state the result above as:
+\[
+\fhat = \sum_{\alpha \in \F_n^2} \fhat(\alpha)\chi_\alpha 
+\]
+Where $\fhat(\alpha) = \fhat(S)$ and $\chi_\alpha(x) = (-1)^{\inn{\alpha}{x}}$. We now have the following two results:
+\begin{itemize}
+    \item $\alpha + \beta$ in this setup is equivalent to the operation $S_\alpha \Delta S_\beta$.
+    \item $\chi_\alpha(x+y) = \chi_\alpha(x)\chi_\alpha(y)$
+    \item $\chi_{\alpha+\beta} = \chi_\alpha(x)\chi_\beta(y)$
+    \item The above two facts combined ensures that $(\chi_\alpha,\cdot)$ is a group and it is isomorphic to $\F_n^2$. 
+\end{itemize}
+
+\begin{theorem}
+    The group $\hat{\F}_2^n = (\chi_\alpha,\cdot)$ is isomorphic to the group $\F_2^n$. This is known as the dual group of $\F_2^n$.
+\end{theorem}
+
+Let us now begin the study of testing properties of the functions of the form $\func{f}{\F_n^2}{\F}$ under the query model where we have black-box query access to the functions. 
+\begin{definition}[Property $\sP$]
+    We define a function $f \in \sF_\F$ to have a property $\sP$ if $f \in \sP \subseteq \sF_\F$.
+\end{definition}
+
+\begin{definition}[Distance to a property $\sP$]
+    We define distance to a property w.r.t. a distance $\func{d}{\sF\times\sF}{\R}$as:
+    \[
+    dist(f,\sP) = \min_{f \in \sF} d(g,f)
+    \]
+\end{definition}
+
+For most of this course, we will be considering the distance between functions as defined in the last lecture to be $d(f,g) = \Pr_{x \in \F_2^n} f(x)\neq g(x) = \sum_{x\in\F_2^n} \norm{f(x)=g(x)}^2/(4\times 2^n)$. For completeness note that:
+\begin{align*}
+    &d(f,g)\\
+    =&\Pr_{x \in \F_2^n} f(x)\neq g(x)\\
+    =&\frac{\sum_{x\in\F_2^n} \norm{f(x)=g(x)}^2}{4\times 2^n}\\
+    =&\frac{\sum_{x\in\F_2^n} \norm{f(x)=g(x)}}{2\times2^n}
+\end{align*}
+
+Let us consider one of the simplest property $\sP$ to be the set of constant functions. In this case, we have to actually check exactly for this property, then we have to query $2^n$ points as it can deviate at a single point. However, can we do better if we have some \textbf{promise} on the input, say of the form: \emph{function $f$ is either constant or $\epsilon$-far from constant}? Note that \textbf{$\epsilon$-far} from a property $p$ means that a function $f$ is at a distance at least $\epsilon$ from a property $p$, i.e. $dist(f,\sP) \geq \epsilon$.
+
+A possible idea to test for constant function under the stated promise can be to pick two points $x,y \in \F_2^n$ uniformly and independently at random, we check if they are same or different.
+
+\begin{algorithm}
+    \caption{Atomic test for constant functions}\label{Alg:Atomic Test Constant}
+    \begin{algorithmic}
+        \State Pick $x,y \in \F_2^n$ uniformly and independently at random
+        \State If $f(x) = f(y)$, return $1$. Otherwise, return $0$.
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{lemma}
+    If a function $f \in \sF$ is $\epsilon$-far from being a constant function, then the test \ref{Alg:Atomic Test Constant} returns $0$ with probability at least $<?>$.
+\end{lemma}
+
+\begin{algorithm}
+    \caption{Test for constant functions}\label{Alg: Test Constant}
+    \begin{algorithmic}
+        \State ?
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{theorem}
+    If a function $f \in \sF$ is $\epsilon$-far from being a constant function, then the test \ref{Alg: Test Constant} returns 0 with probability at least $<?>$.
+\end{theorem}
+
+
+Now, let us consider the property $\sP$ that is the set of all linear functions in $\sF$, i.e. $\sP = \{f \in \sF| f(x+y) = f(x)+f(y)\}$. Equivalently, we can define it as $\sP = \{f \in \sF| \exists \alpha \in \F_2^n\text{ s.t. }f(x) = \inn{\alpha}{x} \}$. We denote these functions $l_\alpha$.
+
+\begin{lemma}
+    $\{f \in \sF| \exists \alpha \in \F_2^n\text{ s.t. }f(x) = \inn{\alpha}{x} \} = \{f \in \sF| f(x+y) = f(x)+f(y)\}$
+
+    \begin{proof}[Proof Sketch]
+        $\alpha_i = f(e_i)$
+    \end{proof}
+\end{lemma}
+
+For property testing, we require more robust definitions to account for the cases of $\epsilon$-close and $\epsilon$-far. Let us start with the notion of distance $d$ directly. 
+\begin{definition}[$\epsilon$-close to linear]\label{def: robust linear}
+    We say \emph{$f$ is $\epsilon$-close to linear} if $\exists l_\alpha$ such that $\Pr_{x \in \F_2^n} [ l_\alpha(x) \neq f(x) ] \leq \epsilon$ or equivalently, $\Pr_{x \in \F_2^n} [ l_\alpha(x) = f(x) ] \geq \epsilon$.
+\end{definition}
+
+
+Now, we look for an equivalent definition where a function $f$ is $\epsilon$-close to linear, we will have $\Pr_{x,y \sim F_2^n} [f(x)+f(y) = f(x+y)] \geq 1 - \epsilon$. If we have this definition to be equivalent to the earlier robust definition \ref{def: robust linear}, then the linearity property will be testable (with $poly(\frac{1}{\epsilon})$ samples). Consider the following algorithm proposed in <cite>.
+
+\begin{algorithm}
+    \caption{Atomic Tester for Linearity|BLR Test}\label{Alg: Atomic Linear Test}
+    \begin{algorithmic}
+        \Require Black-box access to $\func{f}{\F_2^n}{\rbool}$
+        \State Pick $x,y \in \F_2^n$ uniformly and independently at random
+        \State If $f(x+y) = f(x)f(y)$, return $1$; otherwise return $0$
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{theorem}
+    If $f$ is $\epsilon$-far from linear, then with probability $\Omega(\epsilon)$, BLR test detects it.
+\end{theorem}
+
+\begin{theorem}
+    If $f$ is $\epsilon$-close to linear as per definition \ref{def: robust linear}, then $\Pr_{x,y \sim F_2^n} [f(x)+f(y) = f(x+y)] \geq 1 - \epsilon$.
+
+    \begin{proof}
+        Recall the fact that $\inn{f}{g} = 1 - 2d(f,g)$, and $\fhat(\alpha) = \inn{f}{\chi_\alpha)}$. Now, observe that $\forall \alpha \in \F_2^n$, we have $\fhat(\alpha) = \inn{f}{\chi_\alpha} = 1 - 2d(f,\chi_\alpha)$. Now observe that $\chi_\alpha$ are essentially all the linear functions in $\sF$. Thus, we have:
+        \begin{align}
+            \max_\alpha \fhat(\alpha) \leq 1 - 2\epsilon\label{Eq: BLR Proof 1}
+        \end{align}
+
+        We also have,
+        \begin{align*}
+            &\E_{x,y} [f(x)f(y)f(x+Y)]\\
+            =&\Pr[f \text{passes BLR}] - \Pr[f \text{fails BLR}]\\
+            =& 1 - 2 \Pr[f \text{fails BLR}]
+        \end{align*}
+
+        We now use the fourier expansion on the term $f(x)f(y)f(x+y)$,
+        \begin{align*}
+            &f(x)f(y)f(x+y)\\
+            =&\sum_{\alpha,\beta,\gamma} \fhat(\alpha)\fhat(\beta)\fhat(\gamma) \chi_\alpha(x)\chi_\beta(y)\chi_\gamma(x+y)
+        \end{align*}
+        Then, we have:
+        \begin{align*}
+            &\E_{x,y} [f(x)f(y)f(x+y)]\\
+            &=\E_{x,y} [\sum_{\alpha,\beta,\gamma} \fhat(\alpha)\fhat(\beta)\fhat(\gamma) \chi_\alpha(x)\chi_\beta(y)\chi_\gamma(x+y)]\\
+            &= \sum_{\alpha,\beta,\gamma} \fhat(\alpha)\fhat(\beta)\fhat(\gamma) \E_{x,y} [\chi_\alpha(x)\chi_\beta(y)\chi_\gamma(x+y)]\\
+            &= \sum_{\alpha,\beta,\gamma} \fhat(\alpha)\fhat(\beta)\fhat(\gamma) \E_{x} [\chi_\alpha(x) \chi_\gamma(x)\E_y [\chi_{\beta+\gamma}(y)] &\text{By Linearity of $\chi$}\\
+        \end{align*}
+        Note that the term $\E_y [\chi_{\beta+\gamma}(y)]$ becomes $0$ unless $\beta = \gamma$. Similarly, we can see that $\alpha = \beta$ is necessary for the summation term to be non-zero. Then, the sum can be rewritten as:
+        \begin{align*}
+            &\E_{x,y} [f(x)f(y)f(x+y)]\\
+            &=\E_{x,y} [\sum_{\alpha,\beta,\gamma} \fhat(\alpha)\fhat(\beta)\fhat(\gamma) \chi_\alpha(x)\chi_\beta(y)\chi_\gamma(x+y)]\\
+            &= \sum_{\alpha,\beta,\gamma} \fhat(\alpha)\fhat(\beta)\fhat(\gamma) \E_{x,y} [\chi_\alpha(x)\chi_\beta(y)\chi_\gamma(x+y)]\\
+            &= \sum_{\alpha \in \F_2^n} \fhat(\alpha)^3\\
+            &\leq \left(\max_\alpha \fhat(\alpha) \right)\sum_{\alpha} \fhat(\alpha)^2\\
+            &\leq \max_\alpha \fhat^3(\alpha) &\text{By Placherel's Lemma}\\
+            &\leq 1 - 2\epsilon &\text{By equation \ref{Eq: BLR Proof 1}}
+        \end{align*}
+
+        
+    \end{proof}
+\end{theorem}
+
+\textbf{Problem 1: } Suppose $f \in \sF$ is close to some unknown parity function $\chi_\alpha$. Can we find out $\chi_\alpha$?
+
+\textbf{Sol: } Output $x,y \sim \F_2^n$, output $\chi_\alpha(x) = f(y)f(y+x)$.
+

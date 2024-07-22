@@ -1,0 +1,228 @@
+\chapter{Lecture 1: Introduction}
+
+Relveant resource: \cite{gs001},\cite{ODonnell_2014}.
+
+\section{Scope of The Course}
+
+Two possible formats to represent boolean functions:
+\begin{itemize}
+    \item $f: \mathbf{F}_2^n \rightarrow \mathbf{F}_2$ / $\func{f}{\{0,1\}^n}{\{0,1\}}$
+    \item $f: \{-1,1\}^n \rightarrow \{-1,1\}$
+\end{itemize}
+
+Topics to be covered:
+\begin{multicols}{2}
+\begin{itemize}
+    \item Influence
+    \item Noise Sensitivity
+    \item Polynomial approximation
+\end{itemize}
+\begin{itemize}
+    \item Hypercontractivity
+    \item Invariance Principal
+\end{itemize}
+\end{multicols}
+
+Here, we list some of the interesting problems that we would deal with in this course:
+
+
+\begin{question}[Interesting Problem in Additive Number Theory]
+    \textbf{Problem: } Consider $S \subset \Nat$, we define density of the set as $density(S) = \frac{|S|}{N}$. The question we study here is at what density for the set, it will always have infinitely many arithmetic progression, say of length 3.
+    
+    \textbf{Results: } The Density of primes is known to be $O(\frac{1}{\log N})$. Green-Tao theorem states that the set of primes have arbitrary arithmetic progressions of length $\geq k$, for all $k \in \Nat$.
+    
+    Recent result of \cite{kelley2024strong} showed that an arithmetic progression exists even when density is $<<\frac{1}{\log N}$. The best known lower bound shows that there exists set $S$ with density $\frac{1}{e^{c\sqrt{\log n}}}$ such that it does not contain infinitely many sequences of length $3$. An interesting exposition: \cite{Bloom_2023}.
+\end{question}
+
+\begin{question}[Social Choice Theory - Arrows Impossibility Result]
+    \textbf{Problem: } Social choice theory studies the mechanisms for collective decision-making and their impacts. One important question in this domain is to determine whether certain voting mechanisms result in logically coherent outcomes.
+
+    \textbf{Results: } Kenneth Arrow in \cite{RePEc:ucp:jpolec:v:58:y:1950:p:328} proposed an axiomatic framework that generalizes all ranked-choice voting mechanisms and showed that no ranked-choice voting can produce logically coherent results.
+\end{question}
+
+\begin{question}[Goldreich Levin Theorem]
+    
+\end{question}
+
+\section{Introduction}
+
+We will interchangeably use the two notations of boolean functions. For now, let us consider the family of maps $\sF =\{f|\func{f}{\{-1,1\}^n}{\{-1,1\}}\}$. 
+
+
+
+\begin{lemma}
+    Every function $f \in \sF$ can be expressed as $f(x) = \sum_{a \in \{-1,1\}^n} a(x)f(a)$.
+    \begin{proof}
+        We define $a(x)$ to be an indicator function defined as $a(x) = \begin{dcases}1 & if x = a\\ 0 & otherwise\end{dcases}$. Now, for all $x \in \rbool^n$, we have:
+        \[f(x) = \sum_{a \in \rbool^n} a(x)f(a) = f(x)\]
+    \end{proof}
+\end{lemma}
+
+Observe that this proof can be extended to the set of real-valued boolean functions, i.e. this representation holds for all functions in $\sF_\R = \{f|\func{f}{\rbool^n}{\R}\}$. The indicator functions $a(x)$ can be defined as $a(x) = \left(\frac{a_1x_1+1}{2}\right)\left(\frac{a_2x_2+1}{2}\right)\left(\frac{a_3x_3+1}{2}\right)...$. 
+
+\begin{lemma}\label{lemma: monomial representation}
+    Every function $f \in \sF$ can be written as $f = \sum_{S \subseteq [n]} \fhat(S)\chi_S$.
+
+    \begin{proof}
+        Observe that each $a(x) = \Pi_{i \in [n]} \frac{1+a_ix_i}{2}$. This product is actually a linear combination of monomials of the form $\chi^S = \Pi_{i \in S} x_i$ where $S \subseteq [n]$. Thus, through this representations of $a(x)$, we can also write $f$ as $f(x) = \sum_{S \subseteq [n]} \fhat(S)\chi^S$.
+    \end{proof}
+\end{lemma}
+
+Again, this statement holds for all functions in the set $\sF_R$. The following lemma states that this set is a vector space. 
+
+\begin{lemma}
+    $\sF_\R$ forms a vector space of dimension $2^n$.
+    % Additionally, for all $f,g \in \sF$, we have $f(x)g(x) = f\circ g(x)$
+
+    \begin{proof}[Proof Idea]
+        Let us recall that any function $f \in \sF_\R$ can be expressed as $f(x)  = \sum_{a \in \rbool^n} a(x)$ $f(a)$. Equipped with this, we can see that pointwise addition and scalar multiplication makes $\sF_\R$ a vector space. 
+        
+        Also note that, the indicator functions $a(x)$ spans the space and are linearly independent (\textit{Two indicator functions can not combine to provide a new indicator function}). Thus, $\{a(x)|a$$\in \rbool^n\}$ forms a basis of the vector space $\sF_\R$, making its dimension $2^n$.
+    \end{proof}
+\end{lemma}
+
+% Let $S \subset [n]$, we define \emph{monomials} $\chi_S = \Pi_{i \in S}.
+% X_i$. 
+
+\begin{lemma}\label{lemma: monomials form a basis}
+    The monomials $\{\chi_S\}_{S \in [n]}$ forms a basis of $sF$.
+
+    \begin{proof}
+        By lemma \ref{lemma: monomial representation},we know that the set of monomials $\set{\chi_S|S \subseteq [n]}$ spans $\sF_\R$. Additionally, there are $2^n$ such monomials, matching the dimension of the vector space $\sF_\R$. Hence, the set of monomials $\{\chi_S\}_{S \in [n]}$ forms a basis for $\sF_\R$.
+    \end{proof}
+\end{lemma}
+
+\begin{note}[Fourier Expansion Theorem]\label{fet}
+    We have seen that any $f \in \sF$ can be written as:
+    \begin{align*}
+        f = \sum_{s \subseteq [n]} \fhat(s)\chi_S
+    \end{align*}
+
+    Here $\fhat(s)$ is known as \emph{Fourier Coefficient} and the monomials $\chi_S$ are known as the \emph{Characteristic Functions} or \emph{Characters}. By lemma \ref{lemma: monomials form a basis}, this representation is unique. 
+\end{note}
+
+The domain we will be working with is an $n$-dimensional hamming cube. We can define a probability simplex over it. There are two possible ways to define two equivalent distributions over the domain:
+
+\begin{itemize}
+    \item An Uniform distribution over the vectors $\{-1,1\}^n$.
+    \item Each coordinate $x_i$ of $x$ is fixed independently to $-1$ or $1$ with equal probability.
+\end{itemize}
+
+\begin{definition}[Expectation over $\sF$]
+    \begin{align*}
+        \E[f] = \frac{\sum_{a \in {\{-1,+1\}^n}} f(a)}{2^n}
+    \end{align*}
+\end{definition}
+
+\begin{definition}[Inner Product]
+    The inner product for two functions $f,g \in \sF$ is defined as $\inn{f}{g} = \E[f(x)g(x)]$.
+\end{definition}
+
+\begin{definition}[p-th norm]
+    The $p$-th norm of a function $f \in \sF$ is defined as $\norm{f}_p = (\E[f^p(x)])^{\frac{1}{p}}$.
+\end{definition}
+
+\textbf{Spectral Norm:} When $p = 1$, then the norm $\norm{f}_1$ is called the spectral norm of $f$.
+
+\begin{lemma}
+    Calculate $\E[\chi_S] = \begin{dcases}
+        1 &if S = \emptyset\\ 0 &otherwise
+    \end{dcases}$  
+    \begin{proof}
+    if $\chi_S = \emptyset$, $\E[\chi_S] = E[1] = 1$.
+    When $S \neq \emptyset$,
+    \begin{align*}
+        \E[\chi_S]  &= \E[\Pi_{i \in S} x_i]\\
+                    &=\Pi_{i \in S} E[x_i] \\
+                    &= 0 
+    \end{align*}    
+    Because, if $S \neq \emptyset$, then we use the independence of $x_i$'s to break down the product int terms of $\E[x_i]$, each of which has value $0$.
+    \end{proof}
+\end{lemma}
+
+\begin{theorem}
+    The characteristic functions form an orthonormal basis.
+
+    \begin{proof}
+        \begin{align*}
+            \chi_S(x)\chi_T(x)  &= \Pi_{i \in S}x_i\Pi_{i \in T}x_i \\
+                                &= \Pi_{i \in S\cap T} x_i^2 \Pi_{i \in S \Delta T} x_i\\
+                                &= \Pi_{i \in S \Delta T} x_i\\
+                                &= \chi_{X\Delta Y} 
+        \end{align*}
+        Now, we have:
+        \begin{align*}
+            \inn{\chi_S}{\chi_T}  &= \E[\chi_S\chi_T]\\
+                            &= \E[\chi_{S\Delta T}]\\
+                            &= \begin{dcases}
+                                0 &\text{when $S \neq T$}\\
+                                1 &\text{when $S = T$}
+                            \end{dcases}
+        \end{align*}    
+    \end{proof}
+\end{theorem}
+
+\begin{lemma}[Fourier Coefficient Formula]
+    $\fhat(S) = \inn{f}{\chi_S}$
+
+    \begin{proof}
+        \begin{align*}
+            \inn{f}{\chi_S} &= \inn{\sum_{T \subseteq [n]} \fhat(T)\chi_T}{\chi_S}\\
+                            &=\sum_{T \subseteq [n]} \fhat(T)\inn{\chi_T}{\chi_S}\\
+                            &=\fhat(S)
+        \end{align*}    
+        The last equality is due to the fact that $\inn{\chi_T}{\chi_S} = 1$ only when $S = T$.
+    \end{proof}
+\end{lemma}
+
+
+
+\begin{lemma}
+    For $f,g \in \sF$, we have:
+    \begin{align*}
+        \inn{f}{g} &= \sum_{S \subseteq [n]} \fhat(S)\hat{g}(S)\\
+        \norm{f}_2 &= \sum_{S \subseteq [n]} (\fhat(S))^2\\
+    \end{align*}
+    \begin{proof}
+        \begin{align*}
+            \inn{f}{g}  &= \E[f(x)g(x)]\\
+                        &= \E[\sum_{S \subseteq [n]} \fhat(S)\chi_S \cdot \sum_{T \subseteq [n]} \ghat(T)\chi_T ]\\
+                        &= \E[\sum_{S \subseteq [n]} \fhat(S)\ghat(S)]\\
+                        &= \sum_{S \subseteq [n]} \fhat(S)\ghat(S)
+        \end{align*}
+    \end{proof}
+\end{lemma}
+
+\begin{definition}[distance(f,g)]
+    For $f,g \in \sF$, we define their distance as:
+    \begin{align*}
+        distance(f,g) = \frac{|\{a \in \{-1,1\}^n|f(a) \neq g(a)\}|}{2^n} = \Pr(f(x)\neq g(x))
+    \end{align*}
+\end{definition}
+
+\begin{lemma}$\inn{f}{g} = \Pr[f(x)=g(x)] - \Pr[f(x)\neq g(x)] = 1 - 2\times distance(f,g)$
+\begin{proof}
+    This comes from the simple observation that $\inn{f}{g} = \E[f(x)g(x)]$ and $f(x)g(x)$ is $1$ if $f(x) = g(x)$ and $-1$ otherwise.
+\end{proof}
+\end{lemma}
+
+\begin{lemma}
+    $\E[f] = \fhat(\phi)$
+    \begin{proof}
+        \begin{align*}
+            \E[f]   &= \E[f,\mathbf{1}]\\
+                    &= \inn{f}{\chi_\phi}\\
+                    &= \fhat(\phi)
+        \end{align*}
+    \end{proof}
+\end{lemma}
+
+\begin{lemma}
+    $\Var[f] = \sum_{S\subseteq [n],s \neq \phi} \fhat(S)^2$
+    \begin{align*}
+    \Var[f]     &= \E[f^2] -\E[f]^2\\
+                &= \sum_{S \subseteq [n]} \fhat^2(s) - \fhat(\phi)^2 \\
+                &= \sum_{S\subseteq [n],S \neq \phi} \fhat(S)^2
+    \end{align*}
+\end{lemma}
+
