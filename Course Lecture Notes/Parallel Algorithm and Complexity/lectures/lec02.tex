@@ -38,7 +38,7 @@ $\textsc{SORT}\leq \textsc{UCOUNT}$: Given $a_i=a_{i,n-1}\cdots, a_{i,1}a_{0,0}$
 %% Connection of \textsc{PRAM}s and CLASSES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Parallel Random-Access Machine (\textsc{PRAM})}
-In \cite{karpramachandran} many Parallel Machine Models are very well written and explained
+In \cite{RichardM.RAMACHANDRAN_1990} many Parallel Machine Models are very well written and explained
 \begin{definition}[\textsc{PRAM}]
 	A \textsc{PRAM} consists of an infinite sequence of processors $P_1,P_2,\dots$. Each processor $P_i$ has its local memory realized as an infinite sequence $R_{i,0},R_{i,1},R_{i,2},\dots$ of registers. Additionally there is a common (or global) memory given by the infinite sequence $C_0,C_1,C_2,\dots$ of registers. Each register can hold as value a natural number, stored in binary as a bit string.
 	
@@ -114,14 +114,14 @@ In \textsc{CRCW} allows simultaneous read and writes. Hence we have to resolve w
 \begin{proof} $\textsc{AC}^1\subseteq \textsc{CRCW}[\log n,poly(n)]$: (\textsc{COMMON}) For any gate all its parents have similarly reading  access of the memory of the gate and all its children has writing access. But we use \textsc{COMMON} model to resolve write conflicts. For an $\textsc{OR}$ gate if anyone evaluates to be 0 then it ignores and if its 1 then it writes 1. Thus everybody writes 1. Every $\textsc{OR}$ gate by  has 0 previously in the memory. Similarly for $\textsc{AND}$ gate its the opposite. 
 
 
-$\textsc{AC}^1\supseteq \textsc{CRCW}[\log n,poly(n)]$: \thmref{volthm2.56}, \cite{ac1crcwstockmeyervishkin}
+$\textsc{AC}^1\supseteq \textsc{CRCW}[\log n,poly(n)]$: \thmref{volthm2.56}, \cite{StockmeyerVishkin_1984_SoP}
 \end{proof}
 
 \begin{theorem}\label{volthm2.56}
 Let $f:\{0,1\}^*\to \{0,1\}^*$ be a length-respecting function computed by the  \textsc{CRCW-PRAM} $M$ in time $t(n)$. Let the processor bound of $M$ be $p(n)$. The there is a family $\mcC$ of circuits that computes $f$ where the depth of $\mcC$ is $O(t(n))$ and size is polynomial in $n+t(n)+p(n)$.
 \end{theorem}
 \begin{proof}
-See \cite[Theorem 2.56, Page  70]{VollmerCh2}
+See \cite[Theorem 2.56, Page  70]{Vollmer_1999}
 \end{proof}
 
 \section{Some Circuit Complexity Class Relations}

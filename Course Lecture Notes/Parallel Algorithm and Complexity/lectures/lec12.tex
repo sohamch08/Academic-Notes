@@ -79,7 +79,7 @@ $(\Leftarrow):$ We have $\forall \ M_1,M_2$ $sgn_D(M_1)=sgn_D(M_2)$. Now take a 
 
 Like in the forward direction proof we have 3 cases of occurrences of opposite direction edges. In order to obtain $\sg_2$ form $\tau\circ\sg_1$ we have a transposition multiplied to $\tau\circ\sg_1$ for each 2-cycle. Let there are $m$ many 2-cycles. So $m$ many transpositions are multiplied to $\tau\circ \sg_1$ and hence $(-1)^m$ is multiplied to $sgn(\tau\circ \sg_1)$ because of the transpositions due to the 2-cycles. Let $(-1)^{m'}$ is multiplied because of the transpositions of $C$. Now since there are $m+1$ many cycles in $\tau$ $sgn(\tau)=(-1)^{m+1}$. So therefore from $sgn(\sg_1)=sgn(\sg_2)$ we have $(-1)^m\times (-1)^{m'}=(-1)^{m+1}\implies (-1)^{m'}=(-1)$ Hence there are odd number of transpositions multiplied to $\tau\circ \sg_1$ because of $C$. Hence there are odd number of edges in $C$ which are in opposite directions following the 3 cases described in the forward direction proof. Hence for every nice cycle there are odd number of edges which are oddly oriented. Hence $D$ is a Pfaffian orientation.
 \end{proof}
-\begin{theorem}[\cite{Cayley+1849+93+96}]\label{thdetpfsq}
+\begin{theorem}[\cite{Cayley_1849_Sur}]\label{thdetpfsq}
 	$\det(T_G[X])=Pf(T_G)^2$
 \end{theorem}
 \begin{proof}
@@ -111,7 +111,7 @@ Therefore we get $Pf(T_G)^2=\det(T_G)$
 
 Now if we take any nice cycle $C$ in $G$. Then $G-V(C)$ has a matching. Since $C$ is even cycle the vertices in $C$ also has a matching. So we obtain a matching of $G$. Hence if there are odd number of vertices strictly inside $C$ there exists at least on edge of in the matching which connects a vertex inside $C$ and a vertex outside $C$. But this edge would be cutting the cycle $C$ at some point which is not possible since $G$ is planar graph. Therefore the number of vertices strictly inside $C$ is even. By the claim we can say that the number of edges in forward direction in $C$ are odd. Since this is true for any nice cycle in $G$. $D$ is Pfaffian.
 \end{proof}
-\begin{theorem}[\cite{planegraphpfaffian}]
+\begin{theorem}[\cite{Kasteleyn_1963_DSa}]
 	Every Planar graph is Pfaffian 
 \end{theorem}
 \begin{proof}
