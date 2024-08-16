@@ -1,0 +1,18 @@
+\chapter{Finding Closest Pair of Points}
+
+\parinf
+
+\textbf{{Problem}:}  Given a set of points find the closest pair of points  in $\bbR^2$. 
+
+\textbf{Input:} Set $S=\{(x_i,y_i)\mid x_i,y_i\in\bbR, \ \forall\ i\in[n]\}$. We denote $P_i=(x_i,y_i)$. 
+
+\textbf{Output:} $P_i,P_j$ that are at minimum $l_2$ distance i.e. minimize $\sqrt{(x_i-x_j)^2+(y_i-y_j)^2}$. 
+
+\parinn
+
+Now the naive algorithm for this will be checking all pairs of points and take their distance and output the minimum one. There are total $\binom{n }{2}$ possible choices of pairs of points. And calculating the distance of each pair takes $O(1)$ time. So it will take $O(n^2)$ times to find the closest pair of points. \parinf
+
+\textbf{Idea:} $\forall\ P_i,P_j\in S$ find distance $d(P_i,P_j)$ and return the minimum. Time taken is $O(n^2)$. 
+
+
+\chapter{Median Finding}

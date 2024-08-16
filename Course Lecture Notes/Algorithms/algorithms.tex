@@ -2,30 +2,31 @@
 \usepackage{url}
 
 \usepackage[nottoc,numbib]{tocbibind}
-\input{../preamble}
-\input{../letterfonts}
-\input{../macros}
+\input{../../preamble}
+\input{../../letterfonts}
+\input{../../macros}
 
-\definecolor{mycolor1}{HTML}{e65757}
-\definecolor{mycolor2}{HTML}{7a172d}
+\definecolor{mycolor1}{HTML}{1becff}
+\definecolor{mycolor2}{HTML}{2E3192}
 
 
- \newcommand*{\titre}[2]{\begingroup
- 	\newlength{\drop}
- 	\setlength{\drop}{0.1\textheight}
- 	\centering
- 	\settowidth{\unitlength}{\Huge\scshape\bfseries Hensel Lifting and Newton Iteration \hspace{10pt}}
- 	\vspace*{\baselineskip}
- 	\rule{\unitlength}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
- 	\rule{\unitlength}{0.4pt}\\[\baselineskip]
- 	{\huge\scshape\color{white} #1}\\[\baselineskip]
- 	{\large\itshape Instructor: #2}\\[0.2\baselineskip]
- 	\rule{\unitlength}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}
- 	\rule{\unitlength}{1.6pt}\\[4\baselineskip]
- 	{\Large\scshape Soham Chatterjee\\[10mm] sohamchatterjee999@gmail.com \\[2mm] Website: \href{https://sohamch08.github.io/}{\textcolor{black}{sohamch08.github.io}} }\par
- 	\vfill
- 	{\large\scshape 2024}\par
- 	\endgroup}
+\newcommand*{\titre}[2]{\begingroup
+	\newlength{\drop}
+	\setlength{\drop}{0.1\textheight}
+	\centering
+	\settowidth{\unitlength}{\Huge\scshape La matière et fsdfdsf\hspace{3pt}-temps}
+	\vspace*{\baselineskip}
+	\rule{\unitlength}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
+	\rule{\unitlength}{0.4pt}\\[\baselineskip]
+	{\Huge\scshape\color{white} #1}\\[\baselineskip]
+	{\large\itshape Instructor: #2}\\[\baselineskip]
+	{\large\itshape TIFR 2024, Aug-Dec}\\[0.2\baselineskip]
+	\rule{\unitlength}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}
+	\rule{\unitlength}{1.6pt}\\[4\baselineskip]
+	{\Large\scshape Scribe: Soham Chatterjee\\[10mm] sohamchatterjee999@gmail.com \\[2mm] Website: \colorlink{black}{https://sohamch08.github.io/}{sohamch08.github.io} }\par
+	\vfill
+	% {\large\scshape\color{white} 2024}\par
+	\endgroup}
 	
 
 
@@ -69,7 +70,7 @@
 		\node [xshift=\paperwidth/2,yshift=\paperheight/2] at (current page.south west)[minimum width=\paperwidth,minimum height=\paperheight,top color=mycolor1,bottom color=mycolor2]{};
 	\end{tikzpicture}\\[3\baselineskip]
 
-	\titre{Report: Polyhedral Combinatorics, Matroids \\[4mm] and Derandomization of Isolation Lemma}{Rohit Gurjar}
+	\titre{CSS.201.1 Algorithms}{Umang Bhaskar}
 \end{titlepage}
 
 
@@ -92,22 +93,10 @@
 %%%%%%% Body
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\setcounter{page}{1}
-%  \input{chapters/intro}
-%  \input{chapters/matroids}
-%  \input{chapters/matroid-intersection}
-%  \input{chapters/matroid-union}
-%  \input{chapters/linear-programming}
-%  \input{chapters/isolation-lemma}
- \input{chapters/perfect-matching-polytope}
- \input{chapters/bipartite-perfect-matching}
- \input{chapters/matroid-polytope}
- \input{chapters/linear-matroid-intersection}
- \input{chapters/matroid-parity-prob}
- \input{chapters/fractional-matroid-matching}
-\input{chapters/layered-graph-isolation}
+\input{chapters/lec1}
 
 %\printbibliography[heading=none]
 %\addcontentsline{toc}{chapter}{Bibliography}
 \bibliographystyle{alpha}
-\bibliography{matroid_refs}
+\bibliography{algorithms_refs}
 \end{document}
