@@ -1,5 +1,4 @@
 \chapter{Finding Closest Pair of Points}
-
 \begin{algoprob}
 	\problemtitle{$\prb{Find-Closest}(S)$}
 	\probleminput{Set $S=\{(x_i,y_i)\mid x_i,y_i\in\bbR, \ \forall\ i\in[n]\}$. We denote $P_i=(x_i,y_i)$.}
@@ -55,48 +54,50 @@ Below we will show a Divide and Conquer algorithm which gives a much faster algo
 \draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (59.2,204.85) -- (219,204.85) ;
 %Straight Lines [id:da7194776025159269] 
 \draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (134.31,142) -- (134,295) ;
-%Shape: Free Drawing [id:dp8916770831600931] 
-\draw  [line width=3] [line join = round][line cap = round] (103.41,175.52) .. controls (103.41,175.52) and (103.41,175.52) .. (103.41,175.52) ;
-%Shape: Free Drawing [id:dp7205705113694219] 
-\draw  [line width=3] [line join = round][line cap = round] (179.58,180.76) .. controls (179.58,180.76) and (179.58,180.76) .. (179.58,180.76) ;
-%Shape: Free Drawing [id:dp5723003936317532] 
-\draw  [line width=3] [line join = round][line cap = round] (166.27,245.7) .. controls (166.27,245.7) and (166.27,245.7) .. (166.27,245.7) ;
-%Shape: Free Drawing [id:dp19778776200558257] 
-\draw  [line width=3] [line join = round][line cap = round] (89.56,243.61) .. controls (89.56,243.61) and (89.56,243.61) .. (89.56,243.61) ;
-%Shape: Free Drawing [id:dp22218199289458562] 
-\draw  [line width=3] [line join = round][line cap = round] (150.29,213.23) .. controls (150.29,213.23) and (150.29,213.23) .. (150.29,213.23) ;
-%Shape: Free Drawing [id:dp9270216931653172] 
-\draw  [line width=3] [line join = round][line cap = round] (157.74,165.04) .. controls (157.74,165.04) and (157.74,165.04) .. (157.74,165.04) ;
-%Shape: Free Drawing [id:dp30577755696643694] 
-\draw  [line width=3] [line join = round][line cap = round] (89.03,195.42) .. controls (89.03,195.42) and (89.03,195.42) .. (89.03,195.42) ;
-%Shape: Free Drawing [id:dp8352617777328899] 
-\draw  [line width=3] [line join = round][line cap = round] (125.78,264.56) .. controls (125.78,264.56) and (125.78,264.56) .. (125.78,264.56) ;
-%Shape: Free Drawing [id:dp007121195742592068] 
-\draw  [line width=3] [line join = round][line cap = round] (190.77,255.13) .. controls (190.77,255.13) and (190.77,255.13) .. (190.77,255.13) ;
-%Shape: Free Drawing [id:dp9787419741468635] 
-\draw  [line width=3] [line join = round][line cap = round] (160.94,189.14) .. controls (160.94,189.14) and (160.94,189.14) .. (160.94,189.14) ;
-%Shape: Free Drawing [id:dp05782734388952204] 
-\draw  [line width=3] [line join = round][line cap = round] (114.06,215.32) .. controls (114.06,215.32) and (114.06,215.32) .. (114.06,215.32) ;
-%Shape: Free Drawing [id:dp020809307556031387] 
-\draw  [line width=3] [line join = round][line cap = round] (122.59,184.95) .. controls (122.59,184.95) and (122.59,184.95) .. (122.59,184.95) ;
-%Shape: Free Drawing [id:dp9236450749534464] 
-\draw  [line width=3] [line join = round][line cap = round] (117.26,240.46) .. controls (117.26,240.46) and (117.26,240.46) .. (117.26,240.46) ;
-%Shape: Free Drawing [id:dp9814876804759312] 
-\draw  [line width=3] [line join = round][line cap = round] (185.44,221.08) .. controls (185.44,221.08) and (185.44,221.08) .. (185.44,221.08) ;
-%Shape: Free Drawing [id:dp32677091280799897] 
-\draw  [line width=3] [line join = round][line cap = round] (190.77,195.95) .. controls (190.77,195.95) and (190.77,195.95) .. (190.77,195.95) ;
-%Shape: Free Drawing [id:dp7375869135394859] 
-\draw  [line width=3] [line join = round][line cap = round] (122.59,164) .. controls (122.59,164) and (122.59,164) .. (122.59,164) ;
-%Straight Lines [id:da2008032684012] 
-\draw [color={rgb, 255:red, 253; green, 10; blue, 10 }  ,draw opacity=1 ]   (122.48,164.63) -- (122.48,184) ;
+
+
+\draw [color={rgb, 255:red, 253; green, 10; blue, 10 }  ,draw opacity=1 ]   (122.59,164) -- (122.59,184.95) ;
 %Straight Lines [id:da715666979908854] 
-\draw [color={rgb, 255:red, 253; green, 10; blue, 10 }  ,draw opacity=1 ]   (180.01,181.07) -- (190.66,195.74) ;
+\draw [color={rgb, 255:red, 253; green, 10; blue, 10 }  ,draw opacity=1 ]   (179.58,180.76) -- (190.77,195.95) ;
 %Straight Lines [id:da6970165255401948] 
 \draw [color={rgb, 255:red, 255; green, 0; blue, 0 }  ,draw opacity=1 ]   (215.7,183.06) -- (189.96,187.93) ;
 \draw [shift={(188,188.3)}, rotate = 349.29] [color={rgb, 255:red, 255; green, 0; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
 %Straight Lines [id:da5840245566165858] 
 \draw [color={rgb, 255:red, 255; green, 0; blue, 0 }  ,draw opacity=1 ]   (69.21,156.87) -- (117.94,175.03) ;
 \draw [shift={(119.82,175.73)}, rotate = 200.44] [color={rgb, 255:red, 255; green, 0; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+%Shape: Free Drawing [id:dp8916770831600931] 
+\filldraw (103.41,175.52) circle (1pt) ;
+%Shape: Free Drawing [id:dp7205705113694219] 
+\filldraw (179.58,180.76) circle (1pt);
+%Shape: Free Drawing [id:dp5723003936317532] 
+\filldraw (166.27,245.7) circle (1pt);
+%Shape: Free Drawing [id:dp19778776200558257] 
+\filldraw (89.56,243.61) circle (1pt);
+%Shape: Free Drawing [id:dp22218199289458562] 
+\filldraw (150.29,213.23) circle (1pt);
+%Shape: Free Drawing [id:dp9270216931653172] 
+\filldraw (157.74,165.04) circle (1pt);
+%Shape: Free Drawing [id:dp30577755696643694] 
+\filldraw (89.03,195.42) circle (1pt);
+%Shape: Free Drawing [id:dp8352617777328899] 
+\filldraw (125.78,264.56) circle (1pt);
+%Shape: Free Drawing [id:dp007121195742592068] 
+\filldraw (190.77,255.13) circle (1pt);
+%Shape: Free Drawing [id:dp9787419741468635] 
+\filldraw (160.94,189.14) circle (1pt);
+%Shape: Free Drawing [id:dp05782734388952204] 
+\filldraw (114.06,215.32) circle (1pt);
+%Shape: Free Drawing [id:dp020809307556031387] 
+\filldraw (122.59,184.95) circle (1pt);
+%Shape: Free Drawing [id:dp9236450749534464] 
+\filldraw (117.26,240.46) circle (1pt);
+%Shape: Free Drawing [id:dp9814876804759312] 
+\filldraw (185.44,221.08) circle (1pt);
+%Shape: Free Drawing [id:dp32677091280799897] 
+\filldraw (190.77,195.95) circle (1pt);
+%Shape: Free Drawing [id:dp7375869135394859] 
+\filldraw (122.59,164) circle (1pt) ;
+%Straight Lines [id:da2008032684012] 
 %Curve Lines [id:da7178341035011966] 
 \draw    (82,278) .. controls (82,288) and (103,277) .. (105,290) ;
 %Curve Lines [id:da31697667567298216] 
@@ -167,48 +168,48 @@ So we take the strip of radius $\delta_{min}$ around $\ovx$. Define $T=\{P_i\in 
     \draw [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (59.2,204.85) -- (219,204.85) ;
     %Straight Lines [id:da7194776025159269] 
     \draw [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (134.31,142) -- (134,295) ;
-    %Shape: Free Drawing [id:dp8916770831600931] 
-    \draw  [line width=3] [line join = round][line cap = round] (103.41,175.52) .. controls (103.41,175.52) and (103.41,175.52) .. (103.41,175.52) ;
-    %Shape: Free Drawing [id:dp7205705113694219] 
-    \draw  [line width=3] [line join = round][line cap = round] (179.58,180.76) .. controls (179.58,180.76) and (179.58,180.76) .. (179.58,180.76) ;
-    %Shape: Free Drawing [id:dp5723003936317532] 
-    \draw  [line width=3] [line join = round][line cap = round] (166.27,245.7) .. controls (166.27,245.7) and (166.27,245.7) .. (166.27,245.7) ;
-    %Shape: Free Drawing [id:dp19778776200558257] 
-    \draw  [line width=3] [line join = round][line cap = round] (89.56,243.61) .. controls (89.56,243.61) and (89.56,243.61) .. (89.56,243.61) ;
-    %Shape: Free Drawing [id:dp22218199289458562] 
-    \draw  [line width=3] [line join = round][line cap = round] (150.29,213.23) .. controls (150.29,213.23) and (150.29,213.23) .. (150.29,213.23) ;
-    %Shape: Free Drawing [id:dp9270216931653172] 
-    \draw  [line width=3] [line join = round][line cap = round] (157.74,165.04) .. controls (157.74,165.04) and (157.74,165.04) .. (157.74,165.04) ;
-    %Shape: Free Drawing [id:dp30577755696643694] 
-    \draw  [line width=3] [line join = round][line cap = round] (89.03,195.42) .. controls (89.03,195.42) and (89.03,195.42) .. (89.03,195.42) ;
-    %Shape: Free Drawing [id:dp8352617777328899] 
-    \draw  [line width=3] [line join = round][line cap = round] (125.78,264.56) .. controls (125.78,264.56) and (125.78,264.56) .. (125.78,264.56) ;
-    %Shape: Free Drawing [id:dp007121195742592068] 
-    \draw  [line width=3] [line join = round][line cap = round] (190.77,255.13) .. controls (190.77,255.13) and (190.77,255.13) .. (190.77,255.13) ;
-    %Shape: Free Drawing [id:dp9787419741468635] 
-    \draw  [line width=3] [line join = round][line cap = round] (160.94,189.14) .. controls (160.94,189.14) and (160.94,189.14) .. (160.94,189.14) ;
-    %Shape: Free Drawing [id:dp05782734388952204] 
-    \draw  [line width=3] [line join = round][line cap = round] (114.06,215.32) .. controls (114.06,215.32) and (114.06,215.32) .. (114.06,215.32) ;
-    %Shape: Free Drawing [id:dp020809307556031387] 
-    \draw  [line width=3] [line join = round][line cap = round] (122.59,184.95) .. controls (122.59,184.95) and (122.59,184.95) .. (122.59,184.95) ;
-    %Shape: Free Drawing [id:dp9236450749534464] 
-    \draw  [line width=3] [line join = round][line cap = round] (117.26,240.46) .. controls (117.26,240.46) and (117.26,240.46) .. (117.26,240.46) ;
-    %Shape: Free Drawing [id:dp9814876804759312] 
-    \draw  [line width=3] [line join = round][line cap = round] (185.44,221.08) .. controls (185.44,221.08) and (185.44,221.08) .. (185.44,221.08) ;
-    %Shape: Free Drawing [id:dp32677091280799897] 
-    \draw  [line width=3] [line join = round][line cap = round] (190.77,195.95) .. controls (190.77,195.95) and (190.77,195.95) .. (190.77,195.95) ;
-    %Shape: Free Drawing [id:dp7375869135394859] 
-    \draw  [line width=3] [line join = round][line cap = round] (122.59,164) .. controls (122.59,164) and (122.59,164) .. (122.59,164) ;
     %Straight Lines [id:da2008032684012] 
-    \draw [color={rgb, 255:red, 253; green, 10; blue, 10 }  ,draw opacity=1 ]   (122.48,164.63) -- (122.48,184) ;
+    \draw [color={rgb, 255:red, 253; green, 10; blue, 10 }  ,draw opacity=1 ]   (122.59,164) -- (122.59,184.95) ;
     %Straight Lines [id:da715666979908854] 
-    \draw [color={rgb, 255:red, 253; green, 10; blue, 10 }  ,draw opacity=1 ]   (180.01,181.07) -- (190.66,195.74) ;
+    \draw [color={rgb, 255:red, 253; green, 10; blue, 10 }  ,draw opacity=1 ]   (179.58,180.76) -- (190.77,195.95) ;
     %Straight Lines [id:da6970165255401948] 
     \draw [color={rgb, 255:red, 255; green, 0; blue, 0 }  ,draw opacity=1 ]   (215.7,183.06) -- (189.96,187.93) ;
     \draw [shift={(188,188.3)}, rotate = 349.29] [color={rgb, 255:red, 255; green, 0; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
     %Straight Lines [id:da5840245566165858] 
     \draw [color={rgb, 255:red, 255; green, 0; blue, 0 }  ,draw opacity=1 ]   (69.21,156.87) -- (117.94,175.03) ;
     \draw [shift={(119.82,175.73)}, rotate = 200.44] [color={rgb, 255:red, 255; green, 0; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+    %Shape: Free Drawing [id:dp8916770831600931] 
+    \filldraw (103.41,175.52) circle (1pt);
+    %Shape: Free Drawing [id:dp7205705113694219] 
+    \filldraw (179.58,180.76) circle (1pt);
+    %Shape: Free Drawing [id:dp5723003936317532] 
+    \filldraw (166.27,245.7) circle (1pt);
+    %Shape: Free Drawing [id:dp19778776200558257] 
+    \filldraw (89.56,243.61) circle (1pt);
+    %Shape: Free Drawing [id:dp22218199289458562] 
+    \filldraw (150.29,213.23) circle (1pt);
+    %Shape: Free Drawing [id:dp9270216931653172] 
+    \filldraw (157.74,165.04) circle (1pt);
+    %Shape: Free Drawing [id:dp30577755696643694] 
+    \filldraw (89.03,195.42) circle (1pt);
+    %Shape: Free Drawing [id:dp8352617777328899] 
+    \filldraw (125.78,264.56) circle (1pt);
+    %Shape: Free Drawing [id:dp007121195742592068] 
+    \filldraw (190.77,255.13) circle (1pt);
+    %Shape: Free Drawing [id:dp9787419741468635] 
+    \filldraw (160.94,189.14) circle (1pt);
+    %Shape: Free Drawing [id:dp05782734388952204] 
+    \filldraw (114.06,215.32) circle (1pt);
+    %Shape: Free Drawing [id:dp020809307556031387] 
+    \filldraw (122.59,184.95) circle (1pt);
+    %Shape: Free Drawing [id:dp9236450749534464] 
+    \filldraw (117.26,240.46) circle (1pt);
+    %Shape: Free Drawing [id:dp9814876804759312] 
+    \filldraw (185.44,221.08) circle (1pt);
+    %Shape: Free Drawing [id:dp32677091280799897] 
+    \filldraw (190.77,195.95) circle (1pt);
+    %Shape: Free Drawing [id:dp7375869135394859] 
+    \filldraw (122.59,164) circle (1pt);
     %Curve Lines [id:da7178341035011966] 
     \draw    (82,278) .. controls (82,288) and (103,277) .. (105,290) ;
     %Curve Lines [id:da31697667567298216] 
@@ -290,7 +291,7 @@ Hence by the above lemma for each $P_i\in T_y$ there are at most 8 points in $T_
 	%Straight Lines [id:da06933695064552192] 
 	\draw  [dash pattern={on 4.5pt off 4.5pt}]  (293.43,114.85) -- (324.43,114.85) ;
 	%Shape: Free Drawing [id:dp435305414025839] 
-	\draw  [line width=3] [line join = round][line cap = round] (208,73.17) .. controls (208,73.17) and (208,73.17) .. (208,73.17) ;
+	\filldraw (208,73.17) circle (1pt) ;
 	%Shape: Rectangle [id:dp914080675609527] 
 	\draw  [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=0.3 ] (200,73.3) -- (293.43,73.3) -- (293.43,114.85) -- (200,114.85) -- cycle ;
 	
