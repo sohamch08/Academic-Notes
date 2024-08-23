@@ -65,7 +65,7 @@ After sorting each of the groups we takes the medians of each group. Let $x_{i,3
 		$S_i\longleftarrow i^{th}$ block of 5 elements in $S$ for $i\in [t-1]$\; $S_t\longleftarrow$ Whatever is left in $S$\;
 		\For{$i\in [t]$}{Sort $S_i$, Let $h_i$ be the median of $S_i$}
 		$T\longleftarrow \{h_i\mid i\in[t]\}$\;
-		\Return{$\prb{Rank-Find}\lt(T,\lt\lfloor \frac{t}{2}\rt\rceil\rt)$}\;
+		\Return{$\prb{Rank-Find}\lt(T,\lt\lfloor \frac{t}{2}\rt\rfloor\rt)$}\;
 	}
 \caption{\prb{Approximate-Split}$(S)$}
 \end{algorithm}
@@ -84,3 +84,6 @@ So in the picture among elements in upper left the highest element is $x_{i,3}$ 
 \begin{proof}
 	Now number of elements in $S$ smaller than $x_{i,3}\geq |S_u|\geq \frac{n}4$. The number of elements greater than $x_{i,3}\geq |S_d|\geq \frac{n}{4}$. So number of elements in $S$ smaller than $x_{i,3}\leq n-$ number of elements greater than $x_{i,3}\leq n-\frac{n}4=\frac{3n}{4}$.
 \end{proof}
+Hence the \prb{Approximate-Split}$(S)$ takes time $$T_{AS}(n)=O(n)+T_{RF}\lt(\frac{n}{5}\rt)$$
+\subsection{Time Complexity}
+Replacing $T_{AS}(n)$ in the time complexity equation of $T_{RF}(n)$ we get the equation:$$T_{RF}(n)\leq O(n)+T_{RF}\lt(\frac{n}5\rt)+T_{RF}\lt(\frac{3n}{4}\rt)$$Let $T_{RF}(n)\leq kn++T_{RF}\lt(\frac{n}5\rt)+T_{RF}\lt(\frac{3n}{4}\rt)$. We claim that $T_{RF}(n)\leq cn$ for some $c\in \bbN$ for all $n\geq n_0$ where $n_0\in \bbN$. By induction we have $$T_{RF}(n)\leq kn+\frac{cn}{5}+\frac{3cn}{4}=\lt(k+\frac{19c}{20}\rt)n$$To have  $k+\frac{19c}{20}\leq c$ we have to have $k+\frac{19c}{20}\leq c\iff c\geq 20k$. So take $c\geq 20k$ and our claim follows. Hence $T_{RF}(n)=O(n)$. Since we can find any $k^{th}$ smallest number in a given set of distinct integers in linear time we can also find the median in linear time.
