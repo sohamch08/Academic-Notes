@@ -1,10 +1,15 @@
 \chapter{Perfect Matching Polytope}
 \section{Matching Polytope}
+\dfn[m-polytope]{Matching Polytope}{
+	Let $G=(V,E)$ be a graph. For any matching $M$ of $G$, consider the incidence vector $x^M=(x_e)_{e\in E}\in \bbR^E$ given by $$c_e^M=\begin{cases}
+		1& \text{if $e\in M$}\\  0 & \text{o/w}
+	\end{cases}$$The matching polytope of the graph $G$ is defined to be the convex hull of all its matching points, $$\mcM(G)=\conv\{x^M\mid M\text{ is a matching in $G$}\}$$
+}
 \section{Perfect Matching Polytope}
 \dfn[pm-polytope]{Perfect Matching Polytope}{
 	Let $G=(V,E)$ be a graph. For any perfect matching $M$ of $G$, consider the incidence vector $x^M=(x_e)_{e\in E}\in \bbR^E$ given by $$c_e^M=\begin{cases}
 		1& \text{if $e\in M$}\\  0 & \text{o/w}
-	\end{cases}$$ For any perfect matching $M$ of $G$ this vector $x^M$ is called as a \textit{Perfect Matching Point}. The bipartite perfect matching polytope of the graph $G$ is defined to the convex hull of all its perfect matching points,  $$PM(G)=\conv\{x^M\mid \text{$M$ is a perfect matching in $G$}\}$$
+	\end{cases}$$ For any perfect matching $M$ of $G$ this vector $x^M$ is called as a \textit{Perfect Matching Point}. The perfect matching polytope of the graph $G$ is defined to the convex hull of all its perfect matching points,  $$PM(G)=\conv\{x^M\mid \text{$M$ is a perfect matching in $G$}\}$$
 }
 % https://courses.engr.illinois.edu/cs598csc/sp2010/Lectures/Lecture9.pdf
 \section{Bipartite Perfect Matching Polytope}

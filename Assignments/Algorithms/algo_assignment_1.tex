@@ -61,116 +61,37 @@
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
 	\textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 1}\\
-		Email: \href{sohamc@cmi.ac.in}{sohamc@cmi.ac.in} \hfill Roll: BMC202175\\
-		\normalsize Course: Algebra and Computation \hfill Date: \today}
+%		Email: \href{soham.chatterjee@tifr.res.in}{soham.chatterjee@tifr.res.in} \hfill
+		\normalsize Course: Algorithms \hfill Date: \today}
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
 \begin{problem}{%problem statement
-		Problem Set 1: P5
+		P3\hfill  (15 marks)
 	}{p1% problem reference text
 }
-For a prime $p$ and a positive integer $e$, prove that $\bbZ_{p^e}^*$ is cyclic.
+Solve the recurrences: \begin{enumerate}[label=(\roman*)]
+	\item $T(n)=2 T(n / 2)+n \log n$, 
+	\item $T(n)=7 T(n / 3)+n^2$, 
+	\item $T(n)=\sqrt{n} T(\sqrt{n})+n$.
+\end{enumerate}
+
 \end{problem}
-\solve{
-	We will prove this in 3 stages: $e=1$, $e=2$, $e> 2$.
-	
-	\section*{Case 1: $e=1$}
-	\begin{lemma}\label{totprop}
-		$\sum\limits_{d\mid n} \varphi(d)=n$
-	\end{lemma}
-	\begin{proof}
-		Consider the list of numbers $S=\lt\{\frac1n,\frac2n,\dots,\frac{n}{n}\rt\}$. If we express every number in $S$ as simplified form i.e. $\frac{p}{q}$ form where $gcd(p,q)=1$. Then the denominators are all the divisors of $n$. 
-		
-		
-		Then for any $k\in[n]$ we have $$\frac{k}{n}=\frac{\frac{k}{gcd(k,n)}}{\frac{n}{gcd(k,n)}}$$Denote $d_k\coloneqq\frac{n}{gcd(k,n)}$ then $d_k$ is a factor of $n$. And since $gcd\lt( \frac{k}{gcd(k,n)}, \frac{n}{gcd(k,n)} \rt)=1$ we have $\frac{k}{gcd(k,n)}\in \bbZ_{d_k}^*$. Let $k\in\bbZ_{d}^*$ then suppose $l$ is such that $d\times l=n$ then the fraction $\frac{k}{d}=\frac{k\times l}{n}\in S$ and its simplified form is infact $\frac{k}{d}$.
-		
-		Hence for any $d\mid n$, the number of fractions with denominator $d$ is $\varphi(d)$, since for all such fractions the numerators are the elements of $\bbZ_{d}^*$. Therefore we have $\sum\limits_{d\mid n} \varphi(d)=n$.
-	\end{proof}
-	
-	Now define for $d$ such that $d\mid p-1$, $S_d=\{a\in \bbZ_p^*\mid ord(a)=d\}$. Then we have the following lemma:
-	
-	\begin{lemma}
-		$|S_d|=\varphi(d)$
-	\end{lemma}
-	\begin{proof}
-		First we will show that $|S_d|\in\{0,\varphi(d)\}$ then we will show that $|S_d|=\varphi(d)$. Now if $|S_d|\neq 0$ then $\exs\ a\in S_d$ such that $ord(a)=d$. Then consider the polynomial $x^d-1$ over $\bbF_p$. $1,a,a^2,\dots,a^{p-1}$ are its distinct roots. Since the degree is $d$ these are the only roots of the polynomial. Now $a^k$ has order $\frac{d}{gcd(d,k)}$. Then the elements which has order $d$ are $a^k$ where $gcd(k,d)=1$. Hence there are $\varphi(d)$ many powers of $a$ which has order $d$. Therefore $|S_d|\in\{0,\varphi(d)\}$.
-		
-		Now we have by \lmref{totprop} $$\sum_{d\mid p-1}\varphi(d)=p-1$$Now $\{S_d\colon d\mid p-1\}$ is a partition of $\bbZ_P^*$. Therefore $\sum\limits_{d\mid p-1}|S_d|=p-1$. Hence $$p-1=\sum\limits_{d\mid p-1}|S_d|\leq \sum\limits_{d\mid p-1}\varphi(d)=p-1\iff |S_d|=\varphi(d)\ \forall\ d\text{ such that } d\mid p-1$$
-	\end{proof}
-	
-	Hence the number of elements in $\bbZ_p^*$ which has order $d$ such that $d\mid p-1$
-	
-	Now we will introduce another definition. Let $H$ be a group. Then Exponent of $H$ is the smallest number $n$ such that $\forall a\in H$, $a^n=1$. Now we will show that every finite abelian group has an element which has the order to be exponent of the group. Then we will show that $\bbZ_p^*$ has exponent $p-1$. With that we can say $\bbZ_p^*$ has an element which has order $p-1$. Therefore $\bbZ_p^*$ is cyclic since $|\bbZ_p^*|=p-1$ because $\bbZ_p^*$ is a finite abelian group.
-	\begin{lemma}
-		If $G$ is a finite abelian group with exponent $n$ then $\exs\ g\in G$ such that $ord(g)=n$.
-	\end{lemma}
-	\begin{proof}
-		By structure theorem we have $$G\cong \bbZ_{q_1}\times \cdots \times \bbZ_{q_m}$$ where $q_1,\dots, q_m$ are primes powers. Now $\forall\ g\in G$, $ord(g)\mid lcm(q_1,\dots,q_m)$. The element in $\bbZ_{q_1}\times \cdots \times \bbZ_{q_m}$, $(1,1,\dots, 1)$ has order $lcm(q_1,\dots,q_m)$. So the exponent of $G$ is $lcm(q_1,\dots,q_m)$ and the corresponding element of $(1,\dots,1)$ has order $lcm(q_1,\dots,q_m)$.
-	\end{proof}
-	\begin{lemma}
-		$\bbZ_p^*$ has exponent $p-1$.
-	\end{lemma}
-	\begin{proof}
-		Over $\bbF_p$ the equation $x^{p-1}-1$ has $p-1$ roots which are all the elements of $\bbZ_p^*$. There does not exists any polynomial of lower degree which satisfies this property. Hence the exponent of $\bbZ_p^*$ is $p-1$.
-	\end{proof}
-	
-	Therefore there exists an element of $\bbZ_p^*$ which has order $p-1$. Therefore the group $\bbZ_p^*$ is cyclic.
-	\section*{Case 2: $e=2$}
-	\begin{lemma}
-		Let $g$ be generator of the group $\bbZ_p^*$. Then either $g$ or $g+p$ is generator for $\bbZ_{p^2}^*$.
-	\end{lemma}
-	
-	\begin{proof}
-		We have $|\bbZ_{p^2}^*|\varphi(p^2)=p(p-1)$. Let $g$ has order $m$ in $\bbZ_{p^2}^*$. Then $g^p\equiv 1\bmod p$. Hence $p-1\mid m$. Therefore $m=p(p-1)$ or $m=p-1$ since $m\mid p(p-1)$. If its the first case then we are done. For the later take the element $g+p$. Again let its order is $m'$. Then $(g+p)^{m'}\equiv 1\bmod p$. So $p-1\mid m'$. Hence $m'$ can be either $p-1$ or $p(p-1)$. If it is also $p-1$ then we have \begin{align*}
-			1\equiv (g+p)^{p-1} & \equiv g^{p-1}+(p-1)g^{p-2}p+p^2(\cdots)\bmod {p^2}\\
-			& \equiv g^{p-1}+p(p-1)g^{p-2}\bmod {p^2}\\
-			& \equiv 1+p(p-1)g^{p-2}\bmod {p^2}
-		\end{align*}
-		Therefore $$p(p-1)g^{p-2}\equiv 0\bmod{p^2}\iff p\mid (p-1)g^{p-2}$$ which is not possible since $gcd(p,p-1)=1$ and $gcd(p,g)=1$. Contradiction. Hence at least one of $g$ and $g+p$ has order $p(p-1)$.  
-	\end{proof}
-	
-	With this lemma we have an element of $\bbZ_{p^2}^*$ which has order $p(p-1)=|\bbZ_{p^2}^*|$. So $\bbZ_{p^2}^*$ is cyclic.
-	
-	
-	
-	
-	\section*{Case 3: $e> 2$}
-	\begin{lemma}
-		$(1+p)^{p^k}\equiv 1+p^{k+1}\bmod {p^{k+2}}$
-	\end{lemma}
-	\begin{proof}
-		\begin{align*}
-			(1+p)^{p^k}& \equiv \lt((1+p)^p   \rt)^{p^{k-1}}\\
-			& \equiv \lt( 1+p^2+\binom{p}{2}p^2 \rt)^{p^{k-1}}\bmod {p^{k+2}}\\
-			& \equiv 1+p^2\times p^{k-1}\bmod p^{k+2}\\
-			&\equiv 1+p^{k+1}\bmod{p^{k+2}}
-		\end{align*}
-	\end{proof}
-	Therefore $$(1+p)^{p^{k+1}}\equiv(1+p^{k+1})^{p}\equiv 1+p\times p^{k+1}\equiv 1+p^{k+2}\equiv 1\bmod{p^{k+2}}$$Hence $(1+p)$ has order $p^{k+1}$ in $\bbZ_{p^{k+2}}^*$. Or we can say $1+p$ has order $p^{e-1}$ is $\bbZ_{p^e}^*$. 
-	
-	Let $g$ be the generator of $\bbZ_p^*$. Then let the order of $g$ in $\bbZ_{p^e}^*$ is $m$. Then $p-1\mid m$. So $g$ has order $p^k(p-1)$. Therefore the number $g(1+p)\bmod {p^e}$ has order $p^{e-1}(1-p)=\varphi(p^e)$. Therefore $\bbZ_{p^e}^*$ is a cyclic group.
-	
+\solve{	
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement
-		Problem Set 1: P6
+		P4\hfill  (5 marks)
 	}{p2% problem reference text
 	}
-Let $N=p_1p_2\cdots p_k$ be a Carmichael number and $p_i$'s are primes. In class we have seen that given $N$ as input, a single pass of Miller-Robin primality test outputs a nontrivial factor of $N$ with probability $\geq \frac12$. We can do a finer calculation and get better success probability. Show that a single pass of Miller-Robin primality test outputs a nontrivial factor of $N$ with probability $1-\frac1{2^{k-1}}$.
+ Give the best upper bounds you can on the $n$th Fibonacci number $F_n$, where $F_n=F_{n-1}+F_{n-2}$ and $F_1=F_2=1$ are conditionally independent given $C$ if and only if $A$ and $B$ are independent.
 \end{problem}
-\solve{
-	Let $\phi$ be the isomorphism of $$\bbZ_N^*\cong \bbZ_{p_1}^*\times \cdots \times \bbZ_{p_k}^*$$Now suppose $N-1=2^vm$ where $m$ is odd. Let $a\in \{2,\dots, N-2\}$ Let $l_a$ be the minimum such that  $a^{2^{l_a+1}m} \bmod N\equiv 1$. Surely for all $a$, $l_a>0$ and $l_a\leq N-1$ Now take $l=\max\{l_a\mid a\in \{2,\dots, N-2\}\}$. Therefore $l>0$ and $l\leq N-1$. For all $k<l$ there exists $a\in\{2,\dots, N-2\}$ such that  $a^{2^{k+1}m}\not\equiv 1\bmod N$. 
-	
-	Now consider the group $$G_N=\{a\in \bbZ_N^*\mid a^{2^lm}\equiv \pm 1\bmod N\}$$Now there exists at least one $\tda$ such that $\tda^{2^lm}\equiv -1\bmod N$ since otherwise for all $a\in \{2,\dots N-2\}$, $l_a\leq l-1$. Then $\max\{l_a\mid a\in\{2,\dots ,N-2\}\}\leq l-1$ which contradicts that the value we got is $l$. Hence there exist a $\tda\in \bbZ_N^*$ such that $\tda^{2^lm}\equiv -1\bmod N$.
-	
-	Now $\phi(\tda^{2^lm})=(-1,\dots,-1)$. Suppose $\phi(\tda)=(\tda_1,\dots, \tda_k)$. Then we have $$\forall\ i\in[k],\ \tda_i^{2^lm}\equiv -1\bmod p_i$$Now for any $i\in[k]$ the corresponding element in $\bbZ_N^*$ of $(1,\dots,1,\tda_i,1,\dots,1)$ denote by $g$. Then $g^{2^lm}\not\equiv -1\bmod N$. There are $k$ many slots here and in each slot we have 2 options $1$ or $\tda_i$. Hence with above like construction we can have at most $2^k$ many elements. Among these the elements $(1,\dots, 1)$ and $(\tda_1,\dots,\tda_k)$ are in $G_N$. All the other elements remain in distict cosets of $G_N$ in $\bbZ_N^*/G_N$. Hence $$Pr_{a\in_R \bbZ_N^*}[a\in \bbZ_N^*-G_N]\geq \frac{2^k-2}{2^k}=1-\frac1{2^{k-1}}$$Hence $$Pr[\text{Primality Test outputs a nontrivial factor of $N$}]\geq 1-\frac1{2^{k-1}}$$
-	
+\solve{	
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -178,123 +99,90 @@ Let $N=p_1p_2\cdots p_k$ be a Carmichael number and $p_i$'s are primes. In class
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement
-		Problem Set 1: P7
+		P5\hfill  (10 marks)
 	}{p3% problem reference text
 	}
-	Design a randomized polynomial time algorithm such that given $N$ and $\varphi(N)$ as inputs, it outputs a nontrivial factor of $N$ with probability at least $\frac12$, where $\varphi(\cdot)$ is the Euler’s totient function
+Consider two sets $A$ and $B$, each having $n$ integers in the range from 0 to $10 n$. We wish to compute the Cartesian sum of $A$ and $B$, defined by
+$$
+C=\{x+y: x \in A, y \in B\}
+$$
+
+Note that the integers in $C$ are in the range $0$ to $20n$ . We want to find the elements in $C$ and the number of times each element of $C$ is realized as a sum of elements in $A$ and $B$. Give an algorithm that solves the problem in $O(n \log n)$ time, and prove correctness.
+
 \end{problem}
 \solve{
-	We first run Miler-Robin Test. If it outputs prime then we output that. Otherwise if it outputs a factor we also output that. If it outputs `Composite' then we do the following:
-	
-	Let $\varphi(N)=2^st(p-1)$ where $p\mid N$ and $t$ is odd. If $a$ is a non quadratic residue then $$a^{\frac{\varphi(N)}{2^{s+1}}}\bmod N\equiv \lt[a^{\frac{p-1}{2}}\rt]^{t}\bmod p\equiv -1\bmod p$$ Let for $p_i$ the corresponding $s,t$ are denoted by $s_i,t_i$. WLOG assume $s_1\geq s_2\geq \cdots \geq s_k$. Then if $a$ is a Non-Quadratic Residue wrt $p_1$ and Quadratic Residue wrt $p_2$ then $$a^{\frac{\phi(N)}{2^{s_1+1}}}\bmod N\equiv \lt[a^{\frac{p_1-1}{2}}\rt]^{t_1}\bmod p_1\equiv -1\bmod N\text{ but }\lt[a^{\frac{\phi(N)}{2^{s_2+1}}}\rt]^{2^{s_2-s_1}}\bmod p_1\equiv \lt[a^{\frac{p_2-1}{2}}\rt]^{2^{s_2-s_1}\cdot t_1}\bmod p_2\equiv 1\bmod p_2$$Hence $$a^{\frac{\varphi(N)}{2^{s_1+1}}}\not\equiv \pm 1\bmod N$$Now probability that any number is Non-Quadratic Residue modulo $p_1$ but Quadratic residue modulo $p_2$ is $\frac14$. Therefore $a^{\frac{\varphi{N}}{2^{t_1+1}}}$ has a common factor $p_1$ with $N$ but $N$ does not divides it. 
-	
-	Therefore in the algorithm if the Miller Robin test returns `Composite' then we will take a random $a\in\{2,\dots,N-2\}$ then we will compute lowest number $l$ such that 
-	$\lt[a^{\frac{\phi(N)}{2^{l+1}}}\rt]^m\equiv 1\bmod N$ 
-	where $m$ is odd and $\phi(N)=2^k\cdot m$ then we will take 
-	$gcd\lt(\lt[a^{\frac{\phi(N)}{2^{l+1}}}\rt]^m,N\rt)$. 
-	This will return a nontrivial factor of $N$. We will do this procedure $3$ times if the $gcd$ returned is 1. And after 3 times gcd returned 1 we will output prime. 
-	
-	Hence this procedure fails to give a  nontrivial factor is $1-\lt(1-\frac14\rt)^3=1-\frac{27}{64}>\frac12$. 
 }
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 4
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement
-		Problem Set 1: P13
+		P6\hfill  (20 marks)
 	}{p4% problem reference text
 	}
-	Design a deterministic polynomial time algorithm to compute the gcd of two univariate polynomials
-	using resultants and linear system solving.
+	Define $[n]:=\{1,2, \ldots, n\}$. You are given $n$, and oracle access to a function $f:[n] \times[n] \rightarrow[n] \times[n]$ that takes as input two positive integers of value at most $n$, and returns two positive integers of value at most $n$. Let $f_1\left(x_1, x_2\right)$ and $f_2\left(x_1, x_2\right)$ be the first and second coordinates of $f\left(x_1, x_2\right)$, respectively. You are also told that $f_i$ is monotone nondecreasing in coordinate $i$ when coordinate $3-i$ is kept fixed, and monotone nonincreasing in coordinate $3-i$ when coordinate $i$ is kept fixed. That is, given $x_1 \leq x_1^{\prime} \in[n]$ and $x_2 \leq x_2^{\prime} \in[n]$, $f_1\left(x_1, x_2\right) \leq f_1\left(x_1^{\prime}, x_2\right)$, and $f_1\left(x_1, x_2\right) \geq f_1\left(x_1, x_2^{\prime}\right)$. Similarly, $f_2\left(x_1, x_2\right) \geq f_2\left(x_1^{\prime}, x_2\right)$, and $f_2\left(x_1, x_2\right) \leq f_2\left(x_1, x_2^{\prime}\right)$.\parinn
+	
+	The problem is to find a fixed point of the function, i.e., values $x_1, x_2 \in[n]$ so that $f\left(x_1, x_2\right)=$ $\left(x_1, x_2\right)$. Give an algorithm that given $n$ and oracle access to such a function $f$, finds a fixed point of $f$ in time $O(\operatorname{poly}(\log n))$. You must also give a proof of correctness, and running time analysis.
 \end{problem}
 \solve{
-	Let $p,q\in \bbF[x]$ where $\deg p=m$ and $\deg q=n$. The Sylvester matrix generated by $p,q$ is $S_{p,q}$. Let for any $k\in\bbN$, $\bbF_k\coloneqq \{f\in \bbF[x]\mid \deg f<k\}$. Then for $(u,v)\in\bbF_n\times \bbF_m$, $S_{p,q}(u,v)=up+vq$.
 	
-	Let $gcd(p,q)=h$ and $\deg h=d$.
-	\begin{lemma}
-		$\dim \ker S_{p,q}=\deg gcd(p,q)$
-	\end{lemma}
-	\begin{proof}
-		Let $(x,y)\in \ker S_{p,q}$. Then $px+qy=0$. Now denote $p=hp_0$ and $q=hq_0$. Hence $gcd(p_0,q_0)=1$. Therefore $$px+qy=0\iff p_0x+q_0y=0\iff p_0x=-q_0y$$Therefore $q_0\mid x$ and $p_0\mid y$. So let $x=q_0g_x$ and $y=p_0g_y$. Then $$p_0x+q_0y=0\iff p_0q_0g_x+q_0p_0g_y=0\iff p_0q_0(g_x+g_y)=0\iff g_x=-g_y$$
-		So denote $g=g_x=-g_y$. So $x=q_0g$, $y=-p_0g$. Now  $$\deg x<\deg q\iff \deg q_0+\deg g<\deg q_0+\deg h\iff \deg g<\deg h $$  Hence for each $(x,y)\in \ket S_{p,q}$ there exists unique $g\in \bbF_d$ such that $x=q_0g$ and $y=-p_0g$ and also for each $g\in \bbF_d$ we have $x=q_0g$ and $y=-p_0g$ such that $px+qy=0$. Hence there exists a bijection $\bbF_d \cong \ker S_{p,q}$ by $g\mapsto (q_0g,-p_0g)$
-	\end{proof}
-	
-	Therefore by Rank-Nullity Theorem $$\rank(S_{p,q})+\dim \ker S_{p,q}=m+n$$ Therefore $\rank(S_{p,q})=m+n-d$. Hence the last $d$ rows of the row echelon form of the $S_{p,q}^T$ are zeros. Let $(S_{p,q}^T)^*$ denote the row echelon form of $S^T_{p,q}$. Let $e_i$ denote the $i$th row of $(S_{p,q}^T)^*$. Hence the last nonzero row of $(S^T_{p,q})^*$ is $e_{m+n-d}$. We have $\deg e_{m+n-d}\leq d$. Now for $i\in[n]$ the $i$th row of $S^T_{p,q}$ is just $x^{n-i}p$ and for $n+1\leq j\leq n+m$ the $j$th row is $x^{m+n-j}q$. Hence $$e_{m+n-d}=\sum_{i=1}^{n}\alpha_i x^{n-i}p+\sum_{i=n+1}^{m+n}\alpha_ix^{m+n-i}q$$ The LHS has degree $\leq d$ and the RHS is divisible by $h$ since $h\mid p$ and $h\mid q$. Hence $h=e_{m+n-d}$ up to some unit multiplication. Therefore we can say $e_{m+n-d}$ is the gcd of $p,q$. Therefore the algorithm will be 
-	\parinf
-	
-	\textbf{Algorithm:}\begin{enumerate}[label=Step \arabic*,leftmargin=1.5cm]
-		\item Construct $S_{p,q}$
-		\item Find Row Echelon Form of $S_{p,q}^T$ by Gaussian Elimination
-		\item Output the last nonzero row 
-	\end{enumerate}
-	\parinn
 }
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 5
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement
-		Problem Set 1: P14
-	}{p5% problem reference text
-	}
-	Give a polynomial time algorithm to compute the gcd of two bivariate polynomials, without using
-	bivariate factorization.
+	P7\hfill  (15 marks)
+}{p5% problem reference text
+}
+A palindrome is a nonempty string over some alphabet that reads the same forward and backward. Examples of palindromes are all strings of length 1, civic, racecar, and aibohphobia. Give an efficient algorithm, with proof of correctness and run-time analysis, to find the longest palindrome that is a subsequence of a given input string. For example, given the input string character, your algorithm should return carac.
 \end{problem}
 \solve{
-		\begin{lemma}\label{gcdlc}
-		Let $R$ be an Euclidean Domain. Let $p\in R$ be a prime and $f,g\in R[x]$ be nonzero. Let $h=gcd(f,g)\in R[x]$. Denote $\ov{f}=f\bmod p$ and $\ov{g}=g\bmod p$ and $d=\deg h$ and $\alpha=lc(h)$. Assume $p\nmid b=gcd(lc(f),lc(g))\in R$ and $\ovd=\deg gcd(\ovf,\ovg)$. Then \begin{enumerate}
-			\item $\alpha\mid b$
-			\item $\ovd\geq d$
-			\item $d=\ovd\iff \ov{\alpha}\cdot gcd(\ovf,\ovg)=\ovh\iff p\nmid \res\lt(\frac{f}{h},\frac{g}{h}\rt) $
-		\end{enumerate}
-	\end{lemma}
+
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 6
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	P8\hfill  (25 marks)
+}{p6% problem reference text
+}
+The purpose of this question is to extend the closest-points algorithm seen in the first lecture, to give an $O\left(n \log ^2 n\right)$ algorithm for finding the closest pair of points in 3 dimensions. All points in this question are in $\mathbb{R}^3$.
+\begin{enumerate}[label=(\alph*)]
+	\item (5 marks) Prove that, if all points are at least distance $\delta$ apart, a cube with each dimension of size $2 \delta$ contains at most a constant (say $k$ ) number of points.
+	\item (10 marks) You are now given 2 sets of points $S_1$ and $S_2$, each containing $n$ points. The distance between any pair of points in $S_1$ is at least $\delta$, and further, each point in $S_1$ has $z$-coordinate in $[0, \delta]$. Similarly, the distance between any pair of points in $S_2$ is at least $\delta$, and each point in $S_2$ has $z$-coordinate in $[-\delta, 0]$.
 	
-	
-	\begin{proof}
-		\begin{enumerate}
-			\item 	Now $h$ divides both $f,g$. Therefore $lc(h)$ divides both $lc(f)$ and $lc(g)$ in $R$. Hence $\alpha\mid b$
-			\item Let $u=\frac{f}{h}$ and $v=\frac{g}{h}$. Since $p\nmid b\implies p\nmid lc(h)$. Hence $\deg h=\deg \ovh=d$. Now $$\ovu\ovh=\ovf\text{ and }\ovv\ovh=\ovg$$ Hence $\ovh\mid \ovf$ and $\ovh\mid \ovg\implies \ovh\mid gcd(\ovf,\ovg)$. Therefore $\deg gcd(\ovf,\ovg)\geq \deg \ovh\implies \ovd\geq d$.
-			\item $d=\ovd\iff \deg \ovh=\deg gcd(\ovf,\ovg)$. Now $p\nmid b$ and $\alpha\mid b$ so $p\nmid \alpha$. Hence $\alpha$ is a unit in $R/\la p\ra$ as $R/\la p\ra$ is a field. In a field gcd is always taken to be monic. Now $\ov{\alpha}=lc(\ovh)$. Since $\deg \ovh=\deg gcd(\ovf,\ovg)$ we can say $\ovh=u\cdot gcd(\ovf,\ovg)$ for some unit $u\in R/\la p\ra$. Now since $gcd(\ovf,\ovg)$ is monic we have $u=\ov{\alpha}$ Therefore $d=\ovd\implies \ov{\alpha}\cdot gcd(\ovf,\ovg)=\ovh$. Other direction obviously becomes true as $\ov{\alpha}$ is a unit in $R/\la p\ra$. 
-			
-			Now $p\nmid b\implies p$ divides at most one of $lc(u)$ or $lc(v)$. WLOG assume $p\nmid lc(u)$. We know $$p\mid \res (u,v)\iff gcd(\ovu,\ovv)\neq 1\text{ in }R/\la p\ra$$So \begin{align*}
-				gcd(\ovf,\ovg)=gcd(\ovu,\ovv)\cdot \frac{\ovh}{\ov{\alpha}} & \iff \ov{\alpha} gcd(\ovf,\ovg)=gcd(\ovu,\ovv)\ovh \\
-				                                                            & \iff \ovh=gcd(\ovu,\ovv)\ovh                       \\
-				                                                            & \iff gcd(\ovu,\ovv)=1                              \\
-				                                                            & \iff p\nmid \res(\ovu,\ovv)                        \\
-				                                                            & \iff p\nmid \res(u,v)
-			\end{align*}
-			
-		\end{enumerate}
-	\end{proof}
-	
+Extend the algorithm discussed in class to give an $O(n \log n)$-time algorithm for finding the closest pair of points in $S_1 \cup S_2$. Note that, by the first part of the question, any cube with each dimension at most $2 \delta$, contains at most $2 k$ points from $S_1 \cup S_2$.
+\item  (10 marks) Given a set $S$ of $n$ points in $\mathbb{R}^3$, now give an $O\left(n \log ^2 n\right)$-time algorithm to find the closest pair of points.
+
+\end{enumerate}
+
+\end{problem}
+\solve{
+
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 7
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		P9\hfill  (10 marks)
+	}{p7% problem reference text
+	}
+This problem relates to one of the questions asked in class. For any $p, q \geq 1$, and any points $x, y$, and $z \in \mathbb{R}^2$, prove or disprove the following:
+		$$
+		\|x-y\|_p \leq\|x-z\|_p \Leftrightarrow\|x-y\|_q \leq\|x-z\|_q
+		$$
 
 	
-	\begin{algorithm}[H]
-		\KwIn{\begin{enumerate}
-				\item Primitive Polynomials $f,g\in\bbF[x,y]=R[x]$
-				\item $\deg_x f=n\geq \deg_x g\geq 1$
-				\item $\deg_y f,\deg _yg\leq d$
-		\end{enumerate}}
-	\KwOut{$h=gcd(f,g)\in \bbF[x,y]$}
-	\DontPrintSemicolon
-		\Begin{
-		$b\longleftarrow gcd(lc(f),lc(g))$, $FAIL\longleftarrow 1$\;
-		\While{$FAIL$}{
-			Choose a random monic irreducible polynomial $p\in \bbF[y]$ with $\deg p=d+1+\deg b$\;
-			$\ov{f}\longleftarrow f\bmod p$, $\ov{g}\longleftarrow g\bmod p$\;
-			Use Extended Euclidean Algorithm over $\bbF[y]/\la p\ra$ on $\ov{f}$ and $\ov{g}$ to compute the monic $v\in R/\la p\ra$\;
-			Compute $w,f',g'\in R[x]$ with $\deg_yw,\deg_yf',\deg_yg'<\deg p$ such that:$$w\equiv bv\bmod p\qquad f'w\equiv bf\bmod p\qquad g'w\equiv bg \bmod p$$\;
-			\If{$\deg_y(f'w)=\deg_y(bf)$ and $\deg_y(g'w)=\deg(bg)$}{$FAIL\longleftarrow 0$}
-			\Return{ premitive part of $w$ w.r.t $x$}
-		}
-		}
-		\caption{Modular Bivariate GCD Algorithm}
-	\end{algorithm}
+	That is, prove or disprove that $y$ is closer to $x$ than $z$ in the $L_p$ distance metric if and only if it is closer to $x$ in the $L_q$ distance metric
+	As usual, $\|x-y\|_p=\left(\left(x_1-y_1\right)^p+\left(x_2-y_2\right)^p\right)^{1 / p}$.
+\end{problem}
+\solve{
 	
-		Now in $\bbF[x,y]$ let $gcd(f,g)=h$ and $r=\res_x\lt(\frac{f}{h},\frac{g}{h}\rt)\in \bbF[y]$. Now $\deg_yb<\deg_yp=\deg p$ and hence $p\nmid b$. Assume $p\nmid r$ then by \lmref{gcdlc} we have $\alpha \cdot v \equiv h\bmod p$ and $\alpha\mid b$. Therefore $$w\equiv bv\equiv \lt(\frac{b}{\alpha}\rt)h\bmod p$$ Now primitive part of $w$=premitive part of $\lt(\frac{b}{\alpha}\rt)h$=$h$. Hence correct result is returned.
-		
-				Now if $p\mid r$ then by \lmref{gcdlc} we have $\deg_xgcd(\ovf,\ovg)>\deg_x h$. If the degree conditions in step 8 are satisfied then the congruences in step 7 would be equalities and the primitive part of $w$ will be a common divisor of $f$ and $g$ of higher degree than $\deg_x h$. Contradiction. So the degree condtions will not be satisfied.
- }
+}
 \end{document}
