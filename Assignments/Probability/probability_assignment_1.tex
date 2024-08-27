@@ -103,6 +103,9 @@
 \end{enumerate}
 \end{problem}
 \solve{	
+		\begin{enumerate}[label=(\alph*)]
+			\item 
+		\end{enumerate}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 2
@@ -119,6 +122,7 @@ Prove or disprove the following:
 
 If you disproved either of the claims above, for which events $C$ is it then the case that the following statement holds: for all events $A$ and $B$, the events $A$ and $B$ are conditionally independent given $C$ if and only if $A$ and $B$ are independent.\end{problem}
 \solve{	
+	
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -138,7 +142,7 @@ $$
 B=\bigcap_{n=1}^{\infty} B_n=\bigcap_{n=1}^{\infty} \bigcup_{m \geq n} A_m \quad C=\bigcup_{n=1}^{\infty} C_n=\bigcup_{n=1}^{\infty} \bigcap_{m \geq \mathrm{n}} A_m
 $$
 
-The events $B$ and $C$ are denoted by $\limsup _{n \rightarrow \infty} A_n$ and $\liminf _{n \rightarrow \infty} A_n$ respectively. Show that
+The events $B$ and $C$ are denoted by $\limsup\limits_{n \rightarrow \infty} A_n$ and $\liminf\limits_{n \rightarrow \infty} A_n$ respectively. Show that
 \begin{enumerate}[label=(\alph*)]
 	\item $B=\left\{\omega \in \Omega: \omega \in A_n\right.$ for infinitely many values of $\left.n\right\}$.
 	\item $C=\left\{\omega \in \Omega: \omega \in A_n\right.$ for all but finitely many values of $\left.n\right\}$.
@@ -147,13 +151,16 @@ The events $B$ and $C$ are denoted by $\limsup _{n \rightarrow \infty} A_n$ and 
 	
 	\begin{enumerate}[resume, label=(\alph*)]
 		\item $A$ is an event.
-	\item $P\left(A_n\right) \rightarrow P(A)$.
+	\item $\bbP\left(A_n\right) \rightarrow \bbP(A)$.
 \end{enumerate} 
 
 \end{problem}
 \solve{
 	\begin{enumerate}[label=(\alph*)]
-		\item Let $\om\in B$. Then $\om\in \bigcap\limits_{n=1}^{\infty}\bigcup\limits_{m\geq n}A_m$. Hence $\om \in \bigcup\limits_{m\geq n}A_m$ forall $n\in\bbN$. Hence $\om \in A_k$ for some $k\in \bbN$. Let $k_1$ be the least number such that $\om \in A_{k_1}$. Then we also have $\om \in B_{k_1+1}$. So we have some $k_2\geq k_1+1$ such that  $\om \in A_{k_2}$. Then $\om in B_{k_2+1}$. So there exists $k_3\geq k_2+1$ such that $\om \in A_{k_3}$. Continuing like this at $i^{th}$ step we have some $k_{i+1}\geq k_i+1$ such that $\om \in A_{k_{i+1}}$ and so on. So now we got an strictly increasing infinite sequence of positive integers $\lt\{k_1,k_2,k_3\dots,k_{i},\dots\rt\}$ such that $\om \in A_{k_j}$ for all $j\in\bbN$. Hence $\om \in \left\{\omega \in \Omega: \omega \in A_n\text{ for infinitely many values of }n\right\}$. Hence $$B\subseteq \left\{\omega \in \Omega: \omega \in A_n\text{ for infinitely many values of }n\right\}$$
+		\item Let $\om\in B$. Then $\om\in \bigcap\limits_{n=1}^{\infty}\bigcup\limits_{m\geq n}A_m$. Hence $\om \in \bigcup\limits_{m\geq n}A_m$ forall $n\in\bbN$. Hence $\om \in A_k$ for some $k\in \bbN$. Let $k_1$ be the least number such that $\om \in A_{k_1}$. Then we also have $\om \in B_{k_1+1}$. So we have some $k_2\geq k_1+1$ such that  $\om \in A_{k_2}$. Then $\om \in B_{k_2+1}$. So there exists $k_3\geq k_2+1$ such that $\om \in A_{k_3}$. Continuing like this at $i^{th}$ step we have some $k_{i+1}\geq k_i+1$ such that $\om \in A_{k_{i+1}}$ and so on. So now we got an strictly increasing infinite sequence of positive integers $\lt\{k_1,k_2,k_3\dots,k_{i},\dots\rt\}$ such that $\om \in A_{k_j}$ for all $j\in\bbN$. Hence $\om \in \left\{\omega \in \Omega: \omega \in A_n\text{ for infinitely many values of }n\right\}$. Hence $$B\subseteq \left\{\omega \in \Omega: \omega \in A_n\text{ for infinitely many values of }n\right\}$$Now let $\om\in \left\{\omega \in \Omega: \omega \in A_n\text{ for infinitely many values of }n\right\}$. Let $\{s_n\}_{n\in \bbN}$ be the strictly increasing sequence of positive integers such that $\om\in A_{s_n}$. Hence for all $m\in\bbN$ we have $\om\in B_m$ because $\exs n\in\bbN$ such that $s_n>m$ and $\om \in A_{s_m}\implies \om\in B_m$. Therefore $\om\in \bigcap\limits_{m=1}^{\infty}B_m$. Therefore we have  $$\left\{\omega \in \Omega: \omega \in A_n\text{ for infinitely many values of }n\right\}\subseteq B$$Hence we have $B=\left\{\omega \in \Omega: \omega \in A_n\text{ for infinitely many values of }n\right\}$.
+		\item Let $\om\in \left\{\omega \in \Omega: \omega \in A_n\text{ for all but finitely many values of }n\right\}$. Hence there exists $n_0\in \bbN$ such that $\om\in A_n$ for all $n>n_0$. Therefore $\om \in C_n$ for all $n>n_0$. Since $C=\bigcup\limits_{n=1}^{\infty}C_n$ we have $\om \in C$. So we have $$\left\{\omega \in \Omega: \omega \in A_n\text{ for all but finitely many values of }n\right\}\subseteq C$$Now suppose $\om \in C$. So $\exs\ n\in\bbN$ such that $\om\in C_n$. Since $C_n=\bigcap\limits_{m\geq n}A_m$ we have $\om\in A_m$ for all $m\geq n$. Hence $\om\in A_m$ for all but finitely many values of $n$. So $$\om \in \left\{\omega \in \Omega: \omega \in A_n\text{ for all but finitely many values of }n\right\}$$Therefore we get $C=\left\{\omega \in \Omega: \omega \in A_n\text{ for all but finitely many values of }n\right\}$.
+		\item 
+		\item 
 	\end{enumerate}
 }
 
