@@ -1,6 +1,16 @@
 \chapter{Polynomial Multiplication}
 \begin{algoprob}
 	\problemtitle{{Polynomial Multiplication}}
-	\probleminput{Given 2 polynomials of degree $n-1$ by 2 arrays of their coefficients $(a_0,\dots, a_{n-1})$ and $(b_0,\dots, b_{n-1})$ such that $A(x)=a_0+a_1x+\cdots+ a_{n-1}x^{n-1}$ and $B(x)=b_0+b_1x+\cdots+b_{n-1}x^{n-1}$ respectively}
-	\problemquestion{Given 2 polynomials of degree $n-1$ find their product polynomial of degree $2n-2$ by returning the array of their coefficients.}
+	\probleminput{Given 2 univariate polynomials of degree $n-1$ by 2 arrays of their coefficients $(a_0,\dots, a_{n-1})$ and $(b_0,\dots, b_{n-1})$ such that $A(x)=a_0+a_1x+\cdots+ a_{n-1}x^{n-1}$ and $B(x)=b_0+b_1x+\cdots+b_{n-1}x^{n-1}$ respectively}
+	\problemquestion{Given 2 polynomials of degree $n-1$ find their product polynomial $C(x)=A(x)B(x)$ of degree $2n-2$ by returning the array of their coefficients.}
 \end{algoprob}
+\section{Naive Algorithm}
+We can do this naively by calculating each coefficient of $C$ in $O(n)$ time since for any $i\in\{0,\dots, 2n-2\}$ $$c_i=\sum_{j=0}^ia_jb_{i-j}$$Since there are $2n-1=O(n)$ total coefficient of $C$ it takes total $O(n^2)$ time. In the following section we will do this in $O(n\log n)$ time.
+\section{Strassen-Sch\"{o}nhage Algorithm}
+Before diving into the algorithm first let's consider how many ways we can represent a polynomial. Often changing the representation helps solving the problem in less time.\begin{itemize}
+	\item \textbf{Coefficients}: We can represent a polynomial by giving the array of all its coefficient.
+	\item \textbf{Point-Value Pairs}: We can evaluate the polynomial in distinct $n$ points and give all the point-value pairs. This also uniquely represents a polynomial since there is exactly one polynomial of degree $n-1$ which passes through all these points. 
+\end{itemize}
+\begin{theorem}{}{}
+	Given $n$ distinct points $(x_0,y_0)$
+\end{theorem}

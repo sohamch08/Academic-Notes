@@ -118,7 +118,27 @@ $$\bbP\left(\bigcup_{i=1}^{k+1}A_i\right)=\bbP\left(\bigcup_{i=1}^k A_i\right)+\
 =\ &  \sum_{i=1}^{k+1}\bbP[A_i]+\sum_{t=1}^k(-1)^{t}\sum_{T\subseteq [k+1],\ |T|=t+1}\bbP\lt[\bigcap_{i\in T}A_i\rt]\\
 =\ & \sum_{t=1}^{k+1}(-1)^{t-1}\sum_{T\subseteq [k+1],\ |T|=t}\bbP\lt[\bigcap_{i\in T}A_i\rt]
 \end{align*}
-\item 
+\item Suppose $\om\in\Om$. We will count the contribution of $\om$ to the probability $\bbP\lt[\bigcup\limits_{i=1}^nA_i\rt]$. Now if $\om \notin\bigcup_{i=1}^nA_i$ then $\om$ has no contribution to the probability $\bbP\lt[\bigcup\limits_{i=1}^nA_i\rt]$. Now we also have $\om\notin \bigcap\limits_{i\in J}A_i$ for all $J\subseteq [n]$. Hence $\om$ has no contribution to any of the $S_i$ for all $i\in[n]$.\parinn
+
+Now suppose $\om \in \bigcup\limits_{i=1}^nA_i$. Let $\om$ is in exactly $t\leq n$ events among $A_1,\dots, A_n$. WLOG assume those events are $A_1,\dots, A_t$. Now $\om $ is counted once in $\bigcup\limits_{i=1}^nA_i$. In case of $S_i$ with $i\leq t$, for all $J\subseteq [t]$ with $|J|=i$, $\om \in \bigcap\limits_{j\in J}A_j$. Hence in case of $S_i$, $\om $ is counted $\binom{t}{i}$ times. Hence for $k\leq t$, in $S_1-S_2+\cdots+(-1)^kS_k$, $\om $ is counted $\sum\limits_{i=1}^k (-1)^{i-1}\binom{t}{i}$ many times. We are only considering the case $k\leq t$ because when $k>t$ we have $\binom{t}{i}=0$ for $i>k$ and therefore the sum only reduces to $k\leq t$ case. Now two cases arise:\begin{itemize}
+	\item $k=t$: Then $\sum\limits_{i=1}^k (-1)^{i-1}\binom{t}{i}=\sum\limits_{i=1}^t (-1)^{i-1}\binom{t}{i}=1-(1-1)^t=1$. That is, $\om$ is counted the same times on both sides.
+	\item $k<t$: Now $\om$ counted in $LHS$ is once but $\om$ counted in $RHS$ is $\sum\limits_{i=1}^k (-1)^{i-1}\binom{t}{i}$. So we will show $\sum\limits_{i=1}^k (-1)^{i-1}\binom{t}{i}$ is $\geq 1$ when $k$ is odd and $\leq 1$ when $k$ is even. Or equivalently we will show $$f(k)=1-\sum\limits_{i=1}^k (-1)^{i-1}\binom{t}{i}=\sum\limits_{i=0}^k (-1)^{i}\binom{t}{i}=\begin{cases}
+		\geq 0& \text{when $k$ is even}\\
+		\leq 0 & \text{when $k$ is odd}
+	\end{cases}$$
+\end{itemize}\parinf
+
+\textbf{\textit{Claim:}} $f(k)=\sum\limits_{i=0}^k (-1)^{i}\binom{t}{i}=(-1)^k\binom{t-1}{k}$
+
+\begin{proof}
+	We will prove by induction. For base case $k=0$ we have $\binom{t}{0}=1=(-1)^o\binom{t-1}{0}$. So the base case holds. Let this is true for $k$. Now we have to prove for $k+1$. We have for any $m,r\in\bbN$ with $m\geq r$ such that $$\binom{m}{r}=\binom{m-1}{r}+\binom{m-1}{r-1}$$So therefore\begin{align*}
+		\sum\limits_{i=0}^{k+1} (-1)^{i}\binom{t}{i} & = 	\sum\limits_{i=0}^{k} (-1)^{i}\binom{t}{i}+(-1)^{k+1}\binom{t}{k+1}\\
+		& = (-1)^k\binom{t-1}{k}+(-1)^{k+1}\binom{t-1}{k+1}+(-1)^{k+1}\binom{t-1}{k}\\
+		& = (-1)^{k+1}\binom{t-1}{k+1}
+	\end{align*}Hence by Mathematical Induction it is true for all $k$.
+\end{proof}\parinn
+
+Therefore we get $f(k)=(-1)^k\binom{t-1}{k}$. Hence if $k$ is even $f(k)=(-1)^k\binom{t-1}{k}=\binom{t-1}{k}\geq 0$ and when $k$ is odd $f(k)=(-1)^k\binom{t-1}{k}=-\binom{t-1}{k}\leq 0$. Since $\om$ is arbitrary and for odd $k$, $\om$ is counted more in $RHS$ so we have $$	P\left(\bigcup_{i=1}^n A_i\right) \leq S_1-S_2+\ldots+S_k$$ and for even $k$, $\om$ is counted lesser times in $RHS$ than $LHS$ so we have $$	P\left(\bigcup_{i=1}^n A_i\right) \geq S_1-S_2+\ldots-S_k$$Therefore we have the Bonferroni Inequalities.
 		\end{enumerate}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -143,14 +163,14 @@ If you disproved either of the claims above, for which events $C$ is it then the
 				\item $B$ be the event of picking `Ace' in the second deck
 				\item $C$ be the event of picking `Jack' in the first deck
 			\end{itemize}
-		Now $\bbP[A\mid C]=0$ and $\bbP[B\mid C]=\frac{4}{40}=\frac1{10}$ and $$\bbP[A\cap B\mid C]=\bbP[\text{Picking (`King',`Ace')}\mid \text{Picking `Jack' in first deck}]=0=\bbP[A\mid C]\bbP[B\mid C]$$So $A,B$ are independent conditioned on $C$. Now $\bbP[A]=\frac{4}{52}=\frac1{13}$, $\bbP[B]=\frac{12}{52}\,\frac{4}{40}+\frac{40}{52}\,\frac{4}{16}=\frac{3}{130}+\frac{5}{26}=\frac{14}{65}$. $$\bbP[A\cap B]=\frac{4}{52}\,\frac{4}{40}=\frac{3}{130}\neq \bbP[A]\bbP[B]$$
+		Now $\bbP[A\mid C]=0$ and $\bbP[B\mid C]=\frac{4}{40}=\frac1{10}$ and $$\bbP[A\cap B\mid C]=\bbP[\text{Picking (`King',`Ace')}\mid \text{Picking `Jack' in first deck}]=0=\bbP[A\mid C]\bbP[B\mid C]$$So $A,B$ are independent conditioned on $C$. Now $\bbP[A]=\frac{4}{52}=\frac1{13}$, $\bbP[B]=\frac{12}{52}\,\frac{4}{40}+\frac{40}{52}\,\frac{4}{16}=\frac{3}{130}+\frac{5}{26}=\frac{14}{65}$. But $\bbP[A\cap B]=\frac{4}{52}\,\frac{4}{40}=\frac{3}{130}\neq \bbP[A]\bbP[B]$. So they are not independent  without conditioning on $C$. 
 			\item Let we have two unbiased $6-$faced dice. We throw both the dice. Let \begin{itemize}
 				\item $A$ be the event that first dice outcome is $2$ 
 				\item $B$ be the event that second dice outcome is $5$.
 				\item $C$ be the event that the sum of first dice outcome and second dice outcome is $6$
-			\end{itemize} Then $\bbP[A]=\bbP[B]=\frac16$. And  $\bbP[A\cap B]=\frac1{36}$ since $(2,5)$ is one outcome of all $36$ possible outcomes. Hence $\bbP[A\cap B]=\bbP[A]\bbP[B]$. So $A,B$ are independent events. Certainly $\bbP[C]>0$. Then $\bbP[A\mid C],\bbP[B\mid C]\neq 0$. But the $\bbP[A\cap B\mid C]=0$ since $2+5\neq 6$. Hence $\bbP[A\cap B\mid C]\neq \bbP[A\mid C]\bbP[B\mid C]$.
+			\end{itemize} Then $\bbP[A]=\bbP[B]=\frac16$. And  $\bbP[A\cap B]=\frac1{36}$ since $(2,5)$ is one outcome of all $36$ possible outcomes. Hence $\bbP[A\cap B]=\bbP[A]\bbP[B]$. So $A,B$ are independent events. Certainly $\bbP[C]>0$. Then $\bbP[A\mid C]$, $\bbP[B\mid C]\neq 0$. But the $\bbP[A\cap B\mid C]=0$ since $2+5\neq 6$. Hence $\bbP[A\cap B\mid C]\neq \bbP[A\mid C]\bbP[B\mid C]$. Hence they are not independent conditioning on $C$. 
 		\end{itemize}
-	\item 
+	\item If we take $C=\Om$ then for any two events $A,B$, $\bbP[A\mid C]=\bbP[A]$ and $\bbP[B\mid C]=\bbP[B]$. Therefore in that case $A,B$ are independent if and only if $A,B$ are independent conditioned on $C$. 
 	\end{enumerate}
 }
 
