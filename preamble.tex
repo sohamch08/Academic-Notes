@@ -577,7 +577,7 @@
 
 \makeatletter
 \usepackage{tabularx,environ}
-\newcommand{\problemtitle}[1]{\gdef\@problemtitle{#1}}% Store problem title
+\newcommand{\problemtitle}[1]{\gdef\@problemtitle{\scshape #1}}% Store problem title
 \newcommand{\probleminput}[1]{\gdef\@probleminput{#1}}% Store problem input
 \newcommand{\problemquestion}[1]{\gdef\@problemquestion{#1}}% Store problem question
 \NewEnviron{algoprob}{
