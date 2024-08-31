@@ -106,52 +106,28 @@
 		\begin{enumerate}[label=(\alph*)]
 			\item We will prove it using induction on $n$. For base case $t=1$. Then $\bbP[A_1]=S_1=\sum\limits_{i}\bbP[A_i]=\bbP[A_1]$. Hence for base case it holds. Now let this is true for $t=n$. For $t=n+1$
 	
-$$\bbP\left(\bigcup_{i=1}^{k+1}A_i\right)=\bbP\left(\bigcup_{i=1}^k A_i\right)+\bbP\left(A_{k+1}\setminus\bigcup_{i=1}^k A_i\right)=\bbP\left(\bigcup_{i=1}^k A_i\right)+\bbP(A_{k+1})-\bbP\left(\bigcup_{i=1}^k (A_i\cap A_{k+1})\right)$$Now using inductive hypothesis we have \begin{align*}
-	\bbP\left(\bigcup_{i=1}^k (A_i\cap A_{k+1})\right) & =\sum_{t=1}^k(-1)^{t-1}\sum_{J\subseteq [k],\ |J|=t}\bbP\lt[ \bigcap_{i\in J}(A_i\cap A_{k+1}) \rt]\\
-	& = \sum_{t=1}^k(-1)^{t-1}\sum_{J\subseteq [k],\ |J|=t}\bbP\lt[ A_{k+1}\cap\lt( \bigcap_{i\in J}A_i \rt)\rt]
+$$\bbP\left(\bigcup_{i=1}^{k+1}A_i\right)=\bbP\left(\bigcup_{i=1}^k A_i\right)+\bbP(A_{k+1})-\bbP\lt[\left(\bigcup_{i=1}^k A_i \right)\cap A_{k+1}\rt]=\bbP\left(\bigcup_{i=1}^k A_i\right)+\bbP(A_{k+1})-\bbP\left(\bigcup_{i=1}^k (A_i\cap A_{k+1})\right)$$Now using inductive hypothesis we have \begin{align*}
+	\bbP\left(\bigcup_{i=1}^k (A_i\cap A_{k+1})\right) & =\sum_{t=1}^k(-1)^{t-1}\sum_{J\subseteq [k],\ |J|=t}\bbP\lt[ \bigcap_{i\in J}(A_i\cap A_{k+1}) \rt] = \sum_{t=1}^k(-1)^{t-1}\sum_{J\subseteq [k],\ |J|=t}\bbP\lt[ A_{k+1}\cap\lt( \bigcap_{i\in J}A_i \rt)\rt]
 \end{align*}Therefore we have \begin{align*}
 & \bbP\left(\bigcup_{i=1}^k A_i\right)+\bbP(A_{k+1})-\bbP\left(\bigcup_{i=1}^k (A_i\cap A_{k+1})\right) \\
 =\ &  \bbP\left(\bigcup_{i=1}^k A_i\right)+\bbP(A_{k+1})-\mathcolor{blue}{\left[} \sum_{t=1}^k(-1)^{t-1}\sum_{J\subseteq [k],\ |J|=t}\bbP\lt[ A_{k+1}\cap\lt( \bigcap_{i\in J}A_i \rt)\rt]  \mathcolor{blue}{\right]}\\
 =\ & \mathcolor{blue}{\left[}\sum_{t=1}^{k}(-1)^{t-1}\sum_{T\subseteq [k],\ |T|=t}\bbP\lt[\bigcap_{i\in T}A_i\rt]\mathcolor{blue}{\right]}+\bbP[A_{k+1}]+\mathcolor{blue}{\left[}\sum_{t=1}^k(-1)^{t}\sum_{J\subseteq [k],\ |J|=t}\bbP\lt[ A_{k+1}\cap\lt( \bigcap_{i\in J}A_i \rt)\rt]\mathcolor{blue}{\right]}\\
 =\ & \sum_{i=1}^{k+1}\bbP[A_i]+\mathcolor{blue}{\left[}\sum_{t=2}^k(-1)^{t-1}\sum_{T\subseteq [k],\ |T|=t+1}\bbP\lt[\bigcap_{i\in T}A_i\rt]\mathcolor{blue}{\right]}+\mathcolor{blue}{\left[}\sum_{t=1}^k(-1)^{t}\sum_{J\subseteq [k],\ |J|=t}\bbP\lt[ A_{k+1}\cap\lt( \bigcap_{i\in J}A_i \rt)\rt]\mathcolor{blue}{\right]}\\
-=\ &  \sum_{i=1}^{k+1}\bbP[A_i]+\sum_{t=2}^k(-1)^{t-1}\sum_{T\subseteq [k+1],\ |T|=t+1}\bbP\lt[\bigcap_{i\in T}A_i\rt]\\
+=\ &  \sum_{i=1}^{k+1}\bbP[A_i]+\sum_{t=2}^{k+1}(-1)^{t-1}\sum_{T\subseteq [k+1],\ |T|=t+1}\bbP\lt[\bigcap_{i\in T}A_i\rt]\\
 =\ & \sum_{t=1}^{k+1}(-1)^{t-1}\sum_{T\subseteq [k+1],\ |T|=t}\bbP\lt[\bigcap_{i\in T}A_i\rt]
 \end{align*}
 
 Hence we have $$\bbP\left(\bigcup_{i=1}^{k+1}A_i\right)=\sum_{t=1}^{k+1}(-1)^{t-1}\sum_{T\subseteq [k+1],\ |T|=t}\bbP\lt[\bigcap_{i\in T}A_i\rt]$$Therefore it is true for $t=n+1$. Hence by mathematical induction for all $n\in \bbN$ we have $$\bbP\left(\bigcup_{i=1}^{n}A_i\right)=\sum_{i=1}^{n}(-1)^{i-1}\sum_{J\subseteq [n],\ |J|=i}\bbP\lt[\bigcap_{j\in J}A_j\rt]$$
 
-%\item Suppose $\om\in\Om$. We will count the contribution of $\om$ to the probability $\bbP\lt[\bigcup\limits_{i=1}^nA_i\rt]$. Now if $\om \notin\bigcup_{i=1}^nA_i$ then $\om$ has no contribution to the probability $\bbP\lt[\bigcup\limits_{i=1}^nA_i\rt]$. Now we also have $\om\notin \bigcap\limits_{i\in J}A_i$ for all $J\subseteq [n]$. Hence $\om$ has no contribution to any of the $S_i$ for all $i\in[n]$.\parinn
-%
-%Now suppose $\om \in \bigcup\limits_{i=1}^nA_i$. Let $\om$ is in exactly $t\leq n$ events among $A_1,\dots, A_n$. WLOG assume those events are $A_1,\dots, A_t$. Now $\om $ is counted once in $\bigcup\limits_{i=1}^nA_i$. In case of $S_i$ with $i\leq t$, for all $J\subseteq [t]$ with $|J|=i$, $\om \in \bigcap\limits_{j\in J}A_j$. Hence in case of $S_i$, $\om $ is counted $\binom{t}{i}$ times. Hence for $k\leq t$, in $S_1-S_2+\cdots+(-1)^kS_k$, $\om $ is counted $\sum\limits_{i=1}^k (-1)^{i-1}\binom{t}{i}$ many times. We are only considering the case $k\leq t$ because when $k>t$ we have $\binom{t}{i}=0$ for $i>k$ and therefore the sum only reduces to $k\leq t$ case. Now two cases arise:\begin{itemize}
-%	\item $k=t$: Then $\sum\limits_{i=1}^k (-1)^{i-1}\binom{t}{i}=\sum\limits_{i=1}^t (-1)^{i-1}\binom{t}{i}=1-(1-1)^t=1$. That is, $\om$ is counted the same times on both sides.
-%	\item $k<t$: Now $\om$ counted in $LHS$ is once but $\om$ counted in $RHS$ is $\sum\limits_{i=1}^k (-1)^{i-1}\binom{t}{i}$. So we will show $\sum\limits_{i=1}^k (-1)^{i-1}\binom{t}{i}$ is $\geq 1$ when $k$ is odd and $\leq 1$ when $k$ is even. Or equivalently we will show $$f(k)=1-\sum\limits_{i=1}^k (-1)^{i-1}\binom{t}{i}=\sum\limits_{i=0}^k (-1)^{i}\binom{t}{i}=\begin{cases}
-%		\geq 0& \text{when $k$ is even}\\
-%		\leq 0 & \text{when $k$ is odd}
-%	\end{cases}$$
-%\end{itemize}\parinf
-%
-%\textbf{\textit{Claim:}} $f(k)=\sum\limits_{i=0}^k (-1)^{i}\binom{t}{i}=(-1)^k\binom{t-1}{k}$
-%
-%\begin{proof}
-%	We will prove by induction. For base case $k=0$ we have $\binom{t}{0}=1=(-1)^o\binom{t-1}{0}$. So the base case holds. Let this is true for $k$. Now we have to prove for $k+1$. We have for any $m,r\in\bbN$ with $m\geq r$ such that $$\binom{m}{r}=\binom{m-1}{r}+\binom{m-1}{r-1}$$So therefore\begin{align*}
-%		\sum\limits_{i=0}^{k+1} (-1)^{i}\binom{t}{i} & = 	\sum\limits_{i=0}^{k} (-1)^{i}\binom{t}{i}+(-1)^{k+1}\binom{t}{k+1}\\
-%		& = (-1)^k\binom{t-1}{k}+(-1)^{k+1}\binom{t-1}{k+1}+(-1)^{k+1}\binom{t-1}{k}\\
-%		& = (-1)^{k+1}\binom{t-1}{k+1}
-%	\end{align*}Hence by Mathematical Induction it is true for all $k$.
-%\end{proof}\parinn
-%
-%Therefore we get $f(k)=(-1)^k\binom{t-1}{k}$. Hence if $k$ is even $f(k)=(-1)^k\binom{t-1}{k}=\binom{t-1}{k}\geq 0$ and when $k$ is odd $f(k)=(-1)^k\binom{t-1}{k}=-\binom{t-1}{k}\leq 0$. Since $\om$ is arbitrary and for odd $k$, $\om$ is counted more in $RHS$ so we have $$	P\left(\bigcup_{i=1}^n A_i\right) \leq S_1-S_2+\ldots+S_k$$ and for even $k$, $\om$ is counted lesser times in $RHS$ than $LHS$ so we have $$	P\left(\bigcup_{i=1}^n A_i\right) \geq S_1-S_2+\ldots-S_k$$Therefore we have the Bonferroni Inequalities.
-
 \item We will prove this using induction on $n$. For $n=1$, $k=1$. Hence we have $\bbP[A_1]=S_1$. We have both the inequalities for all $k\leq n=1$. So for base case the statement is true. Now suppose the inequalities are true for $n=t$. Hence for all $k\leq t$ if $k$ is odd $$P\left(\bigcup_{i=1}^t A_i\right) \leq S_1-S_2+\ldots+S_k$$ and if $k$ is even $$P\left(\bigcup_{i=1}^t A_i\right) \geq S_1-S_2+\ldots-S_k$$Now we have to prove the inequalities for $n=t+1$. Now for $k=t+1$ by the part (a) we have $$\mathbb{P}\left(\bigcup_{i=1}^{t+1} A_i\right)=S_1-S_2+S_3-\ldots+(-1)^{t} S_{t+1}$$So it follows the inequalities since we have the equality. Now we will consider the case when $k\leq t$. Now first of all we have 
 \begin{equation}
-	\bbP\left(\bigcup_{i=1}^{t+1}A_i\right)=\bbP\left(\bigcup_{i=1}^t A_i\right)+\bbP\left(A_{t+1}\setminus\bigcup_{i=1}^t A_i\right)=\bbP\left(\bigcup_{i=1}^t A_i\right)+\bbP(A_{t+1})-\bbP\left(\bigcup_{i=1}^t (A_i\cap A_{t+1})\right)\label{eq1}
+	\bbP\left(\bigcup_{i=1}^{t+1}A_i\right)=\bbP\left(\bigcup_{i=1}^t A_i\right)+\bbP(A_{t+1})-\bbP\lt[\left(\bigcup_{i=1}^t A_i \right)\cap A_{t+1}\rt]=\bbP\left(\bigcup_{i=1}^t A_i\right)+\bbP(A_{t+1})-\bbP\left(\bigcup_{i=1}^t (A_i\cap A_{t+1})\right)\label{eq1}
 \end{equation}
-\subsubsection*{$k$ is Odd:}
-Suppose $k$ is odd. Now by inductive hypothesis we have $$\bbP\left(\bigcup_{i=1}^t A_i\right)
+\subsubsection*{$k$ is Even:}
+Suppose $k$ is Even. Now by inductive hypothesis we have $$\bbP\left(\bigcup_{i=1}^t A_i\right)
 	\geq \sum\limits_{i=1}^k(-1)^{i-1}\sum\limits_{J\subseteq [t],\ |J|=i}\bbP\lt[\bigcap\limits_{j\in J}A_j\rt] $$
 And \begin{align*}
-	\bbP\left(\bigcup_{i=1}^t (A_i\cap A_{t+1})\right)& \leq  \sum\limits_{i=1}^{k-1}(-1)^{i-1}\sum\limits_{J\subseteq [t],\ |J|=i}\bbP\lt[ \bigcap_{j\in J}(A_j\cap A_{t+1}) \rt]\\
-	& = \sum_{i=1}^{k-1}(-1)^{i-1}\sum_{J\subseteq [t],\ |J|=i}\bbP\lt[ A_{t+1}\cap\lt( \bigcap_{j\in J}A_j \rt)\rt]
+	\bbP\left(\bigcup_{i=1}^t (A_i\cap A_{t+1})\right)& \leq  \sum\limits_{i=1}^{k-1}(-1)^{i-1}\sum\limits_{J\subseteq [t],\ |J|=i}\bbP\lt[ \bigcap_{j\in J}(A_j\cap A_{t+1}) \rt]= \sum_{i=1}^{k-1}(-1)^{i-1}\sum_{J\subseteq [t],\ |J|=i}\bbP\lt[ A_{t+1}\cap\lt( \bigcap_{j\in J}A_j \rt)\rt]
 \end{align*}
 Hence we have \begin{align*}
 	&\bbP\left(\bigcup_{i=1}^t A_i\right)+\bbP(A_{t+1})-\bbP\left(\bigcup_{i=1}^t (A_i\cap A_{t+1})\right)\\
@@ -161,8 +137,8 @@ Hence we have \begin{align*}
 	= &  \sum_{i=1}^{k+1}\bbP[A_i]+ \sum\limits_{i=2}^k(-1)^{i-1}\sum\limits_{J\subseteq [t+1],\ |J|=i}\bbP\lt[\bigcap\limits_{j\in J}A_j\rt]\\
 	= & \sum\limits_{i=1}^k(-1)^{i-1}\sum\limits_{J\subseteq [t+1],\ |J|=i}\bbP\lt[\bigcap\limits_{j\in J}A_j\rt]
 \end{align*}Therefore we have $$\bbP\left(\bigcup_{i=1}^{t+1}A_i\right)\geq  \sum\limits_{i=1}^k(-1)^{i-1}\sum\limits_{J\subseteq [t+1],\ |J|=i}\bbP\lt[\bigcap\limits_{j\in J}A_j\rt]$$
-\subsubsection*{$k$ is Even:}
-Similarly when $k$ is even using inductive hypothesis from \eqref{eq1} we have  $$\bbP\left(\bigcup_{i=1}^t A_i\right)
+\subsubsection*{$k$ is Odd:}
+Similarly when $k$ is odd using inductive hypothesis from \eqref{eq1} we have  $$\bbP\left(\bigcup_{i=1}^t A_i\right)
 \leq \sum\limits_{i=1}^k(-1)^{i-1}\sum\limits_{J\subseteq [t],\ |J|=i}\bbP\lt[\bigcap\limits_{j\in J}A_j\rt] $$And \begin{align*}
 	\bbP\left(\bigcup_{i=1}^t (A_i\cap A_{t+1})\right)& \geq  \sum\limits_{i=1}^{k-1}(-1)^{i-1}\sum\limits_{J\subseteq [t],\ |J|=i}\bbP\lt[ \bigcap_{j\in J}(A_j\cap A_{t+1}) \rt]\\
 	& = \sum_{i=1}^{k-1}(-1)^{i-1}\sum_{J\subseteq [t],\ |J|=i}\bbP\lt[ A_{t+1}\cap\lt( \bigcap_{j\in J}A_j \rt)\rt]
@@ -175,7 +151,7 @@ Similarly when $k$ is even using inductive hypothesis from \eqref{eq1} we have  
 = & \sum\limits_{i=1}^k(-1)^{i-1}\sum\limits_{J\subseteq [t+1],\ |J|=i}\bbP\lt[\bigcap\limits_{j\in J}A_j\rt]
 \end{align*}Therefore we have $$\bbP\left(\bigcup_{i=1}^{t+1}A_i\right)\leq  \sum\limits_{i=1}^k(-1)^{i-1}\sum\limits_{J\subseteq [t+1],\ |J|=i}\bbP\lt[\bigcap\limits_{j\in J}A_j\rt]$$
 
-For $n=t+1$ for any $k\leq t+1$ we have the Bonferroni Inequalities satisfied. Therefore by mathematical induction we have that the Bonferroni inequalities are for any $n\in \bbN$ and for any $kleq n$.
+For $n=t+1$ for any $k\leq t+1$ we have the Bonferroni Inequalities satisfied. Therefore by mathematical induction we have that the Bonferroni inequalities are for any $n\in \bbN$ and for any $k\leq n$.
 		\end{enumerate}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
