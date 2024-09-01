@@ -4,3 +4,31 @@
 	\probleminput{Sequence of distinct integers $A=(a_1,\dots, a_n)$}
 	\problemquestion{Given an array of distinct integers find the longest increasing subsequence i.e. return maximum size set $S\subseteq[n]$ such that $\forall\ i,j\in S$, $i<j\implies a_i<a_j$}
 \end{algoprob}
+\dfnc[dynamic-prog]{Dynamic Programming}{Dynamic Programming has 3 components:\begin{enumerate}
+		\item {Optimal Substructure}: Reduce problem to smaller independent problems
+		\item {Recursion}: Use recursion to solve the problems by solving smaller independent problems
+		\item {Table Filling}: Use a table to store the result to solved smaller independent problems.
+\end{enumerate}}
+\section{$O(n^2)$ Time Algorithm}
+Given $A=(a_1,\dots, a_n)$ first we will create a $n$-length array where $i^{th}$ entry stores the length and longest increasing subsequence ending at $a_i$. Certainly we have the following recursion relation$$\prb{LIS}(k)=1+\max\limits_{\substack{j<k,\  a_j<a_k}}\{\prb{LIS}(j)\}$$since if a subsequence $S\subseteq [n]$ is the longest increasing subsequence ending at $a_k$ then certainly $S-\{k\}$ is the longest increasing subsequence which ends at $a_j<a_k$ for some $j<k$. 
+
+Hence in the table we start with 1st position and using the recursion relation we fill the table from left. And after the table is filled we look for which entry of the table has maximum length. So the algorithm will be following:
+
+\begin{algorithm}\SetKwComment{Comment}{// }{}
+	\DontPrintSemicolon
+	\KwIn{Sequence of distinct integers $A=(a_1,\dots, a_n)$}
+	\KwOut{Maximum size set $S\subseteq [n]$ such that $\forall\ i,j\in S$, $i<j\implies a_i<a_j$.}
+	\Begin{
+	Create an array $T$ of length $n$\;
+	\For{$i\in[n]$}{
+	$T[i][1]\longleftarrow 1+\max\{T[j][1]\colon j<k,\ a_j<a_k\}$\;
+$T[i][2]\longleftarrow T\big[T[i][1]-1\big][2]$\Comment*{Finds $\prb{LIS}[i]$}
+}	
+$Index\longleftarrow \max \{T[j][1]\colon j\in[n]\}$\;
+\Return{$T[Index]$}
+}
+\caption{\prb{LIS}$(A)$}
+\end{algorithm}
+\pagebreak 
+
+For each iteration of the loop it takes $O(n)$ time to find $\prb{LIS}[i]$. Hence the time complexity of this algorithm is $O(n^2)$. 
