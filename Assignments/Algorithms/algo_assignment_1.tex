@@ -80,6 +80,26 @@ Solve the recurrences: \begin{enumerate}[label=(\roman*)]
 
 \end{problem}
 \solve{	
+	\begin{enumerate}[label=(\roman*)]
+		\item $T(n)=2 T(n / 2)+n \log n$, 
+		\item $T(n)=7 T(n / 3)+n^2$, 
+		\item We have the recurrence relation $$T(n)=\sqrt{n}T(\sqrt{n})+n\iff \frac{T(n)}{n}=\frac{T(\sqrt{n})}{\sqrt{n}}+1$$Now denote $F(n)=\frac{T(n)}{n}$. Then we have the new recurrence relation $$f(n)=f(\sqrt{n})+1$$Now suppose $n=2^{2^k}$. Then\begin{align*}
+			f\left(2^{2^k}\right)
+			&= f\left(\sqrt{2^{2^k}}\rt)+1 = f\left(2^{2^{k-1}}\right) + 1 \\
+			&= f\left(2^{2^{k-2}}\right) + 2 \\
+			&= \cdots \\
+			&=f\left(2^{2^0}\right) + k \\
+			& = f(2) + k
+		\end{align*}
+		Now $f(2)=\frac{T(2)}2$ which is a constant. So there exists $n_0\in\bbN$ such that $f(2)\leq \log\log n$ for all $n\geq n_0$. So for large $k$ we have $$f\left(2^{2^k}\right)=f(2)+k\leq 2k$$Hence we claim $f(n)=O(\log_2\log_2 n)$. For $n=n_0$ we already have $f(n_0)\leq 2\log_2\log_2n$. So let for $n=n_0,\dots, t-1$ we have $f(n)\leq c\log_2\log_2n$ for some $c\in \bbN$. Certainly seeing the $n=n_0$ we have $c\geq 2$ but we will choose $c$ appropriately later. Now for $n=t$ \begin{align*}
+			f(t)&=f(\sqrt{t})+1\\
+			& \leq  c\log_2\log_2(\sqrt{t})+1\\
+			&=c\log_2 \lt(\frac12\log_2 t\rt)+1\\
+			& =c\log_2\frac12+c\log_2\log_2t+1\\
+			& = c\log_2\log_2t-c+1
+		\end{align*}
+	So if we choose $c= 2$ then $f(t)=2\log_2\log_2t-1\leq 2\log_2\log_2t$ Hence by mathematical induction $f(n)=O(\log_2\log_2 n)$ for all $n\geq n_0$. Now we have $f(n)=\frac{T(n)}n$ and $f(n)=O(\log_2\log_2n)$. Hence we have $$T(n)=n O(\log_2\log_2 n)=O(n\log_2\log_2 n)$$
+	\end{enumerate}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 2

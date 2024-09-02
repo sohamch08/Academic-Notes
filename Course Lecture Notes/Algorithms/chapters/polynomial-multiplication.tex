@@ -63,8 +63,8 @@ Since $A^0$ and $A^1$ have degree $\frac{n}2-1$ we can use recursion. Hence the 
 	$Y^1\longleftarrow 	\prb{Recursive-DFT}(A^1)$\;		
 	\For{$k=0$ to $\frac{n}{2}-1$}{
 		
-	$Y[k]\longleftarrow Y^0[k]+\om_n^kY^1[k]$\Comment*{$	A\lt(\om_n^k\rt)=A^0\lt(\om_{\frac{n}2}^{k}\rt)+\om_n^kA^1\lt(\om_{\frac{n}2}^{k}\rt)$}\;
-	$Y\lt[k+\frac{n}{2}\rt]\longleftarrow Y^0[k]-\om_n^{\frac{n}2+k}Y^1[k]$\Comment*{$	A\lt(-\om_n^k\rt)=A^0\lt(\om_{\frac{n}2}^{k}\rt)-\om_n^kA^1\lt(\om_{\frac{n}2}^{k}\rt)$}\;
+	$Y[k]\longleftarrow Y^0[k]+\om_n^kY^1[k]$\Comment*{$	A\lt(\om_n^k\rt)=A^0\lt(\om_{\frac{n}2}^{k}\rt)+\om_n^kA^1\lt(\om_{\frac{n}2}^{k}\rt)$}
+	$Y\lt[k+\frac{n}{2}\rt]\longleftarrow Y^0[k]-\om_n^{\frac{n}2+k}Y^1[k]$\Comment*{$	A\lt(-\om_n^k\rt)=A^0\lt(\om_{\frac{n}2}^{k}\rt)-\om_n^kA^1\lt(\om_{\frac{n}2}^{k}\rt)$}
 }
 \Return{Y}
 }

@@ -21,8 +21,8 @@ Hence in the table we start with 1st position and using the recursion relation w
 	\Begin{
 	Create an array $T$ of length $n$\;
 	\For{$i\in[n]$}{
-	$T[i][1]\longleftarrow 1+\max\{T[j][1]\colon j<k,\ a_j<a_k\}$\;
-$T[i][2]\longleftarrow T\big[T[i][1]-1\big][2]$\Comment*{Finds $\prb{LIS}[i]$}
+	$T[i][1]\longleftarrow 1+\max\{T[j][1]\colon j<k,\ a_j<a_k\}$\Comment*{Finds $\prb{LIS}[i]$}
+$T[i][2]\longleftarrow T\big[T[i][1]-1\big][2]$
 }	
 $Index\longleftarrow \max \{T[j][1]\colon j\in[n]\}$\;
 \Return{$T[Index]$}
@@ -32,3 +32,4 @@ $Index\longleftarrow \max \{T[j][1]\colon j\in[n]\}$\;
 \pagebreak 
 
 For each iteration of the loop it takes $O(n)$ time to find $\prb{LIS}[i]$. Hence the time complexity of this algorithm is $O(n^2)$. 
+\section{$O(n\log n)$ Time Algorithm}
