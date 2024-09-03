@@ -19,6 +19,23 @@
 \newcommand{\comb}[2]{\left(\begin{matrix}
 		#1\\ #2
 \end{matrix}\right)}
+%\newcommand[2]{\quotient}{\faktor{#1}{#2}}
+\newcommand\quotient[2]{
+	\mathchoice
+	{% \displaystyle
+		\text{\raise1ex\hbox{$#1$}\Big/\lower1ex\hbox{$#2$}}%
+	}
+	{% \textstyle
+		#1\,/\,#2
+	}
+	{% \scriptstyle
+		#1\,/\,#2
+	}
+	{% \scriptscriptstyle  
+		#1\,/\,#2
+	}
+}
+
 \newcommand{\tensor}{\otimes}
 \newcommand{\xor}{\oplus}
 %\newcommand{\algoprob}[3]{\begin{center}

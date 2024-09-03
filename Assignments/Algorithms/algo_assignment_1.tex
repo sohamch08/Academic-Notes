@@ -96,9 +96,9 @@ Solve the recurrences: \begin{enumerate}[label=(\roman*)]
 			& \leq  c\log_2\log_2(\sqrt{t})+1\\
 			&=c\log_2 \lt(\frac12\log_2 t\rt)+1\\
 			& =c\log_2\frac12+c\log_2\log_2t+1\\
-			& = c\log_2\log_2t-c+1
+			& = c\log_2\log_2t-c+1\leq 2\log_2\log_2t
 		\end{align*}
-	So if we choose $c= 2$ then $f(t)=2\log_2\log_2t-1\leq 2\log_2\log_2t$ Hence by mathematical induction $f(n)=O(\log_2\log_2 n)$ for all $n\geq n_0$. Now we have $f(n)=\frac{T(n)}n$ and $f(n)=O(\log_2\log_2n)$. Hence we have $$T(n)=n O(\log_2\log_2 n)=O(n\log_2\log_2 n)$$
+	So if we choose $c= 2$ then we are done. Hence by mathematical induction $f(n)=O(\log_2\log_2 n)$ for all $n\geq n_0$. Now we have $f(n)=\frac{T(n)}n$ and $f(n)=O(\log_2\log_2n)$. Hence we have $$T(n)=O(n\log_2\log_2 n)$$
 	\end{enumerate}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

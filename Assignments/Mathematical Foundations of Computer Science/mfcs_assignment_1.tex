@@ -1,0 +1,194 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage{amsmath,mathtools,mathdots}
+\usepackage{amssymb,amsthm}  % assumes amsmath package installed
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=doc!80,
+	citecolor=myr,
+	filecolor=myr,      
+	urlcolor=doc!80,
+	pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
+}
+\usepackage[most,many,breakable]{tcolorbox}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{kpfonts}
+\usepackage{libertine}
+\usepackage{physics}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+\usepackage{float}
+
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+
+\input{../assignment-problem-box}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem*{definition*}{Definition}
+\renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\qed\bigskip\\}
+% To give references for any problem use like this
+% suppose the problem number is p3 then 2 options either 
+% \hyperref[p:p3]{<text you want to use to hyperlink> \ref{p:p3}}
+%                  or directly 
+%                   \ref{p:p3}
+
+
+
+\input{../../letterfonts}
+
+\input{../../macros}
+
+\setlength{\parindent}{0pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 1}\\
+		Email: \href{soham.chatterjee@tifr.res.in}{soham.chatterjee@tifr.res.in} \hfill Dept: STCS\\
+		\normalsize Course: Mathematical Foundations of Computer Science \hfill Date: \today}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+\begin{problem}{%problem statement
+	}{p1% problem reference text
+}
+Let $n=17$ and consider an $n \times n$ grid of switches. A configuration of these switches can be represented by a matrix in $\{\mathrm{Off}, \mathrm{On}\}^{n \times n}$. Such a configuration can be modified by flipping any switch and its up to four adjacent switches (e.g., the you can flip the corner $(1,1)$ and the adjacent switches $(1,2)$ and $(2,1))$. Show that there are configurations for which no sequence of modifications will lead the configuration where every switch is Off. (Open ended) What can you say about other values of $n$ ?
+Hint: This question can be solved with linear algebra.
+
+\end{problem}
+\solve{	
+
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		The Isomorphism Theorems
+	}{p2% problem reference text
+	}
+Let $V$ be a vector space over a field $\mathbb{F}$. For $v \in$ $V$ and subsets $S, T \subseteq V$, define the sets $v+S=\{v+s \mid s \in S\}$ and $S+T=$ $\{s+t \mid s \in S, t \in T\}$.
+
+\begin{definition*}[Quotient spaces]
+	 Let $U \leq V$. Define the quotient space $V / U$ to be the vector space over $\mathbb{F}$ whose elements are of the form $v+U$ for some $v \in V$. Addition is defined as $(v+U)+\left(v^{\prime}+U\right)=\left(v+v^{\prime}+U\right)$ for all $v, v^{\prime} \in V$ and scalar multiplication is defined as $a(v+U)=a v+U$ for all $v \in V$ and $a \in \mathbb{F}$.
+
+\end{definition*}
+Prove that the two operations are well-defined and that $V / U$ is indeed a vector space. Calculate its dimension. Then, prove the following theorems. After you've done so, try reading about similar isomorphism theorems for groups, rings, etc. We will discuss them later in the course.
+\begin{enumerate}[label=(\alph*)]
+\item (\textbf{First isomorphism theorem}) Let $U$ and $V$ be two vector spaces over the same field $\mathbb{F}$ and let $\theta: U \rightarrow V$ be a linear transformation. Then, $\ker(\theta)$ is a subspace of $U, \Im(\theta)$ is a subspace of $V$, and
+$$
+\quotient{U}{\ker \theta} \cong \Im\theta
+$$
+\item (\textbf{Second isomorphism theorem}) Let $V$ be a vector space over a field $\mathbb{F}$ and let $S, T \leq V$. Then, $S+T \leq V$ and we have:
+$$
+\quotient{S}{S\cap T}\cong \quotient{S+T}{T}
+$$
+\item (\textbf{Third isomorphism theorem}) Let $T \leq U \leq V$ be a vector spaces over the field $\mathbb{F}$. Then, $\quotient{U}{T}\leq \quotient{V}{T}$ and:
+$$
+\quotient{\lt(\quotient{V}{T}\rt)}{\lt(\quotient{U}{T}\rt)}\cong \quotient{V}{U}
+$$
+\item (\textbf{"Fourth" isomorphism theorem}) Let $U \leq V$ be a vector spaces over the field $\mathbb{F}$. There is a bijection between subspaces of $V$ containing $U$ and subspaces of $\quotient{V}{T}$.
+\end{enumerate}
+\end{problem}
+\solve{	
+	\begin{enumerate}[label=(\alph*)]
+		\item Define the map $\vph:\quotient{U}{\ker\theta}\to \Im \theta$ where $\vph(x+\ker\theta)=\theta(x)$ for any $x+\ker\theta\in \quotient{U}{\ker\theta}$ where $x\in U$. Now we will prove first $\vph $ is a well defined map then it is a linear map and then it is a bijection.
+	\begin{itemize}
+		\item \textbf{{Well Defined:}} Let $x+\ker\theta,y+\ker\theta\in \quotient{U}{\ker\theta}$ for $x,y\in U$. Now suppose we have $x+\ker\theta=y+\ker\theta$. We have to show that $\vph(x+\ker\theta)=\vph(y+\ker\theta)$. Now  $$x+\ker\theta=y+\ker\theta\implies x-y\in\ker\theta\implies \theta(x-y)=0\implies \theta(x)=\theta(y)$$Now we know $\theta(x)=\vph(x+\ker\theta)$ and $\theta(y)=\vph(y+\ker\theta)$. Hence we have $ \vph(x+\ker\theta)=\vph(y+\ker\theta)$. So $\vph$ is a well defined map.
+		\item \textbf{Linear Map:} Let $x+\ker\theta,y+\ker\theta\in \quotient{U}{\ker\theta}$ for some $x,y\in U$. Then $$\vph((x+y)+\ker\theta)=\theta(x+y)=\theta(x)+\theta(y)=\vph(x+\ker\theta)+\vph(y+\ker\theta)$$Hence $\vph$ is linear. Now let $\alpha\in \bbF$. Now $$\vph((\alpha x)+\ker\theta)=\theta(\alpha x)=\alpha \theta(x)=\alpha\vph(x+\ker\theta)$$Hence $\vph$  also satisfies the scalar multiplication property of linear maps. Hence $\vph$ is a linear map between $\quotient{U}{\ker\theta}$ and $\Im\theta$. 
+		\item \textbf{Injectivity:} Let $x+\ker\theta, y+\ker\theta\in \quotient{U}{\ker\theta}$ for some $x,y\in U$. Now suppose we have $$\vph(x+\ker\theta)=\vph(y+\ker\theta)\implies \theta(x)=\theta(y)\implies \theta(x-y)=0\implies x-y\in\ker\theta$$Since $x-y\in\ker\theta $ we have $y\in x+\ker\theta$ since $x-(x-y)=y$ and similarly we have $x\in y+\ker\theta$. Hence we get $x+\ker\theta=y+\ker\theta$. Therefore $\vph$ is injective. 
+		\item \textbf{Surjectivity:} Let $v\in \Im\theta$. Hence $\exs\ x\in U$ such that $\theta(x)=v$. Then consider the vector $x+\ker\theta\in \quotient{U}{\ker\theta}$. Certainly we have $$\vph(x+\ker\theta)=\theta(x)=v$$Hence  for every $v\in \Im\theta$ there is an preimage $x+\ker\theta\in \quotient{U}{\ker\theta}$  where $\vph(x+\ker\theta)=v$. Therefore $\vph$ is surjective. 
+	\end{itemize}
+Since $\vph$ is injective and surjective we can say $\vph$ is a bijection. And since $\vph$ is also a linear map we conclude $\vph$ is an isomorphism. Therefore we have $$\quotient{U}{\ker\theta}\cong \Im \theta$$
+\item Consider the map $\vph:S\to \quotient{S+T}{T}$ where for any $s\in S$, $s\mapsto s+T$. Now we will first show $\vph $ is a well defined surjective linear map and then we will show $\ker\vph=S\cap T$. Then by first isomorphism theorem we will have result.\begin{itemize}
+	\item \textbf{Well Defined:} Let $x,y\in S$ and $x=y$. Then we have to show $\vph(x)=\vph(y)$. Now $\vph(x)=x+T$ and $\vph(y)=y+T$. Now any element of $x+T$ is of the form $x+t$ for some $t\in T$. Since $x=y$ we have $x+t=y+t$. Therefore $x+t\in y+T$. And similarly  for any element $y+t$ of $y+T$ for some $t\in T$ we have $y+t\in x+T$. Therefore $x+T=y+T$. Hence $\vph(x)=\vph(y)$. So $\vph$ is well defined.
+	\item \textbf{Linear Map:} Let $x,y\in S$. Now $$\vph(x+y)=(x+y)+T=(x+T)+(y+T)=\vph(x)+\vph(y)$$Let $\alpha\in\bbF$. Hence Then we have $$\vph(\alpha x)=(\alpha x)+T=\alpha(x+T)=\alpha\vph(x)$$Therefore $\vph$ is a linear map. 
+	\item \textbf{Surjectivity:} Any vector of $\quotient{S+T}T$ is of the form $u+T $ for some $u\in S+T$. Now any vector of $S+T$ is of the form $s+t$ for some $s\in S$ and $t\in T$. Therefore $$u+T=(s+t)+T=s+(t+T)=s+T$$Now $\vph(s)=s+T=u+T$. Therefore $\vph$ is a surjective linear map. 
+	\item $\boldsymbol{\ker\vph=S\cap T}$\textbf{:} Let $s\in S$ and $\vph(s)=0$. Now $\vph(s)=s+T$. Hence $s+T=T\implies s\in T$. Therefore $s\in S\cap T$. Therefore $\ker\vph\subseteq S\cap T$. Now let $s\in S\cap T\implies s\in T$. So $s+T=T$. Therefore $\vph(s)=0$. Hence $s\in \ker\vph$. Therefore $\ker\vph\supseteq S\cap T$. Hence we get $\ker\vph=S\cap T$. 
+\end{itemize}
+Therefore using the first isomorphism theorem we have $$\quotient{S}{\ker\vph}\cong \Im\vph\iff \quotient{S}{S\cap T}\cong \quotient{S+T}{T}$$
+\item Consider the map $\vph:\quotient{V}T\to \quotient{V}{U}$ where $v+T\mapsto v+U$ for some $v+T\in \quotient{V}T$ where $v\in V$. Now we will show $\vph$ is a well defined, linear, surjective map and its kernel is $\quotient{U}T$. Then we will use the first isomorphism theorem
+\begin{itemize}
+	\item \textbf{Well Defined:} Let $v+T,w+T\in\quotient{V}{T}$ for some $v,w\in V$. Now assume $v+T=w+T$. We will show $\vph(v+T)=\vph(w+T)$. Now $v+T=w+T\implies v-w\in T$. And we have $T\leq U$. Therefore $$v-w\in U\implies v+U=w+U\implies \vph(v)=\vph(w)$$Therefore $\vph$ is well defined.
+	\item \textbf{Linear Map:} Let $v+T,w+T\in\quotient{V}{T}$ for some $v,w\in V$. Now $$\vph((v+w)+T)=(v+w)+U=(v+U)+(w+U)=\vph(v+T)+\vph(w+T)$$Let $\alpha\in\bbF$. Then we have $$\vph((\alpha v)+T)=(\alpha v)+U=\alpha(v+U)=\alpha \vph(v)$$Therefore $\vph$ is a well defined linear map.
+	\item \textbf{Surjectivity:} Let $v+U\in \quotient{V}{U}$ for some $v\in V$. Since $T\leq U$, $v+T$ is  a vector of $\quotient{V}{T}$. Then $\vph(v+T)=v+U$. Therefore $\vph$ is surjective.
+	\item $\boldsymbol{\ker\vph=\quotient{U}{T}}$\textbf{:} 
+\end{itemize}
+\end{enumerate}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p3% problem reference text
+	}
+Let $V$ be a vector space over a field $\mathbb{F}$ and $W_1, \ldots, W_k \leq V$ be subspaces. We say that $V$ is the internal direct sum of $W_1, \ldots, W_k$ and write $V=\bigoplus\limits_{i=1}^k W_i$ if for all $v \in V$, there exists unique $w_1 \in W_1, \ldots, w_k \in W_k$ such that $v=\sum\limits_{i=1}^k w_i$. The values $w_1, \ldots, w_k$ are called the projections of $v$ onto $W_1, \ldots, W_k$ respectively.\begin{itemize}
+	\item Show that $V=\bigoplus\limits_{i=1}^k W_i$ if and only if $V=\sum\limits_{i=1}^k W_i$, and for all $i \in[k]$, we have $W_i \cap \sum\limits_{i^{\prime} \neq i} W_{i^{\prime}}=\{0\}$.
+	\item Let $\theta \in L(V)$. Show that $\theta$ is idempotent (namely, we have $\theta \circ \theta=\theta$ ) if and only if $V=\Im(\theta) \ \oplus \ \ker(\theta)$ and for all $v \in V, \theta(v)$ is just the projection of $v$ onto $\Im(\theta)$.
+	\item Let $\theta_1, \ldots, \theta_k \in L(v)$ be idempotent such that $\theta_i \circ \theta_{i^{\prime}}=0$ whenever $i \neq i^{\prime} \in[k]$. Let $\theta_0=I-\sum\limits_{i=1}^k \theta_i$. Show that $\theta_0$ is idempotent and:
+	$$
+	V=\bigoplus_{i=0}^k \Im\left(\theta_i\right)
+	$$
+\end{itemize}
+
+\end{problem}
+\solve{
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p4% problem reference text
+	}
+ Let $V$ be a 3-dimensional vector space over the field $\mathbb{Q}$ of rationals. Let $\theta \in L(V)$ and $x \neq 0 \in V$ be such that $\theta(x)=y, \theta(y)=z$, and $\theta(z)=x+y$. Show that $x, y, z$ form a basis of $V$.
+\end{problem}
+\solve{
+	
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+}{p5% problem reference text
+}
+Show that the set of real numbers $\mathbb{R}$ with standard operations forms a vector space over the field of rationals $\mathbb{Q}$. This is an example of an infinite-dimensional vector space, as we shall now see in two different ways.
+\begin{itemize}
+	\item Show that for any $k>0$ and any primes $p_1, \ldots, p_k$, the real numbers $\log p_1, \ldots, \log p_k$ are linearly independent over $\mathbb{Q}$.
+	\item Show that for any $k>0$ there is a one-to-one function mapping $\mathbb{Q}^k$ to $\mathbb{Q}$.
+\end{itemize}
+
+For both of the above, why do we get that $\mathbb{R}$ forms an infinite-dimensional vector space over $\mathbb{Q}$ ?
+\end{problem}
+\solve{
+
+}
+
+\end{document}
