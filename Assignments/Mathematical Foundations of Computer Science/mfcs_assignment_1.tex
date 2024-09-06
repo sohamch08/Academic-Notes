@@ -40,7 +40,7 @@
 
 \newtheorem{lemma}{Lemma}
 \newtheorem*{definition*}{Definition}
-\renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\qed\bigskip\\}
+\renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\hfill $\blacksquare$\bigskip\\}
 % To give references for any problem use like this
 % suppose the problem number is p3 then 2 options either 
 % \hyperref[p:p3]{<text you want to use to hyperlink> \ref{p:p3}}
@@ -108,7 +108,7 @@ $$
 $$
 \quotient{\lt(\quotient{V}{T}\rt)}{\lt(\quotient{U}{T}\rt)}\cong \quotient{V}{U}
 $$
-\item (\textbf{"Fourth" isomorphism theorem}) Let $U \leq V$ be a vector spaces over the field $\mathbb{F}$. There is a bijection between subspaces of $V$ containing $U$ and subspaces of $\quotient{V}{T}$.
+\item (\textbf{``Fourth" isomorphism theorem}) Let $U \leq V$ be a vector spaces over the field $\mathbb{F}$. There is a bijection between subspaces of $V$ containing $U$ and subspaces of $\quotient{V}{U}$.
 \end{enumerate}
 \end{problem}
 \solve{	
@@ -136,10 +136,13 @@ Therefore using the first isomorphism theorem we have $$\quotient{S}{\ker\vph}\c
 	\item $\boldsymbol{\ker\vph=\quotient{U}{T}}$\textbf{:} Let $v+T\in \ker\vph$ for some $v\in V$. Now $\vph(v+T)=0$. Hence $v+U=0+U\implies v\in U$. Therefore $v+T\in \quotient{U}{T}$ as $\quotient{U}T\leq \quotient{V}{T}$. Hence $\ker\vph\subseteq \quotient{U}{T}$. Now let $u+T\in\quotient{U}{T}$ for some $u\in U$. Since $\quotient{U}T\leq \quotient{V}{T}$, $u+T\in\quotient{V}{T}$. Now $\vph(u+T)=u+U=o+U$. Therefore $u+T\in\ker\vph$. Therefore we have $\ker\vph\supseteq \quotient{U}{T}$. Hence we have $$\ker{\vph}=\quotient{U}{T}$$
 \end{itemize}
 Therefore using first isomorphism theorem we have $$\quotient{\lt(\quotient{V}{T}\rt)}{\ker\vph}\cong\Im \vph\iff\quotient{\lt(\quotient{V}{T}\rt)}{\lt(\quotient{U}T\rt)}\cong \quotient{V}{U}$$
-\item Consider the set $\spec(V)_T=\{U\subseteq V\mid \text{$U$ subspace of $V$ containing $T$}\}$ for any vector space $V$ over $\bbF$. Now we have to show there is a bijection between $\spec(V)_T$ and $\spec\lt(\quotient{V}{T}\rt)$. Consider the function $f:\spec(V)_T\to \spec\lt(\quotient{V}T\rt)$ where $U\mapsto \quotient{U}{T}$ for any subspace $U\in \spec{V}_T$. Now we will show $f$ is a bijection. \begin{itemize}
-	\item \textbf{Injectivity:} Now let $U,W\in \spec(W)_T$ such that $f(U)=f(W)$. Hence we have $\quotient{U}{T}=\quotient{W}{T}$. Let $u\in U$. Then $u+T\in \quotient{U}{T}$. Therefore $u+T\in \quotient{W}{T}$. So $u+T=w+T$ for some $w\in W$. Now we have $u\in w+T\subseteq w+W=W$. So $u\in W$. Therefore $U\subseteq W$. Similarly for any $w\in W$ we have $$w+T\in \quotient{W}{T}\implies w+T\in \quotient{U}{T}\implies w+T=u+T\text{ for some $u\in U$}\implies w\in u+T\subseteq u+U=U$$Hence $W\subseteq U$. Therefore we have $U=W$. Hence $f$ is injective.
-	\item 
+\item Consider the set $\spec(V)_U=\{W\subseteq V\mid \text{$W$ subspace of $V$ containing $U$}\}$ for any vector space $V$ over $\bbF$. Now we have to show there is a bijection between $\spec(V)_U$ and $\spec\lt(\quotient{V}{U}\rt)$. Consider the function $f:\spec(V)_U\to \spec\lt(\quotient{V}U\rt)$ where $W\mapsto \quotient{W}{U}$ for any subspace $W\in \spec{V}_U$. Now we will show $f$ is a bijection. \begin{itemize}
+	\item \textbf{Injectivity:} Now let $S,T\in \spec(V)_U$ such that $f(S)=f(T)$. Hence we have $\quotient{S}{U}=\quotient{T}{U}$. Let $s\in S$. Then $s+U\in \quotient{S}{U}$. Therefore $s+U\in \quotient{T}{U}$. So $s+U=t+U$ for some $t\in T$. Now we have $s\in t+U\subseteq t+T=T$. So $s\in T$. Therefore $S\subseteq T$. Similarly for any $t\in T$ we have $$t+U\in \quotient{T}{U}=\quotient{S}{U}\implies t+U=s+U\text{ for some $s\in S$}\implies t\in s+U\subseteq s+S=S\implies T\subseteq S$$Therefore we have $S=T$. Hence $f$ is injective.
+	\item \textbf{Surjectivity:} Let $W\leq \quotient{V}{U}$. Consider the linear map $\psi: V\to \quotient{V}{U}$ where $v\mapsto v+U$ for all $v\in V$. Now $\psi $ is  indeed a linear map because of the addition and scaler multiplication rules in $\quotient{V}{U}$ explained in defining quotient space as $$\psi(v+w)=(v+w)+U=(v+U)+(w+U)=\psi(v)+\psi(w) \text{ for all $v,w\in V$} $$ and  and $$\psi(\alpha v)=(\alpha v)+U=\alpha(v+U)=\alpha\psi(v)\text{ for all $\alpha\in\bbF$ and $v\in V$}$$
+	
+	Then consider the subspace $\psi^{-1}(W)$ of $V$. Then we  $$\vph\lt(\psi^{-1}(S)\rt)=\vph\lt(\{v\in V\mid v+U\in W\}\rt)=\{\vph(v)\mid v\in V,\ v+U\in W\}=W$$
 \end{itemize}
+Therefore $f$ is bijective. Hence there is an bijection between subspaces of $V$ containing $U$ and subspaces of $\quotient{V}{U}$. 
 \end{enumerate}
 }
 
@@ -161,6 +164,48 @@ Let $V$ be a vector space over a field $\mathbb{F}$ and $W_1, \ldots, W_k \leq V
 
 \end{problem}
 \solve{
+	\begin{itemize}
+		\item \begin{itemize}
+			\item \textbf{Forward Direction $\boldsymbol{(\Rightarrow)}$:} $V=\bigoplus\limits_{i=1}^k W_i$. Then for all $v\in V$, $\exs!\ w_i\in W_i$ such that $v=\sum\limits_{i=1}^nw_i$. So $v\in \sum\limits_{i=1}^k W_i\implies V\subseteq \sum\limits_{i=1}^k W_i$. Now since $W_i$ is a subspace of $V$ for all $i\in[k]$. Hence $\sum\limits_{i=1}^k W_i$ is a subspace of $V$. Therefore we have $V=\sum\limits_{i=1}^k W_i$. 
+			
+			\parinn Now suppose $\exs\ i\in[k]$ such that $W_i\cap \sum\limits_{i'\neq i}W_{i'}\neq \{0\}$. Let $w\in W_i\cap \sum\limits_{i'\neq i}W_{i'}$ and $w\neq 0$. Since $w\in \sum\limits_{i'\neq i}W_{i'}$ there exists $w_{i'}\in W_{i'}$ for all $i'\in [k]$, $i'\neq i$. Hence we have two ways of expressing $w\in V$ one is as a vector of $W_i$ and another is $\sum\limits_{i'\neq i}w_{i'}$. This contradicts that for all $v\in V$ there exists unique $w_i\in W_i$ for all $i\in[k]$ such that $v=\sum\limits_{i=1}^kw_i$. Hence contradiction. We have for all $i\in[k]$, $W_i\cap \sum\limits_{i'\neq i}W_{i'}=\{0\}$. 
+			\item \textbf{Backward Direction $\boldsymbol{(\Leftarrow)}$:} Let $V=\sum\limits_{i=1}^k W_i$ and for all $i\in[k]$, $W_i\cap \sum\limits_{i'\neq i}W_{i'}=\{0\}$. For all $v\in V=\sum\limits_{i=1}^k$ there exists $w_i\in W_i$ for all $i\in[k]$ such that $v=\sum\limits_{i=1}^k w_i$. Suppose there exists a vector $v\in V$ such that $\exs\ \{w_i\in W_i\mid i\in[k]\}\neq \{w'_i\in W_i\mid i\in[k]\}$ such that $$v=\sum\limits_{i=1}^kw_i=\sum_{i=1}^k w'_i\implies \sum\limits_{i=1}^k (w_i-w'_i)=0\implies w_i-w'_i=\sum_{j\neq i}(w'_j-w_j)$$So denote $w=w_i=w'_i$ Then $w\in W_i$ and $w\in \sum\limits_{j\neq i}W_j$ as $w'_j-w_j\in W_j$ for all $j\in [k]$, $j\neq i$ and $\sum\limits_{j\neq i}(w'_j-w_j)\in \sum\limits_{j\neq i}W_j$. So $W_i\cap \sum\limits_{j\neq i}W_j\neq \{0\}$. Hence contradiction. There doesn't exists any vector in $V$ with more than one representations as summation of $k$ vectors one from each of the $W_i$, $i\in[k]$. Hence for each $v\in V$, $\exs!\ w_i\in W_i\ \forall \ i\in[k]$ such that $v=\sum\limits_{i=1}^k w_i$. Therefore $V=\bigoplus\limits_{i=1}^k W_i$. 
+		\end{itemize}
+	Hence we have $V=\bigoplus\limits_{i=1}^k W_i\iff V=\sum\limits_{i=1}^k W_i$, and for all $i \in[k]$, we have $W_i \cap \sum\limits_{i^{\prime} \neq i} W_{i^{\prime}}=\{0\}$.
+	
+	\item \begin{itemize}
+		\item \textbf{Forward Direction $\boldsymbol{(\Rightarrow)}$:} Let $\theta\in L(V)$ is idempotent. Suppose $v\in V$ be any vector. Now we have $v=T(v)+(v-T(v))$. Certainly $T(v)\in \Im \theta$. Now $$\theta(v-\theta(v))=\theta(v)-T\circ \theta(v)=\theta(v)-\theta(v)=0\implies v-\theta(v)\in \ker\theta$$ Hence for all $v\in V$, $v$ can be expressed as a sum of a vector from $\Im\theta$ and a vector from $\ker \theta$. Hence $V\subseteq \Im\theta +\ker\theta$ and since $\Im\theta $ and $\ker\theta$ are subspaces of $V$ so we have $V=\Im\theta+\ker\theta$. Now it is enough to show that $\ker\theta\cap \Im\theta=\{0\}$. Now let $v\in\ker\theta\cap \Im\theta$. Since $v\in \ker\theta$ we have $\theta(v)=0$. And $v\in\Im\theta$ there exists $u\in V$ such that $\theta(u)=v$. Since $0=\theta(v)=\theta\circ \theta(u)=\theta(u)=v$. Hence $\ker\theta\cap \Im\theta=\{0\}$. Therefore by the part (a) we have $V=\ker\theta\oplus \Im\theta$. Hence for all $v\in V$, $v=\theta(v)+(v-\theta(v))$ is the only unique representation as a sum of a vector from $\Im\theta $ and a vector from $\ker\theta$. Hence $\theta(v)$ is the projection of $v$ onto $\Im(\theta)$. 
+		
+	\item 	\textbf{Backward Direction $\boldsymbol{(\Leftarrow)}$:} Suppose $V=\Im\theta\oplus \ker\theta$. For any $v\in V$, $\exs!\ u\in\Im\theta,\ w\in\ker\theta$, such that $v=u+w$. Since $\theta(v)$ is the projection of $v$ onto $\Im\theta$ we have $u=\theta(v)$. Then $v=\theta(v)+w$ where $\theta(w)=0$. Hence we have $$\theta(v)=\theta(\theta(v)+w)=\theta\circ\theta(v)+\theta(w)=\theta\circ\theta(v)$$Hence we have for all $v\in V$, $\theta(v)=\theta\circ\theta(v)$. Therefore $\theta \circ\theta=\theta$ i.e. $\theta$ is idempotent.
+	\end{itemize}
+Hence we have $\theta $ is idempotent $\iff V=\Im\theta\oplus \ker\theta$ and for all $v\in V$, $\theta(v)$ is just the projection of $v$ onto  $\Im\theta$. 
+\item \begin{itemize}
+	\item We know for all $i\in[k]$ $\theta_i\circ\theta_i=\theta_i$ and for all $i,j\in[k]$, $i\neq j$ we have $\theta_i\circ\theta_j=0$. Now \begin{align*}
+		\theta_0\circ \theta & =  \lt[I-\sum_{i=1}^k\theta_i\rt]\circ\lt[I-\sum_{j=1}^k\theta_j\rt]\\
+		& = I\circ I -I\circ\lt(\sum_{i=1}^k\theta_i\rt) - \lt(\sum_{j=1}^k\theta_j\rt)\circ I +\lt(\sum_{i=1}^k\theta_i\rt)\circ \lt(\sum_{j=1}^k\theta_j\rt)\\
+		& = I-\sum_{i=1}^k\theta_i-\sum_{i=1}^k\theta_i+\lt(\sum_{i=1}^k\theta_i\rt)\circ \lt(\sum_{j=1}^k\theta_j\rt)\\
+		& = I-2\sum_{i=1}^k\theta_i+\sum_{1\leq i,j\leq k}\theta_i\circ \theta_j\\
+		& =  I-2\sum_{i=1}^k\theta_i+\sum_{i=1}^k\theta_i\circ\theta_i+\sum_{1\leq i\neq j\leq \leq k}\theta_i\circ \theta_j\\
+		& = I-2\sum_{i=1}^k\theta_i+\sum_{i=1}^k\theta_i\circ\theta_i\\
+		& = I-2\sum_{i=1}^k\theta_i+\sum_{i=1}^k\theta_i\\
+		& = I-\sum_{i=1}^k\theta_i=\theta_0
+	\end{align*}Hence we have $\theta_0$ is idempotent. 
+	
+\item 	Now we have to show $V=\bigoplus\limits_{i=0}^k\Im\theta_i$. First of all notice for all $i\in[k]$ we have $$\theta_i\circ \theta_0=\theta_i\circ\lt(I-\sum\limits_{j=1}^k\theta_j\rt)=\theta-\sum_{j=1}^k\theta_i\circ\theta_j=\theta_i-\theta_i\circ\theta=0$$And similarly $$\theta_0\circ \theta_i=\lt(I-\sum_{j=1}^k \theta_j\rt)\circ \theta_i=\theta_i-\sum_{j=1}^k \theta_j\circ\theta_i=\theta_i-\theta_i\circ\theta_i=0$$Therefore $\forall\ i,j\in\{0,1,\dots,k\}$ we have $\theta_i\circ\theta_j=0$ if $i\neq j$ and $\theta_i\circ\theta_i=\theta_i$. Now by part (b) we have $V=\ker\theta_0\oplus \Im\theta_0$. We will show $\ker\theta_0=\bigoplus\limits_{i=1}^k\Im\theta_i$.  \begin{lemma}
+	For all $v\in\ker\theta_0$, $v=\sum\limits_{i=1}^k \theta_i (v)$
+\end{lemma}
+\begin{proof}
+	$\theta_0(v)=\lt(I-\sum\limits_{i=1}^k\theta_i\rt)(v)=v-\sum\limits_{i=1}^k\theta_i(v)$. Since $v\in \ker\theta_0$ we have $$v-\sum\limits_{i=1}^k\theta_i(v)=0\iff v=\sum\limits_{i=1}^k\theta_i(v)$$
+\end{proof}Now $\theta_i(v)\in \Im\theta_i$. Therefore $\ker\theta_0\subseteq \sum\limits_{i=1}^k \Im\theta_i$. Also for any $v\in \sum\limits_{i=1}^k \Im\theta_i$, $v$ can be written as $\sum\limits_{i=1}^kw_i$ where $w_i\in\Im\theta_i$. Therefore we can think $w_i=\theta_i(v_i)$ for some $v\in V$. Therefore $v=\sum\limits_{i=1}^k\theta_i(v_i)$. Hence $$\theta_0(v)=\sum_{i=1}^k \theta_0\circ \theta_i(v_i)=0$$Hence $v\in \ket\theta_0$. Hence $\sum\limits_{i=1}^k \Im\theta_i\subseteq \ker\theta_0$. Hence we get $\ker\theta_0=\sum\limits_{i=1}^k\Im\theta_i$. Now it is enough to show that $\forall\ i\in[k]$ we have $\Im\theta_i\cap \lt(\sum\limits_{j\neq i}\Im\theta_j\rt)=\{0\}$.
+\begin{lemma}
+	$\forall\ i\in[k]$ we have $\Im\theta_i\cap \lt(\sum\limits_{j\neq i}\Im\theta_j\rt)=\{0\}$
+\end{lemma}
+\begin{proof}
+	For any $i\in[k]$, let $v\in \Im\theta_i\cap \lt(\sum\limits_{j\neq i}\Im\theta_j\rt)$. Since $v\in\Im\theta_i$ there exists $u\in V$, such that $v=\theta_i(u)$. Now since $v\in \sum\limits_{j\neq i}\Im\theta_j$, $\exs\ u_j\in V$ such that $v=\sum\limits_{j\neq i}\theta_j(u_j)$. Now $$\theta_i(v)=\sum\limits_{j\neq i}\theta_i\lt(\theta_j(u_i)\rt)= \sum\limits_{j\neq i}\theta_i\circ\theta_j(u_j)=0$$So $\theta_i(v)=0$ but $\theta_i(v)=\theta_i\lt(\theta_i(u)\rt)=\theta_i\circ\theta_i(u)=\theta_i(u)=v$. Therefore $v=0$. Hence we have $\Im\theta_i\cap \lt(\sum\limits_{j\neq i}\Im\theta_j\rt)=\{0\}$
+\end{proof}
+Hence by part (a) and Lemma 1, Lemma 2 we have $\ker\theta_0=\bigoplus\limits_{i=1}^k \Im\theta_i$. Hence we have $V=\bigoplus\limits_{i=0}^k\Im\theta_i$.
+\end{itemize}
+	\end{itemize}
 }
 
 
@@ -174,8 +219,37 @@ Let $V$ be a vector space over a field $\mathbb{F}$ and $W_1, \ldots, W_k \leq V
 	}
  Let $V$ be a 3-dimensional vector space over the field $\mathbb{Q}$ of rationals. Let $\theta \in L(V)$ and $x \neq 0 \in V$ be such that $\theta(x)=y, \theta(y)=z$, and $\theta(z)=x+y$. Show that $x, y, z$ form a basis of $V$.
 \end{problem}
-\solve{
+\solve{First we will follow 2 lemmas. Then using them we will show $x,y,z$ form a basis.
+	\begin{lemma}\label{znotgo0}
+		$\theta(z)\neq 0$
+	\end{lemma}
+\begin{proof}
+	If $\theta(z)=0$ then we have $x+y=0\implies y=-x$. That means $\theta(x)=y=-x$. Therefore $\theta(y)=\theta(-x)=-\theta(x)=-(-x)=x$. Therefore $z=x$. Then $\theta(z)=\theta(x)=y=-x$. We have $$\theta(z)=0\implies -x=0\implies x=0$$ But given that $x\neq 0$. Hence contradiction. So $\theta(z)\neq 0$.
+\end{proof}
+
+By the lemma we also have $y,z\neq 0$ because otherwise we will have $\theta(z)=0$ which is not possible. Hence $x,y=\theta(x),z=\theta(y),\theta(z)\neq0$.
+\begin{lemma}\label{noeigenvec}
+	$x$ is not an eigenvector of $\theta$.
+\end{lemma}
+\begin{proof}
+	Suppose $x$ is an eigenvector of $\theta$. Then $\exs\ \lm\in \bbQ$ such that $\theta(x)=\lm x$. By \lemref{znotgo0} we have $\lm\neq 0$. Hence $\theta(x)=\lm x=y$. $\theta(y)=\theta(\lm x)=\lm^2 x=z$. And we have $\theta(z)=\theta(\lm^2 x)=\lm^3 x$. Therefore we have $$\lm^3 x=x+y=x+\lm x\iff x(\lm^3-\lm-1)=0\iff \lm^3-\lm-1=0$$
 	
+	Now we will show the polynomial $f(t)=t^3-t-1$ does not have any rational root. Suppose $f(t)$ Let $\frac{p}{q}$ be a rational root of $f(t)$ where $\frac{p}{q}$ is in the lowest form for some $p,q\in\bbZ$ with $q\neq 0$ and $p,q$ coprime. Then $$f\lt(\frac{p}{q}\rt)=\frac{p^3}{q^3}-\frac{p}{q}-1=0\iff p^3-pq^2-q^3=0$$Call $f'=p^3-pq^2-q^3$. Now $q\mid 0$, $q\mid q^3$, $q\mid pq^2$. Hence $$q\mid f'+q^3+pq^2\implies q\mid p^3\implies q=1$$Here $q=1$ since $gcd(p,q)=1$. Similarly $p\mid 0$, $p\mid p^3$, $p\mid pq^2$. Hence $$p\mid p^3-pq^2-f'\implies p\mid q^3\implies p=1$$Hence both $p,q$ are equal to $1$. So $1$ should be a root of $f(t)$ but it is not. Hence contradiction. $f(t)$ has no rational root. 
+	
+	Since $f(t)$ has no rational root there doesn't exists any $\lm\in\bbQ$, $\lm\neq 0$ such that $\lm$ is an eigenvalue of $\theta$. Hence contradiction. Therefore $x$ is not an eigenvector of $\theta$. 
+\end{proof}
+
+Now we are ready to prove that $x,y,z$ forms a basis. Showing $x,y,z$ are linearly independent is enough for us. Suppose they are not. Then $\exs\ a,b,c\in \bbQ$  not all zero such that $ax+by+cz=0$. WLOG asssume $c\neq 0$. Hence we can divide $a,b$ by $c$ and still get a rational. So we can think $\exs\ a,b\in \bbQ$ such that $$ax+by-z=0\iff z=ax+by$$ Now composing $\theta$ on both sides we have \begin{equation}
+	a\theta(x)+b\theta(y)-\theta(z)=0\iff ay+bz-(x+y)=0\implies {-x+(a-1)y+bz=0}\label{compose1}
+\end{equation}Now using \eqref{compose1} we have $$-x+(a-1)y+bz=0\iff -x+(a-1)y+b({ax+by})=0\iff (ab-1)x+(a+b^2-1)y=0$$\textbf{Case 1 ($\boldsymbol{ab-1,\ a+b^2-1\neq 0}$):} If both of $ab-1$ and $a+b^2-1$ is nonzero then $y=\frac{1-ab}{a+b^2-1}x\implies x$ is an eigenvector of $\theta$. This is not possible by \lemref{noeigenvec}.  So at least one of them is zero. Suppose exactly one of them zero.\vspace*{2mm} \parinf
+
+\textbf{Case 2 ($\boldsymbol{ab-1=0,\ a+b^2-1\neq 0}$):} Then $(a+b^2-1)y=0\implies y=0$ then we have $ \theta(z)=0$ which contradicts \lemref{znotgo0}.\vspace*{2mm}
+
+\textbf{Case 3 ($\boldsymbol{ab-1\neq0,\ a+b^2-1= 0}$):} Then $(ab-1)x=0\implies x=0$. But given that $x\neq0$. Therefore this case is not possible.\vspace*{2mm}
+
+\textbf{Case 4 ($\boldsymbol{ab-1=a+b^2-1=0}$):} In this case$$ab-1=0\iff b=\frac1a\implies a+b^2-1=0\iff a+\frac1{a^2}-1==0\iff a^3+1-a^2=0$$Consider the polynomial $g(w)=w^3-w^2+1$. So $a$ is a root of $g(w)$. Now let again $a=\frac{s}{t}$ in their lowest form. Then $$g\lt(\frac{s}{t}\rt)=\frac{s^3}{t^3}-\frac{s^2}{t^2}+1=0\iff s^3-s^2t+t^3=0$$Call $g'= s^3-s^2t+t^3$. Then we have $$s\mid g'-s^3+s^2t\implies s\mid t^3$$Since $gcd(s,t)=1$ we have $s=1$. Again $$t\mid g'-t^3+s^2t\implies t\mid s^3\implies t=1$$Hence we have $a=1$. But $1$ is not a root of $g(w)$. Therefore both $ab-1$ and $a+b^2-1$ can not be both zero. \parinn\vspace*{5mm}
+
+Therefore none of cases is possible. Hence contradiction. Such $a,b$ does not exist. Therefore $x,y,z$ are linearly independent. 
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 5
@@ -193,6 +267,13 @@ Show that the set of real numbers $\mathbb{R}$ with standard operations forms a 
 For both of the above, why do we get that $\mathbb{R}$ forms an infinite-dimensional vector space over $\mathbb{Q}$ ?
 \end{problem}
 \solve{
+	\begin{itemize}
+		\item Let $a_i\in \bbQ$ for all $i\in[k]$ such that $\sum\limits_{i=1}^ka_i\log p_i=0$. Now $$\sum_{i=1}^ka_i\log p_i=\sum_{i=1}^k \log p_i^{a_i}=\log\lt[ \prod_{i=1}^kp_i^{a_i}\rt]$$Since $$\sum\limits_{i=1}^ka_i\log p_i=0\iff \log\lt[ \prod_{i=1}^kp_i^{a_i}\rt]=0\iff \prod_{i=1}^kp_i^{a_i}=1$$Let for each $i\in[k]$, $a_i=\frac{m_i}{n_i}$ where $m_i,n_i\in \bbZ$, $n_i\neq 0$ and $gcd(m_i,n_i)=1$. Let $$b_i=a_i\prod\limits_{j=1}^kn_j=\frac{m_i}{n_i}\prod_{j=1}^kn_j=m_i\prod_{j\neq i}n_j\in\bbZ$$Then we have $$1=\prod_{i=1}^kp_i^{a_i}= \lt(\prod_{i=1}^kp_i^{a_i}\rt)^{\prod\limits_{j=1}^kn_j}=\prod_{i=1}^k p_i^{a_i\prod\limits_{j=1}^kn_j}=\prod_{i=1}^kp_i^{b_i}=1 $$Therefore we get product of powers of prime numbers is $1$. Hence for each prime the power of the prime has to be $0$ because otherwise this is not possible. Hence for all $i\in[k]$, $b_i=0\iff a_i=0$ since $\forall\ i\in[k]$, $n_i\neq 0$. Hence $\{\log p_i\}_{i\in[k]}$ are linearly independent. Since $k$ is arbitrary, we have for all $k\in \bbN$ and for any primes $p_1,\dots, p_k$ the real numbers $\log p_1,\dots, \log p_k$ are linearly independent over $\bbQ$.\vspace*{2mm}
+		
+		\textbf{Proof of $\boldsymbol{\bbR}$ is Infinite-Dimensional over $\boldsymbol{\bbQ}$:} Suppose $\bbR$ is not infinite-dimensional over $\bbQ$. Let dimension of $\bbR$ over $\bbQ$ is $n\in\bbN$. Then suppose $p_1,\dots, p_{n+1}$  be any $n+1$ prime numbers. By the above we have that $\log p_1,\dots, \log p_{n+1}$ is linearly independent over $\bbQ$. But $\dim \bbR=n$ over $\bbQ$. Hence contradiction. $\bbR$ can not be a finite-dimensional vector space over $\bbQ$. Therefore $\bbR$ is an infinite-dimensional vector space over $\bbQ$. 
+		
+		\item For any $k>0$ consider the function $f_k:\bbQ^k\to \bbQ$ where for any $(q_1,\dots, q_k)\in\bbQ$. 
+	\end{itemize}
 
 }
 
