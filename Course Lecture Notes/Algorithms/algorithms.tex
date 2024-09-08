@@ -75,7 +75,7 @@
 
 
 
-\pagebreak
+\newpage
 
 \titleformat{name=\chapter,numberless}[display]
 {\normalfont\Huge\bfseries}{}{0pt}{\Huge}
@@ -84,9 +84,7 @@
 %{\pagestyle{empty} 
 \tableofcontents
 %\clearpage}
-\vfill
-
-\pagebreak
+\newpage
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -97,8 +95,10 @@
 \input{chapters/median-linear-time}
 \input{chapters/polynomial-multiplication}
 \input{chapters/longest-increasing-subsequence}
+\input{chapters/optimal-bst}
+\input{chapters/hoffman-encoding}
 %\printbibliography[heading=none]
 %\addcontentsline{toc}{chapter}{Bibliography}
-\bibliographystyle{alpha}
-\bibliography{algorithms_refs}
+%\bibliographystyle{alpha}
+%\bibliography{algorithms_refs}
 \end{document}
