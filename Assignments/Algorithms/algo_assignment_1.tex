@@ -81,13 +81,34 @@ Solve the recurrences: \begin{enumerate}[label=(\roman*)]
 \end{problem}
 \solve{	
 	\begin{enumerate}[label=(\roman*)]
-		\item $T(n)=2 T(n / 2)+n \log n$, 
-		\item $T(n)=7 T(n / 3)+n^2$, 
+		\item We have the recurrence relation $T(n)=2 T\lt(\frac{n}2\rt)+n \log n$. So \begin{align*}
+			T(n)& =2 T\lt(\frac{n}2\rt)+n \log n\\
+			& = 4T\lt(\frac{n}{4}\rt)+\frac{n}{2}\log\frac{n}{2}+n\log n\leq 2^2T\lt(\frac{n}{2^2}\rt)+2n\log n\\
+			& =2^3T\lt(\frac{n}{2^3}\rt)+\frac{n}{2^2}\log\frac{n}{2^2}+2n\log n\leq 2^3T\lt(\frac{n}{2^3}\rt)+3n\log n\\
+			& \cdots\\
+			& =2^kT\lt(\frac{n}{2^k}\rt)+\frac{n}{2^k}\log\frac{n}{2^k}+(k-1)n\log n\leq 2^kT\lt(\frac{n}{2^k}\rt)+kn\log n\\
+			& \cdots\\
+			& \leq 2^{\log n}T(1)+\log n(n\log n)\leq nT(n)+n\log^2 n=n(T(1)+\log^2 n)=O(n\log^2 n)
+		\end{align*}\parinn
+	
+	So we claim $T(n)\leq cn(T(1)+\log^2 n)$ for all $n\geq n_0$ for some $c$ which we will choose accordingly. Now $n_0=2$. So for $n=2$ we have $T(2)=2T(1)+2\log 2=2T(1)+2=2(T(1)+1)\leq c2(T(1)+\log^2 2)$. Hence the base case follows. Now let $T(n)=cn\log^2n$ is true for all $n=2,\dots, k-1$. Now $$T(k)=2T\lt(\frac{k}2\rt)+k\log k\leq 2c\frac{k}{2}\lt(T(1)+\log^2 \frac{k}{2}\rt)+k\log k=ck\lt(T(1)+\log^2\frac{k}{2}\rt)+k\log k$$Now $\log^2\frac{k}{2}=(\log k-1)^2=\log^2k-2\log k+1$. So we have $$ck\lt(T(1)+\log^2\frac{k}{2}\rt)+k\log k=ck(T(1)+\log^2k)-2ck\log k+ck+k\log k=ck(T(1)+\log^2k)+(1-2c)k\log k+ck$$If $c\geq 1$ we have $1-2c\leq -1$. So we have $$(1-2c)k\log k+ck\leq ck-k\log k\leq 0$$Here the last inequality follows if $c\leq \log k$. Since $k\geq 2$ we have $\log k\geq 1$. So take $c=1$. Then $(1-2c)k\log k+ck\leq 0$. Therefore $$T(k)=k(T(1)+\log^2k)+(1-2)k\log k+k\leq k(T(1)+\log ^2k)$$Hence by mathematical induction we have for all $n\geq 2$, $n\in \bbN$ we have $T(n)\leq n(T(1)+\log^2n)$. Now $$n(T(1)+\log^2 n)=n(T(1)\log^2n+\log^2n)=(1+T(1))n\log^2 n=O(n\log^2n)$$Hence we have $T(n)=O(n\log^2n)$.
+	
+		\item We have the recurrence relation $T(n)=7 T\lt(\frac{n}3\rt)+n^2$. So \begin{align*}
+			T(n)& =7 T\lt(\frac{n}3\rt)+n^2\\
+			& = 7^2T\lt(\frac{n}{3^2}\rt)+\frac{n^2}{9}+n^2\\
+			& = 7^3T\lt(\frac{n}{3^3}\rt)+\frac{n^2}{3^4}+\frac{n^2}{3^2}+n^2=7^3T\lt(\frac{n}{3^3}\rt)+n^2\sum_{i=1}^3\frac{1}{3^{2i}}\\
+			& \cdots\\
+			& = 7^nT\lt(\frac{n}{3^k}\rt)+n^2\sum_{i=1}^k\frac{1}{9^i}\\
+			& \cdots\\
+			& = 7^{\log_3n}T(1)+n^2\sum_{i=1}^{\log_3n}\frac{1}{9^i}\leq n^{\log 7_3}T(1)+\frac{9}{8}n^2\leq T(1)n^2+\frac{9}{8}n^2=\lt(T(1)+\frac{9}{8}\rt)n^2
+		\end{align*}\parinn 
+	
+So we claim $T(n)=(T(1)+c)n^2$ for some $c\geq 2$ and $n\geq n_0$ where $n_0\in\bbN$. So take $n_0=3$. Then $T(3)=7T(1)+9\leq 9T(1)+18\times 9=(T(1)+c)9$. Hence this follows for the base case. Now suppose $T(n)=(T(1)+c)n^2$ for all $n=3,\dots, k-1$. Then for $n=k$ $$T(k)=7T\lt(\frac{k}3\rt)+k^2\leq 7(T(1)+c)\frac{k^2}{3^2}+k^2=k^2\lt(\frac{7(T(1)+c)}{9}+1\rt)$$We want $$\frac{7(T(1)+c)}{9}+1\leq T(1)+c\iff7(T(1)+c)+1\leq 9(T(1)+c)\iff 1\leq 2(c+T(1))$$ this is indeed true since $c\geq 2$. Hence we have $T(k)\leq (c+T(1))k^2$. Hence by mathematical induction we have $T(n)\leq (c+T(1))n^2$ for all $n\geq 4$ with $n\in\bbN$. Now $(c+T(1))n^2=O(n^2)$. Hence $T(n)=O(n^2)$.
 		\item We have the recurrence relation $$T(n)=\sqrt{n}T(\sqrt{n})+n\iff \frac{T(n)}{n}=\frac{T(\sqrt{n})}{\sqrt{n}}+1$$Now denote $F(n)=\frac{T(n)}{n}$. Then we have the new recurrence relation $$f(n)=f(\sqrt{n})+1$$Now suppose $n=2^{2^k}$. Then\begin{align*}
 			f\left(2^{2^k}\right)
 			&= f\left(\sqrt{2^{2^k}}\rt)+1 = f\left(2^{2^{k-1}}\right) + 1 \\
 			&= f\left(2^{2^{k-2}}\right) + 2 \\
-			&= \cdots \\
+			& \cdots \\
 			&=f\left(2^{2^0}\right) + k \\
 			& = f(2) + k
 		\end{align*}
@@ -109,9 +130,17 @@ Solve the recurrences: \begin{enumerate}[label=(\roman*)]
 		P4\hfill  (5 marks)
 	}{p2% problem reference text
 	}
- Give the best upper bounds you can on the $n$th Fibonacci number $F_n$, where $F_n=F_{n-1}+F_{n-2}$ and $F_1=F_2=1$ are conditionally independent given $C$ if and only if $A$ and $B$ are independent.
+ Give the best upper bounds you can on the $n$th Fibonacci number $F_n$, where $F_n=F_{n-1}+F_{n-2}$ and $F_1=F_2=1$ 
 \end{problem}
 \solve{	
+	We have the recurrence relation $F(n)=F_{n-1}+F_{n-2}$ with $F_1=F_2=1$. So we can represent this with matrices like following:
+	$$\mat{F_{n}\\ F_{n-1}}=\mat{1 & 1\\ 1& 0}\mat{F_{n-1}\\ F_{n-2}}=\mat{1 & 1\\ 1& 0}^2\mat{F_{n-2}\\ F_{n-3}}=\cdots \mat{1 & 1\\ 1& 0}^{n-2}\mat{F_2\\ F_1}=\mat{1 & 1\\ 1& 0}^{n-2}\mat{1\\ 1}=\mat{1 & 1\\ 1& 0}^{n-1}\mat{1\\ 0}$$Denote $\ovF_0=\mat{1\\ 0}$ and $\ovF_{k}=\mat{F_{k+1}\\ F_k}$ and $A=\mat{1 & 1\\ 1& 0}$. Therefore we have $\ovF_n=A^n\ovF_0$. 
+	
+	Now clearly $A$ has full rank and $\forall\ k\in \bbN$, $\ovF_k\in\bbR^2$. So we will find the eigenvalues of $A$ to find an eigenbasis. $$\det(A-tI)=\det \mat{1-t&1\\ 1& -t}=-t(1-t)-1=t^2-t-1$$So if $t^2-t-1=0$ then $$t=\frac{1\pm\sqrt{{1+4}}}{2}=\frac{1\pm\sqrt{5}}2$$So denote $\vph=\frac{1+\sqrt{5}}2$ and $\psi=\frac{1-\sqrt{5}}2$. Now let $X=\mat{x_1\\ x_2}$ be an eigenvector corresponding to $\vph$. Then $$AX=\mat{x_1+x_2\\ x_1}=\vph\mat{x_1\\ x_2}$$Therefore $x_1=\vph x_2$. Therefore take $x_2=1$ then we have $x_1=\vph$. So $X=\mat{\vph\\ 1}$. Similarly we have  $Y=\mat{\psi\\ 1}$ is an eigenvector of $A$ corresponding to $\psi$.
+	
+	Now we want to express $\ovF_0$ as a linear combination of $X$, $Y$. Notice$$\frac1{\sqrt{5}}(X-Y)=\frac1{\sqrt{5}}\mat{\vph-\psi\\ 0}=\frac{1}{\sqrt{5}}\mat{\frac{1=\sqrt{5}}2-\frac{1-\sqrt{5}}2\\ 0}=\frac1{\sqrt{5}}\mat{\sqrt{5}\\ 0}=\mat{1\\ 0}=\ovF_0$$Therefore $$\ovF_n=A^n\ovF_0=A^n\lt(\frac1{\sqrt{5}}(X-Y)\rt)=\frac1{\sqrt{5}}(AX-AY)=\frac1{\sqrt{5}}(\vph^n X-\psi^n Y)=\frac1{\sqrt{5}}\vph^n\mat{\vph\\ 1}-\frac{1}{\sqrt{5}}\psi^n\mat{\psi\\ 1}$$Therefore $F_{n}=\frac{\phi^n-\psi^n}{\sqrt{5}}$.\parinf
+	
+	[I knew about How to solve Linear Recurrences using Matrices]
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -124,13 +153,31 @@ Solve the recurrences: \begin{enumerate}[label=(\roman*)]
 	}
 Consider two sets $A$ and $B$, each having $n$ integers in the range from 0 to $10 n$. We wish to compute the Cartesian sum of $A$ and $B$, defined by
 $$
-C=\{x+y: x \in A, y \in B\}
+C=\{x+y\colon x \in A, y \in B\}
 $$
 
 Note that the integers in $C$ are in the range $0$ to $20n$ . We want to find the elements in $C$ and the number of times each element of $C$ is realized as a sum of elements in $A$ and $B$. Give an algorithm that solves the problem in $O(n \log n)$ time, and prove correctness.
 
 \end{problem}
 \solve{
+	 Given $A$, $B$ we create two polynomials $p_A(x)=\sum\limits_{k\in A}x^k$ and $p_B(x)=\sum\limits_{k\in B}x^k$. Since all entries of $A$ and $B$ ranges form $0$ to $10n$. We have $\deg p_A\leq 10n$ and $\deg p_B\leq 10n$. Hence now we can use the algorithm for polynomial multiplication to calculate $p=p_A\cdot p_B$. Now $\deg p\leq 20n$. For any term $x^k$ in $p$, $\exs$ $a\in A$ and $b\in B$ such that $a+b=c$ since $p$ is the product of $p_A$ and $p_B$. Let $S_k\coloneqq \{(a,b)\in A\times B$ such that $a+b=k\}$. Then the coefficient of $x^k$ in $p$ is $|S_k|$ since $$\text{Coeff}(x^k)=\sum\limits_{i=0}^k\text{Coeff}_A(x^i)\cdot \text{Coeff}_B(x^{k-i})$$
+	 where $\text{Coeff}_A(x^i)$ is the coefficient of $x^k$ in $p_A$ and $\text{Coeff}_B(x^{k-i})$ is the coefficient of $x^{k-i}$ in $p_B$. 
+	 
+	 So now we will describe the algorithm. We denote the polynomial multiplication algorithm of two polynomials $S,T$ by $\prb{Polynomial-Multiplication}(S,T)$. So the algorithm will be:
+	 \begin{algorithm}
+	 	\DontPrintSemicolon
+	 	\KwIn{$A=\{a_i\mid i\in[n],\ a_i\in\bbZ,\ 0\leq a_i\leq 10n\}$, $B=\{b_i\mid i\in[n],\ b_i\in\bbZ,\  0\leq b_i\leq 10n\}$}
+	 	\KwOut{$C=\Big\{(c,k_c)\colon \exs\ a\in A,\ b\in B\text{ st }c=a+b,\ k_c=\big|\{(a,b)\in A\times  B\mid  a+b=c\}\big|\Big\}$}
+	 	\Begin{
+	 		Create two arrays $S_A$ and $S_B$ of length $10n+1$ with all elements $0$\;
+	 		\For{$i=1,\dots, n$}{
+	 	$S_A[A[i]]\longleftarrow 1$\;	
+	 	$S_B[B[i]]\longleftarrow 1$\;
+ 		}
+ 		$S\longleftarrow\prb{Polynomial-Multiplication}(S_A,S_B)$\;
+ 		
+ 	}
+	 \end{algorithm}
 }
 
 
