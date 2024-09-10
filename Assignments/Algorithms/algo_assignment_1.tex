@@ -73,7 +73,7 @@
 	}{p1% problem reference text
 }
 Solve the recurrences: \begin{enumerate}[label=(\roman*)]
-	\item $T(n)=2 T(n / 2)+n \log n$, 
+	\item $T(n)=2 T(n / 2)+n \log n$, \label{nlog2n}
 	\item $T(n)=7 T(n / 3)+n^2$, 
 	\item $T(n)=\sqrt{n} T(\sqrt{n})+n$.
 \end{enumerate}
@@ -161,24 +161,40 @@ Note that the integers in $C$ are in the range $0$ to $20n$ . We want to find th
 \end{problem}
 \solve{
 	 Given $A$, $B$ we create two polynomials $p_A(x)=\sum\limits_{k\in A}x^k$ and $p_B(x)=\sum\limits_{k\in B}x^k$. Since all entries of $A$ and $B$ ranges form $0$ to $10n$. We have $\deg p_A\leq 10n$ and $\deg p_B\leq 10n$. Hence now we can use the algorithm for polynomial multiplication to calculate $p=p_A\cdot p_B$. Now $\deg p\leq 20n$. For any term $x^k$ in $p$, $\exs$ $a\in A$ and $b\in B$ such that $a+b=c$ since $p$ is the product of $p_A$ and $p_B$. Let $S_k\coloneqq \{(a,b)\in A\times B$ such that $a+b=k\}$. Then the coefficient of $x^k$ in $p$ is $|S_k|$ since $$\text{Coeff}(x^k)=\sum\limits_{i=0}^k\text{Coeff}_A(x^i)\cdot \text{Coeff}_B(x^{k-i})$$
-	 where $\text{Coeff}_A(x^i)$ is the coefficient of $x^k$ in $p_A$ and $\text{Coeff}_B(x^{k-i})$ is the coefficient of $x^{k-i}$ in $p_B$. 
+	 where $\text{Coeff}_A(x^i)$ is the coefficient of $x^k$ in $p_A$ and $\text{Coeff}_B(x^{k-i})$ is the coefficient of $x^{k-i}$ in $p_B$. Hence for any $i\in\{0,\dots, k\}$, $\text{Coeff}_A(x^i)\cdot \text{Coeff}_B(x^{k-i})$ will contribute to $\text{Coeff}(x^k)$ iff both of them are 1 iff $(i,k-i)\in A\times B$. So $$\text{Coeff}(x^k)=|\{(a,b)\in A\times B\mid a+b=k\}$$
 	 
-	 So now we will describe the algorithm. We denote the polynomial multiplication algorithm of two polynomials $S,T$ by $\prb{Polynomial-Multiplication}(S,T)$. So the algorithm will be:
-	 \begin{algorithm}
+	 So now we will describe the algorithm. We denote the polynomial multiplication algorithm of two polynomials $S,T$ by $\prb{Polynomial-Multiplication}(S,T)$. So the algorithm will be:\vspace*{2mm}
+	 
+	 \begin{algorithm}[H]
+	 	\SetKwComment{Comment}{// }{}
 	 	\DontPrintSemicolon
 	 	\KwIn{$A=\{a_i\mid i\in[n],\ a_i\in\bbZ,\ 0\leq a_i\leq 10n\}$, $B=\{b_i\mid i\in[n],\ b_i\in\bbZ,\  0\leq b_i\leq 10n\}$}
 	 	\KwOut{$C=\Big\{(c,k_c)\colon \exs\ a\in A,\ b\in B\text{ st }c=a+b,\ k_c=\big|\{(a,b)\in A\times  B\mid  a+b=c\}\big|\Big\}$}
 	 	\Begin{
 	 		Create two arrays $S_A$ and $S_B$ of length $10n+1$ with all elements $0$\;
 	 		\For{$i=1,\dots, n$}{
-	 	$S_A[A[i]]\longleftarrow 1$\;	
-	 	$S_B[B[i]]\longleftarrow 1$\;
+	 	$S_A[A[i]]\longleftarrow 1$	\Comment*{Creates the polynomial $p_A$}
+	 	$S_B[B[i]]\longleftarrow 1$\Comment*{Creates the polynomial $p_B$}
  		}
  		$S\longleftarrow\prb{Polynomial-Multiplication}(S_A,S_B)$\;
- 		$C\longleftarrow $
+ 		$C\longleftarrow \{(k,S[k])\colon S[k]\neq 0\}$\;
+ 		\Return{$C$}
  	}
+  \caption{\prb{Cartesian-Sum}}
 	 \end{algorithm}
+ \vspace*{5mm}
+ 
+ \parinf
+ 
+ \textbf{Time Complexity: }\parinn To create $S_A$ and $S_B$ it takes $O(n)$ time. Also for the for loop in each iteration it takes constant time and the loop runs for $n$ iterations so the for loop in total takes $O(n)$ time. 
+ 
+ Now in class we did the \prb{Polynomial-Multiplication} algorithm which multiplies two degree $n-1=O(n)$ polynomial in $O(n\log n)$ time. Since the arrays $S_A$ and $S_B$ represents the polynomials $p_A$ and $p_B$ respectively and $\deg p_A,\deg p_B \leq 10n=O(n)$ the \prb{Polynomial-Multiplication} algorithm takes $O(n\log n)$ time to multiply them. Therefore in Line 6 it takes $O(n\log n)$ time.
+ 
+ Now $p=p_A\cdot p_B$. So $\deg p\leq 20n$. So $S$ is of length at most $20n=O(n)$. Therefore to create $C$ it takes $O(n)$ time. 
+ 
+ Therefore total time taken by the algorithm is $O(n)+O(n)+O(n\log n)+O(n)=O(n\log n)$. Hence time complexity of the algorithm is $O(n\log n)$.
 }
+\newpage
 
 
 
@@ -195,7 +211,7 @@ Note that the integers in $C$ are in the range $0$ to $20n$ . We want to find th
 	The problem is to find a fixed point of the function, i.e., values $x_1, x_2 \in[n]$ so that $f\left(x_1, x_2\right)=$ $\left(x_1, x_2\right)$. Give an algorithm that given $n$ and oracle access to such a function $f$, finds a fixed point of $f$ in time $O(\operatorname{poly}(\log n))$. You must also give a proof of correctness, and running time analysis.
 \end{problem}
 \solve{
-	
+	We will solve this algorithm for any $n\times m$ block where $f:[n]\times [m]\to [n]\times [m]$ with the properties same as given in the question.
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 5
@@ -205,9 +221,54 @@ Note that the integers in $C$ are in the range $0$ to $20n$ . We want to find th
 	P7\hfill  (15 marks)
 }{p5% problem reference text
 }
-A palindrome is a nonempty string over some alphabet that reads the same forward and backward. Examples of palindromes are all strings of length 1, civic, racecar, and aibohphobia. Give an efficient algorithm, with proof of correctness and run-time analysis, to find the longest palindrome that is a subsequence of a given input string. For example, given the input string character, your algorithm should return carac.
+A palindrome is a nonempty string over some alphabet that reads the same forward and backward. Examples of palindromes are all strings of length 1, \texttt{civic}, \texttt{racecar}, and \texttt{aibohphobia}. Give an efficient algorithm, with proof of correctness and run-time analysis, to find the longest palindrome that is a subsequence of a given input string. For example, given the input string \texttt{character}, your algorithm should return \texttt{carac}.
 \end{problem}
 \solve{
+We will solve this using dynamic programming. So we will create an array $LPS$ of $n\times n$ size where for any $i,j\in[n]$ with $i\leq j$, $LPS[i,j]$ denotes the longest palindromic subsequence starting in the subarray starting at $i$ and ending at $j$. Let the given string is $S$. Now for any $i,j\in[n]$ with $i\leq j$ we have:\begin{itemize}
+	\item If $S[i]=S[j]$ then $LPS[i,j]=2+LPS[i+1,j-1]$
+	\item If $S[i]\neq S[j]$ then $LPS[i,j]=\max\{LPS[i+1,j],LPS[i,j-1]\}$
+\end{itemize}
+This is the main recursion relation in order to find the longest palindromic subsequence. For edge cases we have \begin{itemize}
+		\item If $i=j$ then $LPS[i,i]=1$
+		\item If $j=i+1$ and $S[i]=S[j]$ then $LPS[i,j]=2$.
+\end{itemize}In order to have the algorithm by the recursion relation we have to move by finding all the entries of $LPS$ in each diagonal parallel to principle diagonal and then move to the next diagonal parallel to principle diagonal. There are $n$ diagonals parallel to principle diagonal. In each diagonal $d$ there are $n+1-d$ many points. And for any diagonal $d$ the $i^{th}$ point on the diagonal has coordinates $(i,d+i-1)$. So with this we describe the algorithm:
+
+\begin{algorithm}
+\SetKwComment{Comment}{// }{}
+\DontPrintSemicolon
+\KwIn{A string $S$ of length $n$.}
+\KwOut{$T$ where $T\subseteq S$ is the Longest SPalindromic ubsequence of $S$ and $l$ is length of $T$.}
+\Begin{
+	$n\longleftarrow \prb{Length}(S)$\;	
+	Create an array $LPS$ of size $n\times n$\;
+	
+	\For{$i\in[n]$}{
+		$LPS[i,i]=\big(1,[S[i]]\big)$
+	}
+
+\For{$i\in[n-1]$}{
+	\If{$S[i]==S[i+1]$}{
+		$LPS[i,i+1]=\big(2,[S[i],S[i+1]]\big)$
+	}
+	\Else{$LPS[i,i+1]=\big(1,[S[i]]\big)$}
+}
+
+\For{$d=2,\dots, n$}{
+	\For{$i\in [n+1-d]$}{
+		$j\longleftarrow d+i-1$
+		\If{$S[i]==S[j]$}{$LPS[i,j]=\big(2+LPS[i-1,j-1][1], [S[i]] ++ LPS[i-1,j-1][2] ++ [S[d+i-1]]\big)$}
+		\Else{
+			\If{$LPS[i+1,j][1]\geq LPS[i,j-1][1]$}{$LPS[i,j]=LPS[i+1,j]$}
+			\Else{$LPS[i,j]=LPS[i,j-1]$}
+			}	
+		}
+	}
+\Return{$LPS[1,n][2]$}
+}
+\caption{\prb{Longest-Palindromic-Subsequence}$(S)$}
+\end{algorithm}\parinf
+
+\textbf{Time Complexity:} The first two for loops take $O(n)$ time each. In the second for loop in each iteration we are running over $n+1-d=O(n)$ many iterations each of which takes a constant time. Hence it takes $O(n^2)$ time. Therefore the above algorithm takes $O(n^2)$ time to find the longest palindromic sequence. 
 
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -230,8 +291,103 @@ Extend the algorithm discussed in class to give an $O(n \log n)$-time algorithm 
 
 \end{problem}
 \solve{
+\begin{enumerate}[label=(\alph*)]
+	\item % Divide the cube with 7 planes parallel to $xy$ plane with $\frac{\dl}{4}$ distance up from the bottom most face and for the other 6 planes it is at distance $\frac{\dl}{4}$ upward from the previous one. Now do this for other two planes $yz$ and $zx$ too. So now we have 
+	Divide the cube into small cubes with each dimension $\frac{\dl}4$. There are total $64$ such small cubes. So there can be at most $64$ points inside the cube with each dimension $2\dl$. Cause if there are more than $64$ points in side the cube then there exists at least one small cube containing at least $2$ points. \parinn
+	
+	Since any two points are at least $\dl$ distance apart in each of this cube, if there are two points inside one small cube then their distance will be at most $\frac{\dl}{4}\sqrt{3}<\dl$. This is not possible. Hence contradiction. Therefore there can be at most $64$ points inside a cube with each dimension $2\dl$. So  a cube with each dimension of size $2\dl$ contains at most a constant number of points.
+	\item We assume the points are in general position. So first in $S_1\cup S_2$ we sort the points with respect to their $x-$coordinates. Each points in $S_1\cup S_2$ has $z-$coodinate in $[-\dl,\dl]$. So now after sorting the points of $S_1\cup S_2$ we start from left most point and for any point $p_i\in S_1\cup S_2$ we take the cube with two diagonal points $(x_i,y_i-\dl,-\dl)$, $(x_i+2\dl,y_i+\dl,\dl)$ which is a cube with each dimension $2\dl$ i.e. in the left most side of the cube the point $p_i$ is in the middle vertical line (Like in the picture)
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=12cm]{images/closest-pari-r3}
+	\end{figure}
+	
+	
+	Now by part (a) we know there are at most 64 points in this cube. So we can check for the next $64$. Hence we just check the next 64 points in the sorted $S_1\cup S_2$ and see if there are any points with distance less than $\dl$. Hence the algorithm is:
+	
+	\begin{algorithm}
+		\SetKwComment{Comment}{// }{}
+		\DontPrintSemicolon
+		\KwIn{Pair of sets $S_1,S_2$ each with $n$ points with in each set any two points have distance at least $\dl$ and further $z-$coordinate of points in $S_1$ in $[0,\dl]$ and of points in $S_2$ in $[-\dl,0]$.}
+		\KwOut{Closest pair of ponts, $(P_i,P_j,\delta_0)$ where $\delta_0=d(P_i,P_j)$ with $P_i,P_j\in S_1\cup S_2$}
+		\Begin{
+		$T\longleftarrow S_1\cup S_2$ sorted by $x-$coordinate\;
+		\For{$i=1,\dots, 2n$}{
+	$U\longleftarrow $ Next 64 points in $T$\;
+	\For{$\hat{P}\in U$}{
+\If{$d(P,\hat{P})\leq \dl$}{$\dl\longleftarrow d(P,\hat{P})$\;
+$(P_1,P_2)\longleftarrow (P,\hat{P})$}	
+}	
+	}
+\Return{$(P_1,P_2,\dl)$}
+	}
+\caption{\prb{Find-Closest-2-Sets$(S_1,S_2,\dl)$}}
+	\end{algorithm}
+In the algorithm instead od checking for a point with distance less than $\dl$ we are checking pair of points with distance less than or equal to $\dl$ this is because we don't have any pair of points in $S_1$ or $S_2$ which are at least $\dl$ distance. So if there is no pair of points in $S_1\cup S_2$ with distance less than $\dl$ we still get a pair of points with distance equal to $\dl$ and that pair points have the shortest distance.\parinf
 
-}
+\textbf{Time Complexity:} Here to sort the points in $S_1\cup S_2$ it takes $O(n\log n)$ time since there are total $2n$ points in $S_1\cup S_2$. Now the for loop runs for $2n$ iterations and in each iterations it is checking for constant number of points and for each point it is doing constant time operations. So each iteration of the loop takes $O(1)$ time and the for loop takes in total $2nO(1)=O(n)$ time. Hence the whole algorithm takes $O(n\log n)$ time.
+\item Like in the case of $\bbR^2$ algorithm we will first divide the set of all points into two roughly equal parts which we can do by sorting the points with respect to their $z-$coordinates. Let $\ovz$ be the $\lt\lfloor \frac{n}2\rt\rfloor^{th}$ highest $z-$coordinate. We we partition $S$ into points with $z-$coordinate $< \ovz$ and $\geq z$. Call these sets $S_U$ and $S_D$ respectively. Then run the algorithm recursively on each of those sets. And thus we get a closest pair of points and their distance in each of the smaller sets. So we take the pair of points with the distance equal to  the minimum of those two distances. Call this distance $\dl$. So we only need to check the points from $S$ with $z-$coordinate $\in [\ovz-\dl,\ovz+\dl]$. Call this set of points as $T=S_U^T\sqcup S_D^T$. So $$S_U^T=\{P_i\in S_U\colon z_i\in [\ovz,\ovz+\dl] \}\qquad S_D^T=\{P_i\in S_D\colon z_i\in [\ovz-\dl,\ovz]\}$$
+\parinn
+
+Now the situation is almost like the situation in part (b). So we have two sets of points $S_U^T,S_D^T$ each set has at most  $\frac{n}{2}$ points and any two points in any one of the sets has distance at least $\dl$. Then we need to find the closest pair of points in the union of those two sets.
+
+The only change from the situation in part (b) is the now the points in $S_U^T$ have $z-$coordinate   in $[\ovz,\ovz+\dl]$ instead of $[0,\dl]$ and similarly the points in $S_D^T$ have $z-$coordinate in $[\ovz-\dl,\ovz]$ instead of $[-\dl,0]$. Also like in the case of part (b) we don't have to worry about not having a pair of points with their distance $=\dl$. So we have to only look for points with distance less than $\dl$. Therefore we need to do slight change in the algorithm above and then we are good to go.
+
+\begin{algorithm}
+	\DontPrintSemicolon
+	\KwIn{Set of $n$ points, $S=\{P_i(x_i,y_i,z_i)\mid x_i,y_i,z_i\in\bbR, \ \forall\ i\in[n]\}$.}
+	\KwOut{Closest pair of ponts, $(P_i,P_j,\delta)$ where $\delta=d(P_i,P_j)$}
+	\Begin{
+		\If{$|S|\leq 10$}{Solve by Brute Force (Consider every pair of points)}	
+		
+		$S^z\longleftarrow S$ sorted by $z-$coordinate\;
+		$\ovz\longleftarrow \lfloor \frac{n}{2}\rfloor $ highest $z-$coordinate\;
+		$S_U\longleftarrow \{P_i\mid z_i>\bar{z},\ \forall\ i\in[n]\}$\;
+		$S_D\longleftarrow \{P_i\mid z_i\leq\bar{z},\ \forall\ i\in[n]\}$\;
+		$(P_1^L,P_2^L,\delta^L)\longleftarrow$ \textsc{Find-Closest}($S_U$)\;
+		$(P_1^R,P_2^R,\delta^R)\longleftarrow$ \textsc{Find-Closest}($S_D$)\;
+		$\delta_{min}\longleftarrow \min\{\delta^L,\delta^R\}$\;
+		\If{$\delta_{min}<\delta^L$}{$P_1\longleftarrow P_1^R$, $P_2\longleftarrow P_2^R$}
+		
+		\Else{$P_1\longleftarrow P_1^L$, $P_2\longleftarrow P_2^L$}
+		$S_U^T\longleftarrow \{P_i\mid z_i-\ovz\leq \delta_{min}\}$\;
+		$S_D^T\longleftarrow \{P_i\mid \ovz-z_i\leq \delta_{min}\}$\;
+		$(P'_1,P'_2,\dl)\longleftarrow \prb{Find-Closest-2-Sets-Mod}\lt(S_U^T,S_D^T,\ovz,\dl_{min}\rt)$\;
+		\If{$\dl<\dl_{min}$}{
+		\Return{$(P'_1,P'_2,\delta)$}}
+	\Else{\Return{$(P_1,P_2,\dl_{min})$}}
+	}
+	
+	\caption{\textsc{Find-Closest}($S$)}
+	\label{find-closest-nlog2n}	
+\end{algorithm}
+Where we describe he \prb{Find-Closest-2-Sets-Mod} algorithm:
+
+	\begin{algorithm}
+	\SetKwComment{Comment}{// }{}
+	\DontPrintSemicolon
+	\KwIn{Pair of sets $S_1,S_2$ each with $n$ points with in each set any two points have distance at least $\dl$ and further $z-$coordinate of points in $S_1$ in $[z,z+\dl]$ and of points in $S_2$ in $[z-\dl,z]$.}
+	\KwOut{Closest pair of ponts, $(P_i,P_j,\delta_0)$ where $\delta_0=d(P_i,P_j)$ with $P_i,P_j\in S_1\cup S_2$}
+	\Begin{
+		$T\longleftarrow S_1\cup S_2$ sorted by $x-$coordinate\;
+		\For{$i=1,\dots, 2n$}{
+			$U\longleftarrow $ Next 64 points in $T$\;
+			\For{$\hat{P}\in U$}{
+				\If{$d(P,\hat{P})<\dl$}{$\dl\longleftarrow d(P,\hat{P})$\;
+					$(P_1,P_2)\longleftarrow (P,\hat{P})$}	
+			}	
+		}
+		\Return{$(P_1,P_2,\dl)$}
+	}
+	\caption{\prb{Find-Closest-2-Sets-Mod$\lt(S_1,S_2,z,\dl\rt)$}}
+\end{algorithm}
+\parinf
+
+\textbf{Time Complexity:} Let the algorithm takes $T(n)$ to find closest pair of points from $n$ points. To sort the set of points with respect to their $z-$coordinate takes $O(n\log n)$ time. Now forming the sets $S_U$ and $S_D$ takes $O(n)$ time. Now $|S_U|,|S_D|\leq \frac{n}{2}$. Hence in lines 8,9 it takes $T\lt(\frac{n}{2}\rt)$ time. Now line 11-14 it takes constant time. Then again forming the sets $S_U^T,S_D^T$ takes linear time. Then to run the algorithm \prb{Find-Closest-2-Sets-Mod} takes $O(n\log n)$ time. Therefore total time taken is $$T(n)=2T\lt(\frac{n}2\rt)+O(n\log n)$$Hence by \hyperref[p:p1]{Problem \ref{p:p1}: P3 \ref{nlog2n}} we have $T(n)=O(n\log^2n)$. Hence our algorithm takes $O(n\log^2n)$ to find closest pair of points in $\bbR^3$.
+\end{enumerate}
+}\parinf
+
+[I discussed the solution with Shubham]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 7
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -250,6 +406,6 @@ This problem relates to one of the questions asked in class. For any $p, q \geq 
 	As usual, $\|x-y\|_p=\left(\left(x_1-y_1\right)^p+\left(x_2-y_2\right)^p\right)^{1 / p}$.
 \end{problem}
 \solve{
-	
+	This question reduces to showing for any two points $x,y\in\bbR^2$ if the following is true of not $$\|x\|_p\leq \|y\|_p\iff \|x\|_q\leq \|y\|_q$$This is not true. Take $p=1$, $q=2$. And $x=(1,0)$ and $y=(0.55,0.55)$. Then $\|x\|_1=\|x\|_2=1$. But $\|y\|=1.1$, $\|y\|=0.55\sqrt{2}<1$. Hence $\|x\|_1<\|y\|_1$ but $\|x\|_2>\|y\|_2$. Hence the above claim is not true.
 }
 \end{document}
