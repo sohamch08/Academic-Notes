@@ -4,7 +4,6 @@
 \usepackage[a4paper, total={7in, 10in}]{geometry}
 \usepackage{amsmath,mathtools,mathdots}
 \usepackage{amssymb,amsthm}  % assumes amsmath package installed
-\usepackage{float}
 \usepackage{xcolor}
 \usepackage{mdframed}
 \usepackage[shortlabels]{enumitem}
@@ -53,7 +52,12 @@
 \input{../../macros}
 
 \setlength{\parindent}{0pt}
-
+\makeatletter
+\newenvironment{listalgorithm}
+{\par\noindent\hspace*{-\@totalleftmargin}%
+	\minipage{\textwidth}\algorithm[H]}
+{\endalgorithm\endminipage}
+\makeatother
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
@@ -211,25 +215,70 @@ Note that the integers in $C$ are in the range $0$ to $20n$ . We want to find th
 	The problem is to find a fixed point of the function, i.e., values $x_1, x_2 \in[n]$ so that $f\left(x_1, x_2\right)=$ $\left(x_1, x_2\right)$. Give an algorithm that given $n$ and oracle access to such a function $f$, finds a fixed point of $f$ in time $O(\operatorname{poly}(\log n))$. You must also give a proof of correctness, and running time analysis.
 \end{problem}
 \solve{
-	We will solve this algorithm for any $n\times m$ where $ n,m\in\bbN$ block where where we are given the oracle of a function $f:[n]\times [m]\to [a]\times [b]$ where $a\leq n$ and $b\leq m$ with properties same as given in question. First we will prove that for such function there is a fixed point.
+	We will solve this algorithm for any $n\times m$ where $ n,m\in\bbN$ block where where we are given the oracle of a function $f:[n]\times [m]\to [n]\times [n]$  with properties same as given in question. First we will prove that for such function there is a fixed point.
 	\begin{lemma}\label{discretefixedpoint}
 		Suppose $g:[k]\to [l]$ is an non-decreasing function for $k,l\in\bbN$ with $l\leq k$ then there is a fixed point of $g$.
 	\end{lemma}
 \begin{proof}
 	Suppose there is no fixed point. Then $g(1)\neq 1\implies g(1)\geq 2$. Then $g(2)\geq 2$ and $g(2)\neq 2\implies g(2)\geq 3$. Similarly we get $g(3)\geq 4$. Continuing like this we get $g(k)\geq k+1$ which is not possible as for all $i\in[k]$, $g(i)\leq l\leq k$. Hence contradiction. Therefore $g$ has a fixed point.
 \end{proof}
-	\begin{lemma}
-		For the function $f:[n]\times [m]\to [a]\times [b]$ where $a\leq n$ and $b\leq m$, $f$ can be written as $f=(f_1,f_2)$ where $f_1:[n]\times [m]\to [a]$ and $f_2:[n]\times [m]\to [b]$. Then for $x_1\leq x'_1\in[n]$ and $y_1\leq y'_1\in[m]$\begin{itemize}
+	\begin{lemma}\label{fixedpointonboard}
+		For the function $f:[n]\times [m]\to [n]\times [m]$ where $f$ can be written as $f=(f_1,f_2)$ where $f_1:[n]\times [m]\to [n]$ and $f_2:[n]\times [m]\to [m]$. Then for $x_1\leq x'_1\in[n]$ and $y_1\leq y'_1\in[m]$\begin{itemize}
 			\item $f_1(x_1,y_1)\leq f_1(x_1',y_1)$ and $f_1(x_1,y_1)\geq f_1(x_1,y_1')$
 			\item $f_2(x_1,y_1)\geq f_2(x_1',y_1)$ and $f_2(x_1,y_1)\leq f_2(x_1,y_1')$
 		\end{itemize}Then $f$ has a fixed point i.e. $\exs \ p\in[n]$, $q\in[m]$ such that $f(p,q)=(p,q)$
 	\end{lemma}
 \begin{proof}
-	Consider every horizontal line i.e. $L_i\coloneqq [n]\times \{i\}$ for all $i\in[m]$. For each of the line we claim there is a fixed point for $f_1$. For all $i\in[m]$ we can think of the new function $g_i:[n]\to [a]$ where $g_i(k)=f_1(k,i)$. We have $a\leq n$. Then by \lemref{discretefixedpoint}
+	Consider every vertical line i.e. $L_i\coloneqq [n]\times \{i\}$ for all $i\in[m]$. For each of the line we claim there is a fixed point for $f_1$. For all $i\in[m]$ we can think of the new function $g_i:[n]\to [n]$ where $g_i(k)=f_1(k,i)$. Then by \lemref{discretefixedpoint} there is a fixed point of $g_i$. 
 	
-	Let for each $i\in[m]$ let the $p_i\in[n]$ such that $g_i(p_i)=p_i$. Hence $f_1(p_i,i)=p_i$. Since there are $m$ such points we got 
+	Let for each $i\in[m]$ let the $p_i\in[n]$ such that $g_i(p_i)=p_i$. Hence $f_1(p_i,i)=p_i$. Since there are $m$ such points we claim that we can get such $m$ points with the property that $p_1\geq p_2\geq \cdots \geq p_m$. Suppose for any $i\in[m]$ we have $f_1(p_i,i)=p_i$. Then consider the point $(p_i,i-1)$. Then we have $f_1(p_i,i-1)\geq f_1(p_i,i)=p_i$. Hence for the line segment $L_{i-1}^{p_i}=\{(x,i-1)\mid p_i\leq x\leq n\}$.  the value of the function $f_1$ on $L_{i-1}^{p_i}$ is lower bounded by $p_i$ and upper bounded by $n$. So we can think $$h_{i,i-1}:[n-p_{i}+1]\to [n-p_{i}+1]\text{ where }f_1(x,i-1)=h_{i,i-1}(x-p_{i})+p_i$$Now by \lemref{discretefixedpoint} $h_{i,i-1}$ has a fixed point. Therefore there is $k\in [n-p_i+1]$ such that $h(k)=k$. Then $f_1(k+p_i)=h_{i,i-1}(k)+p_i=k+p_i$. So take $p_{i-1}=k+p_i$. Hence $p_{i-1}\geq p_i$. Therefore with this we get $m$ fixed points $p_1,\dots, p_m$ wrt $f_1$on each horizontal lines $L_i$ such that $p_i\geq p_{i+1}$ for all $i\in[m-1]$.
+	
+	Now suppose we have the $m$ points $(p_i,i)$ for all $i\in[m]$ such that $p_i\geq p_{i+1}$ for all $i\in[m-1]$ such that $f(p_i,i)=p_i$ for all $i\in[m]$. Now we will show there is fixed point wrt $f_2$ among these $m$ points. If we can show that we are done. Now for any $i\in[m-1]$ we have $f_2(p_i,i)\leq f_2(p_i,i+1)\leq f_2(p_{i+1},i+1)$. Now consider the function $w:[n]\to [n]$ where $w(i)=f_2(p_i,i)$. Then since we have for all $i\in[m-1]$, $f_2(p_i,i)\leq f_2(p_{i+1},i+1)$, $w$ is nondecreasing. Therefore by \lemref{discretefixedpoint} there is a fixed point. Hence $\exs \ k\in[n]$ such that $w(k)=k$. Hence $f_2(p_k,k)=k$. Hence we get a point $(p_k,k)$ such that $f_1(p_k,k)=p_k$ and $f_2(p_k,k)=k$ or $f(p_k,k)=(p_k,k)$. 
 \end{proof}
+
+Now we will describe the algorithm. We will make our algorithm work for any $n\times m$ board. 
+%First since we have for $x_1\leq x'_1\in[n]$ and $y_1\leq y'_1\in[m]$\begin{itemize}
+%	\item $f_1(x_1,y_1)\leq f_1(x_1',y_1)$ and $f_1(x_1,y_1)\geq f_1(x_1,y_1')$
+%	\item $f_2(x_1,y_1)\geq f_2(x_1',y_1)$ and $f_2(x_1,y_1)\leq f_2(x_1,y_1')$
+%\end{itemize} we can say 
+First we will consider the line $L_{\lt\lfloor \frac{m}{2}\rt\rfloor}=\lt\{\lt(k,\lt\lfloor \frac{m}{2}\rt\rfloor\rt)\colon k\in[n]\rt\}$. By \lemref{discretefixedpoint} there is a fixed point wrt $f_1$ in $L_{\lt\lfloor \frac{m}{2}\rt\rfloor}$. Let the point is $\lt(k,\lt\lfloor \frac{m}{2}\rt\rfloor\rt)$. So $f_1\lt(k,\lt\lfloor \frac{m}{2}\rt\rfloor\rt)=k$. 
+
+Now we check the value of $f_2$ at $\lt(k,\lt\lfloor \frac{m}{2}\rt\rfloor\rt)$. \begin{itemize}
+	\item \textbf{If }$\boldsymbol{f_2\lt(k,\lt\lfloor \frac{m}{2}\rt\rfloor\rt)>\lt\lfloor \frac{m}{2}\rt\rfloor}$: Then for all points $(x,y)$ with $x\leq k$, $y\geq \lt\lfloor \frac{m}{2}\rt\rfloor$ we have $$\lt\lfloor \frac{m}{2}\rt\rfloor<f_2\lt(k,\lt\lfloor \frac{m}{2}\rt\rfloor\rt)\leq f_2\lt(x,\lt\lfloor \frac{m}{2}\rt\rfloor\rt)\leq f_2(x,y)\leq n$$ Hence in the $[k]\times  \lt\{\lt\lfloor\frac{m}{2} \rt\rfloor,\dots n\rt\}$. If we restrict $f$ then we have $f:[k]\times \lt\{\lt\lfloor\frac{m}{2} \rt\rfloor,\dots n\rt\}\to [k]\times  \lt\{\lt\lfloor\frac{m}{2} \rt\rfloor,\dots n\rt\}$. Therefore by \lemref{fixedpointonboard} there is a fixed point in the region $[k]\times\lt\{\lt\lfloor\frac{m}{2} \rt\rfloor,\dots n\rt\}$. So we can just search for the fixed point in that region. 
+	\item  \textbf{If }$\boldsymbol{f_2\lt(k,\lt\lfloor \frac{m}{2}\rt\rfloor\rt)<\lt\lfloor \frac{m}{2}\rt\rfloor}$: Then for all points $(x,y)$ with $x\geq k$, $y\leq \lt\lfloor \frac{m}{2}\rt\rfloor$ we have 
+	$$\lt\lfloor \frac{m}{2}\rt\rfloor>f_2\lt(k,\lt\lfloor \frac{m}{2}\rt\rfloor\rt)\geq f_2\lt(x,\lt\lfloor \frac{m}{2}\rt\rfloor\rt)\geq f_2(x,y)\geq 1$$
+	Hence in the $\{k,\dots, n\}\times\lt[\lt\lfloor\frac{m}{2} \rt\rfloor\rt] $ if we restrict $f$ then we have $f:\{k,\dots, n\}\times\lt[\lt\lfloor\frac{m}{2} \rt\rfloor\rt]\to  \{k,\dots, n\}\times\lt[\lt\lfloor\frac{m}{2} \rt\rfloor\rt]$. Therefore by \lemref{fixedpointonboard} there is a fixed point in the region $\{k,\dots, n\}\times\lt[\lt\lfloor\frac{m}{2} \rt\rfloor\rt]$. So we can just search for that fixed point.
+	 \item \textbf{If }$\boldsymbol{f_2\lt(k,\lt\lfloor \frac{m}{2}\rt\rfloor\rt)=\lt\lfloor \frac{m}{2}\rt\rfloor}$: Then we already have a fixed point so we are done.
+\end{itemize}\parinf
+
+Here in order to give the sets like $\{k,\dots, l\}$ where $k,l\in\bbN$ we can just input the ordered pair $(k,l)$ to denote the set. So we don't have to input all the $l-k+1$ many points into the algorithm. So in the following algorithm by $\{k,\dots, l\}$ as input to the algorithm we mean the ordered pair $(k,l)$. So now we have the following algorithm for a general $[n]\times [m]$ block:
+\begin{algorithm}
+\SetKwComment{Comment}{// }{}
+\DontPrintSemicolon
+\Begin{
+	\If{$|A|\times |B|\leq 4$}{Then find fixed point using brute force (Check value of $f$ at all points)}
+	$k\longleftarrow$ Find fixed point of $g(x)=f_1\lt(x,\lt\lfloor\frac{m}{2}\rt\rfloor\rt)$ by Binary Search\;
+	\If{$f_2\lt(k,\lt\lfloor \frac{m}{2}\rt\rfloor\rt)==\lt\lfloor \frac{m}{2}\rt\rfloor$}{\Return{$\lt(k,\lt\lfloor \frac{m}{2}\rt\rfloor\rt)$}}
+	\If{$f_2\lt(k,\lt\lfloor \frac{m}{2}\rt\rfloor\rt)>\lt\lfloor \frac{m}{2}\rt\rfloor$}{
+	\Return{\prb{Fixed-Point}$\lt( [k], \lt\{\lt\lfloor\frac{m}{2} \rt\rfloor,\dots m\rt\}\rt)$}
 }
+\If{$f_2\lt(k,\lt\lfloor \frac{m}{2}\rt\rfloor\rt)<\lt\lfloor \frac{m}{2}\rt\rfloor$}{
+	\Return{\prb{Fixed-Point}$\lt( \{k,\dots, n\},\lt[\lt\lfloor\frac{m}{2} \rt\rfloor\rt] \rt)$}
+}
+}
+\caption{\prb{Fixed-Point}$([n],[m])$}
+\end{algorithm}
+
+\textbf{Time Complexity:} At first in line 2,6 it takes constant time to check. In line 4 it takes $O(\log n)$ time to find the fixed point for $g(x)=f_1\lt(x,\lt\lfloor\frac{m}{2}\rt\rfloor\rt)$. Now in line 7-8 or 9-10 depending on $k$ can be at worst $1$ or $n$. In that case we have the recursion relation $T(nm)\leq T\lt(\frac{nm}2\rt)+O(\log n)\leq T\lt(\frac{nm}2\rt)+O(\log n)+O(\log m)=T\lt(\frac{nm}2\rt)+O(\log nm)$. Hence we have $T(nm)=O(\log^2 nm)$. \parinn
+
+Hence if we run our algorithm for $m=n$ we have the algorithm for the given problem. So \prb{Fixed-Point}$([n],[n])$ takes time $O(\log^2 n^2)=O(\log^2 n)$ time. Hence we have an algorithm to find the fixed point of the $[n]\times [n]$ with the oracle for the given function in $O(\log^2n)$ time. 
+}\parinf
+
+[Me and Soumyadeep came up with the solution together. I discussed with Shubham]
+\newpage
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 5
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -254,29 +303,29 @@ This is the main recursion relation in order to find the longest palindromic sub
 \SetKwComment{Comment}{// }{}
 \DontPrintSemicolon
 \KwIn{A string $S$ of length $n$.}
-\KwOut{$T$ where $T\subseteq S$ is the Longest SPalindromic ubsequence of $S$ and $l$ is length of $T$.}
+\KwOut{$T$ where $T\subseteq S$ is the Longest Palindromic Subsequence of $S$}
 \Begin{
 	$n\longleftarrow \prb{Length}(S)$\;	
 	Create an array $LPS$ of size $n\times n$\;
 	
 	\For{$i\in[n]$}{
-		$LPS[i,i]=\big(1,[S[i]]\big)$
+		$LPS[i,i]\longleftarrow\big(1,[S[i]]\big)$
 	}
 
 \For{$i\in[n-1]$}{
 	\If{$S[i]==S[i+1]$}{
-		$LPS[i,i+1]=\big(2,[S[i],S[i+1]]\big)$
+		$LPS[i,i+1]\longleftarrow\big(2,[S[i],S[i+1]]\big)$
 	}
-	\Else{$LPS[i,i+1]=\big(1,[S[i]]\big)$}
+	\Else{$LPS[i,i+1]\longleftarrow\big(1,[S[i]]\big)$}
 }
 
 \For{$d=2,\dots, n$}{
 	\For{$i\in [n+1-d]$}{
 		$j\longleftarrow d+i-1$
-		\If{$S[i]==S[j]$}{$LPS[i,j]=\big(2+LPS[i-1,j-1][1], [S[i]] ++ LPS[i-1,j-1][2] ++ [S[d+i-1]]\big)$}
+		\If{$S[i]==S[j]$}{$LPS[i,j]\longleftarrow\big(2+LPS[i-1,j-1][1], [S[i]] ++ LPS[i-1,j-1][2] ++ [S[d+i-1]]\big)$}
 		\Else{
-			\If{$LPS[i+1,j][1]\geq LPS[i,j-1][1]$}{$LPS[i,j]=LPS[i+1,j]$}
-			\Else{$LPS[i,j]=LPS[i,j-1]$}
+			\If{$LPS[i+1,j][1]\geq LPS[i,j-1][1]$}{$LPS[i,j]\longleftarrow LPS[i+1,j]$}
+			\Else{$LPS[i,j]\longleftarrow LPS[i,j-1]$}
 			}	
 		}
 	}
@@ -286,8 +335,9 @@ This is the main recursion relation in order to find the longest palindromic sub
 \end{algorithm}\parinf
 
 \textbf{Time Complexity:} The first two for loops take $O(n)$ time each. In the second for loop in each iteration we are running over $n+1-d=O(n)$ many iterations each of which takes a constant time. Hence it takes $O(n^2)$ time. Therefore the above algorithm takes $O(n^2)$ time to find the longest palindromic sequence. 
-
 }
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 6
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -313,14 +363,14 @@ Extend the algorithm discussed in class to give an $O(n \log n)$-time algorithm 
 	Divide the cube into small cubes with each dimension $\frac{\dl}4$. There are total $64$ such small cubes. So there can be at most $64$ points inside the cube with each dimension $2\dl$. Cause if there are more than $64$ points in side the cube then there exists at least one small cube containing at least $2$ points. \parinn
 	
 	Since any two points are at least $\dl$ distance apart in each of this cube, if there are two points inside one small cube then their distance will be at most $\frac{\dl}{4}\sqrt{3}<\dl$. This is not possible. Hence contradiction. Therefore there can be at most $64$ points inside a cube with each dimension $2\dl$. So  a cube with each dimension of size $2\dl$ contains at most a constant number of points.
-	\item We assume the points are in general position. So first in $S_1\cup S_2$ we sort the points with respect to their $x-$coordinates. Each points in $S_1\cup S_2$ has $z-$coodinate in $[-\dl,\dl]$. So now after sorting the points of $S_1\cup S_2$ we start from left most point and for any point $p_i\in S_1\cup S_2$ we take the cube with two diagonal points $(x_i,y_i-\dl,-\dl)$, $(x_i+2\dl,y_i+\dl,\dl)$ which is a cube with each dimension $2\dl$ i.e. in the left most side of the cube the point $p_i$ is in the middle vertical line (Like in the picture)
+	\item We assume the points are in general position. So first in $S_1\cup S_2$ we sort the points with respect to their $x-$coordinates and $y-$coordinates. Let those new sorted sets are called $T_x$ and $T_y$ respectively. Each points in $S_1\cup S_2$ has $z-$coodinate in $[-\dl,\dl]$. So now after sorting the points of $S_1\cup S_2$ we start from left most point and for any point $p_i\in S_1\cup S_2$ we take the cube with two diagonal points $(x_i,y_i,-\dl)$, $(x_i+2\dl,y_i+2\dl,\dl)$ which is a cube with each dimension $2\dl$ (Like in the picture)
 	\begin{figure}[h]
 		\centering
-		\includegraphics[width=12cm]{images/closest-pari-r3}
+		\includegraphics[width=10cm]{images/closest-pari-r3}
 	\end{figure}
 	
 	
-	Now by part (a) we know there are at most 64 points in this cube. So we can check for the next $64$. Hence we just check the next 64 points in the sorted $S_1\cup S_2$ and see if there are any points with distance less than $\dl$. Hence the algorithm is:
+	Now by part (a) we know there are at most 64 points in this cube. For that we have to check the next 64 points in both $T_x$ and $T_y$ since we have to ensure we have checked all the points inside the cube.  Hence the algorithm is:
 	
 	\begin{algorithm}
 		\SetKwComment{Comment}{// }{}
@@ -350,27 +400,24 @@ In the algorithm instead od checking for a point with distance less than $\dl$ w
 
 Now the situation is almost like the situation in part (b). So we have two sets of points $S_U^T,S_D^T$ each set has at most  $\frac{n}{2}$ points and any two points in any one of the sets has distance at least $\dl$. Then we need to find the closest pair of points in the union of those two sets.
 
-The only change from the situation in part (b) is the now the points in $S_U^T$ have $z-$coordinate   in $[\ovz,\ovz+\dl]$ instead of $[0,\dl]$ and similarly the points in $S_D^T$ have $z-$coordinate in $[\ovz-\dl,\ovz]$ instead of $[-\dl,0]$. Also like in the case of part (b) we don't have to worry about not having a pair of points with their distance $=\dl$. So we have to only look for points with distance less than $\dl$. Therefore we need to do slight change in the algorithm above and then we are good to go.
+The only change from the situation in part (b) is the now the points in $S_U^T$ have $z-$coordinate   in $[\ovz,\ovz+\dl]$ instead of $[0,\dl]$ and similarly the points in $S_D^T$ have $z-$coordinate in $[\ovz-\dl,\ovz]$ instead of $[-\dl,0]$. Also like in the case of part (b) we don't have to worry about not having a pair of points with their distance $=\dl$. So we have to only look for points with distance less than $\dl$. Therefore we need to do slight change in the algorithm above and then we are good to go.\newpage
 
-\begin{algorithm}
+\begin{listalgorithm}
 	\DontPrintSemicolon
 	\KwIn{Set of $n$ points, $S=\{P_i(x_i,y_i,z_i)\mid x_i,y_i,z_i\in\bbR, \ \forall\ i\in[n]\}$.}
 	\KwOut{Closest pair of ponts, $(P_i,P_j,\delta)$ where $\delta=d(P_i,P_j)$}
 	\Begin{
-		\If{$|S|\leq 10$}{Solve by Brute Force (Consider every pair of points)}	
+		\If{$|S|\leq 130$}{Solve by Brute Force (Consider every pair of points)}	
 		
 		$S^z\longleftarrow S$ sorted by $z-$coordinate\;
 		$\ovz\longleftarrow \lfloor \frac{n}{2}\rfloor $ highest $z-$coordinate\;
-		$S_U\longleftarrow \{P_i\mid z_i>\bar{z},\ \forall\ i\in[n]\}$\;
-		$S_D\longleftarrow \{P_i\mid z_i\leq\bar{z},\ \forall\ i\in[n]\}$\;
-		$(P_1^L,P_2^L,\delta^L)\longleftarrow$ \textsc{Find-Closest}($S_U$)\;
-		$(P_1^R,P_2^R,\delta^R)\longleftarrow$ \textsc{Find-Closest}($S_D$)\;
+		$S_U\longleftarrow \{P_i\mid z_i>\bar{z},\ \forall\ i\in[n]\}$, 	$S_D\longleftarrow \{P_i\mid z_i\leq\bar{z},\ \forall\ i\in[n]\}$\;
+		$(P_1^L,P_2^L,\delta^L)\longleftarrow$ \textsc{Find-Closest}($S_U$), $(P_1^R,P_2^R,\delta^R)\longleftarrow$ \textsc{Find-Closest}($S_D$)\;
 		$\delta_{min}\longleftarrow \min\{\delta^L,\delta^R\}$\;
 		\If{$\delta_{min}<\delta^L$}{$P_1\longleftarrow P_1^R$, $P_2\longleftarrow P_2^R$}
 		
 		\Else{$P_1\longleftarrow P_1^L$, $P_2\longleftarrow P_2^L$}
-		$S_U^T\longleftarrow \{P_i\mid z_i-\ovz\leq \delta_{min}\}$\;
-		$S_D^T\longleftarrow \{P_i\mid \ovz-z_i\leq \delta_{min}\}$\;
+		$S_U^T\longleftarrow \{P_i\mid z_i-\ovz\leq \delta_{min}\}$, $S_D^T\longleftarrow \{P_i\mid \ovz-z_i\leq \delta_{min}\}$\;
 		$(P'_1,P'_2,\dl)\longleftarrow \prb{Find-Closest-2-Sets-Mod}\lt(S_U^T,S_D^T,\ovz,\dl_{min}\rt)$\;
 		\If{$\dl<\dl_{min}$}{
 		\Return{$(P'_1,P'_2,\delta)$}}
@@ -379,36 +426,37 @@ The only change from the situation in part (b) is the now the points in $S_U^T$ 
 	
 	\caption{\textsc{Find-Closest}($S$)}
 	\label{find-closest-nlog2n}	
-\end{algorithm}
-Where we describe he \prb{Find-Closest-2-Sets-Mod} algorithm:
+\end{listalgorithm}
+Where we describe he \prb{Find-Closest-2-Sets-Mod} algorithm:\parinf
 
-	\begin{algorithm}
-	\SetKwComment{Comment}{// }{}
-	\DontPrintSemicolon
-	\KwIn{Pair of sets $S_1,S_2$ each with $n$ points with in each set any two points have distance at least $\dl$ and further $z-$coordinate of points in $S_1$ in $[z,z+\dl]$ and of points in $S_2$ in $[z-\dl,z]$.}
-	\KwOut{Closest pair of ponts, $(P_i,P_j,\delta_0)$ where $\delta_0=d(P_i,P_j)$ with $P_i,P_j\in S_1\cup S_2$}
-	\Begin{
-		$T_x\longleftarrow S_1\cup S_2$ sorted by $x-$coordinate\;
-		$T_y\longleftarrow S_1\cup S_2$ sorted by $y-$coordinate\;
-		\For{$i=1,\dots, 2n$}{
-			$U_x\longleftarrow $ Next 64 points in $T_x$\;
-			$U_y\longleftarrow $ Next 64 points in $T_y$\;
-			\For{$\hat{P}\in U_xx\cup U_y$}{
-				\If{$d(P,\hat{P})<\dl$}{$\dl\longleftarrow d(P,\hat{P})$\;
-					$(P_1,P_2)\longleftarrow (P,\hat{P})$}	
-			}	
+%\begin{minipage}{\textwidth}
+	\begin{listalgorithm}
+		\SetKwComment{Comment}{// }{}
+		\DontPrintSemicolon
+		\KwIn{Pair of sets $S_1,S_2$ each with $n$ points with in each set any two points have distance at least $\dl$ and further $z-$coordinate of points in $S_1$ in $[z,z+\dl]$ and of points in $S_2$ in $[z-\dl,z]$.}
+		\KwOut{Closest pair of ponts, $(P_i,P_j,\delta_0)$ where $\delta_0=d(P_i,P_j)$ with $P_i,P_j\in S_1\cup S_2$}
+		\Begin{
+			$T_x\longleftarrow S_1\cup S_2$ sorted by $x-$coordinate, 			$T_y\longleftarrow S_1\cup S_2$ sorted by $y-$coordinate\;
+			\For{$i=1,\dots, 2n$}{
+				$U_x\longleftarrow $ Next 64 points in $T_x$, 			$U_y\longleftarrow $ Next 64 points in $T_y$\;
+				\For{$\hat{P}\in U_xx\cup U_y$}{
+					\If{$d(P,\hat{P})<\dl$}{$\dl\longleftarrow d(P,\hat{P})$\;
+						$(P_1,P_2)\longleftarrow (P,\hat{P})$}	
+				}	
+			}
+			\Return{$(P_1,P_2,\dl)$}
 		}
-		\Return{$(P_1,P_2,\dl)$}
-	}
-	\caption{\prb{Find-Closest-2-Sets-Mod$\lt(S_1,S_2,z,\dl\rt)$}}
-\end{algorithm}
-\parinf
+		\caption{\prb{Find-Closest-2-Sets-Mod$\lt(S_1,S_2,z,\dl\rt)$}}
+	\end{listalgorithm}
+%\end{minipage}
 
-\textbf{Time Complexity:} Let the algorithm takes $T(n)$ to find closest pair of points from $n$ points. To sort the set of points with respect to their $z-$coordinate takes $O(n\log n)$ time. Now forming the sets $S_U$ and $S_D$ takes $O(n)$ time. Now $|S_U|,|S_D|\leq \frac{n}{2}$. Hence in lines 8,9 it takes $T\lt(\frac{n}{2}\rt)$ time. Now line 11-14 it takes constant time. Then again forming the sets $S_U^T,S_D^T$ takes linear time. Then to run the algorithm \prb{Find-Closest-2-Sets-Mod} takes $O(n\log n)$ time. Therefore total time taken is $$T(n)=2T\lt(\frac{n}2\rt)+O(n\log n)$$Hence by \hyperref[p:p1]{Problem \ref{p:p1}: P3 \ref{nlog2n}} we have $T(n)=O(n\log^2n)$. Hence our algorithm takes $O(n\log^2n)$ to find closest pair of points in $\bbR^3$.
-\end{enumerate}
-}\parinf
+\parinf
+\textbf{Time Complexity:} Let the algorithm takes $T(n)$ to find closest pair of points from $n$ points. To sort the set of points with respect to their $z-$coordinate takes $O(n\log n)$ time. Now forming the sets $S_U$ and $S_D$ takes $O(n)$ time. Now $|S_U|,|S_D|\leq \frac{n}{2}$. Hence in lines 8,9 it takes $T\lt(\frac{n}{2}\rt)$ time. Now line 11-14 it takes constant time. Then again forming the sets $S_U^T,S_D^T$ takes linear time. Then to run the algorithm \prb{Find-Closest-2-Sets-Mod} takes $O(n\log n)$ time. Therefore total time taken is $$T(n)=2T\lt(\frac{n}2\rt)+O(n\log n)$$So by \hyperref[p:p1]{Problem \ref{p:p1}: P3 \ref{nlog2n}}  $T(n)=O(n\log^2n)$. Hence it takes $O(n\log^2n)$ to find closest pair of points in $\bbR^3$.
+\end{enumerate}}\parinf
 
 [I discussed the solution with Shubham]
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 7
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -428,5 +476,7 @@ This problem relates to one of the questions asked in class. For any $p, q \geq 
 \end{problem}
 \solve{
 	This question reduces to showing for any two points $x,y\in\bbR^2$ if the following is true of not $$\|x\|_p\leq \|y\|_p\iff \|x\|_q\leq \|y\|_q$$This is not true. Take $p=1$, $q=2$. And $x=(1,0)$ and $y=(0.55,0.55)$. Then $\|x\|_1=\|x\|_2=1$. But $\|y\|=1.1$, $\|y\|=0.55\sqrt{2}<1$. Hence $\|x\|_1<\|y\|_1$ but $\|x\|_2>\|y\|_2$. Hence the above claim is not true.
-}
+}\parinf
+
+[I discussed the counter example with Soumyadeep]
 \end{document}
