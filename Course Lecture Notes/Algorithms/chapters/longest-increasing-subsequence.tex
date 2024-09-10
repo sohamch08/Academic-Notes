@@ -33,7 +33,7 @@ $Index\longleftarrow \max \{T[j][1]\colon j\in[n]\}$\;
 
 For each iteration of the loop it takes $O(n)$ time to find $\prb{LIS}[i]$. Hence the time complexity of this algorithm is $O(n^2)$. 
 \section{$O(n\log n)$ Time Algorithm}
-
+In the following algorithm we update the longest increasing sequence every time we see a new element of the given sequence. At any time we keep the best available sequence.
 \begin{algorithm}\SetKwComment{Comment}{// }{}
 	\DontPrintSemicolon
 	\KwIn{Sequence of distinct integers $A=(a_1,\dots, a_n)$}	
@@ -58,3 +58,17 @@ $S[i]\longleftarrow T\big[S[i+1]\big]$\Comment*{$T[S[i+1]]$ is pointer to previo
 }
 \caption{\prb{QuickLIS}$(A)$}
 \end{algorithm}
+
+\begin{lemma}{}{}
+	For any index $M[k]$ is non increasing
+\end{lemma}
+\begin{proof}
+	Every time we change a value of $M[k]$ we replace by something smaller. So $M[k]$ is non increasing.
+\end{proof}
+
+\begin{lemma}{}{}
+At any time $t$, $M[1]\leq M[2]\leq \cdots\leq M[t]$
+\end{lemma}
+\begin{proof}
+content...
+\end{proof}
