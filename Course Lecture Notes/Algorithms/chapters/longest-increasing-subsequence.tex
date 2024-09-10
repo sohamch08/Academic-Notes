@@ -32,7 +32,7 @@ $Index\longleftarrow \max \{T[j][1]\colon j\in[n]\}$\;
 \pagebreak 
 
 For each iteration of the loop it takes $O(n)$ time to find $\prb{LIS}[i]$. Hence the time complexity of this algorithm is $O(n^2)$. 
-\section{$O(n\log n)$ Time Algorithm}
+\section{\texorpdfstring{$O(n\log n)$}{O(logn)} Time Algorithm}
 In the following algorithm we update the longest increasing sequence every time we see a new element of the given sequence. At any time we keep the best available sequence.
 \begin{algorithm}\SetKwComment{Comment}{// }{}
 	\DontPrintSemicolon
@@ -59,7 +59,7 @@ $S[i]\longleftarrow T\big[S[i+1]\big]$\Comment*{$T[S[i+1]]$ is pointer to previo
 \caption{\prb{QuickLIS}$(A)$}
 \end{algorithm}
 
-\begin{lemma}{}{}
+\begin{lemma}{}{mdecreasing}
 	For any index $M[k]$ is non increasing
 \end{lemma}
 \begin{proof}
@@ -67,8 +67,11 @@ $S[i]\longleftarrow T\big[S[i+1]\big]$\Comment*{$T[S[i+1]]$ is pointer to previo
 \end{proof}
 
 \begin{lemma}{}{}
-At any time $t$, $M[1]\leq M[2]\leq \cdots\leq M[t]$
+At any time $t$, $M[1]\leq M[2]\leq \cdots\leq M[n]$
 \end{lemma}
 \begin{proof}
-content...
+We will prove this by induction on $t$. The base case follows naturally. Now for $k^{th}$ iteration suppose $M[k]$ is replaced by $x_i$. Then we know $\forall \ j<k$ we have $M[j]\leq x_i$. By inductive hypothesis at time $t-1$ we have $M$ as an increasing sequence. Now before replacing $M[k]\leq M[k+1]\leq \cdots M[n]$. Now by \lmref{th:mdecreasing} $M[k]$ is nonincreasing. So  So we still have $M[1]\leq \cdots M[k-1]\leq x_i\leq M[k+1]\leq \cdots \leq M[n]$. Hence bt mathematical induction it holds.
 \end{proof}
+\begin{lemma}{}{}
+	After any $i^{th}$ iteration, for $k\in[n]$ if $M[k]<\infty$ then $M[k]$ stores the smallest value in $x_1,\dots, x_n$ such that there is an increasing subsequence of size $k$ that ends in $M[k]$.
+\end{lemma}

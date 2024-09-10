@@ -98,7 +98,7 @@ Solve the recurrences: \begin{enumerate}[label=(\roman*)]
 			& = 7^2T\lt(\frac{n}{3^2}\rt)+\frac{n^2}{9}+n^2\\
 			& = 7^3T\lt(\frac{n}{3^3}\rt)+\frac{n^2}{3^4}+\frac{n^2}{3^2}+n^2=7^3T\lt(\frac{n}{3^3}\rt)+n^2\sum_{i=1}^3\frac{1}{3^{2i}}\\
 			& \cdots\\
-			& = 7^nT\lt(\frac{n}{3^k}\rt)+n^2\sum_{i=1}^k\frac{1}{9^i}\\
+			& = 7^kT\lt(\frac{n}{3^k}\rt)+n^2\sum_{i=1}^k\frac{1}{9^i}\\
 			& \cdots\\
 			& = 7^{\log_3n}T(1)+n^2\sum_{i=1}^{\log_3n}\frac{1}{9^i}\leq n^{\log 7_3}T(1)+\frac{9}{8}n^2\leq T(1)n^2+\frac{9}{8}n^2=\lt(T(1)+\frac{9}{8}\rt)n^2
 		\end{align*}\parinn 
@@ -211,7 +211,24 @@ Note that the integers in $C$ are in the range $0$ to $20n$ . We want to find th
 	The problem is to find a fixed point of the function, i.e., values $x_1, x_2 \in[n]$ so that $f\left(x_1, x_2\right)=$ $\left(x_1, x_2\right)$. Give an algorithm that given $n$ and oracle access to such a function $f$, finds a fixed point of $f$ in time $O(\operatorname{poly}(\log n))$. You must also give a proof of correctness, and running time analysis.
 \end{problem}
 \solve{
-	We will solve this algorithm for any $n\times m$ block where $f:[n]\times [m]\to [n]\times [m]$ with the properties same as given in the question.
+	We will solve this algorithm for any $n\times m$ where $ n,m\in\bbN$ block where where we are given the oracle of a function $f:[n]\times [m]\to [a]\times [b]$ where $a\leq n$ and $b\leq m$ with properties same as given in question. First we will prove that for such function there is a fixed point.
+	\begin{lemma}\label{discretefixedpoint}
+		Suppose $g:[k]\to [l]$ is an non-decreasing function for $k,l\in\bbN$ with $l\leq k$ then there is a fixed point of $g$.
+	\end{lemma}
+\begin{proof}
+	Suppose there is no fixed point. Then $g(1)\neq 1\implies g(1)\geq 2$. Then $g(2)\geq 2$ and $g(2)\neq 2\implies g(2)\geq 3$. Similarly we get $g(3)\geq 4$. Continuing like this we get $g(k)\geq k+1$ which is not possible as for all $i\in[k]$, $g(i)\leq l\leq k$. Hence contradiction. Therefore $g$ has a fixed point.
+\end{proof}
+	\begin{lemma}
+		For the function $f:[n]\times [m]\to [a]\times [b]$ where $a\leq n$ and $b\leq m$, $f$ can be written as $f=(f_1,f_2)$ where $f_1:[n]\times [m]\to [a]$ and $f_2:[n]\times [m]\to [b]$. Then for $x_1\leq x'_1\in[n]$ and $y_1\leq y'_1\in[m]$\begin{itemize}
+			\item $f_1(x_1,y_1)\leq f_1(x_1',y_1)$ and $f_1(x_1,y_1)\geq f_1(x_1,y_1')$
+			\item $f_2(x_1,y_1)\geq f_2(x_1',y_1)$ and $f_2(x_1,y_1)\leq f_2(x_1,y_1')$
+		\end{itemize}Then $f$ has a fixed point i.e. $\exs \ p\in[n]$, $q\in[m]$ such that $f(p,q)=(p,q)$
+	\end{lemma}
+\begin{proof}
+	Consider every horizontal line i.e. $L_i\coloneqq [n]\times \{i\}$ for all $i\in[m]$. For each of the line we claim there is a fixed point for $f_1$. For all $i\in[m]$ we can think of the new function $g_i:[n]\to [a]$ where $g_i(k)=f_1(k,i)$. We have $a\leq n$. Then by \lemref{discretefixedpoint}
+	
+	Let for each $i\in[m]$ let the $p_i\in[n]$ such that $g_i(p_i)=p_i$. Hence $f_1(p_i,i)=p_i$. Since there are $m$ such points we got 
+\end{proof}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 5
@@ -311,10 +328,12 @@ Extend the algorithm discussed in class to give an $O(n \log n)$-time algorithm 
 		\KwIn{Pair of sets $S_1,S_2$ each with $n$ points with in each set any two points have distance at least $\dl$ and further $z-$coordinate of points in $S_1$ in $[0,\dl]$ and of points in $S_2$ in $[-\dl,0]$.}
 		\KwOut{Closest pair of ponts, $(P_i,P_j,\delta_0)$ where $\delta_0=d(P_i,P_j)$ with $P_i,P_j\in S_1\cup S_2$}
 		\Begin{
-		$T\longleftarrow S_1\cup S_2$ sorted by $x-$coordinate\;
+		$T_x\longleftarrow S_1\cup S_2$ sorted by $x-$coordinate\;
+		$T_y\longleftarrow S_1\cup S_2$ sorted by $y-$coordinate\;
 		\For{$i=1,\dots, 2n$}{
-	$U\longleftarrow $ Next 64 points in $T$\;
-	\For{$\hat{P}\in U$}{
+	$U_x\longleftarrow $ Next 64 points in $T_x$\;
+	$U_y\longleftarrow $ Next 64 points in $T_y$\;
+	\For{$\hat{P}\in U_x\cup U_y$}{
 \If{$d(P,\hat{P})\leq \dl$}{$\dl\longleftarrow d(P,\hat{P})$\;
 $(P_1,P_2)\longleftarrow (P,\hat{P})$}	
 }	
@@ -369,10 +388,12 @@ Where we describe he \prb{Find-Closest-2-Sets-Mod} algorithm:
 	\KwIn{Pair of sets $S_1,S_2$ each with $n$ points with in each set any two points have distance at least $\dl$ and further $z-$coordinate of points in $S_1$ in $[z,z+\dl]$ and of points in $S_2$ in $[z-\dl,z]$.}
 	\KwOut{Closest pair of ponts, $(P_i,P_j,\delta_0)$ where $\delta_0=d(P_i,P_j)$ with $P_i,P_j\in S_1\cup S_2$}
 	\Begin{
-		$T\longleftarrow S_1\cup S_2$ sorted by $x-$coordinate\;
+		$T_x\longleftarrow S_1\cup S_2$ sorted by $x-$coordinate\;
+		$T_y\longleftarrow S_1\cup S_2$ sorted by $y-$coordinate\;
 		\For{$i=1,\dots, 2n$}{
-			$U\longleftarrow $ Next 64 points in $T$\;
-			\For{$\hat{P}\in U$}{
+			$U_x\longleftarrow $ Next 64 points in $T_x$\;
+			$U_y\longleftarrow $ Next 64 points in $T_y$\;
+			\For{$\hat{P}\in U_xx\cup U_y$}{
 				\If{$d(P,\hat{P})<\dl$}{$\dl\longleftarrow d(P,\hat{P})$\;
 					$(P_1,P_2)\longleftarrow (P,\hat{P})$}	
 			}	
