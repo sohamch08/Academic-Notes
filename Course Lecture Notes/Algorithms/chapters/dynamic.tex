@@ -1,0 +1,116 @@
+\chapter{Dynamic Programming}
+\section{Longest Increasing Subsequence}
+\begin{algoprob}
+	\problemtitle{\prb{Longest Increasing Subsequence}}
+	\probleminput{Sequence of distinct integers $A=(a_1,\dots, a_n)$}
+	\problemquestion{Given an array of distinct integers find the longest increasing subsequence i.e. return maximum size set $S\subseteq[n]$ such that $\forall\ i,j\in S$, $i<j\implies a_i<a_j$}
+\end{algoprob}
+\dfnc[dynamic-prog]{Dynamic Programming}{Dynamic Programming has 3 components:\begin{enumerate}
+		\item {Optimal Substructure}: Reduce problem to smaller independent problems
+		\item {Recursion}: Use recursion to solve the problems by solving smaller independent problems
+		\item {Table Filling}: Use a table to store the result to solved smaller independent problems.
+\end{enumerate}}
+\subsection{$O(n^2)$ Time Algorithm}
+Given $A=(a_1,\dots, a_n)$ first we will create a $n$-length array where $i^{th}$ entry stores the length and longest increasing subsequence ending at $a_i$. Certainly we have the following recursion relation$$\prb{LIS}(k)=1+\max\limits_{\substack{j<k,\  a_j<a_k}}\{\prb{LIS}(j)\}$$since if a subsequence $S\subseteq [n]$ is the longest increasing subsequence ending at $a_k$ then certainly $S-\{k\}$ is the longest increasing subsequence which ends at $a_j<a_k$ for some $j<k$. 
+
+Hence in the table we start with 1st position and using the recursion relation we fill the table from left. And after the table is filled we look for which entry of the table has maximum length. So the algorithm will be following:
+
+\begin{algorithm}\SetKwComment{Comment}{// }{}
+	\DontPrintSemicolon
+	\KwIn{Sequence of distinct integers $A=(a_1,\dots, a_n)$}
+	\KwOut{Maximum size set $S\subseteq [n]$ such that $\forall\ i,j\in S$, $i<j\implies a_i<a_j$.}
+	\Begin{
+	Create an array $T$ of length $n$\;
+	\For{$i\in[n]$}{
+	$T[i][1]\longleftarrow 1+\max\{T[j][1]\colon j<k,\ a_j<a_k\}$\Comment*{Finds $\prb{LIS}[i]$}
+$T[i][2]\longleftarrow T\big[T[i][1]-1\big][2]$
+}	
+$Index\longleftarrow \max \{T[j][1]\colon j\in[n]\}$\;
+\Return{$T[Index]$}
+}
+\caption{\prb{LIS}$(A)$}
+\end{algorithm}
+\pagebreak 
+
+For each iteration of the loop it takes $O(n)$ time to find $\prb{LIS}[i]$. Hence the time complexity of this algorithm is $O(n^2)$. 
+\subsection{\texorpdfstring{$O(n\log n)$}{O(logn)} Time Algorithm}
+In the following algorithm we update the longest increasing sequence every time we see a new element of the given sequence. At any time we keep the best available sequence.
+\begin{algorithm}\SetKwComment{Comment}{// }{}
+	\DontPrintSemicolon
+	\KwIn{Sequence of distinct integers $A=(a_1,\dots, a_n)$}	
+	\KwOut{Maximum size set $S\subseteq [n]$ such that $\forall\ i,j\in S$, $i<j\implies a_i<a_j$.}
+\Begin{
+	Create an array $T$ of length $n$ with all entries $0$\;
+	Create an array $M$ of length $n$\;
+	\For{$i=1,\dots, n$}{$M[i]\longleftarrow \infty$}	
+	\For{$i=1,\dots,n$}{
+		$k\longleftarrow $Find smallest index $i$ such that $M[k]>a_i$ using \prb{Binary-Search}\;
+		$M[k]\longleftarrow i$\;
+		$T[i]\longleftarrow M[k-1]$\Comment*{Pointer to the previous element of the sequence}
+}
+$l\longleftarrow $ Largest $l$ such that $M[l]$ is finite\;
+Create an array $S$ of length $l$\;
+\For{$i=l,\dots, 1$}{
+	\If{$i=l$}{$S[l]\longleftarrow M[l]$\;
+	Continue}
+$S[i]\longleftarrow T\big[S[i+1]\big]$\Comment*{$T[S[i+1]]$ is pointer to previous value of sequence}
+}
+\Return{$(l,S)$}
+}
+\caption{\prb{QuickLIS}$(A)$}
+\end{algorithm}\parinf
+
+\textbf{Time Complexity:} To create the arrays and the first for loop takes $O(n)$ time. In each iteration of the for loop at line 6 it takes $O(\log n)$ time to find $k$ and rest of the operations in the loop takes constant time. So the for loop takes $O(n\log n)$ time.  Then To find $l$ and creating $S$ it takes $O(n)$ time. Then in the for loop at line 12 in each iteration it takes constant time. So the for loop at line 12 takes in total $O(n)$ time. Therefore the algorithm takes $O(n\log n)$ time. \parinn
+
+We will do the proof of correctness of the algorithm now.
+%\begin{example}{Working of algorithm}{}
+%	\begin{align*}
+%		&6,12,4,3,7,10,8,18,11,16,9\\
+%		&\cancel{\infty}, \cancel{\infty}, \cancel{\infty}, \cancel{\infty}, \cancel{\infty}, \cancel{\infty}, \cancel{\infty},\dots \\
+%		&\cancel{6},\cancel{12},\cancel{10},\cancel{18},\cancel{16}\\
+%		& \cancel{4}, 7,8,\cancel{11}\\
+%		& 3, \ \ \ 9
+%	\end{align*}
+%\end{example}
+
+
+\begin{lemma}{}{mdecreasing}
+	For any index $M[k]$ is non increasing
+\end{lemma}
+\begin{proof}
+	Every time we change a value of $M[k]$ we replace by something smaller. So $M[k]$ is non increasing.
+\end{proof}
+We denote the state of array $M$ at $i^{th}$ iteration by $M^i$. Then we have the following lemma:
+
+\begin{lemma}{}{}
+At any time $i$, $M^i[1]\leq M^i[2]\leq \cdots\leq M^i[n]$
+\end{lemma}
+\begin{proof}
+We will prove this by induction on $i$. The base case follows naturally. Now for $i^{th}$ iteration suppose $M^i[k]$ is replaced by $x_i$. Then we know $\forall \ j<k$ we have $M^i[j]\leq x_i$. By inductive hypothesis at time $t-1$ we have $M$ as an increasing sequence. Now before replacing $M^i[k]\leq M^i[k+1]\leq \cdots M^i[n]$. Now by \lmref{th:mdecreasing} $M^i[k]$ is nonincreasing. So  So we still have $M^i[1]\leq \cdots M^i[k-1]\leq x_i\leq M^i[k+1]\leq \cdots \leq M^i[n]$. Hence bt mathematical induction it holds.
+\end{proof}
+
+Now suppose at $i^{th}$ iteration $k_i$ is largest such that $M^i[k_i]<\infty$. Then $S^i$ denote the set constructed like the way we constructed at line 12--16 in the algorithm i.e. $$S^i[k_i]=M^i[k_i]\qquad \text{and}\qquad S^i[j]=T[S^i[j+1]]\quad \forall\ j\in[k_i-1]$$
+\begin{lemma}{}{si-isgoodatalliterations}
+	After any $i^{th}$ iteration, for $k\in[n]$ if $M^i[k]<\infty$ then $S^i[k]$ stores the smallest value in $x_1,\dots, x_i$ such that there is an increasing subsequence of size $k$ that ends in $S^i[k]$.
+\end{lemma}
+\begin{proof}
+We will induction on $i$. Base case: This is true after first iteration since only $M^1[1]<\infty$. So this naturally follows. 
+
+Suppose this is true after $i$ iterations.  Now at $(i+1)^{th}$ iteration suppose $t$ be the smallest index such that $M^i[t]>x_{i+1}$. Then we have $$M^i[1],\dots, M^i[t-1]<x_{i+1}<M^i[k],\dots, M^i[n]\implies S^i[1],\dots, S^i[t-1]<x_{i+1}<S^i[k],\dots, S^i[k_i]$$ Now for $k\leq t-1$ it is true by the inductive hypothesis. For $k>t$ and if $M^{i+1}[k]<\infty$ then $S^{i+1}[k]$ is the smallest value in $x_1,\dots, x_{i+1}$ such that there is an increasing subsequence of size $k$ that ends in $S^{i+1}[k]$ since this was true for $i^{th}$ iteration. 
+
+Now only the case when $k=t$ is remaining. If $S^{i+1}[k]$ is not the smallest value in $x_1,\dots ,x_{i+1}$ to have an increasing subsequence of size $k$ ending at $S^{i+1}[k]$ then let $x_j$ was the smallest value to satisfy this condition where $j<i+1$. Then naturally $x_j<x_{i+1}$. Then $M^{i}[t]\leq x_j<x_{i+1}$. But we $t$ was the smallest number such that $M^{i}[t]>x_{i+1}$. Hence contradiction. Therefore $S^i[k]$ is the smallest value in $x_1,\dots, x_{i+1}$ to have an increasing subsequence of size $k$ ending at $S^{i+1}[k]$. 
+
+Therefore by mathematical induction this is true for all iterations. 
+\end{proof}
+
+Now we will show that $S$ is indeed the longest increasing subsequence.
+
+
+\begin{lemma}{}{}
+	$S$ is the longest increasing subsequence of $A$.
+\end{lemma}
+\begin{proof}
+	After the $n^{th}$ iteration $S^n=S$ and $k_n=l$. Hence by \lemref{th:si-isgoodatalliterations} we can say for all $k\in[l]$, $S[k]$ is the smallest number such that there is an increasing sequence of length $k$ ending at $S[k]$. Now we want to show that this increasing sequence is the longest increasing subsequence of $A$. Suppose $S$ is not the longest increasing subsequence. Let $T$ be the longest increasing subsequence of length $t$. Then suppose $j\leq l$ be the smallest index such that $S[j]\neq T[j]$. Now $S[j]$ is the smallest number in $x_1,\dots, x_n$ such that there is an increasing subsequence of length $j$ ending at $S[j]$. Hence we have $S[j]<T[j]$. Now for all $i<j$ we have $S[i]=T[i]$.   Then we form this new subsequence $$\hat{T}=\{T[1],T[2],\dots, T[j-1], S[j],T[j],\dots, T[t]\}$$Certainly $\hat{T}$ has length $t+1$ and it is also an increasing subsequence. But this contradicts the maximality condition of $T$. Hence $S$ is indeed the longest increasing subsequence.
+\end{proof}
+
+\section{Opimal Binary Search Tree}
