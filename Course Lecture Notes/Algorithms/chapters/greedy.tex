@@ -15,20 +15,76 @@
 Assignment of binary strings can also be scene as placing the symbols in a binary tree where at any node $0$ means left child and $1$ means right child. Then the first condition implies that there can not be two codes which lies in the same path from the root to a leaf. I.e. it means that all the codes have to be in the leaves. Then the length of the binary coding for a symbol  is the depth of the symbol in the binary tree. 
 
 Then our goal is to finding a binary tree with minimum cost where all the symbols are at the leaves. We have the following which establish the optimality of Huffman encoding over all prefix encodings where each symbol is assigned a unique string of bits.
-\begin{lemma}{}{}
+\begin{lemma}{}{least-frequent-max-height}
 	In the optimal encoding tree  least frequent element has maximum height.
 \end{lemma}
 \begin{proof}
 	Suppose that is not the case. Let $T$ be the optimal encoding tree and let the least frequent element $x$ is at height $h_1$ and the element with the maximum height is $y$ with height $h_2$ and we have $h_1<h_2$.  Then we construct a new encoding tree $T'$ where we swap the positions of $x$ and $y$. So in $T'$ height of $y$ is $h_1$ and height of $x$ is $h_2$. Then $$\prb{Cost}(T)-\prb{Cost}(T')=(f_xh_1+f_yh_2)-(f_xh_2+f_yh_1)=(f_x-f_y)(h_1-h_2)$$Since $f_x<f_y$ and $h_1<h_2$ we have $\prb{Cost}(T)-\prb{Cost}(T')>0$. But that is not possible since $T$ is the optimal encoding tree. So $T$ should have the minimum cost. Hence contradiction. $x$ has the maximum height.
 \end{proof}
 
-\begin{lemma}{}{}
+\begin{lemma}{}{complete-tree}
 	The optimal encoding binary tree must be complete binary tree. (i.e. every non-leaf node has exactly $2$ children)
 \end{lemma}
 \begin{proof}
-	
+	Suppose $T$ be the optimal binary tree and there is a non-leaf node $r$ which has only one child at height $h$. 
+	By \lmref{least-frequent-max-height} the least frequent element $x$ has the maximum height, $h_m$. 
+	Suppose the frequency of $x$ is $f$. Then consider the new tree $\hat{T}$ where we place the least frequent element at height $h$ and make it the second child of the node $r$. Then $$\prb{Cost}(T)-\prb{Cost}(\hat{T})=fh_m-fh=f(h_m-h)>0$$But this is not possible as $T$ is the optimal binary tree and it has the minimal cost. Hence contradiction. Therefore the optimal encoding binary tree must be a complete binary tree. 
 \end{proof}
+\begin{lemma}{}{}
+There is an optimal binary encoding tree such that the least frequent element and the second least frequent element are siblings at the maximum height.
+\end{lemma}
+\begin{proof}
+Let $T$ be optimal binary encoding tree. Suppose $x$, $y$ are the least frequent element and the second least frequent element. And suppose $b$, $c$  be two siblings at the maximum height of the tree (There may be many such siblings, and if so pick any such pair.). If $\{x,y\}=\{b,c\}$ we are done. So suppose not. Let the frequencies of $x,y,b,c$ are respectively $f_x,f_y,f_b,f_c$.  WLOG assume $f_x\leq f_y$ and $f_b\leq f_c$. 
 
+Now since we know 
+\end{proof}
+\begin{center}
+	
+
+\begin{tikzpicture}[
+	every node/.style={font=\sffamily, align=center},
+	level 1/.style={sibling distance=2.5cm},  % Adjusted distance for level 1
+	level 2/.style={sibling distance=2.5cm},   % Adjusted distance for level 2
+	square/.style={draw, shape=rectangle, minimum width=0.5cm, minimum height=0.5cm, inner sep=0pt, text width=0.5cm, text centered},
+	circle/.style={draw, shape=circle, minimum width=0.5cm, minimum height=0.5cm, inner sep=0pt, text width=0.5cm, text centered},
+	arrow/.style={-Latex, dotted, bend left, <->}
+	]
+	
+	% Leftmost tree
+	\node[circle] (A1) {}
+	child {node[square] (B1) {}}
+	child {node[circle] (C1) {C}
+		child {node[square] (D1) {D}}
+		child {node[circle] (E1) {E}}
+	};
+	
+	% Middle tree
+	\node[circle, right=4cm of A1] (A2) {A}
+	child {node[square] (B2) {B}}
+	child {node[circle] (C2) {C}
+		child {node[square] (D2) {D}}
+		child {node[circle] (E2) {E}}
+	};
+	
+	% Rightmost tree
+	\node[circle, right=4cm of A2] (A3) {A}
+	child {node[square] (B3) {B}}
+	child {node[circle] (C3) {C}
+		child {node[square] (D3) {D}}
+		child {node[circle] (E3) {E}}
+	};
+	
+	% Dotted bidirectional bent arrows between leaf nodes D and E in each tree
+	\draw[arrow, shorten <= 1mm, shorten >= 1mm] (D1) to (E1);
+	\draw[arrow, shorten <= 1mm, shorten >= 1mm] (D2) to (E2);
+	\draw[arrow, shorten <= 1mm, shorten >= 1mm] (D3) to (E3);
+	
+	% Arrows from leftmost tree to middle tree and from middle tree to rightmost tree
+	\draw[-Latex, thick, shorten <= 1mm, shorten >= 1mm] (A1) -- (A2);
+	\draw[-Latex, thick, shorten <= 1mm, shorten >= 1mm] (A2) -- (A3);
+	
+\end{tikzpicture}
+\end{center}
 
 
 
