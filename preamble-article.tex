@@ -316,11 +316,12 @@
 %% Question BOX
 %%================================
 
+
 \makeatletter
-\newtcbtheorem[number within=chapter]{question}{Question}{enhanced,
+\newtcbtheorem{question}{Question}{enhanced,
 	breakable,
 	colback=white,
-	colframe=mygr,
+	colframe=myb!80!black,
 	attach boxed title to top left={yshift*=-\tcboxedtitleheight},
 	fonttitle=\bfseries,
 	title={#2},
@@ -339,7 +340,7 @@
 		(frame.north) -| cycle;
 	},
 	#1
-}{qs}
+}{ex}
 \makeatother
 
 

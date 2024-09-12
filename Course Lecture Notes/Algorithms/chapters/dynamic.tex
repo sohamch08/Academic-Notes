@@ -1,21 +1,20 @@
 \chapter{Dynamic Programming}
+\dfnc[dynamic-prog]{Dynamic Programming}{Dynamic Programming has 3 components:\begin{enumerate}
+		\item {Optimal Substructure}: Reduce problem to smaller independent problems
+		\item {Recursion}: Use recursion to solve the problems by solving smaller independent problems
+		\item {Table Filling}: Use a table to store the result to solved smaller independent problems.
+\end{enumerate}}
 \section{Longest Increasing Subsequence}
 \begin{algoprob}
 	\problemtitle{\prb{Longest Increasing Subsequence}}
 	\probleminput{Sequence of distinct integers $A=(a_1,\dots, a_n)$}
 	\problemquestion{Given an array of distinct integers find the longest increasing subsequence i.e. return maximum size set $S\subseteq[n]$ such that $\forall\ i,j\in S$, $i<j\implies a_i<a_j$}
 \end{algoprob}
-\dfnc[dynamic-prog]{Dynamic Programming}{Dynamic Programming has 3 components:\begin{enumerate}
-		\item {Optimal Substructure}: Reduce problem to smaller independent problems
-		\item {Recursion}: Use recursion to solve the problems by solving smaller independent problems
-		\item {Table Filling}: Use a table to store the result to solved smaller independent problems.
-\end{enumerate}}
 \subsection{$O(n^2)$ Time Algorithm}
-Given $A=(a_1,\dots, a_n)$ first we will create a $n$-length array where $i^{th}$ entry stores the length and longest increasing subsequence ending at $a_i$. Certainly we have the following recursion relation$$\prb{LIS}(k)=1+\max\limits_{\substack{j<k,\  a_j<a_k}}\{\prb{LIS}(j)\}$$since if a subsequence $S\subseteq [n]$ is the longest increasing subsequence ending at $a_k$ then certainly $S-\{k\}$ is the longest increasing subsequence which ends at $a_j<a_k$ for some $j<k$. 
+Given $A=(a_1,\dots, a_n)$ first we will create a $n$-length array where $i^{th}$ entry stores the length and longest increasing subsequence ending at $a_i$. Certainly we have the following recursion relation$$\prb{LIS}(k)=1+\max\limits_{\substack{j<k,\  a_j<a_k}}\{\prb{LIS}(j)\}$$since if a subsequence $S\subseteq [n]$ is the longest increasing subsequence ending at $a_k$ then certainly $S-\{k\}$ is the longest increasing subsequence which ends at $a_j<a_k$ for some $j<k$. Hence in the table we start with 1st position and using the recursion relation we fill the table from left. And after the table is filled we look for which entry of the table has maximum length. So the algorithm will be following:
 
-Hence in the table we start with 1st position and using the recursion relation we fill the table from left. And after the table is filled we look for which entry of the table has maximum length. So the algorithm will be following:
-
-\begin{algorithm}\SetKwComment{Comment}{// }{}
+\begin{algorithm}[H]
+	\SetKwComment{Comment}{// }{}
 	\DontPrintSemicolon
 	\KwIn{Sequence of distinct integers $A=(a_1,\dots, a_n)$}
 	\KwOut{Maximum size set $S\subseteq [n]$ such that $\forall\ i,j\in S$, $i<j\implies a_i<a_j$.}
@@ -29,12 +28,22 @@ $Index\longleftarrow \max \{T[j][1]\colon j\in[n]\}$\;
 \Return{$T[Index]$}
 }
 \caption{\prb{LIS}$(A)$}
-\end{algorithm}
-\pagebreak 
-
-For each iteration of the loop it takes $O(n)$ time to find $\prb{LIS}[i]$. Hence the time complexity of this algorithm is $O(n^2)$. 
+\end{algorithm}\parinf
+\textbf{Time Complexity:} For each iteration of the loop it takes $O(n)$ time to find $\prb{LIS}[i]$. Hence the time complexity of this algorithm is $O(n^2)$. \parinn
 \subsection{\texorpdfstring{$O(n\log n)$}{O(logn)} Time Algorithm}
 In the following algorithm we update the longest increasing sequence every time we see a new element of the given sequence. At any time we keep the best available sequence.
+\begin{idea*}
+	We can make an increasing subsequence longer by picking the smallest number for position $k$ so that there is an increasing subsequence of length $k$. Doing this we can maximize the length of the subsequence. 
+\end{idea*}
+
+\begin{Theorem}{}{}
+	Is $S\subseteq A$ is the longest increasing subsequence of length $t$ then for any $k\in[t]$ the number $S(k)$ is the smallest number in subarray of $A$ starting at first  and ending at $S(k)$ such that there is an increasing subsequence of length $k$ ending at $S(k)$.
+\end{Theorem}
+\begin{proof}
+	Suppose $\exs\ k\in[t]$ such that $k$ is the smallest number in $[t]$ such that $S(k)$ is not the smallest number to satisfy the condition. Now denote the subarray of $A$ starting at first  and ending at $S(k)$ by $A_k$. Now let $x\in A_k$ be the smallest number in $A_k$ such that there is an increasing subsequence of length $k$ ending at $x$. Certainly $x<S(k)$. Now since $k$ is the smallest index which does not satisfy the given condition, $\forall\ j\in[k-1]$, $S(j)$ is the smallest number in $A_j$ such that there is an increasing subsequence of length $j$ ending at $S(j)$. Then consider the subsequence $\{S(1),\dots, S(k-1),x,S(k),S(k+1),\dots, S(t)\}$. This is an increasing subsequence of $A$ and has length $t+1$. But this contradicts the minimality of $S$. Hence contraditon. Every element of $S$ follows the given condition. 
+\end{proof}
+
+So we will construct an increasing subsequence by gradually where each step this property is followed, i.e. at each step we will ensure that the sequence built at some time have the above propert. So now we describe the algorithm. 
 \begin{algorithm}\SetKwComment{Comment}{// }{}
 	\DontPrintSemicolon
 	\KwIn{Sequence of distinct integers $A=(a_1,\dots, a_n)$}	
@@ -106,9 +115,9 @@ Therefore by mathematical induction this is true for all iterations.
 Now we will show that $S$ is indeed the longest increasing subsequence.
 
 
-\begin{lemma}{}{}
+\begin{Theorem}{}{}
 	$S$ is the longest increasing subsequence of $A$.
-\end{lemma}
+\end{Theorem}
 \begin{proof}
 	After the $n^{th}$ iteration $S^n=S$ and $k_n=l$. Hence by \lemref{th:si-isgoodatalliterations} we can say for all $k\in[l]$, $S[k]$ is the smallest number such that there is an increasing sequence of length $k$ ending at $S[k]$. Now we want to show that this increasing sequence is the longest increasing subsequence of $A$. Suppose $S$ is not the longest increasing subsequence. Let $T$ be the longest increasing subsequence of length $t$. Then suppose $j\leq l$ be the smallest index such that $S[j]\neq T[j]$. Now $S[j]$ is the smallest number in $x_1,\dots, x_n$ such that there is an increasing subsequence of length $j$ ending at $S[j]$. Hence we have $S[j]<T[j]$. Now for all $i<j$ we have $S[i]=T[i]$.   Then we form this new subsequence $$\hat{T}=\{T[1],T[2],\dots, T[j-1], S[j],T[j],\dots, T[t]\}$$Certainly $\hat{T}$ has length $t+1$ and it is also an increasing subsequence. But this contradicts the maximality condition of $T$. Hence $S$ is indeed the longest increasing subsequence.
 \end{proof}

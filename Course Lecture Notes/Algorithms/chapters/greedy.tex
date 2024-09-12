@@ -3,5 +3,38 @@
 \section{Maximal Matching}
 
 \section{Hoffman Encoding}
+\begin{algoprob}
+	\problemtitle{Hoffman-Coding}
+	\probleminput{$n$ symbols $A=(a-1,\dots, a_n)$ and their frequencies $P=(f_1,\dots, f_n)$ of using symbols}
+	\problemquestion{Create a binary encoding such that: \begin{itemize}[itemsep=-0.2cm]
+			\item Prefix Free: The code for one word can not be prefix for another code
+			\item Minimality: Minimize $\prb{Cost}(b)=\sum\limits_{i=1}^n f_i\cdot \prb{Len}(b(a_i))$ where $b:A\to \{0,1\}^*$ is the binary encoding
+	\end{itemize}}
+\end{algoprob}
+
+Assignment of binary strings can also be scene as placing the symbols in a binary tree where at any node $0$ means left child and $1$ means right child. Then the first condition implies that there can not be two codes which lies in the same path from the root to a leaf. I.e. it means that all the codes have to be in the leaves. Then the length of the binary coding for a symbol  is the depth of the symbol in the binary tree. 
+
+Then our goal is to finding a binary tree with minimum cost where all the symbols are at the leaves. We have the following which establish the optimality of Huffman encoding over all prefix encodings where each symbol is assigned a unique string of bits.
+\begin{lemma}{}{}
+	In the optimal encoding tree  least frequent element has maximum height.
+\end{lemma}
+\begin{proof}
+	Suppose that is not the case. Let $T$ be the optimal encoding tree and let the least frequent element $x$ is at height $h_1$ and the element with the maximum height is $y$ with height $h_2$ and we have $h_1<h_2$.  Then we construct a new encoding tree $T'$ where we swap the positions of $x$ and $y$. So in $T'$ height of $y$ is $h_1$ and height of $x$ is $h_2$. Then $$\prb{Cost}(T)-\prb{Cost}(T')=(f_xh_1+f_yh_2)-(f_xh_2+f_yh_1)=(f_x-f_y)(h_1-h_2)$$Since $f_x<f_y$ and $h_1<h_2$ we have $\prb{Cost}(T)-\prb{Cost}(T')>0$. But that is not possible since $T$ is the optimal encoding tree. So $T$ should have the minimum cost. Hence contradiction. $x$ has the maximum height.
+\end{proof}
+
+\begin{lemma}{}{}
+	The optimal encoding binary tree must be complete binary tree. (i.e. every non-leaf node has exactly $2$ children)
+\end{lemma}
+\begin{proof}
+	content...
+\end{proof}
+
+
+
+
+
+
+
+
 
 \section{Matroids}
