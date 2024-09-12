@@ -31,7 +31,8 @@ Then our goal is to finding a binary tree with minimum cost where all the symbol
 \begin{proof}
 	Suppose $T$ be the optimal binary tree and there is a non-leaf node $r$ which has only one child at height $h$. 
 	By \lmref{least-frequent-max-height} the least frequent element $x$ has the maximum height, $h_m$. 
-	Suppose the frequency of $x$ is $f$. Then consider the new tree $\hat{T}$ where we place the least frequent element at height $h$ and make it the second child of the node $r$. Then $$\prb{Cost}(T)-\prb{Cost}(\hat{T})=fh_m-fh=f(h_m-h)>0$$But this is not possible as $T$ is the optimal binary tree and it has the minimal cost. Hence contradiction. Therefore the optimal encoding binary tree must be a complete binary tree. 
+	
+	 Then consider the new tree $\hat{T}$ where we place the least frequent element at height $h$ and make it the second child of the node $r$. Then $$\prb{Cost}(T)-\prb{Cost}(\hat{T})=p(x)h_m-p(x)h=p(x)(h_m-h)>0$$But this is not possible as $T$ is the optimal binary tree and it has the minimal cost. Hence contradiction. Therefore the optimal encoding binary tree must be a complete binary tree. 
 \end{proof}
 \begin{lemma}{}{least-frequents-siblings}
 There is an optimal binary encoding tree such that the least frequent element and the second least frequent element are siblings at the maximum height.
@@ -118,37 +119,89 @@ Similarly we calculate cost for going from $T'$ to $T''$ we have $$\prb{Cost}(T'
 
 By the \lmref{complete-tree} and \lmref{least-frequents-siblings} we have that the least frequent element and the second least frequent element are siblings and they have the maximum depth.
 
-\begin{Theorem}{}{replace-less-variable-case}
-Let $T_n$ be any optimal binary encoding tree following \lmref{least-frequents-siblings} (i.e. lowest probability symbols $x$ and $y$ are siblings at the deepest level). Let $T_{n-1}$ be the tree that results by replacing these two leaf nodes for $x,y$  and their parent with a single leaf node $z$ of probability $p(z)=p(x)+p(y)$. Then $$\prb{{Cost}}(T_n)=\prb{Cost}(T_{n-1})+p(z)$$
-\end{Theorem}
-\begin{proof}
-	Let $h$ be the heights of $x$ and $y$ in $T_n$. Clearly $z$ is in height $h-1$ in $T_{n-1}$. Since $z$ replaces $x$ and $y$ the costs of the two trees satisfies \begin{align*}
-		\prb{Cost}(T_n)&=\prb{Cost}(T_{n-1})-(\text{\prb{Cost} due to $z$ in \prb{Cost}$(T_{n-1})$} + (\text{\prb{Cost} due to $x$ and $y$ in \prb{Cost}$(T_{n})$})\\
-		& =\prb{Cost}(T_{n-1})-p(z)\cdot (d-1)+(p(x)+p(y))\cdot d\\
-		& = \prb{Cost}(T_{n-1})-p(z)\cdot (d-1)+p(z)\cdot d\\
-		& = \prb{Cost}(T_{n-1})+p(z)
-	\end{align*}
-\end{proof}
+%\begin{Theorem}{}{replace-less-variable-case}
+%Let $T_n$ be any optimal binary encoding tree following \lmref{least-frequents-siblings} (i.e. lowest probability symbols $x$ and $y$ are siblings at the deepest level). Let $T_{n-1}$ be the tree that results by replacing these two leaf nodes for $x,y$  and their parent with a single leaf node $z$ of probability $p(z)=p(x)+p(y)$. Then $$\prb{{Cost}}(T_n)=\prb{Cost}(T_{n-1})+p(z)$$
+%\end{Theorem}
+%\begin{proof}
+%	Let $h$ be the heights of $x$ and $y$ in $T_n$. Clearly $z$ is in height $h-1$ in $T_{n-1}$. Since $z$ replaces $x$ and $y$ the costs of the two trees satisfies \begin{align*}
+%		\prb{Cost}(T_n)&=\prb{Cost}(T_{n-1})-(\text{\prb{Cost} due to $z$ in \prb{Cost}$(T_{n-1})$} + (\text{\prb{Cost} due to $x$ and $y$ in \prb{Cost}$(T_{n})$})\\
+%		& =\prb{Cost}(T_{n-1})-p(z)\cdot (d-1)+(p(x)+p(y))\cdot d\\
+%		& = \prb{Cost}(T_{n-1})-p(z)\cdot (d-1)+p(z)\cdot d\\
+%		& = \prb{Cost}(T_{n-1})+p(z)
+%	\end{align*}
+%\end{proof}
 
 \begin{observation*}
 	The cost of the trees $T_n$ and $T_{n-1}$ differ only by the fixed term $p(z)=p(x)+p(y)$ which does not depend on the tree's structure. Therefore minimizing the cost for $T_n$ is equivalent to minimizing the cost of $T_{n-1}$.
 \end{observation*}
-%\begin{Theorem}{}{}
-%	Given an instance with symbols $\mcI$: \begin{center}
-%		\begin{tabular}{ccccccccc}
-%			$a_1$, & $a_2$, & $\cdots$, & $a_i$, & $\cdots$, & $a_j$, & $\cdots$, & $a_n$ & with probabilities\\
-%			$p(a_1)$, & $p(a_2)$, & $\cdots$, & $p(a_i)$, & $\cdots$, & $p(a_j)$, & $\cdots$, & $p(a_n)$ &
-%		\end{tabular} 
-%	\end{center}
-%	such that $a_i$, $a_j$ are the least frequent and second least frequent elements respectively. Consider the instance with $n-1$ symbols $\mcI'$:
-%	\begin{center}
-%		\begin{tabular}{ccccccccccc}
-%			$a_1$, & $a_2$, & $\cdots$, & $a_{i-1}$, & $a_{i+1}$,& $\cdots$, & $a_{j-1}$,& $a_{j+1}$, & $\cdots$, & $a_n$, & $b$ \\
-%			$p(a_1)$, & $p(a_2)$, & $\cdots$, & $p(a_{i-1})$,&$p(a_{i+1})$  & $\cdots$, & $p(a_{j-1})$,& $p(a_{j+1})$, & $\cdots$, & $p(a_n)$, & $p(a_i)+p(a_j)$ 
-%		\end{tabular} 
-%	\end{center}
-%	Let $T'$ be the optimal tree for this instance $\mcI'$. Then there is an optimal tree for the original instance $\mcI$ obtained from $T'$ by replacing the leaf of $b$ by an internal node with children $a_i$ and $a_j$.
-%\end{Theorem}
+\begin{Theorem}{}{replace-less-variable-case}
+	Given an instance with symbols $\mcI$: \begin{center}
+		\begin{tabular}{ccccccccc}
+			$a_1$, & $a_2$, & $\cdots$, & $a_i$, & $\cdots$, & $a_j$, & $\cdots$, & $a_n$ & with probabilities\\
+			$p(a_1)$, & $p(a_2)$, & $\cdots$, & $p(a_i)$, & $\cdots$, & $p(a_j)$, & $\cdots$, & $p(a_n)$ &
+		\end{tabular} 
+	\end{center}
+	such that $a_i$, $a_j$ are the least frequent and second least frequent elements respectively. Consider the instance with $n-1$ symbols $\mcI'$:
+	\begin{center}
+		\begin{tabular}{ccccccccccc}
+			$a_1$, & $a_2$, & $\cdots$, & $a_{i-1}$, & $a_{i+1}$,& $\cdots$, & $a_{j-1}$,& $a_{j+1}$, & $\cdots$, & $a_n$, & $b$ \\
+			$p(a_1)$, & $p(a_2)$, & $\cdots$, & $p(a_{i-1})$,&$p(a_{i+1})$  & $\cdots$, & $p(a_{j-1})$,& $p(a_{j+1})$, & $\cdots$, & $p(a_n)$, & $p(a_i)+p(a_j)$ 
+		\end{tabular} 
+	\end{center}
+	Let $T'$ be the optimal tree for this instance $\mcI'$. Then there is an optimal tree for the original instance $\mcI$ obtained from $T'$ by replacing the leaf of $b$ by an internal node with children $a_i$ and $a_j$.
+\end{Theorem}
+\begin{proof}
+	We will prove this by contradiction. Suppose $\hat{T}$ is optimal for $\mcI$. Then $\prb{Cost}(\hat{T})<\prb{Cost}(T)$. In $\hat{T}$ we know $a_i$ and $a_j$ are siblings by \lmref{least-frequents-siblings}. Now consider $\hat{T}'$ for instance $\mcI'$ where we merge $a_i,a_j$ leaves and their parent into a leaf for symbol $b$. 
+	
+	\begin{center}
+		\usetikzlibrary{fit}
+		\begin{tikzpicture}[
+			every node/.style={font=\sffamily, align=center, line width=0.15mm},
+			level 1/.style={level distance=1cm, sibling distance=2cm},  % Adjusted distance for level 1
+			level 2/.style={sibling distance=2cm},   % Adjusted distance for level 2
+			square/.style={draw, shape=rectangle, minimum width=0.5cm, minimum height=0.5cm, inner sep=0pt, text width=0.5cm, text centered},
+			circle/.style={draw, shape=circle, minimum width=0.5cm, minimum height=0.5cm, inner sep=0pt, text width=0.5cm, text centered},
+			filled/.style={fill=blue!20, , draw, line width=0.12mm},  % Style for filled nodes
+			every edge/.style = {draw, latex'-latex' , line width=0.3mm, dotted,},
+			parentarrow/.style={line width=0.12mm, -{latex[length=1mm, width=0.2mm, open, round]}},  % Style for arrows from nodes to children
+			dottedoval/.style={draw, line width=0.3mm, densely dotted, inner sep=0.2mm, ellipse, minimum width=1cm, minimum height=1.5cm}, % Style for the dotted oval shape
+			]
+			
+			% Leftmost tree
+			\node[circle] (A1) {}
+			child {node[circle] (B1) {}
+				child {node[circle] (D1) {} edge from parent[parentarrow]}
+				child {node[circle, filled] (E1) {}
+					child {node[square, filled] (F1) {$a_i$} edge from parent[parentarrow]}
+					child {node[square,filled] (G1) {$a_j$} edge from parent[parentarrow]}
+					edge from parent[parentarrow]
+				}
+				edge from parent[parentarrow]
+			}
+			child {node[circle] (C1) {} edge from parent[parentarrow]};
+			\node[above left=0cm and 0cm of A1] (T1) {$\hat{T}$};  % Label T1
+			% Middle tree
+			\node[circle, right=4cm of A1] (A2) {}
+			child {node[circle] (B2) {}
+				child {node[circle] (D2) {} edge from parent[parentarrow]}
+				child {node[square, filled] (E2) {$b$}}
+				edge from parent[parentarrow]
+			}
+			child {node[circle] (C2) {} edge from parent[parentarrow]};
+			\node[above left=0cm and 0cm of A2] (T1) {$\hat{T}'$};  % Label T2
+			\draw[-Latex, thick, shorten <= 1mm, shorten >= 1mm] (A1) -- (A2);
+			% Dotted oval shape containing E1, F1, and G1
+			\node[dottedoval, fit=(E1)(F1)(G1), yshift=-0.15cm] (Oval) {};
+			
+			% Arrow from dotted oval to B1
+			\draw[-latex, dottedoval] (Oval) to[out=-20,in=-120] (E2);
+		\end{tikzpicture}
+	\end{center}
+	
+	Then $$\prb{Cost}(\hat{T}')=\prb{Cost}(\hat{T})-p(a_i)-p(a_j)<\prb{Cost}-p(a_i)-p(a_j)=\prb{Cost}(T')$$This contradicts the fact that $T'$ is optimal binary encoding tree for $\mcI'$. Hence $T$ is optimal.
+\end{proof}
+
+
 
 
 \subsection{Algorithm}
@@ -159,6 +212,8 @@ Let $T_n$ be any optimal binary encoding tree following \lmref{least-frequents-s
 \end{idea}
 
 Since we always need the least frequent element and the second least frequent element we have to use the data structure called \prb{Min-Priority Queue}. So the following algorithm uses a \prb{Min-Priority Queue} $Q$ keyed on the probabilities to identify the two least frequent objects. 
+
+\newpage 
 \begin{algorithm}
 	\SetKwComment{Comment}{// }{}
 	\DontPrintSemicolon
@@ -193,6 +248,6 @@ $\prb{Insert}(Q,z)$
 \begin{proof}
 	We will prove this by induction on $n$, the number of symbols. For base case $n=1$. There is only one tree possible.
 	
-	For $n=k$ we know that by \lmref{least-frequents-siblings} and \lmref{least-frequent-max-height} that the two symbols $x$ and $y$ of lowest probabilities are siblings and they have the maximum height. Huffman's algorithm replaces these nodes by a character $z$ whose probability is the sum of their probabilities. Now we have 1 less symbols. So by inductive hypothesis Huffman's algorithm computes the optimal binary encoding tree for the $k-1$ symbols. Call it $T_{n-1}$. Then the algorithm replaces $z$ with a parent node with children $x$ and $y$ which results in a tree $T_n$ whose cost is higher by a fixed amount $p(z)=p(x)+p(y)$ by \thmref{replace-less-variable-case}. Now since $T_{n-1}$ is optimal and the cost of replacement doesn't depend on the tree structure, $T_n$ is also optimal.
+	For $n=k$ we know that by \lmref{least-frequents-siblings} and \lmref{least-frequent-max-height} that the two symbols $x$ and $y$ of lowest probabilities are siblings and they have the maximum height. Huffman's algorithm replaces these nodes by a character $z$ whose probability is the sum of their probabilities. Now we have 1 less symbols. So by inductive hypothesis Huffman's algorithm computes the optimal binary encoding tree for the $k-1$ symbols. Call it $T_{n-1}$. Then the algorithm replaces $z$ with a parent node with children $x$ and $y$ which results in a tree $T_n$ whose cost is higher by a fixed amount $p(z)=p(x)+p(y)$. Now since $T_{n-1}$ is optimal by \thmref{replace-less-variable-case} we have $T_n$ is also optimal.
 \end{proof}
 \section{Matroids}

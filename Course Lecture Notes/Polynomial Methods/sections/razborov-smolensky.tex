@@ -1,1 +1,52 @@
 \section{Razborov Smolensky Lower Bound}
+The result we will discuss the result that majority is strictly harder than the parity for $\prb{AC}^0$, since there is no polynomial-size $\cls{AC}^0$ circuit to compute majority even if we are given parity gates. The result is Razborov’s, and the proof technique uses ideas due to both Razborov and Smolensky. 
+
+Consider the class $\cls{AC}^0$ of polynomial size circuits with constant depth  with unbounded fan-in. We consider the class $\cls{AC}^0(\xor)$ where we are give the parity gates $\xor$ which outputs $1$ if an odd number of its inputs are $1$. The main theorem which we will prove in this section is:
+\begin{theorem}{Razborov-Smolensky}{razborovsmolensky}
+	For any $d\in\bbN$ any any depth $d$ $\cls{AC}^0(\xor)$ circuit for \prb{Majority} has size $\geq 2^{\Om\lt(  n^{\frac{1}{2d}}\rt)}$
+\end{theorem}
+
+\subsection{Two Parts of Proving Lower Bound}
+The proof of the above theorem requires two lemmas:
+
+\begin{lemma}{}{boolean-func-poly}
+$\forall\ \eps>0$ and $d\in\bbN$ the following is true:\parinn
+
+If $f:\{0,1\}^n\to \{0,1\}$ can be computed by a size $s$ depth $d$ $\cls{AC}^0(\xor)$ circuit then $\exs$ a polynomial $g$ in $n$ variables and $\deg O\lt(\log \frac{s}{\eps}\rt)^d$ such that $$\underset{a\in\{0,1\}^n}{\bbP}[f(a)=g(a)]\geq 1-\eps$$
+\end{lemma}
+\begin{lemma}{}{poly-approx-maj}
+	For all polynomials $p(x_1,\dots, x_n)$ with $\deg p=t$, $$\underset{a\in\{0,1\}^n}{\bbP}[g(a)=\prb{Maj}(a)]\leq \frac12+O\lt(\frac{t}{\sqrt{n}}\rt)$$
+\end{lemma}
+
+
+Now first we will show that with these two lemmas we can prove Razborov-Smolensky Lower Bound for \prb{Majority} function
+
+\begin{proof-of-theorem}{razborovsmolensky}
+	Suppose \prb{Maj} has a $\cls{AC}^0(\xor)$ circuit of size $<2^{n^{\frac1{2d}-\dl}}$\parinf
+	
+	$\xRightarrow{\textbf{\lmref{boolean-func-poly}}}$ $\exs$ polynomial $g$ of degree $n^{\frac1{2d}-\dl}$ that approximates \prb{Maj} with error 0.1.
+	
+	
+	$\xRightarrow{\textbf{\lmref{poly-approx-maj}}}$ $\forall$ polynomial $g$ of $\deg n^{\frac1{2d}-\dl}$ the error is $\geq 1-\lt[\frac12+O\lt( \frac{n^{\frac1{2d}-\dl}}{\sqrt{n}} \rt)\rt]\geq \frac12--\lt[\frac12+O\lt( \frac{n^{\frac1{2d}-\dl}}{\sqrt{n}} \rt)\rt]\geq  \frac12-o(1)$
+	\parinn
+	
+	But $\frac12-o(1)<0.1$ is contradiction.
+\end{proof-of-theorem}
+\begin{alternate-proof}[razborovsmolensky]
+	Suppose $C$ be an $\cls{AC}^0(\xor)$ circuit of size $s$ and depth $d$ computing $\prb{Majority}$\parinf
+	
+	$\xRightarrow{\textbf{\lmref{boolean-func-poly}}}$ $\exs$ polynomial $g$ of degree $O\lt(\log \frac{s}{\eps}\rt)^d$ with error probability $\leq \eps$.
+	
+	$\xRightarrow{\textbf{\lmref{poly-approx-maj}}}$ $\forall$ polynomial $g$ of $\deg O\lt(\log \frac{s}{\eps}\rt)^d$ the error is $\geq \frac12+O\lt(\frac{\lt(\log \frac{s}{\eps}\rt)^d}{\sqrt{n}}  \rt)$.\parinn
+	
+	Hence from these two results and setting $\eps=0.1$ we have $$\frac12+O\lt(\frac{\lt(\log \frac{s}{\eps}\rt)^d}{\sqrt{n}}  \rt)\geq 1-\eps\implies \lt(\log 10s\rt)^d\geq \sqrt{n}\implies s\geq 2^{\Om\lt(\frac{1}{2d}\rt)}$$
+\end{alternate-proof}
+
+Now that we proved our main objective theorem we will focus on proving the 2 lemmas in the following two sections.
+\subsection{Approximating Boolean Function with Polynomials}
+We first state and prove a lemma showing that every $\cls{AC}^0(\xor)$ circuit can be approximated by a low degree polynomial i.e. \lmref{boolean-func-poly}.  But to prove that we will show a more stronger lemma and then the lemma follows as a simple corollary of this stronger result.
+\begin{lemma}{}{}
+	For all $\cls{AC}^0(\xor)$ circuits $C$ of size $s$ of depth $d$ and $\forall\ \eps>0$ there exists a distribution $\sD$ of polynomials $p(x_1,\dots, x_n)\in\bbF_2[x_1,\dots, x_n]$  such that for all $a\in\{0,1\}^n$ $$\underset{p\in\sD}{\bbP}[p(a)=C(a)]\geq 1-\eps$$ where $\sD$ is supported on polynomials of degree $\leq \lt(\log \frac{s}{\eps}\rt)^d$
+\end{lemma}
+
+\subsection{Low Degree Polynomials Can't Approximate \prb{Majority}}
