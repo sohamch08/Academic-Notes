@@ -2,9 +2,72 @@
 
 \section{Maximal Matching}
 
-\section{Hoffman Encoding}
 \begin{algoprob}
-	\problemtitle{Hoffman-Coding}
+	\problemtitle{Maximal-Matching}
+	\probleminput{Graph $G=(V,E)$}
+	\problemquestion{Find a maximal matching $M\subseteq E$ of $G$}
+\end{algoprob}
+Before diving into the algorithm to find a matching or maximal matching we first define what is a matching.
+\begin{Definition}{Matching}{}
+	For a graph $G=(V,E)$ a matching $M\subseteq E$ is a set of edges such that no two edges in $M$ are incident on same vertex.
+\end{Definition}
+\begin{Definition}{Maximal Matching}{}
+	For a graph $G=(V,E)$ a matching $M\subseteq E$ is maximal if it cannot be extended and still by adding an edge.
+\end{Definition}
+There is also a maximum matching which can be easily understood from the name:
+\begin{Definition}{Maximum Matching}{}
+	For a graph $G=(V,E)$ a matching $M\subseteq E$ is maximum if it is maximal and has the maximum size among all the maximal matchings.
+\end{Definition}
+
+\begin{idea*}
+	The idea is to create a maximal matching we will just go over each edge one by one and check if after adding them to the set $M$  the matching property still holds. 
+\end{idea*}
+\begin{algorithm}
+	\SetKwComment{Comment}{// }{}
+	\DontPrintSemicolon
+	\KwIn{Graph $G=(V,E)$}
+	\KwOut{Maximal Matching $M\subseteq E$ of $G$}
+	\Begin{
+	$M\longleftarrow \emptyset$\;
+	Order the edges $E=\{e_1,\dots, e_k\}$ arbitrarily\;
+	\For{$e\in E$}{\If{$M\cup \{u\}$ is matching}{$M\longleftarrow M\cup \{e\}$}}
+	\Return{$M$}	
+}
+\caption{\prb{Maximal-Matching}}
+\end{algorithm}
+
+\begin{question}{}{}
+		Do we always get the largest possible matching?
+\end{question}
+\solve{ Clearly algorithm output is not optimal always. We get a maximal matching sure. But we don't get a maximum matching always. For example the following graph
+	\begin{center}
+		\begin{tikzpicture}
+			\draw (-2,0) circle (2pt) node (A){};
+			\draw (0,0) circle (2pt) node (B){};
+			\draw (2,0) circle (2pt) node (C){};
+			\draw (4,0) circle (2pt) node (D){};
+			\draw[blue, thick] (A) -- node[midway, above]{$e_1$} (B);
+			\draw[red, thick] (B) -- node[midway, above]{$e_3$}(C);
+			\draw[blue, thick] (C) -- node[midway, above]{$e_2$} (D);
+		\end{tikzpicture}
+	\end{center}
+	If we start from $e_1$ we get the matching $\{e_1.e_2\}$ which is maximum matching but if we start from $e_3$ then we get only the maximal matching $\{e_3\}$ which is not maximum.}
+
+ Since the algorithm output may not be optimal always we can ask the following question
+ \begin{question}{}{}
+ 	How large is the matching obtained compared to the maximum matching?
+ \end{question}
+This brings us to the following result:
+
+\begin{Theorem}{}{}
+	For any graph $G$ let the greedy algorithm obtains the matching $M$ and the maximum matching is $M^{\star}$. Then $$|M|\geq \frac12|M^\star|$$
+\end{Theorem}
+\begin{proof}
+	content...
+\end{proof}
+\section{Huffman Encoding}
+\begin{algoprob}
+	\problemtitle{Huffman-Coding}
 	\probleminput{$n$ symbols $A=(a-1,\dots, a_n)$ and their frequencies $P=(f_1,\dots, f_n)$ of using symbols}
 	\problemquestion{Create a binary encoding such that: \begin{itemize}[itemsep=-0.2cm]
 			\item Prefix Free: The code for one word can not be prefix for another code
@@ -144,14 +207,14 @@ By the \lmref{complete-tree} and \lmref{least-frequents-siblings} we have that t
 	such that $a_i$, $a_j$ are the least frequent and second least frequent elements respectively. Consider the instance with $n-1$ symbols $\mcI'$:
 	\begin{center}
 		\begin{tabular}{ccccccccccc}
-			$a_1$, & $a_2$, & $\cdots$, & $a_{i-1}$, & $a_{i+1}$,& $\cdots$, & $a_{j-1}$,& $a_{j+1}$, & $\cdots$, & $a_n$, & $b$ \\
+			$a_1$, & $a_2$, & $\cdots$, & $a_{i-1}$, & $a_{i+1}$,& $\cdots$, & $a_{j-1}$,& $a_{j+1}$, & $\cdots$, & $a_n$, & $z$ \\
 			$p(a_1)$, & $p(a_2)$, & $\cdots$, & $p(a_{i-1})$,&$p(a_{i+1})$  & $\cdots$, & $p(a_{j-1})$,& $p(a_{j+1})$, & $\cdots$, & $p(a_n)$, & $p(a_i)+p(a_j)$ 
 		\end{tabular} 
 	\end{center}
 	Let $T'$ be the optimal tree for this instance $\mcI'$. Then there is an optimal tree for the original instance $\mcI$ obtained from $T'$ by replacing the leaf of $b$ by an internal node with children $a_i$ and $a_j$.
 \end{Theorem}
 \begin{proof}
-	We will prove this by contradiction. Suppose $\hat{T}$ is optimal for $\mcI$. Then $\prb{Cost}(\hat{T})<\prb{Cost}(T)$. In $\hat{T}$ we know $a_i$ and $a_j$ are siblings by \lmref{least-frequents-siblings}. Now consider $\hat{T}'$ for instance $\mcI'$ where we merge $a_i,a_j$ leaves and their parent into a leaf for symbol $b$. 
+	We will prove this by contradiction. Suppose $\hat{T}$ is optimal for $\mcI$. Then $\prb{Cost}(\hat{T})<\prb{Cost}(T)$. In $\hat{T}$ we know $a_i$ and $a_j$ are siblings by \lmref{least-frequents-siblings}. Now consider $\hat{T}'$ for instance $\mcI'$ where we merge $a_i,a_j$ leaves and their parent into a leaf for symbol $z$. 
 	
 	\begin{center}
 		\usetikzlibrary{fit}
@@ -184,7 +247,7 @@ By the \lmref{complete-tree} and \lmref{least-frequents-siblings} we have that t
 			\node[circle, right=4cm of A1] (A2) {}
 			child {node[circle] (B2) {}
 				child {node[circle] (D2) {} edge from parent[parentarrow]}
-				child {node[square, filled] (E2) {$b$}}
+				child {node[square, filled] (E2) {$z$}}
 				edge from parent[parentarrow]
 			}
 			child {node[circle] (C2) {} edge from parent[parentarrow]};
@@ -198,7 +261,7 @@ By the \lmref{complete-tree} and \lmref{least-frequents-siblings} we have that t
 		\end{tikzpicture}
 	\end{center}
 	
-	Then $$\prb{Cost}(\hat{T}')=\prb{Cost}(\hat{T})-p(a_i)-p(a_j)<\prb{Cost}-p(a_i)-p(a_j)=\prb{Cost}(T')$$This contradicts the fact that $T'$ is optimal binary encoding tree for $\mcI'$. Hence $T$ is optimal.
+	Then $$\prb{Cost}(\hat{T}')=\prb{Cost}(\hat{T})-p(a_i)-p(a_j)<\prb{Cost}(T)-p(a_i)-p(a_j)=\prb{Cost}(T')$$This contradicts the fact that $T'$ is optimal binary encoding tree for $\mcI'$. Hence $T$ is optimal.
 \end{proof}
 
 
@@ -232,7 +295,7 @@ $\prb{Insert}(Q,z)$
 }
 \Return{Last element left in $Q$ as root}
 }
-\caption{\prb{Hoffman-Encoding}$(A,P)$}
+\caption{\prb{Huffman-Encoding}$(A,P)$}
 \end{algorithm}
 
 \parinf
