@@ -63,8 +63,37 @@ This brings us to the following result:
 	For any graph $G$ let the greedy algorithm obtains the matching $M$ and the maximum matching is $M^{\star}$. Then $$|M|\geq \frac12|M^\star|$$
 \end{Theorem}
 \begin{proof}
-	content...
+	Consider an edge $e\in M^{\star}$ but $e\notin M$. Since $e$ wasn't  picked in $M$, $\exs\ e'\in M\setminus M^{\star}$ such that $e$ and $e'$ are incident on same vertex. Thus define the function $f:M^{\star}\to M$ where $$f(e)=\begin{cases}
+		e&\text{when $e\in M$}\\
+		e' & \text{when $e\in M^{\star}\setminus M$ where $e'\in M\setminus M^{\star}$ such that $e'\cap e\neq \emptyset$}
+	\end{cases}$$
+
+Now note that there are at most  two edges in $M^{\star}$ that are adjacent to an edge $e'\in M$ which will be mapped to $e'$. Hence $$|M\setminus M^{\star}|\geq \frac12 |M^{\star}\setminus M|$$Therefore $|f^{-1}(e')|\leq 2$ $\forall\ e'\in M$. Hence $$|M^\star|=|M\cap M^{\star}|+|M^{\star}\setminus M|\leq |M\cap M^{\star}||+2|M\setminus M^{\star}|\leq 2|M|$$Therefore we have the result $|M|\geq \frac12|M^{\star}|$. 
 \end{proof}
+\begin{alternate-proof} 
+	Let $M_1$ and $M_2$ are two matchings. Consider the symmetric difference $M_1\triangle M_2$.  This consists of edges that are in exactly one of $M_1$ and $M_2$. Now in $M\triangle M^{\star}$ we have the following properties:
+	\begin{enumerate}[label=(\alph*)]
+		\item Every vertex in $M\triangle M^{\star}$ has degree $\leq 2\implies $ Each component is a path or an even cycle. 
+		\item The edges of $M$ and $M^{\star}$ alternate. 
+			\end{enumerate}
+		Now we will prove the following property about the connected components of $M\triangle M^{\star}$.
+		
+\begin{center}
+					
+	\begin{minipage}{0.9\textwidth}
+			\textit{\textbf{Claim:}}\hspace{1em} No connected component is a single edge. 
+		
+		\begin{proof}
+			This is because let $e$ be a connected component. So the two edges $e_1,e_2$ which are adjacent to $e$,  they are either in both $M$ and $M^{\star}$ or not in $M$ and $M^{\star}$. The former case is not possible because then $e_1,e_2,e$ are all in either $M$ or $M^{\star}$ which is not possible as they do not satisfy the condition of matching. For the later case since $M^{\star}$ is maximal matching, $e\in M^{\star}$. Then $e\notin M$. That means $e,e_1,e_2\notin M$ which is not possible since $M$ is also a maximal matching. Therefore no connected component is a single edge.
+		\end{proof}
+	\end{minipage}
+\end{center}
+
+	
+		Therefore every path has length $\geq 2$. Therefore ratio of $\#$ edges of $M$ to $\#$ edges of $M^{\star}$ in a path is $\leq 2$. And for cycles we have $\#$ edges of $M=\#$ edges of $M^{\star}$. So in every connected component $C$ of $M\triangle M^{\star}$ the ratio $\frac{|M^{\star}\cap C|}{|M\cap C|}\leq 2$. Therefore we have $$\frac{|M^{\star}|}{|M|}=\frac{|M\cap M^{\star}|+\sum\limits_{C}|M^{\star}\cap C|}{|M\cap M^{\star}|+\sum\limits_{C}|M\cap C|}\leq 2$$Hence we have $|M|\geq \frac12|M^\star|$.
+		
+
+\end{alternate-proof}
 \section{Huffman Encoding}
 \begin{algoprob}
 	\problemtitle{Huffman-Coding}
@@ -276,7 +305,7 @@ By the \lmref{complete-tree} and \lmref{least-frequents-siblings} we have that t
 
 Since we always need the least frequent element and the second least frequent element we have to use the data structure called \prb{Min-Priority Queue}. So the following algorithm uses a \prb{Min-Priority Queue} $Q$ keyed on the probabilities to identify the two least frequent objects. 
 
-\newpage 
+%\newpage 
 \begin{algorithm}
 	\SetKwComment{Comment}{// }{}
 	\DontPrintSemicolon
