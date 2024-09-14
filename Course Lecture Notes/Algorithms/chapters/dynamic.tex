@@ -112,14 +112,57 @@ Now only the case when $k=t$ is remaining. If $S^{i+1}[k]$ is not the smallest v
 Therefore by mathematical induction this is true for all iterations. 
 \end{proof}
 
-Now we will show that $S$ is indeed the longest increasing subsequence.
+%Now we will show that $S$ is indeed the longest increasing subsequence.
 
 
 \begin{Theorem}{}{}
 	$S$ is the longest increasing subsequence of $A$.
 \end{Theorem}
 \begin{proof}
-	After the $n^{th}$ iteration $S^n=S$ and $k_n=l$. Hence by \lemref{th:si-isgoodatalliterations} we can say for all $k\in[l]$, $S[k]$ is the smallest number such that there is an increasing sequence of length $k$ ending at $S[k]$. Now we want to show that this increasing sequence is the longest increasing subsequence of $A$. Suppose $S$ is not the longest increasing subsequence. Let $T$ be the longest increasing subsequence of length $t$. Then suppose $j\leq l$ be the smallest index such that $S[j]\neq T[j]$. Now $S[j]$ is the smallest number in $x_1,\dots, x_n$ such that there is an increasing subsequence of length $j$ ending at $S[j]$. Hence we have $S[j]<T[j]$. Now for all $i<j$ we have $S[i]=T[i]$.   Then we form this new subsequence $$\hat{T}=\{T[1],T[2],\dots, T[j-1], S[j],T[j],\dots, T[t]\}$$Certainly $\hat{T}$ has length $t+1$ and it is also an increasing subsequence. But this contradicts the maximality condition of $T$. Hence $S$ is indeed the longest increasing subsequence.
+	After the $n^{th}$ iteration $S^n=S$ and $k_n=l$. Hence by \lemref{th:si-isgoodatalliterations} we can say for all $k\in[l]$, $S[k]$ is the smallest number such that there is an increasing sequence of length $k$ ending at $S[k]$. Now we want to show that this increasing sequence is the longest increasing subsequence of $A$. Suppose $S$ is not the longest increasing subsequence. Let $T$ be the longest increasing subsequence of length $t$. Then suppose $j\leq l$ be the smallest index such that $S[j]\neq T[j]$. Now $S[j]$ is the smallest number in $x_1,\dots, x_n$ such that there is an increasing subsequence of length $j$ ending at $S[j]$. Hence we have $S[j]<T[j]$. Now for all $i<j$ we have $S[i]=T[i]$.   Then we form this new subsequence $\hat{T}=\{T[1],T[2],\dots, T[j-1], S[j],T[j],\dots, T[t]\}$. Certainly $\hat{T}$ has length $t+1$ and it is also an increasing subsequence. But this contradicts the maximality condition of $T$. Hence $S$ is indeed the longest increasing subsequence.
 \end{proof}
 
-\section{Opimal Binary Search Tree}
+\section{Optimal Binary Search Tree}
+\begin{algoprob}
+	\problemtitle{OptimalBST}
+	\probleminput{A sorted array $A=(a_1,\dots, a_n)$ of search keys and an array of their probability distributions $P=(p(a_1),\dots, p(a_n))$}
+	\problemquestion{Given array of keys $A$ and their probabilities the probability of accessing $a_i$ is $p(a_i)$ then return a binary tree  with the minimum cost where for any binary tree $T$, $\prb{Cost}(T)=\sum\limits_{i=1}^np(a_i)\cdot height\st_T(a_i)$.}
+\end{algoprob}
+
+So let $T$ be the optimal binary search tree with $a_k$ as its root for some $k\in[n]$. Let $T_l$ and $T_r$ denote the tree rooted at the left child and right child of $a_k$ in $T$ respectively. Then: \begin{align*}
+	\prb{Cost}(T) & = p_k+ {\sum_{i<k}p_i\lt(1+height\st_{T_l}(a_i)\rt)}+{\sum_{i>k}p_i\lt(1+height\st_{T_r}(a_i)\rt)} = \sum_{i=1}^n p_i+\underbrace{\sum_{i<k}p_i \cdot height\st_{T_l}(a_i)}_{\prb{Cost}(T_l)}+\underbrace{\sum_{i>k}p_i \cdot height\st_{T_l}(a_i)}_{\prb{Cost}(T_r)}
+\end{align*}
+We will use the use of notion  in general $\prb{OPTCost}(i,k)=\prb{Cost}(T_i^k)$ where $T_i^k$ is the optimal binary tree of the subarray $A[i\dots k]$ for any $i\leq k\leq n$.  Therefore we arrive at the following recurrence relation $$\prb{OPTCost}(i,k)=\begin{cases}
+	0&\text{when $i>k$}\\
+	\sum\limits_{j=i}^k p(a_j)+\min\limits_{i\leq r\leq k}\{\prb{OPTCost}(i,r-1)+\prb{OPTCost}(r+1,k)\} & \text{otherwise}
+\end{cases}$$
+So the algorithm for constructing the optimal binary search tree is following:
+\begin{algorithm}
+\SetKwComment{Comment}{// }{}
+\DontPrintSemicolon
+\caption{\prb{OptimalBST}$(A,P)$}
+\KwIn{A sorted array $A=(a_1,\dots, a_n)$ of search keys and an array of their probability distributions $P=(p(a_1),\dots, p(a_n))$}
+\KwOut{Binary Tree $T$ with the minimum search cost, $\prb{Cost}(T)=\sum\limits_{i=1}^np(a_i)\cdot height\st_T(a_i)$}
+\Begin{
+	\For{$i=1,\dots, n$}{$\prb{OPTCost}[i,i]\longleftarrow (p(a_i),a_i)$, 
+	$\prb{OPTCost}[0,i]\longleftarrow (0,None)$
+}	
+	\For{$d=2,\dots, n$}{
+		\For{$i\in[n+1-d]$}{
+			$minval\longleftarrow 0$ \;
+			\For{$k=i+1,\dots, i+d-2$}{
+				$newval\longleftarrow \prb{OPTCost}[i,k-1][1]+\prb{OPTCost}[k+1,i+d-1][1]$\;
+				\If{$minval>newval$}{$minval\longleftarrow newval$\;
+				$Index\longleftarrow k$}
+			}
+			$\prb{OPTCost}[i,i+d-1]\longleftarrow \lt(minval+\sum\limits_{k=1}^{i+d-1}p(a_k), k\rt)$\;
+			$a_k.left\longleftarrow \prb{OPTCost}[i,k-1][2]$\;
+			$a_k.right\longleftarrow \prb{OPTCost}[k+1,i+d-1][2]$
+					
+	}
+}
+\Return{\prb{OPTCost}$[1,n]$}
+}
+\end{algorithm}\parinf
+
+\textbf{Time Complexity:} To two for loops ar line 4 and line 5 takes $O(n^2)$ many iterations. Now the inner most for loop at line 7 runs $O(n)$ iterations where in each iterations it takes constant runtime. So the total running time of the algorithm is $O(n^3)$.
