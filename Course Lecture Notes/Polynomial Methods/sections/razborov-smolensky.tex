@@ -45,8 +45,22 @@ Now first we will show that with these two lemmas we can prove Razborov-Smolensk
 Now that we proved our main objective theorem we will focus on proving the 2 lemmas in the following two sections.
 \subsection{Approximating Boolean Function with Polynomials}
 We first state and prove a lemma showing that every $\cls{AC}^0(\xor)$ circuit can be approximated by a low degree polynomial i.e. \lmref{boolean-func-poly}.  But to prove that we will show a more stronger lemma and then the lemma follows as a simple corollary of this stronger result.
-\begin{lemma}{}{}
+\begin{lemma}{}{distribution-func-approx}
 	For all $\cls{AC}^0(\xor)$ circuits $C$ of size $s$ of depth $d$ and $\forall\ \eps>0$ there exists a distribution $\sD$ of polynomials $p(x_1,\dots, x_n)\in\bbF_2[x_1,\dots, x_n]$  such that for all $a\in\{0,1\}^n$ $$\underset{p\in\sD}{\bbP}[p(a)=C(a)]\geq 1-\eps$$ where $\sD$ is supported on polynomials of degree $\leq \lt(\log \frac{s}{\eps}\rt)^d$
 \end{lemma}
 
-\subsection{Low Degree Polynomials Can't Approximate \prb{Majority}}
+First we will show that this lemma implies \lmref{boolean-func-poly}. 
+
+\begin{proof-of-lemma}{th:boolean-func-poly}
+	Consider the $|\{0,1\}^n|\times |\supp\sD|$ table for each $a\in\{0,1\}^n$, $a$ represents a row in the table. In the table at $(a,i)^{th}$ entry put $1$ if $i^{th}$ polynomial $p$ in $\sD$ satisfies $p(a)=C(a)$. For rest of the positions put $0$. \parinf\vspace*{2mm}
+	
+	$\xRightarrow{\textbf{\lmref{distribution-func-approx}}}$ $\forall\ \eps>0$ there exists a distribution $\sD$ such that for all $a\in\{0,1\}^n$ such that $\underset{p\in(\sD)}{\bbP}[p(a)=C(a)]\geq 1-\eps$. Hence in the table for each $a\in\{0,1\}^n$, at least $1-\eps$ many fraction of $|\supp(\sD)|$ entries in $a^{th}$ row have $1$. Therefore there are total at least $(1-\eps)\cdot |\{0,1\}^n|\cdot |\supp(\sD)|$ many $1$'s in total in the table. \parinn
+	
+	Hence by pigeon hole principle there is at least one column which has at least $(1-\eps)\cdot |\{0,1\}^n|$ many $1$'s. Therefore there is a polynomial $p\in\supp(\sD)$ which agrees with $C$ in at least $1-\eps$  fraction of total inputs. Hence $${\underset{a\in\{0,1\}^n}{\bbP}[p(a)=C(a)]\geq 1-\eps}$$
+\end{proof-of-lemma}
+
+Now we will prove the \lmref{distribution-func-approx}. Now before diving into the proof first let's see how can we approximate the gates in $\cls{AC}^0(\xor)$ circuits with low-degree polynomials. That way we can approximate any $\cls{AC}^0(\xor)$ circuit with low-degree polynomial.
+
+So to for an 
+
+\subsection{Approximating \prb{Majority}}
