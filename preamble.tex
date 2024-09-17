@@ -735,6 +735,8 @@
 \usetikzlibrary{shapes, positioning}
 \usepackage{titletoc,titlesec}
 \contentsmargin{0cm}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
 \titlecontents{chapter}[3.7pc]
 {\addvspace{30pt}%
 	\begin{tikzpicture}[remember picture, overlay]%
@@ -759,13 +761,21 @@
 {}
 {\hfill\small \thecontentspage}
 []
-
-
+\titlecontents{subsubsection}[3.7pc]
+{\addvspace{-1pt}\small}
+{\hspace*{2pc}\contentslabel[\thecontentslabel]{2pc}}
+{}
+{\hfill\small \thecontentspage}
+[]
+% Adjust horizontal shift for subsubsections
+%\titlecontents{subsubsection}[3.7pc]
 %{\addvspace{-1pt}\small}
+%{\hspace*{4pc}\contentslabel[\thecontentslabel]{2pc}} % Increase the hspace for a bigger horizontal shift
 %{}
-%{}
-%{\ --- \small\thecontentspage}
-%[ \textbullet\ ][]
+%{\hfill\small \thecontentspage}
+%[]
+
+
 
 \makeatletter
 \renewcommand{\tableofcontents}{%

@@ -61,6 +61,15 @@ First we will show that this lemma implies \lmref{boolean-func-poly}.
 
 Now we will prove the \lmref{distribution-func-approx}. Now before diving into the proof first let's see how can we approximate the gates in $\cls{AC}^0(\xor)$ circuits with low-degree polynomials. That way we can approximate any $\cls{AC}^0(\xor)$ circuit with low-degree polynomial.
 
-So to for an 
+So to for a $\neg x_i$ gate we can have the polynomial $1-x_i$. For a $\bigoplus\limits_{i=1}^k x_i$ we can use the polynomial $\sum\limits_{i=1}^k x_i$. So only $\wedge$ and $\vee$ gates are remaining. Now notice if we have a low degree polynomial for $\wedge $ we also have a low degree polynomial for $\vee$ since $$\bigvee_{i=1}^n x_i=\neg \lt( \bigwedge\limits_{i=1}^n (\neg x_i) \rt)$$So we will try to find a polynomial approximating  an $\wedge$ gate of degree $\leq \lt(\log\frac1{\eps}  \rt)^d$.  We can't approximate $\wedge$ by outputting $0$ every time since the desired correctness probability must hold for all inputs $x$. Multiplying a random constant-size subset of the bits will not work either, for the same reason. 
 
-\subsection{Approximating \prb{Majority}}
+Naive way to have a polynomial for $\bigvee\limits_{i=1}^n x_i$ would be $1-\prod\limits_{i=1}^n(1-x_i)$. But with this the degree becomes very large. 
+\begin{idea*}
+	Check parity of random subset of $[n]$. So we take a random subset $S\subseteq [n]$ then we take the polynomial $p_S=\sum\limits_{i\in S}x_i$. 
+\end{idea*}
+\begin{lemma}{}{}
+	If $S$ is a random subset of $[n]$ then $$\bbP\lt[p_S(x_1,\dots, x_n)=\bigwedge\limits_{i=1}^n x_i\rt]=\frac12$$
+\end{lemma}
+
+
+\subsection{Degree-Error Trade of to Approximate \prb{Majority}}
