@@ -129,5 +129,9 @@ Now we will show that if $\prb{Maj}$ has an approximating polynomial of low-degr
 Therefore $\deg(\prb{Maj})\geq \frac{n}{2}$. Now we will prove \lmref{poly-approx-maj} using the above theorem. \vspace*{2mm}
 
 \begin{proof-of-lemma}[poly-approx-maj]
+Let $p\in \bbF_2[x_1,\dots, x_n]$ be a polynomial of degree $t$. Let $S\subseteq \{0,1\}^n$ be the set of inputs where $p$ and $\prb{Maj}$ agree. \parinf
 
+$\xRightarrow{\textbf{\lmref{maj-versatility}}}$ $\forall\ f:\{0,1\}^n\to \{0,1\}$ there exists $g,h\in\bbF_2[x_1,\dots, x_n]$ with $\deg g, \deg g\leq \frac{n}2$ such that $\forall \  z\in\{0,1\}^n$ $$f(a)=g(a)\prb{Maj}(a)+h(a)$$Hence every function $f|_S:S\to \{0,1\}^n$ can be computed by the polynomial $g(x)\cdot p(x)+h(x)\in \bbF_2[x_1,\dots, x_n]$ which has degree $\leq \frac{n}{2}+t$. \parinn
+
+Let $\mcF$ be the vector space  of all functions $f|_S:S\to \{0,1\}$ for all $f:\{0,1\}^n\to \{0,1\}$ and let $\mcP$ be the vector space of all polynomials in $\bbF_2[x_1,\dots, x_n]$ of degree at most $\frac{n}{2}+t$. By the above argument we get that $\forall f|_S\in \mcF$, $\exs \ p\st_f\in \mcP$ such that $f|_S$ is computed by $\mcP$. Hence $\dim\mcF\leq \dim\mcP$. Now $$\dim \mcP=\sum_{i=0}^{\frac{n}2+t}\binom{n}{i}=\sum_{i=0}^{\frac{n}2}\binom{n}{i}+\sum_{i=\frac{n}2+1}^{\frac{n}2+t}\binom{n}{i}=\frac12\; 2^n+\sum_{i=\frac{n}2+1}^{\frac{n}2+t}\binom{n}{i}\leq 2^{n-1}+t\frac{2^n}{\sqrt{n}}=2^n\lt(\frac12+\frac{t}{\sqrt{n}}\rt)$$Now $\dim \mcF=|S|$. Hence $$|S|\leq 2^n\lt(\frac12+\frac{t}{\sqrt{n}}\rt)\implies \frac{|S|}{2^n}\leq \frac12+\frac{t}{\sqrt{n}}$$Therefore for any polynomial $p\in \bbF_2[x_1,\dots, x_n]$ with degree $t$ we have $\underset{a\in\{0,1\}^n}{\bbP}[p(a)=\prb{Maj}(a)]\leq \frac12+O\lt(\frac{t}{\sqrt{n}}\rt)$.
 \end{proof-of-lemma}
