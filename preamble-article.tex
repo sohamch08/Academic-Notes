@@ -592,9 +592,11 @@
 \renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\hfill\qed\bigskip\\}
 \newenvironment{proof-sketch}{\noindent{\it \bf Sketch of Proof:}\hspace*{1em}}{\hfill\qed\bigskip\\}
 \newenvironment{proof-idea}{\noindent{\it \bf Proof Idea:}\hspace*{1em}}{\hfill\qed\bigskip\\}
-\newenvironment{proof-of-theorem}[1]{\noindent{\it \bf Proof of \thmref{#1}:}\hspace*{1em}}{\hfill\qed\bigskip\\}
-\newenvironment{proof-of-lemma}[1]{\noindent{\it \bf Proof of Lemma \lemref{#1}:}\hspace*{1em}}{\hfill\qed\bigskip\\}
-\newenvironment{proof-of-corollary}[1]{\noindent{\it \bf Proof of \corrref{#1}:}\hspace*{1em}}{\hfill\qed\bigskip\\}
+
+\newenvironment{proof-of-theorem}[1][]{\noindent{\it \bf Proof of \thmref{#1}:}\hspace*{1em}}{\hfill\qed\bigskip\\}
+\newenvironment{proof-of-lemma}[1][]{\noindent{\it \bf Proof of  \lmref{#1}:}\hspace*{1em}}{\hfill\qed\bigskip\\}
+\newenvironment{proof-of-corollary}[1][]{\noindent{\it \bf Proof of \corrref{#1}:}\hspace*{1em}}{\hfill\qed\bigskip\\}
+
 \newenvironment{proof-attempt}{\noindent{\it \bf Proof Attempt:}\hspace*{1em}}{\hfill\qed\bigskip\\}
 \newenvironment{alternate-proof}[1][]{\noindent{\textbf{\textbf{Alternate Proof }\thmref{#1}:}}\hspace*{1em}}{\hfill\qed\bigskip\\}
 \newenvironment{proofof}[1]{\noindent{\bf Proof:}
