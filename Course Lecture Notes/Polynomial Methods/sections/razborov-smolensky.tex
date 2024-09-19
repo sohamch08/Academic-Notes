@@ -143,7 +143,7 @@ Let $\mcF$ be the vector space  of all functions $f|_S:S\to \{0,1\}$ for all $f:
 Hence by the observation we can conclude that computing the polynomial for $f$ on $S_0$ or $S_1$ is enough. Now we will prove the \hyperref[th:maj-versatility]{Versatility of \prb{Majority} Theorem}. \vspace*{2mm}
 
 \begin{proof-of-theorem}[maj-versatility]
-	So again assume $S_0=\prb{Maj}^{-1}(0)$ and $S_1=\prb{Maj}^{-1}(1)$. We want to show that these are interpolating sets for polynomials of degree $\leq \frac{n}{2}$ i.e. $\deg f|\st_{S_0},\deg f|\st_{S_1}\leq \frac{n}{2}$. 
+	So assume $S_0=\prb{Maj}^{-1}(0)$ and $S_1=\prb{Maj}^{-1}(1)$. We want to show that these are interpolating sets for polynomials of degree $\leq \frac{n}{2}$ i.e. $\deg f|\st_{S_0},\deg f|\st_{S_1}\leq \frac{n}{2}$. 
 	
 	Now we will show the process to find $u\in\bbF_2[x_1,\dots, x_n]$ with $\deg u\leq \frac{n}{2}$ where $u$ agrees with $f$ in $S_0$. We will follow the same process to find the polynomial $v\in\bbF_2[x_1,\dots, x_n]$ with $\deg v\leq \frac{n}{2}$ where $v$ agrees with $f$ in $S_1$. Now for any $S\subseteq [n]$ we denote $x^S\coloneqq \prod\limits_{i\in S}x_i$. Then $$u(\ovx)=\sum_{S\subseteq[n], |S|\leq \frac{n}{2}}c_Sx^S\quad \forall \ S\subseteq[n],|S|\leq\frac{n}{2},\  c_S\in\{0,1\}$$We have to compute the coefficients of $u$. Now $u(a)=f(a)$ for all $a\in S_0$. Therefore we have a system of linear equations. 
 	
