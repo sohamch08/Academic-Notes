@@ -1,0 +1,173 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage{amsmath,mathtools,mathdots}
+\usepackage{amssymb,amsthm}  % assumes amsmath package installed
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{mdframed,stmaryrd}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	citecolor=myr,
+	filecolor=myr,      
+	urlcolor=black,
+	pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
+}
+\usepackage[most,many,breakable]{tcolorbox}
+\usepackage{tikz}
+\usepackage{caption}
+%\usepackage{kpfonts}
+%\usepackage{libertine}
+\usepackage{physics}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+\usepackage{float}
+
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+
+\usetikzlibrary{decorations.pathreplacing,angles,quotes,patterns}
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+
+\tcbuselibrary{theorems,skins,hooks}
+\newtcbtheorem{problem}{Problem}
+{%
+	enhanced,
+	breakable,
+	colback = white,
+	frame hidden,
+	boxrule = 0sp,
+	borderline west = {2pt}{0pt}{black},
+	arc=5pt,
+	detach title,
+	before upper = \tcbtitle\par\smallskip,
+	coltitle = black,
+	fonttitle = \bfseries,
+	description font = \mdseries,
+	separator sign none,
+	segmentation style={solid, mytheoremfr},
+}
+{p}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem*{definition*}{Definition}
+\renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\hfill $\blacksquare$\bigskip\\}
+% To give references for any problem use like this
+% suppose the problem number is p3 then 2 options either 
+% \hyperref[p:p3]{<text you want to use to hyperlink> \ref{p:p3}}
+%                  or directly 
+%                   \ref{p:p3}
+
+
+
+\input{../../letterfonts}
+
+\input{../../macros}
+
+\setlength{\parindent}{0pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 2}\\
+		Email: \href{soham.chatterjee@tifr.res.in}{soham.chatterjee@tifr.res.in} \hfill Dept: STCS\\
+		\normalsize Course: Mathematical Foundations for Computer Sciences \hfill Date: \today}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+\begin{problem}{%problem statement
+	}{p1% problem reference text
+}
+Let $V$ be a vector space over $\bbR$. Show that the set $V_{\bbC}=V\times V$with the operations below is a vector space over $\bbC$ \begin{align*}
+	(v_1,v_2)+(v_1',v_2')&= (v_1+v_1',v_2+v_2')\\
+ (a+bi)\cdot (v_1,v_2)&=(av_1-bv_2,bv_1+av_2)
+\end{align*}
+This is called complexification and $(v_1,v_2)$ is often denoted as $v_1+v_2i$. Show that:\begin{itemize}[label=$\bullet$]
+	\item If $B$ is a basis of $V$, it is also a basis of $V_{\bbC}$.
+	\item For $\theta\in L(V)$, define the complexified operator $\theta_{\bbC}\in L(V_{\bbC})$ so that $\theta_{\bbC}(v_1+v_2i)=\theta(v_1)+\theta(v_2)i$. Show that for any basis $B$ of $V$, we have $\lt[\theta_{\bbC}\rt]_B=[\theta]_B$
+	\item For all $\lm\in\bbR$, $\lm$ is an eigenvalue of $\theta$ if and only if it is an eigenvalue of $\theta_{\bbC}$. For $\lm\in\bbC$, $\lm$ is an eigenvalue of $\theta_{\bbC}$ if and only if $\ov{\lm}$ is an eigenvalue of $\theta_{\bbC}$ and they have the same multiplicity. Conclude that every real operator over an odd dimensional real vector space has an eigenvalue.
+\end{itemize}
+\end{problem}
+\solve{
+\begin{itemize}[label=$\bullet$]
+\item $B$ is a basis of $V$. Let $\dim V=n$. Suppose $B=\{b_1,\dots, b_n\}$. We want to show $B$ is also a basis of $V_{\bbC}$ i.e. the set $B'=\{(b_i,0)\colon i\in[n]\}$ is a basis of $V_{\bbC}$. So we have to show $\la B_{\bbC}\ra =V_{\bbC}$. From now if $B$ is a basis of $V$ then by $B_{\bbC}$ we denote the set $\{(b,0)\colon b\in B\}$. \parinn
+
+Now $\forall\ i\in [n]$, $(b\st_i,0)\in V_{\bbC}$. Therefore $B_{\bbC}\subseteq V_{\bbC}$. Hence $\la B_{\bbC}\ra\subseteq V_{\bbC}$. Now we have to show that $\la B_{\bbC}\ra \supseteq V_{\bbC}$. So suppose $(v_1,v_2)\in V_{\bbC}$. Then $v_1,v_2\in V$. Hence $\exs!\ \{a\st_{1,i}\}_{i\in[n]}$ and $\{a\st_{2,i}\}_{i\in[n]}$ such that $$v_1=\sum\limits_{i=1}^n a\st_{1.i}b\st_i,\qquad v_2=\sum\limits_{i=1}^na\st_{2,i}b\st_i$$Now for any $v\in V$,  $(a+bi) \cdot (v,0)=(av,bv)$. Therefore we have $$\sum_{i=1}^n \lt(a\st_{1,i}+a\st_{2,i}i\rt)(b\st_i,0)=\sum_{i=1}^n \lt(a\st_{1,i}b\st_i,a\st_{2,i}b\st_i\rt)= \lt(\sum_{i=1}^n a\st_{1,i}b\st_i,\sum_{i=1}^na\st_{2,i}b\st_i\rt)=(v_1,v_2)$$Therefore $(v_1,v_2)\in \la B_{\bbC}\ra$. Hence $$V_{\bbC}\subseteq \la B_{\bbC}\ra\implies V_{\bbC}=\la B_{\bbC}\ra$$Hence $B$ is also a basis of $V_{\bbC}$
+\item \parinn By the above part we know if $B$ is a basis of $V$ then $B_{\bbC}$ is basis of $V_{\bbC}$. Now if $\theta\in L(V)$ then $\theta_{\bbC}\in L(V_{\bbC})$ such that $\theta_{\bbC}(v_1+v_2i)=\theta(v_1)+\theta(v_2)i$. So for any $b+0i\in B_{\bbC}$ we have $$\theta_{\bbC}(b+ 0i)=\theta(b)+\theta(0)i=\theta(b)+0i$$ Let $b\st_j$ be the $j^{th}$ vector of $B$. $\exs!\ a\st_{j,l}$ forall $l\in [n]$ such that $\theta\lt(b\st_j\rt)=\sum\limits_{l=1}^n a\st_{j,l}b\st_l$. Then $[\theta]_B=\lt(a\st_{j,l}\rt)_{1\leq j,l\leq n}$. Then  $$\theta_C\lt(b\st_j\rt)=\theta(b)+0i=\sum_{l=1}^na\st_{j,l}b\st_l+0i=\sum_{l=1}^n\lt(a\st_{j,l}+0i\rt)(b\st_l+0i)=\sum_{l=1}^na\st_{j,l}(b\st_l+0i)$$Therefore $\lt[\theta_{\bbC}\rt]_{B}=\lt(a\st_{j,l}\rt)_{1\leq j,l\leq n}$. Therefore $\lt[\theta_{\bbC}\rt]_B=[\theta]_B$.
+\item \parinn Let $\lm\in \bbR$ is an eigenvalue of $\theta\in L(V)$. Suppose $v\in V$, $v\neq 0$ be eigenvector corresponding to $\lm$. Then in $V_{\bbC}$ we have the vector $v+0i$. Then $$\theta_{\bbC}(v+0i)=\theta(v)+\theta(0)i=\lm v+0i=\lm v+\lm\cdot 0i=\lm(v+0i)$$Hence $\lm$ is also an eigenvalue of $\theta_{\bbC}$. Now suppose $\lm\in \bbR$ is an eigenvalue of $\theta_{\bbC}$. Then suppose $v_1+v_2i\in V_{\bbC}$, $v_1+v_2\neq 0$ be an eigenvector corresponding to $\lm$. Now $$\theta_{\bbC}(v_1+v_2i)=\theta(v_1)+\theta(v_2)i, \ \theta_{\bbC}(v_1+v_2i)=\lm(v_1+v_2i)=\lm v_1+\lm v_2i\implies \theta(v_1)+\theta(v_2)i=\lm v_1+\lm v_2i$$Hence we get $\theta(v_1)=\lm v_1$ and $\theta(v_2)=\lm v_2$. Since $v_1+v_2i\neq 0$, either $v_1\neq 0$ or $v_2\neq 0$. So there exists at least one eigenvector for $\lm$ in $V$. 
+
+Suppose $\lm \in \bbC$. Now we know $\ov{\ov{\lm}}=\lm$. So showing if $\lm$ is eigenvalue of $\theta_{\bbC}\implies \ov{\lm}$ is eigenvalue of $\theta_{\bbC}$ is enough since then replacing $\ov{\lm}$ in place of $\lm$ we get that if $\ov{lm}$ is eigenvalue of $\theta_{\bbC}\implies \ov{\ov{\lm}}=\lm$ is eigenvalue of $\theta_{\bbC}$. Now suppose $v_1+v_2i\in V_{\bbC}$, $v_1+v_2i\neq  0$ be eigenvector corresponding to $\lm$. Let $\lm=a+bi$ where $a,b\in \bbR$. Then $$\lm(v_1+v_2i)=(a+bi)(v_1+v_2i)=(av_1-bv_2,bv_1+av_2)=\theta(v_1)+\theta(v_2)i$$Hence we have $\theta(v_1)=av_1-bv_2$ and $\theta(v_2)=bv_1+av_2$. Hence 
+\end{itemize}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p2% problem reference text
+	}
+
+\end{problem}
+\solve{	
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p3% problem reference text
+	}
+
+\end{problem}
+\solve{
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p4% problem reference text
+	}
+
+\end{problem}
+\solve{
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+}{p5% problem reference text
+}
+
+\end{problem}
+\solve{
+
+
+}
+
+\end{document}
