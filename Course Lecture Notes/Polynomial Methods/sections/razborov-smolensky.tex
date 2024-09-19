@@ -135,3 +135,13 @@ $\xRightarrow{\textbf{\lmref{maj-versatility}}}$ $\forall\ f:\{0,1\}^n\to \{0,1\
 
 Let $\mcF$ be the vector space  of all functions $f|_S:S\to \{0,1\}$ for all $f:\{0,1\}^n\to \{0,1\}$ and let $\mcP$ be the vector space of all polynomials in $\bbF_2[x_1,\dots, x_n]$ of degree at most $\frac{n}{2}+t$. By the above argument we get that $\forall f|_S\in \mcF$, $\exs \ p\st_f\in \mcP$ such that $f|_S$ is computed by $\mcP$. Hence $\dim\mcF\leq \dim\mcP$. Now $$\dim \mcP=\sum_{i=0}^{\frac{n}2+t}\binom{n}{i}=\sum_{i=0}^{\frac{n}2}\binom{n}{i}+\sum_{i=\frac{n}2+1}^{\frac{n}2+t}\binom{n}{i}=\frac12\; 2^n+\sum_{i=\frac{n}2+1}^{\frac{n}2+t}\binom{n}{i}\leq 2^{n-1}+t\frac{2^n}{\sqrt{n}}=2^n\lt(\frac12+\frac{t}{\sqrt{n}}\rt)$$Now $\dim \mcF=|S|$. Hence $$|S|\leq 2^n\lt(\frac12+\frac{t}{\sqrt{n}}\rt)\implies \frac{|S|}{2^n}\leq \frac12+\frac{t}{\sqrt{n}}$$Therefore for any polynomial $p\in \bbF_2[x_1,\dots, x_n]$ with degree $t$ we have $\underset{a\in\{0,1\}^n}{\bbP}[p(a)=\prb{Maj}(a)]\leq \frac12+O\lt(\frac{t}{\sqrt{n}}\rt)$.
 \end{proof-of-lemma}
+
+
+\begin{observation*}
+	Now let for any $f:\{0,1\}^n\to \{0,1\}$, $S_0=\prb{Maj}^{-1}(0)$ and $S_1=\prb{Maj}^{-1}(1)$.  Suppose we can compute the polynomials $u,v\in\bbF_2[x_1,\dots, x_n]$ with $\deg u,\deg v\leq \frac{n}{2}$ such that $u$,$f$ agree on $S_0$ and $v$, $f$ agree on $S_1$ i.e. $f|\st_{S_0}$ can be computed by $u$ and $f|\st_{S_1}$ can be computed by $v$. Then $\forall \ x\in\{0,1\}^n$ we have $$f(x)=u(x)(1-\prb{Maj}(x))+v(x)\prb{Maj}(x)$$
+\end{observation*}
+Hence by the observation we can conclude that computing the polynomial for $f$ on $S_0$ or $S_1$ is enough. Now we will prove the \hyperref[th:maj-versatility]{Versatility of \prb{Majority} Theorem}. \vspace*{2mm}
+
+\begin{proof-of-theorem}[maj-versatility]
+	So again assume $S_0=\prb{Maj}^{-1}(0)$ and $S_1=\prb{Maj}^{-1}(1)$. We want to show that these are interpolating sets for polynomials of degree $\leq \frac{n}{2}$ i.e. $\deg f|\st_{S_0},\deg f|\st_{S_1}\leq \frac{n}{2}$. 
+\end{proof-of-theorem}
