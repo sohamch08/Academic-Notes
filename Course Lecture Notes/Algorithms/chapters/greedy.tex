@@ -362,7 +362,8 @@ $\prb{Insert}(Q,z)$
 
 \subsection{Finding Max Weight Base}
 The problem is given a matroid $M=(E,I)$ and a weight function $W:E\to \bbR$ find the maximum weight base of the matroid. We will solve this using basic greedy algorithm. 
-\subsubsection{Algorithm}
+%\subsubsection{Algorithm}
+
 \begin{algorithm}[H]
 	\KwIn{A matroid $M=(E,I)$ is given as an input as an oracle and a weight function $W:E\to \bbR$.}
 	\KwOut{Find the maximum weight base of the matroid}
@@ -376,16 +377,17 @@ The problem is given a matroid $M=(E,I)$ and a weight function $W:E\to \bbR$ fin
 	}
 	\caption{Algorithm for Finding Max Weight Base}
 \end{algorithm}
-\subsubsection{Correctness Analysis and Characterization}
-\thm{}{The above algorithm outputs a maximum weight base iff $M$ is a matroid}
+%\subsubsection{Correctness Analysis and Characterization}
+\thm{}{The above algorithm outputs a maximum weight base}
+\begin{proof}	Let $M$ be a matroid. We will prove that this greedy algorithm works by inducting on $i$. At any iteration $i$ we need to prove the following claim:
+	
+\begin{center}
+		
+\begin{minipage}{0.9\textwidth}
+		\textbf{\textit{Claim:}} At any iteration $i$ there is a max weight base $B_i$ such that $S_i\subseteq B_i$ and $B_i\setminus S_i\subseteq \{i+1,\dots, n\}$.
+	
 \begin{proof}
-	$\Leftarrow:$\parinf
-	
-	Let $M$ be a matroid. We will prove that this greedy algorithm works by inducting on $i$. At any iteration $i$ we need to prove the following claim:
-	
-	\textbf{\textit{Claim:}} At any iteration $i$ there is a max weight base $B_i$ such that $S_i\subseteq B_i$ and $B_i\setminus S_i\subseteq \{i+1,\dots, n\}$.
-	
-	\textbf{\textit{Proof:}} Base case: $S=\emptyset$. So for base case the statement is true trivially. Assume that the statement is true up to $(i-1)$ iterations.\parinn
+	Base case: $S=\emptyset$. So for base case the statement is true trivially. Assume that the statement is true up to $(i-1)$ iterations.\parinn
 	
 	Now $S_{i-1}\subseteq B_{i-1}$ where $B_{i-1}$ is a maximum weight base and $B_{i-1}-S_{i-1}\subseteq \{i,\dots, n\}$. Now three cases arise:
 	\begin{enumerate}[label=\bfseries Case \arabic*:,leftmargin=1.5cm]
@@ -393,12 +395,12 @@ The problem is given a matroid $M=(E,I)$ and a weight function $W:E\to \bbR$ fin
 		\item If $i\notin B_{i-1}$ and $S_{i-1}+i\notin I$. Then $S_i=S_{i-1}$ and $B_i=B_{i-1}$. And $B_i-S_i\subseteq \{i+1,\dots , n\}$.
 		\item If $i\notin B_{i-1}$ but $S_{i-1}+i\in I$. Then $S_i=S_{i-1}+i$. Now $S_i$ can be extended to a $B'$ by adding all but one element of $B_{i-1}$. So $|B'|=|B_{i-1}|$. Let the element which is not added is $j\in B_{i-1}$. So $B'=B_{i-1}+i-j$. $$wt(B')=Wt(B_{i-1})-wt()+wt(i)$$But we have $wt(i)\geq wt(j)$. So $wt(B')\geq wt(B_{i-1})$. Now since $B_{i-1}$ has maximum weight we have $wt(B')=wt(B_{i-1})$. Then our $B_i=B'$. So $B_i-S_i\subseteq \{i+1,\dots, n\}$.
 	\end{enumerate}
-	Hence the claim is true for the $i$th stage as well. Therefore the claim is true.\Qed
-	
-	Therefore using the claim, after the algorithm finished we have no elements left to check, so the current set has the maximum weight which is also an independent set. So the algorithm successfully returns a maximum weight base.\parinf
-	
-	$\Rightarrow:$
-	
-	Assume $M$ is not a matroid.
-	
+	Hence the claim is true for the $i$th stage as well. Therefore the claim is true.
 \end{proof}
+\end{minipage}
+\end{center}
+	\parinn 
+	
+	Therefore using the claim, after the algorithm finished we have no elements left to check, so the current set has the maximum weight which is also an independent set. So the algorithm successfully returns a maximum weight base.
+\end{proof}
+\subsection{Job Selection with Penalties}
