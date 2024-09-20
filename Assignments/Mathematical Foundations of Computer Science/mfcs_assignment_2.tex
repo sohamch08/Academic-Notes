@@ -28,6 +28,8 @@
 \usepackage{mathrsfs}
 \usepackage{tikz-cd}
 \usepackage{float}
+\usepackage{tfrupee}  
+
 
 \definecolor{mytheorembg}{HTML}{F2F2F9}
 \definecolor{mytheoremfr}{HTML}{00007B}
@@ -115,19 +117,28 @@ This is called complexification and $(v_1,v_2)$ is often denoted as $v_1+v_2i$. 
 
 Now $\forall\ i\in [n]$, $(b\st_i,0)\in V_{\bbC}$. Therefore $B_{\bbC}\subseteq V_{\bbC}$. Hence $\la B_{\bbC}\ra\subseteq V_{\bbC}$. Now we have to show that $\la B_{\bbC}\ra \supseteq V_{\bbC}$. So suppose $(v_1,v_2)\in V_{\bbC}$. Then $v_1,v_2\in V$. Hence $\exs!\ \{a\st_{1,i}\}_{i\in[n]}$ and $\{a\st_{2,i}\}_{i\in[n]}$ such that $$v_1=\sum\limits_{i=1}^n a\st_{1.i}b\st_i,\qquad v_2=\sum\limits_{i=1}^na\st_{2,i}b\st_i$$Now for any $v\in V$,  $(a+bi) \cdot (v,0)=(av,bv)$. Therefore we have $$\sum_{i=1}^n \lt(a\st_{1,i}+a\st_{2,i}i\rt)(b\st_i,0)=\sum_{i=1}^n \lt(a\st_{1,i}b\st_i,a\st_{2,i}b\st_i\rt)= \lt(\sum_{i=1}^n a\st_{1,i}b\st_i,\sum_{i=1}^na\st_{2,i}b\st_i\rt)=(v_1,v_2)$$Therefore $(v_1,v_2)\in \la B_{\bbC}\ra$. Hence $$V_{\bbC}\subseteq \la B_{\bbC}\ra\implies V_{\bbC}=\la B_{\bbC}\ra$$Hence $B$ is also a basis of $V_{\bbC}$
 \item \parinn By the above part we know if $B$ is a basis of $V$ then $B_{\bbC}$ is basis of $V_{\bbC}$. Now if $\theta\in L(V)$ then $\theta_{\bbC}\in L(V_{\bbC})$ such that $\theta_{\bbC}(v_1+v_2i)=\theta(v_1)+\theta(v_2)i$. So for any $b+0i\in B_{\bbC}$ we have $$\theta_{\bbC}(b+ 0i)=\theta(b)+\theta(0)i=\theta(b)+0i$$ Let $b\st_j$ be the $j^{th}$ vector of $B$. $\exs!\ a\st_{j,l}$ forall $l\in [n]$ such that $\theta\lt(b\st_j\rt)=\sum\limits_{l=1}^n a\st_{j,l}b\st_l$. Then $[\theta]_B=\lt(a\st_{j,l}\rt)_{1\leq j,l\leq n}$. Then  $$\theta_C\lt(b\st_j\rt)=\theta(b)+0i=\sum_{l=1}^na\st_{j,l}b\st_l+0i=\sum_{l=1}^n\lt(a\st_{j,l}+0i\rt)(b\st_l+0i)=\sum_{l=1}^na\st_{j,l}(b\st_l+0i)$$Therefore $\lt[\theta_{\bbC}\rt]_{B}=\lt(a\st_{j,l}\rt)_{1\leq j,l\leq n}$. Therefore $\lt[\theta_{\bbC}\rt]_B=[\theta]_B$.
-\item \parinn Let $\lm\in \bbR$ is an eigenvalue of $\theta\in L(V)$. Suppose $v\in V$, $v\neq 0$ be eigenvector corresponding to $\lm$. Then in $V_{\bbC}$ we have the vector $v+0i$. Then $$\theta_{\bbC}(v+0i)=\theta(v)+\theta(0)i=\lm v+0i=\lm v+\lm\cdot 0i=\lm(v+0i)$$Hence $\lm$ is also an eigenvalue of $\theta_{\bbC}$. Now suppose $\lm\in \bbR$ is an eigenvalue of $\theta_{\bbC}$. Then suppose $v_1+v_2i\in V_{\bbC}$, $v_1+v_2\neq 0$ be an eigenvector corresponding to $\lm$. Now $$\theta_{\bbC}(v_1+v_2i)=\theta(v_1)+\theta(v_2)i, \ \theta_{\bbC}(v_1+v_2i)=\lm(v_1+v_2i)=\lm v_1+\lm v_2i\implies \theta(v_1)+\theta(v_2)i=\lm v_1+\lm v_2i$$Hence we get $\theta(v_1)=\lm v_1$ and $\theta(v_2)=\lm v_2$. Since $v_1+v_2i\neq 0$, either $v_1\neq 0$ or $v_2\neq 0$. So there exists at least one eigenvector for $\lm$ in $V$. 
+\item \begin{itemize}
+	\item Let $\lm\in \bbR$ is an eigenvalue of $\theta\in L(V)$. Suppose $v\in V$, $v\neq 0$ be eigenvector corresponding to $\lm$. Then in $V_{\bbC}$ we have the vector $v+0i$. Then $$\theta_{\bbC}(v+0i)=\theta(v)+\theta(0)i=\lm v+0i=\lm v+\lm\cdot 0i=\lm(v+0i)$$Hence $\lm$ is also an eigenvalue of $\theta_{\bbC}$. Now suppose $\lm\in \bbR$ is an eigenvalue of $\theta_{\bbC}$. Then suppose $v_1+v_2i\in V_{\bbC}$, $v_1+v_2\neq 0$ be an eigenvector corresponding to $\lm$. Now $$\theta_{\bbC}(v_1+v_2i)=\theta(v_1)+\theta(v_2)i, \ \theta_{\bbC}(v_1+v_2i)=\lm(v_1+v_2i)=\lm v_1+\lm v_2i\implies \theta(v_1)+\theta(v_2)i=\lm v_1+\lm v_2i$$Hence we get $\theta(v_1)=\lm v_1$ and $\theta(v_2)=\lm v_2$. Since $v_1+v_2i\neq 0$, either $v_1\neq 0$ or $v_2\neq 0$. So there exists at least one eigenvector for $\lm$ in $V$. 
 
-Suppose $\lm \in \bbC$. Now we know $\ov{\ov{\lm}}=\lm$. So showing if $\lm$ is eigenvalue of $\theta_{\bbC}\implies \ov{\lm}$ is eigenvalue of $\theta_{\bbC}$ is enough since then replacing $\ov{\lm}$ in place of $\lm$ we get that if $\ov{lm}$ is eigenvalue of $\theta_{\bbC}\implies \ov{\ov{\lm}}=\lm$ is eigenvalue of $\theta_{\bbC}$. Now suppose $v_1+v_2i\in V_{\bbC}$, $v_1+v_2i\neq  0$ be eigenvector corresponding to $\lm$. Let $\lm=a+bi$ where $a,b\in \bbR$. Then $$\lm(v_1+v_2i)=(a+bi)(v_1+v_2i)=(av_1-bv_2,bv_1+av_2)=\theta(v_1)+\theta(v_2)i$$Hence we have $\theta(v_1)=av_1-bv_2$ and $\theta(v_2)=bv_1+av_2$. Hence 
+\item Suppose $\lm \in \bbC$. Now we know $\ov{\ov{\lm}}=\lm$. So showing if $\lm$ is eigenvalue of $\theta_{\bbC}\implies \ov{\lm}$ is eigenvalue of $\theta_{\bbC}$ is enough since then replacing $\ov{\lm}$ in place of $\lm$ we get that if $\ov{\lm}$ is eigenvalue of $\theta_{\bbC}\implies \ov{\ov{\lm}}=\lm$ is eigenvalue of $\theta_{\bbC}$. Now suppose $v_1+v_2i\in V_{\bbC}$, $v_1+v_2i\neq  0$ be eigenvector corresponding to $\lm$. Let $\lm=a+bi$ where $a,b\in \bbR$. Then $$\lm(v_1+v_2i)=(a+bi)(v_1+v_2i)=(av_1-bv_2,bv_1+av_2)=\theta(v_1)+\theta(v_2)i$$Hence we have $\theta(v_1)=av_1-bv_2$ and $\theta(v_2)=bv_1+av_2$. Hence $$\theta_{\bbC}(v_2+iv_1)=\theta(v_2)+\theta(v_1)i=(av_2+bv_1)+(av_1-bv_2)i=(a-bi)(v_2+v_1i)$$Hence $v_2+v_1i$ is an eigenvector of $\theta_{\bbC}$ with corresponding eigenvalue $\ov{\lm}$. Hence $\om{\lm}$ is an eigenvalue of $\theta_{\bbC}$. Therefore $\lm$ is eigenvalue of $\theta_{\bbC}$ if and only if $\ov{\lm}$ is eigenvalue of $\theta_{\bbC}$. \parinn
+
+Now we want to show that they have the same multiplicity. We shown above that $v_1+v_2i$ is eigenvector of $\lm$ if and only $v_2+v_1i$ is eigenvector of $\ov{\lm}$. Hence there is a bijection between the eigenvectors of $\lm$ and $\ov{\lm}$. Hence their multiplicities are also same.
+
+\item Suppose $V$ is a vector space over $\bbR$ such that $\dim V=2n+1$ for some $n\in  \bbZ_0$. Now take the complexification of $V$, $V_{\bbC}$ and then take the complexified operator of $\theta$, $\theta_{\bbC}$. Since a basis of $V$ is also a basis of $V_{\bbC}$ we can say $\dim V=\dim V_{\bbC}$.  Let $\lm_1,\dots, \lm_k\in\bbC$ are the distinct eigenvalues of $\theta_{\bbC}$. Since $V_{\bbC}$ is a vector space over $\bbC$ we can express $V$ as direct sum of generalized eigenspaces i.e. $V=\bigoplus\limits_{i=1}^k G\st_{\theta_{\bbC}}(\lm_i)$. Now for any $i\in[m]$, $\dim G\st_{\theta_{\bbC}}(\lm_i)=Mult(\lm_i)$. Therefore $\sum\limits_{i=1}^k Mult(\lm_i)=2n+1$. \parinn
+
+Now for each $\lm\in \bbC$ by the above part we have that $\lm$ is eigenvalue iff $\ov{\lm}$ is eigenvalue with same multiplicities. Hence we can pair an eigenvalue with its conjugate $(\lm,\ov{\lm})$. From each pair $2Multi(\lm)$ is contributed to the dimension. For any complex number with nonzero imaginary part along with its conjugate always an even number is contributed to the dimension. But the dimension is odd. So there is an eigenvalue with imaginary part is zero so that its conjugate is the number itself and therefore contribute to the dimension calculation only once. Hence there is an real eigenvalue $\lm$ of $\theta_{\bbC}$. Therefore by the second part we have that $\lm$ is an eigenvalue of $\theta$. Hence $\theta$ has an real eigenvalue if the vector space has odd dimension over $\bbR$. 
+\end{itemize}
 \end{itemize}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\newpage
 \begin{problem}{%problem statement
 	}{p2% problem reference text
 	}
-
+Let there be $n$ goods and let the price of good $i\in[n]$ be $c_i$. Suppose there $m$ orders, where each order $j\in[m]$ is a subset $S_j\subseteq [n]$ saying which goods have been ordered. Suppose there exists $t>0$ such that no good is ordered more than $t$ times. Formally we have, for all $i\in [n]$: $$|\{j\in[m]\mid i\in S_j\}|\leq t$$
+	Imagine that the government demonetizes all currency below \rupee100 and thus all the prices have to be rounded to a multiple of 100. Show that there is a way of rounding the prices to $c_i'$ that are multiples of 100 such that for all $j\in[m]$. the cost of order $j$ changes by at most \rupee100$t$. Formally, for all $j\in[m]$: $$\lt|\sum_{i\in S_j}c_i-\sum_{i\in S_j}c_i'\rt|\leq 100t$$
 \end{problem}
 \solve{	
 }
@@ -138,10 +149,17 @@ Suppose $\lm \in \bbC$. Now we know $\ov{\ov{\lm}}=\lm$. So showing if $\lm$ is 
 \begin{problem}{%problem statement
 	}{p3% problem reference text
 	}
+Let $\theta\in L(V)$ and $\theta^*\in L(V^*)$ be its dual. For any basis $B$ of $V$, show that there exists a basis $B^*$ of $V^*$ such that $[\theta]_B=[\theta^*]_{B^*}$.
 
+Hint: It may be helpful to use another question in this assignment to solve this one.
 \end{problem}
 \solve{
+	
+	
+	
+$V$ is a vector space over $\bbF$. Let $\dim V=n$. Suppose $B$ is a basis of $V$. Let $\tdB$ denote the dual vectors of $B$ which is also basis of $V^*$. Now we know $[\theta^*]_{\tdB}=[\theta]_B^T$. Hence now we need to show that there is a basis $B^*$ such that changing into that basis we get the matrix for $\theta$ to be $[\theta^*]_{B^*}=[\theta^*]_{\tdB}^T$ then we will have $[\theta^*]_{B^*}=[\theta]_B$. So the problem is now reduced to showing that for any $\theta\in L(V)$ where $V$ is an $n-$dimensional vector space $\bbC$ if $B$ is a basis of $V$ then there exists a basis $B'$ such that $[\theta]_{B'}=[\theta]_B^T$.
 
+Suppose $\lm_1,\dots, \lm_m$ are the eigenvalues of $\theta$. Then we know there exists a basis $B_J$ of $V$ such that $[\theta]_{B_J}$ is block diagonal where every block $J_{i}$ corresponds to one of the $\lm_i$ and it has dimension $Mult(\lm_i)=d_i$ and the block has $\lm_i$'s on the diagonal and $0$'s or $1$'s above the diagonal i.e. $$J_i=\mat{\lm & t_{i,1} & & &\\ & \lm_i & t_{i,2} & & \\ &  & \ddots & \ddots & \\  & & & \lm_i & t_{i,d_i-1} \\ & & & & \lm_i}\implies [\theta]_{B_J}=\mat{J_1 & & \\ & \ddots & \\ & & J_m}$$Hence there exists $n\times n$ invertible matrix such that $$[\theta]_B=P^{-1}[\theta]_{B_J}P$$
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -149,11 +167,46 @@ Suppose $\lm \in \bbC$. Now we know $\ov{\ov{\lm}}=\lm$. So showing if $\lm$ is 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement
+		Solving linear recurrence equations
 	}{p4% problem reference text
 	}
-
+Let $A=(a_0,a_1,\dots)$ be a sequence of complex numbers. We say that it satisfies a linear recurrence relation with constant coefficients if there is a number $t>0$ and constants $c_1,\dots, c_t$ such that, for all $i\geq t$, we have: $$a_i=c_1a_{i-1}+c_2a_{i-2}+\cdots+c_ta_{i-t}$$Observe that if $A$ satisfies such a recurrence relation, then $A$ is determined by $(a_1,\dots. a_{t-1})$. In this exercise, we compute all solutions to an arbitrary such recurrence relation.
+\begin{itemize}[label=$\bullet$]
+	\item For all $i\geq 0$, define the vector $b_i=(a_i,a_{i+1},\dots, a_{i+t-1})^T\in \bbC^i$. Describe a linear operator $\theta:\bbC^t\to \bbC^t$ that, for all $i\geq 0$, maps $b_i$ to $b_{i+1}$.
+	\item Show how to compute the powers of a matrix in Jordan normal form, and use it to show that if $\lm_1,\dots, \lm_m$ are the eigenvalues of $\theta$ with multiplicities $d_1,\dots, d_m$ respectively, then sequence $A$ satisfied the recurrence if and only if there exists polynomials $q_1,\dots, q_m$ such that $\deg (q_j)\leq d_j$ for all $j\in[m]$ and for all $i\geq 0$, we have: $$a_i=\sum_{j=1}^mq_j(n)\lm_j^n$$
+	\item Let $F=(f_0,f_1,f_2,\dots)$ be the Fibonacci sequence. Namely, $F$ satisfies $f_0=0$, $f_1=1$, and the linear recurrence relation $f_i=f_{i-1}+f_{i-2}$ for all $i\geq 2$. Compute a formula for this sequence by computing the polynomials $q_j$.
+\end{itemize}
 \end{problem}
 \solve{
+\begin{itemize}[label=$\bullet$]
+	\item Take the standard basis $\{e_i\mid i\in[t]\}$ of $\bbC^t$ where $e_i=(\underbrace{0  \ 0\  \cdots\ 0}_{\text{$(i-1)$ times}}1\ 0\ 0\  \cdots\ 0)^T$. Then define 
+	$$\theta(e_{i+1})=e_{i}+c_{i+1}e_t\ \forall\ i\in[t-1]\quad\text{and}\quad \theta(e_1)=c_1e_1$$Since there is only one $\theta\in L(\bbC^t)$ such that these properties are satisfied we have defined $\theta$ uniquely. Now for any $i\geq 0$ we have \begin{align*}
+		\theta(b_i)&=\theta\lt(\sum_{j=0}^{t-1}a_{i+j}e_{j+1}\rt)=\sum_{j=0}^{t-1}a_{i+j}\theta(e_{j+1})\\
+		 & =\sum_{j=1}^{t-1}a_{i+j}(e_{j}+c_{j+1}e_t)+a_i\theta(e_1)\\
+		 & =\sum_{j=1}^{t-1}a_{i+j}e_j+ \lt(\sum_{j=0}^{t-1}a_{i+j}c_{j+1}\rt)e_t= \sum_{j=1}^{t-1}a_{i+j}e_{j}+a_{i-t}e_t\\
+		 & = \sum_{j=0}^{t-1}a_{i+j+1}e_{j+1}=b_{i+1}
+	\end{align*}Hence this linear map has the property that for all $i\geq 0$, $b_i$ gets mapped to $b_{i+1}$. The matrix will be $$[\theta]=\mat{0 & & & \\ \vdots & &I_{t-1} & \\ 0 & & & \\ c_1 & c_2 & \cdots & c_{t}}$$
+\item Suppose $\dim V=n$. The eigenvalues of $\theta$ are $\lm_1,\dots, \lm_m$ with multiplicities $d_1,\dots, d_m$. Hence let $J_i$ denote the jordan block corresponding to $\lm_i$. Then the Jordan normal form of matrix of $\theta$ looks like $J=\mat{J_1 & & \\ & \ddots & \\ & & J_m}$ with respect to some basis. Hence there exists $n\times n$ invertible matrix $P$ such that $[\theta]=PJP^{-1}$. Therefore $[\theta]^n=(PJP^{-1})^n=PJ^nP^{-1}$. Therefore enough to calculate the power of $J$. Now $$J=\mat{J_1 & & \\ & \ddots & \\ & & J_m}\implies J^n=\mat{J_1^n & & \\ & \ddots & \\ & & J_m^n}$$Hence we only have to calculate power of each Jordan blocks.  Now for any Jordan block with eigenvalue $\lm$ there can be $1$ or $0$ in the positions just above the diagonal. Let $\lm$ has geometric multiplicity $l$. Then there will be $l-1$ zeros in the positions just above the diagonal. Hence we can break $J_{\lm}$ into smaller blocks of the form 
+$$J_{\lm,i}=\mat{\lm & 1   &        & & \\
+				 	 & \lm & 1      & &\\
+			 	     &     & \ddots & \ddots &\\
+		 	        &      &        &        \lm& 1\\
+	 	          &       &        &         & \lm}$$For $i\in[l]$. Then we have $$J_{\lm}^n=\mat{J_{\lm,1}^n & & \\ & \ddots & \\ & & J_{\lm,l}^n}$$Now for each $i\in[l]$ we have $J_{\lm,i}=\lm I+N$ where $N$ has $1$'s on the positions just above the diagonal. Then $$J^n_{\lm,i}=(\lm I+N)^n=\sum\limits_{j=0}^n \binom{n}{j}\lm^{n-j}N^j$$Hence we have finally 
+$$J^n_{\lm,i}=\mat{  \lm^n & \binom{n}{1}\lm^{n-1} & \binom{n}{2}\lm^{n-2} & \cdots & \cdots & \binom{n}{p}\lm^{n-p}\\
+                           & \lm^n & \binom{n}{1}\lm^{n-1} & \cdots & \cdots & \binom{n}{p-1}\lm^{n-p+1}\\
+                           &                       & \ddots                & \ddots & \vdots & \vdots\\
+                           &                       &                       & \ddots & \ddots & \vdots \\
+                           &                       &                       &        &  \lm^n & \binom{n}{1}\lm^{n-1}\\
+                           &                       &                       &        &        & \lm^n} $$Hence from this we can also conclude that every entry of $[\theta]^n$ is linear combinations of $\{\lm_i^n,n\lm_i^n,\dots, n^{d_i}\lm_i^n\}_{i\in[m]}$.                     Now we know for all $n\geq 0$ $$b_{n+t-1}=[\theta]^n b_0$$We know every element of $[\theta]^n$ is linear combinations of $\{\lm_i^n,n\lm_i^n,\dots, n^{d_i}\lm_i^n\}_{i\in[m]}$. Therefore for all $i\in[t]$ $\exs b\st_{i,j,t_j}\in\bbC$ such that $$a_n=\sum_{i\in[t]} a_{i-1}\sum\limits_{j\in[m],0\leq t_j\leq d_j}b\st_{i,j,t_j}n^{t_j}\lm_j^n=\sum_{j\in[m]} \lt[\sum\limits_{i\in[t],0\leq t_j\leq d_j}a_{i-1}b\st_{i,j,t_j}n^{t_j}\rt]\lm_j^n$$So define the polynomial $q_j(x)=\sum\limits_{i\in[t],0\leq t_j\leq d_j}a_{i-1}b\st_{i,j,t_j}x^{t_j}$. We know $\deg q_j\leq d_j$. Then we have $$a_n= \sum_{j=1}^m q_j(n)\lm_j^n$$\parinn
+                       
+                       Now suppose the opposite. There exists $q_1,\dots, q_m$ such that $a_n=\sum\limits_{j=1}^m q_j(n)\lm^n$ for all $n\geq 0$. Each $q_j$ can be expressed as $q_j(n)=\sum_{t_j=0}^{d_j}p_{j,t_j}n^{t_j}$. Now from the above discussion it is visible that $q_j$ is uniquely determined by the first $a_0,\dots, a_{t-1}$ values. So the coefficients $p_{j,t_j}$ for all $j,t_j$ is uniquely determined by $a_0,\dots, a_{t-1}$ and through a linear transformation from $(a_0,\dots, a_{t-1})\mapsto (p_{j,t_j})_{j\in[m], 0\leq t_j\leq d_j}$. Since $\sum_{j=1}^t d_j=t$ we have an injective linear map from $\bbC^t$ to $\bbC^t$. Hence it is surjective. Therefore if we have an isomorphism and we can take the inverse map and from $ (p_{j,t_j})_{j\in[m], 0\leq t_j\leq d_j}$ we can get back $(a_0,\dots, a_{i-t})$. And then produce the whole sequence by the recurrence relation but using the formula that  $a_n=\sum\limits_{j=1}^m q_j(n)\lm^n$ for all $n\geq 0$.
+\item \parinn 	We have the recurrence relation $F(n)=F_{n-1}+F_{n-2}$ with $F_1=F_2=1$. So we can represent this with matrices like following:
+$$\mat{f_{n}\\ f_{n-1}}=\mat{1 & 1\\ 1& 0}\mat{f_{n-1}\\ f_{n-2}}=\mat{1 & 1\\ 1& 0}^2\mat{f_{n-2}\\ f_{n-3}}=\cdots \mat{1 & 1\\ 1& 0}^{n-2}\mat{f_2\\ f_1}=\mat{1 & 1\\ 1& 0}^{n-2}\mat{1\\ 1}=\mat{1 & 1\\ 1& 0}^{n-1}\mat{1\\ 0}$$Denote $\ovf_0=\mat{1\\ 0}$ and $\ovf_{k}=\mat{f_{k+1}\\ f_k}$ and $A=\mat{1 & 1\\ 1& 0}$. Therefore we have $\ovf_n=A^n\ovf_0$. 
+
+Now clearly $A$ has full rank and $\forall\ k\in \bbN$, $\ovf_k\in\bbR^2$. So we will find the eigenvalues of $A$ to find an eigenbasis. $$\det(A-tI)=\det \mat{1-t&1\\ 1& -t}=-t(1-t)-1=t^2-t-1$$So if $t^2-t-1=0$ then $$t=\frac{1\pm\sqrt{{1+4}}}{2}=\frac{1\pm\sqrt{5}}2$$So denote $\vph=\frac{1+\sqrt{5}}2$ and $\psi=\frac{1-\sqrt{5}}2$. Now let $X=\mat{x_1\\ x_2}$ be an eigenvector corresponding to $\vph$. Then $$AX=\mat{x_1+x_2\\ x_1}=\vph\mat{x_1\\ x_2}$$Therefore $x_1=\vph x_2$. Therefore take $x_2=1$ then we have $x_1=\vph$. So $X=\mat{\vph\\ 1}$. Similarly we have  $Y=\mat{\psi\\ 1}$ is an eigenvector of $A$ corresponding to $\psi$.
+
+Now we want to express $\ovf_0$ as a linear combination of $X$, $Y$. Notice$$\frac1{\sqrt{5}}(X-Y)=\frac1{\sqrt{5}}\mat{\vph-\psi\\ 0}=\frac{1}{\sqrt{5}}\mat{\frac{1=\sqrt{5}}2-\frac{1-\sqrt{5}}2\\ 0}=\frac1{\sqrt{5}}\mat{\sqrt{5}\\ 0}=\mat{1\\ 0}=\ovf_0$$Therefore $$\ovf_n=A^n\ovf_0=A^n\lt(\frac1{\sqrt{5}}(X-Y)\rt)=\frac1{\sqrt{5}}(AX-AY)=\frac1{\sqrt{5}}(\vph^n X-\psi^n Y)=\frac1{\sqrt{5}}\vph^n\mat{\vph\\ 1}-\frac{1}{\sqrt{5}}\psi^n\mat{\psi\\ 1}$$Therefore $f_{n}=\frac{\phi^n-\psi^n}{\sqrt{5}}$.
+\end{itemize}		
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -163,11 +216,16 @@ Suppose $\lm \in \bbC$. Now we know $\ov{\ov{\lm}}=\lm$. So showing if $\lm$ is 
 \begin{problem}{%problem statement
 }{p5% problem reference text
 }
-
+Let $U$ and $V$ be vector spaces over a field $\bbF$ and $\theta\in L(U,V)$. If $A$ and $B$ are bases of $U$ and $V$ respectively, we use $_B[\theta]_A$ to denote the matrix of $\theta$ with respect to bases $A$ and $B$. If $U=V$ and $A=B$, we simply write $[\theta]_B$\begin{itemize}[label=$\bullet$]
+	\item Let $U,V,W$ be vector spaces over a field $\bbF$ with bases $A,B,C$ respectively. Let $\theta\in L(U,V)$ and $\phi\in L(V,W)$. Show that $_C[\phi\circ\theta]_A={}_C[\phi]_B\circ {}_B[\theta]_A$.
+	\item Let $V$ be vector space and $I\in L(V)$ be the identity transformation. Let $A$ and $B$ be bases of $V$. Show that $_B[I]_A$ is invertible. Conversely, show that if $A$ is a basis of $V$ and $M$ is an invertible matrix, then there exists another basis $B$ of $V$ such that $M={}_B[I]_A$. Thus, invertible matrices correspond to basis changes.
+	\item Using these, show that if $M$ and $N$ are square matrices and $N$ is invertible, then $rank(MN)=rank(M)$. Deduce that converting a matrix to reduced row echelon form preserves its rank. This justifies the use of reduced row echelon forms.
+\end{itemize}
 \end{problem}
 \solve{
-
-
+\begin{itemize}[label=$\bullet$]
+	\item
+\end{itemize}
 }
 
 \end{document}
