@@ -345,11 +345,16 @@ $\prb{Insert}(Q,z)$
 \section{Matroids}
 \dfn{Matroid}{A matroid $M=(E,\mcI)$ has a ground set $E$ and a collection $I$ of subsets of $E$ called the \textit{Independent Sets} st\begin{enumerate}
 		\item Downward Closure: If $Y\in \mcI$ then $\forall \ X\subseteq Y$, $X\in \mcI$.
-		\item Extension Property: If $X,Y\in \mcI$, $|X|<|Y|$ then $\exs\ e\in Y-X$ such that $X\cup \{e\}$ also written as $X+e\in \mcI$
+		\item Exchange Property: If $X,Y\in \mcI$, $|X|<|Y|$ then $\exs\ e\in Y-X$ such that $X\cup \{e\}$ also written as $X+e\in \mcI$
 \end{enumerate}}
-\begin{observation*}
-	A maximal independent set in a matroid is also a maximum independent set. All maximal independent sets have the same size.
-\end{observation*}\parinf
+An element $x\in E$ extends $A\in\mcI$ if $A\cup \{x\}\in\mcI$. And $A$ is maximal if no element can extend $A$.
+\begin{lemma}{}{}
+	If $A,B$ are maximal independent set, then $|A|=|B|$ i.e. all maximal independent sets are also maximum
+\end{lemma}
+\begin{proof}
+	Suppose $|A|\neq |B|$. WLOG assume $|A|>|B|$. Then by the exchange property $\exs\ e\in A-B$ such that $B\cup \{e\}\in\mcI$. But we assumed that $B$ is maximal independent set. Hence contradiction. We have $|A|=|B|$.
+\end{proof}
+\parinf
 
 \textbf{Base:} Maximal Independent sets are called bases.
 
@@ -358,6 +363,9 @@ $\prb{Insert}(Q,z)$
 \textbf{Rank of a Matroid:} Size of the base.
 
 \textbf{Span of $\boldsymbol{S\in I}$:} $\{e\in E\colon rank(S)=rank(S+e)\}$
+
+
+
 \subsection{Examples of Matroid}
 \begin{itemize}[label=$\bullet$]
 \item \textbf{Uniform Matroid:} Given $E=\{e_1,\dots, e_n\}$, and $k\in\bbZ_0$ take $\mcI=\{S\subseteq E\colon |S|\leq k\}$
@@ -403,10 +411,37 @@ Therefore $M$ is a matroid
 	\end{enumerate}
 Therefore $M$ is a matroid.
 \end{proof}
+\item \textbf{Graphic Matroid:} Given a graph $G=(V,E)$ $E$ is the ground set and take $$\mcI=\{E'\subseteq E\colon E'\text{ is acyclic} \}$$
+\begin{lemma}{}{}
+	$M=(E,\mcI)$ defined as above is a matroid
+\end{lemma}
+\begin{proof}
+	\begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
+		\item Downward Closure: If a set of edges $S$ is acyclic then naturally any subset of edges of $S$ is also acyclic. Hence downward closure property follows.
+		\item Exchange Property: $A,B\in\mcI,$ and $ |B|<|A|$. Let $G_1,\dots, G_k$ are the connected components due to $B$. For each component $G_i$, we have $|G_i\cap A|\leq |G_i\cap B|$ since each component is a tree and $B$ has maximum number of edges for that component. Then $A$ contains an edge $e$ connecting $2$ components $G_i$ and $G_j$. Then $B\cup \{e\}\in \mcI$. 
+	\end{enumerate}Therefore $M$ is a matroid
+\end{proof}
+
+\item \textbf{Linear Matroid:} Given a $m\times n$ matrix $M\in \bbZ^{m\times n}$, $E=[n]$ and take $$\mcI=\{S\subseteq E\colon \text{Columns of $M$ corresponding to $S$ are linearly independent} \}$$
+\begin{lemma}{}{}
+	$M=(E,\mcI)$ defined as above is a matroid
+\end{lemma}
+\begin{proof}
+	\begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
+		\item Downward Closure: $A\in \mcI$, $B\subseteq A$. Subset of linearly independent set is also linearly independent. Hence $B\in \mcI$. 
+		\item Exchange Property: $A,B\in\mcI,\ |B|<|A|$. Then take span $\la A\ra$ over $\bbQ$. Now we know a set of integral vectors are linearly independent over integers if and only if they are linearly independent over rationals. Hence $|A|=\dim _{\bbQ}\la A\ra> \dim _{\bbQ}\la B\ra|B|$. Hence we can extend $B$ by an element $e\in A-B$ such that $\la B\cup \{e\}\ra =|B|+1$. Hence $B\cup \{e\}\in \mcI$.
+	\end{enumerate}Therefore $M$ is a matroid
+\end{proof}
+This matroid is also called Metric Matroid.
 \end{itemize}
 \subsection{Finding Max Weight Base}
-The problem is given a matroid $M=(E,I)$ and a weight function $W:E\to \bbR$ find the maximum weight base of the matroid. We will solve this using basic greedy algorithm. 
-%\subsubsection{Algorithm}
+\begin{algoprob}
+	\problemtitle{Max-Weight-Base}
+	\probleminput{A matroid $M=(E,I)$ is given as an input as an oracle and a weight function $W:E\to \bbR$.}
+	\problemquestion{Find the maximum weight base of the matroid.}
+\end{algoprob}
+
+We will solve this using greedy algorithm.
 
 \begin{algorithm}[H]
 	\KwIn{A matroid $M=(E,I)$ is given as an input as an oracle and a weight function $W:E\to \bbR$.}
@@ -419,7 +454,7 @@ The problem is given a matroid $M=(E,I)$ and a weight function $W:E\to \bbR$ fin
 		\For{$i=1$ to $n$}{\If{$S+i\in I$}{$S\leftarrow S+i$}}
 		\Return{S}
 	}
-	\caption{Algorithm for Finding Max Weight Base}
+	\caption{\prb{Max-Weight-Base}($E,W$)}
 \end{algorithm}
 %\subsubsection{Correctness Analysis and Characterization}
 \thm{}{The above algorithm outputs a maximum weight base}
@@ -460,3 +495,38 @@ The problem is given a matroid $M=(E,I)$ and a weight function $W:E\to \bbR$ fin
 	Therefore using the claims, after the algorithm finished we have no elements left to check, so the current set has the maximum weight which is also an independent set. So the algorithm successfully returns a maximum weight base.
 \end{proof}
 \subsection{Job Selection with Penalties}
+
+\begin{algoprob}
+	\problemtitle{Find-Feasible-Schedule}
+	\probleminput{Set $J$ of $n$ jobs with deadlines $d_1,\dots, d_n$ and rewards $w_1,\dots, w_n$}
+	\problemquestion{Each jobs unit time and we have a single machine to process their jobs. Give a feasible schedule of jobs with maximum reward}
+\end{algoprob}
+
+First lets define what is a schedule and what is a feasible schedule:
+
+\begin{Definition}{Feasible Schedule}{}
+	For a subset $S$ of jobs:
+	\begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
+	\item A schedule is an ordering of $S$
+	\item A feasible schedule is one where one job in $S$ gets finished by deadline.
+	\item A set $S\subseteq J$ is feasible if $S$ has a feasible schedule.
+	\end{enumerate}
+\end{Definition}\parinn
+
+Now  for any $S\subseteq J$, and $t\in\bbZ_+$, define $N_t(S)=\{j\in S\colon d_j\leq t\}$. Then we have the following lemma:
+\begin{lemma}{}{}
+	\Tfae
+	\begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
+		\item $S$ is feasible
+		\item $\forall\ t\in\bbZ_t$, $|N_t(S)|\leq t$
+		\item The schedule that orders jobs by deadline is feasible
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+\begin{itemize}[leftmargin=2cm]
+	\item[$3\implies 1$:] This follows naturally
+	\item[$1\implies 2$:] Suppose not. Then $\exs$ $t$ such that $|N_t(S)|>t$. Then by time $t$, greater than $t$ many jobs have to be completed. But  $S$ is feasible so every job is finished by deadlines and each job takes unit take. Hence by time $t$, more than $t$ jobs can not finished. Hence contradiction.
+	\item[$2\implies 3$:] We will prove this by induction.
+\end{itemize}
+\end{proof}
+
