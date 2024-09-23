@@ -17,10 +17,37 @@ Before diving into the algorithm first let's consider how many ways we can repre
 \parinn
 
 Since we want to find the polynomial $C(x)=A(x)B(x)$ and $C(x)$ has degree $2n-2$, we will evaluate the polynomials $A(x)$ and $B(x)$ in $2n-1$ distinct points. So we will have the algorithm like this:
-\begin{figure}[h]
-	\centering
-	\includegraphics{images/poly-mult}
-\end{figure}
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics{images/poly-mult}
+%\end{figure}
+\begin{center}
+
+\begin{tikzpicture}[node distance=3cm, thick]
+	
+	% Define the rectangles
+	\node[draw, rectangle, minimum width=3cm, minimum height=1.5cm] (rect1) at (0, 1.5) {$ \begin{array}{l}
+			a_{0} ,\dotsc ,a_{n-1}\\
+			\\
+			b_{0} ,\dotsc ,b_{n-1}
+		\end{array}$};
+	\node[draw, rectangle, minimum width=3cm, minimum height=1.5cm] at (0,-3) (rect2) {$ \begin{array}{l}
+			A( x_{0}) ,\dotsc ,A( x_{2n-2})\\
+			\\
+			B( x_{0}) ,\dotsc ,B( x_{2n-2})
+		\end{array}$};
+	\node[draw, rectangle, minimum width=3cm, minimum height=1cm]  at (8, 1.5) (rect3) {$c_{0} ,\dotsc ,c_{2n-2}$};
+	\node[draw, rectangle, minimum width=4cm, minimum height=1.5cm] at (8,-3) (rect4) {$C( x_{0}) ,\dotsc ,C( x_{2n-2})$};
+	% Define the text blocks on the left
+	\node[align=left] (text1) at (-4, 1.5) {Coefficient\\ Representation};
+	\node[align=left] (text2) at (-4, -3) {Point-Value\\ Representation\\ at $\displaystyle 2n-2$ points};
+	
+	% Draw dotted helper lines (optional for alignment visualization)
+	\draw[-Stealth] (rect1.south) -- (rect2.north);
+	\draw[-Stealth] (rect2.east) -- (rect4.west);
+	\draw[-Stealth] (rect4.north) -- (rect3.south);	
+\end{tikzpicture}
+\end{center}
 \subsection{Finding Evaluations of Multiplied Polynomial}
 
 Suppose we were given $A(x)$ and $B(x)$ evaluated at $2n-1$ distinct points $x_0,\dots, x_{2n-2}$. Then we can get $C(x)$ evaluated at $x_0,\dots, x_{2n-2}$ by $$C(x_i)=A(x_i)B(x_i)\ \forall\ i\in \llbracket 2n-2\rrbracket$$Since there are $O(n)$ many points and for each point it takes constant time to multiply we can find evaluations of $C$ at $x_0,\dots, x_{2n-2}$ in $ O(n)$ time.
@@ -42,7 +69,7 @@ Assume $n$ is a power of 2. NWe have the polynomial $A(x)=\sum\limits_{i=0}^{n-1
 Let $$\om_n^k=n^{th}\text{ root of unity for }k\in\llbracket n-1\rrbracket = e^{i\frac{k}{n}2\pi}=\cos\lt(\frac{k}{n}2\pi\rt)+i\sin s\lt(\frac{k}{n}2\pi\rt)$$Hence we have \begin{align*}
 	A\lt(\om_n^k\rt)&=A^0\lt(\om_n^{2k}\rt)+\om_n^kA^1\lt(\om_n^{2k}\rt)=A^0\lt(\om_{\frac{n}2}^{k}\rt)+\om_n^kA^1\lt(\om_{\frac{n}2}^{k}\rt)\\
 	A\lt(-\om_n^k\rt)=A\lt(\om_n^{\frac{n}2+k}\rt)&=A^0\lt(\om_n^{2k}\rt)-\om_n^kA^1\lt(\om_n^{2k}\rt)=A^0\lt(\om_{\frac{n}2}^{k}\rt)-\om_n^kA^1\lt(\om_{\frac{n}2}^{k}\rt)
-\end{align*}. Hence now we will solve the following problem:
+\end{align*}Hence now we will solve the following problem:
 \begin{algoprob}
 	\problemtitle{Recursive-DFT}
 	\probleminput{$(a_0,\dots, a_{n-1})$ representing $(n-1)-$degree polynomial $A(x)=\sum\limits_{i=0}^{n-1}a_ix^i$}
@@ -71,7 +98,7 @@ Since $A^0$ and $A^1$ have degree $\frac{n}2-1$ we can use recursion. Hence the 
 		\caption{\prb{Recursive-DFT}$(A)$}
 	\end{algorithm}
 
-\textbf{Algorithm Time Complexity}: $T(n)=2T\lt(\frac{n}2\rt)+O(n)=O(n\log n)$.\parinn
+\textbf{Time Complexity}: $T(n)=2T\lt(\frac{n}2\rt)+O(n)=O(n\log n)$.\parinn
 
  Therefore we can evaluate a $n-1$ degree polynomial in all the $n^{th}$ roots of unity in $O(n\log n)$ time. Hence with this algorithm we will get evaluations of the polynomial $C(x)=A(x)B(x)$ in all the $2n^{th}$ roots of unity. Now we need to interpolate the polynomial $C(x)$ from its evaluations. We will describe the process in the next subsection.
  \subsection{Interpolation from Evaluations at Roots of Unity}In this section we will show how to interpolate a $n-1$ degree polynomial from evaluations at all $n^{th}$ roots of unity. Previously we had $$\underbrace{\mat{C\lt(\om^0_n\rt)\\ C\lt(\om^1_n\rt)\\ C\lt(\om^2_n\rt)\\ \vdots\\ C\lt(\om^{n-1}_n\rt)}}_{Y}=\underbrace{\mat{1 & \om^0_n & \om ^{0\cdot 2}& \cdots & \om^{0\cdot (n-1)}\\  1 & \om^1_n & \om ^{1\cdot 2}& \cdots & \om^{1\cdot (n-1)}\\ 1 & \om^2_n & \om ^{2\cdot 2}& \cdots & \om^{2\cdot (n-1)}\\ \vdots & \vdots & \vdots & \ddots & \vdots\\ 1 & \om^{n-1}_n & \om ^{(n-1)\cdot 2}& \cdots & \om^{(n-1)\cdot (n-1)}}}_{V=\text{ Vandermonde Matrix}}\underbrace{\mat{c_0\\ c_1\\ c_2\\ \vdots \\ c_{n-1}}}_{C}$$

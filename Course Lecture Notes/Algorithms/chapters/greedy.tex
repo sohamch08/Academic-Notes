@@ -390,7 +390,7 @@ Therefore $M$ is a matroid
 	\end{enumerate}Therefore $M$ is a matroid
 \end{proof}
 \item \textbf{Laminar Matroid:} Given $E$, $\sL=\{L_1,\dots,L_l\}$ such that $\forall\ i,j\in [l]$, either $L_i\subseteq L_j$ or $L_i\supseteq L_j$ or $L_i\cap L_j=\emptyset$ and also given $k_1,\dots, k_l\in \bbZ_0$. Then take $$\mcI=\{S\subseteq E\colon \forall \ j\in[l],\ |S\cap L_j|\leq k_j\}$$For any $L\in\sL$ we denote $k(L)$ be the given number corresponding to $L$.
-\begin{lemma}{}{}
+\begin{lemma}{}{laminar-matroid}
 	$M=(E,\mcI)$ defined as above is a matroid
 \end{lemma}
 \begin{proof}
@@ -514,7 +514,7 @@ First lets define what is a schedule and what is a feasible schedule:
 \end{Definition}\parinn
 
 Now  for any $S\subseteq J$, and $t\in\bbZ_+$, define $N_t(S)=\{j\in S\colon d_j\leq t\}$. Then we have the following lemma:
-\begin{lemma}{}{}
+\begin{lemma}{}{job-schedule}
 	\Tfae
 	\begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
 		\item $S$ is feasible
@@ -523,10 +523,28 @@ Now  for any $S\subseteq J$, and $t\in\bbZ_+$, define $N_t(S)=\{j\in S\colon d_j
 	\end{enumerate}
 \end{lemma}
 \begin{proof}
-\begin{itemize}[leftmargin=2cm]
+
+\begin{itemize}[wide]
 	\item[$3\implies 1$:] This follows naturally
 	\item[$1\implies 2$:] Suppose not. Then $\exs$ $t$ such that $|N_t(S)|>t$. Then by time $t$, greater than $t$ many jobs have to be completed. But  $S$ is feasible so every job is finished by deadlines and each job takes unit take. Hence by time $t$, more than $t$ jobs can not finished. Hence contradiction.
-	\item[$2\implies 3$:] We will prove this by induction.
+	\item[$2\implies 3$:] The schedule orders the jobs by deadline. We induction on $t$. For $t=1$ we have $|N_1(S)|\leq 1$. Hence by $t=1$ at most one job is completed. At $t=1$ the jobs are completed within deadline. Suppose till time $t-1$ the jobs are completed within deadlines. At time $t$ we have $|N_t(S)|\leq t$. Therefore all the jobs with deadlines $\leq t$ in $S$. So they all can be completed within time $t$ in any order. Therefore if we complete the jobs with deadline $<t$ first then also we can complete all the jobs with deadline $t$ within time $t$. Hence at time $t$ all the jobs are completed within their deadlines. Hence by mathematical induction at time $t=n$ all the jobs are completed within deadline. Therefore the schedule orders jobs by deadline then it is a feasible schedule.
 \end{itemize}
 \end{proof}
+\begin{lemma}{}{}
+	Consider $M=(J,\mcI)$ where $S$ is feasible $\implies S\in \mcI$. Then $M$ is a matroid. (Assume that no two jobs have same deadline)
+\end{lemma}
+\begin{proof}
+	Suppose $D\coloneqq $ the maximum of all deadlines. Consider the set $$\sL=\{N_t(J)\colon t\in [D]\}$$Then take $\mcI'=\{S\subseteq J\colon |N_t(S)|\leq t\ \forall t\in [D]\}$. By \lmref{laminar-matroid} $M=(J,\mcI')$ is a laminar matroid. And by \lmref{job-schedule} $\mcI'$ is the set of feasible schedules. Therefore $\mcI'=\mcI$. Hence $M$ is a matroid.
+\end{proof}
+\begin{alternate-proof}
+	\begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
+		\item Downward Closure: If $S\in\mcI$ then $S$ is feasible. Then for any subset $T$ of $S$ all the jobs are completed within deadlines since $S$ is feasible. So $T\in \mcI$.
+		\item Exchanges Property: Given $S,T\in\mcI$ and $|T|<|S|$. Now order $S$ and $T$ by deadlines. Let $j$ be the job with largest deadline that is not in $S$ i.e. $j=\underset{i\in S\setminus T}{\max}d_i$. Then we claim that $T\cup \{j\}\in\mcI$. \parinn
+		
+		Now define $$T^<=\{i\in T\colon d_i<d_j\}\qquad T^>=\{i\in T\colon d_i>d_j\}$$And also similarly define$$S^<=\{i\in S\colon d_i<d_j\}\qquad S^>=\{i\in S\colon d_i>d_j\}$$As we defined $j$ we have $T^>=S^>$. Since we have $|S|>|T|$ we have $|S^<|\geq |T^<|$.  
+		
+		Now if $T\cup \{j\}$ is not feasible then $\exs\ t$ such that $|N_t(T\cup \{j\})|>t$. Since $T$ is feasible we have $|N_t(T)|\leq t$. Hence $t\geq d_j$ otherwise $N_t(T\cup \{j\})=N_t(T)$. But then $$|N_t(T\cup \{j\})|=|T^<|+1+|\{i\in T\cup \{j\}\colon d_j<d_i\leq t\}|\leq |S^<|+1+|\{i\in S\cup \{j\}\colon d_j<d_i\leq t\}|=|N_t(S)|\leq t$$Therefore we obtain $|N_t(T\cup \{j\})|\leq t$. Hence contradiction. Therefore $T\cup \{j\}$ is feasible.
+	\end{enumerate}
+\end{alternate-proof}
+
 
