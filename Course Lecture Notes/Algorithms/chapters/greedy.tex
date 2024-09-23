@@ -358,8 +358,52 @@ $\prb{Insert}(Q,z)$
 \textbf{Rank of a Matroid:} Size of the base.
 
 \textbf{Span of $\boldsymbol{S\in I}$:} $\{e\in E\colon rank(S)=rank(S+e)\}$
-
-
+\subsection{Examples of Matroid}
+\begin{itemize}[label=$\bullet$]
+\item \textbf{Uniform Matroid:} Given $E=\{e_1,\dots, e_n\}$, and $k\in\bbZ_0$ take $\mcI=\{S\subseteq E\colon |S|\leq k\}$
+\begin{lemma}{}{}
+	$M=(E,\mcI)$ defined as above is a matroid
+\end{lemma}
+\begin{proof}
+	\begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
+		\item Downward Closure: $A\in \mcI$, $B\subseteq A\implies |B|\leq k\implies B\in \mcI$
+		\item Exchange Property: $A,B\in\mcI,\ |B|<|A|\leq k\implies |B|<k\implies \forall\ e\in A-B,\ |B\cup \{e\}|\leq k\implies B\cup \{e\}\in \mcI$
+	\end{enumerate}
+Therefore $M$ is a matroid
+\end{proof}
+\item \textbf{Partition Matroid:} Given $E$, $\{P_1,\dots, P_l\}$ such that $E=\bigsqcap\limits_{i=1}^lP_i$ and $k_1,\dots, k_l\in\bbZ_0$ then take $$\mcI=\{S\subseteq E\colon \forall\ k\in[l],\ |S\cap P_j|\leq k_j\}$$
+\begin{lemma}{}{}
+	$M=(E,\mcI)$ defined as above is a matroid
+\end{lemma}
+\begin{proof}
+		\begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
+		\item Downward Closure: $A\in \mcI$, $B\subseteq A\implies \forall\ j\in[l]\ |B\cap P_j|\leq |A\cap P_j|\leq k_j\implies B\in \mcI$
+		\item Exchange Property: $A,B\in\mcI,\ |B|<|A|\implies \exs \ j\in[l],\ |B\cap P_j|< |A\cap P_j|\leq k_j\implies e\in (A\cap P_j)-{(B\cap P_j)}, \ |(B\cup\{e\})\cap P_j|=|B\cap P_j|+1\leq k\implies B\cup \{e\}\in\mcI$
+	\end{enumerate}Therefore $M$ is a matroid
+\end{proof}
+\item \textbf{Laminar Matroid:} Given $E$, $\sL=\{L_1,\dots,L_l\}$ such that $\forall\ i,j\in [l]$, either $L_i\subseteq L_j$ or $L_i\supseteq L_j$ or $L_i\cap L_j=\emptyset$ and also given $k_1,\dots, k_l\in \bbZ_0$. Then take $$\mcI=\{S\subseteq E\colon \forall \ j\in[l],\ |S\cap L_j|\leq k_j\}$$For any $L\in\sL$ we denote $k(L)$ be the given number corresponding to $L$.
+\begin{lemma}{}{}
+	$M=(E,\mcI)$ defined as above is a matroid
+\end{lemma}
+\begin{proof}
+	\begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
+		\item Downward Closure: $A\in \mcI$, $B\subseteq A\implies \forall\ j\in[l]\ |B\cap L_j|\leq |A\cap L_j|\leq k_j\implies B\in \mcI$
+		\item Exchange Property: \parinn Let $A,B\in \mathcal{I}$ with $|B|<|A|$.	If there exists $e\in A\backslash B$ such that $e\notin L$ for any $L\in\sL$, then $|(B+e)\cap L|=|B\cap L|\leq k(L)$ for any $L\in\sL$.
+		
+		Hence assume that for each $e\in A\backslash B$ there exists $L\in\sL$ with $e\in L$.
+		For each $e\in A\backslash B$, let $\sL_e$ be the collection of $L\in\sL$ with $e\in L$.
+		For each $e\in A\backslash B$ and any $L\in\sL\backslash\sL_e$, we have $|(B+e)\cap L|=|B\cap L|\leq k(L)$.
+		
+		Hence it remains to show that there exists $e\in A\backslash B$ such that $|(B+e)\cap L|\leq k(L)$ for any $L\in\sL_e$.
+		Note that $\sL_e$ is a chain, as $\sL$ is a laminar.
+		Let $\sL'=\{L_{e_1},\ldots,L_{e_l}\}$ be the collection of inclusion-wise maximal sets in $\sL$ such that $|B\cap L_{e_i}|\leq k(L_{e_i})$ with $e_i\in A\backslash B$.
+		Then $L_{e_i}\cap L_{e_j}=\emptyset$. Moreover, $|A|>|B|$ and $|A\cap L_{e_i}|\leq k(L_{e_i})$ imply that $|A\backslash (\cup L_{e_i})|>|B\backslash (\cup L_{e_i})|$. Hence there $\exs\ e_i$ such that $|A\cap L_{e_i}|>|B\cap L_{e_i}|$.
+		
+		 Now we take a look at the chain $\sL_{e_i}$. For brevity we will use $e$ instead of $e_i$. So in the chain $\sL_e=\{L_1,\dots, L_n\}$ such that  we have $$L_n\supseteq L_{n-1}\supseteq \cdots \supseteq L_2\supseteq L_1$$Then take $i\in[n]$ to be the largest index such that $|A\cap L_i|\leq |B\cap L_i|$. There will be such index because otherwise we will have $|A|\leq |B|$ which is not possible. Then take $e^*\in (A\cap L_{i+1})-(L_i\cup B)$. Such an $e^*$ will exist because $|A\cap L_{i+1}|>|A\cap L_{i+1}|\implies A\cap (L_{i+1}- L_{i}\neq \emptyset$ and also $A\cap (L_{i+1}- L_{i}\not\subseteq B\cap (L_{i+1}-L_i)$ because otherwise we will have $$|A\cap L_{i+1}|=|A\cap (L_{i+1}- L_{i}|+|A\cap L_{i+1}|\leq |B\cap (L_{i+1}-L_i)|+|B\cap L_i|=|B\cap L_{i+1}|$$which is not possible. Hence there exists $e^*$ such that $e^*\in (A\cap L_{i+1})-(L_i\cup B)$. Therefore take $B^*=B\cup \{e^*\}$. Then for all $j< i$ we have $B^*\cap L_j=B\cap L_j$ so we don't have a problem there. Now for all $j\geq i$ we have $|A\cap L_j|>|B\cap L_j|$. Hence now $|B^*\cap L_j|\leq |B\cap L_j|+1\leq |A\cap L_j|\leq k(L_j)$. Therefore we have $B^*\in\mcI$. Hence the exchange property follows.
+	\end{enumerate}
+Therefore $M$ is a matroid.
+\end{proof}
+\end{itemize}
 \subsection{Finding Max Weight Base}
 The problem is given a matroid $M=(E,I)$ and a weight function $W:E\to \bbR$ find the maximum weight base of the matroid. We will solve this using basic greedy algorithm. 
 %\subsubsection{Algorithm}
@@ -381,10 +425,11 @@ The problem is given a matroid $M=(E,I)$ and a weight function $W:E\to \bbR$ fin
 \thm{}{The above algorithm outputs a maximum weight base}
 \begin{proof}	Let $M$ be a matroid. We will prove that this greedy algorithm works by inducting on $i$. At any iteration $i$ we need to prove the following claim:
 	
-\begin{center}
-		
-\begin{minipage}{0.9\textwidth}
-		\textbf{\textit{Claim:}} At any iteration $i$ there is a max weight base $B_i$ such that $S_i\subseteq B_i$ and $B_i\setminus S_i\subseteq \{i+1,\dots, n\}$.
+\begin{claimwidth}
+			
+	\begin{claim}{}{}
+		At any iteration $i$ there is a max weight base $B_i$ such that $S_i\subseteq B_i$ and $B_i\setminus S_i\subseteq \{i+1,\dots, n\}$.
+	\end{claim}
 	
 \begin{proof}
 	Base case: $S=\emptyset$. So for base case the statement is true trivially. Assume that the statement is true up to $(i-1)$ iterations.\parinn
@@ -392,15 +437,26 @@ The problem is given a matroid $M=(E,I)$ and a weight function $W:E\to \bbR$ fin
 	Now $S_{i-1}\subseteq B_{i-1}$ where $B_{i-1}$ is a maximum weight base and $B_{i-1}-S_{i-1}\subseteq \{i,\dots, n\}$. Now three cases arise:
 	\begin{enumerate}[label=\bfseries Case \arabic*:,leftmargin=1.5cm]
 		\item If $i\in B_{i-1}$ then $S_{i-1}+i\subseteq B_{i-1}$. Therefore $S_{i-1}+i$ is independent. So now $B_i=B_{i-1}$ and $S_i=S_{i-1}+i$ and $B_i-S_i\subseteq \{i+1,\dots, n\}$.
-		\item If $i\notin B_{i-1}$ and $S_{i-1}+i\notin I$. Then $S_i=S_{i-1}$ and $B_i=B_{i-1}$. And $B_i-S_i\subseteq \{i+1,\dots , n\}$.
-		\item If $i\notin B_{i-1}$ but $S_{i-1}+i\in I$. Then $S_i=S_{i-1}+i$. Now $S_i$ can be extended to a $B'$ by adding all but one element of $B_{i-1}$. So $|B'|=|B_{i-1}|$. Let the element which is not added is $j\in B_{i-1}$. So $B'=B_{i-1}+i-j$. $$wt(B')=Wt(B_{i-1})-wt()+wt(i)$$But we have $wt(i)\geq wt(j)$. So $wt(B')\geq wt(B_{i-1})$. Now since $B_{i-1}$ has maximum weight we have $wt(B')=wt(B_{i-1})$. Then our $B_i=B'$. So $B_i-S_i\subseteq \{i+1,\dots, n\}$.
+		\item If $i\notin B_{i-1}$ and $S_{i-1}+i\notin \mcI$. Then $S_i=S_{i-1}$ and $B_i=B_{i-1}$. And $B_i-S_i\subseteq \{i+1,\dots , n\}$.
+		\item If $i\notin B_{i-1}$ but $S_{i-1}+i\in \mcI$. Then $S_i=S_{i-1}+i$. Now $S_i$ can be extended to a $B'$ by adding all but one element of $B_{i-1}$. So $|B'|=|B_{i-1}|$. Let the element which is not added is $j\in B_{i-1}$. So $B'=B_{i-1}+i-j$. $$wt(B')=Wt(B_{i-1})-wt()+wt(i)$$But we have $wt(i)\geq wt(j)$. So $wt(B')\geq wt(B_{i-1})$. Now since $B_{i-1}$ has maximum weight we have $wt(B')=wt(B_{i-1})$. Then our $B_i=B'$. So $B_i-S_i\subseteq \{i+1,\dots, n\}$.
 	\end{enumerate}
 	Hence the claim is true for the $i$th stage as well. Therefore the claim is true.
 \end{proof}
-\end{minipage}
-\end{center}
+\end{claimwidth}
+
+\begin{claimwidth}
+	\begin{claim}{}{}
+	At any iteration, $T_i=\{t_1,\dots, t_k\}$, then $T_i$ is a maximum weight independent set with at most $i$ elements
+\end{claim}
+\begin{proof}
+	We will prove by induction. Base Case: $i=0$. Then $T_i=\emptyset$. So the statement follows naturally.
+	
+	Assume $T_{i-1}$ is maximum weight independent set with at most $i-1$ elements. Now for a contradiction, say $\hat{T}_i\in\mcI$ of size at most $i$ with strictly larger weight than $T_i$. Then $\exs\ x\in \hat{T_i}-T_{i-1}$ such that $T_{i-1}\cup \{x\}\in \mcI$. Then we have $$wt(\hat{T}_i-x)\leq wt(T_{i-1})$$by inductive hypothesis. The only element that extend $T_{i-1}$ are those $t_{i-1}$. Therefore $wt(x)\leq wt(t_i)$. Hence we have $$wt(\hat{T}_i-x)+wt(x)\leq wt(T_{i-1}wt(t_i)\implies wt(\hat{T}_I)\leq wt(T_i)$$But we assumes $wt(\hat{T}_i)>wt(T_i)$. Hence contradiction. 
+\end{proof}
+\end{claimwidth}
+
 	\parinn 
 	
-	Therefore using the claim, after the algorithm finished we have no elements left to check, so the current set has the maximum weight which is also an independent set. So the algorithm successfully returns a maximum weight base.
+	Therefore using the claims, after the algorithm finished we have no elements left to check, so the current set has the maximum weight which is also an independent set. So the algorithm successfully returns a maximum weight base.
 \end{proof}
 \subsection{Job Selection with Penalties}
