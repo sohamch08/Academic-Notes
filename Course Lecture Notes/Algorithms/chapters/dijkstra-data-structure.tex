@@ -1,6 +1,261 @@
 \chapter{Dijkstra Algorithm with Data Structures}
+\begin{algoprob}
+	\problemtitle{Minimum Weight Path}
+	\probleminput{Directed Graph $G=(V,E)$, $s\in V$ is source and $W=\{w_e\in \bbZ_+\colon e\in E\}$}
+	\problemquestion{$\forall\ v\in V-\{s\}$ find minimum weight path $s\rightsquigarrow v$.}
+\end{algoprob}
 
+This is the problem we will discuss in this chapter. In this chapter we will often use the term `shortest distance' to denote the minimum weight path distance. One of the most famous algorithm for finding out minimum weight paths to all vertices from a given source vertex is Dijkstra's Algorithm
 \section{Dijkstra Algorithm}
+We will assume that the graph is given as adjacency list. Dijkstra Algorithm is basically dynamic programming. Suppose $\delta(v)$ is the shortest path distance from $s\rightsquigarrow v$.  Then we have the following relation: 
+$$\delta(v)=\min\limits_{u:(u,v)\in E}\{\delta(u)+e(u,v)\}$$And suppose for any vertex $v\in V-\{s\}$, $dist(v)$ be the distance from $s$ estimated by the algorithm at any point. This is why  Dijkstra's algorithm maintains a set $S$  of vertices   whose final shortest-path weights from the source $s$ have already been determined. The algorithm repeatedly selects the vertex $u\in V-S$ with minimum shortest-path estimate and estimates the distances of neighbors of $u$. So here is the algorithm:
+
+\begin{algorithm}
+	\SetKwComment{Comment}{// }{ }
+	\DontPrintSemicolon
+	\KwIn{Adjacency Matrix of digraph $G=(V,E)$, source vertex $s\in V$ and weight function $W=\{w_e\in \bbZ_+\colon e\in E\}$}
+	\KwOut{$\forall\ v\in V-\{s\}$ minimum weight path from $s\rightsquigarrow v$}
+	\Begin{
+		$S\longleftarrow \emptyset$, $U\longleftarrow V$\;
+		$dist(s)\longleftarrow 0$, $\forall\ v\in V-\{s\}$, $dist(v)\longleftarrow\infty$\;
+		\While{$U\neq \emptyset$}{
+			$u\longleftarrow \min\limits_{u\in U} dist(u)$ and remove $u$ from $U$\;
+			$S\longleftarrow S\cup \{u\}$\;
+			\For{$e=(u,v)\in E$}{$dist(v)\longleftarrow \min\{dist(v), dist(u)+w(u,v)\}$}
+		}
+	}
+\caption{\prb{Dijkstra}$(G,s,W)$}
+\end{algorithm}
+
+Here below we give an example of how the Dijkstra algorithm works:
+%\begin{center}
+	
+\begin{figure}[h]
+	\centering
+\begin{tikzpicture}[
+		node distance = 12mm and 14mm,
+		every state/.append style = {inner sep=0pt, fill=gray!10,
+			minimum size=7mm},
+		every edge/.style = {draw, -Stealth, bend angle=15},
+		auto=right,
+		]
+		
+		%
+		%	\draw[blue!20, line width=5pt] 	(s1) to                     (s2);
+		%
+		\begin{scope}[shift={(-6,0)}]
+			\node (s1) [state,fill=gray!30,label={left:$s$}]         {$\boldsymbol{0}$};
+			\node (s2) [state, above right=of s1]   {$\boldsymbol{\infty}$};
+			\node (s3) [state, right=of s2]         {$\boldsymbol{\infty}$};
+			\node (s4) [state, below right =of s1]   {$\boldsymbol{\infty}$};
+			\node (s5) [state, right=of s4]          {$\boldsymbol{\infty}$};
+			\draw   (s1) edge [ "$10$"]             (s2)
+			(s1) edge ["$5$"]						(s4)
+			(s2) edge ["$1$"]             			(s3)
+			(s2) edge [bend right, "$2$"]			(s4)
+			(s3) edge [bend right, "$4$"] 			(s5)
+			(s5) edge [bend right,"$6$"]  			(s3)
+			(s5) edge [bend left=80,looseness=1.2,  "$7$", swap]	(s1)
+			(s4) edge ["$2$"] 						(s5)
+			(s4) edge ["$9$"]						(s3)
+			(s4) edge [bend right, "$3$"]			(s2);
+		\end{scope}
+		
+		\begin{scope}[shift={(0,0)}]
+			\node (s1) [state,fill=gray!30,label={left:$s$},fill=black,text=white]         {$\boldsymbol{0}$};
+			\node (s2) [state, above right=of s1]   {$\boldsymbol{10}$};
+			\node (s3) [state, right=of s2]         {$\boldsymbol{\infty}$};
+			\node (s4) [state,fill=gray!30, below right =of s1]   {$\boldsymbol{5}$};
+			\node (s5) [state, right=of s4]          {$\boldsymbol{10}$};
+			\draw[blue!20, line width=5pt] (s1) -- (s2);
+			\draw[blue!20, line width=5pt] (s1) -- (s4);	
+			\draw   (s1) edge [ "$10$"]             			(s2)
+			(s1) edge ["$5$"]									(s4)
+			(s2) edge ["$1$"]             						(s3)
+			(s2) edge [bend right, "$2$"]						(s4)
+			(s3) edge [bend right, "$4$"] 						(s5)
+			(s5) edge [bend right,"$6$"]  						(s3)
+			(s5) edge [bend left=80,looseness=1.2,"$7$", swap]	(s1)
+			(s4) edge ["$2$"] 									(s5)
+			(s4) edge ["$9$"]									(s3)			     			
+			(s4) edge [bend right, "$3$"]						(s2);
+			
+		\end{scope}
+		
+		\begin{scope}[shift={(6,0)}]
+			\node (s1) [state,label={left:$s$},fill=black,text=white]         {$\boldsymbol{0}$};
+			\node (s2) [state, above right=of s1]   {$\boldsymbol{8}$};
+			\node (s3) [state, right=of s2]         {$\boldsymbol{13}$};
+			\node (s4) [state, below right =of s1,fill=black,text=white]   {$\boldsymbol{5}$};
+			\node (s5) [state, right=of s4,fill=gray!30]          {$\boldsymbol{7}$};
+			\draw[red!20, line width=5pt] (s1) -- (s4);
+			\draw[blue!20, line width=5pt] (s4) to [bend right=15] (s2);
+			\draw[blue!20, line width=5pt] (s4) -- (s5);	
+			\draw[blue!20, line width=5pt] (s4) -- (s3);
+			\draw   (s1) edge [ "$10$"]             			(s2)
+			(s1) edge ["$5$"]									(s4)
+			(s2) edge ["$1$"]             						(s3)
+			(s2) edge [bend right, "$2$"]						(s4)
+			(s3) edge [bend right, "$4$"] 						(s5)
+			(s5) edge [bend right,"$6$"]  						(s3)
+			(s5) edge [bend left=80,looseness=1.2,"$7$", swap]	(s1)
+			(s4) edge ["$2$"] 									(s5)
+			(s4) edge ["$9$"]									(s3)
+			(s4) edge [bend right, "$3$"]						(s2);
+		\end{scope}
+		
+		\begin{scope}[shift={(-6,-6)}]
+			\node (s1) [state,fill=gray!30,label={left:$s$},fill=black,text=white]      {$\boldsymbol{0}$};
+			\node (s2) [state,fill=gray!30, above right=of s1]   						{$\boldsymbol{8}$};
+			\node (s3) [state, right=of s2]        		 								{$\boldsymbol{13}$};
+			\node (s4) [state, below right =of s1,fill=black,text=white]   				{$\boldsymbol{5}$};
+			\node (s5) [state, right=of s4,fill=black,text=white]          {$\boldsymbol{7}$};
+			\draw[red!20, line width=5pt] (s1) -- (s4);
+			\draw[red!20, line width=5pt] (s4) to [bend right=15] (s2);
+			\draw[red!20, line width=5pt] (s4) -- (s5);	
+			\draw[blue!20, line width=5pt] (s5) to [bend right=15] (s3);
+			\draw[blue!20, line width=5pt] (s5) to [bend left=80,looseness=1.3]	(s1);	
+			\draw   (s1) edge [ "$10$"]             			(s2)
+			(s1) edge ["$5$"]									(s4)
+			(s2) edge ["$1$"]             						(s3)
+			(s2) edge [bend right, "$2$"]						(s4)
+			(s3) edge [bend right, "$4$"] 						(s5)
+			(s5) edge [bend right,"$6$"]  						(s3)
+			(s5) edge [bend left=80,looseness=1.3,"$7$", swap]	(s1)
+			(s4) edge ["$2$"] 									(s5)
+			(s4) edge ["$9$"]									(s3)
+			(s4) edge [bend right, "$3$"]						(s2);
+		\end{scope}
+		
+		\begin{scope}[shift={(0,-6)}]
+			\node (s1) [state,fill=gray!30,label={left:$s$},fill=black,text=white]         {$\boldsymbol{0}$};
+			\node (s2) [state, above right=of s1,fill=black,text=white]   {$\boldsymbol{8}$};
+			\node (s3) [state, right=of s2,fill=gray!30]         {$\boldsymbol{9}$};
+			\node (s4) [state, below right =of s1,fill=black,text=white]   {$\boldsymbol{5}$};
+			\node (s5) [state, right=of s4,fill=black,text=white]          {$\boldsymbol{7}$};
+			\draw[red!20, line width=5pt] (s1) -- (s4);
+			\draw[red!20, line width=5pt] (s4) to [bend right=15] (s2);
+			\draw[red!20, line width=5pt] (s4) -- (s5);	
+			\draw[red!20, line width=5pt] (s5) to [bend right=15] (s3);	
+			\draw[blue!20, line width=5pt] (s2) -- (s3);	
+			\draw   (s1) edge [ "$10$"]             			(s2)
+			(s1) edge ["$5$"]									(s4)
+			(s2) edge ["$1$"]             						(s3)
+			(s2) edge [bend right, "$2$"]						(s4)
+			(s3) edge [bend right, "$4$"] 						(s5)
+			(s5) edge [bend right,"$6$"]  						(s3)
+			(s5) edge [bend left=80,looseness=1.3,"$7$", swap]	(s1)
+			(s4) edge ["$2$"] 									(s5)
+			(s4) edge ["$9$"]									(s3)
+			(s4) edge [bend right, "$3$"]						(s2);
+		\end{scope}
+		
+		\begin{scope}[shift={(6,-6)}]
+			\node (s1) [state,fill=gray!30,label={left:$s$},fill=black,text=white]         {$\boldsymbol{0}$};
+			\node (s2) [state, above right=of s1,fill=black,text=white]   {$\boldsymbol{8}$};
+			\node (s3) [state, right=of s2,fill=black,text=white]         {$\boldsymbol{9}$};
+			\node (s4) [state, below right =of s1,fill=black,text=white]   {$\boldsymbol{5}$};
+			\node (s5) [state,fill=gray!30, right=of s4,fill=black,text=white]          {$\boldsymbol{7}$};
+			\draw[red!20, line width=5pt] (s1) -- (s4);
+			\draw[red!20, line width=5pt] (s4) to [bend right=15] (s2);
+			\draw[red!20, line width=5pt] (s4) -- (s5);	
+			%	\draw[red!20, line width=5pt] (s5) to [bend right=15] (s3);	
+			\draw[red!20, line width=5pt] (s2) -- (s3);	
+			\draw   (s1) edge [ "$10$"]             			(s2)
+			(s1) edge ["$5$"]									(s4)
+			(s2) edge ["$1$"]             						(s3)
+			(s2) edge [bend right, "$2$"]						(s4)
+			(s3) edge [bend right, "$4$"] 						(s5)
+			(s5) edge [bend right,"$6$"]  						(s3)
+			(s5) edge [bend left=80,looseness=1.3,"$7$", swap]	(s1)
+			(s4) edge ["$2$"] 									(s5)
+			(s4) edge ["$9$"]									(s3)
+			(s4) edge [bend right, "$3$"]						(s2);
+		\end{scope}
+	\end{tikzpicture} 
+\caption{The execution of Dijkstra’s algorithm. The source s is the leftmost vertex. The 	shortest-path estimates appear within the vertices, and shaded edges indicate predecessor values. Black vertices are in the set $S$ and at any iteration of while loop the shaded vertex has the minimum value. At any iteration the red edges are the edges considered in minimum weight path from $s$ using only vertices in $S$.}
+\end{figure}
+%\end{center}      
+%\begin{tikzpicture}[
+%	every state/.append style = {inner sep=0pt, fill=gray!10,
+%		minimum size=7mm},
+%	every edge/.style = {draw}, auto=right,
+%	shortcut/.code={\def\pv##1{\pgfkeysvalueof{/tikz/#1/##1}}},
+%	third corner of triangle/.style={shortcut=triangle pars,
+%		triangle pars/.cd,#1,
+%		/tikz/insert path={
+%			let \p1=($(\pv{A})-(\pv{B})$),\n1={sqrt(pow(\x1/1cm,2)+pow(\y1/1cm,2))},
+%			\n2={atan2(\y1,\x1)} in
+%			(intersection cs:first line={(\pv{A})--($(\pv{A})+({\n2-cosinelaw(\n1,\pv{b},\pv{a})}:1)$)},
+%			second line={(\pv{B})--($(\pv{B})+({\n2+cosinelaw(\n1,\pv{a},\pv{b})}:1)$)})
+%	}},
+%	declare function={cosinelaw(\a,\b,\c)=acos((\a*\a+\b*\b-\c*\c)/(2*\a*\b));},
+%	triangle pars/.cd,
+%	A/.initial=A,B/.initial=B,a/.initial=2,b/.initial=2]
+%	
+%	\begin{scope}[shift={(-5,0)}]
+%		\path[scale=0.3] 
+%		node[state,label={left:$s$}, label={[blue]below:$0$}](1){1}
+%		++ (-15:7)  node[state,label={[red]below:$\infty$}](2){2} 
+%		edge["$7$"] (1)
+%		[third corner of triangle={A=2,B=1,a=9,b=10}]
+%		node[state,label={[red]above:$\infty$}] (3){3}
+%		edge["$9$"] (1)
+%		edge["$10$"] (2)
+%		[third corner of triangle={A=2,B=3,a=11,b=15}] 
+%		node[state, label={[red]above:$\infty$}] (4){4}
+%		edge["$15$"] (2)
+%		edge["$11$"] (3)
+%		[third corner of triangle={A=3,B=1,a=14,b=7}] 
+%		node[state,label={[red]above:$\infty$}] (6){6}
+%		edge["$14$"] (1)
+%		edge["$7$"] (3)
+%		[third corner of triangle={A=4,B=6,a=9,b=6}]
+%		node[state,label={[red]above:$\infty$}] (5){5}
+%		edge["$6$"]  (4)
+%		edge["$9$"] (6); 
+%	\end{scope}
+%	
+%	\begin{scope}[shift={((5,0))}]
+%		\path[scale=0.3] 
+%		node[state,label={left:$s$}, label={[blue]below:$0$}](1){1}
+%		++ (-15:7)  node[state,label={[red]below:$\infty$}](2){2} 
+%		edge["$7$"] (1)
+%		[third corner of triangle={A=2,B=1,a=9,b=10}]
+%		node[state,label={[red]above:$\infty$}] (3){3}
+%		edge["$9$"] (1)
+%		edge["$10$"] (2)
+%		[third corner of triangle={A=2,B=3,a=11,b=15}] 
+%		node[state, label={[red]above:$\infty$}] (4){4}
+%		edge["$15$"] (2)
+%		edge["$11$"] (3)
+%		[third corner of triangle={A=3,B=1,a=14,b=7}] 
+%		node[state,label={[red]above:$\infty$}] (6){6}
+%		edge["$14$"] (1)
+%		edge["$7$"] (3)
+%		[third corner of triangle={A=4,B=6,a=9,b=6}]
+%		node[state,label={[red]above:$\infty$}] (5){5}
+%		edge["$6$"]  (4)
+%		edge["$9$"] (6); 
+%		\draw[green!70!black, -latex, shorten <=1pt, shorten >=1pt] (1) to [bend right=30] (2);
+%	\end{scope}
+%\end{tikzpicture}  
+
+
+Suppose at any iteration $t$, let $dist_t(v)$ denotes the distance $v$ from $s$ calculated by algorithm for any $v\in V$ and $S^{(t)}$ denote the content of $S$ at $t^{th}$ iteration. In order to show that the algorithm correctly computes the distances we prove the following lemma:
+\begin{Theorem}{}{}
+	For each $v\in S^{(t)}$, $\dl(v)=dist_t(v)$ for any iteration $t$. 
+\end{Theorem}
+\begin{proof}
+	We will prove this induction. Base case is $|S^{(1)}|=1$. $S$ grows in size. Then only time $|S^{(1)}|=1$ is when $S^{(1)}=\{s\}$ and $d(s)=0=\dl(s)$. Hence for base case this is correct.
+	
+	Suppose this is also true for $t-1$. Let at $t^{th}$ iteration the vertex $u\in V-S$ is picked. By induction hypothesis for all $v\in S^{(t)}-\{u\}$, $dist_t(v)=dist_{t-1}(v)=\dl(v)$. So we have to show that $dist_{t}(u)=\dl(u)$. 
+	
+	Suppose for contradiction the shortest path from $s\rightsquigarrow u$ is $P$ and has total weight $=\dl(u)=w(P)<dist_t(u)$. Now $P$ starts with vertices from $S^{(t)}$ by eventually leaves $S$. Let $(x,y)$ be the first edge in $P$ which leaves $S$ i.e. $x\in S$ but $y\notin S$. By inductive hypothesis $dist_t(x)=\dl(x)$. Let $P_y$ denote the path $s\rightsquigarrow y$ following $P$. Since $y$ appears before $u$ we have $$w(P_y)=\dl(y)\leq \dl(u)=w(P)$$Now $$dist_t(y)\leq dist_t(x)+w(x,y)$$ since $y$ is adjacent to $x$. Therefore $$dist_t(y)\leq dist_t(x)+w(x,y)=\dl(y)\leq dist_t(y)\implies dist_t(y)=\dl(y)$$Now since both $u,y\notin S^{(t)}$ and the algorithm picked up $u$ we have $\dl(u)<dist_t(u)\leq dist_t(y)=\dl(y)$. But we can not have both $\dl(y)\leq \dl(u)$ and $\dl(u)<\dl(y)$. Hence contradiction. Therefore $\dl(u)=dist_t(u)$. Hence by mathematical induction for any iteration $t$, for all $v\in S^{(t)}$, $\dl(v)=dist_t(v)$. 
+\end{proof}
+
+Therefore by the lemma  after all iterations $S$ has all the vertices with their shortest distances from $s$ and henceforth the algorithm runs correctly.\parinf
+
 
 \section{Data Structure 1: Linear Array}
 
