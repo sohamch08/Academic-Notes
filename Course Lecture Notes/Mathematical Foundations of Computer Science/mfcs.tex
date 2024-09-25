@@ -1,0 +1,94 @@
+\documentclass[twoside]{report}
+\usepackage{url}
+
+\usepackage[nottoc,numbib]{tocbibind}
+\input{../../preamble}
+\input{../../letterfonts}
+\input{../../macros}
+
+\definecolor{mycolor1}{HTML}{1becff}
+\definecolor{mycolor2}{HTML}{2E3192}
+
+
+\newcommand*{\titre}[2]{\begingroup
+	\newlength{\drop}
+	\setlength{\drop}{0.1\textheight}
+	\centering
+	\settowidth{\unitlength}{\Huge\scshape La matière et fsdfdsf\hspace{3pt}-temps}
+	\vspace*{\baselineskip}
+	\rule{\unitlength}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
+	\rule{\unitlength}{0.4pt}\\[\baselineskip]
+	{\Huge\scshape\color{white} #1}\\[\baselineskip]
+	{\large\itshape Instructor: #2}\\[\baselineskip]
+	{\large\itshape TIFR 2024, Aug-Dec}\\[0.2\baselineskip]
+	\rule{\unitlength}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}
+	\rule{\unitlength}{1.6pt}\\[4\baselineskip]
+	{\Large\scshape Scribe: Soham Chatterjee\\[10mm] sohamchatterjee999@gmail.com \\[2mm] Website: \colorlink{black}{https://sohamch08.github.io/}{sohamch08.github.io} }\par
+	\vfill
+	% {\large\scshape\color{white} 2024}\par
+	\endgroup}
+	
+
+
+
+
+
+
+\usepackage{xhfill}
+
+
+\usetikzlibrary{calc} 
+
+\titleformat{\chapter}[display]
+{}
+{\hfill \tikz[remember picture] \node[] (nr) {\fontsize{20}{70}\selectfont\color{black}\textsc{Chapter~~} \fontsize{60}{70}\selectfont\color{black}\thechapter};
+	\begin{tikzpicture}[overlay,remember picture]
+		\coordinate (rightborder) at ($(nr)+(100,0)$);
+		\coordinate (right) at ($(nr.east) + (0.5,0)$);
+		\draw[line width=4.5em] (right) -- (rightborder);
+\end{tikzpicture}}
+{-1ex}
+{\filleft\fontsize{30}{50}\selectfont}
+[\vspace{-1ex}]
+
+
+\usetikzlibrary{arrows.meta, automata, calc,bending,positioning, quotes,
+	overlay-beamer-styles}
+
+\begin{document}
+
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+\thispagestyle{empty}
+
+
+
+\begin{titlepage}
+
+	\begin{tikzpicture}[remember picture,overlay]
+		\node [xshift=\paperwidth/2,yshift=\paperheight/2] at (current page.south west)[minimum width=\paperwidth,minimum height=\paperheight,top color=mycolor1,bottom color=mycolor2]{};
+	\end{tikzpicture}\\[3\baselineskip]
+
+	\titre{CSS.201.1 Algorithms}{Umang Bhaskar}
+\end{titlepage}
+
+
+
+\newpage
+
+\titleformat{name=\chapter,numberless}[display]
+{\normalfont\Huge\bfseries}{}{0pt}{\Huge}
+
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% Body
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\setcounter{page}{1}
+\input{chapters/linear-algebra}
+\input{chapters/combinatorics}
+
+\end{document}
