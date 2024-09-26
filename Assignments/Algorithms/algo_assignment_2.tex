@@ -46,7 +46,13 @@
 %                   \ref{p:p3}
 
 
-
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
+\newcommand\getcurrentref[1]{%
+	\ifnumequal{\value{#1}}{0}
+	{??}
+	{\the\value{#1}}%
+}
 \input{../../letterfonts}
 
 \input{../../macros}
@@ -80,7 +86,27 @@ Show that $n-1$ comparisons are necessary and sufficient to find the minimum ele
 
 \end{problem}
 \solve{	
+Suppose there is an algorithm which can find minimum element with less than $n-1$ comparisons. Let $A=(a_1,\dots, a_n)$ be the unsorted array of $n$ elements. Create a graph of vertices $[n]$ and put an edge between $i$ and $j$ if the elements $a_i$ and $a_j$ are compared. Since there are $,n-1$ comparisons in the graph we constructed there are at most $n-2$ edges. Hence the graph has at least $2$ connected components. Let $C_1$ and $C_2$ be two connected components. No two elements one from each component is compared. Let the concluded minimal element from $C_1$ is $x$ and the concluded minimal element from $C_2$ is $y$. Hence we can make any of them bigger than the other depending on the algorithm output to make the algorithm wrong. Hence at least $n-1$ comparisons are necessary to find the minimum element.
 
+Now we can also find the minimum element of an unsorted array of $n$ elements with $n-1$ comparisons by the following algorithm:
+
+\begin{algorithm}
+	\DontPrintSemicolon
+	\KwIn{Array $A=(a_1,\dots, a_n)$}
+	\KwOut{Minimum element of $A$}
+	\Begin{
+	$MinVal\longleftarrow A[1]$\;
+	\For{$i=2,\dots, n$}{
+	\If{$ MinVal>A[i]$}{
+		$MinVal\longleftarrow A[i]$\;
+	}
+	}
+	\Return{$MinVal$}
+}
+\caption{Find-Minimum}
+\end{algorithm}
+
+This algorithm uses only $n-1$ comparisons to find the minimum element of the array. Therefore $n-1$ comparisons are sufficient to find the minimum element in an unsorted array of $n$ elements.
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 2
@@ -93,6 +119,40 @@ Show that $n-1$ comparisons are necessary and sufficient to find the minimum ele
 Show a comparison based algorithm for finding the minimum and maximum in an unsorted array of $n$ elements using $\lt\lfloor \frac{3n}2\rt\rfloor-2$ comparisons. Also show that $\lt\lfloor \frac{3n}2\rt\rfloor-2$ comparisons are necessary to find the minimum and maximum.
 \end{problem}
 \solve{	
+First assume that all the elements are distinct. We will show the algorithm with which you only need to do $\lt\lceil\frac{3n}2\rt\rceil-2$ comparisons. 
+
+So first we partition the elements into pairs. If $n$ is odd then the last element will not in any groups. Hence there are total $\lt\lfloor\frac{n}2\rt\rfloor$ pairs. Now for each pair we compare then. Hence we have done now $\lt\lfloor\frac{n}2\rt\rfloor$ many comparisons. Now in each pair we have an element which was lesser than the other. So from each pair we take the lesser element and make a new set $S$. So $S$ has $\lt\lfloor\frac{n}2\rt\rfloor$ elements. And from each pair we take the greater element and make another new set $T$. If $n$ is odd then the last element which didn't take part in the pairs is  added to both the sets $S$ and  $T$. So $S$ and $T$  both have now $\lt\lceil\frac{n}2\rt\rceil$ elements. 
+
+Now since $S$ has the lesser elements the minimum element of the array is in $S$. And since $T$ has the greater elements, the maximum element of the array is in $T$. So by the \hyperref[p:p1]{Problem \ref{p:p1}: P2} we have an algorithm to find out the minimum element of $S$ using $\lt\lfloor\frac{n}2\rt\rfloor-1$ comparisons. And since finding maximum element of array is very similar as finding minimum element using the same algorithm but using less than instead of greater than we get the maximum element of $T$ using $\lt\lceil\frac{n}2\rt\rceil-1$ comparisons. Hence now we have the minimum and the maximum element of the array.
+
+\begin{algorithm}[H]
+	\DontPrintSemicolon
+	\KwIn{Array $A=(a_1,\dots, a_n)$}
+	\KwOut{Minimum and Maximum element of $A$}
+	\Begin{
+	 $n\longleftarrow A.length$\;
+	 \If{$n==1$}{\Return{$(A[1],A[1])$}}
+	 $k\longleftarrow \lt\lfloor \frac{n}{2}\rt\rfloor$,  $S\longleftarrow \emptyset$, $T\longleftarrow \emptyset$\;
+	 \For{$i=1,\dots, k$}{
+		\If{$A[2i-1]<A[2i]$}{$S\longleftarrow S\cup \{A[2i-1]\}$,		$T\longleftarrow T\cup \{A[2i]\}$} 
+		\Else{$S\longleftarrow S\cup \{A[2i]\}$,			$T\longleftarrow T\cup \{A[2i-1]\}$}
+ 	}
+ \If{$n \bmod 2==1$}{$S\longleftarrow S\cup \{A[n]\}$, $T\longleftarrow T\cup \{A[n]\}$}
+ $Minval\longleftarrow \infty$, $Maxval\longleftarrow -\infty$\;
+ \For{$i\in S$}{
+ 	\If{$i=1$}{$Minval\longleftarrow S[1]$}
+ 	\ElseIf{$Minval>S[i]$}{$Minval\longleftarrow S[i]$}
+ }
+ \For{$j\in T$}{
+	\If{$j=1$}{$Maxval\longleftarrow T[1]$}
+	\ElseIf{$Maxval<T[i]$}{$Maxval\longleftarrow T[i]$}
+}
+	}
+\caption{\prb{Find-Minimum-Maximum}$(A)$}
+\end{algorithm}
+
+
+Hence total comparisons needed to find the minimum and maximum element is $$\lt\lfloor\frac{n}2\rt\rfloor+ \lt(\lt\lceil\frac{n}2\rt\rceil-1\rt)+\lt(\lt\lceil\frac{n}2\rt\rceil-1\rt)=\lt\lfloor\frac{n}2\rt\rfloor+\lt\lceil\frac{n}2\rt\rceil+\lt\lceil\frac{n}2\rt\rceil-2= \lt\lceil\frac{3n}2\rt\rceil-2 $$Hence this algorithm can find out the minimum and maximum using $\lt\lceil\frac{3n}2\rt\rceil-2$ comparisons. Now we need to prove that at least this many comparisons are needed. 
 
 }
 
@@ -107,6 +167,41 @@ Show a comparison based algorithm for finding the minimum and maximum in an unso
 Let $G=(V,E)$ be a directed acyclic graph $G=(V,E)$. Additionally, you are given a nonnegative, integral weight $w_e$ on each edge $e\in E$, and two special vertices $s,t\in V$. Give an algorithm to find a max-weight path from $s$ to $t$.
 \end{problem}
 \solve{
+We can solve this problem using dynamic programing. Let $dist(v)$ denotes the weight of maximum weight path from $s\rightsquigarrow v$ for any $v\in V$. $dist(s)=0$. Now for any $v\in V$ we have the following relation: $$dist(v)=\max\limits_{u:(u,v)\in E}\{dist(u)+w(u,v)\}$$Hence we have the following algorithm:
+
+\begin{algorithm}[H]
+	\DontPrintSemicolon
+	\KwIn{A directec acyclic graph $G=(V,E)$ with $2$ vertices $s,t$ and weights on edges $W$.}
+	\KwOut{Maximum weight path from $s\rightsquigarrow t$}
+	\Begin{
+		$dist(s)\longleftarrow 0$, $s.parent\longleftarrow \prb{Null}$\;
+		\For{$v\in V-\{s\}$}{$dist(v)\longleftarrow -\infty$\;
+		$v.parent\longleftarrow \prb{Null}$}
+		$U\longleftarrow \{s\}$\;
+		\While{$U\neq \emptyset$}{
+		$u\longleftarrow $ Extract first element of $U$\;
+		\For{$(u,v)\in E$}{
+			\If{$\prb{MaxPath}[v]\leq \prb{MaxPath}[u]+w(u,v)$}{$\prb{MaxPath}[v]\longleftarrow \prb{MaxPath}[u]+w(u,v)$\;
+				$v.parent\longleftarrow u$}
+			$U\longleftarrow U\cup \{v\}$\;
+	}	
+	}
+$P\longleftarrow \emptyset$, $p\longleftarrow t$\;
+\While{\prb{True}}{
+	$P\longleftarrow P\cup \{p\}$\;
+	\If{$p.parent ==\prb{Null}$}{\prb{Break}}
+	$p\longleftarrow p.parent$\;
+	
+}
+$P\longleftarrow \prb{Reverse}(P)$\;
+\Return{$P$}
+		
+		
+	}
+\caption{\prb{Find-Max-Path}$(G,s,t,W)$}
+\end{algorithm}\parinf
+
+\textbf{Time Complexity:} The lines 2-3 takes $O(n)$ time and line 5 takes constant time. The while loop at line 7 picks a vertex and then goes through all its neighbors  and adds them to $U$. So the while loop visits at most every vertex and and every edges. In each iteration it takes constant time. Therefore the while loop takes $O(|V|+|E|)=O(n^2)$ time. Now for the while loop at line 14 it can be at most $n$ many iterations and in each iteration it takes constant time. The \prb{Reverse} function also take linear time. Therefore the algorithm runs in $O(n^2)$ time or $O(|V|+|E|)$ time.
 
 }
 
@@ -123,7 +218,17 @@ Let $G=(V,E)$ be a directed acyclic graph $G=(V,E)$. Additionally, you are given
 Given a matroid $(S,\mcI)$, show that  $(S,\mcI')$ is also a matroid, where $A\in \mcI'$ if $S\setminus A$ contains a maximal independent in $\mcI$.
 \end{problem}
 \solve{
-
+\begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
+	\item Downward Closure: Let $A\in \mcI'$ and $B\subseteq A\implies S\setminus A\subseteq S\setminus B$. Since $A\in \mcI'$, $\exs\ X\in \mcI$ such that $X$ is a maximal independent set such that $X\subseteq S\setminus A$. Therefore we have $X\subseteq S\setminus A\subseteq S\setminus B$. Therefore $B\in \mcI'$. Hence $\mcI'$ follows the downward closure property.
+	\item Exchange Property: Let $A,B\in\mcI'$ and $|B|<|A|$.  Let $X,Y\in\mcI$ be maximal independent sets such that $X\subseteq S\setminus A$ and $Y\subseteq S\setminus B$. First we prove a lemma:
+	
+	\begin{lemma}
+	$E,F$ are maximal independent sets in a matroid $M$. Then	$\exs\ e\in E\setminus F$ and $f\in F\setminus E$ such that $(E\cup \{f\})\setminus\{e\}$ and $(F\cup \{e\})\setminus\{f\}$ are also maximal independent sets in $M$
+	\end{lemma}
+\begin{proof}
+	We have $|E|=|F|$. Let $e\in E\setminus F$. Then consider the set $E\setminus {e}$. Now since $|F|>|E\setminus \{e\}|=|E|-1$ there exists $f\in F\setminus (E\setminus \{e\})=F\setminus E$ such that $(E\cup \{f\})\setminus \{e\}$ is an independent set. Since $|(E\cup \{f\})\setminus \{e\}|=|E|$ it is a maximal independent set. Now we will show $(F\cup \{e\} )\setminus \{f\}$ is also a maximal independent set. Now it suffices to show that $(F\cup \{e\} )\setminus \{f\}$ is independent set since $|(F\cup \{e\} )\setminus \{f\}|=|F|$. Therefore if $(F\cup \{e\} )\setminus \{f\}$ is independent set then it is also a maximal independent set.
+\end{proof}
+\end{enumerate}
 }
 
 
@@ -167,6 +272,45 @@ Exercise 10.4-6 (on tree representations with pointers) from CLRS.
 Given a directed graph $G=(V,E)$ with weights on the edges, and which has a negative-weight directed cycle that is reachable from the source $s$, Give an efficient algorithm to list the vertices of such a cycle.
 \end{problem}
 \solve{
+	If the graph if there is a negative-weight cycle reachable from $s$ then there is a vertex $j$ reachable from $s$ such that the shortest path from $j\rightsquigarrow j$ has negative weight. So we will use the Floyd Warshal Algorithm. But we will also keep track of the paths. We are assuming that $G$ is given as an adjacency matrix. 
+	
+	Here we introduce a $[n+1]\times [n]\times [n]$ $D=\lt(d_{i,j}^{(k)}\rt)$ where $k\in[n+1]$. So $d_{i,j}^{(k)}$ is the weight of the shortest path from $i$ to $j$ using the vertices $[k]$. Naturally we have the relation: $$d_{i,{j}}^{(k+1)}=\min \lt\{d_{i,{k+1}}^{(k)}+d_{{k+1},j}^{(k)},\; d_{i,{j}}^{(k)}  \rt\}$$Here we also need to keep the path. So when the minimum path uses the $k+1$ vertex then we just concatenate the paths from $i\rightsquigarrow k+1\rightsquigarrow j$ and otherwise the path is same as it was not using the vertex $k+1$. So here is the algorithm:
+	
+\begin{algorithm}[H]
+\DontPrintSemicolon
+\KwIn{A directec graph $G=(V=[n],E)$ with source vertex $s$ and weights on edges $W$ with promise that $G$ has a negative-weighted cycle reachable from $s$}
+\KwOut{Find a negative-weighted cycle reachable from $s$}
+\Begin{
+Create a $[n+1]\times [n]\times [n]$ array $D=\lt(d_{i,j}^{(k)}\rt)$ for all $k\in[n+1]$, $i,j\in [n]$ with all entries $(\infty,\prb{Null})$\;
+\For{$i,j\in[n]$}{$d^{(0)}_{i,j}=\big(A[i,j],[i,j]\big)$}
+
+\For{$k=1,\dots, n$}{
+	\For{$i=1,\dots, n$}{
+	\For{$j=1,\dots, n$}{
+		\If{$d_{i,j}^{(k-1)}[1]  >  d_{i,k}^{(k-1)}[1]+d_{k,j}^{(k-1)}[1]$ }{$ d_{i,j}^{(k)}[2]\longleftarrow d_{i,k}^{(k-1)}[2]\ ++\ d_{k,j}^{(k-1)}[2]$}
+		\Else{{$ d_{i,j}^{(k)}[2]\longleftarrow d_{i,j}^{(k-1)}[2]$}}
+}
+}
+}
+$Visited\longleftarrow \{s\}$, $U\longleftarrow \{s\}$\;
+Create a $n$ length array $VIS$ with all entries $0$\;
+$VIS[s]=1$\;
+\While{$U\neq \emptyset$ }{
+	$u\longleftarrow $ Extract first element of $U$\;
+	\For{$(u,v)\in E$}{
+		\If{$VIS[v]==0$}{
+			$U\longleftarrow U\cup\{v\}$\; 
+			$Visited\longleftarrow Visited\cup \{v\}$\;
+			$VIS[v]\longleftarrow 1$}
+	}
+	
+}
+\For{$v\in Visited$}{\If{$d_{i,i}^{(n)}[1]<0$}{\Return $d_{i,i}^{(n)}[2]$}}
+}
+\caption{\prb{Find-Negative-Cycle}$(A,s,W)$}
+\end{algorithm}\parinf
+
+\textbf{Time Complexity:} The line 2 takes $O(n^3)$ time to create the array. In line 3 the for loop has $n^2$ iterations where each iteration takes constant time. In line 5-7 it takes total $n^3$ iterations and each iteration takes constant time. So the for loops in line 5-7 in total takes $O(n^3)$ time. In line 12-14 it takes linear time. In line 15 the while loop and the for loop at line 17 goes through each vertex and then also goes through each neighbor of it. Hence there are total $O(|V|+|E|)=O(n^2)$ iterations each of which takes constant time. In line 22 the for loop has $O(n)$ many iterations at most and each iteration it takes constant time. Hence the algorithm runs in $O(n^3)$ time. 
 }
 
 
