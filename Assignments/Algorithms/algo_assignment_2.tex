@@ -70,7 +70,7 @@
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
-	\textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 1}\\
+	\textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 2}\\
 		Email: \href{soham.chatterjee@tifr.res.in}{soham.chatterjee@tifr.res.in} \hfill Dept: STCS\\
 		\normalsize Course: Algorithms \hfill Date: \today}
 	
@@ -103,7 +103,7 @@ Now we can also find the minimum element of an unsorted array of $n$ elements wi
 	}
 	\Return{$MinVal$}
 }
-\caption{Find-Minimum}
+\caption{\prb{Find-Minimum}}
 \end{algorithm}
 
 This algorithm uses only $n-1$ comparisons to find the minimum element of the array. Therefore $n-1$ comparisons are sufficient to find the minimum element in an unsorted array of $n$ elements.
@@ -147,6 +147,7 @@ Now since $S$ has the lesser elements the minimum element of the array is in $S$
 	\If{$j=1$}{$Maxval\longleftarrow T[1]$}
 	\ElseIf{$Maxval<T[i]$}{$Maxval\longleftarrow T[i]$}
 }
+\Return{($Minval, Maxval$)}
 	}
 \caption{\prb{Find-Minimum-Maximum}$(A)$}
 \end{algorithm}
@@ -154,7 +155,33 @@ Now since $S$ has the lesser elements the minimum element of the array is in $S$
 
 Hence total comparisons needed to find the minimum and maximum element is $$\lt\lfloor\frac{n}2\rt\rfloor+ \lt(\lt\lceil\frac{n}2\rt\rceil-1\rt)+\lt(\lt\lceil\frac{n}2\rt\rceil-1\rt)=\lt\lfloor\frac{n}2\rt\rfloor+\lt\lceil\frac{n}2\rt\rceil+\lt\lceil\frac{n}2\rt\rceil-2= \lt\lceil\frac{3n}2\rt\rceil-2 $$Hence this algorithm can find out the minimum and maximum using $\lt\lceil\frac{3n}2\rt\rceil-2$ comparisons. Now we need to prove that at least this many comparisons are needed. 
 
-}
+
+Now we work as an adversary to the algorithm and will force the algorithm to do at least $\lt\lceil \frac{3n}{2}\rt\rceil-2$ many comparisons. So for each element in the array we keep the tags $M$ and $m$. The $M$ tag represents that the element can be the maximum element of the array and the $m$ tag represents the element can be the minimum element of the array. Now on each comparison of two elements the algorithm does we remove tags for example if two elements both having a $M$ tag and a $m$ tag is compared then the smaller one can not be  maximum so the $M$ tag from the smaller one is removed and the larger one can not be the minimum so the $m$ tag from the larger one is removed.
+
+Initially before the algorithm starts all elements have one $M$ tag and one $m$ tag. After the algorithm successfully find the maximum element and the minimum element there is only one $M$ tag on some element and only one $m$ tag on some element of the array. So initially there are $2n$ tags and at the end there are $2$ tags. Hence $2n-2$ tags have to be removed in order to find the maximum and minimum of the array. 
+
+Now at any point during the execution of the algorithm if there is an element with both the $M$ and $m$ tags then this element has not been compared to other element because otherwise if its compared then either it becomes the larger and then the $m$ tag is removed or it becomes the smaller and then the $M$ tag is removed. Now consider the following cases:
+\begin{itemize}
+	\item Two $(M,m)$ tagged elements are compared: Then the adversary makes one of the larger and other one smaller randomly.
+	\item If $(M,m)$ tagged element, $a$ is compared with $M$ tagged element, $b$: $a$ has not been compared to any one. So the adversary simply makes $b$ larger. So only the $M$ tag from $a$ is removed.
+	\item If $(M,m)$ tagged element, $a$ is compared with $m$ tagged element, $b$: $a$ has not been compared to any one. So the adversary simply makes $b$ smaller. So only the $m$ tag from $a$ is removed.
+	\item If $M$ tagged element, $a$ is compared with $M$ tagged element, $b$: Then the whatever the adversary makes larger only one $M$ tag will be removed. 
+	\item If $m$ tagged element, $a$ is compared with $m$ tagged element, $b$: Then similarly like the above case whatever the adversary makes smaller only one $m$ tag will be removed. 
+	\item If $M$ tagged element, $a$ is compared with an element $b$ with no tag: Then if $a$ becomes smaller then $M$ tag of $a$ is removed and in the other case no tag is removed.
+	\item If $m$ tagged element, $a$ is compared with an element $b$ with no tag: Then if $a$ becomes larger then $m$ tag of $a$ is removed and in the other case no tag is removed.
+\end{itemize}
+Apart from the first case in all the above case at most $1$ tag is getting removed. For first case $2$ tags are removed. But at most $\lt\lfloor\frac{n}{2}\rt\rfloor$ many such comparisons possible. So the only case remaining is when a $M$ tagged element, $a$ is compared with a $m$ tagged element $b$. We want to claim if the adversary makes the $a$ larger than $b$ then no contradictions will arise.
+
+We want to argue for this using the graphs. We have $n$ vertices which are basically the elements of the array. So for each comparison if $a_i$ and $a_j$ are compared we put a directed edge $a_i\to a_j \iff a_i>a_j$. This way we construct the graph $G=(V,E)$. Let ${G^{(t)}=(V,E^{(t)})}$ be the graph constructed by the comparisons which happened before the $t^{th}$ comparison in the algorithm. So in $G^{(0)}$, $E^{(0)}=\emptyset$. Now we know for any $t$, $G^{(t)}$ is a directed acyclic graph. So suppose at $t^{th}$ comparison an element $a$ with tag $M$ is compared with an element $b$ with tag $m$. Consider the weakly connected components of $G^{(t)}$. A weakly connected component is a subset of vertices such that for any two vertices $u,v$ in that set either there is a path from $u\rightsquigarrow v$ or there is a path from $v\rightsquigarrow u$. 
+
+If $a$ and $b$ are in same weakly connected component then there is a path from $a\rightsquigarrow b$ or a path from $b\rightsquigarrow a$. If there is a path from $a\rightsquigarrow b$. Then naturally we conclude that $a>b$. So assume there is a path from $b\rightsquigarrow a$. In that case let the last edge of the path is $b'\to a$. Since the edge $b'\to a\in E^{(t)}$ they were compared before the $t^{th}$ comparison and in that comparison $a$ was smaller than $b'$. Then the $M$ tag of $a$ should have been removed but $a$ still has the tag. Contradiction. If $a$ and $b$ are in same weakly connected component then there is a path from $a\rightsquigarrow b$ and therefore $a>b$.
+
+Now assume $a$ and $b$ are in different weakly connected component. Then there is no path from $a\rightsquigarrow b$ or $b\rightsquigarrow a$. Hence the adversary can make $a$ larger than $b$ and there will not be any contradictions. Cause making $a>b$ only affects the vertices which are reachable from $a$ and $b$. But $a$ is not reachable from the vertices reachable from $b$ and similarly $b$ is not reachable from the vertices reachable from $a$. Therefore the adversary can make $a$ larger than $b$ and then no tags will be removed.
+
+So now we shown that in at most $\lt\lfloor \frac{n}2\rt\rfloor$ many comparisons $22$ tags will be removed. So the for the remaining at least $2n-2\lt\lfloor \frac{n}2\rt\rfloor$ tags for rest of the comparisons in each comparison at most $1$ tag is removed. And at the end $2$ tags are remaining. So the number of comparisons needed is:$$\lt[(2n-2)-2\lt\lfloor \frac{n}2\rt\rfloor\rt]+\lt\lfloor \frac{n}2\rt\rfloor=2n-\lt\lfloor \frac{n}2\rt\rfloor-2$$We will show that $2n-\lt\lfloor \frac{n}2\rt\rfloor=\lt\lceil\frac{3n}2\rt\rceil$. If $n=2k$ for some $k\in\bbN$ then $2n-\lt\lfloor \frac{n}2\rt\rfloor=4k-k=3k=\lt\lceil \frac{3n}2\rt\rceil$. If $n=2k+1$ for some $k\in\bbN$ then $2n-\lt\lfloor \frac{n}2\rt\rfloor=4k+2-k=3k+2$ and on the other hand $ \lt\lceil \frac{3n}2\rt\rceil=\lt\lceil \frac{6k+3}{2}\rt\rceil=\lt\lceil3k+\frac32\rt\rceil=3k+2$. So we have $2n-\lt\lfloor \frac{n}2\rt\rfloor=\lt\lceil\frac{3n}2\rt\rceil$. Hence at least $\lt\lceil\frac{3n}2\rt\rceil-2$ many comparisons are needed for any algorithm to find out the minimum and maximum element of an unsorted array of $n$ elements.
+}\parinf
+
+[I discussed the solution with Soumyadeep]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 3
@@ -205,7 +232,7 @@ $P\longleftarrow \prb{Reverse}(P)$\;
 
 }
 
-
+\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 4
@@ -220,15 +247,13 @@ Given a matroid $(S,\mcI)$, show that  $(S,\mcI')$ is also a matroid, where $A\i
 \solve{
 \begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
 	\item Downward Closure: Let $A\in \mcI'$ and $B\subseteq A\implies S\setminus A\subseteq S\setminus B$. Since $A\in \mcI'$, $\exs\ X\in \mcI$ such that $X$ is a maximal independent set such that $X\subseteq S\setminus A$. Therefore we have $X\subseteq S\setminus A\subseteq S\setminus B$. Therefore $B\in \mcI'$. Hence $\mcI'$ follows the downward closure property.
-	\item Exchange Property: Let $A,B\in\mcI'$ and $|B|<|A|$.  Let $X,Y\in\mcI$ be maximal independent sets such that $X\subseteq S\setminus A$ and $Y\subseteq S\setminus B$. First we prove a lemma:
+	\item Exchange Property: Let $A,B\in\mcI'$ and $|B|<|A|$.  Let $X,Y\in\mcI$ be maximal independent sets such that $X\subseteq S\setminus A$ and $Y\subseteq S\setminus B$. We have $|X|=|Y|$. Now consider the set $X\setminus B\in \mcI$ as $X\in\mcI$. We can extend $X\setminus B$ to a maximal independent set $Z$ by adding elements from $Y$ not in $X\setminus Y$. Then let $Z=(X\setminus B)\sqcup T$ where $T\subseteq Y\setminus (X\setminus B)=Y\setminus X$. \parinn
 	
-	\begin{lemma}
-	$E,F$ are maximal independent sets in a matroid $M$. Then	$\exs\ e\in E\setminus F$ and $f\in F\setminus E$ such that $(E\cup \{f\})\setminus\{e\}$ and $(F\cup \{e\})\setminus\{f\}$ are also maximal independent sets in $M$
-	\end{lemma}
-\begin{proof}
-	We have $|E|=|F|$. Let $e\in E\setminus F$. Then consider the set $E\setminus {e}$. Now since $|F|>|E\setminus \{e\}|=|E|-1$ there exists $f\in F\setminus (E\setminus \{e\})=F\setminus E$ such that $(E\cup \{f\})\setminus \{e\}$ is an independent set. Since $|(E\cup \{f\})\setminus \{e\}|=|E|$ it is a maximal independent set. Now we will show $(F\cup \{e\} )\setminus \{f\}$ is also a maximal independent set. Now it suffices to show that $(F\cup \{e\} )\setminus \{f\}$ is independent set since $|(F\cup \{e\} )\setminus \{f\}|=|F|$. Therefore if $(F\cup \{e\} )\setminus \{f\}$ is independent set then it is also a maximal independent set.
-\end{proof}
+	First of all we have $(X\setminus B)\cap (A-B)=\emptyset$ since $X\cap A=\emptyset$. Also we have $$X\cap B\subseteq (S\setminus A)\cap B=B\setminus A$$Now we want to claim $A\setminus B\not\subseteq T$ because if it is true then $\exs\ e\in A\setminus B$ such that $e\notin T$. Then $Z\subseteq S\setminus (B\cup \{e\})$. So suppose $A\setminus B\subseteq T$. Then $|T|\geq |A\setminus B|$. Now $$|B\setminus A|=|B|-|A\cap B|<|A|-|A\cap B|=|A\setminus B|$$Hence $$|T|\geq |A\setminus B|> |B-A|$$Now we have $$|Z|=|X\setminus B|+|T|>|X\setminus B|+|B\setminus A| \geq |X\setminus B|+|X\cap B|=|X| $$Therefore we have $|Z|>|X|$ but both are maximal independent sets of $(S,\mcI)$ and their size should be equal. Hence contradiction. Therefore $A\setminus B\not\subseteq T$. 
+	
+	Therefore $\exs\ e\in A\setminus B$ such that $e\notin T$. Then $e\notin Z\implies Z\subseteq S\setminus B\cup \{x\}$. Therefore $B\cup \{x\}\in \mcI'$. Hence $(S,\mcI')$ follows the exchange property.
 \end{enumerate}
+Therefore $(S,\mcI')$ is a matroid.
 }
 
 
@@ -243,6 +268,11 @@ Given a matroid $(S,\mcI)$, show that  $(S,\mcI')$ is also a matroid, where $A\i
 In class, we showed that if $(S,\mcI)$ is a matroid, then for any nonnegative weights $w$ no the  elements of $S$, the greedy algorithm obtains a maximum weight independent set. Show that this is only true if $(S,\mcI)$ a matroid. That is, for a fixed downward-closed set system $(S,\mcI)$, if the greedy algorithm obtains a maximum weight element of $\mcI$ for every assignment of nonnegative weights to elements of $S$, then $(S,\mcI)$ is a matroid.
 \end{problem}
 \solve{ 
+	Here we only have to prove that $(S,\mcI)$ follows the exchange property. So let $A,B\in \mcI$ and $|B|<|A|$. So we create a weight function $W$. Let $|S|=n$. Then $\forall\ b\in B$ we have  $W(b)=\frac1{n}$. And $\forall\ a\in A-B$, we have $W(a)=\frac1{n+1}$. Now $$W(B)\leq \frac{|B|}{n}$$Now suppose $|A|=k$, $|B|=l$ and $|A-B|=m$ then we have $n\geq k>l$ and $m>0$ and $|A\cap B|=k-m\leq l$. Hence $$ W(A)=\frac{k-m}{n}+\frac{m}{n+1}=\frac{(k-m)(n+1)+nm}{n(n+1)}=\frac{(n+1)k-m}{n(n+1)}$$ Now the algorithm sorts the elements by their weight and after sorting firstly the algorithm will encounter the elements of $B$ and then the elements of $A-B$. Since $B\in\mcI$ the algorithm will pick all the elements of $B$ and construct the set $B$ when it starts to encounter the elements of $A-B$. Now the algorithm picks any element from $A-B$ if there is already a set $S\in\mcI$ such that $W(S)>W(B)$. Now we claim $W(A)>W(B)$. 
+	
+	$$W(A)= \frac{(n+1)k-m}{n(n+1)}>\frac{l}{n}=W(B)\iff \frac{(n+1)k-m}{n+1}>l\iff {(n+1)k-m}>l(n+1)\iff (n+1)(k-l)>m$$The last inequality is true since $k>l$ and $m\leq n$. Hence we have a set which has weight greater than the weight of $B$. So the algorithm will pick an element $x$ from $A-B$ such that $B\cup \{x\}\in \mcI$.
+	
+	Hence $(S,\mcI)$ follows the base exchange property. Therefore $(S,\mcI)$ is a matroid. 
 }
 
 
@@ -251,13 +281,54 @@ In class, we showed that if $(S,\mcI)$ is a matroid, then for any nonnegative we
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement
-	P7\hfill  (10 marks)
+	P7: Exercise 10.4-6 (on tree representations with pointers) from CLRS.\hfill  (10 marks)
 }{p6% problem reference text
 }
-Exercise 10.4-6 (on tree representations with pointers) from CLRS.
 
+The \textit{left-child}, \textit{right-sibling} representation of an arbitrary rooted tree uses three
+pointers in each node: \textit{left-child}, \textit{right-sibling}, and \textit{parent}. From any node, its
+parent can be reached and identified in constant time and all its children can be
+reached and identified in time linear in the number of children. Show how to use
+only two pointers and one boolean value in each node so that the parent of a node
+or all of its children can be reached and identified in time linear in the number of
+children.
 \end{problem}
 \solve{
+	Fir each node in the tree the we will keep a boolean value called \textit{isRightSibling}. If value of \textit{isRightSibling} is 1 then there is a right sibling of the current node and there is a \textit{right-sibling} pointer of the node and the node has not \textit{parent} pointer pointing towards its parent. If value of \textit{isRightSibling} is 0 then there is not \textit{right-sibling} pointer of the current node. Instead the node has a \textit{parent} pointer pointing towards its parent. 
+	
+	So the following are two algorithms for going to a parent of a given node and going to a  given specific child of a given node.\parinf
+	
+%\begin{minipage}{0.45\textwidth}
+	\begin{algorithm}[H]
+		\DontPrintSemicolon
+		\Begin{
+			\While{\prb{True}}{
+				\If{$node.isRightSibling==1$}{$node\longleftarrow node.right-sibling$}
+				\Else{\Return{$node.parent$}}
+			}		
+		}
+		\caption{\prb{Parent}$(node)$}
+	\end{algorithm}
+%\end{minipage}\hfil
+%\begin{minipage}{0.55\textwidth}
+\begin{algorithm}[H]
+	\DontPrintSemicolon
+	\Begin{
+		$\prb{Children}\longleftarrow\emptyset$\;
+		$\prb{Children}\longleftarrow \prb{Children}\cup \{node.left-child\}$\;
+		\While{$node.isRightSibling==1$}{
+			$\prb{Children}\longleftarrow\prb{Children}\cup \{node.right-sibling\}$\;
+			$node\longleftarrow node.right-sibling$\;
+			
+		}	
+	\Return{\prb{Children}}	
+	}
+	\caption{\prb{Child}$(node)$}
+\end{algorithm}
+
+The algorithm for finding the parent goes through all the children of the parent of the given node to go to the right most sibling of the given node then returns the parent to the node. So it takes linear time in the number of children. The algorithm for finding all the children it goes to the left child of the given node and then goes through all the right siblings of the children one by one and then returns the array of all the children. Hence this algorithm also reaches all the children of the given node in linear time in the number of children.
+%\end{minipage}
+
 }
 
 
@@ -305,7 +376,7 @@ $VIS[s]=1$\;
 	}
 	
 }
-\For{$v\in Visited$}{\If{$d_{i,i}^{(n)}[1]<0$}{\Return $d_{i,i}^{(n)}[2]$}}
+\For{$v\in Visited$}{\If{$d_{v,v}^{(n)}[1]<0$}{\Return $d_{i,i}^{(n)}[2]$}}
 }
 \caption{\prb{Find-Negative-Cycle}$(A,s,W)$}
 \end{algorithm}\parinf
