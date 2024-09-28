@@ -178,7 +178,7 @@ If $a$ and $b$ are in same weakly connected component then there is a path from 
 
 Now assume $a$ and $b$ are in different weakly connected component. Then there is no path from $a\rightsquigarrow b$ or $b\rightsquigarrow a$. Hence the adversary can make $a$ larger than $b$ and there will not be any contradictions. Cause making $a>b$ only affects the vertices which are reachable from $a$ and $b$. But $a$ is not reachable from the vertices reachable from $b$ and similarly $b$ is not reachable from the vertices reachable from $a$. Therefore the adversary can make $a$ larger than $b$ and then no tags will be removed.
 
-So now we shown that in at most $\lt\lfloor \frac{n}2\rt\rfloor$ many comparisons $22$ tags will be removed. So the for the remaining at least $2n-2\lt\lfloor \frac{n}2\rt\rfloor$ tags for rest of the comparisons in each comparison at most $1$ tag is removed. And at the end $2$ tags are remaining. So the number of comparisons needed is:$$\lt[(2n-2)-2\lt\lfloor \frac{n}2\rt\rfloor\rt]+\lt\lfloor \frac{n}2\rt\rfloor=2n-\lt\lfloor \frac{n}2\rt\rfloor-2$$We will show that $2n-\lt\lfloor \frac{n}2\rt\rfloor=\lt\lceil\frac{3n}2\rt\rceil$. If $n=2k$ for some $k\in\bbN$ then $2n-\lt\lfloor \frac{n}2\rt\rfloor=4k-k=3k=\lt\lceil \frac{3n}2\rt\rceil$. If $n=2k+1$ for some $k\in\bbN$ then $2n-\lt\lfloor \frac{n}2\rt\rfloor=4k+2-k=3k+2$ and on the other hand $ \lt\lceil \frac{3n}2\rt\rceil=\lt\lceil \frac{6k+3}{2}\rt\rceil=\lt\lceil3k+\frac32\rt\rceil=3k+2$. So we have $2n-\lt\lfloor \frac{n}2\rt\rfloor=\lt\lceil\frac{3n}2\rt\rceil$. Hence at least $\lt\lceil\frac{3n}2\rt\rceil-2$ many comparisons are needed for any algorithm to find out the minimum and maximum element of an unsorted array of $n$ elements.
+So now we shown that in at most $\lt\lfloor \frac{n}2\rt\rfloor$ many comparisons $2\lt\lfloor \frac{n}2\rt\rfloor$ tags will be removed. So the for the remaining at least $2n-2\lt\lfloor \frac{n}2\rt\rfloor$ tags for rest of the comparisons in each comparison at most $1$ tag is removed. And at the end $2$ tags are remaining. So the number of comparisons needed is:$$\lt[(2n-2)-2\lt\lfloor \frac{n}2\rt\rfloor\rt]+\lt\lfloor \frac{n}2\rt\rfloor=2n-\lt\lfloor \frac{n}2\rt\rfloor-2$$We will show that $2n-\lt\lfloor \frac{n}2\rt\rfloor=\lt\lceil\frac{3n}2\rt\rceil$. If $n=2k$ for some $k\in\bbN$ then $2n-\lt\lfloor \frac{n}2\rt\rfloor=4k-k=3k=\lt\lceil \frac{3n}2\rt\rceil$. If $n=2k+1$ for some $k\in\bbN$ then $2n-\lt\lfloor \frac{n}2\rt\rfloor=4k+2-k=3k+2$ and on the other hand $ \lt\lceil \frac{3n}2\rt\rceil=\lt\lceil \frac{6k+3}{2}\rt\rceil=\lt\lceil3k+\frac32\rt\rceil=3k+2$. So we have $2n-\lt\lfloor \frac{n}2\rt\rfloor=\lt\lceil\frac{3n}2\rt\rceil$. Hence at least $\lt\lceil\frac{3n}2\rt\rceil-2$ many comparisons are needed for any algorithm to find out the minimum and maximum element of an unsorted array of $n$ elements.
 }\parinf
 
 [I discussed the solution with Soumyadeep]
@@ -246,8 +246,8 @@ Given a matroid $(S,\mcI)$, show that  $(S,\mcI')$ is also a matroid, where $A\i
 \end{problem}
 \solve{
 \begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
-	\item Downward Closure: Let $A\in \mcI'$ and $B\subseteq A\implies S\setminus A\subseteq S\setminus B$. Since $A\in \mcI'$, $\exs\ X\in \mcI$ such that $X$ is a maximal independent set such that $X\subseteq S\setminus A$. Therefore we have $X\subseteq S\setminus A\subseteq S\setminus B$. Therefore $B\in \mcI'$. Hence $\mcI'$ follows the downward closure property.
-	\item Exchange Property: Let $A,B\in\mcI'$ and $|B|<|A|$.  Let $X,Y\in\mcI$ be maximal independent sets such that $X\subseteq S\setminus A$ and $Y\subseteq S\setminus B$. We have $|X|=|Y|$. Now consider the set $X\setminus B\in \mcI$ as $X\in\mcI$. We can extend $X\setminus B$ to a maximal independent set $Z$ by adding elements from $Y$ not in $X\setminus Y$. Then let $Z=(X\setminus B)\sqcup T$ where $T\subseteq Y\setminus (X\setminus B)=Y\setminus X$. \parinn
+	\item \textbf{Downward Closure:} Let $A\in \mcI'$ and $B\subseteq A\implies S\setminus A\subseteq S\setminus B$. Since $A\in \mcI'$, $\exs\ X\in \mcI$ such that $X$ is a maximal independent set such that $X\subseteq S\setminus A$. Therefore we have $X\subseteq S\setminus A\subseteq S\setminus B$. Therefore $B\in \mcI'$. Hence $\mcI'$ follows the downward closure property.
+	\item \textbf{Exchange Property:} Let $A,B\in\mcI'$ and $|B|<|A|$.  Let $X,Y\in\mcI$ be maximal independent sets such that $X\subseteq S\setminus A$ and $Y\subseteq S\setminus B$. We have $|X|=|Y|$. Now consider the set $X\setminus B\in \mcI$ as $X\in\mcI$. We can extend $X\setminus B$ to a maximal independent set $Z$ by adding elements from $Y$ not in $X\setminus Y$. Then let $Z=(X\setminus B)\sqcup T$ where $T\subseteq Y\setminus (X\setminus B)=Y\setminus X$. \parinn
 	
 	First of all we have $(X\setminus B)\cap (A-B)=\emptyset$ since $X\cap A=\emptyset$. Also we have $$X\cap B\subseteq (S\setminus A)\cap B=B\setminus A$$Now we want to claim $A\setminus B\not\subseteq T$ because if it is true then $\exs\ e\in A\setminus B$ such that $e\notin T$. Then $Z\subseteq S\setminus (B\cup \{e\})$. So suppose $A\setminus B\subseteq T$. Then $|T|\geq |A\setminus B|$. Now $$|B\setminus A|=|B|-|A\cap B|<|A|-|A\cap B|=|A\setminus B|$$Hence $$|T|\geq |A\setminus B|> |B-A|$$Now we have $$|Z|=|X\setminus B|+|T|>|X\setminus B|+|B\setminus A| \geq |X\setminus B|+|X\cap B|=|X| $$Therefore we have $|Z|>|X|$ but both are maximal independent sets of $(S,\mcI)$ and their size should be equal. Hence contradiction. Therefore $A\setminus B\not\subseteq T$. 
 	
@@ -381,7 +381,7 @@ $VIS[s]=1$\;
 \caption{\prb{Find-Negative-Cycle}$(A,s,W)$}
 \end{algorithm}\parinf
 
-\textbf{Time Complexity:} The line 2 takes $O(n^3)$ time to create the array. In line 3 the for loop has $n^2$ iterations where each iteration takes constant time. In line 5-7 it takes total $n^3$ iterations and each iteration takes constant time. So the for loops in line 5-7 in total takes $O(n^3)$ time. In line 12-14 it takes linear time. In line 15 the while loop and the for loop at line 17 goes through each vertex and then also goes through each neighbor of it. Hence there are total $O(|V|+|E|)=O(n^2)$ iterations each of which takes constant time. In line 22 the for loop has $O(n)$ many iterations at most and each iteration it takes constant time. Hence the algorithm runs in $O(n^3)$ time. 
+\textbf{Time Complexity:} The line 2 takes $O(n^3)$ time to create the array. In line 3 the for loop has $n^2$ iterations where each iteration takes constant time. In line 5-7 it takes total $n^3$ iterations and each iteration takes constant time. So the for loops in line 5-7 in total takes $O(n^3)$ time (We are assuming concatenating two lists take constant time. So in line 9 it takes constant time). In line 12-14 it takes linear time. In line 15 the while loop and the for loop at line 17 goes through each vertex and then also goes through each neighbor of it. Hence there are total $O(|V|+|E|)=O(n^2)$ iterations each of which takes constant time. In line 22 the for loop has $O(n)$ many iterations at most and each iteration it takes constant time. Hence the algorithm runs in $O(n^3)$ time. 
 }
 
 
@@ -396,6 +396,41 @@ $VIS[s]=1$\;
 Let us modify the ``cut rule" (in the implementation of decrease-key operation for a Fibonacci heap) to cut a node $x$ from its parent as soon as it loses its 3rd child. Recall that the rule that we studied in class was when a node loses its 2nd child. Can we still upper bound the maximum degree of a node of an $n-$node Fibonacci heap with $O(\log n)$.
 \end{problem}
 \solve{
+	To have the maximum degree bound first we prove two lemmas:
+	\begin{lemma}\label{lem1}
+		Let $x$ be a node in the Fibonacci heap. Let $y_1,\dots, y_k$ be children of $x$ in the order which they were added. Then $y_1.\textit{degree}\geq 0$, $y_2.\textit{degree}\geq 1$ and $y_i.\textit{degree}\geq i-3$  for $i=3,\dots, k$
+	\end{lemma}
+\begin{proof}
+	Degree of any node is at least $0$. So we already get $y_1.\textit{degree}\geq 0$. Now the children are indexed in the order which they were added. So when $y_1$ was added to $x$ \textit{degree} of $x$ was $0$. So after adding $y_1$ \textit{degree} of $x$ became $1$. Now when $y_2$ was added $x.\textit{degree}\geq 1$ and $y_2.\textit{degree}=x.\textit{degree}$. So $y.\textit{degree}\geq 1$.
+	
+	For $i\geq 3$ when $y_i$ was linked to $x$ then $y_1,\dots, y_{i-1}$ were children of $x$. So at that time $x.\textit{degree}\geq i-1$. Since $y_i$ was linked to $x$ we must have $y_i.\textit{degree}=x.\textit{degree}$. So at that time we must have $y_i.\textit{degree}\geq i-1$. Since then because of the \textsc{Cascading-Cut} operation $y_i$ can loose at most $2$ children and still remain as the child of $x$. So $y_i.\textit{degree}\geq i-3$. Therefore for all $i=3,\dots, k$ we have $y_i.\textit{degree}\geq i-3$ and $y_1.\textit{degree}\geq 0$, $y_2.\textit{degree}\geq 1$.
+\end{proof}
+\begin{lemma}\label{lem2}
+	Consider the sequence of numbers $\{a_n\}_{n\geq 0}$ where $$a_0=0, \ a_1=1,\ a_2=1,\ a_n=1+\sum_{i=3}^n a_{i-3}$$Then we have the following:
+	\begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
+		\item $a_n=a_{n-1}+a_{n-3}$ for $n\geq 3$
+		\item The equation $x^3-x^2-1=0$ has a real root $\lm$ which is greater than $1$ 
+		\item $a_{n+3}\geq \lm^n$ for all $n=\bbN\cup \{0\}$
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	\begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
+		\item We have $$a_n=1+\sum_{i=3}^n a_{i-3}=\lt[1+\sum_{i=3}^{n-1} a_{i-3}\rt]+a_{n-3}=a_{n-1}+a_{n-3}$$Therefore we obtain the given recurrence relation for all $n\geq 3$.
+		\item Value of the polynomial $p(x)=x^3-x^2-1$ at $x=1$ is $p(1)=1-1-1<0$. And $p(2)=8-4-1>0$. Hence $p(x)$ has a real root between $1$ and $2$. Therefore $p(x)$ has a real root $\lm$ which is greater than $1$.
+		\item We will prove this by induction. For $n=0$ we have $\lm^0=1$ and $a_3=1+a_0=1\geq \lm^0$. Hence the base case is followed. Suppose for $n=0,\dots, i-1$ we have $a_{n+3}\geq \lm^n$. For $n=i$ $$a_{i+3}=a_{i+2}+a_i\geq \lm^{i-1}+\lm^{i-3}=\lm^{i-3}(\lm^2+1)=\lm^{i-3}\lm^3=\lm^i$$Hence by mathematical induction we have $a_{n+3}\geq \lm^n$ for all $n\geq 0$
+	\end{enumerate}
+\end{proof}
+Now using these two lemmas we will prove a upper bound the size of a node with degree $k$ which we can use to bound the maximum degree since the number of nodes is $n$ and degree can not exceed the total number of nodes.
+\newpage
+
+\begin{lemma}\label{lem3}
+	Suppose $x$ be a node in a Fibonacci heap with $k=x.\textit{degree}$.  Then $x.\textit{size}\geq a_{k+3}\geq\lm^k$
+\end{lemma}
+\begin{proof}
+	Let $s_k$ denote the minimum possible size of any node with degree $k$. Now we have $s_0=1$, $s_1=2$, $s_3=3$. So we have $x.\textit{size}\geq s_k$. Suppose $y_1,\dots, y_k$ be the children of $x$ in the order which they were linked to $x$. Now  to bound $s_k$ we count one for the root and one each for the first two children of the root and then we have the sizes for the other children. So we have $$x.\textit{size}\geq s_k\geq 3+\sum_{i=3}^k s_{y_i.\textit{degree}}\geq 3+\sum_{i=3}^k s_{i-3}$$Now we will inductively show that $s_k\geq a_{k+3}$. For base case using \lemref{lem1} we have $s_0=1=a_3$, $s_1=2=a_3+a_1=a_4$, $s_2=3=a_4+a_2=a_5$. Therefore for $k=0,1,2$ we have $s_k=a_{k+3}$. So the base case is followed. Now suppose this is true for $k=0,\dots, i-1$. For $k=i$ we have $$s_i\geq 3+\sum_{j=3}^is_{j-3}\geq 3+\sum_{j=3}^i a_{j}=3+\sum_{j=0}^i a_{j}-\sum_{j=0}^2a_j=3+\sum_{j=0}^ia_j-2=1+\sum_{j=0}^ia_j=a_{i+3}$$Therefore we have $s_i\geq a_{i+3}$. Hence by mathematical induction we have $s_k\geq a_{k+3}$ and then using \lemref{lem2} we have $s_k\geq \lm^k$ for all $k\in\bbN\cup \{0\}$.
+\end{proof}
+
+Now we will bound the maximum degree. Let $x$ be a node in the Fibonacci heap. Let $k=x.\textit{degree}$.  Then by \lemref{lem3} we have $k\geq \lm^k$. Let there are total $n$ nodes in the Fibonacci heap. Therefore we have $$n\geq k\geq \lm^k\implies \lg_{\lm}n\geq \log_{\lm}\lm^k\implies k\leq \log_{\lm}n=\log \lm\cdot \log n=O(\log n)$$Hence the maximum degree is bounded by $O(\log n)$. 
 }
 
 
@@ -410,5 +445,22 @@ Let us modify the ``cut rule" (in the implementation of decrease-key operation f
 The following are Fibonacci-heap operations: \textit{extract-min}$(\cdot)$, \textit{decrease-key}$(\cdot,\cdot)$, and also \textit{create-node}$(x,k)$ which creates a node $x$ in th root list with key value $k$. Show a sequence of these operations that results in a Fibonacci heap consisting of just one tree that is a linear chain of $n$ nodes.
 \end{problem}
 \solve{
+	We construct a Fibonacci heap consisting of just one tree that is a linear chain of $n$ nodes iteratively. For $n=1$ we just do a \textit{create-node}$(x,k)$ operation and then we have a Fibonacci heap with just one node. Now we will discuss for $n>1$ case. At $i^{th}$ iteration we create a linear chain with $i$ nodes for any $i\in [n-1]$. Let $x^{(i+1)}$ denote the root of the linear chain with $i+1$ nodes after $i^{th}$ iteration and $k^{(i+1)}$ denote the value of the key of the root $x^{(i+1)}$. With this set up we start the process of creating linear chain with $n$ nodes:
+	\begin{itemize}
+		\item \textbf{Initialization:} At $i=1$ we have the empty heap. So we will create a new heap $\mcH$ by inserting $3$ nodes with \textit{create-node}$(a,k_a)$, \textit{create-node}$(b,k_b)$, \textit{create-node}$(c,k_c)$ with the property that $k_a>k_b>k_c$. So we have the min pointer on $k_c$ . Now we do the operation \textit{extract-min}$(\mcH)$. The \textit{extract-min} operation will then remove the node $c$. And since now there are $2$ nodes with degree $0$, the \textsc{Consolidate} operation add the two nodes $a,b$ together with $b$ being the root $x^{(2)}$ with the value $k^{(2)}=k_b$ since $k_b<k_a$ and the degree of $b$ becomes $1$. Hence now we have a Fibonacci heap with $2$ nodes which is  a linear chain.  So the operations used in this step are:\begin{itemize}
+			\item $3$ times \textit{create-node} 
+			\item \textit{extract-min}
+		\end{itemize}
+		\item \textbf{Iteration:} So now assume we have a Fibonacci heap which is a linear chain of $i+1$ nodes. The root of the chain is $x^{(i+1)}$ and the value of the key of $x^{(i+1)}$ is $k^{(i+1)}$. We will now show the process of creating a linear chain of $i+2$ nodes. \parinn
+		
+		First we create three nodes with at least two of them have the key value less than $k^{(i+1)}$, $i\in[n-1]$. So we do \textit{create-node}$(\alpha,k_{\alpha})$, \textit{create-node}$(\beta,k_{\beta})$, \textit{create-node}$(\gm,k_{\gm})$ with $k_{\alpha}<k_{\beta}<k_{\gm}$ and  suppose $k_{\alpha},k_{\beta}<k^{(i+1)}$. So now the min pointer is on the node $\alpha$. Now we run the operation $\textit{extract-min}(\mcH)$. This operation then removes the node $k_{\alpha}$. Now $\beta$ and $\gm$ are two nodes with degree $0$. The \textsc{Consolidate} operation then add the two nodes $\beta$ and $\gm$ together with $\gm$ being the child of $\beta$ and then degree of $\beta$ becomes $1$. Now we have two roots, $x^{(i+1)}$ and $\beta$ both having degree 1. So the \textsc{Consolidate} operation links $x^{(i+1)}$ and $\beta$ with $x^{(i+1)}$ being a child of $\beta$ since initially we took $k_{\beta}<k^{(i+1)}$. So now degree of $\beta$ is 2 and the two child of $\beta $ are $x^{(i+1)}$ and $\gm$. So now we run the operation \textit{decrease-key}$(\gm,k_{\beta}-1)$. So now key of $\gm$ becomes less than key of $\beta$. So $\gm$ is now added to the root list  and degree of $\beta$ becomes $1$. Since $\gm $ has the minimum key the min pointer now points to $gm$. So now we do an \textit{extract-min}$(\mcH)$ operation. This will remove the $\gm$ from the root list and now we have a new linear chain with $i+2$ node where the root $x^{(i+2)}=\beta$ and the key is $k^{(i+2)}=k_{\beta}$. So the operations used in one iterations are:
+		\begin{itemize}
+			\item $3$ times \textit{create-node}
+			\item \textit{extract-min}
+			\item \textit{decrease-key}
+			\item \textit{extract-min}
+		\end{itemize}
+	\end{itemize}
+So we do the iteration process $n-1$ many times to have a linear chain with $n$ nodes.  
 }
 \end{document}
