@@ -158,7 +158,7 @@ Hence total comparisons needed to find the minimum and maximum element is $$\lt\
 
 Now we work as an adversary to the algorithm and will force the algorithm to do at least $\lt\lceil \frac{3n}{2}\rt\rceil-2$ many comparisons. So for each element in the array we keep the tags $M$ and $m$. The $M$ tag represents that the element can be the maximum element of the array and the $m$ tag represents the element can be the minimum element of the array. Now on each comparison of two elements the algorithm does we remove tags for example if two elements both having a $M$ tag and a $m$ tag is compared then the smaller one can not be  maximum so the $M$ tag from the smaller one is removed and the larger one can not be the minimum so the $m$ tag from the larger one is removed.
 
-Initially before the algorithm starts all elements have one $M$ tag and one $m$ tag. After the algorithm successfully find the maximum element and the minimum element there is only one $M$ tag on some element and only one $m$ tag on some element of the array. So initially there are $2n$ tags and at the end there are $2$ tags. Hence $2n-2$ tags have to be removed in order to find the maximum and minimum of the array. 
+Initially before the algorithm starts all elements have one $M$ tag and one $m$ tag each. After the algorithm successfully find the maximum element and the minimum element there is only one $M$ tag on some element and only one $m$ tag on some element of the array. So initially there are $2n$ tags and at the end there are $2$ tags. Hence $2n-2$ tags have to be removed in order to find the maximum and minimum of the array. 
 
 Now at any point during the execution of the algorithm if there is an element with both the $M$ and $m$ tags then this element has not been compared to other element because otherwise if its compared then either it becomes the larger and then the $m$ tag is removed or it becomes the smaller and then the $M$ tag is removed. Now consider the following cases:
 \begin{itemize}
@@ -247,9 +247,9 @@ Given a matroid $(S,\mcI)$, show that  $(S,\mcI')$ is also a matroid, where $A\i
 \solve{
 \begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
 	\item \textbf{Downward Closure:} Let $A\in \mcI'$ and $B\subseteq A\implies S\setminus A\subseteq S\setminus B$. Since $A\in \mcI'$, $\exs\ X\in \mcI$ such that $X$ is a maximal independent set such that $X\subseteq S\setminus A$. Therefore we have $X\subseteq S\setminus A\subseteq S\setminus B$. Therefore $B\in \mcI'$. Hence $\mcI'$ follows the downward closure property.
-	\item \textbf{Exchange Property:} Let $A,B\in\mcI'$ and $|B|<|A|$.  Let $X,Y\in\mcI$ be maximal independent sets such that $X\subseteq S\setminus A$ and $Y\subseteq S\setminus B$. We have $|X|=|Y|$. Now consider the set $X\setminus B\in \mcI$ as $X\in\mcI$. We can extend $X\setminus B$ to a maximal independent set $Z$ by adding elements from $Y$ not in $X\setminus Y$. Then let $Z=(X\setminus B)\sqcup T$ where $T\subseteq Y\setminus (X\setminus B)=Y\setminus X$. \parinn
+	\item \textbf{Exchange Property:} Let $A,B\in\mcI'$ and $|B|<|A|$.  Let $X,Y\in\mcI$ be maximal independent sets such that $X\subseteq S\setminus A$ and $Y\subseteq S\setminus B$. We have $|X|=|Y|$. Now consider the set $X\setminus B\in \mcI$ as $X\in\mcI$. We can extend $X\setminus B$ to a maximal independent set $Z$ by adding elements from $Y$ not in $X$. Then let $Z=(X\setminus B)\sqcup T$ where $T\subseteq Y\setminus (X\setminus B)=Y\setminus X$. \parinn
 	
-	First of all we have $(X\setminus B)\cap (A-B)=\emptyset$ since $X\cap A=\emptyset$. Also we have $$X\cap B\subseteq (S\setminus A)\cap B=B\setminus A$$Now we want to claim $A\setminus B\not\subseteq T$ because if it is true then $\exs\ e\in A\setminus B$ such that $e\notin T$. Then $Z\subseteq S\setminus (B\cup \{e\})$. So suppose $A\setminus B\subseteq T$. Then $|T|\geq |A\setminus B|$. Now $$|B\setminus A|=|B|-|A\cap B|<|A|-|A\cap B|=|A\setminus B|$$Hence $$|T|\geq |A\setminus B|> |B-A|$$Now we have $$|Z|=|X\setminus B|+|T|>|X\setminus B|+|B\setminus A| \geq |X\setminus B|+|X\cap B|=|X| $$Therefore we have $|Z|>|X|$ but both are maximal independent sets of $(S,\mcI)$ and their size should be equal. Hence contradiction. Therefore $A\setminus B\not\subseteq T$. 
+	First of all we have $(X\setminus B)\cap (A\setminus B)=\emptyset$ since $X\cap A=\emptyset$. Also we have $$X\cap B\subseteq (S\setminus A)\cap B=B\setminus A$$Now we want to claim $A\setminus B\not\subseteq T$ because if it is true then $\exs\ e\in A\setminus B$ such that $e\notin T$. Then $Z\subseteq S\setminus (B\cup \{e\})$. So suppose $A\setminus B\subseteq T$. Then $|T|\geq |A\setminus B|$. Now $$|B\setminus A|=|B|-|A\cap B|<|A|-|A\cap B|=|A\setminus B|$$Hence $$|T|\geq |A\setminus B|> |B\setminus A|$$Now we have $$|Z|=|X\setminus B|+|T|>|X\setminus B|+|B\setminus A| \geq |X\setminus B|+|X\cap B|=|X| $$Therefore we have $|Z|>|X|$ but both are maximal independent sets of $(S,\mcI)$ and their size should be equal. Hence contradiction. Therefore $A\setminus B\not\subseteq T$. 
 	
 	Therefore $\exs\ e\in A\setminus B$ such that $e\notin T$. Then $e\notin Z\implies Z\subseteq S\setminus B\cup \{x\}$. Therefore $B\cup \{x\}\in \mcI'$. Hence $(S,\mcI')$ follows the exchange property.
 \end{enumerate}
@@ -268,7 +268,7 @@ Therefore $(S,\mcI')$ is a matroid.
 In class, we showed that if $(S,\mcI)$ is a matroid, then for any nonnegative weights $w$ no the  elements of $S$, the greedy algorithm obtains a maximum weight independent set. Show that this is only true if $(S,\mcI)$ a matroid. That is, for a fixed downward-closed set system $(S,\mcI)$, if the greedy algorithm obtains a maximum weight element of $\mcI$ for every assignment of nonnegative weights to elements of $S$, then $(S,\mcI)$ is a matroid.
 \end{problem}
 \solve{ 
-	Here we only have to prove that $(S,\mcI)$ follows the exchange property. So let $A,B\in \mcI$ and $|B|<|A|$. So we create a weight function $W$. Let $|S|=n$. Then $\forall\ b\in B$ we have  $W(b)=\frac1{n}$. And $\forall\ a\in A-B$, we have $W(a)=\frac1{n+1}$. Now $$W(B)\leq \frac{|B|}{n}$$Now suppose $|A|=k$, $|B|=l$ and $|A-B|=m$ then we have $n\geq k>l$ and $m>0$ and $|A\cap B|=k-m\leq l$. Hence $$ W(A)=\frac{k-m}{n}+\frac{m}{n+1}=\frac{(k-m)(n+1)+nm}{n(n+1)}=\frac{(n+1)k-m}{n(n+1)}$$ Now the algorithm sorts the elements by their weight and after sorting firstly the algorithm will encounter the elements of $B$ and then the elements of $A-B$. Since $B\in\mcI$ the algorithm will pick all the elements of $B$ and construct the set $B$ when it starts to encounter the elements of $A-B$. Now the algorithm picks any element from $A-B$ if there is already a set $S\in\mcI$ such that $W(S)>W(B)$. Now we claim $W(A)>W(B)$. 
+	Here we only have to prove that $(S,\mcI)$ follows the exchange property. So let $A,B\in \mcI$ and $|B|<|A|$. Let $|S|=n$. So we create a weight function $W$ where $\forall\ b\in B$ we have  $W(b)=\frac1{n}$. And $\forall\ a\in A-B$, we have $W(a)=\frac1{n+1}$ and $\forall\ x\notin A\cup B$, $W(x)=0$. Now $$W(B)=\frac{|B|}{n}$$Now suppose $|A|=k$, $|B|=l$ and $|A-B|=m$ then we have $n\geq k>l$ and $m>0$ and $|A\cap B|=k-m\leq l$. Hence $$ W(A)=W(A\cap B)+W(A-B)=\frac{k-m}{n}+\frac{m}{n+1}=\frac{(k-m)(n+1)+nm}{n(n+1)}=\frac{(n+1)k-m}{n(n+1)}$$ Now the algorithm sorts the elements by their weight and after sorting firstly the algorithm will encounter the elements of $B$ and then the elements of $A-B$. Since $B\in\mcI$ the algorithm will pick all the elements of $B$ and construct the set $B$ when it starts to encounter the elements of $A-B$. Now the algorithm picks any element from $A-B$ if there is already a set $S\in\mcI$ such that $W(S)>W(B)$. Now we claim $W(A)>W(B)$. 
 	
 	$$W(A)= \frac{(n+1)k-m}{n(n+1)}>\frac{l}{n}=W(B)\iff \frac{(n+1)k-m}{n+1}>l\iff {(n+1)k-m}>l(n+1)\iff (n+1)(k-l)>m$$The last inequality is true since $k>l$ and $m\leq n$. Hence we have a set which has weight greater than the weight of $B$. So the algorithm will pick an element $x$ from $A-B$ such that $B\cup \{x\}\in \mcI$.
 	
@@ -348,13 +348,28 @@ Given a directed graph $G=(V,E)$ with weights on the edges, and which has a nega
 	Here we introduce a $[n+1]\times [n]\times [n]$ $D=\lt(d_{i,j}^{(k)}\rt)$ where $k\in[n+1]$. So $d_{i,j}^{(k)}$ is the weight of the shortest path from $i$ to $j$ using the vertices $[k]$. Naturally we have the relation: $$d_{i,{j}}^{(k+1)}=\min \lt\{d_{i,{k+1}}^{(k)}+d_{{k+1},j}^{(k)},\; d_{i,{j}}^{(k)}  \rt\}$$Here we also need to keep the path. So when the minimum path uses the $k+1$ vertex then we just concatenate the paths from $i\rightsquigarrow k+1\rightsquigarrow j$ and otherwise the path is same as it was not using the vertex $k+1$. So here is the algorithm:
 	
 \begin{algorithm}[H]
+	\SetKwComment{Comment}{// }{}
 \DontPrintSemicolon
-\KwIn{A directec graph $G=(V=[n],E)$ with source vertex $s$ and weights on edges $W$ with promise that $G$ has a negative-weighted cycle reachable from $s$}
+\KwIn{A directed graph $G=(V=[n],E)$ with source vertex $s$ and weights on edges $W$ with promise that $G$ has a negative-weighted cycle reachable from $s$}
 \KwOut{Find a negative-weighted cycle reachable from $s$}
 \Begin{
-Create a $[n+1]\times [n]\times [n]$ array $D=\lt(d_{i,j}^{(k)}\rt)$ for all $k\in[n+1]$, $i,j\in [n]$ with all entries $(\infty,\prb{Null})$\;
-\For{$i,j\in[n]$}{$d^{(0)}_{i,j}=\big(A[i,j],[i,j]\big)$}
+$Visited\longleftarrow \{s\}$, $U\longleftarrow \{s\}$\;
+Create a $n$ length array $VIS$ with all entries $0$\;
+$VIS[s]=1$\;
+\While{$U\neq \emptyset$ }{
+	$u\longleftarrow $ Extract first element of $U$\;
+	\For{$(u,v)\in E$}{
+		\If{$VIS[v]==0$}{
+			$U\longleftarrow U\cup\{v\}$, $VIS[v]\longleftarrow 1$\;
+			$Visited\longleftarrow Visited\cup \{v\}$}
+	}	
+}
 
+\For{$i,j\in[n]$}{
+\If{$VIS[i]==1$}{
+$d^{(0)}_{i,j}=\big(A[i,j],[i,j]\big)$\Comment*{Makes a graph with vertices reachable from $s$}}
+}
+Create a $[n+1]\times [n]\times [n]$ array $D=\lt(d_{i,j}^{(k)}\rt)$ for all $k\in[n+1]$, $i,j\in [n]$ with all entries $(\infty,\prb{Null})$\;
 \For{$k=1,\dots, n$}{
 	\For{$i=1,\dots, n$}{
 	\For{$j=1,\dots, n$}{
@@ -363,25 +378,13 @@ Create a $[n+1]\times [n]\times [n]$ array $D=\lt(d_{i,j}^{(k)}\rt)$ for all $k\
 }
 }
 }
-$Visited\longleftarrow \{s\}$, $U\longleftarrow \{s\}$\;
-Create a $n$ length array $VIS$ with all entries $0$\;
-$VIS[s]=1$\;
-\While{$U\neq \emptyset$ }{
-	$u\longleftarrow $ Extract first element of $U$\;
-	\For{$(u,v)\in E$}{
-		\If{$VIS[v]==0$}{
-			$U\longleftarrow U\cup\{v\}$\; 
-			$Visited\longleftarrow Visited\cup \{v\}$\;
-			$VIS[v]\longleftarrow 1$}
-	}
-	
-}
+
 \For{$v\in Visited$}{\If{$d_{v,v}^{(n)}[1]<0$}{\Return $d_{i,i}^{(n)}[2]$}}
 }
 \caption{\prb{Find-Negative-Cycle}$(A,s,W)$}
 \end{algorithm}\parinf
 
-\textbf{Time Complexity:} The line 2 takes $O(n^3)$ time to create the array. In line 3 the for loop has $n^2$ iterations where each iteration takes constant time. In line 5-7 it takes total $n^3$ iterations and each iteration takes constant time. So the for loops in line 5-7 in total takes $O(n^3)$ time (We are assuming concatenating two lists take constant time. So in line 9 it takes constant time). In line 12-14 it takes linear time. In line 15 the while loop and the for loop at line 17 goes through each vertex and then also goes through each neighbor of it. Hence there are total $O(|V|+|E|)=O(n^2)$ iterations each of which takes constant time. In line 22 the for loop has $O(n)$ many iterations at most and each iteration it takes constant time. Hence the algorithm runs in $O(n^3)$ time. 
+\textbf{Time Complexity:} In line 2-4 it takes linear time. In line 5 the while loop and the for loop at line 7 goes through each vertex and then also goes through each neighbor of it. Basically runs a depth first search and list the vertices reachable from $s$. Hence there are total $O(|V|+|E|)=O(n^2)$ iterations each of which takes constant time. In line 12 the for loop has $O(n)$ many iterations at most and each iteration it takes constant time. The line 15 takes $O(n^3)$ time to create the array. In line 16 the outer for loop has $n$ iterations and for each iteration the two for loops at lines $17-18$  has total $n^2$ iterations where each iteration takes constant time. In line 16-22 it takes total  $O(n^3)$ time (We are assuming concatenating two lists take constant time. So in line 9 it takes constant time).  Hence the algorithm runs in $O(n^3)$ time. 
 }
 
 
@@ -401,7 +404,7 @@ Let us modify the ``cut rule" (in the implementation of decrease-key operation f
 		Let $x$ be a node in the Fibonacci heap. Let $y_1,\dots, y_k$ be children of $x$ in the order which they were added. Then $y_1.\textit{degree}\geq 0$, $y_2.\textit{degree}\geq 1$ and $y_i.\textit{degree}\geq i-3$  for $i=3,\dots, k$
 	\end{lemma}
 \begin{proof}
-	Degree of any node is at least $0$. So we already get $y_1.\textit{degree}\geq 0$. Now the children are indexed in the order which they were added. So when $y_1$ was added to $x$ \textit{degree} of $x$ was $0$. So after adding $y_1$ \textit{degree} of $x$ became $1$. Now when $y_2$ was added $x.\textit{degree}\geq 1$ and $y_2.\textit{degree}=x.\textit{degree}$. So $y.\textit{degree}\geq 1$.
+	Degree of any node is at least $0$. So we already get $y_1.\textit{degree}\geq 0$. Now the children are indexed in the order which they were added. So when $y_1$ was added to $x$ \textit{degree} of $x$ was $0$. So after adding $y_1$ \textit{degree} of $x$ became $1$. Now when $y_2$ was added $x.\textit{degree}\geq 1$ and $y_2.\textit{degree}=x.\textit{degree}$. So $y_2.\textit{degree}\geq 1$.
 	
 	For $i\geq 3$ when $y_i$ was linked to $x$ then $y_1,\dots, y_{i-1}$ were children of $x$. So at that time $x.\textit{degree}\geq i-1$. Since $y_i$ was linked to $x$ we must have $y_i.\textit{degree}=x.\textit{degree}$. So at that time we must have $y_i.\textit{degree}\geq i-1$. Since then because of the \textsc{Cascading-Cut} operation $y_i$ can loose at most $2$ children and still remain as the child of $x$. So $y_i.\textit{degree}\geq i-3$. Therefore for all $i=3,\dots, k$ we have $y_i.\textit{degree}\geq i-3$ and $y_1.\textit{degree}\geq 0$, $y_2.\textit{degree}\geq 1$.
 \end{proof}
@@ -417,7 +420,7 @@ Let us modify the ``cut rule" (in the implementation of decrease-key operation f
 	\begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
 		\item We have $$a_n=1+\sum_{i=3}^n a_{i-3}=\lt[1+\sum_{i=3}^{n-1} a_{i-3}\rt]+a_{n-3}=a_{n-1}+a_{n-3}$$Therefore we obtain the given recurrence relation for all $n\geq 3$.
 		\item Value of the polynomial $p(x)=x^3-x^2-1$ at $x=1$ is $p(1)=1-1-1<0$. And $p(2)=8-4-1>0$. Hence $p(x)$ has a real root between $1$ and $2$. Therefore $p(x)$ has a real root $\lm$ which is greater than $1$.
-		\item We will prove this by induction. For $n=0$ we have $\lm^0=1$ and $a_3=1+a_0=1\geq \lm^0$. Hence the base case is followed. Suppose for $n=0,\dots, i-1$ we have $a_{n+3}\geq \lm^n$. For $n=i$ $$a_{i+3}=a_{i+2}+a_i\geq \lm^{i-1}+\lm^{i-3}=\lm^{i-3}(\lm^2+1)=\lm^{i-3}\lm^3=\lm^i$$Hence by mathematical induction we have $a_{n+3}\geq \lm^n$ for all $n\geq 0$
+		\item We will prove this by induction. For $n=0$ we have $\lm^0=1$ and $a_3=1+a_0=1= \lm^0$. Hence the base case is followed. Suppose for $n=0,\dots, i-1$ we have $a_{n+3}\geq \lm^n$. For $n=i$ $$a_{i+3}=a_{i+2}+a_i\geq \lm^{i-1}+\lm^{i-3}=\lm^{i-3}(\lm^2+1)=\lm^{i-3}\lm^3=\lm^i$$Hence by mathematical induction we have $a_{n+3}\geq \lm^n$ for all $n\geq 0$
 	\end{enumerate}
 \end{proof}
 Now using these two lemmas we will prove a upper bound the size of a node with degree $k$ which we can use to bound the maximum degree since the number of nodes is $n$ and degree can not exceed the total number of nodes.
@@ -430,7 +433,7 @@ Now using these two lemmas we will prove a upper bound the size of a node with d
 	Let $s_k$ denote the minimum possible size of any node with degree $k$. Now we have $s_0=1$, $s_1=2$, $s_3=3$. So we have $x.\textit{size}\geq s_k$. Suppose $y_1,\dots, y_k$ be the children of $x$ in the order which they were linked to $x$. Now  to bound $s_k$ we count one for the root and one each for the first two children of the root and then we have the sizes for the other children. So we have $$x.\textit{size}\geq s_k\geq 3+\sum_{i=3}^k s_{y_i.\textit{degree}}\geq 3+\sum_{i=3}^k s_{i-3}$$Now we will inductively show that $s_k\geq a_{k+3}$. For base case using \lemref{lem1} we have $s_0=1=a_3$, $s_1=2=a_3+a_1=a_4$, $s_2=3=a_4+a_2=a_5$. Therefore for $k=0,1,2$ we have $s_k=a_{k+3}$. So the base case is followed. Now suppose this is true for $k=0,\dots, i-1$. For $k=i$ we have $$s_i\geq 3+\sum_{j=3}^is_{j-3}\geq 3+\sum_{j=3}^i a_{j}=3+\sum_{j=0}^i a_{j}-\sum_{j=0}^2a_j=3+\sum_{j=0}^ia_j-2=1+\sum_{j=0}^ia_j=a_{i+3}$$Therefore we have $s_i\geq a_{i+3}$. Hence by mathematical induction we have $s_k\geq a_{k+3}$ and then using \lemref{lem2} we have $s_k\geq \lm^k$ for all $k\in\bbN\cup \{0\}$.
 \end{proof}
 
-Now we will bound the maximum degree. Let $x$ be a node in the Fibonacci heap. Let $k=x.\textit{degree}$.  Then by \lemref{lem3} we have $k\geq \lm^k$. Let there are total $n$ nodes in the Fibonacci heap. Therefore we have $$n\geq k\geq \lm^k\implies \lg_{\lm}n\geq \log_{\lm}\lm^k\implies k\leq \log_{\lm}n=\log \lm\cdot \log n=O(\log n)$$Hence the maximum degree is bounded by $O(\log n)$. 
+Now we will bound the maximum degree. Let $x$ be a node in the Fibonacci heap. Let $k=x.\textit{degree}$.  Then by \lemref{lem3} we have $k\geq \lm^k$. Let there are total $n$ nodes in the Fibonacci heap. Therefore we have $$n\geq k\geq \lm^k\implies \log_{\lm}n\geq \log_{\lm}\lm^k\implies k\leq \log_{\lm}n=O(\log n)$$Hence the maximum degree is bounded by $O(\log n)$. 
 }
 
 
@@ -453,7 +456,7 @@ The following are Fibonacci-heap operations: \textit{extract-min}$(\cdot)$, \tex
 		\end{itemize}
 		\item \textbf{Iteration:} So now assume we have a Fibonacci heap which is a linear chain of $i+1$ nodes. The root of the chain is $x^{(i+1)}$ and the value of the key of $x^{(i+1)}$ is $k^{(i+1)}$. We will now show the process of creating a linear chain of $i+2$ nodes. \parinn
 		
-		First we create three nodes with at least two of them have the key value less than $k^{(i+1)}$, $i\in[n-1]$. So we do \textit{create-node}$(\alpha,k_{\alpha})$, \textit{create-node}$(\beta,k_{\beta})$, \textit{create-node}$(\gm,k_{\gm})$ with $k_{\alpha}<k_{\beta}<k_{\gm}$ and  suppose $k_{\alpha},k_{\beta}<k^{(i+1)}$. So now the min pointer is on the node $\alpha$. Now we run the operation $\textit{extract-min}(\mcH)$. This operation then removes the node $k_{\alpha}$. Now $\beta$ and $\gm$ are two nodes with degree $0$. The \textsc{Consolidate} operation then add the two nodes $\beta$ and $\gm$ together with $\gm$ being the child of $\beta$ and then degree of $\beta$ becomes $1$. Now we have two roots, $x^{(i+1)}$ and $\beta$ both having degree 1. So the \textsc{Consolidate} operation links $x^{(i+1)}$ and $\beta$ with $x^{(i+1)}$ being a child of $\beta$ since initially we took $k_{\beta}<k^{(i+1)}$. So now degree of $\beta$ is 2 and the two child of $\beta $ are $x^{(i+1)}$ and $\gm$. So now we run the operation \textit{decrease-key}$(\gm,k_{\beta}-1)$. So now key of $\gm$ becomes less than key of $\beta$. So $\gm$ is now added to the root list  and degree of $\beta$ becomes $1$. Since $\gm $ has the minimum key the min pointer now points to $gm$. So now we do an \textit{extract-min}$(\mcH)$ operation. This will remove the $\gm$ from the root list and now we have a new linear chain with $i+2$ node where the root $x^{(i+2)}=\beta$ and the key is $k^{(i+2)}=k_{\beta}$. So the operations used in one iterations are:
+		First we create three nodes with at least two of them have the key value less than $k^{(i+1)}$, $i\in[n-1]$. So we do \textit{create-node}$(\alpha,k_{\alpha})$, \textit{create-node}$(\beta,k_{\beta})$, \textit{create-node}$(\gm,k_{\gm})$ with $k_{\alpha}<k_{\beta}<k_{\gm}$ and  suppose $k_{\alpha},k_{\beta}<k^{(i+1)}$. So now the min pointer is on the node $\alpha$. Now we run the operation $\textit{extract-min}(\mcH)$. This operation then removes the node $k_{\alpha}$. Now $\beta$ and $\gm$ are two nodes with degree $0$. The \textsc{Consolidate} operation then add the two nodes $\beta$ and $\gm$ together with $\gm$ being the child of $\beta$ and then degree of $\beta$ becomes $1$. Now we have two roots, $x^{(i+1)}$ and $\beta$ both having degree 1. So the \textsc{Consolidate} operation links $x^{(i+1)}$ and $\beta$ with $x^{(i+1)}$ being a child of $\beta$ since initially we took $k_{\beta}<k^{(i+1)}$. So now degree of $\beta$ is 2 and the two child of $\beta $ are $x^{(i+1)}$ and $\gm$. So now we run the operation \textit{decrease-key}$(\gm,k_{\beta}-1)$. So now key of $\gm$ becomes less than key of $\beta$. So $\gm$ is now added to the root list  and degree of $\beta$ becomes $1$. Since $\gm $ has the minimum key the min pointer now points to $\gm$. So now we do an \textit{extract-min}$(\mcH)$ operation. This will remove the $\gm$ from the root list and now we have a new linear chain with $i+2$ node where the root $x^{(i+2)}=\beta$ and the key is $k^{(i+2)}=k_{\beta}$. So the operations used in one iterations are:
 		\begin{itemize}
 			\item $3$ times \textit{create-node}
 			\item \textit{extract-min}

@@ -1,0 +1,16 @@
+\section{All Pairs Shortest Path}
+\begin{algoprob}
+	\problemtitle{All Pairs Shortest Path}
+	\probleminput{$G=(V,E)$ adjacency matrix, $V=[n]$. $G$ has no negative cycle.}
+	\problemquestion{For all $u,v\in V$ output the length of the shortest path from $u$ to $v$ in $G$.}
+\end{algoprob}
+
+A very well known algorithm for solving this is  using dynamic programming.  Suppose \textsc{Shortest-Path}$(i,j,k)$= Length of shortest path $i$ to $j$ that only takes vertices in $[k]$. So we have the following relation $$\textsc{Shortest-Path}(i,j,k)=\min\lt\{  \textsc{Shortest-Path}(i,j,k-1), \textsc{Shortest-Path}(i,k,k-1)+\textsc{Shortest-Path}(k,j,k-1)  \rt\}$$The time complexity of the algorithm is $O(n^3)$.
+
+\begin{Theorem}{\cite{Williams_2014_Fap_CONF}}{}
+	There is a randomized algorithm for \prb{APAP} with runtime $\frac{n^3}{2^{\eps\sqrt{\log n}}}$
+\end{Theorem}
+ Before diving in to the randomized algorithm we will first look into another problem.
+
+
+\subsection{Min Plus Product of Matrices}

@@ -254,7 +254,7 @@ Suppose at any iteration $t$, let $dist_t(v)$ denotes the distance $v$ from $s$ 
 	Suppose for contradiction the shortest path from $s\rightsquigarrow u$ is $P$ and has total weight $=\dl(u)=w(P)<dist_t(u)$. Now $P$ starts with vertices from $S^{(t)}$ by eventually leaves $S$. Let $(x,y)$ be the first edge in $P$ which leaves $S$ i.e. $x\in S$ but $y\notin S$. By inductive hypothesis $dist_t(x)=\dl(x)$. Let $P_y$ denote the path $s\rightsquigarrow y$ following $P$. Since $y$ appears before $u$ we have $$w(P_y)=\dl(y)\leq \dl(u)=w(P)$$Now $$dist_t(y)\leq dist_t(x)+w(x,y)$$ since $y$ is adjacent to $x$. Therefore $$dist_t(y)\leq dist_t(x)+w(x,y)=\dl(y)\leq dist_t(y)\implies dist_t(y)=\dl(y)$$Now since both $u,y\notin S^{(t)}$ and the algorithm picked up $u$ we have $\dl(u)<dist_t(u)\leq dist_t(y)=\dl(y)$. But we can not have both $\dl(y)\leq \dl(u)$ and $\dl(u)<\dl(y)$. Hence contradiction. Therefore $\dl(u)=dist_t(u)$. Hence by mathematical induction for any iteration $t$, for all $v\in S^{(t)}$, $\dl(v)=dist_t(v)$. 
 \end{proof}
 
-Therefore by the lemma  after all iterations $S$ has all the vertices with their shortest distances from $s$ and henceforth the algorithm runs correctly.\parinf
+Therefore by the lemma  after all iterations $S$ has all the vertices with their shortest distances from $s$ and henceforth the algorithm runs correctly.
 
 
 \section{Data Structure 1: Linear Array}
@@ -264,3 +264,19 @@ Therefore by the lemma  after all iterations $S$ has all the vertices with their
 \section{Amortized Analysis}
 
 \section{Data Structure 3: Fibonacci Heap}
+Instead of keeping just one Heap we will no keep an array of Heaps. We will also discard the idea of binary trees. We will now use a data structure which will take the benefit of the faster time of both the data structure. I.e.
+%\begin{center}
+%	\begin{tabular}{c|c|c}
+%		& \prb{Extract-Min} & \prb{Decrease-Key}\\
+%		Linear Array & $O(n)$ & $\mathcolor{red}{\boxed{\mathcolor{black}{O(1)}}}$\\
+%		Min-Heap & $\mathcolor{red}{\boxed{\mathcolor{black}{O(\log n)}}}$ & $O(\log n)$\\[2mm]
+%		Fibonacci Heap & $O(\log n)^*$ & $O(1)$
+%	\end{tabular}
+%\end{center}
+The * is because  in Fibonacci Heap the amortized time taken by \prb{Extract-Min} is  $O(\log n)$.
+
+ Since Fibonacci heap is an array of heaps there is a \textit{rootlist} which is the list of all the roots of all the heaps in the Fibonacci heap. There is a \textit{min-pointer} which points to the root with the minimum key. For each node in the Fibonacci heap we have a pointer to its parent and  we keep 3 variables. The 3 variables are \textit{degree}, \textit{size} and \textit{lost} where \textit{lost} is a Boolean Variable. For any node $x$ in the Fibonacci heap the $x.\textit{degree}$ is the number of children $x$ has, $x.\textit{size}$ is the number of nodes in the tree rooted at $x$ and $x.\textit{lost}$ is 1 if and only if $x$ has lost a child before. Why any node will lost a child that explanation we will give later. With this set up let's dive into the data structure.
+ 
+ \subsection{Inserting Node}
+ To insert a node we call the \prb{Fib-Insert} function and in the function the algorithm initiates the node with setting up all the pointers and variables then add the node to the \textit{rootlist}. 
+
