@@ -1,2 +1,42 @@
 \chapter{Combinatorics}
+\section{Twelve Problems: $n$ Balls in $m$ Bins}
+\begin{Theorem}{}{}
+	\begin{center}
+		\begin{tabularx}{0.9\textwidth}{>{\raggedright}p{0.2\linewidth}|>{\centering\arraybackslash}m{0.2\linewidth} |>{\centering\arraybackslash}m{0.2\linewidth}|>{\centering\arraybackslash}m{0.2\linewidth}}
+			& $\leq 1$ balls/bin $(m\geq n)$ & $\geq 1$ balls/bin $(m\leq n)$ & Unrestricted\\\hline
+			Identical Balls, Identical Bins& 1 & $P(n,m)$ & $\sum\limits_{i=1}^mP(n,i)$\\[5mm]
+			Identical Balls, Distinguishable Bins & $\displaystyle{\binom{m}{n}}$ & $\displaystyle{\binom{m-1}{n-1}}$ & $\displaystyle{\binom{n+m-1}{m-1}}$\\[5mm]
+			Distinguishable Balls, Identical Bins & $1$ & $S_2(n,m)$ & $\sum\limits_{i=1}^mS_2(ni)$\\[5mm]
+			Distinguishable Balls, Distinguishable Bins & $\displaystyle{\binom{m}{n}n!}$ & $S_2(n,m)m! $ & $m^n$
+		\end{tabularx}
+	\end{center}
+\end{Theorem}
+\begin{proof}
+	
+\end{proof}
+\section{Stirling Numbers}
+\subsection{Stirling Number of Second Kind}
+\begin{Definition}{Stirling Number of The Second Kind}{}
+	It is the number of ways to partition the set $[n]$ into $m$ nonempty parts. 
+\end{Definition}
 
+Clearly if we take the $n$ balls to be the set $[n]$ the balls become distinguishable and each partition is bin and the order order of the partition doesn't matter the bins are identical. So the it becomes the number of ways $n$ distinguishable balls divided into $m$ identical bins.
+\begin{lemma}{}{}
+	$S_2(n,m)=S_2(n-1,m-1)+mS_2(n-1,m)$
+\end{lemma}
+\begin{proof}
+	We have the balls $[n]$. Then there are two cases. The bin containing ball `1' can has only 1 ball or it can have $\geq 2$ balls. 
+	
+	For the first case the bin containing ball `1' has only one balls. So the rest of the $n-1$ balls are divided into the rest of the $m-1$ bins. The number of ways this is done is $S_2(n-1,m-1)$.
+	
+	For the second case the bin containing ball `1' has at least $2$ balls. In that case apart from the ball `1' all the other balls are filled into $m$ identical bins where each bin has at least $1$ ball. So we can think this scenario in other way that is first we fill bins with all the balls except `1' and then we choose where to put the ball `1'. So the number of ways the balls, $\{2,3,\dots, n\}$ i.e. $n-1$ distinguishable balls can be divided into $m$ bins is $S_2(n-1,m)$. Now there are $m$ choices for the ball `1' to be partnered up. Hence for this case there are $mS_2(n-1,m)$ many ways.
+	
+	Therefore the total number of ways the $n$ distinguishable balls can be divided into $m$ bins so that each bin has at least $1$ ball is $S_(n-1,m-1)+mS_2(n-1,m)$. Therefore we get $S_2(n,m)=S_2(n-1,m-1)+mS_2(n-1,m)$.
+\end{proof}
+
+\begin{lemma}{}{}
+	$S_2(n+1,m+1)= \displaystyle\sum\limits_{i=m}^n  \binom{n}{i}  S_2(n,i)$
+\end{lemma}
+\begin{combi-proof}
+On the $LHS$ we are counting the number of ways to partition $[n+1]$ into $m+1$ parts. For the $RHS$ let's focus on the element $n+1$. So we drop the element from $[n+1]$ in the $(m+1)^{th}$ part. Suppose there are mor
+\end{combi-proof}
