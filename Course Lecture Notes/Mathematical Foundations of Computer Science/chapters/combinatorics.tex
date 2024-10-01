@@ -21,10 +21,10 @@
 \end{Definition}
 
 Clearly if we take the $n$ balls to be the set $[n]$ the balls become distinguishable and each partition is bin and the order order of the partition doesn't matter the bins are identical. So the it becomes the number of ways $n$ distinguishable balls divided into $m$ identical bins.
-\begin{lemma}{}{}
+\begin{lemma}{}{s2recrel1}
 	$S_2(n,m)=S_2(n-1,m-1)+mS_2(n-1,m)$
 \end{lemma}
-\begin{proof}
+\begin{combi-proof}
 	We have the balls $[n]$. Then there are two cases. The bin containing ball `1' can has only 1 ball or it can have $\geq 2$ balls. 
 	
 	For the first case the bin containing ball `1' has only one balls. So the rest of the $n-1$ balls are divided into the rest of the $m-1$ bins. The number of ways this is done is $S_2(n-1,m-1)$.
@@ -32,11 +32,21 @@ Clearly if we take the $n$ balls to be the set $[n]$ the balls become distinguis
 	For the second case the bin containing ball `1' has at least $2$ balls. In that case apart from the ball `1' all the other balls are filled into $m$ identical bins where each bin has at least $1$ ball. So we can think this scenario in other way that is first we fill bins with all the balls except `1' and then we choose where to put the ball `1'. So the number of ways the balls, $\{2,3,\dots, n\}$ i.e. $n-1$ distinguishable balls can be divided into $m$ bins is $S_2(n-1,m)$. Now there are $m$ choices for the ball `1' to be partnered up. Hence for this case there are $mS_2(n-1,m)$ many ways.
 	
 	Therefore the total number of ways the $n$ distinguishable balls can be divided into $m$ bins so that each bin has at least $1$ ball is $S_(n-1,m-1)+mS_2(n-1,m)$. Therefore we get $S_2(n,m)=S_2(n-1,m-1)+mS_2(n-1,m)$.
-\end{proof}
+\end{combi-proof}
 
-\begin{lemma}{}{}
-	$S_2(n+1,m+1)= \displaystyle\sum\limits_{i=m}^n  \binom{n}{i}  S_2(n,i)$
+\begin{lemma}{}{s2recrel2}
+	$S_2(n+1,m+1)= \displaystyle\sum\limits_{i=m}^n  \binom{n}{i}  S_2(i,m)$
 \end{lemma}
 \begin{combi-proof}
-On the $LHS$ we are counting the number of ways to partition $[n+1]$ into $m+1$ parts. For the $RHS$ let's focus on the element $n+1$. So we drop the element from $[n+1]$ in the $(m+1)^{th}$ part. Suppose there are mor
+On the $LHS$ we are counting the number of ways to partition $[n+1]$ into $m+1$ parts. 
+
+For the $RHS$ let's focus on the element $n+1$. So we drop the element from $[n+1]$ in the $(m+1)^{th}$ part. The $(m+1)^{th}$ block can have $k$ elements from $[n]$ which are partnered by $n+1$ where $0\leq k\leq n-m$. We have $k\leq n-m$ since all the other $m$ parts have at least 1 element that leaves us $n-m$ elements to choose. So there are $\binom{n}{k}$ ways to choose the $k$ elements. The remaining $n-k$ elements are divided into $m$ parts which can be done in $S_2(n-k,m)$ many choices. So in total we have $\sum\limits+{k=0}^{n-m}S_2(n-k,m)$ ways to divide $[n+1]$ into $m+1$ parts. Therefore we have $$S_2(n+1,m+1=\sum\limits_{i=0}^{n-m}\binom{n}{i}S_2(n-i,m)=\sum\limits_{i=0}^{n-m}\binom{n}{n-i}S_2(n-i,m)=\sum\limits_{i=m}^{n}\binom{n}{i}S_2(i,m)$$
 \end{combi-proof}
+\begin{alg-proof}We will prove by Induction. 
+	\begin{align*}
+		S_2(n+1,m+1) & = \mathcolor{black}{S_2(n,m)}+\mathcolor{blue}{(m+1)S_2(n,m)} & [\text{Using \lmref{s2recrel1}}]\\
+		             & = \mathcolor{black}{\sum_{i=m-1}^{n-1}\binom{n-1}{i}S_2(i,m-1)} +\mathcolor{blue}{ (m+1)\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}& [\text{Induction Hypothesis}]\\
+		             & = \mathcolor{black}{\sum_{i=m-1}^{n-1}\binom{n-1}{i}S_2(i,m-1)}+\mathcolor{red}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}+\mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}& [\text{Using \lmref{s2recrel1}}]\\
+		             & = \sum_{i=m}^{n-1}\binom{n-1}{i-1}S_2(i-1,m-1)+\mathcolor{red}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}+\mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}\\
+	\end{align*}
+\end{alg-proof}
