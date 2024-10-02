@@ -3,12 +3,12 @@
 \usepackage{url}
 
 \usepackage[nottoc,numbib]{tocbibind}
-\input{../../preamble-article}
+\input{preamble-article}
 \input{../../letterfonts}
 \input{../../macros}
 
-\definecolor{mycolor1}{HTML}{95A3B3}
-\definecolor{mycolor2}{HTML}{84DCC6}
+\definecolor{mycolor1}{HTML}{D1603D}
+\definecolor{mycolor2}{HTML}{210D08}
 %\usepackage{anysize}
 %\marginsize{1.5in}{1in}{0.5in}{0.5in}
 
@@ -26,8 +26,6 @@
 	\rule{\unitlength}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}
 	\rule{\unitlength}{1.6pt}\\[4\baselineskip]
 	{\Large\scshape Scribe: Soham Chatterjee\\[10mm] sohamchatterjee999@gmail.com \\[2mm] Website: \href{https://sohamch08.github.io/}{\textcolor{black}{sohamch08.github.io}} }\par
-	\vfill
-	{\large\scshape 2024}\par
 	\endgroup}
 	
 
@@ -57,7 +55,10 @@
 %----------------------------------------------------------------------------------------
 \pagebreak
 \thispagestyle{empty}
-\tableofcontents 
+{
+	\hypersetup{linkcolor=mytoccolor}
+	\tableofcontents
+}
 \newpage
 \pagestyle{fancy}  
 

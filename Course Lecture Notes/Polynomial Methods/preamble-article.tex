@@ -80,6 +80,8 @@
 \definecolor{light-gray}{gray}{0.95}
 \definecolor{Emerald}{HTML}{00A99D}
 \definecolor{RoyalBlue}{HTML}{0071BC}
+\definecolor{mytoccolor}{HTML}{84371F}
+
 
 \renewcommand{\qed}{\ensuremath{\blacksquare}}
 
@@ -713,24 +715,24 @@
 \titlecontents{section}[3.7pc]
 {\addvspace{30pt}%
 	\begin{tikzpicture}[remember picture, overlay]%
-		\draw[fill=doc!60,draw=doc!60] (-7,-.1) rectangle (-0.6,.5);%
+		\draw[fill=mytoccolor,draw=mytoccolor] (-7,-.1) rectangle (-0.6,.5);%
 		\pgftext[left,x=-3.3cm,y=0.17cm]{\color{white}\Large\sc\bfseries Section\ \thecontentslabel};%
-	\end{tikzpicture}\color{doc!60}\large\sc\bfseries}%
+	\end{tikzpicture}\color{mytoccolor}\large\sc\bfseries}%
 {}
 {}
 {\;\titlerule\;\large\sc\bfseries Page \thecontentspage
 	\begin{tikzpicture}[remember picture, overlay]
-		\draw[fill=doc!60,draw=doc!60] (2pt,0) rectangle (4,0.1pt);
+		\draw[fill=mytoccolor,draw=mytoccolor] (2pt,0) rectangle (4,0.1pt);
 \end{tikzpicture}}%
 \titlecontents{subsection}[3.7pc]
 {\addvspace{2pt}}
-{\contentslabel[\thecontentslabel]{2pc}}
+{\contentslabel[\textcolor{mytoccolor}{\thecontentslabel}]{2pc}}
 {}
 {\hfill\small \thecontentspage}
 []
 \titlecontents{subsubsection}[3.7pc]
 {\addvspace{-1pt}\small}
-{\hspace*{2pc}\contentslabel[\thecontentslabel]{2pc}}
+{\hspace*{2pc}\contentslabel[\textcolor{mytoccolor}{\thecontentslabel}]{2pc}}
 {}
 {\hfill\small \thecontentspage}
 []
@@ -741,8 +743,8 @@
 	\section*{%
 		\vspace*{-20\p@}%
 		\begin{tikzpicture}[remember picture, overlay]%
-			\pgftext[right,x=15cm,y=0.2cm]{\color{doc!60}\Huge\sc\bfseries \contentsname};%
-			\draw[fill=doc!60,draw=doc!60] (13,-.75) rectangle (20,1);%
+			\pgftext[right,x=15cm,y=0.2cm]{\color{mytoccolor}\Huge\sc\bfseries \contentsname};%
+			\draw[fill=mytoccolor,draw=mytoccolor] (13,-.75) rectangle (20,1);%
 			\clip (13,-.75) rectangle (20,1);
 			\pgftext[right,x=15cm,y=0.2cm]{\color{white}\Huge\sc\bfseries \contentsname};%
 	\end{tikzpicture}}%

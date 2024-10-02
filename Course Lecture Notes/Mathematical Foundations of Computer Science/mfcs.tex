@@ -2,19 +2,19 @@
 \usepackage{url}
 
 \usepackage[nottoc,numbib]{tocbibind}
-\input{../../preamble}
+\input{preamble}
 \input{../../letterfonts}
 \input{../../macros}
 
-\definecolor{mycolor1}{HTML}{1becff}
-\definecolor{mycolor2}{HTML}{2E3192}
+\definecolor{mycolor1}{HTML}{E54B4B}
+\definecolor{mycolor2}{HTML}{1B2021}
 
 
 \newcommand*{\titre}[2]{\begingroup
 	\newlength{\drop}
 	\setlength{\drop}{0.1\textheight}
 	\centering
-	\settowidth{\unitlength}{\Huge\scshape La matière et fsdfdsf\hspace{3pt}-temps}
+	\settowidth{\unitlength}{\Huge\scshape CSS.102.1 Mathematical Foundations\hspace{3pt}-temps}
 	\vspace*{\baselineskip}
 	\rule{\unitlength}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
 	\rule{\unitlength}{0.4pt}\\[\baselineskip]
@@ -41,7 +41,7 @@
 
 \titleformat{\chapter}[display]
 {}
-{\hfill \tikz[remember picture] \node[] (nr) {\fontsize{20}{70}\selectfont\color{black}\textsc{Chapter~~} \fontsize{60}{70}\selectfont\color{black}\thechapter};
+{\hfill \tikz[remember picture] \node[] (nr) {\fontsize{20}{70}\selectfont\color{mytoccolor}\textsc{Chapter~~} \fontsize{60}{70}\selectfont\color{mytoccolor}\thechapter};
 	\begin{tikzpicture}[overlay,remember picture]
 		\coordinate (rightborder) at ($(nr)+(100,0)$);
 		\coordinate (right) at ($(nr.east) + (0.5,0)$);
@@ -71,7 +71,7 @@
 		\node [xshift=\paperwidth/2,yshift=\paperheight/2] at (current page.south west)[minimum width=\paperwidth,minimum height=\paperheight,top color=mycolor1,bottom color=mycolor2]{};
 	\end{tikzpicture}\\[3\baselineskip]
 
-	\titre{CSS.201.1 Algorithms}{Umang Bhaskar}
+	\titre{CSS.102.1 Mathematical Foundations\\[3mm] of Computer Science}{Raghuvansh Saxena}
 \end{titlepage}
 
 
@@ -80,8 +80,9 @@
 
 \titleformat{name=\chapter,numberless}[display]
 {\normalfont\Huge\bfseries}{}{0pt}{\Huge}
-
+{\hypersetup{linkcolor=mytoccolor}
 \tableofcontents
+}
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

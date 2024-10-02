@@ -1,5 +1,5 @@
 \chapter{Combinatorics}
-\section{Twelve Problems: $n$ Balls in $m$ Bins}
+\section{Twelve Problems: $\bmn$ Balls in $\bmm$ Bins}
 \begin{Theorem}{}{}
 	\begin{center}
 		\begin{tabularx}{0.9\textwidth}{>{\raggedright}p{0.2\linewidth}|>{\centering\arraybackslash}m{0.2\linewidth} |>{\centering\arraybackslash}m{0.2\linewidth}|>{\centering\arraybackslash}m{0.2\linewidth}}
@@ -21,6 +21,9 @@
 \end{Definition}
 
 Clearly if we take the $n$ balls to be the set $[n]$ the balls become distinguishable and each partition is bin and the order order of the partition doesn't matter the bins are identical. So the it becomes the number of ways $n$ distinguishable balls divided into $m$ identical bins.
+
+Now we will see some recursion relations of the Stirling number of the first kind. 
+
 \begin{lemma}{}{s2recrel1}
 	$S_2(n,m)=S_2(n-1,m-1)+mS_2(n-1,m)$
 \end{lemma}
@@ -34,9 +37,9 @@ Clearly if we take the $n$ balls to be the set $[n]$ the balls become distinguis
 	Therefore the total number of ways the $n$ distinguishable balls can be divided into $m$ bins so that each bin has at least $1$ ball is $S_(n-1,m-1)+mS_2(n-1,m)$. Therefore we get $S_2(n,m)=S_2(n-1,m-1)+mS_2(n-1,m)$.
 \end{combi-proof}
 
-\begin{lemma}{}{s2recrel2}
+\begin{Theorem}{}{s2recrel2}
 	$S_2(n+1,m+1)= \displaystyle\sum\limits_{i=m}^n  \binom{n}{i}  S_2(i,m)$
-\end{lemma}
+\end{Theorem}
 \begin{combi-proof}
 On the $LHS$ we are counting the number of ways to partition $[n+1]$ into $m+1$ parts. 
 
@@ -44,18 +47,110 @@ For the $RHS$ let's focus on the element $n+1$. So we drop the element from $[n+
 \end{combi-proof}
 \begin{alg-proof}We will prove by Induction. 
 	\begin{align*}
-		S_2(n+1,m+1) & = \mathcolor{black}{S_2(n,m)}+\mathcolor{blue}{(m+1)S_2(n,m)} \\
-		             & = \mathcolor{black}{\sum_{i=m-1}^{n-1}\binom{n-1}{i}S_2(i,m-1)} +\mathcolor{blue}{ (m+1)\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}\\
-		             & = \mathcolor{black}{\sum_{i=m-1}^{n-1}\binom{n-1}{i}S_2(i,m-1)}+\mathcolor{red!80!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}+\mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}\\
-		             & = \sum_{i=m}^{n-1}\binom{n-1}{i-1}S_2(i-1,m-1)+\mathcolor{red!80!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}+\mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}\\
-		             & =  \sum_{i=m}^{n-1}\binom{n-1}{i-1}S_2(i-1,m-1) + \mathcolor{red!80!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}+\mathcolor{blue}{\sum_{j=m}^{n-1}\lt[\binom{n}j-\binom{n-1}{j-1}\rt]S_2(j,m)}\\
-		             & =  \sum_{i=m}^{n-1}\binom{n-1}{i-1}S_2(i-1,m-1) + \mathcolor{red!80!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}+\mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n}jS_2(j,m)}-\sum_{j=m}^{n-1}\binom{n-1}{j-1}S_2(j,m)\\
-		             & =  \sum_{i=m}^{n-1}\binom{n-1}{i-1}S_2(i-1,m-1) + \mathcolor{red!80!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}+\mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n}jS_2(j,m)}-\sum_{j=m}^{n-1}\binom{n-1}{j-1}\bigg[S_2(j-1,m-1)+mS_2(j-1,m)\bigg]\\
-		             & = \cancel{ \sum_{i=m}^{n-1}\binom{n-1}{i-1}S_2(i-1,m-1)} + \mathcolor{red!80!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}+\mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n}jS_2(j,m)}-\cancel{\sum_{j=m}^{n-1}\binom{n-1}{j-1}S_2(j-1,m-1)}-\mathcolor{green!50!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j-1}S_2(j-1,m)}\\
-		             & =  \mathcolor{red!80!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)} + \mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n}jS_2(j,m)}-\mathcolor{green!50!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j-1}S_2(j-1,m)}
+		& S_2(n+1,m+1)=\mathcolor{black}{S_2(n,m)}+\mathcolor{blue}{(m+1)S_2(n,m+1)} \\
+		             =\ & \mathcolor{black}{\sum_{i=m-1}^{n-1}\binom{n-1}{i}S_2(i,m-1)} +\mathcolor{blue}{ (m+1)\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}\\
+		             =\ & \mathcolor{black}{\sum_{i=m-1}^{n-1}\binom{n-1}{i}S_2(i,m-1)}+\mathcolor{red!80!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}+\mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}\\
+		             =\ & \sum_{i=m}^{n}\binom{n-1}{i-1}S_2(i-1,m-1)+\mathcolor{red!80!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}+\mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}\\
+		             =\ &  \sum_{i=m}^{n}\binom{n-1}{i-1}S_2(i-1,m-1) + \mathcolor{red!80!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}+\mathcolor{blue}{\sum_{j=m}^{n-1}\lt[\binom{n}j-\binom{n-1}{j-1}\rt]S_2(j,m)}\\
+		             =\ &  \sum_{i=m}^{n}\binom{n-1}{i-1}S_2(i-1,m-1) + \mathcolor{red!80!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}+\mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n}jS_2(j,m)}-\sum_{j=m}^{n-1}\binom{n-1}{j-1}S_2(j,m)\\
+		             =\ &  \sum_{i=m}^{n}\binom{n-1}{i-1}S_2(i-1,m-1) + \mathcolor{red!80!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}+\mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n}jS_2(j,m)} {-\sum_{j=m}^{n-1}\binom{n-1}{j-1}\bigg[S_2(j-1,m-1)+mS_2(j-1,m)\bigg]}\\
+		             =\ & S_2(n-1,m-1)+\cancel{ \sum_{i=m}^{n-1}\binom{n-1}{i-1}S_2(i-1,m-1)} + \mathcolor{red!80!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}+\mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n}jS_2(j,m)}-\cancel{\sum_{j=m}^{n-1}\binom{n-1}{j-1}S_2(j-1,m-1)}\\
+		             & \hskip0.75\textwidth-\mathcolor{red!80!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j-1}S_2(j-1,m)}\\
+		             =\ &  S_2(n-1,m-1)+\mathcolor{red!80!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)} + \mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n}jS_2(j,m)}-\mathcolor{red!80!black}{m\sum_{j=m+1}^{n-1}\binom{n-1}{j-1}S_2(j-1,m)}\\
+		             =\ &  S_2(n-1,m-1) + \mathcolor{red!80!black}{m\sum_{j=m}^{n-1}\binom{n-1}{j}S_2(j,m)}+\mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n}jS_2(j,m)}-\mathcolor{red!80!black}{m\sum_{j=m}^{n-2}\binom{n-1}{j}S_2(j,m)}\\
+		             =\ &  S_2(n-1,m-1)+ {mS_2(n-1,m)}\mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n}jS_2(j,m)}\\
+		             =\ & S_2(n,m)+ \mathcolor{blue}{\sum_{j=m}^{n-1}\binom{n}jS_2(j,m)}= \sum_{j=m}^{n}\binom{n}jS_2(j,m)
 	\end{align*}
 \end{alg-proof}
 \subsection{Stirling Number of First Kind}
 \begin{Definition}{Stirling Number of The First Kind}{}
-	It is the number of ways to partition the set $[n]$ into $m$ nonempty parts. 
+It is the number of permutations of $[n]$ with exactly $m$ cycles. The \textit{signed version} of Stirling number of the first kind is $(-1)^{n-m}S_1(n,m)$.
 \end{Definition}
+Now we will see some recursion relations of the Stirling number of the first kind. 
+\begin{lemma}{}{}
+	$S_1(n,m)=S_1(n-1,m-1)+(n-1)S_1(n-1,m)$
+\end{lemma}
+\begin{combi-proof}
+	The $LHS$ is the number of permutations of $[n]$ into $m$ cycles by definition. 
+	
+	In the $RHS$ we can break the permutations into two different kinds: permutations where $1\mapsto1$ and permutations where $1\not\mapsto 1$. For the permutations $1\mapsto1$ this alone forms a cycle. So the rest of the $n-1$ elements have to be permuted into $m-1$ cycles. Hence the number of such permutations is $S_1(n-1,m-1)$.
+	
+	For permutations where $1\not\mapsto 1$ take any permutation $\sg$. We will consider the permutation $\sg'$ on the elements $\{2,\dots, n\}$ where if $\sg(k)=1$ then $\sg'(k)=\sg\circ\sg(k)$ and otherwise for all $k\in \{2,\dots n\}$, $\sg'(k)=\sg(k)$. So $\sg'$ is now a permutation of $\{2,\dots, n\}$. For all such permutations where $1\not\mapsto 1$ we get a new unique permutation $\sg'$. So the number of cycles in $\sg$ is same as $\sg'$. Hence it is enough to for now count the number of permutations of $\{2,\dots,n\}$ into $m$ cycles  is $S_1(n-1,m)$. Now for any such permutation $\pi$ we can create new $n-1$ many permutations where $\forall\ i\in\{2,\dots, n\}$ where  $\pi_i(i)=1$, $\pi_i(1)=\pi(i)$. In this way for each permutation we get $n-1$ new permutations. Hence the number of permutations where $1\not\mapsto 1$ is $(n-1)S_2(n-1,m)$. 
+	
+	Hence total number of permutations of $[n]$ into $m$ cycles is $S_1(n-1,m-1)+(n-1)S_1(n-1,m)$. Therefore we get the lemma. 
+\end{combi-proof}
+
+\begin{lemma}{}{s1prop3}
+	$S_1(n,m)\displaystyle\binom{m}{k}=\sum_{j=k}^{n+k-m}\binom{n}{j}S_1(j,k)S_1(n-j,m-k)$
+\end{lemma}
+\begin{combi-proof}
+	In $LHS$, $S_1(n,m)$ is the number of permutations on $[n]$ with exactly $m$ cycles. Hence $S_1(n,m)\binom{m}{k}$ is the number of ways to choose $k$ cycles among the $m$ cycles from permutations on $[n]$ with exactly $m$ cycles. This is same as first constructing the chosen $k$ cycles with some elements of $[n]$ and then with the rest of elements construct the rest $m-k$ cycles.
+	
+	In $RHS$ first we select  $j$ elements for the $k$ cycles from $n$ in $\binom{n}{j}$ ways. Then for the chosen $j$ elements we create $k$ cycles in $S_1(j,k)$ ways. So the number of ways we can create $k$ cycles by $j$ elements from $[n]$ is $\binom{n}{j}S_1(j,k)$ ways. Now for the rest of the elements we create the rest $m-k$ cycles which we can do in $S_1(n-j,m-k)$. Therefore the number of ways to construct $k$ cycles and with the rest of the elements construct the remaining $m-k$ cycles with elements from $[n]$ is $\sum\limits_{j=k}^{n+k-m}\binom{n}{j}S_1(j,k)S_1(n-j,m-k)$. Therefore we have $$S_1(n,m)\displaystyle\binom{m}{k}=\sum_{j=k}^{n+k-m}\binom{n}{j}S_1(j,k)S_1(n-j,m-k)$$
+\end{combi-proof}
+\begin{Theorem}{}{}
+	$S_1(n+1,m+1)=\displaystyle\sum_{j=m}^n\binom{j}{m}S_1(n,j)$.
+\end{Theorem}
+\begin{combi-proof}
+Consider the permutations on $[n]$ which has at least $m$ cycles. So take a permutation $\sg$ which has $j$ cycles where $m\leq j\leq n$. So for any cycle consider the smallest element in that cycle to be the leading element. So let the permutation is $$\sigma=(a_1\ldots a_{\ell_1})(a_{\ell_1+1}\ldots a_{\ell_2})\ldots(a_{\ell_{j-1}+1}\ldots a_j)$$Now among these $j$ cycles we choose $m$ cycles in $\binom{j}{m}$ ways. Let the first $m$ cycles are chosen. Then we create the last $(m+1)^{th}$ cycle using the $n+1$ in the following way $$\matp{n+1 & a_{\ell_{m}}+1& \dots& a_{\ell_{m+1}}&a_{\ell_{m+1}}+1&\dots&a_j}$$Hence for each chosen set of $m$ cycles we can join the rest of the cycles and $n+1$ to get the $(m+1)^{th}$ cycle. So now the number of permutations on $[n]$ with $j$ cycles is $S_1(n,j)$. Then we can choose the $m$ cycles among $j$ cycles in $\binom{j}{m}$ ways. So the number of permutations on $[n+1]$ with $m+1$ cycles is $\sum\limits_{j=m}^n\binom{j}{m}S_1(n,j)$. Therefore we have $$S_1(n+1,m+1)=\displaystyle\sum_{j=m}^n\binom{j}{m}S_1(n,j)$$
+\end{combi-proof}
+\begin{alg-proof}
+	First we will prove an identity of $S_1(n+1,m+1)$ then we will dive into the prove of this expression. We will show that  $S_1(n+1,m+1)=\sum\limits_{k=m}^n\frac{n!}{k!}S_1(k,m)$. We can use induction on $n+m+2$\begin{align*}
+		S_1(n+1,m+1)& =S_1(n,m)+nS_1(n,m+1)\\
+		& =S_1(n,m) +n\sum_{k=m}^{n-1}\frac{(n-1)!}{k!}S_1(k,m)\\
+		& = \frac{n!}{n!}S_1(n,m) +\sum_{k=m}^{n-1}\frac{n!}{k!}S_1(k,m)=\sum_{k=m}^{n}\frac{n!}{k!}S_1(k,m)
+	\end{align*}
+	Now we will prove this inductively. 
+	\begin{align*}
+		\sum_{j-m}^n\binom{j}{m}S_1(n,j) & = \sum_{j=m}^n\sum_{k=m}^{n+m-j}\binom{n}{k}S_1(k,m)S_1(n-k,j-m) & [\text{Using \lmref{s1prop3}}]\\
+		& = \sum_{k=m}^n\binom{n}{k}S_1(k,m)\sum_{j=m}^{n+m-k}S_1(n-k,j-m)\\
+		& = \sum_{k=m}^n\binom{n}{k}S_1(k,m)\sum_{j=0}^{n-k}S_1(n-k,j)\\
+		& = \sum_{k=m}^n\binom{n}{k}S_1(k,m)(n-k)!& \lt[\text{Since $\displaystyle\sum_{j=0}^{n-k}S_1(n-k,j)$ is  number of permutations on $[n-k]$}\rt]\\
+		&  \sum_{k=m}^n\frac{n!}{k!}S_1(k,m)\\
+		& = S_1(n+1,m+1)
+	\end{align*}
+
+\end{alg-proof}
+
+Now we will show you a property of the signed Stirling number of the first kind.
+\begin{Theorem}{}{}
+	$S_1(n,m)=\displaystyle\sum\limits_{i=m}^n(-1)^{i-m}\binom{i}{m}S_1(n+1,i+1)$
+\end{Theorem}
+\begin{proof}
+	\begin{align*}
+		\sum_{i=m}^n(-1)^{i-m}\binom{i}{m}S_1(n+1,i+1) & = (-1)^{i-m}\binom{i}{m}\sum_{j=i}^n\binom{j}{i}S_1(n,j)\\
+		& = \sum_{j=m}^nS_1(n,j)\sum_{i=m}^j (-1)^{i-m}\binom{i}{m}\binom{j}{i}\\
+		& = \sum_{j=m}^n S_1(n,j)\sum_{i=m}^j (-1)^{i-m}\binom{j}{m}\binom{j-m}{i-m}\\
+		& = \sum_{j=m}^n \binom{j}{m}S_1(n,j)\sum_{i=0}^{j-m} (-1)^{i}\binom{j-m}{i}\\
+		& = \sum_{j=m+1}^n \binom{j}{m}S_1(n,j)\underbrace{\sum_{i=0}^{j-m} (-1)^{i}\binom{j-m}{i}}_{=0}+\binom{m}{m}S_1(n,m)(-1)^0\binom{0}{0}\\
+		& = S_1(n,m)
+	\end{align*}
+\end{proof}
+\subsection{Connecting the Two Stirling Numbers}
+\begin{Theorem}{}{}
+	Let $S_1$ and $S_2$ be $k\times k$ matrix where for any $n,m\in [k]$ with $n\geq m$ we have $(S_1)_{n,m}=(-1)^{n-m}S_1(n,m)$ and $(S_2)_{n,m}=S_2(n,m)$ and $0$ otherwise then $S_1S_2=I$i.e. $$\displaystyle\sum\limits_{i=m}^n(-1)^{n-i}S_1(n,i)S_2(i,m)=\mathbbm{1}(n=m)$$
+\end{Theorem}
+\begin{proof}
+We will induct on $n+m$. Then we have \begin{align*}
+	\sum\limits_{i=m}^n(-1)^{n-i}S_1(n,i)S_2(i,m) & = \sum_{i=0}^{\infty} (-1)^{n-i}(S_1(n-1,i-1)+(n-1)S_1(n-1,i))S_2(i,m)\\
+	& = \sum_{i=0}^{\infty} (-1)^{n-i}S_1(n-1,i-1)S_2(i,m)+ (n-1)\sum_{i=0}^{\infty} (-1)^{n-i}S_1(n-1,i)S_2(i,m)\\
+	& = \sum_{i=0}^{\infty} (-1)^{n-i}S_1(n-1,i-1)[S_2(i-1,m-1)+mS_2(i-1,m)] - (n-1)\mathbbm{1}(n-1=m)\\
+	& = \sum_{i=0}^{\infty} (-1)^{n-i}S_1(n-1,i-1)S_2(i-1,m-1)+m\sum_{i=0}^{\infty} (-1)^{n-i}S_1(n-1,i-1)S_2(i-1,m)\\
+	& \hskip0.6\textwidth-(n-1)\mathbbm{1}(n-1=m)\\
+	& = \mathbbm{1}(n=m)+m\mathbbm{1}(n-1=m)-(n-1)\mathbbm{1}(n-1=m)\\
+	& =  \mathbbm{1}(n=m)+(m-n+1)\mathbbm{1}(n-1=m)= \mathbbm{1}(n=m)
+\end{align*}
+\end{proof}
+\section{Inclusion Exclusion Principle}
+\begin{Theorem}{Inclusion-Exclusion Principle}{}
+\end{Theorem}
+
+\begin{corollary}{}{}
+	If $\forall\ i\in[n]$, $A_i=\{0\}$. Then $$1=\sum_{i=0}^n(-1)^{i+1}\binom{n}{i}$$
+\end{corollary}
+\begin{corollary}{}{}
+	There are $\sum\limits_{k=0}^n\binom{m}{k}(-1)^k(m-k)^n$ onto functions from $[n]\to [m]$
+\end{corollary}
+\begin{Theorem}{Strong Inclusion-Exclusion}{}
+	Let $f$ be a function mapping subsets of $[n]\to \bbR$. Define $g$ from subsets of $[n]$ to $\bbR$ as follows $$f(T)=\sum_{S\subseteq T}f(S)\quad T\subseteq [n]$$Then $$f(T)=\sum_{S\subseteq T}(-1)^{|T|-|S|}g(S)$$
+\end{Theorem}
