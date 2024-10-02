@@ -7,7 +7,7 @@
 \usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools,titlesec}
 \usepackage{bookmark}
 \usepackage[inline]{enumitem}
-\usepackage{hyperref,theoremref}
+\usepackage{hyperref,theoremref,changepage}
 \hypersetup{
 	colorlinks=true, linkcolor=doc!80, urlcolor=doc!80, citecolor=mydefinitfr!80!black,
 	bookmarksnumbered=true,
@@ -263,7 +263,7 @@
 %================================
 
 \tcbuselibrary{theorems,skins,hooks}
-\newtcbtheorem[number within=subsection]{claim}{Claim}
+\newtcbtheorem[use counter from=Theorem, number within=subsection]{claim}{Claim}
 {%
 	enhanced
 	,breakable
@@ -283,7 +283,7 @@
 {th}
 
 
-\newtcbtheorem[number within=section]{Claim}{Claim}
+\newtcbtheorem[use counter from=theorem, number within=section]{Claim}{Claim}
 {%
 	enhanced
 	,breakable

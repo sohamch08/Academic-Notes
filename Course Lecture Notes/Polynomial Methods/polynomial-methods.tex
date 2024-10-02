@@ -30,7 +30,15 @@
 	
 
 
-
+\makeatletter
+\newcommand{\ostar}{\mathbin{\mathpalette\make@circled\star}}
+\newcommand{\make@circled}[2]{%
+	\ooalign{$\m@th#1\smallbigcirc{#1}$\cr\hidewidth$\m@th#1#2$\hidewidth\cr}%
+}
+\newcommand{\smallbigcirc}[1]{%
+	\vcenter{\hbox{\scalebox{0.77778}{$\m@th#1\bigcirc$}}}%
+}
+\makeatother
 
 
 
@@ -103,6 +111,12 @@ The content of this course will be the followings:
 \input{sections/kakeya-nikodym}
 \input{sections/razborov-smolensky}
 \input{sections/all-pairs-shortest-path}
+
+
+
+
+
+\newpage
 
 \bibliographystyle{alpha}
 \bibliography{polymethod_refs}
