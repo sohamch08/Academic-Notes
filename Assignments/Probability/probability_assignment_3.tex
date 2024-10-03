@@ -1,0 +1,190 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage{amsmath,mathtools,mathdots}
+\usepackage{amssymb,amsthm}  % assumes amsmath package installed
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=doc!80,
+	citecolor=myr,
+	filecolor=myr,      
+	urlcolor=doc!80,
+	pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
+}
+\usepackage[most,many,breakable]{tcolorbox}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{mathpazo}
+% Use the libertine package for the Libertine font
+\usepackage{libertine}
+\usepackage[libertine]{newtxmath}
+\usepackage{libertine}
+\usepackage{physics}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+\usepackage{float}
+\usepackage{pgfplots}
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+
+\input{../assignment-problem-box}
+
+\newtheorem{lemma}{Lemma}
+\renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\qed\bigskip\\}
+% To give references for any problem use like this
+% suppose the problem number is p3 then 2 options either 
+% \hyperref[p:p3]{<text you want to use to hyperlink> \ref{p:p3}}
+%                  or directly 
+%                   \ref{p:p3}
+
+
+
+\input{../../letterfonts}
+
+\input{../../macros}
+
+\setlength{\parindent}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 2}\\
+		Email: \href{soham.chatterjee@tifr.res.in}{soham.chatterjee@tifr.res.in} \hfill Dept: STCS\\
+		\normalsize Course: Probability Theory \hfill Date: \today}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+\begin{problem}{%problem statement
+	}{p1% problem reference text
+}
+We know that independent random variables are uncorrelated. Argue that uncorrelated
+jointly Gaussian random variables are independent.
+
+Hint: do this for two random variables first. For $n$ random variables, you might find it
+easier to use the characteristic function.
+\end{problem}
+\solve{
+	Let $\ovZ=(Z_1,\dots, Z_n)^T$ be the $n$ uncorrelated jointly Gaussian random variables. Let $K$ be the covarince matrix of $Z$. 
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p2% problem reference text
+	}
+\begin{enumerate}[label=(\roman*)]
+	\item * Let $X$ and $Y$ be independent random variables. $X_1\sim N(0,1)$; and $Y=+1$ with probability $p$ and $Y=-1$ with probability $1-p$. We define $X_2=YX_1$. Is $X_2$ Gaussian? Are $X_1,X_2$ jointly Gaussian? Justify your answers.
+	
+	[See Example 3.3.4 from [G] for a solution]
+	\item Repeat (i) if $X_1\sim N(m,1)$ and $m>0$
+\end{enumerate}
+\end{problem}
+\solve{
+	
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+[G] Exercise 3.8
+}{p3% problem reference text
+	}
+\begin{enumerate}[label=(\alph*)]
+	\item Let $[K]=\mat{0.75 & 0.25\\ 0.25 & 0.75}$. Show that $1$ and $\frac12$ are eigenvalues of $[K]$ and find the normalized eigenvectors. Express $[K]$ ad $[Q\Lm Q^{-1}]$, where $[\Lm]$ is diagonal and $[Q]$ is orthonormal.
+	\item Let $[K']=\alpha[K]$ for real $\alpha\neq 0$. Find the eigenvalues and eigenvectors of $[K']$. Don not use brute force - think!
+	\item Find the eigenvalues and eigenvectors of $[K^m]$, where $[K^m]$ is the $mth$ power of $[K]$.
+\end{enumerate}
+\end{problem}
+\solve{
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement 
+	}{p4% problem reference text
+	}
+We derived the p.d.f. of a jointly Gaussian random vector $X=AW$, where $A$ is an $n\times n$ matrix. We used the fact $A$ is invertible. How would you precisely describe the distribution of $X$ if $A$ is not invertible? Describe the underlying geometry of the distribution of $X$. Use the following $A$ as an example: $$A=\matp{1 & 2 &3\\ 1 & 1&1\\ 2&3&4}$$
+\end{problem}
+\solve{
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement 
+		[G] Problem 3.9
+	}{p5% problem reference text
+	}
+Let $X$ and $Y$ be jointly Gaussian with means $m_X$, $m_Y$, variances $\sg_X^2, \sg_Y^2$, and normalized covariance $\rho$. Find the conditional density $f\st_{X\mid Y}(x\mid y)$.
+\end{problem}
+\solve{
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 6
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\parinf\vspace*{1cm}
+
+In the next two problems we will use a common model for communication systems.
+The transmitted signal $\vec{X}$ is a Gaussian random vector of size m (vector since there
+are several, say $m$, transmit antennas and each component of the vector stands for the
+input to a separate antenna). The signal goes over a linear and additive Gaussian noise
+channel and is picked up by a receiver which also has $n$ antennas. The received vector
+of length $n$ has the form.\begin{equation}
+	\vec{Y}=H\vec{X}+\vec{Z},\label{eq}
+\end{equation}where $H$ is a constant $n\times m$ vector and $\vec{Z}$ is a Gaussian random vector of size $n$ and independent of $\vec{X}$.
+
+\begin{problem}{%problem statement 
+	}{p6% problem reference text
+	}
+Let us first consider the simpler case of $m=1$ and $n=2$. So $X$ is a scalar random variable. Let $X$ have the standard normal distribution $N(0,1)$. The received signals are $$Y_i=h_iX+Z_i,\qquad i=1,2,$$where $Z_i\sim N(0,\sg^2)$ are i.i.d and independent of $X$. And $h_i'$s are constants which represent the channel ``gains" from the transmit antenna to the receive antennas.\begin{enumerate}[label=(\alph*)]
+	\item Find the conditional joint distribution of $Y_1,Y_2$ conditioned on $X=x$.
+	\item Find the conditional joint distribution of $X$ conditioned on $Y_1=y_1$, $Y_2=y_2$.
+	\item Using (b), what is your estimate of the transmitted signal $X$ if you are told that the receive antennas observed $Y_1=y_1$, $Y_2=y_2$. \textbf{Interpret your results}. Does your answer make intuitive sense? What happens to the estimate when the noise variance $\sg^2$ becomes small? or large?
+\end{enumerate}
+\end{problem}
+\solve{
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 7
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement 
+	}{p7% problem reference text
+	}
+Now consider the general model in \eqref{eq} for general $n,m$. Let $\vec{X}\sim N(\vec{0}, K_X)$, $\vec{Z}\sim N(\vec{0},K_Z)$ and $\vec{Z}$ is independent of $\vec{X}$.
+\begin{enumerate}[label=(\alph*)]
+	\item Show that $\vec{U}=(\vec{X},\vec{Y})$ is jointly Gaussian. You may use any of the equivalent definitions we saw in class
+	\item Find a simple condition on $H,K_X,K_Z$ so that $K_U$ is invertible.
+	\item What is the conditional distribution of the input $\vec{X}$ given the output $\vec{Y}=\vec{y}$.
+\end{enumerate}
+\end{problem}
+\solve{
+}
+
+
+\end{document}

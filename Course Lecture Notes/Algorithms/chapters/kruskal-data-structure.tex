@@ -64,3 +64,56 @@
 \section{Data Structure 2: Left Child Right Siblings Tree}
 
 \section{Data Structure 3: Union Find}
+\subsection{Analyzing the Union-Find Data-Structure}
+We call a node in the union-find data-structure a \textit{leader} if it is the root of the (reversed) tree.
+\begin{lemma}{}{}
+	Once a node stop being a \textit{leader} (i.e. the node in top of a tree). it can never become a leader again.
+\end{lemma}
+\begin{lemma}{}{}
+	Once a node stop being a leader then its rank is fixed.
+\end{lemma}
+\begin{lemma}{}{}
+	Ranks are monotonically increasing in the reversed trees, as we travel from a node to
+	the root of the tree.
+\end{lemma}
+
+\begin{lemma}{}{}
+	When a node gets rank $k$ than there are at least $\geq 2^k$ elements in its subtree.
+\end{lemma}
+\begin{corolary}{}{}
+	For all vertices $v$, $v.rank\leq \lt\lfloor \log n\rt\rfloor$
+\end{corolary}
+\begin{corolary}{}{}
+	Height of any tree $\leq \lt\lfloor\log _2n\rt\rfloor$
+\end{corolary}
+\begin{lemma}{}{}
+	The number of nodes that get assigned rank $k$ throughout the execution of the Union-Find data-structure is at most $\frac{n}{2^k}$. 
+\end{lemma}
+Define $N(r)=\#$vertices with rank at least $k$. Then by the above lemma we have $N(r)\leq \frac{n}{2^k}$.
+\begin{lemma}{}{}
+	 The time to perform a single find operation when we perform union by rank and path
+	compression is $O(\log n)$ time.
+\end{lemma}
+We will show that we can do much better. In fact we will show that for $m$ operations over $n$ elements the overall running time is $O((n+m)\log ^*n)$
+
+\begin{lemma}{}{}
+	During a single $\prb{Find}(x)$ operation, the number of jumps between blocks along the search path is $O(\log^*n)$.
+\end{lemma}
+\begin{lemma}{}{}
+	At most $|\textit{Block}(i)|\leq \textit{Tower}(i)$ many \prb{Find} operations can pass through an element $x$ which is in the $i^{th}$ block (i.e. $\prb{index}_B(x)=i$) before $x.\textit{parent}$ is no longer in the $i^{th}$ block. That is $\prb{index}_B(x.\textit{parent})>i$.
+\end{lemma}
+
+\begin{lemma}{}{}
+	There are at most $\frac{n}{\textit{Tower}(i)}$ nodes that have ranks in the $i^{th}$ block throughout the algorithm execution.
+\end{lemma}
+
+\begin{lemma}{}{}
+	The number of internal jumps performed, inside the $i^{th}$ block, during the lifetime of \prb{Union-Find} data structure is $O(n)$.
+\end{lemma}
+
+\begin{Theorem}{}{}
+	The number of internal jumps performed by the \prb{Union-Find} data structure overall $O(n\log^*n)$.
+\end{Theorem}
+\begin{Theorem}{}{}
+	The overall time spent on $m$ \prb{Find} operations, throughout the lifetime of a Union-Find data structure defined over $n$ elements is $O((n+m)\log^*n)$.
+\end{Theorem}
