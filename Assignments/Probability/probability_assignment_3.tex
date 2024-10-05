@@ -144,16 +144,19 @@ If $X_1,X_2$ is jointly Gaussian then the marginal distribution on $X_2$ is also
 % Problem 4
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{problem}{%problem statement 
-    }{p4% problem reference text
-    }
-    We derived the p.d.f. of a jointly Gaussian random vector $X=AW$, where $A$ is an $n\times n$ matrix. We used the fact $A$ is invertible. How would you precisely describe the distribution of $X$ if $A$ is not invertible? Describe the underlying geometry of the distribution of $X$. Use the following $A$ as an example: $$A=\matp{1 & 2 &3\\ 1 & 1&1\\ 2&3&4}$$
-\end{problem}
-\solve{
-}
+%\begin{problem}{%problem statement 
+%    }{p4% problem reference text
+%    }
+%    We derived the p.d.f. of a jointly Gaussian random vector $X=AW$, where $A$ is an $n\times n$ matrix. We used the fact $A$ is invertible. How would you precisely describe the distribution of $X$ if $A$ is not invertible? Describe the underlying geometry of the distribution of $X$. Use the following $A$ as an example: $$A=\matp{1 & 2 &3\\ 1 & 1&1\\ 2&3&4}$$
+%\end{problem}
+%\solve{
+%}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 5
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\addtocounter{problem}{1}
 
 \begin{problem}{%problem statement 
         [G] Problem 3.9
@@ -168,7 +171,7 @@ If $X_1,X_2$ is jointly Gaussian then the marginal distribution on $X_2$ is also
                         & = \frac{1}{2\pi\sg_x\sg_Y\sqrt{1-\rho^2}}\exp(-\frac{     (x-m_X)\lt[\frac{x-m_X}{\sg_x^2} -\rho\frac{y-m_Y}{\sg_x\sg_Y} \rt]  +  (y-m_Y)\lt[-\rho\frac{x-m_X}{\sg_x\sg_Y} +\frac{y-m_Y}{\sg_Y^2}\rt]}{2(1-\rho^2)})\\
                         & = \frac{1}{2\pi\sg_x\sg_Y\sqrt{1-\rho^2}}\exp(-\frac{     \frac{(x-m_X)^2}{\sg_x^2} -\rho\frac{(x-m_X)(y-m_Y)}{\sg_x\sg_Y}       -\rho\frac{(x-m_X)(y-m_Y)}{\sg_x\sg_Y} +\frac{(y-m_Y)^2}{\sg_Y^2}   }{2(1-\rho^2)})\\
                         & = \frac{1}{2\pi\sg_x\sg_Y\sqrt{1-\rho^2}}\exp(-\frac1{2(1-\rho^2)}\lt[    \frac{(x-m_X)^2}{\sg_x^2} -2\rho\frac{(x-m_X)(y-m_Y)}{\sg_x\sg_Y}  +\frac{(y-m_Y)^2}{\sg_Y^2}   \rt] )\\
-    \end{align*}Now we have $f\st_{Y}(y)=\frac{1}{\sg_Y\sqrt{2\pi}}\exp(-\frac{(y-m_Y)^2}{2\sg_Y^2})$. We know for conditional density function $f\st_{X\mid Y}(x\mid y)=\frac{f\st_{X,Y}(x,y)}{f\st_Y(y)}$. Hence we have  \newpage
+    \end{align*}Now we have $f\st_{Y}(y)=\frac{1}{\sg_Y\sqrt{2\pi}}\exp(-\frac{(y-m_Y)^2}{2\sg_Y^2})$. We know for conditional density function $f\st_{X\mid Y}(x\mid y)=\frac{f\st_{X,Y}(x,y)}{f\st_Y(y)}$. Hence we have  
 
     \begin{align*}
         f\st_{X\mid Y}(x\mid y)&= \frac{\dfrac{1}{2\pi\sg_x\sg_Y\sqrt{1-\rho^2}}   \exp(-\dfrac1{2(1-\rho^2)}\lt[    \dfrac{(x-m_X)^2}{\sg_x^2} -2\rho\dfrac{(x-m_X)(y-m_Y)}{\sg_x\sg_Y}  +\dfrac{(y-m_Y)^2}{\sg_Y^2}   \rt] )}{\dfrac{1}{\sg_Y\sqrt{2\pi}}\exp(-\dfrac{(y-m_Y)^2}{2\sg_Y^2})}\\

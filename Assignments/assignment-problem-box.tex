@@ -5,9 +5,9 @@
 \definecolor{myg}{RGB}{56, 140, 70}
 \definecolor{myb}{RGB}{45, 111, 177}
 \definecolor{myr}{RGB}{199, 68, 64}
-
+\newcounter{problem}
 \tcbuselibrary{theorems,skins,hooks}
-\newtcbtheorem{problem}{Problem}
+\newtcbtheorem[use counter=problem]{problem}{Problem}
 {%
 	enhanced,
 	breakable,
