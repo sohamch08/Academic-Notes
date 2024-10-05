@@ -11,12 +11,12 @@
 \usepackage{indentfirst}
 \usepackage{hyperref}
 \hypersetup{
-	colorlinks=true,
-	linkcolor=doc!80,
-	citecolor=myr,
-	filecolor=myr,      
-	urlcolor=doc!80,
-	pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
+    colorlinks=true,
+    linkcolor=doc!80,
+    citecolor=myr,
+    filecolor=myr,      
+    urlcolor=doc!80,
+    pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
 }
 \usepackage[most,many,breakable]{tcolorbox}
 \usepackage{tikz}
@@ -60,45 +60,58 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-	
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
-	\textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 2}\\
-		Email: \href{soham.chatterjee@tifr.res.in}{soham.chatterjee@tifr.res.in} \hfill Dept: STCS\\
-		\normalsize Course: Probability Theory \hfill Date: \today}
-	
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 3}\\
+    Email: \href{soham.chatterjee@tifr.res.in}{soham.chatterjee@tifr.res.in} \hfill Dept: STCS\\
+    \normalsize Course: Probability Theory \hfill Date: \today\\ 
+\noindent\rule{7in}{2.8pt}}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
-\begin{problem}{%problem statement
-	}{p1% problem reference text
-}
-We know that independent random variables are uncorrelated. Argue that uncorrelated
-jointly Gaussian random variables are independent.
 
-Hint: do this for two random variables first. For $n$ random variables, you might find it
-easier to use the characteristic function.
+\begin{problem}{%problem statement
+    }{p1% problem reference text
+    }
+    We know that independent random variables are uncorrelated. Argue that uncorrelated
+    jointly Gaussian random variables are independent.
+
+    Hint: do this for two random variables first. For $n$ random variables, you might find it
+    easier to use the characteristic function.
 \end{problem}
 \solve{
-	Let $\ovZ=(Z_1,\dots, Z_n)^T$ be the $n$ uncorrelated jointly Gaussian random variables. Let $K$ be the covarince matrix of $Z$. 
+    Let $\ovU=(U_1,\dots, U_n)^T$ be the $n$ uncorrelated jointly Gaussian random variables. Let $K$ be the covarince matrix of $\ovU$ where for each $i\in[n]$ we have $Z_i\sim N(\mu_i,\sg_i^2)$. So $\ovU=\ov{\mu}+\ovZ$ where $\ovZ=(Z_1,\dots, Z_n)^T$ and $\ovZ$ is zero mean Gaussian random variables. Since the Gaussian random variables are uncorrelated the matrix $K$ is diagonal. Hence the $K^{-1}$ is also diagonal. Then we know the density function of $\ovU$ is $$f\st_{\ovU}(\ovu)=\frac{\exp\lt[-\frac12(\ovu-\ov{\mu})^TK^{-1}(\ovu-\ov{\mu})  \rt]}{(2\pi)^{\frac{n}2}\sqrt{\det K}}$$Since $K$ is diagonal $$K=\mat{\sg_1^2 & & &\\ & \sg_2^2 & & \\ & & \ddots & \\ & & & \sg_n^2}\implies K^{-1}=\mat{\frac1{\sg_1^2} & & &\\ & \frac1{\sg_2^2} & & \\ & & \ddots & \\ & & & \frac1{\sg_n^2}}$$Therefore we have $$(\ovu-\ov{\mu})^TK^{-1}(\ovu-\ov{\mu})=\sum_{i=1}^n (u_i-\mu_i)\frac{1}{\sg_i^2}(u_i-\mu_i)=\sum_{i=1}^n\frac{(u_i-\mu_i)^2}{\sg_i^2}$$Hence we have $$f\st_{\ovU}(\ovu)=\dfrac{\exp\lt[-\frac12\sum\limits_{i=1}^n \frac{(u_i-\mu_i)^2}{\sg_i^2}\rt]}{(2\pi)^{\frac{n}2}\sqrt{\det K}}=\dfrac{\prod\limits_{i=1}^n\exp\lt[-\frac12 \frac{(u_i-\mu_i)^2}{\sg_i^2}\rt]}{(2\pi)^{\frac{n}2} \sqrt{\prod\limits_{i=1}^n {\sg_i^2}}  }=\prod\limits_{i=1}^n\dfrac{\exp\lt[-\frac{(u_i-\mu_i)^2}{2\sg_i^2}\rt]}{\sqrt{2\pi\sg_i^2} }= \prod\limits_{i=1}^n f\st_{U_i}(u_i)$$Therefore $U_i'$s are independent. 
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement
-	}{p2% problem reference text
-	}
-\begin{enumerate}[label=(\roman*)]
-	\item * Let $X$ and $Y$ be independent random variables. $X_1\sim N(0,1)$; and $Y=+1$ with probability $p$ and $Y=-1$ with probability $1-p$. We define $X_2=YX_1$. Is $X_2$ Gaussian? Are $X_1,X_2$ jointly Gaussian? Justify your answers.
-	
-	[See Example 3.3.4 from [G] for a solution]
-	\item Repeat (i) if $X_1\sim N(m,1)$ and $m>0$
-\end{enumerate}
+    }{p2% problem reference text
+    }
+    \begin{enumerate}[label=(\roman*)]
+        \item * Let $X$ and $Y$ be independent random variables. $X_1\sim N(0,1)$; and $Y=+1$ with probability $p$ and $Y=-1$ with probability $1-p$. We define $X_2=YX_1$. Is $X_2$ Gaussian? Are $X_1,X_2$ jointly Gaussian? Justify your answers.
+
+            [See Example 3.3.4 from [G] for a solution]
+        \item Repeat (i) if $X_1\sim N(m,1)$ and $m>0$
+    \end{enumerate}
 \end{problem}
 \solve{
+	We know for any random variable $Z\sim N(\mu,\sg^2)$ the characteristic function of $Z$ is $\bbE[\exp(itZ)]=\exp(it\mu-\frac12\sg^2t^2)$. 
 	
+	Now we know $X_1\sim N(m,1)$ where $m>0$. Therefore $\bbE[X_1]=m$ and $\Var[X_1]=1$. Therefore $\bbE[X_1^2]=\Var[X_1]+\bbE[X_1]^2=1+m^2$. Also for $Y$ we have $\bbE[Y]=p-(1-p)=2p-1$ and $\bbE[Y^2]=p+(1-p)=1$. Now we will calculate the mean and the variance and the characteristic function of $X_2=X_1Y$. $$\bbE[X_2]=\bbE[X_1Y]=\bbE[X_1]\bbE[Y]=(2p-1)m$$Now $$\bbE[X^2_2]=\bbE[X_1^2Y^2]=\bbE[X_1^2]\bbE[Y^2]=m^2+1$$Hence we have $$\Var[X_2]=\bbE[X^2_2]-\bbE[X_2]^2=m^2+1-(2p-1)^2m^2=m^2+1-(4p^2-4p+1)m^2=1-4m^2(p^2-p)$$
+	
+	Hence if $X_2$ is Gaussian then we have $X_2\sim N((2p-1)m, 1-4m^2(p^2-p))$. Then  the characteristic function of $X_2$ would have become $\exp(it(2p-1)m-\frac{t^2}2(1-4m^2(p^2-p)))$.	Now let's calculate the characteristic function of  $X_2$. $$\bbE[\exp(itX_2)]=\bbE[\exp(itX_1)]\bbE[\exp(itY)]=\exp(itm-\frac{t^2}{2})\lt[ pe^{it}+(1-p)e^{-it}\rt]$$So comparing the two equations we have \begin{align*}
+		         & \exp(it(2p-1)m-\frac{t^2}2(1-4m^2(p^2-p)))=\exp(itm-\frac{t^2}{2})\lt[ pe^{it}+(1-p)e^{-it}\rt] \\
+		\implies &\exp(it(2p-1)m-\frac{t^2}2(1-4m^2(p^2-p))- \lt[ itm-\frac{t^2}{2} \rt])= pe^{it}+(1-p)e^{-it}\\
+		\implies &\exp(2it(p-1)m+\frac{t^2}2(4m^2(p^2-p)))= pe^{it}+(1-p)e^{-it}\\
+		\implies &\exp(2it(p-1)m+2t^2m^2(p^2-p))= pe^{it}+(1-p)e^{-it}
+	\end{align*}Now notice that $p\leq 1$. Hence $p-1\leq 0$ and $p^2-p\leq0$. Therefore we have $$2it(p-1)m+2t^2m^2(p^2-p)\leq 0\implies \exp(2it(p-1)m+2t^2m^2(p^2-p))\leq 1$$ But in the $RHS$ we have $$pe^{it}+(1-p)e^{-it}=p(\cos t+i\sin t)+(1-p)(\cos t-i\sin t)=\cos t+i(2p-1)\sin t$$Therefore $|pe^{it}+(1-p)e^{-it}|=\sqrt{1+(2p-1)^2}>1$. But this is not possible. Hence contradiction. $X_2$ is not Gaussian.
+
+If $X_1,X_2$ is jointly Gaussian then the marginal distribution on $X_2$ is also Gaussian. Since we know the marginal distribution on $X_2$ is not Gaussian we have $X_1,X_2$ are not joinly Gaussian. 
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -106,16 +119,23 @@ easier to use the characteristic function.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement
-[G] Exercise 3.8
-}{p3% problem reference text
-	}
-\begin{enumerate}[label=(\alph*)]
-	\item Let $[K]=\mat{0.75 & 0.25\\ 0.25 & 0.75}$. Show that $1$ and $\frac12$ are eigenvalues of $[K]$ and find the normalized eigenvectors. Express $[K]$ ad $[Q\Lm Q^{-1}]$, where $[\Lm]$ is diagonal and $[Q]$ is orthonormal.
-	\item Let $[K']=\alpha[K]$ for real $\alpha\neq 0$. Find the eigenvalues and eigenvectors of $[K']$. Don not use brute force - think!
-	\item Find the eigenvalues and eigenvectors of $[K^m]$, where $[K^m]$ is the $mth$ power of $[K]$.
-\end{enumerate}
+        [G] Exercise 3.8
+    }{p3% problem reference text
+    }
+    \begin{enumerate}[label=(\alph*)]
+        \item Let $[K]=\mat{0.75 & 0.25\\ 0.25 & 0.75}$. Show that $1$ and $\frac12$ are eigenvalues of $[K]$ and find the normalized eigenvectors. Express $[K]$ ad $[Q\Lm Q^{-1}]$, where $[\Lm]$ is diagonal and $[Q]$ is orthonormal.
+        \item Let $[K']=\alpha[K]$ for real $\alpha\neq 0$. Find the eigenvalues and eigenvectors of $[K']$. Don't not use brute force - think!
+        \item Find the eigenvalues and eigenvectors of $[K^m]$, where $[K^m]$ is the $mth$ power of $[K]$.
+    \end{enumerate}
 \end{problem}
 \solve{
+    \begin{enumerate}[label=(\alph*)]
+        \item Let the vector $\mat{1 & 1}^T$ and $\mat{1 & -1}^T$. We claim they are the eigenvectors corresponding to eigenvalues $1$ and $-1$ respectively. $$\mat{0.75 & 0.25\\ 0.25 & 0.75}\mat{1\\1}=\mat{0.75+0.25\\ 0.25+0.75}=\mat{1\\1}\text{ and }\mat{0.75 & 0.25\\ 0.25 & 0.75}\mat{1\\-1}=\mat{0.75-0.25\\ 0.25-0.75}=\mat{0.5\\-0.5}=\frac12\mat{1\\-1}$$Hence $\mat{1& 1} ^T$ and $\mat{1& -1}^T$ are indeed eigenvector corresponding to eigenvalues $1$ and $-1$ respectively.  
+
+            Now the vectors $\mat{1& 1}^T$ and $\mat{1& -1}^T$ are orthogonal but they are not normalized vectors. Hence consider the vectors $\frac1{\sqrt{2}}\mat{1& 1}^T$ and $\frac{1}{\sqrt{2}}\mat{1& -1}^T$. They are orthogonal and also they are normalized. Hence they are orthonormal. Hence we claim $[Q]=\frac1{\sqrt{2}}\mat{1 & 1\\ 1& -1} $. Since we already knew the eigenvalues we also have $[\Lm]=\mat{1 & 0\\ 0 & \frac12}$. First we will show that $[Q^T]=[Q^{-1}]$. Now $\det[Q]=\lt(\frac{1}{\sqrt{2}}\rt)^2(1\times (-1)-1\times 1)=\frac12\times (-2)=-1$. Now $$[Q^{-1}]=\frac{1}{\det[Q]}\mat{-\frac1{\sqrt{2}} & -\frac1{\sqrt{2}}\\ -\frac1{\sqrt{2}}& \frac1{\sqrt{2}}}=\frac1{\sqrt{2}}\mat{1 &1\\ 1&-1}=[Q^T] $$So now $$[Q\Lm Q^{-1}]=\frac12\mat{1& 1\\ 1&-1}\mat{1 & 0\\ 0& 0.5}\mat{1& 1\\ 1&-1}=\frac12\mat{1 & 0.5 \\ 1& - 0.5}\mat{1& 1\\ 1&-1}=\frac12\mat{1.5& 0.5\\ 0.5 & 1.5}=\mat{0.75&0.25\\ 0.25&0.75}=[K]$$
+        \item If $v$ is an eigenvector with corresponding eigenvalue $\lm$ of $[K]$ then we have $$[K']v=\alpha[K]v=\alpha \lm v=(\alpha\lm )v$$So $v$ is also an eigenvector of $[K']$ but the corresponding eigenvalue is $\alpha \lm$. Since by the previous part we know the eigenvector of $[K]$ are $\mat{1&1}^T$  and $\mat{1& -1}^T$ with corresponding eigenvalues $1$ and $\frac12$ respectively the eigenvectors of $[K']$ are the same $\mat{1&1}^T$  and $\mat{1& -1}^T$ with corresponding eigenvalues $\alpha$ and $\frac{\alpha}2$ respectively.
+        \item If $v$ is an eigenvector with corresponding eigenvalue $\lm$ of $[K]$ then we have $$[K^m]v=[K^{m-1}][K]v=[K^{m-1}]\alpha v=\alpha [K^{m-1}]v=\alpha^2[K^{m-2}]v=\cdots = \alpha^{m-1}[K]v=\alpha^m v$$Therefore $v$ is also an eigenvector of $[K^m]$ but the corresponding eigenvalue is $\lm^v$. Since by the part (a) we know the eigenvector of $[K]$ are $\mat{1&1}^T$  and $\mat{1& -1}^T$ with corresponding eigenvalues $1$ and $-1$ respectively the eigenvectors of $[K^m]$ are the same $\mat{1&1}^T$  and $\mat{1& -1}^T$ with corresponding eigenvalues $1$ and $\frac1{2^m}$ respectively.
+    \end{enumerate}		
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -123,9 +143,9 @@ easier to use the characteristic function.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement 
-	}{p4% problem reference text
-	}
-We derived the p.d.f. of a jointly Gaussian random vector $X=AW$, where $A$ is an $n\times n$ matrix. We used the fact $A$ is invertible. How would you precisely describe the distribution of $X$ if $A$ is not invertible? Describe the underlying geometry of the distribution of $X$. Use the following $A$ as an example: $$A=\matp{1 & 2 &3\\ 1 & 1&1\\ 2&3&4}$$
+    }{p4% problem reference text
+    }
+    We derived the p.d.f. of a jointly Gaussian random vector $X=AW$, where $A$ is an $n\times n$ matrix. We used the fact $A$ is invertible. How would you precisely describe the distribution of $X$ if $A$ is not invertible? Describe the underlying geometry of the distribution of $X$. Use the following $A$ as an example: $$A=\matp{1 & 2 &3\\ 1 & 1&1\\ 2&3&4}$$
 \end{problem}
 \solve{
 }
@@ -134,19 +154,34 @@ We derived the p.d.f. of a jointly Gaussian random vector $X=AW$, where $A$ is a
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement 
-		[G] Problem 3.9
-	}{p5% problem reference text
-	}
-Let $X$ and $Y$ be jointly Gaussian with means $m_X$, $m_Y$, variances $\sg_X^2, \sg_Y^2$, and normalized covariance $\rho$. Find the conditional density $f\st_{X\mid Y}(x\mid y)$.
+        [G] Problem 3.9
+    }{p5% problem reference text
+    }
+    Let $X$ and $Y$ be jointly Gaussian with means $m_X$, $m_Y$, variances $\sg_X^2, \sg_Y^2$, and normalized covariance $\rho$. Find the conditional density $f\st_{X\mid Y}(x\mid y)$.
 \end{problem}
 \solve{
+    We have $\bbE[X]=m_X$ and $\bbE[Y]=m_Y$. Hence $\rho=\frac{\bbE[(X-\bbE[X])(Y-\bbE[Y])]}{\sg_X\sg_Y}=\frac{\bbE[(X-m_X)(Y-m_Y)]}{\sg_X\sg_Y}$. So $\cov(X,Y)=\rho\sg_X\sg_Y$. Hence the covariance matrix is $$K=\mat{\sg_X^2 & \rho\sg_X\sg_Y\\ \rho\sg_X\sg_Y& \sg_Y^2}$$Now $\det K=\sg_X^2\sg_Y^2-\rho^2\sg_X^2\sg_Y^2=\sg_X^2\sg_Y^2(1-\rho^2)$. Then $$K^{-1}=\frac{1}{\sg_X^2\sg_Y^2(1-\rho^2)}\mat{\sg_Y^2   &   -\rho\sg_X\sg_Y \\ -\rho\sg_X\sg_Y & \sg_X^2 }=\frac1{1-\rho^2}\mat{\frac1{\sg_x^2} & -\frac{\rho}{\sg_x\sg_Y} \\ -\frac{\rho}{\sg_x\sg_Y} & \frac{1}{\sg_Y^2}}$$Now we know the joint density function of $X,Y$ is \begin{align*}
+        f\st_{X,Y}(x,y) & =\frac{1}{2\pi\sqrt{\det K}}\exp(-\frac1{2(1-\rho^2)}\mat{x-m_X&  y-m_Y}\mat{\frac1{\sg_x^2} & -\frac{\rho}{\sg_x\sg_Y} \\ -\frac{\rho}{\sg_x\sg_Y} & \frac{1}{\sg_Y^2}}\mat{x-m_X\\ y-m_Y})\\
+                        & = \frac{1}{2\pi\sg_x\sg_Y\sqrt{1-\rho^2}}\exp(-\frac1{2(1-\rho^2)}\mat{x-m_X&  y-m_Y}\mat{\frac{x-m_X}{\sg_x^2} -\rho\frac{y-m_Y}{\sg_x\sg_Y}\\[3mm]  -\rho\frac{x-m_X}{\sg_x\sg_Y} +\frac{y-m_Y}{\sg_Y^2}})\\
+                        & = \frac{1}{2\pi\sg_x\sg_Y\sqrt{1-\rho^2}}\exp(-\frac{     (x-m_X)\lt[\frac{x-m_X}{\sg_x^2} -\rho\frac{y-m_Y}{\sg_x\sg_Y} \rt]  +  (y-m_Y)\lt[-\rho\frac{x-m_X}{\sg_x\sg_Y} +\frac{y-m_Y}{\sg_Y^2}\rt]}{2(1-\rho^2)})\\
+                        & = \frac{1}{2\pi\sg_x\sg_Y\sqrt{1-\rho^2}}\exp(-\frac{     \frac{(x-m_X)^2}{\sg_x^2} -\rho\frac{(x-m_X)(y-m_Y)}{\sg_x\sg_Y}       -\rho\frac{(x-m_X)(y-m_Y)}{\sg_x\sg_Y} +\frac{(y-m_Y)^2}{\sg_Y^2}   }{2(1-\rho^2)})\\
+                        & = \frac{1}{2\pi\sg_x\sg_Y\sqrt{1-\rho^2}}\exp(-\frac1{2(1-\rho^2)}\lt[    \frac{(x-m_X)^2}{\sg_x^2} -2\rho\frac{(x-m_X)(y-m_Y)}{\sg_x\sg_Y}  +\frac{(y-m_Y)^2}{\sg_Y^2}   \rt] )\\
+    \end{align*}Now we have $f\st_{Y}(y)=\frac{1}{\sg_Y\sqrt{2\pi}}\exp(-\frac{(y-m_Y)^2}{2\sg_Y^2})$. We know for conditional density function $f\st_{X\mid Y}(x\mid y)=\frac{f\st_{X,Y}(x,y)}{f\st_Y(y)}$. Hence we have  \newpage
+
+    \begin{align*}
+        f\st_{X\mid Y}(x\mid y)&= \frac{\dfrac{1}{2\pi\sg_x\sg_Y\sqrt{1-\rho^2}}   \exp(-\dfrac1{2(1-\rho^2)}\lt[    \dfrac{(x-m_X)^2}{\sg_x^2} -2\rho\dfrac{(x-m_X)(y-m_Y)}{\sg_x\sg_Y}  +\dfrac{(y-m_Y)^2}{\sg_Y^2}   \rt] )}{\dfrac{1}{\sg_Y\sqrt{2\pi}}\exp(-\dfrac{(y-m_Y)^2}{2\sg_Y^2})}\\
+                               & = \dfrac{1}{\sg_x\sqrt{2\pi(1-\rho^2)}}\exp( -\dfrac{\lt[    \frac{(x-m_X)^2}{\sg_x^2} -2\rho\frac{(x-m_X)(y-m_Y)}{\sg_x\sg_Y}  +\frac{(y-m_Y)^2}{\sg_Y^2}   -(1-\rho^2)\frac{(y-m_Y)^2}{2\sg_Y^2}  \rt]}{2(1-\rho^2)}    )\\
+                               & = \dfrac{1}{\sg_x\sqrt{2\pi(1-\rho^2)}}\exp( -\dfrac{\lt[    \frac{(x-m_X)^2}{\sg_x^2} -2\rho\frac{(x-m_X)(y-m_Y)}{\sg_x\sg_Y}  +\rho^2\frac{(y-m_Y)^2}{\sg_Y^2}   \rt]}{2(1-\rho^2)}    )\\
+                               & = \dfrac{1}{\sg_x\sqrt{2\pi(1-\rho^2)}} \exp( -\frac1{2(1-\rho^2)}  \lt[ \frac{x-m_X}{\sg_x} -\rho \frac{y-m_Y}{\sg_Y}   \rt]^2  )\\
+                               & = \dfrac{1}{\sg_x\sqrt{2\pi(1-\rho^2)}} \exp( -\frac1{2\sg_X^2(1-\rho^2)}  \lt[ x-\lt(\rho \frac{\sg_X}{\sg_Y}({y-m_Y})+m_X\rt)  \rt]^2  )
+    \end{align*}Hence we have $X\mid Y=y\sim N\lt(\rho \frac{\sg_X}{\sg_Y}({y-m_Y})+m_X,   \sg_X^2(1-\rho^2) \rt)$.
 }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 6
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\parinf\vspace*{1cm}
+\parinf\vspace*{2cm}
 
 In the next two problems we will use a common model for communication systems.
 The transmitted signal $\vec{X}$ is a Gaussian random vector of size m (vector since there
@@ -154,19 +189,34 @@ are several, say $m$, transmit antennas and each component of the vector stands 
 input to a separate antenna). The signal goes over a linear and additive Gaussian noise
 channel and is picked up by a receiver which also has $n$ antennas. The received vector
 of length $n$ has the form.\begin{equation}
-	\vec{Y}=H\vec{X}+\vec{Z},\label{eq}
-\end{equation}where $H$ is a constant $n\times m$ vector and $\vec{Z}$ is a Gaussian random vector of size $n$ and independent of $\vec{X}$.
+    \vec{Y}=H\vec{X}+\vec{Z},\label{eq}
+\end{equation}where $H$ is a constant $n\times m$ vector and $\vec{Z}$ is a Gaussian random vector of size $n$ and independent of $\vec{X}$.\parinn
 
 \begin{problem}{%problem statement 
-	}{p6% problem reference text
-	}
-Let us first consider the simpler case of $m=1$ and $n=2$. So $X$ is a scalar random variable. Let $X$ have the standard normal distribution $N(0,1)$. The received signals are $$Y_i=h_iX+Z_i,\qquad i=1,2,$$where $Z_i\sim N(0,\sg^2)$ are i.i.d and independent of $X$. And $h_i'$s are constants which represent the channel ``gains" from the transmit antenna to the receive antennas.\begin{enumerate}[label=(\alph*)]
-	\item Find the conditional joint distribution of $Y_1,Y_2$ conditioned on $X=x$.
-	\item Find the conditional joint distribution of $X$ conditioned on $Y_1=y_1$, $Y_2=y_2$.
-	\item Using (b), what is your estimate of the transmitted signal $X$ if you are told that the receive antennas observed $Y_1=y_1$, $Y_2=y_2$. \textbf{Interpret your results}. Does your answer make intuitive sense? What happens to the estimate when the noise variance $\sg^2$ becomes small? or large?
-\end{enumerate}
+    }{p6% problem reference text
+    }
+    Let us first consider the simpler case of $m=1$ and $n=2$. So $X$ is a scalar random variable. Let $X$ have the standard normal distribution $N(0,1)$. The received signals are $$Y_i=h_iX+Z_i,\qquad i=1,2,$$where $Z_i\sim N(0,\sg^2)$ are i.i.d and independent of $X$. And $h_i'$s are constants which represent the channel ``gains" from the transmit antenna to the receive antennas.\begin{enumerate}[label=(\alph*)]
+        \item Find the conditional joint distribution of $Y_1,Y_2$ conditioned on $X=x$.
+        \item Find the conditional joint distribution of $X$ conditioned on $Y_1=y_1$, $Y_2=y_2$.
+        \item Using (b), what is your estimate of the transmitted signal $X$ if you are told that the receive antennas observed $Y_1=y_1$, $Y_2=y_2$. \textbf{Interpret your results}. Does your answer make intuitive sense? What happens to the estimate when the noise variance $\sg^2$ becomes small? or large?
+    \end{enumerate}
 \end{problem}
+\newpage 
 \solve{
+    Now $\tdZ=\mat{X& Z_1& Z_2}^T$ forms independent zero mean Gaussian 3-random vectors since $X\sim N(0,1)$, $Z_1\sim N(0,\sg^2)$, $Z_2\sim N(0,\sg^2)$. Hence the covariance matrix of $\tdZ$ is $$\bbE[\tdZ\tdZ^T]=\mat{1 & & \\ & \sg^2& \\ & & \sg^2}$$Consider the matrix $$A=\mat{1&0&0\\ h_1& 1& 0\\ h_2& 0 &1}$$Then we have $$\mat{X\\ Y_1\\Y_2}=A\mat{X\\ Z_1\\Z_2}$$Hence the 3-random vector $\tdY=\mat{X& Y_1& Y_2}^T$ is a zero mean Gaussian $3-$random vectors. Now let $K$ denote the covariance matrix of $\tdY$. Then $$K=\bbE[\tdY\tdY^T]=\bbE[A\tdZ\tdZ^TA^T]=A\bbE[\tdZ\tdZ^T]A^T=\mat{1&0&0\\ h_1& 1& 0\\ h_2& 0 &1}\mat{1 &0 &0 \\  0& \sg^2&0 \\ 0&0 & \sg^2}\mat{1 & h_1& h_1\\ 0 & 1&0\\ 0& 0& 1}=\mat{1& h_1&h_2\\ h_1 & h_1+\sg^2 & h_1h_2\\ h_2& h_1h_2 & h_2^2+\sg^2}$$Now $$K=\mat{K_X & K_{X\cdot Y}\\ K_{X\cdot Y}^T & K_Y}=\lt[\begin{array}{c|cc}
+        1& h_1&h_2\\ \hline h_1 & h_1+\sg^2 & h_1h_2\\ h_2& h_1h_2 & h_2^2+\sg^2
+    \end{array}\rt]$$Therefore $K_X=\mat{1}$, $K_Y=\mat{h_1+\sg^2 & h_1h_2\\ h_1h_2 & h_2^2+\sg^2}$ and $K_{X\cdot Y}=K_{Y\cdot X}^T=\mat{h_1 & h_2}$. 
+    \begin{enumerate}[label=(\alph*)]
+        \item Let $\ovY=\mat{Y_1 & Y_2}^T$. Then we are asked to find $\ovY\mid X=x$. We know $\ovY\mid X=x$ is Gaussian bivariate random vector. The  mean of $\ovY\mid X=x$ is $$K_{Y\cdot X}K_X^{-1}x=K_{X\cdot Y}^TK_X^{-1}x=\mat{h_1\\ h_2}x=\mat{h_1x\\ h_2x}$$ The variance of $\ovY\mid X=x$ is $$K_Y-K_{Y\cdot X}K_X^{-1}K_{Y\cdot X}^T=\mat{h_1+\sg^2 & h_1h_2\\ h_1h_2 & h_2^2+\sg^2}-\mat{h_1\\ h_2}\mat{h_1& h_2}=\mat{h_1+\sg^2 & h_1h_2\\ h_1h_2 & h_2^2+\sg^2}- \mat{h_1^2 h_1h_2\\ h_1h_2& h_2^2}=\mat{\sg^2 & 0\\ 0& \sg^2}$$Therefore we have $Y_1\mid X=x\sim N(h_1x,\sg^2)$ and $Y_2\mid X=x\sim N(h_2x,\sg^2)$. 
+        \item  Let $\ovy=\mat{y_1 & y_2}^T$. We are asked to find $X\mid \ovY=\ovY$. We know $X\mid \ovY=\ovy$ is a Gaussian distribution. But we will find the mean and the variance of the distribution now. First we will find $K_Y^{-1}$. $$K_Y^{-1}=\mat{h_1+\sg^2 & h_1h_2\\ h_1h_2 & h_2^2+\sg^2}^{-1}=\frac1{\sg^4+\sg^2(h_1^2+h_2^2)}\mat{h_2^2+\sg^2& -h_1h_2\\ -h_1h_2& h_1^2+\sg^2}$$The mean of $X\mid \ovY=\ovy$ is $$K_{X\cdot Y}K_Y^{-1}\;\ovy=\frac1{\sg^4+\sg^2(h_1^2+h_2^2)}\mat{h_1 & h_2}\mat{h_2^2+\sg^2& -h_1h_2\\ -h_1h_2& h_1^2+\sg^2}\mat{y_1\\ y_2}=\frac{\sg^2(h_1y_1+h_2y_2)}{\sg^4+\sg^2(h_1^2+h_2^2)}=\frac{h_1y_1+h_2y_2}{\sg^2+h_1^2+h_2^2}$$The variance of $X\mid \ovY=\ovy$ is $$ K_X-K_{X\cdot Y}K_Y^{-1}K_{X\cdot Y}^T=1-\frac1{\sg^4+\sg^2(h_1^2+h_2^2)}\mat{h_1 & h_2}\mat{h_2^2+\sg^2& -h_1h_2\\ -h_1h_2& h_1^2+\sg^2}\mat{h_1\\h_2}=1-\frac{\sg^2(h_1+h_2)}{\sg^4+\sg^2(h_1^2+h_2^2)}=
+            \frac{\sg^2}{\sg^2+h_1^2+h_2^2}$$
+            Therefore we have $X\mid \ovY=\ovy\sim N\lt(\frac{h_1y_1+h_2y_2}{\sg^2+h_1^2+h_2^2},\frac{\sg^2}{\sg^2+h_1^2+h_2^2}\rt)$
+        \item Hence the estimated transmitted signal $X$ if observed $Y_1=y_1$ and $Y_2=y_2$ is $\frac{h_1y_1+h_2y_2}{\sg^2+h_1^2+h_2^2}$. \parinn
+
+            Now $$\lim_{\sg^2\to 0}\frac{h_1y_1+h_2y_2}{\sg^2+h_1^2+h_2^2}=\frac{h_1y_1+h_2y_2}{h_1^2+h_2^2}$$Hence if $\sg^2$ becomes very small then the estimated transmitted signal is $\frac{h_1y_1+h_2y_2}{h_1^2+h_2^2}$. 
+
+            If $\sg^2$ becomes large $$\lim_{\sg^2\to \infty}\frac{h_1y_1+h_2y_2}{\sg^2+h_1^2+h_2^2}=0$$then the estimated transmitted signal is $0$.
+    \end{enumerate}                                                                                                                                                                                                                                                                                                                                                                                                                                                      
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -174,16 +224,25 @@ Let us first consider the simpler case of $m=1$ and $n=2$. So $X$ is a scalar ra
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{problem}{%problem statement 
-	}{p7% problem reference text
-	}
-Now consider the general model in \eqref{eq} for general $n,m$. Let $\vec{X}\sim N(\vec{0}, K_X)$, $\vec{Z}\sim N(\vec{0},K_Z)$ and $\vec{Z}$ is independent of $\vec{X}$.
-\begin{enumerate}[label=(\alph*)]
-	\item Show that $\vec{U}=(\vec{X},\vec{Y})$ is jointly Gaussian. You may use any of the equivalent definitions we saw in class
-	\item Find a simple condition on $H,K_X,K_Z$ so that $K_U$ is invertible.
-	\item What is the conditional distribution of the input $\vec{X}$ given the output $\vec{Y}=\vec{y}$.
-\end{enumerate}
+    }{p7% problem reference text
+    }
+    Now consider the general model in \eqref{eq} for general $n,m$. Let $\vec{X}\sim N(\vec{0}, K_X)$, $\vec{Z}\sim N(\vec{0},K_Z)$ and $\vec{Z}$ is independent of $\vec{X}$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that $\vec{U}=(\vec{X},\vec{Y})$ is jointly Gaussian. You may use any of the equivalent definitions we saw in class
+        \item Find a simple condition on $H,K_X,K_Z$ so that $K_U$ is invertible.
+        \item What is the conditional distribution of the input $\vec{X}$ given the output $\vec{Y}=\vec{y}$.
+    \end{enumerate}
 \end{problem}
-\solve{
+\solve{\begin{enumerate}[label=(\alph*)]
+        \item Now $\hat{Z}=\mat{\vec{X}^T,\vec{Z}^T}^T$ forms independent zero mean Gaussian $(n+m)$-random variable since $\vec{X}\sim N(\vec{0},K_X)$ and $\vec{Z}\sim N(\vec{0},K_Z)$. Also denote $\hat{Y}=\mat{\vec{X}^T,\vec{Y}^T}^T$. Now we know $$\vec{Y}=H\vec{X}+\vec{Z}\implies \vec{Y}=[H\mid I_n]\mat{\vec{X}\\ \vec{Z}}\implies \mat{\vec{X}\\ \vec{Y}}=\underbrace{\lt[ \begin{array}{c|c}
+                    I_m & \\ \hline H & I_n
+            \end{array} \rt]}_{A}\mat{\vec{X}\\ \vec{Z}}\implies \hat{Y}=A\hat{Z}$$ Since $\hat{Z}$ is zero mean Gaussian $(n+m)$-random vector $hat{Y}$ is also a zero mean Gaussian $(n+m)$-random vector. Hence $\vec{U}=(\vec{X},\vec{Y})$ is jointly Gaussian.
+        \item \parinn Now  covariance matrix of $\vec{U}$ or $\hat{Y}$ is $K_U$. The covariance matrix of $\hat{Z}$ is $$\bbE[\hat{Z}\hat{Z}^T]=\mat{K_X& \\ & K_Z}$$Then we have $$K_U=\bbE[\hat{Y}\hat{Y}^T]=\bbE[A\hat{Z}\hat{Z}^TA^T]=A\bbE[\hat{Z}\hat{Z}^T]A^T=\mat{I_m & \\ H& I_n}\mat{K_X& \\ & K_Z}\mat{I_m & H^T\\ & I_n}=\mat{K_X & K_XH^T\\ HK_X& HK_XH^T+K_Z}$$Let the inverse of $K_U$ is $$K_U^{-1}=\mat{P & Q\\ R & S}\implies K_UK_U^{-1}=\mat{K_XP+K_XH^TR & K_XQ+K_XH^TS\\  HK_XP+(HK_XH^T+K_Z)R& HK_XQ+(HK_XH^T+K_Z)S}=\mat{I_m & \\ & I_n}$$Then we have $$K_XP+K_XH^TR=I_m\implies K_X(P+H^TR)=I_n\implies K_X\text{ is invertible}$$ Now we have $$HK_XP+(HK_XH^T+K_Z)R=0\implies HK_X(P+H^TR)+K_ZR=0\implies H+K_ZR=0$$We also have
+
+            $$HK_XQ+(HK_XH^T+K_Z)S=I_n\implies H(K_XQ+K_XH^TS)+K_ZS=I_n\implies K_ZS=I_n\implies K_Z\text{ is invertible} $$If $K_X,K_Z$ are invertible then we have $S=K_Z^{-1}$. $H+KZR=0\implies R=-K_Z^{-1}H$. $$K_XQ+K_XH^TK_Z^{-1}=0\implies Q=-H^TK_Z^{-1}$$And finally $$P+H^TR=K_X^{-1}\implies P= K_X^{-1}+H^TK_Z^{-1}H$$Therefore if $K_X$, $K_Y$ and $HK_XH^T+K_Z$ are invertible then $K_U$ becomes invertible. 
+        \item We have $K_U=\mat{K_X & K_XH^T\\ HK_X& HK_XH^T+K_Z}$. Also from this we get $$K_U^{-1}=\mat{K_X^{-1}+H^TK_Z^{-1}H & -H^TK_Z^{-1} \\ -K_Z^{-1}H & K_Z^{-1}}$$Now we know $\vec{X}\mid \vec{Y}=\vec{y} $ is a  Gaussian $m$-random variable. The mean of $\vec{X}\mid \vec{Y}=\vec{y} $ is $P^{-1}Q=-(K_X^{-1}+H^TK_Z^{-1}H)^{-1}H^TK_Z^{-1}$. And the variance is $(K_X^{-1}+H^TK_Z^{-1}H)^{-1}$. Therefore we have the distribution function of $\vec{X}\mid \vec{Y}=\vec{y}$ is  $ N\lt(-(K_X^{-1}+H^TK_Z^{-1}H)^{-1}H^TK_Z^{-1},  (K_X^{-1}+H^TK_Z^{-1}H)^{-1}  \rt)$. 
+
+    \end{enumerate}
 }
 
 
