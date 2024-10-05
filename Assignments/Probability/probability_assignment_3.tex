@@ -201,7 +201,7 @@ of length $n$ has the form.\begin{equation}
         \item Using (b), what is your estimate of the transmitted signal $X$ if you are told that the receive antennas observed $Y_1=y_1$, $Y_2=y_2$. \textbf{Interpret your results}. Does your answer make intuitive sense? What happens to the estimate when the noise variance $\sg^2$ becomes small? or large?
     \end{enumerate}
 \end{problem}
-\newpage 
+
 \solve{
     Now $\tdZ=\mat{X& Z_1& Z_2}^T$ forms independent zero mean Gaussian 3-random vectors since $X\sim N(0,1)$, $Z_1\sim N(0,\sg^2)$, $Z_2\sim N(0,\sg^2)$. Hence the covariance matrix of $\tdZ$ is $$\bbE[\tdZ\tdZ^T]=\mat{1 & & \\ & \sg^2& \\ & & \sg^2}$$Consider the matrix $$A=\mat{1&0&0\\ h_1& 1& 0\\ h_2& 0 &1}$$Then we have $$\mat{X\\ Y_1\\Y_2}=A\mat{X\\ Z_1\\Z_2}$$Hence the 3-random vector $\tdY=\mat{X& Y_1& Y_2}^T$ is a zero mean Gaussian $3-$random vectors. Now let $K$ denote the covariance matrix of $\tdY$. Then $$K=\bbE[\tdY\tdY^T]=\bbE[A\tdZ\tdZ^TA^T]=A\bbE[\tdZ\tdZ^T]A^T=\mat{1&0&0\\ h_1& 1& 0\\ h_2& 0 &1}\mat{1 &0 &0 \\  0& \sg^2&0 \\ 0&0 & \sg^2}\mat{1 & h_1& h_1\\ 0 & 1&0\\ 0& 0& 1}=\mat{1& h_1&h_2\\ h_1 & h_1+\sg^2 & h_1h_2\\ h_2& h_1h_2 & h_2^2+\sg^2}$$Now $$K=\mat{K_X & K_{X\cdot Y}\\ K_{X\cdot Y}^T & K_Y}=\lt[\begin{array}{c|cc}
         1& h_1&h_2\\ \hline h_1 & h_1+\sg^2 & h_1h_2\\ h_2& h_1h_2 & h_2^2+\sg^2
