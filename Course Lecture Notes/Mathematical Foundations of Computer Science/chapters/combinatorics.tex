@@ -143,14 +143,29 @@ We will induct on $n+m$. Then we have \begin{align*}
 \end{proof}
 \section{Inclusion Exclusion Principle}
 \begin{Theorem}{Inclusion-Exclusion Principle}{}
+	Let $A_1,\dots, A_n$ be finite sets. Then $$\lt|\bigcup_{i=1}^nA_i\rt|=\sum_{J\subseteq [n], J\neq\emptyset}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|$$
 \end{Theorem}
-
+\begin{proof}
+	We will prove this using induction on $n$.\begin{align*}
+		\lt|\bigcup\limits_{i=1}^{n}A_i\rt| & = \lt|\bigcup_{i=1}^{n-1} A_i\rt|+  |A_{n}|-  \lt|\lt(\bigcup_{i=1}^{n-1} A_i \rt)\cap A_{n}\rt|                                                                                                                                                                                                  \\
+		                                    & =  \mathcolor{red!80!black}{\lt|\bigcup\limits_{i=1}^{n-1}A_i\rt|}+|A_n|\mathcolor{blue!80!black}{-\lt|\bigcup_{i=1}^{n-1}(A_i\cap A_n)   \rt|                                                                                                                     }                                       \\
+		                                    & = \mathcolor{red!80!black}{\sum_{J\subseteq [n-1],J\neq\emptyset}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt| }+|A_n|\mathcolor{blue!80!black}{-\sum_{J\subseteq[n-1],J\neq\emptyset} (-1)^{|J|+1}\lt|A_n\cap\lt(\bigcap_{j\in J}A_j\rt)\rt|    }                                                               \\
+		                                    & =  \mathcolor{red!80!black}{\sum_{J\subseteq [n-1],J\neq\emptyset}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt| }+|A_n|\mathcolor{blue!80!black}{-\sum_{\substack{J\subseteq[n]\\ J\neq\{n\},n\in J}} (-1)^{|J|+1}\lt|A_n\cap\lt(\bigcap_{j\in J-\{n\}}A_j\rt)\rt|                     }                         \\
+		                                    & = \mathcolor{red!80!black}{ \sum_{J\subseteq [n-1],J\neq\emptyset}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|       }   +\sum_{J=\{n\}}(-1)^{|J|+1}\lt|\bigcap_{j\in J} A_j \rt|       \mathcolor{blue!80!black}{+\sum_{\substack{J\subseteq[n]\\ J\neq\{n\},n\in J}} (-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|}\\
+		                                    &= \mathcolor{red!80!black}{ \sum_{\substack{J\subseteq [n]\\J\neq\emptyset,n\notin J}}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|       }   +\sum_{J=\{n\}}(-1)^{|J|+1}\lt|\bigcap_{j\in J} A_j \rt|       \mathcolor{blue!80!black}{+\sum_{\substack{J\subseteq[n]\\ J\neq\{n\},n\in J}} (-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|}\\
+		                                    &= \sum_{J\subseteq [n], J\neq\emptyset}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|
+	\end{align*}
+Hence by mathematical induction we have the theorem.
+\end{proof}
 \begin{corollary}{}{}
 	If $\forall\ i\in[n]$, $A_i=\{0\}$. Then $$1=\sum_{i=0}^n(-1)^{i+1}\binom{n}{i}$$
 \end{corollary}
+\begin{proof}
+	Using the Inclusion-Exclusion Principle we have $$1=\lt|\bigcup_{i=1}^nA_i\rt|=\sum_{J\subseteq [n], J\neq\emptyset}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|=\sum_{J\subseteq [n], J\neq\emptyset}(-1)^{|J|+1}=\sum_{i=1}^n(-1)^{i+1}\binom{n}{i}$$
+\end{proof}
 \begin{corollary}{}{}
 	There are $\sum\limits_{k=0}^n\binom{m}{k}(-1)^k(m-k)^n$ onto functions from $[n]\to [m]$
 \end{corollary}
 \begin{Theorem}{Strong Inclusion-Exclusion}{}
-	Let $f$ be a function mapping subsets of $[n]\to \bbR$. Define $g$ from subsets of $[n]$ to $\bbR$ as follows $$f(T)=\sum_{S\subseteq T}f(S)\quad T\subseteq [n]$$Then $$f(T)=\sum_{S\subseteq T}(-1)^{|T|-|S|}g(S)$$
+	Let $f:2^{[n]}\to \bbR$. Define $g:2^{[n]}\to \bbR$ on a subset $T\subseteq [n]$ to be as follows $$g(T)=\sum_{S\subseteq T}f(S)\quad T\subseteq [n]$$Then $$f(T)=\sum_{S\subseteq T}(-1)^{|T|-|S|}g(S)$$
 \end{Theorem}
