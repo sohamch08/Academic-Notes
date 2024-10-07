@@ -163,9 +163,9 @@ Hence by mathematical induction we have the theorem.
 \begin{proof}
 	Using the Inclusion-Exclusion Principle we have $$1=\lt|\bigcup_{i=1}^nA_i\rt|=\sum_{J\subseteq [n], J\neq\emptyset}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|=\sum_{J\subseteq [n], J\neq\emptyset}(-1)^{|J|+1}=\sum_{i=1}^n(-1)^{i+1}\binom{n}{i}$$
 \end{proof}
-\begin{corollary}{}{}
+\begin{corolary}{}{}
 	There are $\sum\limits_{k=0}^n\binom{m}{k}(-1)^k(m-k)^n$ onto functions from $[n]\to [m]$
-\end{corollary}
+\end{corolary}
 \begin{Theorem}{Strong Inclusion-Exclusion}{}
 	Let $f:2^{[n]}\to \bbR$. Define $g:2^{[n]}\to \bbR$ on a subset $T\subseteq [n]$ to be as follows $$g(T)=\sum_{S\subseteq T}f(S)\quad T\subseteq [n]$$Then $$f(T)=\sum_{S\subseteq T}(-1)^{|T|-|S|}g(S)$$
 \end{Theorem}
