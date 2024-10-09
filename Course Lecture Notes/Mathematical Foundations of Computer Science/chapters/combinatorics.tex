@@ -1,5 +1,5 @@
 \chapter{Combinatorics}
-\section{Twelve Problems: $\bmn$ Balls in $\bmm$ Bins}
+\section{Twelve Problems: {$n$} Balls in $m$ Bins}
 \begin{Theorem}{}{}
 	\begin{center}
 		\begin{tabularx}{0.9\textwidth}{>{\raggedright}p{0.2\linewidth}|>{\centering\arraybackslash}m{0.2\linewidth} |>{\centering\arraybackslash}m{0.2\linewidth}|>{\centering\arraybackslash}m{0.2\linewidth}}
@@ -67,7 +67,7 @@ For the $RHS$ let's focus on the element $n+1$. So we drop the element from $[n+
 It is the number of permutations of $[n]$ with exactly $m$ cycles. The \textit{signed version} of Stirling number of the first kind is $(-1)^{n-m}S_1(n,m)$.
 \end{Definition}
 Now we will see some recursion relations of the Stirling number of the first kind. 
-\begin{lemma}{}{}
+\begin{lemma}{}{s1recrel1}
 	$S_1(n,m)=S_1(n-1,m-1)+(n-1)S_1(n-1,m)$
 \end{lemma}
 \begin{combi-proof}
@@ -96,18 +96,19 @@ Consider the permutations on $[n]$ which has at least $m$ cycles. So take a perm
 \end{combi-proof}
 \begin{alg-proof}
 	First we will prove an identity of $S_1(n+1,m+1)$ then we will dive into the prove of this expression. We will show that  $S_1(n+1,m+1)=\sum\limits_{k=m}^n\frac{n!}{k!}S_1(k,m)$. We can use induction on $n+m+2$\begin{align*}
-		S_1(n+1,m+1)& =S_1(n,m)+nS_1(n,m+1)\\
-		& =S_1(n,m) +n\sum_{k=m}^{n-1}\frac{(n-1)!}{k!}S_1(k,m)\\
-		& = \frac{n!}{n!}S_1(n,m) +\sum_{k=m}^{n-1}\frac{n!}{k!}S_1(k,m)=\sum_{k=m}^{n}\frac{n!}{k!}S_1(k,m)
+		S_1(n+1,m+1) & =S_1(n,m)+nS_1(n,m+1)                                          \\
+		             & =S_1(n,m) +n\sum_{k=m}^{n-1}\frac{(n-1)!}{k!}S_1(k,m)          \\
+		             & = \frac{n!}{n!}S_1(n,m) +\sum_{k=m}^{n-1}\frac{n!}{k!}S_1(k,m) \\
+		             & =\sum_{k=m}^{n}\frac{n!}{k!}S_1(k,m)
 	\end{align*}
 	Now we will prove this inductively. 
 	\begin{align*}
-		\sum_{j-m}^n\binom{j}{m}S_1(n,j) & = \sum_{j=m}^n\sum_{k=m}^{n+m-j}\binom{n}{k}S_1(k,m)S_1(n-k,j-m) & [\text{Using \lmref{s1prop3}}]\\
-		& = \sum_{k=m}^n\binom{n}{k}S_1(k,m)\sum_{j=m}^{n+m-k}S_1(n-k,j-m)\\
-		& = \sum_{k=m}^n\binom{n}{k}S_1(k,m)\sum_{j=0}^{n-k}S_1(n-k,j)\\
-		& = \sum_{k=m}^n\binom{n}{k}S_1(k,m)(n-k)!& \lt[\text{Since $\displaystyle\sum_{j=0}^{n-k}S_1(n-k,j)$ is  number of permutations on $[n-k]$}\rt]\\
-		&  \sum_{k=m}^n\frac{n!}{k!}S_1(k,m)\\
-		& = S_1(n+1,m+1)
+		\sum_{j-m}^n\binom{j}{m}S_1(n,j) & = \sum_{j=m}^n\sum_{k=m}^{n+m-j}\binom{n}{k}S_1(k,m)S_1(n-k,j-m) & [\text{Using \lmref{s1prop3}}]                                                                       \\
+		                                 & = \sum_{k=m}^n\binom{n}{k}S_1(k,m)\sum_{j=m}^{n+m-k}S_1(n-k,j-m) &  \\
+		                                 & = \sum_{k=m}^n\binom{n}{k}S_1(k,m)\sum_{j=0}^{n-k}S_1(n-k,j)     &  \\
+		                                 & = \sum_{k=m}^n\binom{n}{k}S_1(k,m)(n-k)!                         & \lt[\text{Since $\displaystyle\sum_{j=0}^{n-k}S_1(n-k,j)$ is  number of permutations on $[n-k]$}\rt] \\
+		                                 & \sum_{k=m}^n\frac{n!}{k!}S_1(k,m)                                &  \\
+		                                 & = S_1(n+1,m+1)                                                   &
 	\end{align*}
 
 \end{alg-proof}
@@ -149,11 +150,11 @@ We will induct on $n+m$. Then we have \begin{align*}
 	We will prove this using induction on $n$.\begin{align*}
 		\lt|\bigcup\limits_{i=1}^{n}A_i\rt| & = \lt|\bigcup_{i=1}^{n-1} A_i\rt|+  |A_{n}|-  \lt|\lt(\bigcup_{i=1}^{n-1} A_i \rt)\cap A_{n}\rt|                                                                                                                                                                                                  \\
 		                                    & =  \mathcolor{red!80!black}{\lt|\bigcup\limits_{i=1}^{n-1}A_i\rt|}+|A_n|\mathcolor{blue!80!black}{-\lt|\bigcup_{i=1}^{n-1}(A_i\cap A_n)   \rt|                                                                                                                     }                                       \\
-		                                    & = \mathcolor{red!80!black}{\sum_{J\subseteq [n-1],J\neq\emptyset}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt| }+|A_n|\mathcolor{blue!80!black}{-\sum_{J\subseteq[n-1],J\neq\emptyset} (-1)^{|J|+1}\lt|A_n\cap\lt(\bigcap_{j\in J}A_j\rt)\rt|    }                                                               \\
-		                                    & =  \mathcolor{red!80!black}{\sum_{J\subseteq [n-1],J\neq\emptyset}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt| }+|A_n|\mathcolor{blue!80!black}{-\sum_{\substack{J\subseteq[n]\\ J\neq\{n\},n\in J}} (-1)^{|J|+1}\lt|A_n\cap\lt(\bigcap_{j\in J-\{n\}}A_j\rt)\rt|                     }                         \\
-		                                    & = \mathcolor{red!80!black}{ \sum_{J\subseteq [n-1],J\neq\emptyset}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|       }   +\sum_{J=\{n\}}(-1)^{|J|+1}\lt|\bigcap_{j\in J} A_j \rt|       \mathcolor{blue!80!black}{+\sum_{\substack{J\subseteq[n]\\ J\neq\{n\},n\in J}} (-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|}\\
-		                                    &= \mathcolor{red!80!black}{ \sum_{\substack{J\subseteq [n]\\J\neq\emptyset,n\notin J}}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|       }   +\sum_{J=\{n\}}(-1)^{|J|+1}\lt|\bigcap_{j\in J} A_j \rt|       \mathcolor{blue!80!black}{+\sum_{\substack{J\subseteq[n]\\ J\neq\{n\},n\in J}} (-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|}\\
-		                                    &= \sum_{J\subseteq [n], J\neq\emptyset}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|
+		                                    & = \mathcolor{red!80!black}{\sum_{J\subseteq [n-1],\; J\neq\emptyset}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt| }+|A_n|\mathcolor{blue!80!black}{-\sum_{J\subseteq[n-1],\; J\neq\emptyset} (-1)^{|J|+1}\lt|A_n\cap\lt(\bigcap_{j\in J}A_j\rt)\rt|    }                                                               \\
+		                                    & =  \mathcolor{red!80!black}{\sum_{J\subseteq [n-1],\; J\neq\emptyset}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt| }+|A_n|\mathcolor{blue!80!black}{-\sum_{\substack{J\subseteq[n]\\ J\neq\{n\},\; n\in J}} (-1)^{|J|+1}\lt|A_n\cap\lt(\bigcap_{j\in J-\{n\}}A_j\rt)\rt|                     }                         \\
+		                                    & = \mathcolor{red!80!black}{ \sum_{J\subseteq [n-1],\; J\neq\emptyset}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|       }   +\sum_{J=\{n\}}(-1)^{|J|+1}\lt|\bigcap_{j\in J} A_j \rt|       \mathcolor{blue!80!black}{+\sum_{\substack{J\subseteq[n]\\ J\neq\{n\},\; n\in J}} (-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|}\\
+		                                    &= \mathcolor{red!80!black}{ \sum_{\substack{J\subseteq [n]\\J\neq\emptyset,\; n\notin J}}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|       }   +\sum_{J=\{n\}}(-1)^{|J|+1}\lt|\bigcap_{j\in J} A_j \rt|       \mathcolor{blue!80!black}{+\sum_{\substack{J\subseteq[n]\\ J\neq\{n\},\; n\in J}} (-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|}\\
+		                                    &= \sum_{J\subseteq [n],\; J\neq\emptyset}(-1)^{|J|+1}\lt|\bigcap_{j\in J}A_j\rt|
 	\end{align*}
 Hence by mathematical induction we have the theorem.
 \end{proof}
@@ -166,6 +167,107 @@ Hence by mathematical induction we have the theorem.
 \begin{corolary}{}{}
 	There are $\sum\limits_{k=0}^n\binom{m}{k}(-1)^k(m-k)^n$ onto functions from $[n]\to [m]$
 \end{corolary}
-\begin{Theorem}{Strong Inclusion-Exclusion}{}
+\subsection{Strong Inclusion-Exclusion Principle}
+\begin{Theorem}{Strong Inclusion-Exclusion}{sie}
 	Let $f:2^{[n]}\to \bbR$. Define $g:2^{[n]}\to \bbR$ on a subset $T\subseteq [n]$ to be as follows $$g(T)=\sum_{S\subseteq T}f(S)\quad T\subseteq [n]$$Then $$f(T)=\sum_{S\subseteq T}(-1)^{|T|-|S|}g(S)$$
 \end{Theorem}
+\subsection{Mobius Inversion}
+Now we derive a weak version of Mobius Inversion Theorem directly using \hyperref[th:sie]{Strong Inclusion Exclusion Principle}. If $f$ is a function from all product of primes to $\bbR$ and $g(n)=\sum\limits_{d\mid n}f(d)$ then we have $$f(n)=\sum\limits_{d\mid n}(-1)^{\#\text{divisors of $\lt(\frac{n}d\rt)$}}g(d)=\sum_{d\mid n}(-1)^{\#\text{divisors of $(d)$}}g\lt(\frac{n}d\rt)$$We we define a new function $\mu:\bbN\to \{-1,0,1\}$  such that $$\mu(n)=\begin{cases}
+	0 & \text{If $n$ is not a product of distinct primes}\\
+	(-1)^{\#\text{prime divisors of $n$}} & \text{If $n$ is a product of distinct primes}
+\end{cases}$$So $\mu$ gets rid of the all the natural numbers $n$ which is not a product of distinct primes. 
+So now we have the Mobius Inversion Theorem
+\begin{Theorem}{Mobius Inversion}{mi}
+	Let $f:\bbN\to \bbR$ and define $g:\bbN\to \bbR$ such that $g(n)=\sum\limits_{d\mid n}f(d)$ then if the  function $\mu:\bbN\to \{-1,0,1\}$   is defined as above then we have $$f(n)=\sum_{d\mid n}\mu(d)\; g\lt(\frac{n}d\rt)$$
+\end{Theorem}
+\subsection{Euler Totient Function}
+\begin{definition}{Euler Totient Function}{}
+	Euler Totient Function, $\phi:\bbN\to\bbN$, $\phi(n)$ is the number of integers $m\leq n$ such that $gcd(m,n)=1$.
+\end{definition}
+\begin{lemma}{}{}
+	For any $n\in \bbN$, $$n=\sum_{d\mid n}\phi(d)$$
+\end{lemma}
+\begin{proof}
+		Consider the list of numbers $S=\lt\{\frac1n,\frac2n,\dots,\frac{n}{n}\rt\}$. If we express every number in $S$ as simplified form i.e. $\frac{p}{q}$ form where $gcd(p,q)=1$. Then the denominators are all the divisors of $n$. 
+	
+	
+	Then for any $k\in[n]$ we have $$\frac{k}{n}=\frac{\ \frac{k}{gcd(k,n)}\ }{\ \frac{n}{gcd(k,n)}\ }$$Denote $d_k\coloneqq\frac{n}{gcd(k,n)}$ then $d_k$ is a factor of $n$. And since $gcd\lt( \frac{k}{gcd(k,n)}, \frac{n}{gcd(k,n)} \rt)=1$ we have $\frac{k}{gcd(k,n)}\in \bbZ_{d_k}^*$. Let $k\in\bbZ_{d}^*$ then suppose $l$ is such that $d\times l=n$ then the fraction $\frac{k}{d}=\frac{k\times l}{n}\in S$ and its simplified form is in fact $\frac{k}{d}$.
+	
+	Hence for any $d\mid n$, the number of fractions with denominator $d$ is $\varphi(d)$, since for all such fractions the numerators are the elements of $\bbZ_{d}^*$. Therefore we have $\sum\limits_{d\mid n} \varphi(d)=n$.
+	
+\end{proof}
+\begin{alternate-proof}
+	$$n  = \sum_{i=1}^n 1 = \sum_{d\mid n}\ \sum_{\substack{i\leq n,\\ gcd(i,n)=d}}1=\sum_{d\mid n} \sum_{\substack{d\mid i,\ i\leq n,\\ gcd\lt(\frac{i}d,\frac{n}d\rt)=1}}1=\sum_{d\mid n}\ \sum_{\substack{j\leq \frac{n}d,\\ gcd\lt(\frac{n}d,j\rt)=1}}1= \sum_{d\mid n}\phi\lt(\frac{n}d\rt)=\sum_{d\mid n}\phi(d)$$
+\end{alternate-proof}
+
+Since $n=\sum\limits_{d\mid n}\phi(d)$ this is already in the form $g(n)=\sum\limits_{d\mid n}f(d)$. Hence take $g\bbN\to \bbR$ to be identity function and take $f$ to be the Euler Totient function. Then by \hyperref[th:mi]{Mobius Inversion} we have $$\phi(n)=\sum_{d\mid n}\mu(d)\; g\lt(\frac{n}d\rt)=\sum_{d\mid n}\mu(d)\frac{n}d\implies \frac{\phi(n)}{n}=\sum_{d\mid n}\frac{\mu(d)}{d}$$
+
+\section{Generating Function}
+\begin{Question}{}{}
+	What is the number of non-negative solutions of $x_1+x_2+x_3+x_4=5$ for which $x_1+x_2$ is even?
+\end{Question}
+\begin{solution}
+	$x_1+x_2$ is even. So it can be $0$ or $2$ or $4$. In that case $x_3+x_4$ can be $5$ or $3$ or $1$ respectively. For any $k$, $x+y=k$  in $k+1$ ways where $x,y$ are non-negative. Then the total number of solutions is $1\times 6+3\times 4+5\times 2=28$.
+	
+	Another way of solving this is consider the power series $$A(x)=1+3x^2+5x^4+\cdots=\sum_{i=0}^{\infty}a_ix^i\qquad B(x)=1+2x+3x^2+\cdots=\sum_{i=0}^{\infty}b_ix^i$$Where \begin{align*}
+		a_i=\begin{cases}
+			\#\text{solutions to $x_1+x_2=i$}& \text{when $i$ is even}\\
+			0 & \text{when $i$ is odd}
+		\end{cases},  &&  b_i=		\#\text{solutions to $x_1+x_2=i$}
+	\end{align*}
+Then for $A\cdot B=C=\sum\limits_{i=0}^{\infty}c_ix^i$, $c_i=\#$solutions to $x_1+x_2+x_3+x_4=i$ where $x_1+x_2$ is even.
+\end{solution}
+\begin{Question}{}{}
+	What is the number of subsets of $[n]$ of size $k$?
+\end{Question}
+\begin{solution}
+	Suppose there are $n$ variables $x_1,\dots, x_n$. For each subset $S\subseteq [n]$ where $|S|=k$, we assign $x_i=1$ if $i\in S$ and otherwise assign $x_i=0$. Hence the number of subsets of $[n]$ of size $k$ is same as the number of solutions of $\sum\limits_{i=1}^nx_i=k$. 
+	
+	Consider the following generating function $$(1+x)^n=\sum_{i=0}^n \binom{n}ix^i=\sum_{i=0}a_ix^i$$Here for each $i$, $a_i=\#$solutions for $\sum\limits_{i=1}^nx_i=k$. Therefore number of subsets of $[n]$ of size $k$ is $\binom{n}k$. 
+\end{solution}
+\begin{Question}{}{}
+	How many partitions of $n$ are there?
+\end{Question}
+\begin{solution}
+	We can find a nice generating function for number of partitions of $n$. We have $$\sum_{n\geq 0}P(n)x^n=\prod_{r=1}^{\infty}\sum_{i=0}^{\infty}x^{i\cdot r}$$For each $r\geq 1$ for any $i\geq 0$ think of $x^{i\cdot r}$ as the number of $r$'s in a partition of $n$ is $i$. So if $P$ is a partition of $n$ then suppose $n_i$ be the number of $i$'s in $P$. Hence we have $\sum\limits_{i=1}^ni\cdot n_i=n$ Then the corresponding term $x^n$ is generated by the $\prod\limits_{i=1}^nx^{i\cdot n_i}$ where $x^{i\cdot n_i}$ comes form the $\sum\limits_{j=0}^{\infty}x^{j\cdot n_i}$. Hence $$\sum_{n\geq 0}P(n)x^n=\prod_{r=1}^{\infty}\sum_{i=0}^{\infty}x^{i\cdot r}=\prod_{r=1}^{\infty}\frac1{1-x^r}$$
+\end{solution}
+\subsection{Well Formed Parenthesis and Catalan Number}
+\begin{definition}{Well Formed Parenthesis}{}
+	A sequence of parenthesis is well formed if $\#($ $=$ $\#)$ and any prefix has at least as many $($ as $)$.
+\end{definition}
+Now consider for any $i\geq 0$, \begin{align*}
+	a_i&=\#\text{Well formed parenthesis of length $2i$}\\
+	b_i&=\#\text{Well formed parenthesis such that the fist matches the last and length $2i$}
+\end{align*}
+\begin{definition}{Catalan Number}{}
+	The $n^{th}$ Catalan Number is the number of  well formed parenthesis of length $2n$, i.e. $a_i$. 
+\end{definition}
+\begin{observation}
+	$b_n=a_{n-1}$. 
+\end{observation}
+Since for $b_n$ the first matches with the last. So the internal $2(n-1)$ parenthesis forms a well formed parenthesis and that can be in $a_{n-1}$ ways.
+
+\begin{observation}
+	$a_n=\sum\limits_{i=1}^nb_ia_{n-i}=\sum\limits_{i=1}^n a_{i-1}a_{n-i}$. 
+\end{observation}
+Since there are $2n$ parenthesis the first $($ is matched with a $)$ at any of the  $n$ $)$'s since inside them all the parenthesis are forms well formed parenthesis. Hence we consider each case where the first $($ matched with $i^{th}$ $)$ differently. If the first $($ is matched with $i^{th}$ $)$ then inside them there is $2(i-1)$ length well formed parenthesis and we can think of this case as $b_i$ and the rest $2n-2i$ many parenthesis forms all possible well formed parenthesis which can be done in $a_{n-i}$ ways. So the number of ways the first $($ is matched with $i^{th}$ $)$ is $b_ia_{n-i}$ ways.  
+
+Now define the power series $A(x)=\sum\limits_{i\geq 0}a_ix^i$. Then we have $$A^2(x)=\sum_{i\geq 0}\lt( \sum_{j=0}^ia_ja_{i-j} \rt)x^i$$This is almost in the form $\sum\limits_{i=1}^n a_{i-1}a_{n-i}$ for coefficient of $x^i$. So we do the following $$xA^2(x)=x\sum_{i\geq 0}\lt( \sum_{j=0}^ia_ja_{i-j} \rt)x^i=\sum_{i\geq 0}\lt( \sum_{j=0}^ia_ja_{i-j} \rt)x^{i+1}=\sum_{i\geq 0}\lt( \sum_{j=1}^{i+1}a_{j-1}a_{i+1-j} \rt)x^{i+1}=\sum_{i\geq 0}a_{i+1}x^{i+1}=A(x)-1$$
+Hence we get a quadratic equation for $A(x)$ which is $A^2(x)x-A(x)+1=0$. Therefore $$A(x)=\frac{1\pm\sqrt{1-4x}}{2x}$$Now $$\sqrt{1-4x}=1+\frac12(-4x)+\frac{\frac12\times \lt(\frac12-1\rt)}{2!}(-4x)^2+\frac{\frac12\lt(\frac12-1\rt)\lt(\frac12-2\rt)}{3!}(-4x)^3+\cdots=\sum_{i\geq 0}\binom{\frac12}{i}(-4x)^i$$Therefore $$\frac{1+\sqrt{1-4x}}{2x}= \frac1x+\sum_{i\geq 1}2\binom{\frac12}{i}(-1)^{i}(4x)^{i-1} $$Now as $x\to 0$ we have  $\frac{1+\sqrt{1-4x}}{2x}$ does not exists but we have $$\frac{1-\sqrt{1-4x}}{2x}=\sum_{i\geq 1}2\binom{\frac12}{i}(-4x)^{i-1}=\sum_{i\geq 0}2\binom{\frac12}{i+1}(-4x)^{i}\quad \text{and}\quad \lim_{x\to 0}\sum_{i\geq 0}2\binom{\frac12}{i+1}(-4x)^{i}=2\binom{\frac12}{0+1}(-4)^{0}=2\frac12=1=a_0$$Therefore we have $$A(x)=\frac{1-\sqrt{1-4x}}{2x}=\sum_{i\geq 0}2\binom{\frac12}{i+1}(-4x)^{i}$$Now $$a_i=2\binom{\frac12}{i+1}=2\times (-4)^i\frac{\prod\limits_{j=0}^i \lt(\frac12-j\rt)}{(i+1)!}=\frac{2\times (-4)^i}{2^{i+1}}\frac{\prod\limits_{j=0}^i \lt(1-2j\rt)}{(i+1)!}= 2^i\frac{\prod\limits_{j=0}^i \lt(2j-1\rt)}{(i+1)!}=\frac1{i+1}\binom{2i}{i}$$Hence the $n^{th}$ Catalan Number is $\frac{1}{n+1}\binom{2n}n$. 
+
+\subsection{Generating Function of Stirling Number of First Kind}
+
+Take the generating function for $S_1(m,m)$ to be $\sum\limits_{m=0}^nS_1(n,m)x^m$. Then we have the following theorem
+\begin{Theorem}{}{}
+	$$\sum\limits_{m=0}^nS_1(n,m)x^m=\prod_{m=0}^{n-1}(x+m)$$
+\end{Theorem}
+\begin{proof}
+	We will prove this by proving that the coefficients of $RHS$ follows the recursion relation \lmref{s1recrel1}  and also the initial conditions are same as Stirling Number of the First Kind. For $n=1$, we have $$S_1(1,0)+S_1(1,1)x=0+x$$Hence it is satisfied. For any $n$, $S(n,n)=1$ and the coefficient of $x^n$ in $\prod_{m=0}^{n-1}(x+m)$ is also $1$. Therefore the initial conditions are satisfied. Now we will show that \lmref{s1recrel1} is followed. We will use induction on $n$. The base case is already followed. \begin{align*}
+		\prod_{m=1}^{n}(x+m-1) & = x\prod_{m=1}^{n-1}(x+j-1)+(n-1)\prod_{j=1}^{n-1}(x+j-1)\\
+		& = x\sum_{m=0}^{n-1}S_1(n-1,m)x^{m}+(n-1)\sum_{m=0}^{n-1}S_1(n-1,m)x^m & [\text{Induction Hypothesis}]\\
+		& = \sum_{m=1}^{n}S_1(n-1,m-1)x^{m}+(n-1)\sum_{m=0}^{n}S_1(n-1,m)x^m\\
+		& = \sum_{m=0}^{n}S_1(n-1,m-1)x^{m}+(n-1)\sum_{m=0}^{n}S_1(n-1,m)x^m\\
+		& = \sum_{m=0}^n\lt(S_1(n-1,m-1)+(n-1)S_1(n-1,m)\rt)x^m= \sum_{m=0}^nS_1(n,m)x^m
+	\end{align*}
+\end{proof}
+\subsection{Exponential Generating Function}

@@ -505,6 +505,33 @@
 }{qs}
 \makeatother
 
+
+\makeatletter
+\newtcbtheorem[number within=section]{Question}{Question}{enhanced,
+	breakable,
+	colback=white,
+	colframe=myb!80!black,
+	attach boxed title to top left={yshift*=-\tcboxedtitleheight},
+	fonttitle=\bfseries,
+	title={#2},
+	boxed title size=title,
+	boxed title style={%
+		sharp corners,
+		rounded corners=northwest,
+		colback=tcbcolframe,
+		boxrule=0pt,
+	},
+	underlay boxed title={%
+		\path[fill=tcbcolframe] (title.south west)--(title.south east)
+		to[out=0, in=180] ([xshift=5mm]title.east)--
+		(title.center-|frame.east)
+		[rounded corners=\kvtcb@arc] |-
+		(frame.north) -| cycle;
+	},
+	#1
+}{qs}
+\makeatother
+
 \newtcbtheorem[number within=chapter]{wconc}{Wrong Concept}{
 	breakable,
 	enhanced,
@@ -638,7 +665,6 @@
 \newtheorem{fact}[observation]{Fact}
 \newtheorem{assumption}{Assumption}[section]
 
-
 \renewenvironment{proof}{\noindent{\textit{\textbf{Proof:}}}\hspace*{1em}}{\hfill\qed\bigskip\\}
 \newenvironment{combi-proof}{\noindent{\textbf{\textit{Combinatorial Proof:}}}\hspace*{1em}}{\hfill\qed\bigskip\\}
 \newenvironment{alg-proof}{\noindent{\textbf{\textit{Algebraic Proof:}}}\hspace*{1em}}{\hfill\qed\bigskip\\}
@@ -653,6 +679,7 @@
 	of #1:}}}\hspace*{1em}}{\hfill\qed\bigskip\\}
 \newenvironment{remark}{\noindent{Remark:}\hspace*{1em}}{\bigskip\\}
 \newenvironment{idea}{\noindent{Idea: }}{\bigskip\\}
+\newenvironment{solution}{\noindent{\textit{\textbf{Solution:}}}\hspace*{1em}}{\hfill\qed\bigskip\\}
 
 
 
