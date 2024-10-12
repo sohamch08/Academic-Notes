@@ -47,7 +47,7 @@
 \definecolor{myg}{RGB}{56, 140, 70}
 \definecolor{myb}{RGB}{45, 111, 177}
 \definecolor{myr}{RGB}{199, 68, 64}
-
+\usepackage[inline]{asymptote}
 \tcbuselibrary{theorems,skins,hooks}
 \newtcbtheorem{problem}{Problem}
 {%
@@ -199,7 +199,7 @@ Consider the sequence $\{0,1,1\}$. We put them in that order circularly. i.e. $$
 Then for any $j\in\bbF_3$ and for any $i>0$ and $i\in\bbN$ $$S^j(i)+S^j(i+1)\equiv S^{j+2}(i)\pmod 2$$Since $j\in\bbF_3$ we take $j+2\bmod 2$. 
 \end{lemma}
 \begin{proof}
-	For $j=0$ we have \begin{align*}
+	For any $i>0$, $i\in\bbN$ we have  \begin{align*}
 		S^0(i)=\begin{cases}
 			0 & \text{If $i\equiv 1\pmod 3$}\\
 			1 & \text{Otherwise}
@@ -302,26 +302,157 @@ Use the ideas above to show that a $d$-dimensional polytope that is the intersec
 \end{problem}
 \solve{
 \begin{itemize}[label=$\bullet$]
+%	
 	\item \begin{itemize}
 		\item   
 \begin{adjustbox}{minipage={\linewidth}, valign=t}
 	
 	\begin{wrapfigure}{t}{0.4\linewidth}
 		
-		\includegraphics[width=\linewidth]{triangulation.png}		
+\begin{center}
+		\begin{tikzpicture}
+		% Define the vertices of the rounded irregular decagon
+\coordinate (A) at (2, 0);
+\coordinate (K) at (0.6, -0.6); % New vertex between A and J
+\coordinate (J) at (-1, -0.5);
+\coordinate (I) at (-2, 0);
+\coordinate (H) at (-2.3, 1);
+\coordinate (G) at (-1.8, 2);
+\coordinate (F) at (-1, 2.8);
+\coordinate (E) at (0, 3);
+\coordinate (D) at (1, 2.8);
+\coordinate (C) at (1.8, 2);
+\coordinate (B) at (2.3, 1);
+
+% Draw the polygon with the new vertex K
+\draw[blue!80!white] (A) -- (K) -- (J) -- (I) -- (H) -- (G) -- (F) -- (E) -- (D) -- (C) -- (B) -- cycle;
+\draw[thick, red] (E) -- (J);
+% Draw a filled circle at each vertex with radius 1pt
+\foreach \point in {A, B, C, D, E, F, G, H, I, J, K} {
+	\fill (\point) circle (2pt);
+}
+	\end{tikzpicture}
+\end{center}
 	\end{wrapfigure}
 	We will prove this using induction on number of sides of any convex polygon. For $n=3$ there is only one triangle. Hence the base case follows. Let this is true for $n=3,\dots, k-1$. For $n=k$ take any triangulation of the any polygon with $n$ sides. There is at least one edge among all the edges of all the triangles of the triangulation which is not a side of the polygon.  Let  $k_1$ be the number of vertices on the left side of the edge and $k_2$ be the  number of vertices on the right side of the edge.  
 \end{adjustbox}\parinn
 
 Then we have $k_1+k_2+2=k$. Now by induction the number of triangles in any triangulation of the $k_1+2$-polygon bounded by the edge and the $k_1$ vertices to the left is $k_1+2-2=k_1$. And the number of triangles in any triangulation of the $k_2+2$-polygon bounded by the edge and the $k_2$ vertices to the right of the edge is $k_2+2-2=k_2$. Hence the number of triangles in the triangulation of the $n$ sided polygon is $k_1+k_2=k-2$. Therefore by mathematical induction any triangulation of the convex polygon with $n$ sides has $n-2$ triangles.\parinn
 
-Therefore any triangulation of a regular polygon with $n$ sides has $n-2$ triangles.
-\item 
-		
-		
+Therefore any triangulation of a regular polygon with $n$ sides has $n-2$ triangles. 
+\item 	We will count the number of triangulations for general convex polygon with $n$ sides. Suppose $T_n$ denote the number of triangulations of a $n$ sided convex polygon. We will find a recursion relation for $T_n$. 
 
+\begin{adjustbox}{minipage={\linewidth}, valign=t}
+	
+	\begin{wrapfigure}{t}{0.4\linewidth}
+		
+		\begin{center}
+			\begin{tikzpicture}
+				% Define the vertices of the rounded irregular decagon
+				\coordinate (A) at (2, 0);
+				\coordinate (K) at (0.6, -0.6); % New vertex between A and J
+				\coordinate (J) at (-1, -0.5);
+				\coordinate (I) at (-2, 0);
+				\coordinate (H) at (-2.3, 1);
+				\coordinate (G) at (-1.8, 2);
+				\coordinate (F) at (-1, 2.8);
+				\coordinate (E) at (0, 3);
+				\coordinate (D) at (1, 2.8);
+				\coordinate (C) at (1.8, 2);
+				\coordinate (B) at (2.3, 1);
+				
+				% Draw the polygon with the new vertex K
+				\draw[blue!80!white] (A) -- (K) -- (J) -- (I) -- (H) -- (G) -- (F) -- (E) -- (D) -- (C) -- (B) -- cycle;
+				\draw[thick, red] (E) node[above, rotate=-2, black]{\scriptsize{Moving vertex}} node[below right, black]{$v_k$}-- (J)  node[midway, left=0.5cm,black]{$P_{k}$}  node[above=3mm, left=-1mm, black]{$v_1$}-- (K) node[midway, below, black,rotate=-4]{\scriptsize{Fixed Triangle Base}} node[above=3mm, right=-1mm, black]{$v_n$} -- (E)  node[midway, right=0.25cm,black]{$P_{n-k+1}$};
+				% Draw a filled circle at each vertex with radius 1pt
+				\foreach \point in {A, B, C, D, E, F, G, H, I, J, K} {
+					\fill (\point) circle (2pt);
+				}
+			\end{tikzpicture}
+		\end{center}
+	\end{wrapfigure}
+\parinn
+
+Let $P_n$ denote a polygon with $n$ sides. Now we first fix an edge. We index the vertices with $v_i$ for $i\in[n]$ anticlockwise where the fixed edge is between $v_1$ and $v_n$. For any triangulation of $P_n$ this edge becomes a base of a triangle for some triangle in any triangulation of $P_n$. For the triangle having the fixed edge we already chose 2 vertices and only the third vertex has to chosen. So there are in total $n-2$ choices to choose the third vertex of the triangle with the fixed edge as base. Let the third vertex be $k$. Hence $1<k<n$. Hence the triangle $\triangle v_1v_kv_n$ divides $P_n$ into two regions. On the right side of the $\ov{v_1v_k}$ edge there are $k-1$ vertices of $P_n$. Hence the vertices $v_1,v_2,\dots, v_k$ forms  forms a $k$ sided polygon $P_{k}$. And on the left side of the $\ov{v_kv_n}$ edge there are $n-k+1$ many vertices. Hence the vertices $v_n,v_{n-1},\cdots v_k$ forms a $n-k+1$ sided polygon $P_{n-k+1}$. 
+\end{adjustbox}
+
+
+Now $P_k$ can be triangulated in $T_k$ many ways and $P_{n-k+1}$ can be triangulated in $T_{n-k+1}$ many ways. Therefore in total for the current choice of $k$ there are $T_k\cdot T_{n-k+1}$ many triangulations of $P_n$. Now since $k$ can be the other vertex adjacent to $v_1$ or $v_n$ we will take $T_2=1$. This is because even though there is no polygon with $2$ vertices we $n-2+1\neq 0$ and therefore we can still count $T_{n-k+1}$ and multiply with $T_2$ to get the total number of triangulations when $k=2$. Similarly we we can count total number of triangulations when $n-k+1=2\implies k=n-1$. Therefore we have the following recursion relation $$T_n=\sum_{k=2}^{n-1}T_k\cdot T_{n-k+1}$$
+\begin{lemma}
+	$T_n=C_{n-2}$ for $n\geq 2$, $n\in\bbN$ where $C_n$ is the $n^{th}$ Catalan Number.
+\end{lemma}
+\begin{proof}
+	We will show this using induction on $n$. For $n=2$ we have $T_2=1$ and we also know $C_0=1$. Hence the base case is followed. Let this is true for $n=2,\dots, k-1$. Now by the recursion relation we have$$T_k  = \sum_{m=2}^{k-1}T_m\cdot T_{k-m+1}  = \sum_{m=2}^{m-1}C_{m-2}\cdot C_{k-m+1-2} =\sum_{m=2}^{k-1}C_{m-2}\cdot C_{k-m-1} = \sum_{m=1}^{k-2}C_{m-1}\cdot C_{k-m-2}=C_{k-2}$$Therefore by Mathematical induction we have that $T_n=C_{n-2}$ for $n\geq 2$, $n\in\bbN$.
+\end{proof}
+Therefore number of triangulations of $n$-sided convex polygon is $C_{n-2}$ where $C_n$ is the $n^{th}$ Catalan Number. Since the given polygon is a regular $n$-sided polygon it is also a convex polygon. Therefore number of triangulations of a $n$-sided regular polygon is $C_{n-2}$.
 	\end{itemize}
+
+\item \begin{itemize}
+	\item Suppose we have a regular polygon with $n$ sides. We label the vertices with $v_0,\dots, v_{n-1}$. Now any triangulation of the polygon has a triangle which has at least one edge which is a diagonal. Consider the diagonal $\ov{v_av_{a+k}}$, $n-2>k>2$. Such a diagonal divides the polygon into two parts. \parinn
+	
+	Consider the part with lesser number of vertices and if the two parts have same number of vertices then consider any one. So consider the polygon made of those vertices using the edges of the polygon and the diagonal. We will show a necessary and sufficient condition for which such a a polygon can be triangulated by isosceles. 
+	
+	\begin{lemma}\label{p5lm1}
+		Let $n>3$. Consider the  polygon $D_t$ with vertices $v_0,\dots, v_t$ where the following are satisfied:\begin{enumerate}
+			\item $|\ov{v_{i-1}v_i}|=|\ov{v_{j-1}v_j}|$ for any $i,j\in [t]$ 
+			\item $|\ov{v_0v_n}|>|\ov{v_i,v_j}|$ for all $i,j\in\{0,\dots, t\}$, $j\geq i$ with the property $j-i\neq t$ 
+			\item  $\angle v_{i-1}v_iv_{i+1}=\angle v_{j-1}v_jv_{j+1}$ for all $i,j\in[t-1]$
+		\end{enumerate} then $D_t$ can be triangulated with isosceles triangles if and only if $n=2^k$ for some $k\in\bbN$, $k>1$.
+	\end{lemma}
+\begin{proof}
+	We will first show that if $t=2^k$ then $D_t$ can be triangulated with isosceles triangles.We will prove this using induction on $k$. For base case let $k=2$. Then  consider the triangulation for $t=4$ with the triangles $\{\triangle v_0v_1v_2, \triangle v_0v_2v_4, \triangle v_2v_3v_4\}$. Hence the base case follows. Then the  second property basically says that $\ov{v_0v_t}$ is the biggest among the diagonals and sides of the polygon. This side then has to be a bases of an isosceles triangles. Since there are odd number of vertices we form the isosceles triangle $\triangle v_0v_{2^{k-1}}v_{2^k} $ since only $|\ov{v_0,v_{2^{k-1}}}|\neq |\ov{v_{2^{k-1}},v_t}|$ and $|\ov{v_0,v_i}|\neq |\ov{v_i,v_t}|$ for all $i\in[t-1]$ where $i\neq 2^{k-1}$. 
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics{workspace.pdf}
+	\end{figure}
+
+	Now we are left with 2 polygons. One is constructed by the vertices $v_0,\dots, v_{2^{k-1}}$ and the other one is constructed by the vertices $v_{2^{k-1}}, \dots, v_{2^{k}}$ Both of them satisfies the properties of the properties in the lemma. Hence each of them form a $D_{2^{k-1}}$, Therefore by inductive hypothesis they are  triangulated with isosceles triangles. Thus recursively we keep triangulating $D_{2^k}$ using isosceles triangles until we obtain a $D_1$ which is an isosceles triangle. Hence $D_{2^k}$ can be triangulated by isosceles triangles. Also observe that for $t=2^k$ there is only one possible triangulation of $D_t$ using isosceles triangles since at each step we have only one possible choice to construct the triangulation using isosceles triangles.
+	
+	We will show that $t=2^k$ is sufficient. First we will show $t$ is not odd.  Suppose $t$ is odd. Let $t=2k+1$. By the second property $\ov{v_0v_t}$ is the biggest among all diagonals and sides of the polygon. Therefore this edge has to be  the base of the isosceles triangles having the edge $\ov{v_0v_t}$. Since $t$ is odd the edge $\ov{v_{k}v_{k+1}}$ is parallel to the edge $\ov{v_0v_t}$. Therefore for all $i\in [t-1]$ we have $|\ov{v_0,v_i}|\neq |\ov{v_i,v_t}|$. Therefore there is not isosceles triangle which uses the vertices of $D_t$ and the edge $\ov{v_0v_t}$. But that is not possible if $D_t$ can be triangulated using isosceles triangles. Hence contradiction. Hence $t$ can not be odd. Therefore $t$ is even.
+	
+	Now we will show if $t$ is of the form $2^l(2k+1)$ where $k,l\in\bbN$ and $l,k\neq 0$, then also $D_t$ can not be triangulated using isosceles triangles. Again the edge $\ov{v_0,v_t}$ is the base of the isosceles triangle in any triangulation of $D_t$ using isosceles triangles. Now to construct an isosceles triangle using vertices of $D_t$ and edge $\ov{v_0,v_t}$ there is only one choice for the third vertex which is $2^{l-1}(2k+1)$ since otherwise for all $i\in [2^l(2k+1)]$, $i\neq 2^{l-1}(2k+1)$ we have $|\ov{v_0,v_i}|\neq |\ov{v_i,v_t}|$. So the $\triangle v_0v_{2^{l-1}(2k+1)}v_t$ is an isosceles triangles. Hence any triangulation of $D_t$ using isosceles triangles has the triangle $\triangle v_0v_{2^{l-1}(2k+1)}v_t$. Now the polygons constructed using $\{v_0,\dots, v_{2^{l-1}(2k+1)}\}$ and $\{v_{2^{l-1}(2k+1)},\dots, v_t\}$ follows the 3 properties given in the lemma. Hence they forms two $D_{{2^{l-1}(2k+1)}}$. Hence any triangulation of $D_t$ using isosceles triangles gives a triangulation of $D_{2^{l-1}(2k+1)}$ using isosceles triangles. If $l-1>0$ then again any triangulation of $D_{2^{l-1}(2k+1)}$ with isosceles triangles use the isosceles triangle $\triangle v_0 v_{2^{l-2}(2k+1)}v_{2^{l-1}(2k+1)}$. Again we get 2 polygons $D_{2^{l-2}(2k+1)}$. Therefore any triangulation  of $D_{2^{l-1}(2k+1)}$ using isosceles triangles gives a triangulation of $D_{2^{l-2}(2k+1)}$ using isosceles triangles. Hence any triangulation of $D_{2^l(2k+1)}$ using isosceles triangles gives a triangulation of $D_{2^{l-2}(2k+1)}$ using isosceles triangles. Continuing like this we get any triangulation of $D_{2^l(2k+1)}$ using isosceles triangles gives a triangulation of $D_{2k+1}$ using isosceles triangles. But we showed earlier that $D_{2k+1}$ can not have   a triangulation using isosceles triangles. Hence contradiction. Therefore if $n$ is of the form $2^l(2k+1)$ where $k,l\in\bbN$ and $k,l\neq 0$ then $D_t$ can not be triangulated using isosceles triangles.
+	
+	This leaves with only option fo $t$ to be of the form $2^k$ where $k\in \bbN$ and $k>1$. Hence $D_t$ can be triangulated using isosceles triangles where $t>3$ if and only if $t=2^k$ for some $k>1$, $k\in\bbN$.
+\end{proof}
+
+Suppose the regular polygon with vertices $v_0,\dots, v_{n-1}$ can be triangulated using isosceles triangles. If $n=3$ then it is a equilateral triangle hence it can be triangulated using isosceles triangles. If $n=4$ then it is a square. Therefore if we take any diagonal then it divides the square into two isosceles triangles. Therefore for $n=4$ also we can triangulate into isosceles triangles.
+
+Now consider $n>4$. Take any triangulation of the polygon using isosceles triangles. Then take  any triangle consisting of at least 2 diagonals of the polygon. Without loss of generality we can think the edge is $\ov{v_0,v_l}$ and the other vertex is $v_k$ where $1<k<l-1$ and $\lt\lfloor\frac{n}2\rt\rfloor\leq l< n$. Now since $\triangle v_0v_lv_k$ is isosceles we have $k=\frac{l}2$. Now the vertices $v_0,\dots  v_k$ forms $D_{k}$ defined in \lemref{p5lm1}. Similarly the vertices $v_k,\dots, v_l$ also forms $D_k$. Since $k>2$ by \lemref{p5lm1} we know $k=2^m$ for some $m>1$, $m\in\bbN$.  Now we will see case wise for $l$:\begin{itemize}
+	\item \textbf{Case 1:} $l=n-1$. Then we have in the two $D_k$ we counted the vertex $v_k$ each time once. The total number of vertices in the polygon is $n$ and each $D_k$ has $k+1$ many vertices. Therefore So we have $$n=2\times (2^m+1)-1\implies 2^{m+1}+1$$
+	\item \textbf{Case 2:} $l=n-2$. Then the triangle $\triangle v_0v_{n-1}v_{n-2}$ is isosceles. In the two $D_k$ we counted the vertex $v_k$ each time once and we didn't counted the vertex $v_{n-1}$. Therefore we have $$n-1=2(2^m+1)-1\implies n=2^{m+1}+2$$
+	\item \textbf{Case 3:} $l<n-2$. Then the vertices $v_0,\dots, v_l$ form a $D_l$. That means $D_l$ is triangulated using isosceles triangles. Therefore using \lemref{p5lm1} we have $l=2^p$ for some $p\in\bbN$, $p>1$. Then we have $$n+3=2(2^m+1)+(2^p+1)\implies n=2^{m+1}+2^p$$
+\end{itemize}
+Hence $n$ has the form $2^{m+1}+2^p$ for some $m,p\bbN\cup \{0\}$. the $n=3$ and $n=4$ case also comes under this form for $m=p=0$ and $m=p-1=0$ respectively. Hence for any $n$ the regular polygon using the vertices $v_0,\dots, v_n$ can be triangulated using isosceles triangles if $n=2$ or $n=2^{m+1}+2^p$ for some $m,p\in\bbN\cup\{0\}$.
+
+Now we will show triangulation for $n=2^{m+1}+2^p$ with isosceles triangles. We can always assume $m+1\geq p$ without loss of generality. Then $n=2^{m+1}+2^p=2^P(2^{m+1-p}+1)$. So we will show first that for $n=2^k+1$ we can triangulate using isosceles triangles and then we will show if for any $n$ we can triangulate using isosceles triangles then we can also triangulate $2n$ using isosceles triangles. 
+\begin{lemma}\label{p5lm3}
+	All regular polygons with $n = 2^k + 1$ or $n=4$ have triangulations with isosceles triangles.
+\end{lemma}
+\begin{proof}
+	For $n=4$ we take the triangles $\{\triangle v_0v_1v_2, \triangle v_0v_2v_4, \triangle v_2v_3v_4\}$. This is a triangulation for $n=4$ using isosceles triangles. For $n=2^k+1$ we take the triangle $\triangle v_0v_{2^{k-1}}v_{2^{k}}$. Now the vertices $v_0,\dots, v_{2^{k-1}}$ forms $D_{2^{k-1}}$ and the vertices $v_{2^{k-1}},\dots, v_{2^k}$ also forms $D_{2^{k-1}}$. We have shown in \lemref{p5lm1} how to triangulate $D_{2^{k-1}}$ using isosceles triangles. Therefore we have the lemma.
+\end{proof}
+\begin{lemma}\label{p5lm4}
+	 If a regular polygon with $n$ sides has a  triangulation with isosceles triangles, then the regular polygon with $2n$ sides also has a triangulation with isosceles triangles. 
+\end{lemma}
+\begin{proof}
+	We have the vertices $v_0,\dots, v_{2n-1}$. We construct the diagonals $\ov{v_{2i-2}v_{2i}}$ for $i\in [n]$ where $v_{2n}\coloneq v_0$. Now the triangles $\triangle v_{2i-2}v_{2i-1}v_{2i}$ for all $i\in [n]$ is isosceles triangle. Also the polygon we vertices $v_0,v_{2},v_4,\dots, v_{2i},\dots, v_{2n-2}$ where $0\leq i\leq n-1$ forms a regular polygon with $n$ sides. And we know a  regular polygon with $n$ sides has a  triangulation with isosceles triangles. Hence this gives a triangulation of regular polygon with $2n$ sides using isosceles triangles. 
+\end{proof}
+Therefore we can have a triangulation of a regular polygon with $n$ sides using isosceles triangles if and only if $n$ is of the form $n=2^{m+1}+2^p$ where $m,p\in\bbN\cup\{0\}$.
+\item We will now consider all the triangulations which are same upon rotation to be same. Hence all the triangulations which are same under rotation contributes only 1 in total to the count. We claim that there is only 1 triangulation using isosceles triangles. From the previous part we know for $n$ of the form $n=2^{m+1}+2^p$ there is a triangulation of the regular polygon with $n$ sides using isosceles triangles. WLOG we can assume $m+1\geq p$. Therefore $n=2^{m+1}+2^p=2^p(2^{m+1-p}+1)=2^p(2^q+1)$ where $q=m+1-p\geq 0$\parinn
+
+We will also proceed like we did in the previous part. Any triangulation of the regular polygon with $n$ sides using isosceles triangles has a triangle which has at least 2 sides which are diagonals of the polygon. We can relabel the vertices by rotating them so that we can say the triangle is $\triangle v_0v_lv_k$ where $\lt\lfloor\frac{n}2\rt\rfloor\leq l<n$ and $1<k<l-1$ and since the triangle is isosceles we have $k=\frac{l}2$. Then the vertices $v_0,\dots  v_k$ forms $D_{k}$ and similarly the vertices  $v_k,\dots, v_l$ also forms $D_k$. Now we have $k\geq 2$. Hence by \lemref{p5lm1} we have $k=2^s$ for some $s\in\bbN$, $s\geq 1$. We have scene in the proof of \lemref{p5lm1} that $D_k$ can be triangulated in an unique way using isosceles triangles.  
+
+That leaves us the polygon formed with the vertices $v_0,\dots, v_l$. If $l=n-1$ then it is just an edge. In that case for such triangulation $n+1$ can be written as twice of a number of the form $2^s+1$ since $D_k$ has $k+1$ many vertices since we are counting $v_k$ two times in total once in each $D_k$. For this case is only possible when $n=2^{s+1}+1$. Conversely we can say if $n$ is of the form $n=2^{s+1}+1$ then we get $k=2^s$ uniquely. 
+
+If $l<n-1$ the $v_0,\dots, v_l$ forms $D_l$. In order to $D_l$ have triangulation using isosceles triangles $l$ has to be of the form $2^t+1$ where $t=\geq 1$ and $t\in\bbN$. Therefore in this case we count both $v_0$ and $v_l$ two times, once in each $D_k$ and $D_l$. So $n+3$ can be written in the form $2(2^s+1)+(2^t+1)=2^{s+1}+2^t +3\implies n=2^{s+1}+2^t$. Since $s,t\geq 1$ we have $n\geq 6$.  If $n$ is a sum of two powers of $2$ then $n$ there exists unique $s,t$ such that $n=2^s+2^t$ where $s,t\geq 1$ and $s,t\in\bbN\cup\{0\}$. Hence conversely if $n$ is of the form $n=2^s+2^t$ then from this we can say $k=2^{s-1}$ and $l=2^t$ uniquely and the triangle obtained divides the regular polygon into two $D_{2^{s-1}}$ and one $D_{2^t}$. 
+
+Therefore for all $n$ of the form $n=2^{m+1}+2^p$ there is a unique triangulation of the regular polygon with $n$ sides using isosceles triangles.
+
+So now removing the assumption that we take all the triangulations to be same which are same under rotation we obtain $n$ triangulations of the regular polygon using isosceles triangles. 
+\end{itemize}
 \end{itemize}
 }
+
 
 \end{document}
