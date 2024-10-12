@@ -29,8 +29,10 @@
 \usepackage{tikz-cd}
 \usepackage{float}
 \usepackage{tfrupee}  
+\usepackage{adjustbox}
+\usepackage{wrapfig}
 
-
+\AfterEndEnvironment{wrapfigure}{\setlength{\intextsep}{0mm}}
 \definecolor{mytheorembg}{HTML}{F2F2F9}
 \definecolor{mytheoremfr}{HTML}{00007B}
 \definecolor{doc}{RGB}{0,60,110}
@@ -105,7 +107,15 @@
 Let $m,n>0$ be given and let $S$ be a subset of $[m]\times [n]$. We say $S$ is downward closed if for all $i\leq i'\in [m]$ and $j\leq j'\in [n]$, we have $(i',j')\in S$ only if $(i,j)\in S$. How many downward closed sets are there?
 \end{problem}
 \solve{
+$S$ is downward closed if  $\forall\ i\leq  i'$ and $j\leq j'$, $(i,j)\in S$ then $(i',j')\in S$. We we define a new order $\preccurlyeq$ where $(a,b)\preccurlyeq (c,d)$ where $a,c\in [n]$ and $b,d\in [m]$ if $a\leq c$ and $b\leq d$. Therefore if $\forall \ (i,j)\preccurlyeq (a,b)$, $(i,j)\in S$ then $(a,b)\in S$. Hence  $S$ is uniquely defined if we can find the maximal elements with respect to this order since all other elements of $S$ is $\preccurlyeq $  to one of the maximal elements of $S$. So we have to count how many ways we can select the maximal elements of $S$. 
 
+Now with respect to the first coordinate take the right most maximal element, $(n_1,m_1)$ where $n_1\in [n]$ and $m_1\in [m]$. Then all other maximal elements has first coordinate less than $n_1$. Now all other maximal elements also has second coordinate greater than $m_1$ because if any element of $S$, $(a,b)$ has second coordinate $b\leq m_1$ then $(a,b)\preccurlyeq (n_1,m_1)$. So now we take the second right most maximal element $(n_2,m_2)$. We have $n_2<n_1$ and $m_2>m_1$. Again all other maximal elements apart from right most and second right most element has first coordinate less than $n_2$ and second coordinate greater than $m_2$ by same argument as before. Continuing like this we get that the maximal elements of $S$ with respect to the defined order $\preccurlyeq$ from right most to left most has strictly increasing second coordinate. 
+
+Now the maximal elements of $S$ defines an unique path from the coordinate $(n,0)$ to $(0,m)$. We also get the maximal elements of a set from each path from $(n,0)$ to $(0,m)$ which enters the $[n]\times [m]$ grid uniquely. For any path from $(n,0)$ to $(0,m)$ which enters the $[n]\times [m]$ consists of up movement and left movement and in each movement we move by $1$ unit. So from such a path we take the coordinates where we change from up movements to left movements i.e. the path has a staircase like structure and we take the coordinates where we take am ascending step. Hence from each such path we get uniquely the maximal elements of a downward closed set. So it suffices to calculate all possible such paths.
+
+Now among all the paths from $(n,0)$ to $(0,m)$ with up and left movements there is only one path which does not enter the $[n]\times [m]$ grid. This is first takes all the left movements and reaches $(0,0)$ then takes all the up movements to reach $(0,m)$. All the other paths enter the grid $[n]\times [m]$. So we will subtract 1 from the total number of paths from $(n,0)$ to $(0,m)$. 
+
+Now to reach  from $(n,0)$ to $(0,m)$ there is in total $n$ left movements and $m$ up movements. A path from $(n,0)$ to $(0,m)$ is like a $n+m$ ordered pair where each element is up or left. Now once we select first on which positions we will put the up movements in the $n+m$ ordered pair then rest of the positions we can fill up by left movement. So number of paths is equal to in how many ways we can choose the $m$ positions among the $n+m$ positions to put the up movements. This we can do in $\binom{m+n}{m}$ ways. Therefore the total number of paths from $(n,0)$ to $(0,m)$ with up and left movements is $\binom{m+n}{m}$. Therefore total number of downward closed sets is $\binom{n+m}{m}-1$.
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 2
@@ -140,7 +150,8 @@ Call an operator $\theta\in L(V)$ unitary if for all $v\in V$, we have $\|\theta
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
+
+
 \begin{problem}{%problem statement
 	}{p3% problem reference text
 	}
@@ -266,7 +277,13 @@ Let $n>0$ be an integer. Count the number of subsets $S\subseteq [n]$ that:\begi
 \solve{
 \begin{enumerate}[label=(\alph*)]
 	\item Let $|S|=k$. Therefore $k\in S$. Now rest of the $k-1$ elements are from $[n]\setminus\{k\}$. So the rest $k-1$ elements can be chosen from $[n]\setminus\{k\}$ in $\binom{n-1}{k-1}$ ways. Therefore total number of sets $S\subseteq [n]$ that satisfy $|S|\in S$ is $$\sum_{k=1}^n\binom{n-1}{k-1}=\sum_{k=0}^{n-1}\binom{n-1}{k}=2^{n-1}$$Hence there are $2^{n-1}$ such sets are possible
-	\item Let $|S|=k$. Now for all $S'\subsetneq S$, we have $|S'|\notin S$. Hence for all $m<k$, $m\notin S$. Therefore the rest of the $k-1$ elements of $S$ are from $[n]\setminus[k]$. For this to satisfy we should have $n-k\geq k-1\implies \frac{n+1}2\geq k$. For such $k$ the rest $k-1$ elements can be chosen from $[n]\setminus[k]$ in $\binom{n-k}{k-1}$ ways. Hence total number of sets $S\subseteq [n]$ that satisfy the given property is $$\sum_{k=1}^{\lt\lfloor\frac{n+1}2\rt\rfloor}\binom{n-k}{k-1}$$
+	\item Let $|S|=k$. Now for all $S'\subsetneq S$, we have $|S'|\notin S$. Hence for all $m<k$, $m\notin S$. Therefore the rest of the $k-1$ elements of $S$ are from $[n]\setminus[k]$. For this to satisfy we should have $n-k\geq k-1\implies \frac{n+1}2\geq k$. For such $k$ the rest $k-1$ elements can be chosen from $[n]\setminus[k]$ in $\binom{n-k}{k-1}$ ways. Hence total number of sets $S\subseteq [n]$ that satisfy the given property is $$\sum_{k=1}^{\lt\lfloor\frac{n+1}2\rt\rfloor}\binom{n-k}{k-1}$$\parinn
+	
+	Another way of counting: We call subsets $S\subseteq [n]$ which follows the property that $|S|\in S$ and that for all $S'\subsetneq S$, we have $|S'|\notin S$ to be selfish subsets of $[n]$. Let $a_n$ denotes the number of selfish subsets of $[n]$. There can be two kinds of such subsets. Subsets which doesn't contain $n$ and subsets which contain $n$. For selfish subsets which doesn't contain $n$ are also selfish subsets of $[n-1]$. Therefore number of selfish subsets of $[n-1]$ is $a_{n-1}$. Hence number of selfish subsets of $[n]$ that doesn't contain $n$ is $a_{n-1}$.
+	
+	Now we will count the number of selfish subsets of $[n]$ which  contains $n$. Now we claim that there is a one-one correspondence between selfish subsets of $[n-2]$ and selfish subsets of $[n]$ that contains $n$. For each selfish subset $P$ of $[n-2]$ we have $\forall\ x\in P$, $x\geq |P|$. So we create a new subset of $[n]$, $Q=\{n\}\sqcup\{x+1\colon x\in P\}$. Now $|Q|=|P|+1$. Since $\forall\ x\in P$, $x\geq |P|\implies x+1\geq |P|+1$. Now since $P\subseteq [n-2]$, for all $x\in P$, $x+1\leq n-1$. Hence we have $n\geq |Q|$. Therefore $Q$ is a selfish subset of $P$ which contains $n$.  Similarly let $Q$ be a selfish subset of $[n]$ which contains $n$. Now $|Q|\geq 2$ since otherwise $|Q|=1$ then $Q=\{1\}$. Since $|Q|\geq 2$, $1\notin Q$. So we form a new set $P=\{x-1\colon x\in Q\setminus\{n\}\}$.Since $n\notin Q\setminus \{n\}$, for all $x\in Q\setminus \{n\}$, $|Q|\leq x\leq n-1\implies |P|=|Q|-1\leq x-1\leq n-2$. Hence $P$ is also a selfish subset of $[n-2]$. Therefore there is a one-one correspondence between the selfish subsets of $[n-2]$ and selfish subsets of $[n]$ that contains $n$. Now number of selfish subsets of $[n-2]$ is $a_{n-2}$. Therefore number of selfish subsets of $[n]$ that contains $n$ is $a_{n-2}$. 
+	
+	Hence total number of selfish subsets of $[n]$ is $a_{n-1}+a_{n-2}$. Therefore we get the recursion relation $a_n=a_{n-1}+a_{n-2}$. Now for $n=1$ there is only one selfish subset of $[1]$. For $n=2$ the only possible selfish subset of $[2] $ is $\{1\}$ since neither $\{1,2\}$ nor $\{2\}$ is a selfish subset of $[2]$. Hence we have $a_1=1$ and $a_2=1$. Therefore we get the recursion relation of Fibonacci sequence same initial conditions. Hence the number of selfish subsets of $[n]$ is $n^{th}$ Fibonacci number, $F_n$. Therefore we also get the identity that$$ \sum_{k=1}^{\lt\lfloor\frac{n+1}2\rt\rfloor}\binom{n-k}{k-1}=F_n$$
 \end{enumerate}
 }
 
@@ -284,6 +301,27 @@ A triangulation of a polygon is a partition of its area into (disjoint) triangle
 Use the ideas above to show that a $d$-dimensional polytope that is the intersection of $n-$halfspaces can be partitioned into at most $n^d$ simplices.
 \end{problem}
 \solve{
+\begin{itemize}[label=$\bullet$]
+	\item \begin{itemize}
+		\item   
+\begin{adjustbox}{minipage={\linewidth}, valign=t}
+	
+	\begin{wrapfigure}{t}{0.4\linewidth}
+		
+		\includegraphics[width=\linewidth]{triangulation.png}		
+	\end{wrapfigure}
+	We will prove this using induction on number of sides of any convex polygon. For $n=3$ there is only one triangle. Hence the base case follows. Let this is true for $n=3,\dots, k-1$. For $n=k$ take any triangulation of the any polygon with $n$ sides. There is at least one edge among all the edges of all the triangles of the triangulation which is not a side of the polygon.  Let  $k_1$ be the number of vertices on the left side of the edge and $k_2$ be the  number of vertices on the right side of the edge.  
+\end{adjustbox}\parinn
+
+Then we have $k_1+k_2+2=k$. Now by induction the number of triangles in any triangulation of the $k_1+2$-polygon bounded by the edge and the $k_1$ vertices to the left is $k_1+2-2=k_1$. And the number of triangles in any triangulation of the $k_2+2$-polygon bounded by the edge and the $k_2$ vertices to the right of the edge is $k_2+2-2=k_2$. Hence the number of triangles in the triangulation of the $n$ sided polygon is $k_1+k_2=k-2$. Therefore by mathematical induction any triangulation of the convex polygon with $n$ sides has $n-2$ triangles.\parinn
+
+Therefore any triangulation of a regular polygon with $n$ sides has $n-2$ triangles.
+\item 
+		
+		
+
+	\end{itemize}
+\end{itemize}
 }
 
 \end{document}
