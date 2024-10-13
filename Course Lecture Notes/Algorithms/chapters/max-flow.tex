@@ -1,1 +1,102 @@
 \chapter{Max Flow Min Cut}
+\section{Maximum Flow}
+Suppose we are given a directed graph $G=(V,E)$ with a source vertex $s$ and a target vertex $t$. And additionally for every edge $e\in E$ we are given a number $c_e\in \bbZ_+$ which is called the capacity of the edge.
+\begin{Definition}{Flow}{}
+	An $s-t$ flow is a function $f:E\to\bbR_+$ which satisfies the following:\begin{enumerate}[label=\protect\circled{\small\arabic*}]
+		\item $\forall\ e\in E$, $f(e)\leq c_e$
+		\item $\forall\ v\in V\setminus\{s,t\}$, $\sum\limits_{e\in \textit{in}(v)}f(e)=\sum\limits_{e\in \textit{out}(v)}f(e)$
+	\end{enumerate}
+Also the value of a flow $f$ is denoted by $|f|\coloneqq \sum\limits_{e\in \textit{out}(s)}f(e)$.
+\end{Definition}Before proceeding into the setup and the problem first we will assume some things
+\begin{assumption*} 
+	\begin{itemize}
+		\item $\textit{in}(s)=\emptyset$ i.e. there is no edge into $s$.
+		\item $\textit{out}(t)=\emptyset$ i.e. there is no edge out of $t$.
+		\item There are no parallel edges
+	\end{itemize}
+\end{assumption*}
+\begin{lemma}{}{}
+	For any flow $f$, $|f|=\sum\limits_{e\in \textit{in}(t)}f(e)$
+\end{lemma}
+\begin{proof}
+	We have for every edge $e\in E$, $\exs\ v\in V$ such that $e\in \textit{in}(v)$ and $\exs\ u\in V$ such that $e\in \textit{out}(u)$. Hence we get $$\sum_{e\in E}f(e)=\sum_{v\in V}\sum_{e\in\textit{in}(v)}f(e)=\sum_{v\in V}\sum){e\in\textit{out}(v)}f(e)\implies \sum_{v\in V}\lt[\sum_{e\in\textit{in}(v)}f(e)-\sum_{e\in\textit{out}(v)}f(e)\rt]=0$$
+	Now we know $\forall\ v\in V\setminus\{s,t\}$. $\sum\limits_{e\in\textit{in}(v)}f(e)=\sum\limits_{e\in\textit{out}(v)}f(e)$. Therefore we get $$ \sum_{v\in V}\lt[\sum_{e\in\textit{in}(v)}f(e)-\sum_{e\in\textit{out}(v)}f(e)\rt]=0\implies \sum_{v\in \{s,t\}}\lt[\sum_{e\in\textit{in}(v)}f(e)-\sum_{e\in\textit{out}(v)}f(e)\rt]=0\implies \sum\limits_{e\in \textit{out}(s)}f(e)-\sum\limits_{e\in \textit{in}(t)}f(e)$$Hence we have $|f|=\sum\limits_{e\in \textit{in}(t)}f(e)$.
+\end{proof}
+
+%Now the problem we will study is to given such a graph find a flow which maximizes the value.
+\begin{algoprob}
+	\problemtitle{Max Flow}
+	\probleminput{A directed graph $G=(V,E)$ with source vertex $s$ and target vertex $t$ and for all edge $e\in E$ capacity of the edge $c_e\in\bbZ_+$}
+	\problemquestion{Given such a graph and its capacities find an $s-t$ flow which has the maximum value}
+\end{algoprob}
+
+\begin{Example}{}{}
+	Consider the following directed graph with capacities: $V=\{s,t,u,v\},\quad c_{s,u}=2,c_{s,v}=c_{u,t}=c_{v,t}=c_{u,v}=1$. Firstly the following function: $f':f'(s,u)=2=f(u,t)$. It is not a flow since $f(u,t)=2>1=c_{u,t}$. Now we define three different flow functions:
+	\begin{center}
+	\begin{tikzpicture}[scale=1.5]
+	% Draw vertices with circles around them
+\begin{scope}[shift={(-5,0)}]
+		\node[draw, circle] (A) at (0, 0) {$s$};
+	\node[draw, circle] (B) at (2, 1) {$u$};
+	\node[draw, circle] (C) at (2, -1) {$v$};
+	\node[draw, circle] (D) at (4, 0) {$t$};
+	
+	% Draw directed edges with values and reduced bends
+	\draw[,-latex, bend left=15] (A) to node[below] {2} (B);
+	\draw[,-latex, bend left=15] (B) to node[below] {1} (D);
+	\draw[,-latex] (B) -- node[left] {1} (C);
+	\draw[,-latex, bend right=15] (A) to node[above] {1} (C);
+	\draw[,-latex, bend right=15] (C) to node[above] {1} (D);
+	
+	
+    % Draw a single continuous red path from A to B to C to D
+\draw[red!80!black, thick, ,-latex, rounded corners=5pt] 
+($(A) + (0.1, 0.4)$) to [bend left=15] node[above] {1} ($(B) + (-0.4, 0.2)$) 
+-- node[left] {1} ($(C) + (-0.4, -0.35)$) to [bend right=18] node[below] {1}($(D) + (-0.2, -0.5)$);
+\draw[blue, thick, ,-latex, rounded corners=12pt, bend left=70] ($(A) + (0, 0.6)$) to node[above, xshift=-2.5cm, yshift=-0.85cm]{1} node[above, xshift=2.5cm, yshift=-0.85cm] {1}($(D) + (-0, 0.6)$);
+\draw[blue, thick, ,-latex, rounded corners=12pt, bend right=70] ($(A) + (0, -0.6)$) to node[below, xshift=-2.5cm, yshift=0.85cm]{1} node[below, xshift=2.5cm, yshift=0.85cm]{1} ($(D) + (0, -0.6)$);
+\draw[green!60!black, thick, rounded corners=12pt, bend left=23] ($(A) + (0.5, 0)$) to node[below]{2} ($(B) + (0.2,-0.39)$);
+\draw[green!60!black, thick,,-latex, rounded corners=12pt, bend left=17]  ($(B) + (0.2,-0.39)$)  to node[below]{1} ($(D) + (-0.5,0)$)  ;
+\draw[green!60!black, thick, rounded corners=5pt,-latex]  ($(B) + (0.2,-0.39)$)  to  node[right]{1}($(C) + (0.2,0.35)$)  to [bend right=23] node[above]{1} ($(D) + (-0.5,0)$);
+
+\end{scope}
+\begin{scope}[shift={(1.5,0)}]
+	\draw (1,0) node[text width=8cm]{\begin{itemize}
+			\item \textcolor{red!80!black}{$f\colon f(s,u)=f(u,v)=f(v,t)=1$ and otherwise $0$. Therefore $|f|=1$}
+			\item \textcolor{blue}{$g\colon g(s,u)=g(u,t)=1$, $g(s,v)=g(v,t)=1$ and otherwise $0$. Therefore $|g|=2$}
+			\item \textcolor{green!50!black}{$h\colon h(s,u)=2$, $h(u,t)=h(u,v)=h(v,t)=1$ and otherwise $0$. Therefore $|h|=2$}
+	\end{itemize}\vspace*{5mm}
+
+Notice here $g$ and $h$ has the maximum flow value.};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{Example}
+
+
+\section{Ford Fulkerson Algorithm}
+\begin{Definition}{Residual Graph}{}
+	Given a directed graph $G=(V,E)$ and capacities $C_e$ for all $e\in E$ and an $s-t$ flow $f$ the residual graph $G_f=(V,E_f)$ has the edges with the following properties:
+	\begin{enumerate}[label=\protect\circled{\arabic*}]
+		\item If $(u,v)\in E$ and $f(u,v)>0$  then $(v,u)\in E_f$ and $c_{v,u}^f=f(u,v)$. Such an edge is called a ``backward" edge.
+		\item If $(u,v)\in E$ and $f(u,v)<c_{u,v}$ then $(u,v)\in E_f$ and $c_{u,v}^f=c_{u,v}-f(u,v)$. It is called ``forward" edge.
+	\end{enumerate}
+\end{Definition}
+
+\begin{algorithm}
+\DontPrintSemicolon
+\SetKwComment{Comment}{//}{}
+\KwIn{Directed graph $G=(V,E)$, source $s$, target $t$ and edge capacities $C_e$ for all $e\in E$}
+\KwOut{Flow $f$ with maximum value}
+\Begin{
+	\For{$e\in E$}{$f(e)=0$}
+	\While{$\exs\ s\rightsquigarrow t$ path $P$ in $G_f$}{
+	$\dl\longleftarrow \min\limits_{e\in P}\{c_e^f\}$
+	\For{$e=(u,v)\in P$}{
+	\If{$e$ is Forward Edge}{$f(u,v)\longleftarrow f(u,v)+\dl$}
+	\Else{$f(u,v)\longleftarrow f(v,u)-\dl$}
+}
+}	
+}
+\caption{\prb{Max-Flow}}
+\end{algorithm}
