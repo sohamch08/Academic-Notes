@@ -74,9 +74,7 @@ Therefore it suffices to compute $W$ in $O(n^2)$ time. Now $A,B$ may not have a 
 \end{proof}
 \end{claimwidth}
 Therefore with this we get an unique witness matrix $W'$. From now on for brevity we will call $A'$ by $A$, $B'$ by $B$ and $W'$ by $W$. 
-\item \textbf{Fredman's Trick:} Now we have a witness matrix $W$ such that $\forall\ i,j\in[n]$ then $W(i,j)=$ unique $k\in[s]$. Now $\forall\ l\in [s]$ we have \begin{align*}
-	A(i,k)+B(k,j) \leq A(i,l)+B(l,j)
-\end{align*}
+\item \textbf{Fredman's Trick:} Now we have a witness matrix $W$ such that $\forall\ i,j\in[n]$ then $W(i,j)=$ unique $k\in[s]$. Now $\forall\ l\in [s]$ we have $$	A(i,k)+B(k,j) \leq A(i,l)+B(l,j)\iff A(i,k)-A(i,l)\leq B(l,j)-B(k,j)$$ So we create the matrices $$\tdA_i(k,l)=A(i,k)-A(i,l)\qquad \tdB_j(k,l)=B(l,j)-B(k,j)$$For $i\in[n]$, $\tdA_i$ and $\tdB_i$ are $s\times s$ matrices. 
 	\end{enumerate}
 
 \end{proof}

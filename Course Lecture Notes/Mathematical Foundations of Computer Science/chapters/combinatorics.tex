@@ -305,3 +305,112 @@ Now define the exponential generating function for derangements to be $D(x)=\sum
 
 
 \section{Partitions}
+
+\section{Partially Ordered Sets (Poset)}
+\dfn{Partially Ordered Sets (Posets)}{
+Let $U$ be a set. A relation $\leq$ on $U$ is a partial order if  we have \begin{enumerate}[label=\bfseries\protect\circled{\roman*},align=left]
+	\item \textbf{Reflexive:} $x\leq x$ for all $x\in U$
+	\item \textbf{Transitive:} $x\leq y$, $y\leq z\implies x\leq z$, $\forall \ x,y,z\in U$
+	\item \textbf{Anti-symmetric} $x\leq y$, $y\leq x\implies x=y$
+\end{enumerate}Then the pair $(U,\leq)$ is called a partially ordered set
+}
+\begin{adjustbox}{minipage={\linewidth}, valign=t}
+	
+	\begin{wrapfigure}{t}{0.35\linewidth}
+		
+		\centering
+	\begin{tikzpicture}[scale=0.8]
+		% Define the positions of each subset
+		\node (empty) at (0, 0) {$\emptyset$};
+		\node (1) at (-2, 2) {$\{1\}$};
+		\node (2) at (0, 2) {$\{2\}$};
+		\node (3) at (2, 2) {$\{3\}$};
+		\node (12) at (-2, 4) {$\{1, 2\}$};
+		\node (13) at (0, 4) {$\{1, 3\}$};
+		\node (23) at (2, 4) {$\{2, 3\}$};
+		\node (123) at (0, 6) {$\{1, 2, 3\}$};
+		
+		% Draw the edges between nodes to represent the inclusion relation
+		\draw[-latex] (empty) -- (1);
+		\draw[-latex] (empty) -- (2);
+		\draw[-latex] (empty) -- (3);
+		\draw[-latex] (1) -- (12);
+		\draw[-latex] (1) -- (13);
+		\draw[-latex] (2) -- (12);
+		\draw[-latex] (2) -- (23);
+		\draw[-latex] (3) -- (13);
+		\draw[-latex] (3) -- (23);
+		\draw[-latex] (12) -- (123);
+		\draw[-latex] (13) -- (123);
+		\draw[-latex] (23) -- (123);
+	\end{tikzpicture}
+	\caption{Hasse Diagram of $\lt(2^{[3]},\subseteq \rt)$}
+		
+		\vspace{-2\baselineskip}
+		
+	\end{wrapfigure}
+	
+	\vspace*{0.15em}
+	We will now define some terms which will be used a lot in this section:
+	\begin{enumerate}
+		\item \textit{Total order} of a set $U$  is partial order  such that for all $x,y\in U$, either $x\leq y$ or $y\leq x$  (or both)
+		\item If $x\leq y$ and $x\neq y$ then $x<y$
+		\item $x\leq y\equiv y\geq x$
+		\item For any $x,y\in U$ if neither $x\leq y$ nor $y\leq x$ then $x$ and $y$ are \textit{incomparable} and denoted by $x\| y$.
+		\item A \textit{chain} is a totally ordered subset of $U$.
+		\item The \textit{Height} of $U$, $h(U)$ is the length of the longest chain in $U$.
+		\item An \textit{anti-chain} is a subset of incomparable elements 
+		\item The \textit{Width} of $U$, $w(U)$ is the size of the longest anti-chain in $U$.
+		\item The \textit{minimal} elements of $U$ is defined as $\min(U)=\{x\in U\mid \forall\ y\in U,\ x\leq y\text{ or }y\|x\}$
+		\item The \textit{maximal} elements of $U$ is defined as $\max(U)=\{x\in U\mid \forall\ y\in U,\ y\leq x\text{ or }y\|x\}$
+	\end{enumerate}
+	
+\end{adjustbox}
+
+\begin{Example}{}{}
+	\begin{enumerate}[label=(\alph*)]
+		\item $U=[n]$ and $\leq $ is the standard ordering.
+		\item $U=2^{[n]}$ and $\leq $ is inclusion. 
+	\end{enumerate}
+\end{Example}
+
+
+\begin{assumption*}
+	We will assume $U$ is always finite
+\end{assumption*}
+\begin{lemma}{}{minmax-antichain}
+	$\min (U)$ and $\max{(U)}$ are anti-chains, non-empty (if $U$ is non-empty) (possibly intersecting).
+\end{lemma}
+\begin{proof}
+	We will prove for $\min(U)$ and the same type of proof will also work for $\max(U)$. Since $U$ is nonempty and finite $\exs \ x\in U$. Now if $x\notin \min(U)$ then $\exs\ y_1\in U\setminus\{x\}$ such that $y_1<x$. If $y_1\notin U$ then $\exs\ y_2\in U\setminus\{x,y_1\}$ such that $y_2<y_1$. Continuing like this if $y_{|U|-2}\notin U$, $\exs\ y_{|U|-1}\in U\setminus\{x,y_i\colon i\in[|U|-2]\}$. Then $y_{|U|-1}$ is the only element left in $U\setminus\{x,y_i\colon i\in[|U|-2]\}$. Hence $y_{|U|-1}$ is the minimal element of $U$. So $y_{|U|-1}\in \min(U)$. Therefore $\min(U)$ is nonempty.
+	
+	 Suppose $\min(U)$  not a anti-chain then $\exs,\ x,y\in U$ and $x\neq y$ such that $x\not\| y$. Hence either $x<y$ or $y<x$. WLOG suppose $x<y$. Then $y$ is not a minimal element since $y\not\leq x$. Hence contradiction. $\min(U)$ forms an anti-chain.
+	 
+	 Let $U=[1]$ with standard ordering $\leq$. Then $\min(U)=\max(U)=[1]$. Hence $\min(U)$ and $\max(U)$ may intersect. 
+\end{proof}
+\begin{observation*}
+	$\min(U)$ and $\max(U)$ are singleton sets  if it is a total order. 
+\end{observation*}
+
+\begin{lemma}{}{}
+	Any maximal chain has an element of $\min(U)$ and an element of $\max(U)$. These elements are same if length of the chain is $1$
+\end{lemma}
+\begin{Theorem}{Antichain Partitioning}{}
+	Every poset $(U,\leq )$ can be partitioned into $h(U)$ many antichains (not less). 
+\end{Theorem}
+\begin{proof}
+	We will first show that $U$ can not be partitioned into fewer than $h(U)$ many antichains. No antichain contains two elements from a chain,  since elements of chains are pairwise com-
+	parable and elements of antichains are pairwise incomparable. So each element of the longest chain in $U$ are in distinct antichains. Since the longest chain in $U$ has length $h(U)$, at least $h(U)$ many antichains are needed.
+	
+	Now for all $x\in U$ define the \textit{depth} of $x$, $d(x)$ in $U$ to be the length of the longest chain that ends at $x$ i.e. $$d(x)=\max\limits_{\textit{chain $C$},\; \max(C)=x}|C|$$Hence by definition we have $d(x)\leq h(U)$ for all $x\in U$. Consider $$A_i=\{x\in U\colon d(x)=i\}\quad\forall\ i\in[h(U)]$$We will show $\forall\ i\in[h(U)]$, $A_i$ is an antichain. The proof of $A_i$ is antichain is similar to \lmref{minmax-antichain}.
+\end{proof}
+\begin{Theorem}{Dilworth's Theorem}{}
+	Every poset $(U,\leq)$ can be partitioned into $w(U)$ many chains (not less).
+\end{Theorem}
+\begin{proof}
+	Clearly at lest $w(U)$ many chains are needed since any two elements of the longest antichain of $U$ are incomparable and therefore they are in distinct chains and henceforth all the elements of the longest antichain are in distinct chains.
+	
+	We will show there is such a partition we will induct on $|U|$. Consider the maximal antichain of $U$, $P=\{x_1,\dots, x_{w(U)}\}$. Now we partition $U$ into two posets of smaller size.$$U_1\coloneqq \{x\in U\mid \exs\ y\in P,\ y\leq x\}\qquad U_2\coloneqq \{x\in U\mid \exs\ y\in P,\ x\leq y\}$$ with the same relations as for $U$. Now notice $U_1\cap U_2=P$. Therefore $w(U_1)=w(U_2)=w(U)$. Assuming $P\subsetneq U_1$ and $P\subsetneq U_2$ by inductive hypothesis we can partition $U_1$ and $U_2$ into chains $C^1_1,\dots, C_{w(U_1)}^1$ and $C_1^1,\dots, C_{w(U_2)}^2$ respectively where $C_i^1\cap C_i^2=\{x_i\}$ for all $i\in w(U)$. Hence we can take $C_i=C_1\cup C_2$ and $C_i$ is a chain for all $i\in w(U)$. So we get $w(U)$ many partitions of $U$.
+	
+	Now we have to consider the case where  there is no largest antichain except for $\min(U )$, $\max(P )$ or both.
+\end{proof}

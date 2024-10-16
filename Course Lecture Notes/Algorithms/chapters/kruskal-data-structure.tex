@@ -67,15 +67,24 @@
 \subsection{Analyzing the Union-Find Data-Structure}
 We call a node in the union-find data-structure a \textit{leader} if it is the root of the (reversed) tree.
 \begin{lemma}{}{}
-	Once a node stop being a \textit{leader} (i.e. the node in top of a tree). it can never become a leader again.
+	Once a node stop being a {leader} (i.e. the node in top of a tree). it can never become a leader again.
 \end{lemma}
+\begin{proof}
+	A node $x$ stops being a {leader} only because of the \prb{Union} operation which made $x$ child of a node $y$ which is a {leader} of a tree. From this point on, the only operation that might change the parent pointer of $x$ is the \prb{Find} operation which traverses through $x$. Since path-compression only change the parent pointer of $x$ to point to some other node $y$. Therefore the parent pointer of $x$ will never become equal to itself i.e. $x$ can never be a {leader} again. Hence once $x$ stops being a {leader} it can never be a {leader} again.
+\end{proof}
 \begin{lemma}{}{}
 	Once a node stop being a leader then its rank is fixed.
 \end{lemma}
+\begin{proof}
+	The rank of a node changes only by an \prb{Union} operation. But the \prb{Union} operation only changes the rank of nodes that are {leader} after the operation is done. Therefore once a node stops being a {leader} it's rank will not being changed by an \prb{Union} operation. Hence once a node stop being a leader then its rank is fixed.
+\end{proof}
 \begin{lemma}{}{}
 	Ranks are monotonically increasing in the reversed trees, as we travel from a node to
 	the root of the tree.
 \end{lemma}
+\begin{proof}
+	To show that the ranks are monotonically increasing  it suffices to prove that for all edge $u\to v$ in the data structure we have $\Rank(u)<\Rank(v)$. 
+\end{proof}
 
 \begin{lemma}{}{}
 	When a node gets rank $k$ than there are at least $\geq 2^k$ elements in its subtree.
