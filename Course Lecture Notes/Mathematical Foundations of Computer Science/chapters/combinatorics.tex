@@ -392,7 +392,7 @@ Let $U$ be a set. A relation $\leq$ on $U$ is a partial order if  we have \begin
 	$\min(U)$ and $\max(U)$ are singleton sets  if it is a total order. 
 \end{observation*}
 
-\begin{lemma}{}{}
+\begin{lemma}{}{chainoneminonemax}
 	Any maximal chain has an element of $\min(U)$ and an element of $\max(U)$. These elements are same if length of the chain is $1$
 \end{lemma}
 \begin{Theorem}{Antichain Partitioning}{}
@@ -412,5 +412,6 @@ Let $U$ be a set. A relation $\leq$ on $U$ is a partial order if  we have \begin
 	
 	We will show there is such a partition we will induct on $|U|$. Consider the maximal antichain of $U$, $P=\{x_1,\dots, x_{w(U)}\}$. Now we partition $U$ into two posets of smaller size.$$U_1\coloneqq \{x\in U\mid \exs\ y\in P,\ y\leq x\}\qquad U_2\coloneqq \{x\in U\mid \exs\ y\in P,\ x\leq y\}$$ with the same relations as for $U$. Now notice $U_1\cap U_2=P$. Therefore $w(U_1)=w(U_2)=w(U)$. Assuming $P\subsetneq U_1$ and $P\subsetneq U_2$ by inductive hypothesis we can partition $U_1$ and $U_2$ into chains $C^1_1,\dots, C_{w(U_1)}^1$ and $C_1^1,\dots, C_{w(U_2)}^2$ respectively where $C_i^1\cap C_i^2=\{x_i\}$ for all $i\in w(U)$. Hence we can take $C_i=C_1\cup C_2$ and $C_i$ is a chain for all $i\in w(U)$. So we get $w(U)$ many partitions of $U$.
 	
-	Now we have to consider the case where  there is no largest antichain except for $\min(U )$, $\max(P )$ or both.
+	Now we have $U_1=U\iff U=\min(U)$ and $U_2=U\iff U=\min(U)$. So we only have to consider the case where  there is no largest antichain except for $\min(U )$, $\max(P )$ or both.  In that case let $C$ be any maximal chain. Then $C$ has exactly one element of $\min(U)$ and exactly one element of $\max(U)$ by \lmref{chainoneminonemax}. So $w(U\setminus C)=w(U)-1$ since only one element from each largest antichain is removed. Now by induction $U\setminus C$ can be partitioned into $w(U)-1$ many chains. Hence $U$ can be partitioned into $w(U)$ many chains. Hence we are done. 
 \end{proof}
+\subsection{Subposets and Dimensions}
