@@ -1,8 +1,8 @@
-\chapter{Max Flow Min Cut}
-\section{Maximum Flow}
-Suppose we are given a directed graph $G=(V,E)$ with a source vertex $s$ and a target vertex $t$. And additionally for every edge $e\in E$ we are given a number $c_e\in \bbZ_+$ which is called the capacity of the edge.
+\chapter{Maximum Flow}
+\section{Flow}
+Suppose we are given a directed graph $G=(V,E)$ with a source vertex $s$ and a target vertex $t$. And additionally for every edge $e\in E$ we are given a number $c_e\in \bbZ_0$ which is called the capacity of the edge.
 \begin{Definition}{Flow}{}
-	An $s-t$ flow is a function $f:E\to\bbR_+$ which satisfies the following:\begin{enumerate}[label=\protect\circled{\small\arabic*}]
+	An $s-t$ flow is a function $f:E\to\bbR_0$ which satisfies the following:\begin{enumerate}[label=\protect\circled{\small\arabic*}]
 		\item $\forall\ e\in E$, $f(e)\leq c_e$
 		\item $\forall\ v\in V\setminus\{s,t\}$, $\sum\limits_{e\in \textit{in}(v)}f(e)=\sum\limits_{e\in \textit{out}(v)}f(e)$
 	\end{enumerate}
@@ -100,3 +100,44 @@ Notice here $g$ and $h$ has the maximum flow value.};
 }
 \caption{\prb{Max-Flow}}
 \end{algorithm}
+We call one iteration of the While loop at line 4 \textit{Flow Augmentation}.
+%\begin{note}
+%	In each flow augmentation some edge will disappear. This is because the 
+%\end{note}
+\begin{lemma}{}{flowaugment}
+	At any iteration the $f'$ obtained after the flow augmentation of the flow $f$ is a valid flow
+\end{lemma}
+\begin{proof}
+	At any iteration  let $P$ be the path from $s\rightsquigarrow t$ and $\dl=\min\limits_{e\in P}c_f(e)$. Let $f'$ be the new function such that for each $(u,v)\in P$ if $(u,v)$ is forward edge in $G_f$ then $f'(u,v)=f(u,v)+\dl$ and if $(u,v)$ is backward edge in $G_f$ then $f'(v,u)=f(v,u)-\dl$ and for other edges $e\in E\setminus P$, $f'(e)=f(e)$. 
+	
+		Now since $\dl=\min\limits_{e\in P}c_f(e)$, $c_f(e)\geq \dl$ for all $e\in P$. Hence if $(u,v)$ is backward edge then $(v,u)\in E$ and $c_f(u,v)=f(u,v)$. Hence $f'(v,u)=f(v,u)-\dl\geq 0$. Therefore for all $e\in E$, $f'(e)\geq 0$. 
+	
+	Now first we will show $f'(e)\leq c_e$ for all $e\in E$. If $(u,v)\in P$ is a forward edge then $(u,v)\in E$ and $c_f(u,v)=c_{u,v}f(u,v)$. Therefore $f'(u,v)=f(u,v)+\dl\leq f(u,v)+c_{u,v}-f(u,v)=c_{u,v}$. Now if $(u,v)\in P$ is a backward edge then $(v,u)\in E$ and $c_f(u,v)=f(u,v)$. Therefore $f'(u,v)=f(u,v)-\dl\leq f(u,v)\leq c_{u,v}$. For other edges $e\in E\setminus P$, $f'(e)=f(u)\leq c_e$. Therefore $f'(e)\leq c_e$ for all $e\in E$
+	
+	Now we will prove for all $v\in V\setminus\{s,t\}$, $\sum\limits_{e\in \textit{in}(v)}f'(e)=\sum\limits_{e\in\textit{out}(v)}f'(e)$. If $v$ is not in the path $P$ in $G_f$ then, $f'(e)=f(e)$ for all edges $e\in \textit{in}(v)\cup \textit{out}(v)$. Hence the condition is satisfied for such vertices. Suppose $v$ is in the path $P$. Then there are two edges $e_1$ and $e_2$ in $P$ which are incident on $e$. If both are forward edges or both are backward edges then one of them is in $\textit{in}(v)$ and other one is in $\textit{out}(v)$. WLOG suppose $e_1\in \textit{in}(v)$ and $e_2\in\textit{out}(v)$ we have $$\sum\limits_{e\in \textit{in}(v)}f'(e)=\sum\limits_{e\in \textit{in}(v)\setminus\{e_1\}}f(e)+f(e_1)\pm \dl=\sum\limits_{e\in\textit{out}(v)\setminus \{e_2\}}f(e)+f(e_2)\pm \dl=\sum\limits_{e\in\textit{out}(v)}f'(e)$$If one of $e_1$, $e_2$ forward edge and other one is backward edge then either $e_1,e_2\in \textit{in}(v)$ (when $e_1$ is forward and $e_2$ is backward) or $e_1,e_2\in \textit{out}(v)$ (when $e_1$ is backward and $e_2$ is forward). Now if $e_1,e_2\in \textit{in}(v)$, $f'(e_1)+f'(e_2)=f(e_1)+\dl+f(e_2)-\dl=f(e_1)+f(e_2)$ and if $e_1,e_2\in\textit{out}(v)$ then $f'(e_1)+f'(e_2)=f(e_1)-\dl+f'(e_2)+\dl=f(e_1)+f(e_2)$. Hence $$\sum\limits_{e\in \textit{in}(v)}f'(e)=\sum\limits_{e\in \textit{in}(v)}f(e)=\sum\limits_{e\in\textit{out}(v)}f(e)=\sum\limits_{e\in\textit{out}(v)}f'(e)$$ Hence $f'$ is a valid flow. 
+\end{proof}
+
+\begin{lemma}{}{flowaugment-flowvalue}
+	At any iteration Given $G_f$ if the flow, $f'$ obtained after flow augmentation of $f$ by $\dl$ then $$|f'|=|f|+\dl$$
+\end{lemma}
+\begin{proof}
+	Since we augment flow along an $s\rightsquigarrow t$ path, the first edge of the path is always in \textit{out}$(s)$. Let the first edge is $e=(s,u)$. Now $e$ has to be a forward edge because otherwise $(u,s)\in E$ and then there is an incoming edge in $G$ which is not possible. Hence $$|f'|=\sum\limits_{e\in \textit{out}(s)}f'(e)=\sum_{e\in \textit{out}(s)\setminus\{e\}}f(e)+f'(e)=\sum_{e\in \textit{out}(s)\setminus\{e\}}f(e)+f(e)+\dl=\sum_{e\in\textit{out}(s)}f(e)+\dl=|f|+\dl$$Hence we have the lemma.
+\end{proof}
+\begin{lemma}
+	At every iteration of the Ford-Fulkerson Algorithm the flow values and the residual capacities of the residual graph are non-negative integers.
+\end{lemma}
+\begin{proof}
+	Initial flow and the residual capacities are non-negative integers. Let till $i^{th}$ iteration the flow values and the residual capacities were non-negative integers. Let the flow after $i^{th}$ iteration was $f$. Hence $\forall\ e\in E$, $f(e)\in \bbZ_0$. Therefore in the $G_f$ for all $e\in E_f$, $c_f(e)\in\bbZ_0$. Hence $\dl\in\bbZ_0$. Therefore $\forall\ e\in E$, $f'(e)\in\bbZ_0$. And therefore for all $e\in E_{f'}$ where $G_{f'}$ is the residual graph of the flow $f'$, $c_{f'}(e)\in\bbZ_0$. Hence by mathematical induction the lemma follows.
+\end{proof}
+At any iteration let $P$ be the path from $s\rightsquigarrow t$. Then for all $e\in P$, $c_f(e)>0$. Therefore $\dl=\min\limits_{e\in P}c_f(e)\geq 1$. Therefore the algorithm must stop in at most $\sum\limits_{e\in \textit{out}(s)}c_e$ since we can have the value of a flow to be at max the value of the sum of capacities of edges in \textit{out}$(s)$ and therefore we can increase the flow at max that many times.
+\begin{lemma}
+	If $f$ is a max flow then there is no $s\rightsquigarrow t$ path in $G_f$.
+\end{lemma}
+\begin{proof}
+	Suppose there is an $s\rightsquigarrow t$ path $P$ in $G_f$. We will show that then $f$ is not a max flow following the algorithm. Then $\forall\ e\in P$, $c_f(e)>0$. Hence $\dl=\min\limits_{e\in P}c_f(e)\geq 1$. Now after the flow augmentation process of $f$ by $\dl$ we get a new valid flow $f'$ by \lmref{flowaugment} and by \lmref{flowaugment-flowvalue} we have $|f'|=|f|+\dl>||f|$. Hence $f$ is not a maximum flow. Hence contradiction. Therefore there is no $s\rightsquigarrow t$ path in $G_f$.
+\end{proof}
+\section{Cuts}
+\dfn{Cut Set}{For a graph $G=(V,E)$ and a subset $A\subseteq V$, the cut $(A,V\setminus A)$ is  a bipartition of $V$ where  the edges $E_A$ of the graph $G_A=(A,V\setminus A, E_A)$ is the set  $E_A= E\cap (A\times (V\setminus A))$.\parinn
+	
+	Now if $s,t$ are two vertices of $G$ then an $s-t$ \textit{Cut} $(A,V\setminus A)$ is a cut such that $s\in A$ and $t\in V\setminus A$.}
+ Now we define for a cut $(A,V\setminus A)$ the \textit{Capacity of the Cut} $(A,V\setminus A)=\sum\limits_{e\in E_A}c_e$.
