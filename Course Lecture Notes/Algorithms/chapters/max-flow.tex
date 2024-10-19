@@ -198,12 +198,49 @@ Suppose $f_i$ be the total flow after $i^{th}$ iteration. And $G_{f_i}$ be the r
 	In $i^{th}$ iteration of the Ford-Fulkerson Algorithm or Edmonds-Karp Algorithm if $P$ is the $s\rightsquigarrow t$ in the residual graph $G_{f_i}$ where $e=(u,v)\in P$  and $c_{f_i}(u,v)=\dl=\min\limits_{e\in P}c_{f_i}(e)$ then the edge $(u,v)$ is not present in the next residual graph $G_{f_{i+1}}$. Thus at least one edge disappears in each iteration of Ford-Fulkerson or Edmonds-Karp Algorithm.
 \end{note}
 Now we will prove following two lemmas which will help us to prove that the Edmond-Karp algorithm takes $O(mn)$ iterations. 
-\begin{lemma}{}{}
+\begin{lemma}{}{distincreasewithiteration}
 At any iteration $i$, 	$\forall\ v\in V$, $\textit{dist}_i(v)\leq\textit{dist}_{i+1}(v)$
 \end{lemma}
+\begin{proof}
+	Suppose this is not true. Then let $i$ be the first iteration in which there exists a vertex $v\in V$ such that $\textit{dist}_i(v)>\textit{dist}_{i+1}(v)$. We pick such $v$ which minimizes $\textit{dist}_{i+1}(v)$. Consider the shortest path $P$ from $s\rightsquigarrow v$ in $G_{f_{i+1}}$. Hence length of $P$, $|P|=\textit{dist}_{i+1}(v)$. Let $(u,v)$ be the last edge of $P$. 
+	\begin{center}
+		\begin{tikzpicture}
+			\node[draw, circle] (A) at (0, 0) {$s$};
+			\node[draw, circle] (B) at (5, 0) {$u$};
+			\node[draw, circle] (C) at (7, 0) {$v$};
+			\draw [-latex,
+			line join=round,
+			decorate, decoration={
+				zigzag,
+				segment length=10,
+				amplitude=.9,post=lineto,
+				post length=2pt
+			}]  ($(A)+(0.4,0)$) to ($(B)+(-0.4,0)$);
+		\draw[-latex] ($(B)+(0.4,0)$) to ($(C)+(-0.4,0)$);
+		\node at (-0.8,0) {$P:$};
+		\end{tikzpicture}
+	\end{center}
+	Then $$\textit{dist}_{i+1}(v)=\textit{dist}_{i+1}(u)+1\geq \textit{dist}_i(u)+1$$Here the last inequality follows because $v$ is the vertex which has the minimum $\textit{dist}_{i+1}(v)$ among all the vertices $w\in V$ which follows $\textit{dist}_i(w)>\textit{dist}_{i+1}(w)$. Now we will analyze case wise.\begin{itemize}
+		\item \textbf{Case 1:} $(u,v)\in E_{f_i}$. Then $$\textit{dist}_i(v)\leq \textit{dist}_{i}(u)+1\leq \textit{dist}_{i+1}(v)$$But this is not possible since $\textit{dist}_i(v)>\textit{dist}_{i+1}(v)$. 
+		\item \textbf{Case 2:} $(u,v)\notin E_{f_i}$. Then $(v,u)\in E_{f_i}$. Since $(u,v)\in E_{f_{i+1}}$ then we must have sent flow along $(v,u)$. Since we take the shortest $s\rightsquigarrow t$ path in $G_{f_i}$ in the algorithm we have $\textit{dist}_i(u)=\textit{dist}_i(v)+1$. But then $$\textit{dist}_i(u)\leq \textit{dist}_{i+1}(v)-1\implies \textit{dist}_{i+1}(v)\geq \textit{dist}_i(v)+2$$But this is not possible.
+	\end{itemize}
+Hence contradiction \ctr Therefore for all iterations $i$, for all vertices $v\in V$, $\textit{dist}_i(v)\leq \textit{dist}_{i+1}(v)$.
+\end{proof}
 
-
-\begin{lemma}{}{}
+\begin{lemma}{}{lineartimeedgeappear}
 	For any edge $e=(u,v)\in E$ the number of iterations where either $(u,v)$ appears or $(v,u)$ appears is at most $O(n)$ i.e. $$\lt|\lt\{i\colon (u,v)\notin G_{f_i}, (u,v)\in G_{f_{i+1}}\rt\}\rt|+\lt|\lt\{i\colon (v,u)\notin G_{f_i}, (v,u)\in G_{f_{i+1}}\rt\}\rt|=O(n)$$
 \end{lemma}
+\begin{proof}
+	Following the proof of \lmref{distincreasewithiteration}  in the second case we showed if $(u,v)\notin G_{f_i}$ but $(u,v)\in G_{f_{i+1}}$ then $\textit{dist}_{i+1}(v)\geq \textit{dist}_i(v)+2$. Hence the distance increases by at least $2$. Now this can happen at most $O(n)$ many times since $\forall\ i$, $\textit{dist}_i(v)\leq n-1$. Hence the number of iterations where either $(u,v)$ appears or $(v,u)$ appears is at most $O(n)$.
+\end{proof}
+
+With this this lemma we will prove that the Edmonds-Karp Algorithm takes $O(mn)$ iterations. 
+\begin{Theorem}{}{}
+	Edmonds-Karp Algorithm terminates in $O(mn)$ many iterations. 
+\end{Theorem}
+\begin{proof}
+	For $k$ iterations at least $k$ edges must disappear. Since each edge can reappear $O(n)$ times by \lmref{lineartimeedgeappear}, it can disappear at most $O(n)$ many times. In each iteration at least one edge disappears. Now after $O(mn)$ iterations number of disappearances is at most $O(mn)$. But after $O(mn)$ many disappearances  there are no edge remaining and therefore there is no $s\rightsquigarrow t$ path. Hence the algorithm terminates. Therefore the Algorithm terminates in $O(mn)$ iterations.
+\end{proof}
+
+Hence Edmond-Karp Algorithm takes $O(m^2n)\textit{poly}(\log c_e)=O\lt(m^2n\log^{O(1)}(c_e)\rt)$ time since it takes $O(mn)$ iterations and in each iteration it finds the shortest $s\rightsquigarrow t$ path in $G_{f_i}$ in $O(m)$ time and in each iteration it does addition and subtraction and finds minimum of the capacities which takes polynomial of the bits needed to represent them time.
 \section{Preflow-Push/Push Relabel Algorithm}
