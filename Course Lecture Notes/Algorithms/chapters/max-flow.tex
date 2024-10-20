@@ -254,7 +254,7 @@ In this algorithm we will maintain something called ``Preflow" which is not a va
 \end{Definition}
 Notice here unlike the definition of \hyperref[def:flow]{Flow} here in the second criteria we need  $\sum\limits_{e\textit{in}(v)}f(e)\geq \sum\limits_{e\in\textit{out}(v)}f(e)$ instead of  $\sum\limits_{e\textit{in}(v)}f(e)= \sum\limits_{e\in\textit{out}(v)}f(e)$.
 
-N3121ow define for all $v\in V$ and for all preflow $f$, $\textit{excess}_f(v)=\sum\limits_{e\in\textit{in}(v)}f(e)-\sum\limits_{e\in\textit{out}(v)}f(e)$. If $f$ is a preflow then $\textit{excess}_f(s)\leq 0$ and $\forall\ v\in V\setminus\{s\},$ $\textit{excess}_f(v)\geq 0$
+Now define for all $v\in V$ and for all preflow $f$, $\textit{excess}_f(v)=\sum\limits_{e\in\textit{in}(v)}f(e)-\sum\limits_{e\in\textit{out}(v)}f(e)$. If $f$ is a preflow then $\textit{excess}_f(s)\leq 0$ and $\forall\ v\in V\setminus\{s\},$ $\textit{excess}_f(v)\geq 0$
 \begin{lemma}{}{}
 	For all preflow $f$ $$\sum\limits_{v\in V}\textit{excess}_f(v)=0$$
 \end{lemma}
@@ -328,7 +328,7 @@ Below we will show change of the residual graph and preflow in each iteration of
 		\draw (0,-0.5) node{$3$} node[left=0.5cm]{$l:$};
 		\draw (2,-0.5) node{$\cancel{0}1$};
 		\draw (4,-0.5) node{$0$};
-		\draw (0,-1) node{$-6$} node[left=0.5cm]{$\textit{excess}:$};
+		\draw (0,-1) node{$-6$} node[left=0.5cm]{$\textit{excess}_f:$};
 		\draw (2,-1) node{$6$};
 		\draw (4,-1) node{$0$};
 		
@@ -336,7 +336,7 @@ Below we will show change of the residual graph and preflow in each iteration of
 		\draw ($(s)+(-0.5,0.7)$) node[left]{$f:$};
 		%	\draw[-latex] ($(v)+(0.3,0.2)$) -- ($(t)-(0.3,-0.2)$) node[above, midway]{$4$};
 		
-		\draw (10,0) node[text width=10cm]{Since $\textit{excess}_ff(v)=6>0$. So in first iteration $v$ is taken. Since there is no edge $(v,u)$ with $l(u)=l(v)-1$, label of $v$ got increased};
+		\draw (10,0) node[text width=10cm]{Since $\textit{excess}_f(v)=6>0$. So in first iteration $v$ is taken. Since there is no edge $(v,u)$ with $l(u)=l(v)-1$, label of $v$ got increased};
 	\end{tikzpicture}
 \item 	Step 2:
 
@@ -349,7 +349,7 @@ Below we will show change of the residual graph and preflow in each iteration of
 	\draw (0,-0.5) node{$3$} node[left=0.5cm]{$l:$};
 	\draw (2,-0.5) node{$1$};
 	\draw (4,-0.5) node{$0$};
-	\draw (0,-1) node{$-6$} node[left=0.5cm]{$\textit{excess}:$};
+	\draw (0,-1) node{$-6$} node[left=0.5cm]{$\textit{excess}_f:$};
 	\draw (2,-1) node{$\cancel{6}2$};
 	\draw (4,-1) node{$\cancel{0}4$};
 	
@@ -369,7 +369,7 @@ Below we will show change of the residual graph and preflow in each iteration of
 	\draw (0,-0.5) node{$3$} node[left=0.5cm]{$l:$};
 	\draw (2,-0.5) node{$\cancel{1}4$};
 	\draw (4,-0.5) node{$0$};
-	\draw (0,-1) node{$-6$} node[left=0.5cm]{$\textit{excess}:$};
+	\draw (0,-1) node{$-6$} node[left=0.5cm]{$\textit{excess}_f:$};
 	\draw (2,-1) node{$2$};
 	\draw (4,-1) node{$4$};
 	
@@ -391,7 +391,7 @@ Below we will show change of the residual graph and preflow in each iteration of
 	\draw (0,-0.5) node{$3$} node[left=0.5cm]{$l:$};
 	\draw (2,-0.5) node{$4$};
 	\draw (4,-0.5) node{$0$};
-	\draw (0,-1) node{$-6$} node[left=0.5cm]{$\textit{excess}:$};
+	\draw (0,-1) node{$-6$} node[left=0.5cm]{$\textit{excess}_f:$};
 	\draw (2,-1) node{$\cancel{2}0$};
 	\draw (4,-1) node{$4$};
 	
@@ -498,14 +498,7 @@ Now we need a bound on the number of push operations. We will count separately t
 
 
 Now we will count the number of non-saturating pushes. For such pushes along any edge $(v,u)$ the $\textit{excess}_f(v)$ goes to $0$. We define the potential function for a preflow $f$, $$\phi(f)=\sum_{v:\textit{ excess}_f(v)>0}l(v)$$Now $\phi(f)\geq 0$ for all preflow $f$ and initially at the start of the algorithm $\phi(f^0)=0$. 
-\begin{observation}
-	For relabeling operation $\phi(f)$ increases by $1$.
-\end{observation}
-Since there are at most $2n^2$ relabeling operations by  \corref{relabel2n2}, $\phi(f)$ increases by at most $2n^2$ with relabeling operations.
-\begin{observation}
-	For each saturating push $\textit{excess}_f(v,w)$ might not go to $0$ and therefore $\phi$ might increase.
-\end{observation}
-Now by \lmref{satpush2mn} total number of saturated pushes is at most $2mn$. And by \corref{eachvertexlabel2n} each vertex has label at most $2n$. Hence in total $\phi(f)$ can increase at most $2mn\times 2n=4mn^2$ by saturated pushes.
+
 \begin{lemma}{}{nonsatpushleveldecrease1}
 	For each non-saturating push  $\phi(f)$ decreases by at least 1.
 \end{lemma}
@@ -518,7 +511,17 @@ Now by \lmref{satpush2mn} total number of saturated pushes is at most $2mn$. And
 		\end{itemize}
 Hence for both the cases $\phi(f^i)\leq \phi(f^{i-1})-1$. Therefore $\phi(f^{i-1})$ decreases by at least 1.
 \end{proof}
-\begin{lemma}{}{}
-	$\phi(f)$ can increase at most 
-\end{lemma}
+
+
+\begin{observation}
+	For relabeling operation $\phi(f)$ increases by $1$.
+\end{observation}
+Since there are at most $2n^2$ relabeling operations by  \corref{relabel2n2}, $\phi(f)$ increases by at most $2n^2$ with relabeling operations.
+\begin{observation}
+	For each saturating push $\textit{excess}_f(v,w)$ might not go to $0$ and therefore $\phi$ might increase.
+\end{observation}
+Now by \lmref{satpush2mn} total number of saturated pushes is at most $2mn$. And by \corref{eachvertexlabel2n} each vertex has label at most $2n$. Hence in total $\phi(f)$ can increase at most $2mn\times 2n=4mn^2$ by saturated pushes. Hence $\phi(f)$ increases at most $2n^2+2mn\times 2m=O(mn^2)$.
+
+
 Now $$\#\text{Non-saturating Pushes}  \leq \text{Total decrease in }\phi\leq \text{Total increase in }\phi\leq 2n^2+4mn^2=O(mn^2)$$
+Therefore total number of iterations of the \prb{While} loop is $\#$Relabeling$+\#$Saturated Push$+\#$Non-saturated Push$= 2n^2+2mn+O(mn^2)=O(mn^2)$.  There fore the algorithm takes $O(mn^2)$ iteration. In each iteration it takes $O(m+n)$ time. Therefore the runtime of the algorithm is $O(mn^2)O(n+m)=O(m^2n^2)$. 

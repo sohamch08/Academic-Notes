@@ -415,3 +415,48 @@ Let $U$ be a set. A relation $\leq$ on $U$ is a partial order if  we have \begin
 	Now we have $U_1=U\iff U=\min(U)$ and $U_2=U\iff U=\min(U)$. So we only have to consider the case where  there is no largest antichain except for $\min(U )$, $\max(P )$ or both.  In that case let $C$ be any maximal chain. Then $C$ has exactly one element of $\min(U)$ and exactly one element of $\max(U)$ by \lmref{chainoneminonemax}. So $w(U\setminus C)=w(U)-1$ since only one element from each largest antichain is removed. Now by induction $U\setminus C$ can be partitioned into $w(U)-1$ many chains. Hence $U$ can be partitioned into $w(U)$ many chains. Hence we are done. 
 \end{proof}
 \subsection{Subposets and Dimensions}
+\dfn{Subposet}{$P=(U,\leq_P)$ is a subposet of $Q=(V,\leq_Q)$ if there is an injective function $f:U\to V$ such that $\forall\ x_1,x_2\in U$, $x_1\leq_Px_2\iff f(x_1)\leq_Qf(x_2)$. The function $f$ is called an \textit{embedding}.} 
+
+We say $Q=(U,\leq_Q)$ is an \textit{extension} of $P=(U,\leq_P)$ iff $\forall\ x_1,x_2\in U$, $x_1\leq_Px_2\iff x_1\leq_Qx_2$. $Q$ is a \textit{linear extension} of $P$ if $\leq_Q$ is a total order. 
+\begin{lemma}{}{}
+	Let $P_1=(U,\leq _1)$, $P_2=(U,\leq_2)$ be two posets on the same ground set $U$. Then we define $P=P_1\cap P_2\coloneqq (U,\leq)$ with the relation $\leq \coloneqq \leq_1\cap \leq_2$, meaning $$x\leq y\iff x\leq_1y\text{ and }x\leq_2y$$Then $P$ is a poset and $P_1$ and $P_2$ are extensions of $P$.
+\end{lemma}
+\begin{proof}
+	The $\leq $ relation is an partial order relation. Since all pairs that are related via $\leq $ are related via $\leq_1$ and $\leq _2$, $\leq_1,\leq_2$ are extensions of $\leq$.
+\end{proof}
+\begin{Definition}{$d-$ary Dominance Poset}{}
+ For $d\in \bbN$ the set $\bbR^d$ becomes a $d-$ary dominance poset via the \textit{dominance order}, $\leq_{\text{dom}}$ where $x=(x_1,\dots, x_d), y=(y_1,\dots, y_d)\in \bbR^d$ we have $$x\domrel y\iff \forall\ i\in[d],\ x_i\leq y_i$$
+\end{Definition}
+Then we have the following definition for $d-$dimensional posets $(U,\leq)$.
+\begin{Definition}{Dimension of Poset}{}
+	The dimension of the poset $(U,\leq)$ is the smallest $d\in \bbN$ such that $(U,\leq)$ is a subposet of  $(\bbR^d,\domrel)$.
+\end{Definition}
+\begin{Theorem}{}{}
+	Let $(U,\leq)$  be a poset and $d>0$, $d\in\bbN$. We have that $U$ is $d-$dimensional if and only if $d$ is the smallest number such that $U$ can be written as intersection of $d-$linear extensions of $U$. 
+\end{Theorem}
+\begin{proof}
+	$``\Leftarrow":$ Let there are $d$-linear extensions of $(U,\leq)$, which are $(U,\leq_1),\dots(U,\leq_d)$ such that $$x\leq y\iff x\leq_i y\ \forall\ i\in[d]$$We will construct an embedding $f:U\to \bbR^d$. For any $x\in U$ we take $f(u)=(r_1,\dots, r_d)$ where $r_i=|\{y\in U\colon y\leq_i x\}|$. Now we will show $f$ is indeed an embedding. Let $u,v\in U$. Then  suppose $f(u)=(r_1^u,\dots,r_d^u)$ and $f(v)=(r_1^v,\dots, r_d^v)$. Now 
+	\begin{align*}
+		u\leq v&\iff u\leq_i v\ \forall \ i\in[d]\\
+		 & \iff \Big(x\in\{y\in U\colon y\leq_i u\}\implies x\leq_i u\leq_i v\implies x\in   \{y\in U\colon y\leq_i v\}  \Big)\ \forall \ i\in[d]\\
+		 & \iff r_i^u\leq r_i^v\ \forall \ i\in[d]\\
+		 & \iff f(u)\domrel f(v)
+	\end{align*}Hence $f$ is indeed a embedding. 
+
+$``\Rightarrow":$ $(U,\leq)$ is $d$-dimensional. There exists an embedding $f:U\to\bbR$. Now $\forall\ x,y\in U$ we have $$x\leq y\iff f(x)\domrel f(y)$$. Now we can assume no two points of $U$ share a coordinate or else we can force this rule changing the values a little. Now we can think $f=(f_1,\dots, f_n)$ where $f_i:U\to \bbR$ for all $i\in[d]$ such that $x\leq y\iff f_i(x)\leq f_i(y)$ for all $i\in[d]$. Then we have the linear extensions of $(U,\leq)$, $(U,\leq_i)$ where $\forall\ x,y\in U$, $x\leq_i y\iff f_i(x)\leq f_i(y)$.  
+\end{proof}
+\begin{lemma}{}{}
+	The dimension of $(2^{[d]},\subseteq)$ is $d$
+\end{lemma}
+\begin{proof}
+	The dimension is at most $d$ because $\{0,1\}^d$ can be mapped to $\bbR^d$. Now we will show that  lower than $d$ embedding is not possible. 
+	
+	Suppose for the sake of contradiction that $(\{0,1\}^d,\leq )$ can be written as the intersection of $d-1$ linear extensions. Let $(\{0,1\}^d,\leq_i)$ for all $i\in[d-1]$ be the linear extensions of $(\{0,1\}^d,\leq)$. Now consider the pairs of sets $(\{i\},\ov{\{i\}})$ for all $i\in[d]$. Now for all $i\in[d]$, we have $\{i\}\not\leq \ov{\{i\}}$. Hence $\exs\ j\in[d-1]$ such that $\{i\}\not\leq_j\ov{\{i\}}\implies \ov{\{i\}}<_j\{i\}$. 	Therefore $\exs\ i_1,i_2\in[d]$ where $i_1\neq i_2$ such that $\exs\ j\in[d-1]$ such that $\ov{\{i_1\}}<_j\{i_1\}$ and $\ov{\{i_2\}}<_j\{i_2\}$ by Pigeon Hole Principle. Since $i_1\neq i_2$ we have $\{i_1\}\leq \ov{\{i_2\}}\implies \{i_1\}\leq_j\ov{\{i_2\}}$ and $\{i_2\}\leq \ov{\{i_1\}}\implies \{i_2\}\leq_j\ov{\{i_1\}}$. Therefore we have $$\ov{\{i_1\}}<_j\{i_1\}\leq_j \ov{\{i_2\}}<_j\{i_2\}\leq_j\ov{\{i_1\}}$$Hence contradiction \ctr
+\end{proof}
+
+\begin{lemma}{}{}
+	For all $(U,\leq)$, $\dim U\leq w(U)$.
+\end{lemma}
+\begin{proof}
+	content...
+\end{proof}
