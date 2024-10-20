@@ -404,7 +404,7 @@ Let $U$ be a set. A relation $\leq$ on $U$ is a partial order if  we have \begin
 	
 	Now for all $x\in U$ define the \textit{depth} of $x$, $d(x)$ in $U$ to be the length of the longest chain that ends at $x$ i.e. $$d(x)=\max\limits_{\textit{chain $C$},\; \max(C)=x}|C|$$Hence by definition we have $d(x)\leq h(U)$ for all $x\in U$. Consider $$A_i=\{x\in U\colon d(x)=i\}\quad\forall\ i\in[h(U)]$$We will show $\forall\ i\in[h(U)]$, $A_i$ is an antichain. The proof of $A_i$ is antichain is similar to \lmref{minmax-antichain}.
 \end{proof}
-\begin{Theorem}{Dilworth's Theorem}{}
+\begin{Theorem}{Dilworth's Theorem}{dilworth}
 	Every poset $(U,\leq)$ can be partitioned into $w(U)$ many chains (not less).
 \end{Theorem}
 \begin{proof}
@@ -458,5 +458,5 @@ $``\Rightarrow":$ $(U,\leq)$ is $d$-dimensional. There exists an embedding $f:U\
 	For all $(U,\leq)$, $\dim U\leq w(U)$.
 \end{lemma}
 \begin{proof}
-	content...
+	Firstly $U$ can be decomposed into $w(U)$ many chains by \hyperref[th:dilworth]{Dilworth's Theorem}. 
 \end{proof}
