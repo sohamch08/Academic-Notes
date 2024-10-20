@@ -1,0 +1,8 @@
+\section{Matrix Rigidity}
+
+\begin{definition}{Rigidity of a Matrix}{}
+	The rigidity of a matrix $A\in\bbF^{n\times n}$ for rank $r$  over $\bbF$ (denoted by $R_A^{\bbD}(r)$) is the minimum number of entries to be changed in $A$  so that the rank becomes at most $r$. More formally  $$R_A^{\bbF}(r)\triangleq \min_{C}\{\textit{sparsity}(C)\mid C\in\bbF^{n\times n}, \Rank(A+C)\leq r\}$$
+\end{definition}
+\begin{definition}{$(r,s)$ Rigid Matrix}{}
+	A matrix $A\in \bbF^{n\times n}$ is said to be $(r,s)$ rigid if it cannot be written as a sum of rank $r$ matrix and a $s$-sparse matrix i.e. $R_A^{\bbF}(r)>s$. 
+\end{definition}

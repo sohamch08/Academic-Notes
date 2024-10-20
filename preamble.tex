@@ -210,22 +210,22 @@
 }
 {th}
 \tcbuselibrary{theorems,skins,hooks}
-\newtcbtheorem[use counter from=Theorem, number within=chapter]{corollary}{Corollary}
+\newtcbtheorem[use counter from=theorem, number within=chapter]{corollary}{Corollary}
 {%
 	enhanced
 	,breakable
 	,colback = mytheorembg
 	,frame hidden
 	,boxrule = 0sp
-	,borderline west = {2pt}{0pt}{mytheoremfr}
+	,borderline west = {2pt}{0pt}{myp!60!black}
 	,sharp corners
 	,detach title
 	,before upper = \tcbtitle\par\smallskip
-	,coltitle = mytheoremfr
+	,coltitle = myp!60!black
 	,fonttitle = \bfseries\sffamily
 	,description font = \mdseries
 	,separator sign none
-	,segmentation style={solid, mytheoremfr}
+	,segmentation style={solid, myp!85!black}
 }
 {th}
 
