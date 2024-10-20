@@ -418,7 +418,7 @@ Now suppose $f^i$ denote the preflow after the $i^{th}$ iteration of the algorit
 	c_e&\text{when $e=(s,u)$}\\ 0 & \text{otherwise}
 \end{cases}$$
 Now we will show the correctness of the algorithm.
-\begin{lemma}{}{}
+\begin{lemma}{}{vtospathineachiteration}
 	$\forall\ v\in V$, $\forall\ i$, $\textit{excess}_{f^i}(v)>0\implies\exs\ v\rightsquigarrow s$ in $G_{f^i}$
 \end{lemma}
 \begin{proof}
@@ -427,7 +427,7 @@ Now we will show the correctness of the algorithm.
 		\sum_{u\in X}\textit{excess}_{f^i}(u) =\sum_{u\in X}\lt[ \sum_{e\in \textit{in}(v)}f^i(e)-\sum_{e\in\textit{out}(v)}f^i(e) \rt]= \sum_{e\in \textit{in}(X)}f^{i}(e)-\sum_{e\in\textit{out}{(X)}}f^{i}(e)$$
 		Now if $\sum\limits_{e\in \textit{in}(X)}f^{i}(e)>0$ then $\exs\ e=(u',u)\in E$ such that $u'\notin X$ and $u\in X$ and $f^{i}(e)>0$. Then the backward edge $(u,u')\in E_{f^i}$. Then $u'$ is reachable from $v$ in $G_{f^i}$. But $u'\notin X$. Contradiction \ctr Therefore $\sum\limits_{e\in \textit{in}(X)}  f^{i}(e)=0$. Hence $$\sum_{u\in X}  \textit{excess}_{f^i}(u)= \cancel{\sum_{e\in \textit{in}(X)}f^{i}(e)}-\sum_{e\in\textit{out}{(X)}}f^{i}(e)\leq 0$$But from \hyperref[obs-labelofsisn]{Observation \ref{obs-labelofsisn}}  we have $\forall\ w\in V\setminus\{s\}$, $\textit{excess}_{f^i}(w)\geq 0$. But at the same time $\sum\limits_{u\in X}  \textit{excess}_{f^i}(u)\leq 0$ and $\textit{excess}_{f^i}(v)>0$. Hence $\exs\ $ a vertex $u\in X$ such that $\textit{excess}_{f^i}(u)< 0$. But we know only vertex with negative \textit{excess} is $s$. Therefore $s\in X$. Hence $s$ is reachable from $v$.
 \end{proof}
-\begin{lemma}{}{}
+\begin{lemma}{}{eachedgelabeldecrease1}
 	$\forall\ i$, if $(u,v)\in G_{f^i}$ then $l(v)\geq l(u)-1$.	
 \end{lemma}
 \begin{proof}
@@ -435,14 +435,90 @@ Now we will show the correctness of the algorithm.
 	
 	Now suppose the condition is true for $f^{i-1}$. Now in the $i^{th}$ iteration   suppose the selected vertex is $v\in V\setminus\{t\}$ with $\textit{excess}_{f^{i-1}}>0$. Now there are two possible cases.\begin{itemize}[label=$\bullet$]
 		\item \textbf{Case 1:} If the step is relabeling then $f^{i-1}=f^i$, $G_{f^{i-1}}=G_{f^i}$ but $v$ is relabeled by $l(v)+1$. Now for any edge $e=(u,v)\in \textit{in}(v)$ by Inductive Hypothesis $l(v)\geq l(u)-1\implies l(v)+1\geq l(u)-1$. Now consider any edge $e=(v,w)\in \textit{out}(v)$.  By Inductive Hypothesis we have $l(w)\geq l(v)-1$. Now if $l(w)=l(v)-1$ then we would have pushed flow along the edge $(v,w)$. Since that is not the case we have $l(w)>l(v)-1$. Therefore $l(w)\geq (l(v)+1)-1$. Hence the condition is satisfied.
-		\item \textbf{Case 2:} If the step is pushing flow then suppose we push flow along the edge $(v,w)\in E_{f^i}$ and $l(w)=l(v)-1$. Now if $(v,w)\in E_{f^{i-1}}$ then the residual graph is unchanged and labels are also unchanged. So nothing changes. If $(v,w)\notin E_{f^{i-1}}$ but  $(v,w)\in E_{f^{i}}$. Then since we pushed flow on the new edge $(v,w)$ therefore we have $l(v)\geq l(w)+1\geq l(w)-1$.  Hence the condition is satisfied.
+		\item \textbf{Case 2:} If the step is pushing flow then suppose we push flow along the edge $(v,w)\in E_{f^{i-1}}$ and $l(w)=l(v)-1$. Now if we push flow along the edge $(v,w)$ we might introduce the reverse edge $(w,v)$ in $G_{f^i}$. In that case $l(v)=l(w)+1\geq l(w)-1$. Hence the condition is satisfied.
 	\end{itemize}
 Therefore by mathematical induction $\forall\ i$, $\forall \ (u,v)\in E_{f^i}$, $l(v)\geq l(u)-1$.
 \end{proof}
 
-\begin{corolary}{}{}
+\begin{corolary}{}{nostpath}
 	There is no $s\rightsquigarrow t$ path in $G_{f^i}$ in any iteration $i$. Thus when the algorithm terminates $f$ is a max flow.
 \end{corolary}
-\begin{corolary}{}{}
+\begin{proof}
+	Now $l(s)=n$ and $l(t)=0$. We fix $v$ and $i$. If there is a $s\rightsquigarrow v$ path in $G_{f^i}$ then length of the path is at most $n-1$. For each edge in the path the label decreases by at most $1$ by \lmref{eachedgelabeldecrease1}. Hence $l(v)\geq 1$. Therefore for every vertex $v\in V$, reachable from $s$ we have $l(v)\geq 1$. But $l(t)=0$. Hence $t$ is not reachable from $s$. 	Hence if the algorithm terminates, band if $f$ is a valid flow then y \hyperref[th:maxflowmincut]{Max Flow Min Cut Theorem}  it is a max flow.
+\end{proof}
+\begin{corolary}{}{eachvertexlabel2n}
 	$\forall\ v\in V$, $\forall\ i$, $l(v)\leq 2n$.
 \end{corolary}
+\begin{proof}
+	Suppose $\exs\ v,i$ such that $l(v)=2n$ and $\textit{excess}_{f^i}(v)>0$. By \lmref{vtospathineachiteration} there exists an $v\rightsquigarrow s$ path in $G_{f^i}$. Now by \lmref{eachedgelabeldecrease1} for each edge in the path the label decreases by at most $1$ and the length of the path is at most $n-1$. Since $l(v)=2n$, $l(s)\geq n+1$. But we know $l(s)$ for all $i$ by \hyperref[obs-labelofsisn]{Observation \ref{obs-labelofsisn}}. Hence contradiction \ctr Therefore for all $v\in V$ and $\forall\ i$, $l(v)\leq 2n$.
+\end{proof}
+
+\begin{corolary}{}{relabel2n2}
+	Total number relabeling operations is $\leq 2n^2$
+\end{corolary}
+\begin{proof}
+	By \corref{eachvertexlabel2n} each vertex label can be at most $2n$. So total number of relabeling operations done in the algorithm is at most $2n^2$
+\end{proof}
+ 
+Now we need a bound on the number of push operations. We will count separately the number of Saturating Pushes and number of Non-Saturating Pushes.
+\begin{lemma}{}{satpush2mn}
+	Total number of saturating pushes is $\leq 2mn$
+\end{lemma}
+\begin{proof}
+	We first fix an edge $(v,w)$. Now we will count the number of saturating pushes along $(v,w)$. Then $\dl=c_f(v,w)$.  Now consider the scenario of  two consecutive saturating pushes along $(v,w)$. When the first saturating push along $(v,w)$ occurred we have $l(w)=l(v)-1$. Now if $(v,w)$ is forward edge then $\dl=c_f(v,w)=c_{v,w}-f(v,w)$. Then new flow along $(v,w)$ is $f(v,w)+c_f(v,w)=c_{v,w}$. Hence the edge $(v,w)$ vanishes and the flow along $(w,v)$ is $c_{v,w}$. If $(v,w)$ is a backward edge then $\dl=c_f(w,v)=f(w,v)$. Hence then new flow along $(w,v)$ is $f(w,v)-\dl=0$. Hence again the $(w,v)$ edge vanishes and the flow along $(w,v)$ is $f(w,v)$. 
+	
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{scope}
+				\node[draw, circle] (A) at (0, 0) {$v$};
+			\node[draw, circle] (B) at (2, -1) {$w$};
+			\draw[dashed] (A)-- (2,0) node [right]{$l(v)$};
+			\draw[dashed] (-2,0) -- (A);
+			\draw[dashed] (B)-- (0,-1) ;
+			\draw[dashed] (4,-1) node [right]{$l(w)=l(v)-1$}  -- (B);
+			\draw[-latex] (A) -- (B);
+			\end{scope}
+		\draw[thick,-latex] (3.5,-0.6) -- node[midway, above]{Saturated Push}(7.5,-0.6);
+		\begin{scope}[shift={(8,0)}]
+			\node[draw, circle] (A) at (0, 0) {$v$};
+			\node[draw, circle] (B) at (2, -1) {$w$};
+			\draw[dashed] (A)-- (2,0) node [right]{$l(v)$};
+			\draw[dashed] (-2,0) -- (A);
+			\draw[dashed] (B)-- (0,-1) ;
+			\draw[dashed] (4,-1) node [right]{$l(w)=l(v)-1$}  -- (B);
+			\draw[-latex] (B) -- (A);
+		\end{scope}
+		\end{tikzpicture}
+	\end{center}
+	
+	 Therefore after a saturated push along $(v,w)$ the edge vanishes and the $(w,v)$ edge is there. Hence in order for another push along $(v,w)$ the algorithm must push flow along $(w,v)$. And this happens when we have the new labels of $v,w$ follow the condition $l'(w)=l'(v)+1$. Since by \hyperref[obs-labelsmonotone]{Observation \ref{obs-labelsmonotone}} the labels never decreases in order for $l(w)=l(v)+1$ the label of $v$ must  increase  by at least $2$.
+	
+	Now starting from $l(v)=0$ we have by \lmref{eachvertexlabel2n} $l(v)\leq 2n$ and for each saturating push along $(v,w)$ the $l(v)$ increase by $2$. Hence at most $n$ many saturating pushes occurred along $(v,w)$. Now in the original graph since there are $m$ edges the total number of saturating pushes is $\leq 2mn$. 
+\end{proof}
+
+
+Now we will count the number of non-saturating pushes. For such pushes along any edge $(v,u)$ the $\textit{excess}_f(v)$ goes to $0$. We define the potential function for a preflow $f$, $$\phi(f)=\sum_{v:\textit{ excess}_f(v)>0}l(v)$$Now $\phi(f)\geq 0$ for all preflow $f$ and initially at the start of the algorithm $\phi(f^0)=0$. 
+\begin{observation}
+	For relabeling operation $\phi(f)$ increases by $1$.
+\end{observation}
+Since there are at most $2n^2$ relabeling operations by  \corref{relabel2n2}, $\phi(f)$ increases by at most $2n^2$ with relabeling operations.
+\begin{observation}
+	For each saturating push $\textit{excess}_f(v,w)$ might not go to $0$ and therefore $\phi$ might increase.
+\end{observation}
+Now by \lmref{satpush2mn} total number of saturated pushes is at most $2mn$. And by \corref{eachvertexlabel2n} each vertex has label at most $2n$. Hence in total $\phi(f)$ can increase at most $2mn\times 2n=4mn^2$ by saturated pushes.
+\begin{lemma}{}{nonsatpushleveldecrease1}
+	For each non-saturating push  $\phi(f)$ decreases by at least 1.
+\end{lemma}
+\begin{proof}
+	Suppose 	at any iteration $i$  a non-saturating push occur along an edge $(v,w)$. Therefore $l(w)=l(v)-1$. We will show that $\phi(f^i)\leq \phi(f^{i-1})-1$.		We have $\dl=\textit{excess}_{f^{i-1}}(v)$. Now if $(v,w)$ is a forward edge then new flow along $(v,w)$ is $f^i(v,w)=f^{i-1}(v,w)+\textit{excess}_{f^{i-1}}(v)$. Since $(v,w)\in \textit{out}(v)$ 
+		$$\textit{excess}_{f^i}(v)=\sum_{e\in \textit{in}(v)}f^i(e)-\sum_{e\in \textit{out}(v)}f^i(e)=          \sum_{e\in \textit{in}(v)}f^{i-1}(e)-\sum_{e\in \textit{out}(v)\setminus\{(v,w)\}}f^{i-1}(e)-f^i(v,w)  =   \textit{excess}_{f^{i-1}}(v)-\dl=0$$ Otherwise if $(v,w)$ is a backward edge. Then  ew flow along $(w,v)$ is  $f^i(w,v)=f^{i-1}(w,v)-\textit{excess}_{f^{i-1}}(v)$. Since $(w,v)\in \textit{in}(v)$ $$\textit{excess}_{f^i}(v)=\sum_{e\in \textit{in}(v)}f^i(e)-\sum_{e\in \textit{out}(v)}f^i(e)=    f^{i}(w,v) +     \sum_{e\in \textit{in}(v)\setminus\{(w,v)\}}f^{i-1}(e)-\sum_{e\in \textit{out}(v)}f^{i-1}(e)  =  -\dl+ \textit{excess}_{f^{i-1}}(v)=0$$In both cases $\textit{excess}_{f^i}(v)=0$. Therefore 	 $v$ goes out of the summation. 		Now there are two cases depending on the value of $\textit{excess}_{f^{i-1}}(w)$\begin{itemize}[label=$\bullet$]
+			\item \textbf{Case 1:}
+		If $\textit{excess}_{f^{i-1}}(w)>0$ i.e. $w$ had excess flow before push operation then $\phi(f^{i-1})$ decreases by $l(v)$ i.e. $\phi(f^i)=\phi(f^{i-1})-l(v)$. Since $l(w)=l(v)-1$ and by  \hyperref[obs-labelsmonotone]{Observation \ref{obs-labelsmonotone}} $l(v)\geq 1$. Therefore $\phi(f^i)=\phi(f^{i-1})-l(v)\leq \phi(f^{i-1})-1$.
+	\item \textbf{Case 2:}	If $\textit{excess}_{f^{i-1}}(w)=0$, then $\textit{excess}_{f^i}(w)=\textit{excess}_{f^{i-1}}(w)+\dl>0$ since $\dl=\textit{excess}_{f^{i-1}}(v)>0$ and therefore $\phi(f^i)=\phi(f^{i-1})-l(v)+l(w)=\phi(f^{i-1})-1$
+		\end{itemize}
+Hence for both the cases $\phi(f^i)\leq \phi(f^{i-1})-1$. Therefore $\phi(f^{i-1})$ decreases by at least 1.
+\end{proof}
+\begin{lemma}{}{}
+	$\phi(f)$ can increase at most 
+\end{lemma}
+Now $$\#\text{Non-saturating Pushes}  \leq \text{Total decrease in }\phi\leq \text{Total increase in }\phi\leq 2n^2+4mn^2=O(mn^2)$$
