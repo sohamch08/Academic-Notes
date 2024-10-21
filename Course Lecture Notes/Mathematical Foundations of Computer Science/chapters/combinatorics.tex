@@ -485,12 +485,80 @@ Now we will show an use of this theorem to prove a very well know criterion for 
 		& \iff \forall\ A_L\subseteq L,\ |A_L|\leq |N(A_L)|
 	\end{align*}Hence we have the theorem
 \end{proof}
-\subsection{Lattices}
+\subsection{Boolean Lattice}
 For all $n>0$ the Boolean Lattice $\mcB_n$ of order $n$ is the poset $(\{0,1\}^n,\subseteq)$. We will prove a property of the Boolean Lattice and we will define general lattice later.
 \begin{Theorem}{Sperner's Theorem}{}
 	For all $n\in \bbZ_+$ $$w(\mcB_n)=\binom{n}{\lt\lceil\frac{n}2\rt\rceil}$$
 \end{Theorem}
 \begin{proof}
-	First of all take all the subsets of $\{0,1\}^n$ of size $\lt\lceil\frac{n}2\rt\rceil$ and this number is $\binom{n}{\lt\lceil\frac{n}2\rt\rceil}$. These sets form an anti-chain. Therefore we have $w(\mcB_n)\geq \binom{n}{\lt\lceil\frac{n}2\rt\rceil}$.
-
+	First of all take all the subsets of $\{0,1\}^n$ of size $\lt\lceil\frac{n}2\rt\rceil$ and this number is $\dps{\binom{n}{\lt\lceil\frac{n}2\rt\rceil}}$. These sets form an anti-chain. Therefore we have $w(\mcB_n)\geq \dps{\binom{n}{\lt\lceil\frac{n}2\rt\rceil}}$.
+	
+	Let $A_1,\dots, A_k\subseteq [n]$ form an antichain. We will show that $k\leq \dps{\binom{n}{\lt\lceil\frac{n}2\rt\rceil}}$.	Let $Sym(n)$ is the set of all permutations on $[n]$. Now for all $i\in[k]$ define $$S_i=\{\pi\in Sym(n)\colon \{\pi(A_i)\}=A_i\}$$Then we have $|S_i|=|A_i|!(n-|A_i|)!$. Now notice that $A_i\cap A_j=\emptyset$ for $i\neq j$. Therefore we have $$n!\geq\sum_{i=1}^k|S_i|=\sum_{i=1}^k(n-|A_i|)!|A_i|!\geq \sum_{i=1}^k\lt\lfloor\frac{n}2\rt\rfloor!\lt(n-\lt\lfloor\frac{n}2\rt\rfloor\rt)!=k\lt\lfloor\frac{n}2\rt\rfloor!\lt(n-\lt\lfloor\frac{n}2\rt\rfloor\rt)!\implies \binom{n}{\lt\lfloor\frac{n}2\rt\rfloor}\geq k$$Therefore we have the lemma.
 \end{proof}
+\begin{Theorem}{Erd\H{o}s-Ko-Rado Theorem}{}
+	Let $0<k\leq \frac{n}{2}$. Let $A$ be a family of   subsets of $[n]$ of size $k$ that are pairwise intersecting. Then $|A|\leq \binom{n-1}{k-1}$.
+\end{Theorem}
+\begin{proof}
+	Let $\sA=\{A_1,\dots, A_m\}$ be the family. For all $i\in[m]$ define $$S_i=\{\pi\in Sym(n)\colon \exs\ j\in[n],\ \pi(j+[|A_i|])=A_i\}$$where $j+[|A_i|]\coloneqq \{l+j\colon l\in A_i\}$. We have $|S_i|=n(n-k)!k!$. Now each $\pi$ is in at most $k$ many different $A_i$. Then we have $$kn!\geq m\times n(n-k)!k!\implies (n-1)!\geq m(n-k)!(k-1)!\implies \binom{n-1}{k-1}\geq m$$Hence we have the lemma.
+\end{proof}
+\subsection{Symmetric Chain Decomposition}
+Below we will define some properties of chains in a poset $(U,\leq)$.\begin{itemize}[label=$\bullet$]
+	\item For any $u\in U$ $\Rank(x)=\max\limits\{|C|\colon \max(C)=x\}$
+	\item $(U,\leq)$ is \textit{ranked} if  all maximal chains ending in an element $u\in U$ have the same size.
+	\item A chain $C$ is \textit{unrefinable} if $\not\exists\ u\in U-C$ with $\min(C)<u<\max(C)$ such that $C\cup \{u\}$ is a chain. If $U$ is ranked then a chain $C$ is unrefinable if and only if it does not skip any rank
+	\item A chain $C$ is \textit{symmetric} if it is unrefinable and $\Rank(\min(C))+\Rank(\max(C))=h(U)+1$
+\end{itemize}
+\dfn{Symmetric Chain Decomposition}{A symmetric chain decomposition of a poset $(U,\leq)$ is a partition of the elements of $U$ into symmetric chains.}
+
+For any $n\in \bbZ_+$  in the boolean lattice $\mcB_n$ for any subset $A\subseteq [n]$ we have $\Rank(A)=|A|+1$ and $h(\mcB_n)=n+1$. Hence in case of boolean lattice for any unrefinable chain $C:\ A_1\subseteq A_2\subseteq \cdots\subseteq A_k$ it is symmetric when $$\Rank(\min(C))+\Rank(\max(C))=h(U)+1\iff (|A_1|+1)+(|A_k|+1)=(n+1)+1\iff |A_1|+|A_k|=n$$The symmetric chain decomposition of the boolean lattice $\mcB_n$ if a partition of subsets of $[n]$ into chains such that for any chain in the partition $A_1\subseteq A_2\subseteq\cdots \subseteq A_k$ we have \begin{itemize}[label=$\bullet$]
+	\item $|A_1|+|A_k|=n$
+	\item $\forall\ j\in[k]$, $|A_j|=|A_{j-1}|+1$.
+\end{itemize}
+
+\vspace*{5mm}
+
+Now for any $n\in\bbZ_+$ the boolean lattice $$\mcB_n=\{\underbrace{\{0,1\}\times\{0,1\}\times\cdots \times \{0,1\}}_{n\text{ times}}\}=\{1\cdot1,1\cdot 2,1\cdot 3,\dots, 1\cdot k\}$$We define the general poset $B(m_1,m_2,\dots, m_k)$ for any $k\in\bbZ_+$  to be the set $$B(m_1,m_2,\dots, m_k)=\text{Submultisets of }M=\{m_1\cdot 1,m_2\cdot2,\dots, m_k\cdot k\}$$ordered by inclusion where $m_i\in\bbZ_+$ for all $i\in[k]$. Therefore $\mcB_n=B({1,1,\cdots, 1})$. $B(m_1,\dots, m_k)$ is ranked and in $B(m_1,\dots, m_k)$ for any sets $A=\{r_1\cdot1,\dots, r_k\cdot k\}$, $\Rank(A)=r_1+r_2+\cdots+r_k-1$ and $h(u)=m_1+m_2+\cdots+m_k+1$. Call  the sum $m_1+m_2+\cdots+m_k$ to $n$
+\begin{Theorem}{}{}
+	$B(m_1,\dots, m_k)$ has a symmetric chain decomposition for all $k\in\bbZ_+$ and $m_i\in \bbZ_+$ $\forall\ i\in[k]$. 
+\end{Theorem}
+\begin{proof}
+	We will prove this using induction on $k$. If $k=1$ then $B(m_1)=\{0,\dots, m_1\}$ which is a symmetric chain of length $m_1+1$. So the trivial partition i.e. $\{\{i\}\colon i\in B(m_1)\}$ is a symmetric chain decomposition of $B(m_1)$. Hence the base case follows.
+	
+	Let this is true for $B(m_1,\dots, m_{k-1})$. We have $$B(m_1,\dots, m_{k})=B(m_1,\dots, m_{k-1})\cup\{m_k\cdot k\}$$  By inductive hypothesis $\exs$ a symmetric chain decomposition $\mcA=(C_1,\dots,C_l)$ of $B(m_1,\dots, m_{k-1})$ where $$C_i:\qquad A_{i,1}\leq A_{i,2}\leq \cdots\leq  A_{i,k_i}$$where $\forall\ i\in[l]$ and $\forall\ j\in[k_i]$ $$\Rank(A_{i,1})+\Rank(A_{i,k_i})=n+1-m_k,\qquad \Rank(A_{i,j})=\Rank(A_{i,j-1})+1=\Rank(A_{i,k_i})-(k_i-j)$$Now since $C_i$'s are unrefinable we have for all $j\in[k_i]$, $\Rank(A_{i,j})=\Rank(A_{i,1})+(j-1)$. Since $B(m_1,\dots,m_{k-1})=\bigsqcup\limits_{i=1}^{l}C_i$ we have $B(m_1,\dots, m_k)=\bigsqcup\limits_{i=1}^l\textit{Cur}_i$ i.e. $\{\textit{Cur}_i\colon i\in[l]\}$ is a partition of $B(m_1,\dots,m_k)$ where 
+	$$\textit{Cur}_i=C_i\times \{0,\dots, m_k\}$$Now we will focus on each of the \textit{Cur}$_i$'s. Now informally each of the $\textit{Cur}_i$ looks like a grid of size $m_k\times k_i$. 
+	
+	Now denote $z_i=\min\{m_k+1,k_i\}$. We will now create $z_i$ many chains which follows the same properties followed by $\{C_i\colon i\in[l]\}$. Now for all $j\in [z_i]$ define the chain $C_{i,j}$ 
+	$$C_{i,j}\colon  A_{i,1}\cup\{(j-1)\cdot k\}\subseteq  A_{i,2}\cup\{(j-1)\cdot k\}\subseteq  \cdots\subseteq  A_{i,k_i-j+1}\cup\{(j-1)\cdot k\}\subseteq   A_{i,k_i-j+1}\times\{j\cdot k\}\subseteq  \cdots \subseteq  A_{i,k_i-j+1}\cup\{m_k\cdot k\}$$
+	The construction of the new chains basically looks like the following picture.
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=8cm]{images/symchaindecomp.pdf}
+	\end{figure}
+
+Now for all $i\in[l]$ and  $j\in[z_i]$ then we have \begin{align*}
+	\Rank(A_{i,1}\cup\{(j-1)\cdot k\})+(\Rank \lt(A_{i,k_i-j+1}\cup\{m_k\cdot k\}\rt)&= \Rank(A_{i,1})+(j-1)+\Rank(A_{i,k_i-j+1})+m_k\\
+	& = \Rank(A_{i,1})+\Rank(A_{i,k_i})-(j-1)+m-k+(j-1)\\
+	& = n+1-m_k+m_k=n+1
+\end{align*}
+Hence the new collection of chains $\mcA'=\{C_{i,j}\colon i\in[l],\ j\in[z_i]\}$ forms a symmetric chain decomposition of $B(m_1,\dots, m_k)$. Hence by mathematical induction we have the theorem.
+\end{proof}
+\subsection{General Lattices}
+
+\dfn{Lattice}{A poset $U(,\leq)$ is a lattice $\forall\ x,y\in U$, then least upper bound of $x,y$, $x\vee y$  i.e. $$x\vee y\geq x,y\text{ and }\forall\ z\in U:\ z\geq x,y\implies z\geq x\vee y$$ also called \textit{join} of $x,y$ exists and the greatest lower bound of $x,y$, $x\wedge y$ i.e. $$x\wedge y\leq x,y\text{ and }\forall\ z\in U:\ z\leq x,y\implies z\leq x\wedge y$$ also called \textit{meet} of $x,y$ exists.}
+
+\begin{Theorem}{Tarski's Fixed Point Theorem}{}
+	Let $(U,leq)$ be a finite lattice and $f:U\to U$ be a monotone function (i.e. $x\leq\implies f(x)\leq f(y)$) then define $$z_{max}=\bigvee_{x\leq f(x)}x\qquad z_{\min}=\bigwedge_{f(x)\leq x}x$$Then $z_{\max}$ is the largest fixed point and $z_{\\min}$ is the smallest fixed point.
+\end{Theorem}
+\section{Probabilistic Method}
+\begin{Definition}{Ramsey Number}{}
+	For $k>0$, the $\sR(k)$ is the smallest integer such that any graph with $\sR(k)$ vertices  has either a clique of size $k$ or an independent set of size $k$.
+\end{Definition}
+\begin{lemma}{}{}
+	For all $k>4$, $\sR(k)>2^{\frac{k}2}$ i.e  $\exs$ a graph with $2^{\frac{k}2}$ vertices that does not have a $k$ size clique or $k$ size independent set.
+\end{lemma}
+\begin{Theorem}{Turan's Theorem}{}
+	Let $k>0$ and $G$ be a graph with $n$ vertices without a clique of size $k+1$. The number of edges in $G \leq \lt(1-\frac1k\rt)\frac{n^2}{2}$. 
+\end{Theorem}
+\begin{lemma}{Magnitude of Boolean Quadratic Forms}{}
+	Let $n>0$ and $a_{i,j}\in\{1,-1\}$ for all $i,j\in[n]$. Then $$\max_{x_1,\dots, x_n\in \{1,-1\}}\max_{y_1,\dots, y_n\in \{1,-1\}}\sum_{i,j\in[n]}a_{i,j}x_iy_j\geq \Im(n^{1.5})$$
+\end{lemma}
