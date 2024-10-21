@@ -454,9 +454,43 @@ $``\Rightarrow":$ $(U,\leq)$ is $d$-dimensional. There exists an embedding $f:U\
 	Suppose for the sake of contradiction that $(\{0,1\}^d,\leq )$ can be written as the intersection of $d-1$ linear extensions. Let $(\{0,1\}^d,\leq_i)$ for all $i\in[d-1]$ be the linear extensions of $(\{0,1\}^d,\leq)$. Now consider the pairs of sets $(\{i\},\ov{\{i\}})$ for all $i\in[d]$. Now for all $i\in[d]$, we have $\{i\}\not\leq \ov{\{i\}}$. Hence $\exs\ j\in[d-1]$ such that $\{i\}\not\leq_j\ov{\{i\}}\implies \ov{\{i\}}<_j\{i\}$. 	Therefore $\exs\ i_1,i_2\in[d]$ where $i_1\neq i_2$ such that $\exs\ j\in[d-1]$ such that $\ov{\{i_1\}}<_j\{i_1\}$ and $\ov{\{i_2\}}<_j\{i_2\}$ by Pigeon Hole Principle. Since $i_1\neq i_2$ we have $\{i_1\}\leq \ov{\{i_2\}}\implies \{i_1\}\leq_j\ov{\{i_2\}}$ and $\{i_2\}\leq \ov{\{i_1\}}\implies \{i_2\}\leq_j\ov{\{i_1\}}$. Therefore we have $$\ov{\{i_1\}}<_j\{i_1\}\leq_j \ov{\{i_2\}}<_j\{i_2\}\leq_j\ov{\{i_1\}}$$Hence contradiction \ctr
 \end{proof}
 
-\begin{lemma}{}{}
+\begin{Theorem}{}{}
 	For all $(U,\leq)$, $\dim U\leq w(U)$.
-\end{lemma}
+\end{Theorem}
 \begin{proof}
-	Firstly $U$ can be decomposed into $w(U)$ many chains by \hyperref[th:dilworth]{Dilworth's Theorem}. Let the chains are $C_1,\dots, C_{w(U)}$. Let $$C_i:\qquad x_{i,1}\leq x_{i,2}\leq\cdots\leq x_{i,k_i}$$For all $x\in U$ define $N_i(x)$ to be the largest $j\in[k_i]$ such that $x_{i,j}\leq x$. With $j=0$ if no such element exists. Now also define $$S_{ij}=\{s\in U\setminus C_i\colon N_i(x)=j\}$$
+	Firstly $U$ can be decomposed into $w(U)$ many chains by \hyperref[th:dilworth]{Dilworth's Theorem}. Let the chains are $C_1,\dots, C_{w(U)}$. Let $$C_i:\qquad x_{i,1}\leq x_{i,2}\leq\cdots\leq x_{i,k_i}$$For all $x\in U$ define $N_i(x)$ to be the largest $j\in[k_i]$ such that $x_{i,j}\leq x$. With $j=0$ if no such element exists. Now also define $$S_{ij}=\{s\in U\setminus C_i\colon N_i(x)=j\}$$For each $S_{i,j}$ take a topological sort. 
+	
+	Now we will create a linear extension of $(U,\leq )$, $L_i=(U,\leq_i)$ from $C_i$. Now for any $i\in[w(U)]$ for each $j\in[k_i]\cup\{0\}$ we take the ordering wrt $\leq_i$ inside $S_{i,j}$ to be a topological sort ordering of the elements. Now	since for all $j\in[k_i]\cup\{0\}$, $N_i(x_{i,j})=j-1$ we have $$\forall\ x\in S_{i,j},\ x_{i,j-1}\leq x\leq_i x_{i,j}$$ Therefore we have the following order of $U$ with respect to $\leq_i$ $$S_{i,0}\quad x_{i,0} \quad S_{i,1}\quad x_{i,1}\quad\cdots\quad x_{i,k_i}\quad S_{i,k_i}$$Therefore $L_i$ is a linear extension of $(U,\leq)$. 
+	
+		Suppose $x,y\in U$ and $x\leq y$. Now if $x,y\in C_i$ for some $i\in [w(U)]$ then $x\leq_i y$. Then $x,y\in C_k$ for some $k\in[w(U)]$. then we already have $x\leq_i$. Otherwise let $x,y\in U$ and $x\leq y$. If for $i\in[w(U)]\setminus\{k\}$, $x,y\in S_{i,j}$ for some $j\in[k_i]\cup\{0\}$.  Then since elements of $S_{i,j}$ are in topological sort order $x$ is before $y$ in $S_{i,j}$. Hence $x\leq_i y$. Otherwise for $i\in [w(U)]\setminus\{k\}$, $x\in S_{i,j}$ and $y\in S_{i,j'}$ for some $j,j'\in[k_i]\cup\{0\}$. In that case $N_i(x)< N_i(y)$ since $x_{i,N_i(x)}\leq x\leq y$. Hence $j<j'$. Therefore $x\leq_i y$. Hence for all $i\in[w(U)]$, $x\leq_i y$. 
+	
+	Suppose $x,y\in U$ and $\forall\ i\in[w(U)]$, $x\leq_i y$. If $x,y\in C_i$ for some $i\in[w(U)]$ then we already have $x\leq y$. Suppose $x\in C_i$ and $y\in C_j$ for some $i,j\in[w(U)]$ and $i\neq j$. We have $x\leq_i y$ and $x\leq_j y$. But since $x,y$ are in different chains we have $x\| y$. In that case in $C_i$, $y\in S_{i,0}$ and hence $y<_i x$. But that is not possible. Hence contradiction \ctr We have $x,y$ in the same chain and henceforth $x\leq y$. 
+	
+	Therefore $L_i$ for all $i\in [w(U)]$ are linear extensions of $(U,\leq)$ such that  $(U,\leq)=\bigcap\limits_{i=1}^{w(U)}L_i$. Hence $\dim U\leq w(U)$. 
+\end{proof}
+
+Now we will show an use of this theorem to prove a very well know criterion for matching in a bipartite graph.
+\begin{Theorem}{Hall's Theorem}{}
+	Let $G=(L,R,E)$ be a bipartite graph. $G$ has a matching of size $|L|$ if and only if $\forall \ S\subseteq L$, $|S|\leq |N(S)|$.
+\end{Theorem}
+\begin{proof}
+	We have  $V=L\sqcup R$. be the set of vertices. Now define $u\to v\iff u\in L,\ v\in R$ and $(u,v)\in E$. \begin{align*}
+		G\text{ has a matching of size }|L|&\iff V\text{ can be partitioned into }|R|\text{ chains, }w(U)\leq |R|\\
+		&\iff w(U)=|R|\\
+		&\iff \text{Any subset of size}>|R|\text{ is not an antichain}\\
+		& \iff \Big(\forall\ A_L\subseteq L,\ A_R\subseteq R,\ |A_L|+|A_R|>|R|\implies \exs\ u\in A_L,\ v\in A_R,\ u\to v\Big)\\
+		& \iff \Big(\forall\ A_L\subseteq L,\ A_R\subseteq R,\ |A_L|+|A_R|>|R|\implies N(A_L)\cap A_R\neq\emptyset\Big)\\
+		& \iff \forall\ A_L\subseteq L,\ A_R\subseteq R\ |A_R|\leq |R|-|A_L| \text{ or }N(A_L)\cap A_R\neq\emptyset\\
+		& \iff \forall\ A_L\subseteq L,\ |\ov{N(A_L)}|\leq |R|-|A_L|\\
+		& \iff \forall\ A_L\subseteq L,\ |A_L|\leq |N(A_L)|
+	\end{align*}Hence we have the theorem
+\end{proof}
+\subsection{Lattices}
+For all $n>0$ the Boolean Lattice $\mcB_n$ of order $n$ is the poset $(\{0,1\}^n,\subseteq)$. We will prove a property of the Boolean Lattice and we will define general lattice later.
+\begin{Theorem}{Sperner's Theorem}{}
+	For all $n\in \bbZ_+$ $$w(\mcB_n)=\binom{n}{\lt\lceil\frac{n}2\rt\rceil}$$
+\end{Theorem}
+\begin{proof}
+	First of all take all the subsets of $\{0,1\}^n$ of size $\lt\lceil\frac{n}2\rt\rceil$ and this number is $\binom{n}{\lt\lceil\frac{n}2\rt\rceil}$. These sets form an anti-chain. Therefore we have $w(\mcB_n)\geq \binom{n}{\lt\lceil\frac{n}2\rt\rceil}$.
+
 \end{proof}
