@@ -2,9 +2,9 @@
 \usepackage{url}
 
 \usepackage[nottoc,numbib]{tocbibind}
-\input{../../preamble}
-\input{../../letterfonts}
-\input{../../macros}
+\input{preamble}
+\input{letterfonts}
+\input{macros}
 
 \definecolor{mycolor1}{HTML}{1becff}
 \definecolor{mycolor2}{HTML}{2E3192}
@@ -35,13 +35,12 @@
 
 
 \usepackage{xhfill}
-\definecolor{mychaptercolor}{HTML}{2E3192}
 
 \usetikzlibrary{calc} 
 
 \titleformat{\chapter}[display]
 {}
-{\hfill \tikz[remember picture] \node[] (nr) {\fontsize{20}{70}\selectfont\color{mychaptercolor}\textsc{Chapter~~} \fontsize{60}{70}\selectfont\color{mychaptercolor}\thechapter};
+{\hfill \tikz[remember picture] \node[] (nr) {\fontsize{20}{70}\selectfont\color{mytoccolor}\textsc{Chapter~~} \fontsize{60}{70}\selectfont\color{mytoccolor}\thechapter};
 	\begin{tikzpicture}[overlay,remember picture]
 		\coordinate (rightborder) at ($(nr)+(100,0)$);
 		\coordinate (right) at ($(nr.east) + (0.5,0)$);
@@ -77,13 +76,12 @@
 
 
 \newpage
-\pagestyle{empty}
+
 \titleformat{name=\chapter,numberless}[display]
 {\normalfont\Huge\bfseries}{}{0pt}{\Huge}
-
-%{\hypersetup{linkcolor=mytoccolor}
-\tableofcontents
-%}
+{\hypersetup{linkcolor=mytoccolor}
+	\tableofcontents
+}
 \newpage
 
 \pagestyle{fancy}
@@ -91,13 +89,14 @@
 %%%%%%% Body
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\setcounter{page}{1}
-\input{chapters/closest-points}
-\input{chapters/median-linear-time}
-\input{chapters/polynomial-multiplication}
-\input{chapters/dynamic}
-\input{chapters/greedy}
-\input{chapters/dijkstra-data-structure}
-\input{chapters/kruskal-data-structure}
-\input{chapters/red-black-tree-structure}
-\input{chapters/max-flow}
+%\input{chapters/closest-points}
+%\input{chapters/median-linear-time}
+%\input{chapters/polynomial-multiplication}
+%\input{chapters/dynamic}
+%\input{chapters/greedy}
+%\input{chapters/dijkstra-data-structure}
+%\input{chapters/kruskal-data-structure}
+%\input{chapters/red-black-tree-structure}
+%\input{chapters/max-flow}
+\input{chapters/randomized-algo}
 \end{document}

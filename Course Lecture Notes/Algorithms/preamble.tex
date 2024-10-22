@@ -21,6 +21,7 @@
 %\graphicspath{ {./images/} } %give your suitable image path
 \usepackage{varwidth}
 \usepackage{authblk}
+\usepackage{marvosym}
 \usepackage{nameref}
 \usepackage{multicol,array,multirow}
 \usepackage{tikz-cd}
@@ -97,12 +98,17 @@
 \definecolor{light-gray}{gray}{0.95}
 \definecolor{Emerald}{HTML}{00A99D}
 \definecolor{RoyalBlue}{HTML}{0071BC}
-\definecolor{mytoccolor}{doc!60}
+\definecolor{mytoccolor}{HTML}{4549C4}
 
 \renewcommand{\qed}{\ensuremath{\blacksquare}}
 
 
+%\usepackage{fontspec}
 
+% Load the custom font and create a command \useabcfont{}
+%\newfontface\abcfont{Letter Gothic MT Std Regular.otf}
+
+%\newcommand{\useabcfont}[1]{{\abcfont #1}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TCOLORBOX SETUPS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -205,22 +211,22 @@
 }
 {th}
 \tcbuselibrary{theorems,skins,hooks}
-\newtcbtheorem[use counter from=Theorem, number within=chapter]{corollary}{Corollary}
+\newtcbtheorem[use counter from=theorem, number within=chapter]{corollary}{Corollary}
 {%
 	enhanced
 	,breakable
 	,colback = mytheorembg
 	,frame hidden
 	,boxrule = 0sp
-	,borderline west = {2pt}{0pt}{mytheoremfr}
+	,borderline west = {2pt}{0pt}{myp!60!black}
 	,sharp corners
 	,detach title
 	,before upper = \tcbtitle\par\smallskip
-	,coltitle = mytheoremfr
+	,coltitle = myp!60!black
 	,fonttitle = \bfseries\sffamily
 	,description font = \mdseries
 	,separator sign none
-	,segmentation style={solid, mytheoremfr}
+	,segmentation style={solid, myp!85!black}
 }
 {th}
 
@@ -733,6 +739,7 @@
 % TABLE OF CONTENTS 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
 \usepackage{tikz}
 \usetikzlibrary{shapes, positioning}
 \usepackage{titletoc,titlesec}
@@ -794,7 +801,7 @@
 %\titleformat{\chapter}[display]
 %{\normalfont\Huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
 
-	
+
 \newcommand\colorlink[3]{\href{#2}{\color{#1}#3}}
 \newcommand\colorurl[2]{{\color{#1}\url{#2}}}
 
