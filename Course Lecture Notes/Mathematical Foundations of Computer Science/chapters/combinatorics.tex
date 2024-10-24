@@ -616,9 +616,9 @@ Now we will prove a very strong result called the Lov\'{a}sz-Local Lemma. But be
 	
 	We can represent the above relations by the Dependency Graph which is a directed whose vertices is $[n]$ and the set of neighbors of $i\in[n]$  is the set $N(i)$.
 \end{Definition}
-\begin{lemma}{Lov\'{a}sz-Local Lemma}{}
+\begin{Theorem}{Lov\'{a}sz-Local Lemma}{}
 	Let $E_1,\dots, E_n$ be events and $G=([n],E)$ be the dependency graph of these events. Suppose $x_1,\dots, x_n$ satisfy $$\forall i\in[n]\quad \bbP[E_i]\leq x_i\prod_{j:(i,j)\in E}(1-x_j)$$Then $$\bbP\lt[\bigwedge_{i=1}^n\ov{E}_i\rt]\geq \prod_{i=1}^n(1-x_i)$$
-\end{lemma}
+\end{Theorem}
 \begin{proof}
 	We will first prove the following claim:\begin{claimwidth}
 		\begin{claim}{}{}
@@ -645,12 +645,18 @@ Using Lova\'{a}sz Local Lemma we have the following corollary:
 \dfn{Negative Dependency (di)graph}{
 $G$ is a negatve dependency (di)graph if for every event $E_i$ and every subset $S\subseteq [n]\setminus N(i)\cup\{i\}$ we have $$\bbP\lt[E_i\cap\bigcup_{j\in S}E_j   \rt]\geq \bbP[E_i]\bbP\lt[ \bigcup_{j\in S}E_j \rt]$$ 
 }
-\begin{lemma}{Lopsided Lov\'{a}sz Local Lemma}{}
+\begin{Theorem}{Lopsided Lov\'{a}sz Local Lemma}{}
 	Suppose $G$ is a negative dependency (di)graph for events $E_1,\dots, E_n$ and there exists $x_1,\dots, x_n$ which satisfy $$\forall i\in[n]\quad \bbP[E_i]\leq x_i\prod_{j:(i,j)\in E}(1-x_j)$$Then $$\bbP\lt[\bigwedge_{i=1}^n\ov{E}_i\rt]\geq \prod_{i=1}^n(1-x_i)$$
-\end{lemma}
+\end{Theorem}
 \begin{proof}
 	content...
 \end{proof}
 \section{Linear Algebraic Techniques in Combinatorics}
 \subsection{Odd Town Even Town}
+\begin{lemma}{}{}
+	Let $\mcF\subseteq 2^{[n]}$ be such that $|A|$ is odd for every $A\in \mcF$ and $|A\cap B|$ is even for every distinct $A,B\in \mcF$. Then $|\mcF|\leq n$.
+\end{lemma}
+\begin{proof}
+	Define $x_A$ for every $A\in \mcF$ to be the characteristic vector in $\{0,1\}^n$ where $x_A(i)=1\iff i\in A$. We will show that $x_A$'s for all $A\in\mcF$ are linearly independent over $|bbF_2$. This suffices to show that $|\mcF\leq n$ since $|\mcF|=|\{x_A\colon A|in\mcF\}|\leq \dim \{0,1\}^n=n$.
+\end{proof}
 \subsection{Fisher's Inequality}
