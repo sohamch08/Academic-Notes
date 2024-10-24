@@ -384,7 +384,8 @@ Let $U$ be a set. A relation $\leq$ on $U$ is a partial order if  we have \begin
 \begin{proof}
 	We will prove for $\min(U)$ and the same type of proof will also work for $\max(U)$. Since $U$ is nonempty and finite $\exs \ x\in U$. Now if $x\notin \min(U)$ then $\exs\ y_1\in U\setminus\{x\}$ such that $y_1<x$. If $y_1\notin U$ then $\exs\ y_2\in U\setminus\{x,y_1\}$ such that $y_2<y_1$. Continuing like this if $y_{|U|-2}\notin U$, $\exs\ y_{|U|-1}\in U\setminus\{x,y_i\colon i\in[|U|-2]\}$. Then $y_{|U|-1}$ is the only element left in $U\setminus\{x,y_i\colon i\in[|U|-2]\}$. Hence $y_{|U|-1}$ is the minimal element of $U$. So $y_{|U|-1}\in \min(U)$. Therefore $\min(U)$ is nonempty.
 	
-	 Suppose $\min(U)$  not a anti-chain then $\exs,\ x,y\in U$ and $x\neq y$ such that $x\not\| y$. Hence either $x<y$ or $y<x$. WLOG suppose $x<y$. Then $y$ is not a minimal element since $y\not\leq x$. Hence contradiction. $\min(U)$ forms an anti-chain.
+	 Suppose $\min(U)$  not a anti-chain then $\exs,\ x,y\in U$ and $x\neq y$ such that $x\nparallel
+	  y$. Hence either $x<y$ or $y<x$. WLOG suppose $x<y$. Then $y$ is not a minimal element since $y\not\leq x$. Hence contradiction. $\min(U)$ forms an anti-chain.
 	 
 	 Let $U=[1]$ with standard ordering $\leq$. Then $\min(U)=\max(U)=[1]$. Hence $\min(U)$ and $\max(U)$ may intersect. 
 \end{proof}
@@ -443,7 +444,7 @@ Then we have the following definition for $d-$dimensional posets $(U,\leq)$.
 		 & \iff f(u)\domrel f(v)
 	\end{align*}Hence $f$ is indeed a embedding. 
 
-$``\Rightarrow":$ $(U,\leq)$ is $d$-dimensional. There exists an embedding $f:U\to\bbR$. Now $\forall\ x,y\in U$ we have $$x\leq y\iff f(x)\domrel f(y)$$. Now we can assume no two points of $U$ share a coordinate or else we can force this rule changing the values a little. Now we can think $f=(f_1,\dots, f_n)$ where $f_i:U\to \bbR$ for all $i\in[d]$ such that $x\leq y\iff f_i(x)\leq f_i(y)$ for all $i\in[d]$. Then we have the linear extensions of $(U,\leq)$, $(U,\leq_i)$ where $\forall\ x,y\in U$, $x\leq_i y\iff f_i(x)\leq f_i(y)$.  
+$``\Rightarrow":$ $(U,\leq)$ is $d$-dimensional. There exists an embedding $f:U\to\bbR$. Now $\forall\ x,y\in U$ we have $$x\leq y\iff f(x)\domrel f(y)$$Now we can assume no two points of $U$ share a coordinate or else we can force this rule changing the values a little. Now we can think $f=(f_1,\dots, f_n)$ where $f_i:U\to \bbR$ for all $i\in[d]$ such that $x\leq y\iff f_i(x)\leq f_i(y)$ for all $i\in[d]$. Then we have the linear extensions of $(U,\leq)$, $(U,\leq_i)$ where $\forall\ x,y\in U$, $x\leq_i y\iff f_i(x)\leq f_i(y)$.  
 \end{proof}
 \begin{lemma}{}{}
 	The dimension of $(2^{[d]},\subseteq)$ is $d$
@@ -496,10 +497,10 @@ For all $n>0$ the Boolean Lattice $\mcB_n$ of order $n$ is the poset $(\{0,1\}^n
 	Let $A_1,\dots, A_k\subseteq [n]$ form an antichain. We will show that $k\leq \dps{\binom{n}{\lt\lceil\frac{n}2\rt\rceil}}$.	Let $Sym(n)$ is the set of all permutations on $[n]$. Now for all $i\in[k]$ define $$S_i=\{\pi\in Sym(n)\colon \{\pi(A_i)\}=A_i\}$$Then we have $|S_i|=|A_i|!(n-|A_i|)!$. Now notice that $A_i\cap A_j=\emptyset$ for $i\neq j$. Therefore we have $$n!\geq\sum_{i=1}^k|S_i|=\sum_{i=1}^k(n-|A_i|)!|A_i|!\geq \sum_{i=1}^k\lt\lfloor\frac{n}2\rt\rfloor!\lt(n-\lt\lfloor\frac{n}2\rt\rfloor\rt)!=k\lt\lfloor\frac{n}2\rt\rfloor!\lt(n-\lt\lfloor\frac{n}2\rt\rfloor\rt)!\implies \binom{n}{\lt\lfloor\frac{n}2\rt\rfloor}\geq k$$Therefore we have the lemma.
 \end{proof}
 \begin{Theorem}{Erd\H{o}s-Ko-Rado Theorem}{}
-	Let $0<k\leq \frac{n}{2}$. Let $A$ be a family of   subsets of $[n]$ of size $k$ that are pairwise intersecting. Then $|A|\leq \binom{n-1}{k-1}$.
+	Let $0<k\leq \frac{n}{2}$. Let $\mcA$ be a family of   subsets of $[n]$ of size $k$ that are pairwise intersecting. Then $|\mcA|\leq \binom{n-1}{k-1}$.
 \end{Theorem}
 \begin{proof}
-	Let $\sA=\{A_1,\dots, A_m\}$ be the family. For all $i\in[m]$ define $$S_i=\{\pi\in Sym(n)\colon \exs\ j\in[n],\ \pi(j+[|A_i|])=A_i\}$$where $j+[|A_i|]\coloneqq \{l+j\colon l\in A_i\}$. We have $|S_i|=n(n-k)!k!$. Now each $\pi$ is in at most $k$ many different $A_i$. Then we have $$kn!\geq m\times n(n-k)!k!\implies (n-1)!\geq m(n-k)!(k-1)!\implies \binom{n-1}{k-1}\geq m$$Hence we have the lemma.
+	Let $\mcA=\{A_1,\dots, A_m\}$ be the family. For all $i\in[m]$ define $$S_i=\{\pi\in Sym(n)\colon \exs\ j\in[n],\ \pi(j+[|A_i|])=A_i\}$$where $j+[|A_i|]\coloneqq \{l+j\colon l\in A_i\}$. We have $|S_i|=n(n-k)!k!$. Now each $\pi$ is in at most $k$ many different $A_i$. Then we have $$kn!\geq m\times n(n-k)!k!\implies (n-1)!\geq m(n-k)!(k-1)!\implies \binom{n-1}{k-1}\geq m$$Hence we have the lemma.
 \end{proof}
 \subsection{Symmetric Chain Decomposition}
 Below we will define some properties of chains in a poset $(U,\leq)$.\begin{itemize}[label=$\bullet$]
@@ -524,7 +525,7 @@ Now for any $n\in\bbZ_+$ the boolean lattice $$\mcB_n=\{\underbrace{\{0,1\}\time
 \begin{proof}
 	We will prove this using induction on $k$. If $k=1$ then $B(m_1)=\{0,\dots, m_1\}$ which is a symmetric chain of length $m_1+1$. So the trivial partition i.e. $\{\{i\}\colon i\in B(m_1)\}$ is a symmetric chain decomposition of $B(m_1)$. Hence the base case follows.
 	
-	Let this is true for $B(m_1,\dots, m_{k-1})$. We have $$B(m_1,\dots, m_{k})=B(m_1,\dots, m_{k-1})\cup\{m_k\cdot k\}$$  By inductive hypothesis $\exs$ a symmetric chain decomposition $\mcA=(C_1,\dots,C_l)$ of $B(m_1,\dots, m_{k-1})$ where $$C_i:\qquad A_{i,1}\leq A_{i,2}\leq \cdots\leq  A_{i,k_i}$$where $\forall\ i\in[l]$ and $\forall\ j\in[k_i]$ $$\Rank(A_{i,1})+\Rank(A_{i,k_i})=n+1-m_k,\qquad \Rank(A_{i,j})=\Rank(A_{i,j-1})+1=\Rank(A_{i,k_i})-(k_i-j)$$Now since $C_i$'s are unrefinable we have for all $j\in[k_i]$, $\Rank(A_{i,j})=\Rank(A_{i,1})+(j-1)$. Since $B(m_1,\dots,m_{k-1})=\bigsqcup\limits_{i=1}^{l}C_i$ we have $B(m_1,\dots, m_k)=\bigsqcup\limits_{i=1}^l\textit{Cur}_i$ i.e. $\{\textit{Cur}_i\colon i\in[l]\}$ is a partition of $B(m_1,\dots,m_k)$ where 
+	Let this is true for $B(m_1,\dots, m_{k-1})$. We have $$B(m_1,\dots, m_{k})=B(m_1,\dots, m_{k-1})\cup\{m_k\cdot k\}$$  By inductive hypothesis $\exs$ a symmetric chain decomposition $\mcA=(C_1,\dots,C_l)$ of $B(m_1,\dots, m_{k-1})$ where $$C_i:\qquad A_{i,1}\subseteq A_{i,2}\subseteq \cdots\subseteq  A_{i,k_i}$$where $\forall\ i\in[l]$ and $\forall\ j\in[k_i]$ $$\Rank(A_{i,1})+\Rank(A_{i,k_i})=n+1-m_k,\qquad \Rank(A_{i,j})=\Rank(A_{i,j-1})+1=\Rank(A_{i,k_i})-(k_i-j)$$Now since $C_i$'s are unrefinable we have for all $j\in[k_i]$, $\Rank(A_{i,j})=\Rank(A_{i,1})+(j-1)$. Since $B(m_1,\dots,m_{k-1})=\bigsqcup\limits_{i=1}^{l}C_i$ we have $B(m_1,\dots, m_k)=\bigsqcup\limits_{i=1}^l\textit{Cur}_i$ i.e. $\{\textit{Cur}_i\colon i\in[l]\}$ is a partition of $B(m_1,\dots,m_k)$ where 
 	$$\textit{Cur}_i=C_i\times \{0,\dots, m_k\}$$Now we will focus on each of the \textit{Cur}$_i$'s. Now informally each of the $\textit{Cur}_i$ looks like a grid of size $m_k\times k_i$. 
 	
 	Now denote $z_i=\min\{m_k+1,k_i\}$. We will now create $z_i$ many chains which follows the same properties followed by $\{C_i\colon i\in[l]\}$. Now for all $j\in [z_i]$ define the chain $C_{i,j}$ 
@@ -533,13 +534,13 @@ Now for any $n\in\bbZ_+$ the boolean lattice $$\mcB_n=\{\underbrace{\{0,1\}\time
 	\begin{figure}[h]
 		\centering
 		\includegraphics[width=8cm]{images/symchaindecomp.pdf}
-	\end{figure}
+	\end{figure}\parinf
 
 Now for all $i\in[l]$ and  $j\in[z_i]$ then we have \begin{align*}
 	\Rank(A_{i,1}\cup\{(j-1)\cdot k\})+(\Rank \lt(A_{i,k_i-j+1}\cup\{m_k\cdot k\}\rt)&= \Rank(A_{i,1})+(j-1)+\Rank(A_{i,k_i-j+1})+m_k\\
 	& = \Rank(A_{i,1})+\Rank(A_{i,k_i})-(j-1)+m-k+(j-1)\\
 	& = n+1-m_k+m_k=n+1
-\end{align*}
+\end{align*}\parinn
 Hence the new collection of chains $\mcA'=\{C_{i,j}\colon i\in[l],\ j\in[z_i]\}$ forms a symmetric chain decomposition of $B(m_1,\dots, m_k)$. Hence by mathematical induction we have the theorem.
 \end{proof}
 \subsection{General Lattices}
@@ -547,18 +548,109 @@ Hence the new collection of chains $\mcA'=\{C_{i,j}\colon i\in[l],\ j\in[z_i]\}$
 \dfn{Lattice}{A poset $U(,\leq)$ is a lattice $\forall\ x,y\in U$, then least upper bound of $x,y$, $x\vee y$  i.e. $$x\vee y\geq x,y\text{ and }\forall\ z\in U:\ z\geq x,y\implies z\geq x\vee y$$ also called \textit{join} of $x,y$ exists and the greatest lower bound of $x,y$, $x\wedge y$ i.e. $$x\wedge y\leq x,y\text{ and }\forall\ z\in U:\ z\leq x,y\implies z\leq x\wedge y$$ also called \textit{meet} of $x,y$ exists.}
 
 \begin{Theorem}{Tarski's Fixed Point Theorem}{}
-	Let $(U,leq)$ be a finite lattice and $f:U\to U$ be a monotone function (i.e. $x\leq\implies f(x)\leq f(y)$) then define $$z_{max}=\bigvee_{x\leq f(x)}x\qquad z_{\min}=\bigwedge_{f(x)\leq x}x$$Then $z_{\max}$ is the largest fixed point and $z_{\\min}$ is the smallest fixed point.
+	Let $(U,leq)$ be a finite lattice and $f:U\to U$ be a monotone function (i.e. $x\leq\implies f(x)\leq f(y)$) then define $$z_{max}=\bigvee_{x\leq f(x)}x,\qquad z_{\min}=\bigwedge_{f(x)\leq x}x$$Then $z_{\max}$ is the largest fixed point and $z_{\\min}$ is the smallest fixed point.
 \end{Theorem}
+\begin{proof}
+	Define the sets $$S_{\max}=\{x\in U\colon x\leq f(x)\}\qquad S_{\min}=\{x\in U\colon f()\leq x\}$$Now observe that $S_{\max}\neq \emptyset$ since $\min(U)\in S_{\max}$. And similarly $S_{min}\neq\emptyset$ as $\max(U)\in S_{\min}$. 
+	
+	Now $\forall\ x\in S_{\max}$ we   have $$x\leq z_{\max}\implies f(x)\leq f(z_{\max})\implies x\leq f(z_{\max})$$Now it follows that $$z_{\max}\leq f(z_{\max})\implies f(z_{\max})\leq f\lt(f(z_{\max})\rt)\implies f(z_{\max})\in S_{\max} \implies f(z_{\max})\leq z_{max}\implies z_{\max}=f(z_{\max})$$Therefore $z_{\max}$ is a fixed point. Now $z_{\max}$ is also largest fixed point since all the fixed points are in $S_{\max}$.
+	
+	Similarly we get that $z_{\min}$ is the fixed point and it is the smallest fixed point since all fixed points are in $S_{\min}$. Hence we have the theorem. 
+\end{proof}
+\begin{remark}
+	Tarski's Fixed Point Theorem is not true for infinite lattices. For example take $U=\bbZ$ and take $f:\bbZ\to \bbZ$ where $f(n)=n^2+1$. Then $f$ has no fixed point.
+\end{remark}
 \section{Probabilistic Method}
+The probabilistic method is a powerful tool for tackling many problems in discrete
+mathematics. Roughly speaking, the method works as follows: trying to prove that
+a structure with certain desired properties exists, one defines an appropriate prob-
+ability space of structures and then shows that the desired properties hold in these
+structures with positive probability.
+\subsection{Ramsey Numbers}
 \begin{Definition}{Ramsey Number}{}
 	For $k>0$, the $\sR(k)$ is the smallest integer such that any graph with $\sR(k)$ vertices  has either a clique of size $k$ or an independent set of size $k$.
 \end{Definition}
 \begin{lemma}{}{}
 	For all $k>4$, $\sR(k)>2^{\frac{k}2}$ i.e  $\exs$ a graph with $2^{\frac{k}2}$ vertices that does not have a $k$ size clique or $k$ size independent set.
 \end{lemma}
+\begin{proof}
+	Let $n=2^{\frac{k}2}$ and consider a random graph (i.e. each edge appears with $\frac12$ probability) with $n$ vertices. Let $G$ be such a graph. We will show that $$\underset{G}{\bbP}[\exs\ S\subseteq [n]\colon |S|=k, \ S\text{ is not a clique or independent set}]<1$$Now using the union bound it is enough to show that $$\sum_{S\subseteq[n],\ |S|=k}\underset{G}{\bbP}[S\text{ is aa clique or independent set}]<1$$Now we have $$\sum_{S\subseteq[n],\ |S|=k}\underset{G}{\bbP}[S\text{ is aa clique or independent set}]=\sum_{S\subseteq[n],\ |S|=k}2\times \lt(\frac12\rt)^{\binom{k}2}=\binom{n}{k}\frac{2}{2^{\binom{k}2}}$$Hence it suffices to show that $$\binom{n}{k}\frac{2}{2^{\binom{k}2}}<1\iff 2\binom{n}k2^{-\frac{k^2-k}2}<1\iff \frac{\cancel{n^k}}{k!}\;\frac{2^\frac{k}2+1}{\cancel{2\st^{\frac{k^2}2}}}<1\iff\frac{2^{\frac{k}2+1}}{2^{\frac{k^2}2}}<1$$The last inequality is  true when $k> 4$.
+	
+	Hence when $k>4$ we have $\underset{G}{\bbP}[\exs\ S\subseteq [n]\colon |S|=k, \ S\text{ is a clique or independent set}]<1$. Hence $$\underset{G}{\bbP}[\forall\ S\subseteq [n]\colon |S|=k, \ S\text{ is not a clique or independent set}]>0$$Therefore there exists a graph $G$ with $2^{\frac{k}2}$ many vertices which does not have a $k$ size clique or $k$ size independent set. 
+\end{proof}
+\subsection{Turan's Theorem}
 \begin{Theorem}{Turan's Theorem}{}
-	Let $k>0$ and $G$ be a graph with $n$ vertices without a clique of size $k+1$. The number of edges in $G \leq \lt(1-\frac1k\rt)\frac{n^2}{2}$. 
+	Let $k>0$ and $G$ be a graph with $n$ vertices without a clique of size $k+1$. The number of edges in $G < \lt(1-\frac1k\rt)\frac{n^2}{2}$. 
 \end{Theorem}
+\begin{proof}
+	We will show that if $|E|< \binom{n}2-\lt(1-\frac1k\rt)\frac{n^2}2$ then there is an independent set of size $k+1$. Then by flipping the graph i.e. taking the edge set which is  the complement of the edge set of $G'=(V,E)$ we get a clique of size $k+1$.
+	
+	Consider an uniformly random permutation of vertices $[n]$ and let $S$ be the set of vertices that occur before all their neighbors. Hence $S$ forms an independent set. Therefore we have $$\bbE[|S|]=\sum_{i\in[n]}\bbP[i\in S]=\sum_{i\in [n]}\frac1{d_i+1}$$Here the last step is true because the vertex $i$ has $d_i$ many neighbors and if we arrange all the neighbors and the vertex $i$ one after another what is the probability the vertex $i$ comes at first among them. 
+	
+	Now by Jensen Inequality we have $$\bbE[|S|]=\sum_{i\in[n]}\frac{1}{d_i+1}\geq \frac{n}{\frac1n\lt(\sum\limits_{i\in[n]}d_i\rt)+1}=\frac{n}{\frac2n|E|+1}=\frac{n^2}{2|E|+n}$$Since  $|E|< \binom{n}2-\lt(1-\frac1k\rt)\frac{n^2}2=\frac{n(n-1)}2-\lt(1-\frac1k\rt)\frac{n^2}2=\frac12\lt(\frac{n^2}k-n\rt)$. Therefore we have $$\bbE[|S|]\geq \frac{n^2}{2|E|+n}>\frac{n^2}{\frac{n^2}k-n+n}=k$$Hence $\bbE[|S|]>k$ and since $|S|$ is always a positive integer we have $\bbE[|S|]\geq k+1$. Since the average cannot exceed the maximum we have the largest independent set has size at least $k+1$. Therefore if we take the complement graph there is a $k+1$ size clique. Hence
+	
+	Hence if we have $|E|\geq \binom{n}2-\lt(1-\frac1k\rt)\frac{n^2}2$ there is no independent set of size $k+1$. And therefore the complement graph also has no clique of size $k+1$.
+\end{proof}
+
+\subsection{Magnitude of Boolean Quadratic Forms}
 \begin{lemma}{Magnitude of Boolean Quadratic Forms}{}
-	Let $n>0$ and $a_{i,j}\in\{1,-1\}$ for all $i,j\in[n]$. Then $$\max_{x_1,\dots, x_n\in \{1,-1\}}\max_{y_1,\dots, y_n\in \{1,-1\}}\sum_{i,j\in[n]}a_{i,j}x_iy_j\geq \Im(n^{1.5})$$
+	Let $n>0$ and $a_{i,j}\in\{1,-1\}$ for all $i,j\in[n]$. Then $$\max_{x_1,\dots, x_n\in \{1,-1\}}\max_{y_1,\dots, y_n\in \{1,-1\}}\sum_{i,j\in[n]}a_{i,j}x_iy_j\geq \Om\lt(n^{1.5}\rt)$$
 \end{lemma}
+\begin{proof}
+	Let $B$ denote the $LHS$ of given expression i.e. $$B\coloneqq \max_{x_1,\dots, x_n\in \{1,-1\}}\max_{y_1,\dots, y_n\in \{1,-1\}}\sum_{i,j\in[n]}a_{i,j}x_iy_j$$Now\begin{align*}
+		B& = \max_{x_1,\dots, x_n\in \{1,-1\}}\max_{y_1,\dots, y_n\in \{1,-1\}}\sum_{i,j\in[n]}a_{i,j}x_iy_j\\
+		& = \max_{x_1,\dots, x_n\in \{1,-1\}}\max_{y_1,\dots, y_n\in \{1,-1\}}\sum_{j=1}^ny_j\sum_{i=1}^n a_{i,j}x_i\\
+		& =  \max_{x_1,\dots, x_n\in \{1,-1\}}\sum_{j=1}^n\max_{y_1,\dots, y_n\in \{1,-1\}}y_j\sum_{i=1}^n a_{i,j}x_i\\
+		& = \max_{x_1,\dots, x_n\in \{1,-1\}}\sum_{j=1}^n\lt|\sum_{i=1}^n a_{i,j}x_i\rt|\\
+	\end{align*}Now it is enough to show that $$\underset{X_1,\dots, X_n}{\bbE}\lt[\sum_{j=1}^n\lt|\sum_{i=1}^na_{i,j}X_i\rt|\rt] =\sum_{j=1}^n\underset{X_1,\dots, X_n}{\bbE}\lt[ \lt|\sum_{i=1}^na_{i,j}X_i \rt| \rt]  \geq \Om(n^{1.5})\implies \underset{X_1,\dots, X_n}{\bbE}\lt[ \lt|\sum\limits_{i=1}^na_{i,j}X_i \rt| \rt] \geq \Om(n^{0.5})$$Now in the expression $\underset{X_1,\dots, X_n}{\bbE}\lt[ \lt|\sum\limits_{i=1}^na_{i,j}X_i \rt| \rt] $ the $a_{i,j}$ doesn't matter as they take the values of $1$ or $-1$ and $X_i$ also takes the values $1$ or $-1$ we can think $Y_i=a_{i,j}X_i$ where $Y_i $ takes values $1$ or $-1$. Then we have $$\underset{X_1,\dots, X_n}{\bbE}\lt[ \lt|\sum\limits_{i=1}^na_{i,j}X_i \rt| \rt]=\underset{Y_1,\dots, Y_n}{\bbE}\lt[ \lt|\sum\limits_{i=1}^nY_i \rt| \rt]=\frac1{2^n}\sum_{k=0}^n\binom{n}{k}|2k-n|$$ Now we have 
+\begin{align*}
+	\sum_{k=0}^n\binom{n}k|n-2k|&=2\sum_{k=0}^{\lfloor n/2\rfloor}\binom{n}k(n-2k)=2\left(n\sum_{k=0}^{\lfloor n/2\rfloor}\binom{n}k-2\sum_{k=0}^{\lfloor n/2\rfloor}k\binom{n}k\right)\\\\
+	&=2n\left(\sum_{k=0}^{\lfloor n/2\rfloor}\binom{n}k-2\sum_{k=0}^{\lfloor n/2\rfloor}\binom{n-1}{k-1}\right)=2n\left(\sum_{k=0}^{\lfloor n/2\rfloor}\left(\binom{n}k-\binom{n-1}{k-1}\right)-\sum_{k=0}^{\lfloor n/2\rfloor}\binom{n-1}{k-1}\right)\\\\
+	&=2n\left(\sum_{k=0}^{\lfloor n/2\rfloor}\binom{n-1}k-\sum_{k=0}^{\lfloor n/2\rfloor}\binom{n-1}{k-1}\right)=2n\left(\sum_{k=0}^{\lfloor n/2\rfloor}\binom{n-1}k-\sum_{k=0}^{\lfloor n/2\rfloor-1}\binom{n-1}k\right)=2n\binom{n-1}{\lfloor n/2\rfloor}=\Om(n^{0.5})
+\end{align*}Hence we have $\underset{X_1,\dots, X_n}{\bbE}\lt[ \lt|\sum\limits_{i=1}^na_{i,j}X_i \rt| \rt]=\Om(n^{0.5})$. Therefore $B\geq \Om(n^{1.5})$.
+\end{proof}
+\subsection{Lov\'{a}sz-Local Lemma}
+Now we will prove a very strong result called the Lov\'{a}sz-Local Lemma. But before that first we need the define Dependency Graph of finite set of events.
+\begin{Definition}{Dependency (di)graph}{}
+	Let $E_1,\dots, E_n$ be events. For each $i$ there is some subset $N(i)\subseteq [n]$ such that $A_i$ is independent from $\{A_j\colon j\notin N(i)\cup \{i\}\}$. Here event $A$ is independent from $\{B_1,\dots, B_k\}$ means $A$ is independent of every event of the form $\bigwedge\limits_{i=1}^kC_i$ where $C_i$ is either $B_i$ or $\ovB_i$.\parinn
+	
+	We can represent the above relations by the Dependency Graph which is a directed whose vertices is $[n]$ and the set of neighbors of $i\in[n]$  is the set $N(i)$.
+\end{Definition}
+\begin{lemma}{Lov\'{a}sz-Local Lemma}{}
+	Let $E_1,\dots, E_n$ be events and $G=([n],E)$ be the dependency graph of these events. Suppose $x_1,\dots, x_n$ satisfy $$\forall i\in[n]\quad \bbP[E_i]\leq x_i\prod_{j:(i,j)\in E}(1-x_j)$$Then $$\bbP\lt[\bigwedge_{i=1}^n\ov{E}_i\rt]\geq \prod_{i=1}^n(1-x_i)$$
+\end{lemma}
+\begin{proof}
+	We will first prove the following claim:\begin{claimwidth}
+		\begin{claim}{}{}
+			$\forall\ i\in[n]$ and $\forall\ S\subseteq[n]$, $i\notin S$ we have $$\bbP\lt[E_i\mid \bigwedge_{j\in S}\ovE_j\rt]\leq\frac{\bbP[E_i]}{\prod\limits_{j\in S,\ (i,j)\in E}(1-x_j)}$$
+		\end{claim}
+	\begin{proof}
+		We will prove this using induction on $|S|$. For base case let $S=\emptyset$. Then $S\cap\{j\colon (i,j)\in E\}=\emptyset$. Then $\prod\limits_{j\in S,\ (i,j)\in E}(1-x_j)=1$. And since $S$ in empty $\bbP\lt[E_i\mid \bigwedge\limits_{j\in S}\ovE_j\rt]=\bbP[E_i]$. Therefore the base case follows. \parinn
+		
+		Suppose $|S|=k$. If $S\cap\{j\colon (i,j)\in E\}=\emptyset$, $E_i$ is independent of $E_j$ for all $j\in S$. Therefore $\bbP\lt[E_i\mid \bigwedge\limits_{j\in S}\ovE_j\rt]=\bbP[E_i]$. Also since $S\cap\{j\colon (i,j)\in E\}=\emptyset$ we have $\prod\limits_{j\in S,\ (i,j)\in E}(1-x_j)=1$. Therefore the claim follows.
+		
+		Now Suppose $S\cap\{j\colon (i,j)\in E\}\neq\emptyset$. Let $S_1\coloneqq S\cap\{j\colon (i,j)\in E\}$ and $S_2\coloneqq S\setminus S_1$. Then we have $$\bbP\lt[E_i\mid \bigwedge_{j\in S}\ov{E}_j\rt]=\frac{\bbP\lt[ E_i\wedge \lt( \bigwedge\limits_{j\in S_1}\ovE_j\rt)\mid \bigwedge\limits_{j\in S_2}\ovE_j \rt]}{\bbP\lt[  \bigwedge\limits_{j\in S_1}\ovE_j\mid \bigwedge\limits_{j\in S_2}\ovE_j \rt]}\leq \frac{\bbP\lt[ E_i\mid \bigwedge\limits_{j\in S_2}\ovE_j \rt]}{\bbP\lt[  \bigwedge\limits_{j\in S_1}\ovE_j\mid \bigwedge\limits_{j\in S_2}\ovE_j \rt]}\leq\frac{\bbP[ E_i]}{\bbP\lt[  \bigwedge\limits_{j\in S_1}\ovE_j\mid \bigwedge\limits_{j\in S_2}\ovE_j \rt]} $$So we will now give a lower bound on $\bbP\lt[  \bigwedge\limits_{j\in S_1}\ovE_j\mid \bigwedge\limits_{j\in S_2}\ovE_j \rt]$. Now we have \begin{align*}
+			\bbP\lt[  \bigwedge\limits_{j\in S_1}\ovE_j\mid \bigwedge\limits_{j\in S_2}\ovE_j \rt] & = \prod_{k\in S_1}\bbP\lt[ E_k\ \lt|\ \ \lt(\bigwedge_{j\in S_2}\ovE_j\rt) \wedge \lt( \bigwedge_{j<k,\ j\in S_1}\ovE_j\rt) \rt.  \rt]\\
+			& \geq \prod_{k\in S_1} \lt(1-\frac{\bbP[E_k]}{\prod\limits_{\substack{j\in S_2\\ (k,j)\in E}}(1-x_k)  \prod\limits_{\substack{j\in S_1,\, j<k\\ (k,j)\in E}}(1-x_k)  }   \rt) &[\text{Inductive Hypothesis}]\\
+			& \geq \prod_{k\in S_1}(1-x_k)& \lt[\bbP[E_k]\leq x_k\prod_{j:(k,j)\in E}(1-x_j)\rt]
+		\end{align*}Therefore we have $$\bbP\lt[E_i\mid \bigwedge_{j\in S}\ovE_j\rt]\leq \frac{\bbP[E_i]}{\prod\limits_{k\in S_1}(1-x_k)}=\frac{\bbP[E_i]}{\prod\limits_{k\in S,(i,k)\in E}(1-x_k)}$$Hence we have the claim	\end{proof}
+	\end{claimwidth}
+Now using the claim we have $$\bbP\lt[ \bigwedge_{i=1}^n\ovE_i \rt]=\prod_{i=1}^n\bbP\lt[ \ovE_i\mid\bigwedge_{j<i}\ovE_j \rt]$$
+\end{proof}
+
+Using Lova\'{a}sz Local Lemma we have the following corollary:
+\begin{corolary}{}{}
+	Suppose $G$ has degree $\leq d$ and $x_1=x_2=\cdots=x_n=\frac1{d+1}$. If $\forall\ i\in[n]$ $$\bbP[E_i]\leq\frac{1}{e(d+1)}\implies \bbP\lt[\bigwedge_{i=1}^n\ov{E}_i\rt]>0$$
+\end{corolary}
+\dfn{Negative Dependency (di)graph}{
+$G$ is a negatve dependency (di)graph if for every event $E_i$ and every subset $S\subseteq [n]\setminus N(i)\cup\{i\}$ we have $$\bbP\lt[E_i\cap\bigcup_{j\in S}E_j   \rt]\geq \bbP[E_i]\bbP\lt[ \bigcup_{j\in S}E_j \rt]$$ 
+}
+\begin{lemma}{Lopsided Lov\'{a}sz Local Lemma}{}
+	Suppose $G$ is a negative dependency (di)graph for events $E_1,\dots, E_n$ and there exists $x_1,\dots, x_n$ which satisfy $$\forall i\in[n]\quad \bbP[E_i]\leq x_i\prod_{j:(i,j)\in E}(1-x_j)$$Then $$\bbP\lt[\bigwedge_{i=1}^n\ov{E}_i\rt]\geq \prod_{i=1}^n(1-x_i)$$
+\end{lemma}
+\begin{proof}
+	content...
+\end{proof}
+\section{Linear Algebraic Techniques in Combinatorics}
+\subsection{Odd Town Even Town}
+\subsection{Fisher's Inequality}
