@@ -657,6 +657,14 @@ $G$ is a negatve dependency (di)graph if for every event $E_i$ and every subset 
 	Let $\mcF\subseteq 2^{[n]}$ be such that $|A|$ is odd for every $A\in \mcF$ and $|A\cap B|$ is even for every distinct $A,B\in \mcF$. Then $|\mcF|\leq n$.
 \end{lemma}
 \begin{proof}
-	Define $x_A$ for every $A\in \mcF$ to be the characteristic vector in $\{0,1\}^n$ where $x_A(i)=1\iff i\in A$. We will show that $x_A$'s for all $A\in\mcF$ are linearly independent over $|bbF_2$. This suffices to show that $|\mcF\leq n$ since $|\mcF|=|\{x_A\colon A|in\mcF\}|\leq \dim \{0,1\}^n=n$.
+	Define $x_A$ for every $A\in \mcF$ to be the characteristic vector in $\{0,1\}^n$ where $x_A(i)=1\iff i\in A$. We will show that $x_A$'s for all $A\in\mcF$ are linearly independent over $|bbF_2$. This suffices to show that $|\mcF\leq n$ since $$|\mcF|=|\{x_A\colon A|\in\mcF\}|\leq \dim_{\bbF_2} \{0,1\}^n=n$$
 \end{proof}
+\begin{lemma}{}{}
+	Let $\mcF\subseteq 2^{[n]}$ be such that $|A|$ is even for every $A\in \mcF$ and $|A\cap B|$ is off for every distinct $A,B\in \mcF$. Then $|\mcF|\leq n$
+\end{lemma}
 \subsection{Fisher's Inequality}
+\begin{Theorem}{Fisher's Inequality}{}
+	Suppose that $\mcF\subseteq 2^{[n]}$ is a family of nonempty clubs such that for some fixed $k$, $|A\cap B|=k$ for every distinct $A,B\in \mcF$. Then $|\mcF|\leq n$.
+\end{Theorem}
+\subsection{RW Theorem}
+\section{Projective Planes}
