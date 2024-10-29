@@ -667,4 +667,14 @@ $G$ is a negatve dependency (di)graph if for every event $E_i$ and every subset 
 	Suppose that $\mcF\subseteq 2^{[n]}$ is a family of nonempty clubs such that for some fixed $k$, $|A\cap B|=k$ for every distinct $A,B\in \mcF$. Then $|\mcF|\leq n$.
 \end{Theorem}
 \subsection{RW Theorem}
+\begin{Definition}{$\sL$-Intersecting Family}{}
+	Let $\sL$ be a set of $s$ positive integers. A family of nonempty subsets $\mcF\subseteq 2^{[n]}$ is called $\sL$-intersecting family if $\forall\ i\neq j\in[n]$, $|S_i\cap S_j|\in \sL$. 
+\end{Definition}
+Then we have the following theorem:
+\begin{Theorem}{RW Theorem}{}
+	Let $\sL$ be a set of $s$ positive integers and $\mcF\subseteq 2^{[n]}$ is a $\sL$-intersecting family such that $|A|\notin \sL$ for all $A\in \mcF$. Then $|\mcF|\leq \sum\limits_{k=0}^s \binom{n}{k}$
+\end{Theorem}
+\begin{lemma}{}{}
+	Let $\sL$ be a set of $s$ positive integers and $\mcF\subseteq 2^{[n]}$ is a $\sL$-intersecting family such that $\forall\ A\in \sL$, $|A|=k$ and $\forall\ l\in \sL$, $l<k$. Then $|\mcF|\leq \binom{n}{s}$. 
+\end{lemma}
 \section{Projective Planes}

@@ -1,0 +1,170 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage{amsmath,mathtools,mathdots}
+\usepackage{amssymb,amsthm}  % assumes amsmath package installed
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{mdframed,stmaryrd}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	citecolor=myr,
+	filecolor=myr,      
+	urlcolor=black,
+	pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
+}
+\usepackage[most,many,breakable]{tcolorbox}
+\usepackage{tikz}
+\usepackage{caption}
+%\usepackage{kpfonts}
+%\usepackage{libertine}
+\usepackage{physics}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+\usepackage{float}
+\usepackage{tfrupee}  
+\usepackage{adjustbox}
+\usepackage{wrapfig}
+
+\AfterEndEnvironment{wrapfigure}{\setlength{\intextsep}{0mm}}
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+
+\usetikzlibrary{decorations.pathreplacing,angles,quotes,patterns}
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+\tcbuselibrary{theorems,skins,hooks}
+\newtcbtheorem{problem}{Problem}
+{%
+	enhanced,
+	breakable,
+	colback = white,
+	frame hidden,
+	boxrule = 0sp,
+	borderline west = {2pt}{0pt}{black},
+	arc=5pt,
+	detach title,
+	before upper = \tcbtitle\par\smallskip,
+	coltitle = black,
+	fonttitle = \bfseries,
+	description font = \mdseries,
+	separator sign none,
+	segmentation style={solid, mytheoremfr},
+}
+{p}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem*{definition*}{Definition}
+\renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\hfill $\blacksquare$\bigskip\\}
+% To give references for any problem use like this
+% suppose the problem number is p3 then 2 options either 
+% \hyperref[p:p3]{<text you want to use to hyperlink> \ref{p:p3}}
+%                  or directly 
+%                   \ref{p:p3}
+
+
+
+\input{../../letterfonts}
+
+\input{../../macros}
+
+\setlength{\parindent}{0pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 3}\\
+		Email: \href{soham.chatterjee@tifr.res.in}{soham.chatterjee@tifr.res.in} \hfill Dept: STCS\\
+		\normalsize Course: Mathematical Foundations for Computer Sciences \hfill \today\\ 
+		\noindent\rule{7in}{2.8pt}}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+\begin{problem}{%problem statement
+	}{p1% problem reference text
+}
+Let $n>0$. Consider a directed graph on partitions of $n$ (with the parts sorted by size). There is a (directed) edge from a partition to another if the latter can be obtained from the former by moving a "unit" from a part to the one immediately after, while maintaining the order. For example, there is an edge from the partition $25=10+6+4+3+2$ to $25=10+5+5+3+2$ as a "unit" is moved from 6 to 4 and it does not change the order of the parts, but no edge vice-versa. Similarly, there is an edge from the partition $25=10+6+4+3+2$ to $25=10+6+4+3+1+1$. Characterize all the sink partitions (those without any outgoing edges) that can be by starting from the partition $n=n$ (with only one part) and following these edges.
+\end{problem}
+\solve{
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p2% problem reference text
+	}
+Consider a tournament with $k$ teams. Each team gets a rank at the end of the tournament, possibly allowing for ties. For example, if there are 5 teams, team 3 may be first, teams 1, 4 maybe tied second, and teams 2, 5, may be tied third. Compute an explicit formula for the exponential generating function of $R(k)$ for the number of rankings, assuming that $R(0)=1$.
+\end{problem}
+\solve{	
+
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{problem}{%problem statement
+	}{p3% problem reference text
+	}
+Let $(U, \leq)$ be poset and $M$ be a square matrix with rows and columns indexed by $U$ such that the $(x, y)$-th entry of $M$ is $\mathbb{1}(x \leq y)$.\begin{itemize}[label=$\bullet$]
+	\item Show that $M$ is invertible.
+	\item Compute the inverse of $M$ when $(U, \leq)$ is the divisibility poset for positive integers at most $n$ (for some fixed $n$ ) and use it to derive the Möbius inversion formula.
+\end{itemize}
+\end{problem}
+\solve{	
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p4% problem reference text
+	}
+Let $k, p>0$ be integers where $p$ is prime. A seller has $k p$ marbles, where marble $i \in[k p]$ costs \rupee$i$, that he is trading. Call a trade "divisible" if both the cost and the number of marbles sold is a multiple of $p$ (selling no marbles is one such trade). How many divisible trades are there? Write your answer in terms of $p$-th roots of unity.
+\end{problem}
+\solve{
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+}{p5% problem reference text
+}
+A graph is a thunderstorm graph if every connected component is either a cycle (clouds) or a path (lightning bolts) or isolated vertices (raindrops). Compute an explicit formula, i.e., a formula without summation signs, for the exponential generating function of:
+\begin{itemize}[label=$\bullet$]
+	\item The number of connected thunderstorm graphs on the vertex set $[n]$.
+	\item The number of thunderstorm graphs on the vertex set $[n]$.
+\end{itemize}
+\end{problem}
+\solve{
+
+}
+
+
+\end{document}
