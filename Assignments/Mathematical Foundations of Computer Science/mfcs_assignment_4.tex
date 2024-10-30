@@ -31,7 +31,7 @@
 \usepackage{tfrupee}  
 \usepackage{adjustbox}
 \usepackage{wrapfig}
-
+\newcommand{\mathbbm}[1]{\text{\usefont{U}{bbm}{m}{n}#1}}
 \AfterEndEnvironment{wrapfigure}{\setlength{\intextsep}{0mm}}
 \definecolor{mytheorembg}{HTML}{F2F2F9}
 \definecolor{mytheoremfr}{HTML}{00007B}
@@ -47,8 +47,9 @@
 \definecolor{myg}{RGB}{56, 140, 70}
 \definecolor{myb}{RGB}{45, 111, 177}
 \definecolor{myr}{RGB}{199, 68, 64}
+\newcounter{problem}
 \tcbuselibrary{theorems,skins,hooks}
-\newtcbtheorem{problem}{Problem}
+\newtcbtheorem[use counter=problem]{problem}{Problem}
 {%
 	enhanced,
 	breakable,
@@ -69,7 +70,7 @@
 
 \newtheorem{lemma}{Lemma}
 \newtheorem*{definition*}{Definition}
-\renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\hfill $\blacksquare$\bigskip\\}
+\renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\hfill\qed\bigskip\\}
 % To give references for any problem use like this
 % suppose the problem number is p3 then 2 options either 
 % \hyperref[p:p3]{<text you want to use to hyperlink> \ref{p:p3}}
@@ -91,9 +92,9 @@
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
-	{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 3}\\
+	{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 4}\\
 		Email: \href{soham.chatterjee@tifr.res.in}{soham.chatterjee@tifr.res.in} \hfill Dept: STCS\\
-		\normalsize Course: Mathematical Foundations for Computer Sciences \hfill \today\\ 
+		\normalsize Course: Mathematical Foundations for Computer Sciences \hfill October 29, 2024\\ 
 		\noindent\rule{7in}{2.8pt}}
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -105,20 +106,99 @@
 }
 Let $n>0$. Consider a directed graph on partitions of $n$ (with the parts sorted by size). There is a (directed) edge from a partition to another if the latter can be obtained from the former by moving a "unit" from a part to the one immediately after, while maintaining the order. For example, there is an edge from the partition $25=10+6+4+3+2$ to $25=10+5+5+3+2$ as a "unit" is moved from 6 to 4 and it does not change the order of the parts, but no edge vice-versa. Similarly, there is an edge from the partition $25=10+6+4+3+2$ to $25=10+6+4+3+1+1$. Characterize all the sink partitions (those without any outgoing edges) that can be by starting from the partition $n=n$ (with only one part) and following these edges.
 \end{problem}
-\solve{
-}
+\solve{For any partition $n=k_1+\cdots +k_m$ where $k_1\geq \ddots \geq k_m$ we represent the partition by the tuple $(k_1,\dots, k_m)$. We call the alteration happened at $i$ on the partition $(k_1,\dots, k_m)$ if there is an edge from $(k_1,\dots, k_m)$ to $(k_1,\dots, k_{i-1},k_i-1,k_{i+1}+1,k_{i+2},\dots, k_m)$.
+\begin{lemma}\label{lem11}
+	A partition does not have any edge going out if and only if any two consecutive partitions have difference at most 1
+\end{lemma}
+\begin{proof}
+	Consider a partition of $n$. Let ($k_1,\dots, k_m)$ is the partition of $n$. Now $\exs\ i\in[m-1]$ such that $k_i-k_{i+1}\geq 2\iff k_i-1\geq k_{i+1}+1\iff k_{i-1}\geq k_i>k_i-1\geq k_{i+1}+1>k_{i+3}\iff \exs\ $edge going out from the partition to the partition $(k_1,\dots, k_{i-1},k_i-1,k_{i+1}+1,k_{i+2},\dots, k_m)$.
+\end{proof}
+\begin{lemma}\label{lem12}
+	A partition where there exists an element which appears more than 2 times is not reachable from $n$.
+\end{lemma}
+\begin{proof}
+	Let there be a partition of $n$ which is reachable from $n$ and there exists an element which appears more than 2 times. Now in the path from $n$ to that partition consider the partition where first time when that element appeared more than 2 times. Let the partition be $(k_1,\dots, k_m)$. Then the parent of that partition didn't have all $k_i,k_{i+1},k_{i+2}$ equal. Then  alteration from the parent of that partition happened at any of the $\{i-1,i,i+1,i+2\}$ places. \begin{itemize}
+		\item \textbf{Case 1:} If alteration happened at $i-1$ then before alteration the parent of the partition had $(k_1,\dots, k_{i-1}+1,k_i-1,k_{i+1},k_{i+2},\dots, k_m)$ and $k_{i}-1<k_{i+1}$. This is not possible. So this is case is not possible.
+		\item \textbf{Case 2:} If alteration happened at $i$ then before alteration the parent of the partition had $(k_1,\dots, k_{i}+1,k_{i+1}-1,k_{i+2},\dots, k_m)$ and $k_{i+1}-1<k_{i+2}$. This is not possible. So this is case is not possible.
+		\item \textbf{Case 3:} If alteration happened at $i+1$ then before alteration the parent of the partition had $(k_1,\dots,k_i,k_{i+1}+1,k_{i+2}-1,\dots, k_m)$ and $k_{i}<k_{i+1}+1$. This is not possible. So this is case is not possible.
+		\item \textbf{Case 4:} If alteration happened at $i+2$ then before alteration the parent of the partition had $(k_1,\dots,k_i,k_{i+1},k_{i+2}+1,k_{i+3}-1,\dots, k_m)$ and $k_{i+1}<k_{i+2}+1$. This is not possible. So this is case is not possible.
+	\end{itemize}Therefore none of the cases are possible. Hence the partition has no parent. Hence contradiction. Therefore we have the lemma.
+\end{proof}
+
+Hence we get that if a partition is reachable then no element in that partition is repeated more than 2 times. 
+\begin{lemma}
+	A sink partition reachable from $n$ can have at most one element which appears twice.
+\end{lemma}
+\begin{proof}
+	Suppose that is not the case. Let $(k_1,\dots, k_m)$ be a reachable sink partition of $n$ such that there are at least two elements which appears twice in the partition. Let $i,j\in[m-1]$ such that $i\neq j$ and $i+1<j$ be the closest indexes such that $k_i=k_{i+1}$ and $k_j=k_{j+1}$. Let $k_i=a$ and $k_j=b$ Now by \lemref{lem11} $k_t-k_{t+1}\leq 1$ for all $t\in[m-1]$. Since $i,j$ are closest such that  $k_i=k_{i+1}$ and $k_j=k_{j+1}$ we have $$k_{i+2}=a+1,k_{i+3}=a+2,\dots,k_{j-1}=a+(j-i-2),k_j=a+(j-i-1)=b$$For brevity denote $j-i+1=l$. Then $j=l+1+i$. Certainly by \lemref{lem12} $k_{i-1}>k_i$ and $k_{j+2}<k_{j+1}$. Call $i,j$ as $i_1$ and $j_1$.
+	
+	Now since the partition is reachable from $n$ there is a path from $n$ to $(k_1,\dots, k_m)$. Consider the partition $(k_{1,1},\dots, k_{l_1,1})$ where first time the above event occurred i.e. $k_{t,1}=k_t$ for all $t\in\{i_1,\dots, j_1+1\}$. Here $l_1\leq m$ as with alterations number of partitions always stays same or increase. Since $(k_1,\dots, k_m)$ is a reachable sink partition $(k_{1,1},\dots, k_{l,1})$ is also reachable. Consider the parent of this partition. From the parent alteration can happen only on the positions $\{i_1-1,\dots, j_1+1\}$. Alteration at any of the positions in $\{i_1-1,\dots, j_1+1\}$ means the parent of the partition had 2 indexes $i_2,j_2$ with $i_2+1<j_2$ which were closer to each other than $i_1,j_1$ and also the elements at those two indexes are different and they appeared twice. So we get a new partition $(k_{1,1}',\dots, k_{l,1}')$ such that there exists indexes $i_2,j_2$ such that $i_2+1<j_2$ and $k_{i_2}'=k_{i_2+1}'$, $k_{j_2}'=k_{j_2+1}'$. 
+	
+	Again consider the partition $(k_{1,2},\dots, k_{l_2,2})$ where first time the above event occurred i.e. $k_{t,2}=k_{t,1}'$ for all $t\in\{i_2,\dots, j_2+1\}$.  Consider the parent of this partition. From the parent alteration can happen only on the positions $\{i_2-1,\dots, j_2+1\}$. Alteration at any of the positions in $\{i_2-1,\dots, j_2+1\}$ means the parent of the partition had 2 indexes $i_3,j_3$ with $i_3+1<j_3$ which were closer to each other than $i_2,j_2$ and also the elements at those two indexes are different and they appeared twice. So we get a new partition $(k_{1,2}',\dots, k_{l_3,2}')$ such that there exists indexes $i_3,j_3$ such that $i_3+1<j_3$ and $k_{i_3}'=k_{i_3+1}'$, $k_{j_3}'=k_{j_3+1}'$. 
+	
+	Continuing like this finally we get a partition $(k_{1,s-1}',\dots, k_{l_{s-1},s-1}')$ such that there exists $j\in [l_{s-1}]$ such that $$k_{j,s-1}'=k_{j+1,s-1}'=k_{j+2,s-1}'+1=k_{j+3,s-1}'+1$$And from this partition $(k_{1,s},\dots, k_{l_s,s})$ we take the partition where first time the above event occurred i.e. $k_{t,s}=k_{t,s-1}'$ for all $t\in\{j-1,j,j+1,j+2,j+3\}$. Now for brevity denote $(k_{1,s},\dots, k_{l_s,s})$ as $(k_1,\dots, k_l)$ where $k_{i}=k_{i+1}=k_{i+2}+1=k_{i+3}+1$ for $i\in [l]$. Now we will analyze case wise:
+	\begin{itemize}
+		\item \textbf{Case 1:} If alteration happened at $i-1$ then before alteration the parent of the partition had $(k_1,\dots, k_{i-1}+1,k_i-1,k_{i+1},k_{i+2},\dots, k_l)$ and $k_{i}-1<k_{i+1}$. This is not possible. So this is case is not possible.
+		\item \textbf{Case 2:} If alteration happened at $i$ then before alteration the parent of the partition had $(k_1,\dots, k_{i}+1,k_{i+1}-1,k_{i+2},\dots, k_l)$ and $k_{i+1}-1=k_{i+2}=,k_{i+3}$. By \lemref{lem42} this partition should not be reachable. Hence contradition. This case is not possible.
+		\item \textbf{Case 3:} If alteration happened at $i+1$ then before alteration the parent of the partition had $(k_1,\dots,k_i,k_{i+1}+1,k_{i+2}-1,\dots, k_l)$ and $k_{i}<k_{i+1}+1$. This is not possible. So this is case is not possible.
+		\item \textbf{Case 4:} If alteration happened at $i+2$ then before alteration the parent of the partition had $(k_1,\dots,k_i,k_{i+1},k_{i+2}+1,k_{i+3}-1,\dots, k_l)$ and $k_i=k_{i+1}=k_{i+2}+1$. By \lemref{lem42} this partition should not be reachable. Hence contradition. This case is not possible.
+		\item \textbf{Case 4:} If alteration happened at $i+3$ then before alteration the parent of the partition had $(k_1,\dots,k_i,k_{i+1},k_{i+2},k_{i+3}+1,k_{i+4}-1,\dots, k_l)$ and $k_{i+2}<k_{i+3}+1$. This is not possible. So this is case is not possible.
+	\end{itemize}Therefore none of the cases is possible. Hence contradiction. Therefore $(k_1,\dots, k_m)$ is not a reachable sink partition of $n$. Therefore we have the lemma.	
+\end{proof}
+
+Now we will show every partition with at most one element appearing twice is reachable from $n$.
+\begin{lemma}\label{lem14}
+	For a partition $(r,r-1,\dots, r-k)$  is reachable from $n$ for any $r$ and $k$ which follows  $n=\sum\limits_{i=0}^k(r-i)$, $k<r$
+\end{lemma}
+\begin{proof}
+	For any $r$ we will prove this inducting on $k$. For $k=0$ we have $n=r$ then we dont have to do any alteration. Hence the base case follows. Suppose for $k-1$ this is true. Now we have $n=\sum\limits_{i=0}^{k}(r-i)$. Now by inductive hypothesis we can reach $(r,r-1,\dots, r-(k-1))$ starting from $\sum\limits_{i=0}^{k-1}(r-i)$. We will do the same alterations to reach $(r,r-1,\dots, r-(k-1))$ but the starting number will be $\sum\limits_{i=0}^{k}(r-i)$. So after the same alterations we will reach $(2r-k,r-1,\dots, r-(k-1))$. Now we will do the following operations\begin{multline*}
+		(2r-k,r-1,\dots, r-(k-1))\to (2r-k-1,r-1+1,\dots, r-(k-1))\to\\
+		\cdots\to (2r-k-1,r-1,\dots, r-(k-1)+1) \to (2r-k-1,r-1,\dots, r-(k-1),1)
+	\end{multline*}Now afterwards at any stage $i\in[r-k-1]$ we do the operation \begin{multline*}
+		(2r-k-1-i,r-1,\dots, r-(k-1),i)\to (2r-k-1-i-1,r-1+1,\dots, r-(k-1),i)\to\\
+		\cdots\to(2r-k-1-i-1,r-1,\dots, r-(k-1)+1,i)\to  (2r-k-1-i-1,r-1,\dots, r-(k-1),i+1)
+	\end{multline*}We keep doing this operation for $r-k-1$ many times and finally we reach $(r,r-1,\dots, r-(k-1),r-k)$. Hence by mathematical induction this is true for all $k$, $k<r$. Hence we can reach  a partition $(r,r-1,\dots, r-k)$ from $n$ for any $r$ and $k$ which follows  $n=\sum\limits_{i=0}^k(r-i)$, $k<r$.
+\end{proof}
+\begin{lemma}\label{lem15}
+	For a partition $(r,r-1,\dots, r-k,r-k)$  is reachable from $n$ for any $r$ and $k$ which follows  $n=\sum\limits_{i=0}^k(r-i)+(r-k)$, $k<r$
+\end{lemma}
+\begin{proof}
+	We first apply the same operations as to reach $(r,r-1,\dots, r-k)$ but we start from $\sum\limits_{i=0}^k(r-i)+(r-k)$ as described in \lemref{lem14}. Then we reach the partition $(2r-k,r-1,\dots, r-k)$. Now again we do the same operations as in case of the inductive step of the proof of \lemref{lem14}. This propagates the $r-k$ by $1$ element at a time. This finally gives the partition $(r,r-1,\dots, r-k,r-k)$. Hence we can reach $(r,r-1,\dots, r-k,r-k)$ from $n$. 
+\end{proof}
+\begin{lemma}\label{lem16}
+	For a partition $(r,r-1,\dots, r-l,r-l,\dots,r-k )$ is reachable from $n$ for any $r,k,l$  where $n=\sum\limits_{i=0}^k(r-i)+(r-l)$, $r>k> l$ 
+\end{lemma}
+\begin{proof}
+	For a partition $(r+(k+1-l),r-1,\dots, r-l,r-l-1,\dots,r-k,r-k-1 )$ is reachable from $n$ for any $r,k,l$  where $n=\sum\limits_{i=0}^k(r-i)+(r-l)$, $r>k> l$ since $$\sum\limits_{i=0}^k(r-i)+(r-l)=\sum\limits_{i=0}^{k+1}(r-i)+(r-l)-(r-k-1)=\sum\limits_{i=0}^{k+1}(r-i)+(k+1-l)$$following the operations in the proof of \lemref{lem14}. Now we will do the following operation \begin{align*}
+		&	(r+(k+1-l),r-1,\dots,r-k-1 )\to (r+(k+1-l)-1,r-1+1,\dots,r-k-1 )\to\\
+		&	\cdots\to (r+(k+1-l)-1,r-1,\dots,r-k,r-k )\cdots \to  (r+(k+1-l)-2,r-1,\dots,r-k+1,r-k )\\
+		&	\cdots\xrightarrow{i\text{ times}}(r+(k+1-l)-i,r-1,\dots,r-k+i-1,r-k+i-1\dots,r-k )\\
+		&	\cdots\xrightarrow{(k+1-l)\text{ times}}(r,r-1,\dots,r-k+(k+1-l-1),r-k+(k+1-l-1)\dots,r-k )\\
+		& =(r,\dots, r-l,r-l,\dots, r-k)
+	\end{align*}Hence $(r+(k+1-l),r-1,\dots, r-l,r-l-1,\dots,r-k,r-k-1 )$ is reachable from $n$.
+\end{proof}
+
+Therefore with all these lemmas we obtain that if a partition is reachable from $n$ then the partition is of the form $(r,r-1,\dots, r-k)$ or $(r,r-1,\dots, r-l,r-l,r-l-1,\dots, r-k)$ where $r>k\geq l$. Notice if $r-k>1$ then we can also break $r-k$ into smaller partitions. Hence if a partition is sink partition then it must end with $1$. Therefore the sink partitions are of the form $(r,r-1,\dots, r-l,r-l,r-l-1,\dots, 1)$ where $n=\sum\limits_{i=0}^r-1(r-i)+(r-l)$ for some $r>l$. 
+}\parinf
+
+[I discussed solution of second part with Vivek]\parinn
+\addtocounter{problem}{1}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{problem}{%problem statement
-	}{p2% problem reference text
-	}
-Consider a tournament with $k$ teams. Each team gets a rank at the end of the tournament, possibly allowing for ties. For example, if there are 5 teams, team 3 may be first, teams 1, 4 maybe tied second, and teams 2, 5, may be tied third. Compute an explicit formula for the exponential generating function of $R(k)$ for the number of rankings, assuming that $R(0)=1$.
-\end{problem}
-\solve{	
+%\begin{problem}{%problem statement
+%	}{p2% problem reference text
+%	}
+%Consider a tournament with $k$ teams. Each team gets a rank at the end of the tournament, possibly allowing for ties. For example, if there are 5 teams, team 3 may be first, teams 1, 4 maybe tied second, and teams 2, 5, may be tied third. Compute an explicit formula for the exponential generating function of $R(k)$ for the number of rankings, assuming that $R(0)=1$.
+%\end{problem}
+%\solve{	
+%
+%}
 
-}
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -127,13 +207,33 @@ Consider a tournament with $k$ teams. Each team gets a rank at the end of the to
 \begin{problem}{%problem statement
 	}{p3% problem reference text
 	}
-Let $(U, \leq)$ be poset and $M$ be a square matrix with rows and columns indexed by $U$ such that the $(x, y)$-th entry of $M$ is $\mathbb{1}(x \leq y)$.\begin{itemize}[label=$\bullet$]
+Let $(U, \leq)$ be poset and $M$ be a square matrix with rows and columns indexed by $U$ such that the $(x, y)$-th entry of $M$ is $\mathbbm{1}(x \leq y)$.\begin{itemize}[label=$\bullet$]
 	\item Show that $M$ is invertible.
 	\item Compute the inverse of $M$ when $(U, \leq)$ is the divisibility poset for positive integers at most $n$ (for some fixed $n$ ) and use it to derive the Möbius inversion formula.
 \end{itemize}
 \end{problem}
 \solve{	
-}
+\begin{itemize}[label=$\bullet$]
+	\item Consider the directed graph $G=(V,E)$ with vertices $V=U$ and for any $x,y\in U$, $x\neq y$ the directed edge $(x,y)\in E$ if $x\leq y$. Then the adjacency matrix of $G$ is the matrix $M-I$. Since $U$ is a poset the graph $G$ is a directed acyclic graph. Hence in $(M-I)^k$ for any $x,y\in U$, $x\neq y$ the entry $(M-I)^k(x,y)$ is the number of paths from $x\rightsquigarrow y$. Since  the maximum length of a path in $G$ is at most $|U|-1$ there is no path of length $|U|$ between any two vertices. Hence $(M-I)^{|U|}=0$.  Now $(M-I)^{|U|}=0$ implies that the minimal polynomial of $M$ is a divisor of $(x-1)^{|U|}$. Therefore the only eigenvalue of $M$ is $1$. Hence $\det(M)=1$. Therefore $M$ is invertible.
+	\item Consider the $n\times n$ matrix $S$ where for all $d,m\in[n]$ such that  $$S(d,n)=\mathbbm{1}(d\mid m)\mu\lt(\frac{m}d\rt)$$We will show that $MS=I$. \parinn
+	
+	Now for any $m\in[n]$ we have $$MS(m,m)=\sum_{k=1}^n M(m,k)S(k,m)=\sum_{\substack{k\in[n]\\ m\mid k, k\mid m}}\mu\lt(\frac{m}k\rt)=\mu\lt(\frac{m}m\rt)=1$$Hence $MS$ has $1$'s on the diagonals. \parinn
+	
+	Now take any $m_1,m_2\in[n]$ such that $m_1\neq m_2$. We will show that $MS(m_1,m_2)=0$. Now if $m_1\nmid m_2$ then $\not\exists\ k\in [n]$ such that $m_1\mid k$ and $k\mid m_2$. Therefore $$MS(m_1,m_2)=\sum_{\substack{k\in[n]\\ m_1\mid k, k\mid m_2}}\mu\lt(\frac{m_2}k\rt)=0$$Now assume $m_1\mid m_2$. Now $m_1\neq m_2$ hence $m_2\neq 1$. Let $d=\frac{m_2}{m_1}$. Then we have $$MS(m_1,m_2)=\sum_{\substack{k\in[n]\\ m_1\mid k, k\mid m_2}}\mu\lt(\frac{m_2}k\rt)=\sum_{\substack{ k\mid d}}\mu\lt(\frac{d}{k}\rt)$$\begin{lemma}
+		For any positive integer $n$ if $n\neq 1$ then $\sum\limits_{d\mid n}\mu\lt(\frac{n}d\rt)=0$
+	\end{lemma}
+\begin{proof}
+	Let $n\neq 1$ and $n=\prod\limits_{i=1}^kp_i^{e_i}$ be the prime factorization of $n$ where for all $i\in[k]$, $e_i\neq 0$. Now for any $d$, where $d\mid n$, $$\mu\lt(\frac{n}{d}\rt)\neq0\iff\exs\ S\subseteq [k],\ \frac{n}{d}=\prod_{i\in S}p_i$$Now $\mu\lt(\frac{n}{d}\rt)=1$ iff $\exs\ S\subseteq [k],\ \frac{n}{d}=\prod\limits_{i\in S}p_i$ and $|S|\equiv 0\bmod 2$ and $\mu\lt(\frac{n}{d}\rt)=-1$ iff $\exs\ S\subseteq [k],\ \frac{n}{d}=\prod\limits_{i\in S}p_i$ and $|S|\equiv 1\bmod 2$. Therefore we have $$\sum\limits_{d\mid n}\mu\lt(\frac{n}d\rt)=\sum_{S\subseteq [k]}(-1)^{|S|}=\sum_{i=0}^k\binom{k}i(-1)^i=(1+(-1))^k=0$$So we have the lemma.
+\end{proof}
+
+
+Therefore from the lemma we have that $\sum\limits_{\substack{ k\mid d}}\mu\lt(\frac{d}{k}\rt)=0$. Therefore for $m_1\neq m_2\in [n]$ with $m_1\mid m_2$ we have $MS(m_1,m_2)=0$. Hence $MS=I$. Therefore $S$ is the inverse of $M$.
+
+Now we will prove the M\"{o}bius Inversion Formula. Let $f:\bbN\to \bbR$ and $g:\bbN\to\bbR$ be two functions  such that $g(k)=\sum\limits_{d\mid k}f(d)$. Now define the column vectors $F$ and $G$ where for any $i\in[n]$, $F(i)=f(i)$ and $G(i)=g(i)$. Then for any $k\in[n]$ we have $$M^TF(k)=\sum_{d\mid k}f(d)=g(k)\implies M^TF=G$$Therefore $$F=(M^T)^{-1}G=S^TG$$Now $$S^TG(k)=\sum_{d\in[n]}S^T(k,d)g(d)=\sum_{d\in[n]}S(d,k)g(d)=\sum_{d\mid k}\mu\lt(\frac{k}d\rt)g(d)$$Therefore $\sum\limits_{d\mid k}\mu\lt(\frac{k}d\rt)g(d)=f(k)$ for all $k\in[n]$. Therefore we have the M\"{o}bius Formula.
+\end{itemize}
+}\parinf
+
+[Me and Soumyadeep came up with the solution together and I discussed solution of second part with Aakash]\parinn
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -146,8 +246,41 @@ Let $(U, \leq)$ be poset and $M$ be a square matrix with rows and columns indexe
 Let $k, p>0$ be integers where $p$ is prime. A seller has $k p$ marbles, where marble $i \in[k p]$ costs \rupee$i$, that he is trading. Call a trade "divisible" if both the cost and the number of marbles sold is a multiple of $p$ (selling no marbles is one such trade). How many divisible trades are there? Write your answer in terms of $p$-th roots of unity.
 \end{problem}
 \solve{
+Consider the polynomial $f(t,c)=\sum\limits_{i=1}^{kp} (1+tc^i)$ where in $i^{th}$ term $(1+tc^i)$  the power of $c$ represent the cost of $i^{th}$ coin and $t$ represents if the $i^{th}$ is taken into consideration. Therefore for any $t^kc^l$ the $s(k,l)\coloneqq\textit{Coeff}(t^kc^l)$ represent the number of ways to pick $k$ coins such that the sum their costs is $l$. Hence $$f(t,c)=\sum\limits_{i=1}^{kp} (1+tc^i)=\sum_{k,l}s(k,l)t^kc^l$$Hence we have to find the coefficients $s(k,l)$ for which $p\mid k$ and $p\mid l$. In order to do that we will use the following lemma:
 
-}
+\begin{lemma}\label{lem41}
+	Let $f(x)=\sum\limits_{i=0}^{n}a_ix^i$ where $a_i\in \bbR$ is a polynomial with $a_n\neq 0$. Then $$\frac1p\sum_{i=0}^{p-1}f(\zeta_p^i)=\sum_{k=0,\ p\mid k}^n a_k$$where $\zeta_p$ is the $p^{th}$ root of unity.
+\end{lemma}
+\begin{proof}
+	For any $i\in \{0,1,\dots, p-1\}$, Therefore we have $$
+		\sum_{i=0}^{p-1}f(\zeta_p^i)=\sum_{i=0}^{p-1}\sum_{k=0}^na_k\zeta_p^{ik}=\sum_{k=0}^{n}a_k\lt[\sum_{i=0}^{p-1}\zeta_p^{ki}\rt]$$Now for $k\equiv 0\bmod p$ we have $\sum\limits_{i=0}^{p-1}\zeta_p^{ki}=\sum\limits_{i=0}^{p-1}1=p$ and for $k\not\equiv 0\bmod p$ we have $$\sum\limits_{i=0}^{p-1}\zeta_p^{ki}=\sum_{k=0}^{p-1}\zeta_p^i=\frac{z^p-1}{z-1}=0$$Hence we have $$\sum_{i=0}^{p-1}f(\zeta_p^i)=\sum_{k=0}^{n}a_k\lt[\sum_{i=0}^{p-1}\zeta_p^{ki}\rt]=\sum_{k=0,\ p\mid k}^{n}pa_k=p\sum_{k=0,\ p\mid k}^{n}a_k$$Therefore $\frac1p\sum\limits_{i=0}^{p-1}f(\zeta_p^i)=\sum\limits_{k=0,\ p\mid k}^n a_k$.
+\end{proof}
+
+We will use this lemma to first find the sum of coefficients in $f(t,c)$ for which the power of $c$ is divisible by $p$ then that becomes a polynomial over $t$ where we take the sum of coefficient for which the power of $t$ is divisible by $p$.
+
+So consider the polynomial $g(t)=\frac1p\sum\limits_{i=0}^{p-1}f(t,\zeta_p^i)$. We have another lemma
+\begin{lemma}\label{lem42}
+	$f(t,\zeta_p^i)=\lt[ \prod\limits_{i=0}^{p-1}(1+t\zeta_p^i)\rt]^k$
+\end{lemma}
+\begin{proof}
+	We will show that $$\prod\limits_{i=0}^{p-1}\lt(1+t\zeta_p^{lp+i}\rt)= \prod\limits_{i=0}^{p-1}(1+t\zeta_p^i)$$ for any $l\in \{0,\dots, k-1\}$. We have $$\zeta_p^{lp+i}=\lt(\zeta_p^{p}\rt)^l\times \zeta_p^i=\zeta_p^i$$Therefore $$\prod\limits_{i=0}^{p-1}\lt(1+t\zeta_p^{lp+i}\rt)=\prod\limits_{i=0}^{p-1}\lt(1+t\zeta_p^{i}\rt)$$Hence we have $$f(t,\zeta_p^i)=\prod_{l=0}^{k-1}\prod\limits_{i=0}^{p-1}\lt(1+t\zeta_p^{lp+i}\rt)=\prod_{l=0}^{k-1}\prod\limits_{i=0}^{p-1}\lt(1+t\zeta_p^{i}\rt)=\lt[ \prod\limits_{i=0}^{p-1}(1+t\zeta_p^i)\rt]^k$$Hence we have the lemma.
+\end{proof}
+
+Hence we have $$g(t)=\frac1p\sum\limits_{i=0}^{p-1}f(t,\zeta_p^i)=\frac1p\lt[f(t,1)+\sum_{i=1}^{p-1}\lt[ \prod\limits_{i=0}^{p-1}(1+t\zeta_p^i)\rt]^k\rt]=\frac1p\lt[ (1+t)^{kp} +(p-1)\lt[ \prod\limits_{i=0}^{p-1}(1+t\zeta_p^i)\rt]^k\rt]$$By \lemref{lem41} $g(t)$ is actually independent of $\zeta_p$. Therefore in $g(t)$ the coefficient of $t^i$ is the sum of coefficients of $s(i,j)$ for all $j$ such that $p\mid j$. Hence $$g(t)=\sum_{i=0}^{kp}\lt[\sum_{j,\ p\mid j}s(i,j)\rt]t^i$$Now again by \lemref{lem41} the sum of the coefficients of the powers of $t$ that are multiple of $p$ is $\frac1p\sum\limits_{i=0}^{p-1}g\lt(\zeta_p^i\rt)$. \begin{align*}
+	\frac1p\sum\limits_{i=0}^{p-1}g\lt(\zeta_p^i\rt) & = \frac1p\sum\limits_{i=0}^{p-1}\frac1p\lt[ (1+\zeta_p^{i})^{kp} +(p-1)\lt[ \prod\limits_{j=0}^{p-1}(1+\zeta_p^{i+j})\rt]^k\rt] & [\text{\lemref{lem42}}]\\
+	& = \frac1{p^2}\sum\limits_{i=0}^{p-1}(1+\zeta_p^{i})^{kp}+\frac{p-1}{p^2}\sum\limits_{i=0}^{p-1}\lt[ \prod\limits_{j=0}^{p-1}(1+\zeta_p^{i+j})\rt]^k\\
+	& = \frac1{p^2}\sum\limits_{i=0}^{p-1}(1+\zeta_p^{i})^{kp}+\frac{p-1}{p^2}\sum\limits_{i=0}^{p-1}\lt[ \prod\limits_{j=0}^{p-1}(1+\zeta_p^{j})\rt]^k\\
+	& = \frac1{p^2}\sum\limits_{i=0}^{p-1}(1+\zeta_p^{i})^{kp}+\frac{p-1}{p^2}\;p\lt[ \prod\limits_{i=0}^{p-1}(1+\zeta_p^{i})\rt]^k\\
+	& = \frac1{p^2}\sum\limits_{i=0}^{p-1}(1+\zeta_p^{i})^{kp}+\frac{p-1}{p}\lt[ \prod\limits_{i=0}^{p-1}(1+\zeta_p^{i})\rt]^k
+\end{align*}Now we will analyze case wise:
+\begin{itemize}
+	\item \textbf{Case 1:} $p$ is odd prime. Then we have $$\lt[ \prod\limits_{i=0}^{p-1}(1+\zeta_p^{i})\rt]^k=2^k$$Hence we have $$\frac1{p^2}\sum\limits_{i=0}^{p-1}(1+\zeta_p^{i})^{kp}+\frac{p-1}{p}\lt[ \prod\limits_{i=0}^{p-1}(1+\zeta_p^{i})\rt]^k=\frac1{p^2}\sum\limits_{i=0}^{p-1}(1+\zeta_p^{i})^{kp}+\frac{p-1}{p}2^k$$
+	\item \textbf{Case 2:} $p=2$. Then $\zeta_2=-1$. Hence $$\frac1{2^2}\sum\limits_{i=0}^{1}(1+(-1)^{i})^{2k}+\frac{1}{2}\lt[ \prod\limits_{i=0}^{1}(1+(-1)^{i})\rt]^k=\frac1{2^2}(1+(-1)^{0})^{2k}+\frac{1}{2}\lt[ \prod\limits_{i=0}^{1}(1+(-1)^{i})\rt]^k=2^{2k-2}+0=4^{k-1}$$
+\end{itemize}Therefore the number of was to get both the number of marbles sold and the total cost of them divisible by $p$ is $4^{k-1}$ is $p=2$ and $\frac1{p^2}\sum\limits_{i=0}^{p-1}(1+\zeta_p^{i})^{kp}+\frac{p-1}{p}2^k$ if $p$ is an odd prime. 
+}\parinf
+
+[I discussed with Vivek]\parinn
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 5
@@ -163,8 +296,31 @@ A graph is a thunderstorm graph if every connected component is either a cycle (
 \end{itemize}
 \end{problem}
 \solve{
+\begin{itemize}[label=$\bullet$]
+	\item Suppose $n\geq 3$. Since the graph is connected it can be either a path or a cycle. Now from a path with $[n]$ as vertices we get two permutations since if $\sg_1\to\sg_2\to\cdots \sg_n$ is a path then the we get the permutations $(\sg_1,\dots, \sg_n)$ and $(\sg_n,\dots, \sg_1)$. From each each path we get different sets of permutations. Now number of possible  permutations of $[n]$ is $n!$. Hence there are total $\frac{n!}2$ many paths with vertices $[n]$.\parinn
+	
+	 Now for each cycle of vertices $[n]$ gives $n$ distinct permutations since $\sg_1\to \sg_2\to \cdots\to \sg_n\to\sg_1$, cycle gives the permutations $(\sg_i,\sg_{i+1},\dots, \sg_n,\sg_1,\dots, \sg_{i-1})$ for all $i\in[n]$. For no two cycles we get same set of permutations.  Now if we take a mirror reflection of a cycle we get the same cycle in the graph but a different circular permutation. Hence total number of cycles is $\frac{n!}{2n}=\frac{(n-1)!}2$.  
+	 
+	 Hence there are total $\frac{n!}{2}+\frac{(n-1)!}2$ many thunderstorm graphs for $n\geq 3$. Now for $n=1,2$ there is only one graph is possible which is a path. Now define $a_n\coloneqq$ number of thunderstorm graphs on the vertex set $[n]$ for all $n\in\bbN$, $n\geq 3$. For $n=1,2$ we have $a_1=1=a_2$. For $n=0$ we have no graphs so $a_0=0$. So the exponential generating function, $g(x)$ is  
+	\begin{align*}
+\sum_{i=0}^{\infty}a_n\frac{x^n}{n!}&=\sum_{i=1}^{\infty}a_n\frac{x^n}{n!}\\
+ &=x+\frac{x^2}{2!}+\sum_{n=3}^{\infty}\lt[\frac{n!}2+\frac{(n-1)!}{2}\rt]\frac{x^n}{n!}\\
+ & =x+\frac{x^2}{2!}+\frac12\sum_{n=3}^{\infty}x^n+\frac12\sum_{n=3}^{\infty}\frac{x^n}{n}\\
+ & = \frac{x}2-\frac12+\frac12\lt[\sum_{n=0}^{\infty}x^n\rt]+\frac12\lt[  \sum_{n=1}^{\infty}\frac{x^n}{n}   \rt]-\frac{x}2-\frac{x^2}{4}\\
+ & = \frac1{2(1-x)}-\frac12\ln(1-x)-\frac{x^2}{4}-\frac12 & \lt[\int\frac{dx}{1-x}=\sum_{n=0}^{\infty}\int{x^n}dx=\sum_{n=1}^{\infty}\frac{x^n}{n}\rt]
+	\end{align*}
+	\item Fix $n$. The vertices are $[n]$. Suppose there are $k$ connected components. Now we will count the number of thunderstorm graphs with vertices $[n]$ with $k$ connected components. Suppose in an instance the size of the components are $c_1,\dots, c_k$. The number of ways to partition of $[n]$ into $k$ partitions of sizes $c_1,\dots, c_k$ is $\frac{n!}{k!\prod\limits_{i=1}^k c_i!}$. Now if we take $\frac{n!}{l!}   \textit{Coeff}_{x^n}\lt(g^l(x)\rt)$ this computes the number of thunder storm graphs with vertices $[n]$ and $k$ components since $g(x)$ has the number of connected thunderstorm graphs of size $i$ divided by $i!$.
+	\begin{align*}
+		\sum_{n=0}^{\infty}\frac1{n!}\lt[\sum_{l=1}^{n}\frac{n!}{l!}   \textit{Coeff}_{x^n}\lt(g^l(x)\rt)\rt]x^n&= 	\sum_{n=0}^{\infty}\lt[\sum_{l=1}^{n}\frac1{l!}   \textit{Coeff}_{x^n}\lt(g^l(x)\rt)\rt]x^n\\
+	& = 	\sum_{n=0}^{\infty}\lt[\sum_{l=1}^{n} \textit{Coeff}_{x^n}\lt(\frac{g(x)^l}{l!}\rt)\rt]x^n\\
+		& = 	\sum_{n=0}^{\infty} \textit{Coeff}_{x^n}\lt(\sum_{l=1}^{n}\frac{g(x)^l}{l!}\rt)x^n\\
+		& = 	\sum_{n=0}^{\infty} \textit{Coeff}_{x^n}\lt(\sum_{l=1}^{\infty}\frac{g(x)^l}{l!}\rt)x^n\\
+		& = 	\sum_{n=0}^{\infty} \textit{Coeff}_{x^n}\lt(e^{g(x)}-1\rt)x^n = e^{g(x)}-1
+	\end{align*}Hence the exponential generating function is $$e^{g(x)}-1=e^{\frac1{2(1-x)}-\frac12\ln(1-x)-\frac{x^2}{4}-\frac12 }-1=\frac{e^{\frac1{2(1-x)}-\frac{x^2}{4}-\frac12 }}{\sqrt{1-x}}$$
+\end{itemize}
+}\parinf
 
-}
+[Me and Soumyadeep came up with the solution together]\parinn
 
 
 \end{document}

@@ -678,3 +678,25 @@ Then we have the following theorem:
 	Let $\sL$ be a set of $s$ positive integers and $\mcF\subseteq 2^{[n]}$ is a $\sL$-intersecting family such that $\forall\ A\in \sL$, $|A|=k$ and $\forall\ l\in \sL$, $l<k$. Then $|\mcF|\leq \binom{n}{s}$. 
 \end{lemma}
 \section{Projective Planes}
+\begin{Definition}{Projective Planes}{}
+Let $n>0$ and $S_1,\dots, S_m\subseteq [n]$ are a projective plane if \begin{enumerate}
+\item $|S_i|\geq 2$ for all $i\in[m]$ 
+\item For all $i\neq j\in[n]$ $\exs!\ k\in[m]$ such that $i,j\in S_k$ 
+\item For all $i\neq j\in [m]$, $S_i\cap S_j=\{j\}$ for some $j\in[n]$. 
+\item $\exs$ distinct $j_1,j_2,j_3,j_4\in[n]$ such that for all $i\in[n]$, $|S_i\cap\{j_1,j_2,j_3,j_4\}|\leq 2$. 
+\end{enumerate}
+\end{Definition}
+The elements in $[n]$ are called points and the subsets $S_i\subseteq [n]$ for all $i\in[m]$ are called lines. 
+\begin{Example}{Fano System}{}
+	For $n=7$ consider the following sets \begin{align*}
+		S_1=\{1,3,2\}, && &S_2=\{2,6,4\}, && S_3=\{4,5,1\},\\ 
+		S_4=\{1,7,6\}, && &S_5=\{2,7,5\}, && S_6=\{4,7,3\},\\ 
+		&& &S_7=\{3,5,6\} &&  
+	\end{align*}This forms a projective plane as it follows all the conditions. This projective plane is represented like this:
+\end{Example}
+\begin{Theorem}{}{}
+	Let $S_1,\dots, S_m\subseteq[n]$ be a projective plane. Then\begin{enumerate}
+		\item $\exs$ $s\geq 2$ such that each point is on $s+1$ lines and each line has $s+1$ points ($s$ is the order of the projective plane)
+		\item $m=n=s^2+s+1$. 
+	\end{enumerate}
+\end{Theorem}
