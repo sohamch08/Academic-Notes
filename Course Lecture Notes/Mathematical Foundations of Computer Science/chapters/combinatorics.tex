@@ -648,24 +648,40 @@ $G$ is a negatve dependency (di)graph if for every event $E_i$ and every subset 
 \begin{Theorem}{Lopsided Lov\'{a}sz Local Lemma}{}
 	Suppose $G$ is a negative dependency (di)graph for events $E_1,\dots, E_n$ and there exists $x_1,\dots, x_n$ which satisfy $$\forall i\in[n]\quad \bbP[E_i]\leq x_i\prod_{j:(i,j)\in E}(1-x_j)$$Then $$\bbP\lt[\bigwedge_{i=1}^n\ov{E}_i\rt]\geq \prod_{i=1}^n(1-x_i)$$
 \end{Theorem}
-\begin{proof}
-	content...
-\end{proof}
+
 \section{Linear Algebraic Techniques in Combinatorics}
 \subsection{Odd Town Even Town}
-\begin{lemma}{}{}
+\begin{lemma}{Odd Town}{}
 	Let $\mcF\subseteq 2^{[n]}$ be such that $|A|$ is odd for every $A\in \mcF$ and $|A\cap B|$ is even for every distinct $A,B\in \mcF$. Then $|\mcF|\leq n$.
 \end{lemma}
 \begin{proof}
-	Define $x_A$ for every $A\in \mcF$ to be the characteristic vector in $\{0,1\}^n$ where $x_A(i)=1\iff i\in A$. We will show that $x_A$'s for all $A\in\mcF$ are linearly independent over $|bbF_2$. This suffices to show that $|\mcF\leq n$ since $$|\mcF|=|\{x_A\colon A|\in\mcF\}|\leq \dim_{\bbF_2} \{0,1\}^n=n$$
+	Define $x_A$ for every $A\in \mcF$ to be the characteristic vector in $\{0,1\}^n$ where $x_A(i)=1\iff i\in A$. We will show that $x_A$'s for all $A\in\mcF$ are linearly independent over $\bbF_2$. This suffices to show that $|\mcF|\leq n$ since $$|\mcF|=|\{x_A\colon A|\in\mcF\}|\leq \dim_{\bbF_2} \{0,1\}^n=n$$Suppose $\exs\ \alpha_A\in\bbF_2$ for all $A\in \mcF$ such that $\sum\limits_{A\in \mcF}\alpha_Ax_A=0$. Hence we have$$
+		\sum_{A\in \mcF}\alpha_Ax_A=0  \implies \forall\ j\in[n],\ \sum_{A\in \mcF}\alpha_Ax_{A}(j)=0          \implies \forall \ A\in\mcF,\ \sum_{j\in A}\sum_{B\in\mcF}\alpha_Bx_B(j)=0 $$Hence we have for any $A\in\mcF$ $$
+		\sum_{j\in A}\sum_{B\in\mcF}\alpha_Bx_B(j)= \sum_{B\in\mcF}\sum_{j\in A}\alpha_Bx_B(j)=\sum_{B\in\mcF}\alpha_B\sum_{j\in A}x_B(j)=\sum_{B\in\mcF}\alpha_B\sum_{j\in A\cap B}x_B(j)=\alpha_A\sum_{j\in A}x_A(j)+\sum_{B\in\mcF, B\neq A}\alpha_B\sum_{j\in A\cap B}x_B(j) =0 $$Now $|A|$ is odd and for all $B\in\mcA$ such that $B\neq A$, $|A\cap B|$ is even. Therefore $\sum\limits_{j\in A}x_A(j)=|A|=1$ and $\sum\limits_{j\in A\cap B}x_B(j)=|A\cap B|=0$. Therefore $$\sum_{j\in A}\sum_{B\in\mcF}\alpha_Bx_B(j)=\alpha_A\sum_{j\in A}x_A(j)+\sum_{B\in\mcF, B\neq A}\alpha_B\sum_{j\in A\cap B}x_B(j) =\alpha_A=0$$Therefore for all $A\in\mcF$ we have $\alpha_A=0$. Hence $\{x_A\colon A\in\mcF\}$ are linearly independent. Hence we have $|\mcF|\leq n$. 
 \end{proof}
-\begin{lemma}{}{}
-	Let $\mcF\subseteq 2^{[n]}$ be such that $|A|$ is even for every $A\in \mcF$ and $|A\cap B|$ is off for every distinct $A,B\in \mcF$. Then $|\mcF|\leq n$
+\begin{lemma}{Even Town}{}
+	Let $\mcF\subseteq 2^{[n]}$ be such that $|A|$ is even for every $A\in \mcF$ and $|A\cap B|$ is even for every distinct $A,B\in \mcF$. Then $|\mcF|\leq 2^{\frac{n}2}$
 \end{lemma}
+\begin{proof}
+Define $x_A$ for every $A\in \mcF$ to be the characteristic vector in $\{0,1\}^n$ where $x_A(i)=1\iff i\in A$. Define $U=\la x_A\colon A\in\mcF\ra\subseteq \bbF_2^n$. We will show that $\dim U\leq {\frac{n}2}$. Let $U^0$ be the annihilator of $U$. Now we have $\dim U+\dim U^0= n$. Consider the following map $\vph:U\to U^0$ where for any $u\in U$, $\vph(u)(x)=\sum\limits_{i=1}^nu_ix_i\bmod 2$. 
+
+Now $\vph$ is invective since $$\vph(u)=\vph(u')\iff \forall\ i\in[n],\ \vph(u)(e_i)=\vph(u')(e_i)\iff u_i=u'_i\ \forall\ i\in[n]\iff u=u'$$Fix any arbitrary $u\in U$. $\exs\ \alpha_A\in\bbF_2$ for all $A\in\mcF$ such that $\sum\limits_{A\in\mcF}\alpha_Ax_A=u$. Therefore for all $i\in [n]$, $u_i=\sum\limits_{A\in\mcF}\alpha_Ax_A(i)$.  Hence for all $\beta_A\in \bbF_2$ for all $A\in\mcF$ we have $$\vph(u)\lt(\sum_{A\in \mcF}\beta_Ax_A\rt)=\sum_{i=1}^nu_i\sum_{A\in\mcF}\beta_Ax_A(i)=\sum_{i=1}^n\sum\limits_{A\in\mcF}\alpha_Ax_A(i)\sum_{B\in\mcF}\beta_Bx_B(i)=\sum\limits_{A\in\mcF}\sum_{B\in\mcF}\alpha_A\beta_B\underbrace{\sum_{i=1}^nx_A(i)x_B(i)}_{|A\cap B|}=0$$Therefore for all $v\in U$, $\vph(u)(v)=0$. Hence $\dim U\leq \dim U^0\implies \dim U\leq\frac{n}2\implies |U|\leq 2^{\frac{n}2}\implies |\mcF|\leq 2^{\frac{n}2}$
+\end{proof}
 \subsection{Fisher's Inequality}
 \begin{Theorem}{Fisher's Inequality}{}
 	Suppose that $\mcF\subseteq 2^{[n]}$ is a family of nonempty clubs such that for some fixed $k$, $|A\cap B|=k$ for every distinct $A,B\in \mcF$. Then $|\mcF|\leq n$.
 \end{Theorem}
+\begin{proof}
+	We will prove this using induction on $k$. For $k=0$ we have all sets in $\mcF$ are disjoint. There there can be at most $n$ many disjoint subsets of $[n]$. Therefore $|\mcF|\leq n$. Hence the base case follows.
+	
+	Now suppose this is true for $k-1$. Now let for all distinct $A,B\in\mcF$, $|A\cap B|=k$. Then for all $A\in\mcF$ we have $|A|>k>0$. Define $x_A$ for every $A\in \mcF$ to be the characteristic vector in $\{0,1\}^n$ where $x_A(i)=1\iff i\in A$ over $\bbR^n$. We will show $\{x_A\colon A\in\mcF\}$ are linearly independent over $\bbR^n$. This suffices because then we have $$|\mcF|= |\{x_A\colon A|\in\mcF\}|\leq \dim\st_{\bbR}\bbR^n=n$$Suppose $\exs\ \alpha_A\in\bbR$ for all $A\in \mcF$ such that $\sum\limits_{A\in \mcF}\alpha_Ax_A=0$. Hence we have$$
+	\sum_{A\in \mcF}\alpha_Ax_A=0  \implies \forall\ j\in[n],\ \sum_{A\in \mcF}\alpha_Ax_{A}(j)=0          \implies \forall \ A\in\mcF,\ \sum_{j\in A}\sum_{B\in\mcF}\alpha_Bx_B(j)=0 $$So we have for any $A\in\mcF$ $$
+	\sum_{j\in A}\sum_{B\in\mcF}\alpha_Bx_B(j)=\sum_{B\in\mcF}\alpha_B\sum_{j\in A}x_B(j)=\sum_{B\in\mcF}\alpha_B\sum_{j\in A\cap B}x_B(j)=\alpha_A\sum_{j\in A}x_A(j)+\sum_{\substack{B\in\mcF,\\ B\neq A}}\alpha_B\sum_{j\in A\cap B}x_B(j) =\alpha_A|A|+ \sum_{\substack{B\in\mcF,\\ B\neq A}}\alpha_B|A\cap B|$$Therefore we get $$\alpha_A|A|+ k\sum_{\substack{B\in\mcF,\\ B\neq A}}\alpha_B=0\iff \alpha_A(|A|-k)+ k\sum_{B\in\mcF}\alpha_B=0\iff \alpha_A=-\frac{k\sum\limits_{B\in\mcF}\alpha_B}{|A|-k}\iff \sum_{A\in\mcF}\alpha_A=-k\lt(\sum_{B\in\mcF}\alpha_B\rt)\sum_{A\in\mcF}\frac1{|A|-k}$$The $LHS $ and $RHS$ have opposite signs. They can only be equal if both sides are zero. Hence $\sum\limits_{A\in\mcF}\alpha_A=0$. Then we have for any $A\in\mcF$, $\alpha_A=0$. Therefore $\{x_A\colon A\in\mcF\}$ are linearly independent. Hence we have $|\mcF|\leq n$. 
+\end{proof}
+
+
+
+
 \subsection{RW Theorem}
 \begin{Definition}{$\sL$-Intersecting Family}{}
 	Let $\sL$ be a set of $s$ positive integers. A family of nonempty subsets $\mcF\subseteq 2^{[n]}$ is called $\sL$-intersecting family if $\forall\ i\neq j\in[n]$, $|S_i\cap S_j|\in \sL$. 
@@ -674,9 +690,27 @@ Then we have the following theorem:
 \begin{Theorem}{RW Theorem}{}
 	Let $\sL$ be a set of $s$ positive integers and $\mcF\subseteq 2^{[n]}$ is a $\sL$-intersecting family such that $|A|\notin \sL$ for all $A\in \mcF$. Then $|\mcF|\leq \sum\limits_{k=0}^s \binom{n}{k}$
 \end{Theorem}
+\begin{proof}
+	For all $A\in\mcF$, define the $n-$variate polynomial $$\tdp_A(x_1,\dots, x_n)=\prod\limits_{l\in\sL}\lt(\sum_{i\in A}x_i-l\rt)$$Consider the multilinear version of these polynomials $\tdp_A$ and call them $p_A$ i.e. for all $i\in [n]$ replace all nonzero powers of $x_i$ in $\tdp_A$ by just $x_i$. Hence for all $a\in\{0,1\}^n$ we have $\tdp_A(a)=p(a)$ for all $A\in\mcF$.
+	
+	
+	Now define $y_A$ for every $A\in \mcF$ to be the characteristic vector in $\{0,1\}^n$ where $y_A(i)=1\iff i\in A$ over $\bbR^n$. So $|\{p_A\colon A\in\mcF\}|=|\{y_A\colon A\in\mcF\}|$. Now for any $A,B\in\mcF$ we have $$\tdp_A(y_B)=p_A(y_B)=\begin{cases}
+		\prod\limits_{l\in\sL}\lt(\sum\limits_{i\in A}y_A(i)-l\rt)=\prod\limits_{l\in\sL}\lt(|A|-l\rt)\neq 0 & \text{When }A=B\\[5mm]
+		\prod\limits_{l\in\sL}\lt(\sum\limits_{i\in A}y_B(i)-l\rt)=\prod\limits_{l\in\sL}\lt(|A\cap B|-l\rt)=0 & \text{When }A\neq B
+	\end{cases}$$Therefore we have $p_A(y_B)\neq0 \iff A=B$. Hence the polynomials $\{p_A\colon A\in\mcF\}$ are linearly independent over $\bbR$.
+
+ Now for all $A\in\mcF$, $\deg p_A\leq |\sL|=s$. The set of multilinear polynomials of degree $\leq s$ is a vector space of dimension $\sum\limits_{k=0}^s\binom{n}{k}$. Hence $$|\mcF|=|\{y_A\colon A\in\mcF\}|=|\{p_A\colon A\in \mcF\}|\leq \sum_{k=0}^s\binom{n}{k}$$Hence we have the theorem.
+\end{proof}
 \begin{lemma}{}{}
-	Let $\sL$ be a set of $s$ positive integers and $\mcF\subseteq 2^{[n]}$ is a $\sL$-intersecting family such that $\forall\ A\in \sL$, $|A|=k$ and $\forall\ l\in \sL$, $l<k$. Then $|\mcF|\leq \binom{n}{s}$. 
+	Let $\sL$ be a set of $s$ positive integers and $\mcF\subseteq 2^{[n]}$ is a $\sL$-intersecting family such that $\forall\ A\in \mcF$, $|A|=k$ and $\forall\ l\in \sL$, $l<k$. Then $|\mcF|\leq \binom{n}{s}$. 
 \end{lemma}
+\begin{proof}
+For all $A\in\mcF$, define the $n-$variate polynomial $$\tdp_A(x_1,\dots, x_n)=\prod\limits_{l\in\sL}\lt(\sum_{i\in A}x_i-l\rt)$$Consider the multilinear version of these polynomials $\tdp_A$ and call them $p_A$ i.e. for all $i\in [n]$ replace all nonzero powers of $x_i$ in $\tdp_A$ by just $x_i$. Hence for all $a\in\{0,1\}^n$ we have $\tdp_A(a)=p(a)$ for all $A\in\mcF$.
+ 
+We will define another set of polynomials now. For all $T\subseteq [n]$ with $|T|<s$ define $$\tdq_(x_1,\dots, x_n)=\lt(\sum_{i=1}^nx_i-k\rt)\prod_{t\in T}x_t$$Like in case of $\tdp_A$'s let $q_T$ be the multilinear version of $\tdq_T$. Hence for all $a\in\{0,1\}^n$, $\tdq_T(a)=q_T(a)$ for all $T\subseteq [n]$, $|T|<s$. We will show that $\{p_A\colon A\in\mcF\}\cup \{q_T\colon T\subseteq [n],|T|<s\}$ is linearly independent.
+
+Now define $y_T$ for every $T\subseteq[n]$ to be the characteristic vector in $\{0,1\}^n$ where $y_T(i)=1\iff i\in T$. Consider an arbitrary linear combination $$\sum\limits_{A\in\mcF}\alpha_Ap_A+\sum\limits_{\substack{T\subseteq[n],\\ |T|<s}}\beta_Tq_T=0\implies \forall\ B\in\mcF, \sum\limits_{A\in\mcF}\alpha_Ap_A(y_B)+\sum\limits_{\substack{T\subseteq[n],\\ |T|<s}}\beta_Tq_T(y_B)= \alpha_Bp_B(y_B)=0\implies\forall\ B\in\mcF, \alpha_B=0$$Hence we have now $\sum\limits_{\substack{T\subseteq[n],\\ |T|<s}}\beta_Tq_T=0$. Now let $T^*$ be the smallest such that $\beta_{T^*}\neq 0$. Then we have $$\sum\limits_{\substack{T\subseteq[n],\\ |T|<s}}\beta_Tq_T=\sum\limits_{\substack{T\subseteq[n],\\ |T|<s,\ |T|\geq |T^*|}}\beta_Tq_T(y_{T^*})=\beta_{T^*}q_{T^*}(y_{T^*})+\sum\limits_{\substack{T\subseteq[n], |T|<s,\\ T\neq T^*, |T|\geq |T^*|}}\beta_Tq_T(y_{T^*})=0$$Now if $T\neq T^*$ then $\exs\ i\in T\setminus T^*$. Therefore $y_{T^*}(i)=0$. Hence $q_T(y_{T^*})=0$. Hence we have $$\beta_{T^*}q_{T^*}(y_{T^*})+\sum\limits_{\substack{T\subseteq[n], |T|<s,\\ T\neq T^*, |T|\geq |T^*|}}\beta_Tq_T(y_{T^*})=\beta_{T^*}q_{T^*}(y_{T^*})\implies \beta_{T^*}q_{T^*}(y_{T^*})=0\implies \beta_{T^*}=0$$But we assumed that $\beta_{T^*}\neq 0$. Hence contradiction. Therefore $\{p_A\colon A\in\mcF\}\cup \{q_T\colon T\subseteq [n],|T|<s\}$ is linearly independent. The set of multilinear polynomials of degree $\leq s$ is a vector space of dimension $\sum\limits_{k=0}^s\binom{n}{k}$. Now $|\mcF|=|\{p_A\colon A\in \mcF\}|\leq \sum_{k=0}^s\binom{n}{k}$ and $\deg p_A\leq s$ for all $A\in\mcF$. Therefore we have $$|\mcF|+|\{q_T\colon T\subseteq[n],|T|<s\}|=|\mcF|+\sum_{k=0}^{s-1}\binom{n}{k}\leq \sum_{k=0}^{s}\binom{n}{k}\implies |\mcF|\leq \binom{n}{s}$$Hence we have the lemma.
+\end{proof}
 \section{Projective Planes}
 \begin{Definition}{Projective Planes}{}
 Let $n>0$ and $S_1,\dots, S_m\subseteq [n]$ are a projective plane if \begin{enumerate}
@@ -688,15 +722,50 @@ Let $n>0$ and $S_1,\dots, S_m\subseteq [n]$ are a projective plane if \begin{enu
 \end{Definition}
 The elements in $[n]$ are called points and the subsets $S_i\subseteq [n]$ for all $i\in[m]$ are called lines. 
 \begin{Example}{Fano System}{}
-	For $n=7$ consider the following sets \begin{align*}
+	For $n=7$ consider the following sets 
+	
+	\begin{minipage}{0.69\textwidth}
+		\begin{align*}
 		S_1=\{1,3,2\}, && &S_2=\{2,6,4\}, && S_3=\{4,5,1\},\\ 
 		S_4=\{1,7,6\}, && &S_5=\{2,7,5\}, && S_6=\{4,7,3\},\\ 
 		&& &S_7=\{3,5,6\} &&  
-	\end{align*}This forms a projective plane as it follows all the conditions. This projective plane is represented like this:
+	\end{align*}
+	\end{minipage}
+\begin{minipage}{0.3\textwidth}
+	\begin{center}
+		\usetikzlibrary{calc}
+		\begin{tikzpicture}[scale=2.3]
+		
+		\node[draw,circle] (G) at (0,0) {7};
+		\node[draw,circle] (A) at (0,1) {1};
+		\node[draw,circle] (B) at (-0.866,-0.5) {2};
+		\node[draw,circle] (C) at (0.866,-0.5) {4};
+		\node[draw,circle] (D) at (0,-0.5) {6};
+\node[draw,circle] (E) at (0.433,0.25) {5};
+\node[draw,circle] (F) at (-0.433,0.25) {3};
+		    % Draw a dashed circle with gaps around D, E, F
+		        \draw (G) circle [radius=0.5];
+\node[draw,circle,fill=myexamplebg] (D) at (0,-0.5) {6};
+\node[draw,circle,fill=myexamplebg] (E) at (0.433,0.25) {5};
+\node[draw,circle,fill=myexamplebg] (F) at (-0.433,0.25) {3};
+\draw (A) -- (F)--(B) -- (D) -- (C) -- (E) -- (A) -- cycle;
+\foreach \x in {A,B,C,D,E,F,G}{
+\draw (G) -- (\x);
+}
+
+	\end{tikzpicture}
+	\end{center}
+\end{minipage}
+\vspace*{3mm}
+
+
+This forms a projective plane as it follows all the conditions. This projective plane is represented like this:
+
 \end{Example}
 \begin{Theorem}{}{}
 	Let $S_1,\dots, S_m\subseteq[n]$ be a projective plane. Then\begin{enumerate}
 		\item $\exs$ $s\geq 2$ such that each point is on $s+1$ lines and each line has $s+1$ points ($s$ is the order of the projective plane)
 		\item $m=n=s^2+s+1$. 
 	\end{enumerate}
+
 \end{Theorem}
