@@ -249,7 +249,7 @@ defined so that the sum of the pseudodistances along the simple path from $v$ to
 \Return{$(v.p,v.d)$}
 	\caption{\prb{Find-Set}$(v)$}
 \end{algorithm}
-
+So  $\prb{Find-Depth}(v)=\prb{Find-Set}(v)[1]$
 \item Now to implement \prb{Graft} we will need to find the roots of the tree $r,v$ is in and then find the depths of $r,v$. We will add the trees according to their ranks and then update the pseudodistances.
 \begin{algorithm}
 	$x\longleftarrow \prb{Find-Set}(v)[0]$\;
@@ -286,7 +286,9 @@ Suppose $E=\{a_j\colon j\in[n]\}$ are the jobs with deadline $d_1,\dots, d_n$.  
 Suppose till some iteration the set of operations that are filled in the time slots at or before their deadlines is $S$. Hence $S\in \mcI$. Therefore in the next iteration if the algorithm assigns $a_j$ within it's deadline then $S\cup \{a_j\}\in \mcI$. Now let  $S\cup \{a_j\}\in\mcI$. Suppose the algorithm is not able to place $a_j$ in the time slot at or before $d_j$. That means all the time slots till $d_j$ are filled before assigning $a_j$ in a time slot. That means $N_{d_j}(S)=d_j$ and $N_{d_j}(S\cup \{a_j\})=d_j+1$. But since $S\cup \{a_j\}\in \mcI$ we have $N_t(S\cup \{a_j\})\leq t$ for all $t$. Hence contradiction. Therefore the algorithm assigns $a_j$ in the time slot at or before $d_j$ if and only if $S\cup \{a_j\}\in \mcI$.
 
 Now in order to show that the algorithm outputs a optimal answer we have to show that the penalty is minimum. Since $(E,\mcI)$ is a matroid. Hence the greedy algorithm works to find the minimum weight base. And in the given algorithm each $a_j$ is added in time slot at or before it's deadline if and only if adding to the set of jobs completed within deadline in previous iteration is an independent set. Hence the algorithm forms the greedy approach to minimize the penalty. Therefore the algorithm outputs an optimal solution. 
-}
+}\parinf
+
+[I discussed with Vivek]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -319,7 +321,7 @@ Let $n$ be the total number of nodes in $T_1$ and $T_2$.
 		\KwIn{Red-Black tree with $n'$ nodes}
 		\KwOut{Find the black-height of the tree}
 		\Begin{
-	$v\longleftarrow root$ of $T$\;
+	$v\longleftarrow root$ of $T$, 
 $bh\longleftarrow 0$\;
 \While{True}{
 	\If{$v.\textit{color}==\textit{black}$}{$bh\longleftarrow bh+1$}
