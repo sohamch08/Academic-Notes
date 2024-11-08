@@ -56,7 +56,7 @@
 
 \begin{document}
 
-
+\pagestyle{plain}
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
@@ -77,18 +77,20 @@
 
 \newpage
 
+	\pagestyle{plain}
 \titleformat{name=\chapter,numberless}[display]
 {\normalfont\Huge\bfseries}{}{0pt}{\Huge}
 {\hypersetup{linkcolor=mytoccolor}
 	\tableofcontents
+	
 }
-\newpage
-
+\clearpage
 \pagestyle{fancy}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% Body
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\setcounter{page}{1}
+\setcounter{page}{1}
 %\input{chapters/closest-points}
 %\input{chapters/median-linear-time}
 %\input{chapters/polynomial-multiplication}
@@ -97,6 +99,10 @@
 %\input{chapters/dijkstra-data-structure}
 %\input{chapters/kruskal-data-structure}
 %\input{chapters/red-black-tree-structure}
-\input{chapters/max-flow}
-\input{chapters/randomized-algo}
+%\input{chapters/max-flow}
+%\input{chapters/randomized-algo}
+%\input{chapters/global-min-cut}
+\input{chapters/matching}
+
+
 \end{document}

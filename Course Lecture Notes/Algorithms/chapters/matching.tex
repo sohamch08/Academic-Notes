@@ -1,0 +1,71 @@
+\chapter{Matching Algorithms}
+\section{Bipartite Matching}
+\subsection{Using Max Flow}
+\subsection{Using Augmenting Paths}
+\subsection{Using Matrix Scaling}
+Here we will show a new algorithm for bipartite matching using matrix scaling. The paper which we will follow is  [Linial-Samorodnitsky-Wigderson, STOC'1998]
+
+Suppose $G=(L\cup R,E)$ a bipartite graph. If  bipartite adjacency matrix of the graph $G$ is $A$ then the permanent of the matrix $A$, $$per(A)=\sum\limits_{\sg\in S_n}\prod_{i=1}^n x_{i,\sg(i)}$$ counts the number of perfect matchings in $G$. So we want to check if for a given bipartite graph $(L\cup R,E)$, $per(A)>0$ or not where $A$ is the bipartite adjacency matrix. Now there is a necessary and sufficient condition for existence of perfect matching in a bipartite graph which is called Hall's condition.
+\begin{Theorem}{Hall's Condition}{}
+	A bipartite graph $G=(L\cup R,E)$ has an $L$-perfect matching if and only if $\forall $ $S\subseteq L$, $|S|\leq |N(S)|$ where $N(S)=\{v\in R\colon \exs\ u\in L,\ (u,v)\in E\}$
+\end{Theorem} 
+\begin{proof}
+	Now if $G$ has a $L$-perfect matching then for every $S\subseteq L$, $S$ is matched with some $T\subseteq R$ such that $|S|=|T|$. Therefore $T\subseteq N(S)\implies |S|=|T|\leq |N(S)|$.
+	
+	Now we will prove the opposite direction. Suppose for all $S\subseteq L$ we have $|S|\leq |N(S)|$. Lssume there is no $L$-perfect matching in $G$. Let $M$ be a maximum $L$-matching in $G$. Let $u\in L$ is unmatched. Now consider the following sets:\begin{align*}
+		X&=\{x\in L\colon \exs\text{ $M$-alternating path from $u$ to $x$}\}, &		Y&=\{y\in R\colon \exs\text{ $M$-alternating path from $u$ to $y$}\}		
+	\end{align*}
+Now notice that $N(X)\subseteq Y$. Since in a $M$-alternating path from $u$ whenever the odd edges are not matching edges and the even edges are matching edges. So in the odd edges we can pick any neighbor except the one it is matched with and the immediate even edge before that connects that vertex with the vertex in $R$ it is matched with. Hence we have $N(X)\subseteq Y$.
+
+Now it suffices to prove that $|X|>|Y|$. Now let $y\in Y$. Suppose $u\rightsquigarrow x'\to y$ be the $M$-alternating path. If $y$ is not matched then we could increase the matching by taking the odd edges of the path and thus obtain a matching with larger size than $M$. But $M$ is maximum matching. Hence $y$ is matched. Therefore we can extend the path by taking the matching edge incident on $y$ and go the the vertex $x''\in L$ i.e. the new $M$-alternating path becomes $u\rightsquigarrow x'\to y\to x''$ to have a $M$-alternating path $u\rightsquigarrow x''$. So $|X|>|Y|$.
+
+Therefore we obtained a set of vertices $X\subseteq Y$ such that $|X|>|Y|\geq N(X)|$. This contradicts the assumption. Hence contradiction. Therefore $G$ has a $L$-perfect matching. 
+\end{proof}\newpage
+
+We will use hall's condition on the adjacency matrix to check if $per(A)$ is positive or not. Now multiplying a row or a column of a matrix by some constant $c$ also multiplies the permanent of the matrix by $c$ as well. In fact if $d_1,d_2\in\bbR_+^n$ and $D_1=diag(d_1)$ and $D_2=diag(D_2)$  then $per(D_1AD_2)=\lt(\prod\limits_{i=1}^nd_{1_i}\rt)\lt(\prod\limits_{i=1}^nd_{2_i}\rt)per(A)$. So we can scale our original matrix $A$ to obtain a different matrix $B$ and from $B$ we can approximate $per(A)$ by approximating $per(B)$. A natural strategy is to seek an efficient algorithm for scaling $A$ to a doubly stochastic $B$.
+\begin{Definition}{Doubly Stochastic}{}
+	A matrix $M\in\bbR^{m\times m}$ is doubly stochastic if entries are non-negative and each row and column sum to $1$.
+\end{Definition}
+
+First we will show that Hall's Condition holds for doubly stochastic matrix. First let's see what it means for a matrix to satisfy hall's condition. A matrix with all entries non-negative holds Hall's Condition if for all $S\subseteq [n]$ if $T=\{i\in [n]\colon \exs\ j\in S,\ A(i,j)\neq 0\}$ then $|T|\geq |S|$. This also corresponds to the bipartite adjacency matrix satisfying the hall's condition since for any set of rows $S$ the number of columns for which in the $S$ rows at least one entry is non zero should be greater than or equal to $|S|$.
+\begin{lemma}{}{}
+	Hall's Condition holds for doubly stochastic matrix.
+\end{lemma}
+\begin{proof}
+	Let $M$ be the doubly stochastic matrix. Let $S\subseteq [n]$. So consider the $|S|\times n$ matrix which only consists of the rows in $S$. Call this matrix $M_S^r$. Now suppose $T$ be the set of columns in $M_S^r$ which has nonzero entries. Now consider the $n\times |T|$ matrix which only consists of the columns in $T$. Call this matrix $M_T^c$. Now since $M$ is doubly stochastic we know sum of entries of $M_S^r$ is $|S|$ and sum of entries of $M_T^c$ is $|T|$. Our goal is to show $|S|\leq |T|$. Now since $T$ is the only set of columns which have nonzero columns in $M_S^r$ the elements which contributes to the sum of entries in $M_S^r$ are in the  $T$ columns in $M_S^r$. Since these elements are also present in $M_T^c$ we have $|T|\geq |S|$. 
+\end{proof}
+
+Hence for doubly stochastic matrices the permanent is positive. Now not all matrices are doubly stochastic. And in fact matrices with permanent zero will not be doubly stochastic so no amount of scaling will make it doubly stochastic. So we will settle for approximately doubly stochastic matrix. In order to make a matrix doubly stochastic first for each row we will divide the row with their row some. Now it becomes row stochastic. Then if its not approximately doubly stochastic for each column we will divide the column entries with their column sum. But first what $\eps$-approximate doubly stochastic matrix means.
+
+\begin{Definition}{$\eps-$Approximate Doubly Stochastic Matrix}{}
+	A  matrix is $\eps-$approximate doubly stochastic if for each column, the column sum is in $(1-\eps,1+\eps)$ and  for each row, the row sum is in $(1-\eps,1+\eps)$
+\end{Definition}
+
+Now we will show that even for $\eps$-approximate doubly stochastic matrix the hall's condition holds.
+\begin{lemma}{}{}
+	Halls's Condition holds for $\eps$-approximate doubly stochastic matrix for $\eps<\frac1{10n}$
+\end{lemma}
+\begin{proof}
+	Let $M$ is $\eps-$approximate doubly stochastic matrix. Let $S\subseteq [n]$. So consider the $|S|\times n$ matrix which only consists of the rows in $S$. Call this matrix $M_S^r$. Now suppose $T$ be the set of columns in $M_S^r$ which has nonzero entries. Now consider the $n\times |T|$ matrix which only consists of the columns in $T$. Call this matrix $M_T^c$. Now the sum of entries in $M_S^r$ is $\geq |S|(1-\eps)$ and sum of entries in $M_T^c$ is $\leq |T|(1-\eps)$. Now since $T$ is the only set of columns which have nonzero columns in $M_S^r$ the elements which contributes to the sum of entries in $M_S^r$ are in the  $T$ columns in $M_S^r$. Since these elements are also present in $M_T^c$ we have $||T|(1+\eps)\geq |S|(1-\eps)$. Therefore we have $$||T|\geq |S|\frac{1-\eps}{1+\eps}=|S|\lt(1-\frac{2\eps}{1+\eps}\rt)\geq |S|(1-2\eps)>|S|\lt(1-\frac1{5n}\rt)\geq |S|\lt(1-\frac1{|S|}\rt)>|S|-1$$Since $T$ is an integer we have $|T|\geq |S|$. Hence the Hall's condition holds. 
+\end{proof}
+
+Therefore permanent of $\eps$-approximate doubly stochastic matrix is also positive. Hence our algorithm for bipartite perfect matching is:
+\begin{algorithm}
+	\DontPrintSemicolon
+\KwIn{Bipartite adjacency matrix $A$ of $G=(L\cup R,E)$}
+\KwOut{Decide if $G$ has a perfect matching.}
+\Begin{
+\While{True}{
+	$A\longleftarrow$ Scale every rows of $A$	to make it row stochastic.\;
+	\If{All column-sums are in $(1-\eps,1+\eps)$}{\Return{Yes}}
+	$A\longleftarrow$ Scale every column of $A$	to make it column stochastic.\;
+	\If{All row-sums are in $(1-\eps,1+\eps)$}{\Return{Yes}}
+}	
+}
+\caption{\prb{BP-Matrix-Scaling}}
+\end{algorithm}
+
+
+In both if conditions we are checking if the matrix is $\eps-$approximate doubly stochastic matrix. The moment it becomes a $\eps-$approximate doubly stochastic matrix we are done. 
+
+Now if $G$ doesn't have a perfect matching then we will never reach a $\eps$-approximate doubly stochastic matrix since otherwise Hall's condition will hold and then we will have that the permanent is positive. So if $G$ doesn't have a perfect matching the algorithm will run in an infinite loop. We only need to check if $G$ has a perfect matching the algorithm returns Yes.
