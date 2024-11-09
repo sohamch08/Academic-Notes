@@ -1,0 +1,220 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage{amsmath,mathtools,mathdots,adjustbox,wrapfig}
+\usepackage{amssymb,amsthm}  % assumes amsmath package installed
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{mdframed}
+%\usepackage{subfig}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=doc!80,
+    citecolor=myr,
+    filecolor=myr,      
+    urlcolor=doc!80,
+    pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
+}
+\usepackage[most,many,breakable]{tcolorbox}
+\usepackage{tikz}
+%\usepackage{caption}
+\usepackage{mathpazo}
+\usepackage[skip=0.333\baselineskip]{caption}
+\usepackage{subcaption}
+% Use the libertine package for the Libertine font
+\usepackage{libertine}
+\usepackage[libertine]{newtxmath}
+\usepackage{libertine}
+\usepackage{physics}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+\usepackage{float}
+\usepackage{pgfplots}
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+
+\input{../assignment-problem-box}
+
+\newtheorem{lemma}{Lemma}
+\renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\qed\bigskip\\}
+% To give references for any problem use like this
+% suppose the problem number is p3 then 2 options either 
+% \hyperref[p:p3]{<text you want to use to hyperlink> \ref{p:p3}}
+%                  or directly 
+%                   \ref{p:p3}
+
+
+
+\input{../../letterfonts}
+
+\input{../../macros}
+
+\setlength{\parindent}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 5}\\
+    Email: \href{soham.chatterjee@tifr.res.in}{soham.chatterjee@tifr.res.in} \hfill Dept: STCS\\
+    \normalsize Course: Probability Theory \hfill Date: \today\\ 
+\noindent\rule{7in}{2.8pt}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+    }{p1% problem reference text
+    }
+Let $X,Y_1,Y_2$ be three random variables with joint density $f_{X,Y_1,Y_2}$. For a fixed $y_1$, consider two random variables $\tilde{X}$, $\tilde{Y_2}$ with joint distribution $g_{\tdX,\tilde{Y_2}}$ defined as $g_{\tdX,\tilde{Y_2}}(x,y_2)=f_{X,Y_2\mid Y_1}(x,y_2\mid y_1)$. Show that $$\bbE[\tdX\mid \tdY=y_2]=\bbE[X\mid Y_1=y_1,Y_2=y_2]$$
+\end{problem}
+\solve{
+We have $$g_{\tdX\mid \tdY_2}(x\mid y_2)=\frac{g_{\tdX,\tdY_2}(x,y_2)}{g_{\tdY_2}(y_2)}=\frac{f_{X,Y_2\mid Y_1}(x,y_2\mid y_1)}{f_{Y_2\mid Y_1}(y_2\mid y_1)}=f_{X\mid Y_1,Y_2}(x\mid y_1,y_2)$$Therefore $\bbE[\tdX\mid \tdY=y_2]=\bbE[X\mid Y_1=y_1,Y_2=y_2]$.
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+    }{p2% problem reference text
+    }
+Consider the Kalman filtering problem for the scalar system:
+$$
+\begin{aligned}
+	X_k & =\alpha X_{k-1}+W_k \\
+	Y_k & =h X_k+Z_k
+\end{aligned}
+$$
+as described in class (i.e., $W_k \sim N\left(0, \sigma_W^2\right)$ i.i.d, $Z_k \sim N\left(0, \sigma_Z^2\right)$, and $X_1$ are independent). The initial condition is $X_1 \sim N\left(0, \sigma_{X_1}^2\right)$. For the numerical exercises below you can assume $\sigma_{X_1}^2=\sigma_Z^2=\sigma_W^2=h=1$.\begin{enumerate}[label=(\alph*)]
+	\item Plot sample paths of the process $\left\{X_k\right\}$ for different values of $\alpha$. Pick a representative set of values of $\alpha$ to show the effect of $\alpha$ on how the sample paths look like. Can you explain qualitatively the effect?
+\item Let $\hat{X}_k=E\left[X_k \mid Y_1, \ldots, Y_k\right]$. For those sample paths of $\left\{X_k\right\}$ plotted in part (a), plot in the same figure the sample paths of the estimates $\left\{\hat{X}_k\right\}$. What is the qualitative effect of $\alpha$ on the estimation errors?
+\item Let $\tilde{X}_k=E\left[X_k \mid Y_k\right]$. This is the state estimate based only on the current observation. For the sample paths in (a) and (b), plot the sample paths of $\left\{\tilde{X}_k\right\}$ in the same figure as well. How does the difference in the accuracy of the estimators $\hat{X}_k$ and $\tilde{X}_k$ depend on the value of $\alpha$ ? Explain qualitatively.
+\item Let $f_k$ be the conditional distribution of $X_k$ give the observations up to time $k$. For your favorite value of $\alpha$, plot $f_k$ for several values of $k$ to get a feel of how the distribution evolves in time. Do these distributions depend on the random outcome of the experiment? How?
+\item What happens to the distribution of $X_k$ as $k \rightarrow \infty$ ? Give a quantitative answer. Does your answer depend on $\alpha$ ? Does your answer depend on $\sigma_{X_1}^2$ ?
+\item What happens to the MMSE estimation error $\sigma_k^2$ of $\hat{X}_k$ as $k \rightarrow \infty$ ? Does it converge to zero, a finite non-zero value or infinity? How does your answer depend on $\alpha$ ? An answer supported by numerical evidence together with some analysis would be fine; it doesn't have to be totally rigorous.
+\end{enumerate}
+\end{problem}
+\solve{
+\begin{enumerate}[label=(\alph*)]
+	\item Here we have taken the values of $\alpha$ to be $\{-1,0.8,1,1.2\}$ in \hyperref[fig:fig1]{Figure 1(a)}. Here we can see that when the value of $\alpha$ is $1.2$  then the sample value increases. And when the value of $\alpha$ is $-1$ it oscillates around $0$. But for $\alpha=0.8$ the sample values remains close to $0$. Therefore the sample values converges when $|\alpha|<1$ and otherwise diverges.
+	\newpage
+	
+
+\begin{figure}[t]%
+	\centering
+	\includegraphics[width=8cm]{./ass5_Figure_1.png}\label{fig:fig1}%
+	\caption{Plot of $X_k$ for different $\alpha\in \{-1,0.8,1,1.2\}$}%
+%	\label{fig:example}%
+\end{figure}
+
+\item In the  following plot we can see that the predicted values $\bbE[X\mid Y_1,\dots, Y_k]$ matches almost correctly with the sample values $X_k$. From the plots we conclude that as $|\alpha$ becomes larger it has lesser effect on the estimation which we also showed in part (f) where we showed if $|\alpha|$ becomes larger then the MMSE estimation is independent of $\alpha$. 
+
+\begin{figure}[hbt!]
+	\begin{subfigure}{.475\linewidth}
+		\includegraphics[width=\linewidth]{./ass5.2b-0.8.pdf}
+		\caption{Plot of $X_k$ vs $\hat{X}_k$ for $\alpha=0.8$}
+		\label{MLEDdet}
+	\end{subfigure}\hfill % <-- "\hfill"
+	\begin{subfigure}{.475\linewidth}
+		\includegraphics[width=\linewidth]{./ass5.2b-1.pdf}
+		\caption{Plot of $X_k$ vs $\hat{X}_k$ for $\alpha=1$}
+		\label{energydetPSK}
+	\end{subfigure}
+	
+	\medskip % create some *vertical* separation between the graphs
+	\begin{subfigure}{.475\linewidth}
+		\includegraphics[width=\linewidth]{./ass5.2b-1.2.pdf}
+		\caption{Plot of $X_k$ vs $\hat{X}_k$ for $\alpha=1.2$}
+		\label{velcomp}
+	\end{subfigure}\hfill % <-- "\hfill"
+	\begin{subfigure}{.475\linewidth}
+		\includegraphics[width=\linewidth]{./ass5.2b--1.pdf}
+		\caption{Plot of $X_k$ vs $\hat{X}_k$ for $\alpha=-1$}
+		\label{estcomp}
+	\end{subfigure}
+	
+	\caption{Compared $X_k$ and predicted $\hat{X_k}$}
+	\label{fig:roc}
+\end{figure}
+
+
+
+\item Here we compare $X_k$, $\hat{S}_k$ and $\tdX_k=\bbE[X_k\mid Y_k]$ for all values of $\alpha$. Now we have $\cov(X_k,Y_k)=h\rho_k^2$ and $\Var[Y_k]=h^2\rho_k^2+\sg_Z^2$. Hence we have $$\bbE[X_k\mid Y_k]=\frac{h\rho_k^2 Y_k}{h^2\rho_k^2+\sg_Z^2}$$So we have\begin{align*}
+	\bbE[X_k-\tdX_k]^2 & = \bbE\lt[X_k-\frac{h\rho_k^2 Y_k}{h^2\rho_k^2+\sg_Z^2}\rt] ^2\\
+	& = \frac{1}{\lt(h^2\rho_k^2+\sg_Z^2\rt)^2}\bbE\lt[(h^2\rho_k^2+\sg_Z^2)X_k-h\rho_k^2(hX_k+Z_k)\rt]^2\\
+	& = \frac{1}{\lt(h^2\rho_k^2+\sg_Z^2\rt)^2}\bbE[\sg_Z^2X_k-h\rho_k^2Z_k]^2\\
+	& = \frac{\sg_Z^4\rho_k^2+h^2\rho_k^4\sg_Z^2}{\lt(h^2\rho_k^2+\sg_Z^2\rt)^2}= \frac{\sg_Z^2\rho_k^2}{h^2\rho_k^2+\sg_Z^2}
+\end{align*}Now this is the MMSE estimation of $\sg_k^2$ of $X_k$ which comparing with part (f) we can see that we obtained the same estimation value. Therefore both $\hat{X}_k$ and $\tdX_k$ are equally good estimating sample values. 
+
+\begin{figure}[hbt!]
+\begin{subfigure}{.475\linewidth}
+	\includegraphics[width=\linewidth]{./ass5.2c-0.8.pdf}
+	\caption{Plot of $X_k$ vs $\hat{X}_k$ vs $\tilde{X}_k$ for $\alpha=0.8$}
+	\label{MLEDdet}
+\end{subfigure}\hfill % <-- "\hfill"
+\begin{subfigure}{.475\linewidth}
+	\includegraphics[width=\linewidth]{./ass5.2c-1.pdf}
+	\caption{Plot of $X_k$ vs $\hat{X}_k$ vs $\tilde{X}_k$ for $\alpha=1$}
+	\label{energydetPSK}
+\end{subfigure}
+
+\medskip % create some *vertical* separation between the graphs
+\begin{subfigure}{.475\linewidth}
+	\includegraphics[width=\linewidth]{./ass5.2c-1.2.pdf}
+	\caption{Plot of $X_k$ vs $\hat{X}_k$ vs $\tilde{X}_k$ for $\alpha=1.2$}
+	\label{velcomp}
+\end{subfigure}\hfill % <-- "\hfill"
+\begin{subfigure}{.475\linewidth}
+	\includegraphics[width=\linewidth]{./ass5.2c--1.pdf}
+	\caption{Plot of $X_k$ vs $\hat{X}_k$ vs $\tilde{X}_k$ for $\alpha=-1$}
+	\label{estcomp}
+\end{subfigure}
+
+\caption{Compared $X_k$ and predicted $\hat{X_k}$ and $\tdX_k$ }
+\label{fig:roc}
+\end{figure}
+\item Here we plot $f_k$ for values $k\in[10]$ with $\alpha=0.8$. Now the conditional distribution $X\mid Y_1,\dots, Y_k$ approaches the distribution $N\lt(0,\frac{\sg2}{1-\alpha^2}\rt)$ for large $k$ and also we notice from the plot that this doesn't depend on the $Y_k$.\newpage
+
+\begin{figure}[hbt!]
+	\centering
+	\includegraphics[width=16cm]{./ass5.2d-0.8.pdf}
+	\caption{Plot of density $f_k$ of $X_k\mid Y_1,...,Y_k$ for $\alpha=0.8$, $k\in[10]$}
+\end{figure}
+
+\item We will induct on $k$. Since $X_1,W_2$ are independent and we have $X_2=\alpha X_1+W_2$ hence $X_2\sim N\lt(0, \alpha^2\sg_{X_1}^2+\sg_W^2\rt)$. Now $X_{k-1}$ and $W_k$ are independent and we have $X_k=\alpha X_{k-1}+W_k$. By inductive hypothesis $X_{k-1}$ follows Gaussian Distribution. Hence $X_k$ also follows Gaussian Distribution. Hence $\bbE[X_k]=0$. Now we have to calculate $\Var[X_k]$.$$\Var[X_k]=\alpha^2\Var[X_{k-1}]+\sg_W^2=\alpha^2(\alpha^2\Var[X_{k-2}]+\sg_W^2)+\sg_W^2=\cdots = \alpha^{2k-2}\sg_{X_1}^2+\sg_W^2\sum_{i=0}^{k-1}\alpha^{2i}$$Therefore $X_k\sim N\lt(0,\alpha^{2k-2}\sg_{X_1}^2+\sg_W^2\sum\limits_{i=0}^{k-1}\alpha^{2i}\rt)$. Hence if $|\alpha|<1$, $\lim\limits_{k\to\infty}\Var[X_k]=\frac{\sg_W^2}{1-\alpha^2}$. Hence as $k\to\infty$, $X_k\to N\lt(0,\frac{\sg_W^2}{1-\alpha^2}\rt)$. Now if $|\alpha|\geq 1$, then as $k\to \infty$, $\alpha^{2k-2}$ diverges. Therefore $\Var[X_k]$ diverges to $+\infty$.\parinn
+
+If $|\alpha|<1$ then $\Var[X_k]=\frac{\sg_W^2}{1-\alpha^2}$. Hence it doesn't depend on $\sg_{X_1}^2$. 
+\item Let $\rho_k$ denote the variance of $X_k$. Then we have the formula $$\rho_n=\alpha^2\rho_{n-1}^2+\sg_W^2\quad\text{for } n\geq 2$$Hence we know the behavior of the conditional variance $\sg_k^2$ of ${X_k}$. Hence we know the MMSE of ${X_k\mid Y_1,\dots, Y_k}$ as $k\to \infty$. Now we have $$\sg_k^2=\frac{\rho_k^2\sg_Z^2}{h^2\rho_k^2+\sg_Z^2}=\frac{\sg_Z^2}{h^2+\frac{\sg_Z^2}{\rho_k^2}}$$From the previous part  if $|\alpha|<1$ then $\lim\limits_{k\to \infty}\rho_k=\frac{\sg_W^2}{1-\alpha^2}$ and if $|\alpha|\geq 1$ then as $k\to \infty$, $\rho_k$ diverges to $+\infty$.  Therefore when $|\alpha|<1$, $\lim\limits_{k\to\infty}\sg_k^2=\frac{\sg_Z^2\sg_W^2}{h^2\sg_W^2+(1-\alpha^2)\sg_Z^2}$ and when $|\alpha|\geq 1$ we have $\lim\limits_{k\to\infty}\sg_k^2=\frac{\sg_Z^2}{h^2}$.
+\end{enumerate}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{problem}{%problem statement
+    }{p3% problem reference text
+    }
+For the system in \hyperref[p:p2]{Problem \ref{p:p2}} derive a recursive algorithm for computing the one-step ahead estimator: $\bbE[{X_k\mid Y_1,Y_2,\dots, Y_k,Y_{k+1}}]$. This means we can look ahead one step to estimate the state.
+\end{problem}
+\solve{
+
+}
+
+
+
+\end{document}
