@@ -68,10 +68,11 @@
 
 \textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 5}\\
     Email: \href{soham.chatterjee@tifr.res.in}{soham.chatterjee@tifr.res.in} \hfill Dept: STCS\\
-    \normalsize Course: Probability Theory \hfill Date: \today\\ 
-\noindent\rule{7in}{2.8pt}}
+    \normalsize Course: Probability Theory \hfill Date: \today
+    \\  \noindent\rule{7in}{2.8pt}
+}
 
-
+[All the problems I discussed with Spandan, Soumyadeep]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -79,10 +80,10 @@
 \begin{problem}{%problem statement
     }{p1% problem reference text
     }
-Let $X,Y_1,Y_2$ be three random variables with joint density $f_{X,Y_1,Y_2}$. For a fixed $y_1$, consider two random variables $\tilde{X}$, $\tilde{Y_2}$ with joint distribution $g_{\tdX,\tilde{Y_2}}$ defined as $g_{\tdX,\tilde{Y_2}}(x,y_2)=f_{X,Y_2\mid Y_1}(x,y_2\mid y_1)$. Show that $$\bbE[\tdX\mid \tdY=y_2]=\bbE[X\mid Y_1=y_1,Y_2=y_2]$$
+Let $X,Y_1,Y_2$ be three random variables with joint density $f_{X,Y_1,Y_2}$. For a fixed $y_1$, consider two random variables $\tilde{X}$, $\tilde{Y_2}$ with joint distribution $g_{\tdX,\tilde{Y_2}}$ defined as $g_{\tdX,\tilde{Y_2}}(x,y_2)=f_{X,Y_2\mid Y_1}(x,y_2\mid y_1)$. Show that $$\bbE[\tdX\mid \tdY=y_2]=\bbE[X\mid Y_1=y_1,Y_2=y_2]$$What is the relevance of this fact in our derivation of recursive estimation in the lecture?
 \end{problem}
 \solve{
-We have $$g_{\tdX\mid \tdY_2}(x\mid y_2)=\frac{g_{\tdX,\tdY_2}(x,y_2)}{g_{\tdY_2}(y_2)}=\frac{f_{X,Y_2\mid Y_1}(x,y_2\mid y_1)}{f_{Y_2\mid Y_1}(y_2\mid y_1)}=f_{X\mid Y_1,Y_2}(x\mid y_1,y_2)$$Therefore $\bbE[\tdX\mid \tdY=y_2]=\bbE[X\mid Y_1=y_1,Y_2=y_2]$.
+We have $$g_{\tdX\mid \tdY_2}(x\mid y_2)=\frac{g_{\tdX,\tdY_2}(x,y_2)}{g_{\tdY_2}(y_2)}=\frac{f_{X,Y_2\mid Y_1}(x,y_2\mid y_1)}{f_{Y_2\mid Y_1}(y_2\mid y_1)}=\frac{\frac{f_{X,Y_1,Y_2}(x,y_1,y_2)}{f_{Y_1}(y_1)}}{\frac{f_{Y_1,Y_2}(y_1,y_2)}{f_{Y_1}(y_1)}}=f_{X\mid Y_1,Y_2}(x\mid y_1,y_2)$$Therefore $\bbE[\tdX\mid \tdY=y_2]=\bbE[X\mid Y_1=y_1,Y_2=y_2]$. This is used to derive the iterative estimator which is used in the recurrence relation for Kalman Filter.
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 2
@@ -92,12 +93,10 @@ We have $$g_{\tdX\mid \tdY_2}(x\mid y_2)=\frac{g_{\tdX,\tdY_2}(x,y_2)}{g_{\tdY_2
     }{p2% problem reference text
     }
 Consider the Kalman filtering problem for the scalar system:
-$$
-\begin{aligned}
-	X_k & =\alpha X_{k-1}+W_k \\
-	Y_k & =h X_k+Z_k
-\end{aligned}
-$$
+
+\begin{align*}
+	X_k  =\alpha X_{k-1}+W_k && 	Y_k =h X_k+Z_k
+\end{align*}
 as described in class (i.e., $W_k \sim N\left(0, \sigma_W^2\right)$ i.i.d, $Z_k \sim N\left(0, \sigma_Z^2\right)$, and $X_1$ are independent). The initial condition is $X_1 \sim N\left(0, \sigma_{X_1}^2\right)$. For the numerical exercises below you can assume $\sigma_{X_1}^2=\sigma_Z^2=\sigma_W^2=h=1$.\begin{enumerate}[label=(\alph*)]
 	\item Plot sample paths of the process $\left\{X_k\right\}$ for different values of $\alpha$. Pick a representative set of values of $\alpha$ to show the effect of $\alpha$ on how the sample paths look like. Can you explain qualitatively the effect?
 \item Let $\hat{X}_k=E\left[X_k \mid Y_1, \ldots, Y_k\right]$. For those sample paths of $\left\{X_k\right\}$ plotted in part (a), plot in the same figure the sample paths of the estimates $\left\{\hat{X}_k\right\}$. What is the qualitative effect of $\alpha$ on the estimation errors?
@@ -109,13 +108,13 @@ as described in class (i.e., $W_k \sim N\left(0, \sigma_W^2\right)$ i.i.d, $Z_k 
 \end{problem}
 \solve{
 \begin{enumerate}[label=(\alph*)]
-	\item Here we have taken the values of $\alpha$ to be $\{-1,0.8,1,1.2\}$ in \hyperref[fig:fig1]{Figure 1(a)}. Here we can see that when the value of $\alpha$ is $1.2$  then the sample value increases. And when the value of $\alpha$ is $-1$ it oscillates around $0$. But for $\alpha=0.8$ the sample values remains close to $0$. Therefore the sample values converges when $|\alpha|<1$ and otherwise diverges.
-	\newpage
+	\item Here we have taken the values of $\alpha$ to be $\{-1,0.8,1,1.2\}$ in \hyperref[fig:fig1]{Figure 1}. Here we can see that when the value of $\alpha$ is $1.2$  then the sample value increases. And when the value of $\alpha$ is $-1$ it oscillates around $0$. But for $\alpha=0.8$ the sample values remains close to $0$. Therefore the sample values converges when $|\alpha|<1$ and otherwise diverges.
+
 	
 
-\begin{figure}[t]%
+\begin{figure}[hbt!]%
 	\centering
-	\includegraphics[width=8cm]{./ass5_Figure_1.png}\label{fig:fig1}%
+	\includegraphics[width=8cm]{./ass5.2a.pdf}\label{fig:fig1}%
 	\caption{Plot of $X_k$ for different $\alpha\in \{-1,0.8,1,1.2\}$}%
 %	\label{fig:example}%
 \end{figure}
@@ -212,7 +211,7 @@ If $|\alpha|<1$ then $\Var[X_k]=\frac{\sg_W^2}{1-\alpha^2}$. Hence it doesn't de
 For the system in \hyperref[p:p2]{Problem \ref{p:p2}} derive a recursive algorithm for computing the one-step ahead estimator: $\bbE[{X_k\mid Y_1,Y_2,\dots, Y_k,Y_{k+1}}]$. This means we can look ahead one step to estimate the state.
 \end{problem}
 \solve{
-
+We have $Y_{k+1}=hX_{k+1}+W_{k+1}$. and $X_{k+1}=\alpha X_k+Z_k$. Therefore combining these two we have $$Y_{k+1}=\alpha hX_k+(hW_k+Z_{k+1})$$Now take $T_k=hW_k+Z_{k+1}$. Then $T_k\sim N(0,h^2\sg_W^2+\sg_Z^2)$. Now denote $Y_1^k=(Y_1,\dots, Y_k)$ and denote $y_1^k=(y_1,\dots, y_k)$. Then we have  $$f\st_{X_k\mid Y^{K+1}_1}(x\mid y_1^{k+1})=\frac{f\st_{Y_{k+1}\mid X_k,Y^{K}_1}(y_{k+1}\mid x_k,y_1^{k})}{f\st_{Y_{k+1}\mid Y^{K}_1}(y_{k+1}\mid y_1^{k})}f_{X_k\mid Y_1^k}(x_k\mid y_1^k)$$Combining this with $\alpha hX_k+(hW_k+Z_{k+1})$ we can write $$\bbE[X_k\mid Y_1^{k+1}]=h\alpha \bbE[X_{k-1}\mid Y_1^k]$$
 }
 
 
