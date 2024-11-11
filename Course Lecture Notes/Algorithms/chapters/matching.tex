@@ -85,7 +85,7 @@ We have $\eps<\frac1{10n}$. Therefore if $t\geq 200n^4$ then we have $$1\geq \Ph
 	\KwIn{Bipartite adjacency matrix $A$ of $G=(L\cup R,E)$}
 	\KwOut{Decide if $G$ has a perfect matching.}
 	\Begin{
-		$\eps\longleftarrow \frac1{20n}$\;bp-matrix-scaling-potential-increase
+		$\eps\longleftarrow \frac1{20n}$\;
 		\For{$i\in [200n^4]$}{
 			$A\longleftarrow$ Scale every rows of $A$	to make it row stochastic.\;
 			\If{All column-sums are in $(1-\eps,1+\eps)$}{\Return{Yes}}
