@@ -1,0 +1,333 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage{amsmath,mathtools,mathdots}
+\usepackage{amssymb,amsthm}  % assumes amsmath package installed
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{mdframed,stmaryrd}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	citecolor=myr,
+	filecolor=myr,      
+	urlcolor=black,
+	pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
+}
+\usepackage[most,many,breakable]{tcolorbox}
+\usepackage{tikz}
+\usepackage{caption}
+%\usepackage{kpfonts}
+%\usepackage{libertine}
+\usepackage{physics}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+\usepackage{float}
+\usepackage{tfrupee}  
+\usepackage{adjustbox}
+\usepackage{wrapfig}
+\usepackage{listings}
+\newcommand{\mathbbm}[1]{\text{\usefont{U}{bbm}{m}{n}#1}}
+\AfterEndEnvironment{wrapfigure}{\setlength{\intextsep}{0mm}}
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+
+\usetikzlibrary{decorations.pathreplacing,angles,quotes,patterns}
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+\newcounter{problem}
+\tcbuselibrary{theorems,skins,hooks}
+\newtcbtheorem[use counter=problem]{problem}{Problem}
+{%
+	enhanced,
+	breakable,
+	colback = white,
+	frame hidden,
+	boxrule = 0sp,
+	borderline west = {2pt}{0pt}{black},
+	arc=5pt,
+	detach title,
+	before upper = \tcbtitle\par\smallskip,
+	coltitle = black,
+	fonttitle = \bfseries,
+	description font = \mdseries,
+	separator sign none,
+	segmentation style={solid, mytheoremfr},
+}
+{p}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem*{definition*}{Definition}
+\renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\hfill\qed\bigskip\\}
+% To give references for any problem use like this
+% suppose the problem number is p3 then 2 options either 
+% \hyperref[p:p3]{<text you want to use to hyperlink> \ref{p:p3}}
+%                  or directly 
+%                   \ref{p:p3}
+
+
+
+\input{../../letterfonts}
+
+\input{../../macros}
+
+\setlength{\parindent}{0pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 5}\\
+		Email: \href{soham.chatterjee@tifr.res.in}{soham.chatterjee@tifr.res.in} \hfill Dept: STCS\\
+		\normalsize Course: Mathematical Foundations for Computer Sciences \hfill November 26, 2024\\ 
+		\noindent\rule{7in}{2.8pt}}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+\begin{problem}{%problem statement
+	}{p1% problem reference text
+}
+Solve the following parts.
+\begin{itemize}[label=$\bullet$]
+	\item Prove that a group has exactly three subgroups if and only if it is cyclic of order $p^2$ for some prime $p$.
+	\item Let $p<q$ be primes. Show that every group of order $pq$ has a normal Sylow subgroup. Additionally, if $p$ does not divide $q	-1$, then every such group is cyclic. 
+\end{itemize}
+\end{problem}
+\solve{
+\begin{itemize}[label=$\bullet$]
+	\item Suppose $G$ has exactly 3 subgroups. Then $G$ has only one proper subgroup. Let the proper subgroup is $H$. Then take $g\in G\setminus H$. Now $g\neq e$ where $e$ is the identity element. Hence $\la g\ra= G$. Therefore $G$ is cycle. Now $G$ has 3 subgroups. Let $|G|=n$. Therefore $n$ as exactly $3$ divisors. Now if $d\mid n$ the then the number of order $d$ elements in $G$ is $\phi(d)$ where $\phi(d)$ is the Euler Totient function.  \parinn
+	
+	\begin{lemma}
+		 The number of subgroups of a cyclic group $G$ is the same as number of divisors of $n$ where $|G|=n$.
+	\end{lemma} 
+\begin{proof}
+	Let $d\mid n$. Then there are $\phi(d)$ many elements of $G$ whose order is $d$. Therefore take $h\in G$ such that order of $h$ is $d$. Then take the subgroup $\la h\ra$. Clearly $|\la h\ra|=d$. Now for all $h^k$ where $gcd(k,d)=1$ and $k<d$ order of $h^k$ is $d$. There are $\phi(d)$ many such $k$'s. Hence all the elements in $G$ of order $d$ are in the subgroup $\la h \ra$. Therefore for each divisor there exists one subgroup of order $d$. Now if $K$ is a subgroup of $G$. Then $|K|\mid n$. So each subgroup corresponds to a divisor of $n$. Therefore the number of subgroups of $G$ and the number of divisors of $n$ are same.
+\end{proof}
+	
+	Since $G$ has exactly 3 subgroups, $n$ has exactly 3 divisors. And the numbers which have exactly $3$ divisors are of the form $p^2$ for some prime $p$. Hence $G$ has order $p^2$.
+	
+	Now let $G$ is cyclic and $G$ has order $p^2$. Now we just proved that number of divisors of $n$ and the number of subgroups of a cyclic group are same. Since $G$ has order $p^2$ and $p^2$ has $3$ divisors, $G$ has exactly $3$ subgroups.
+	
+	\item Let $G$ be the group with order $pq$. By Sylow Theorem there exists a $q-$Sylow subgroup. Let $n_q$ denote the number of $q-$Sylow subgroups. Then we have $$n_q\equiv 1\bmod q\qquad n_q\mid p$$
+	Now the divisors of $pq$ are $1,p,q,pq$. Among these $q\equiv 0 \bmod q$ and $pq\equiv 0\bmod q$. Since $p<q $ we have $p\equiv p\bmod q$. Therefore the only possible value for $n_q=1$. Hence there is an unique $q-$Sylow subgroup. Call it $Q$
+	\begin{lemma}
+		If a finite group $G$ has only one subgroup of a given order then that subgroup is normal
+	\end{lemma}
+\begin{proof}
+	Let $H$ be a subgroup of $G$ of given order. Let $g\in G$. Then $gHg^{-1}$ is a subgroup of $G$. Now $|gHg^{-1}|=|H|$. Since there is exactly one subgroup of $G$ of given order we have $gHg^{-1}=H$. Since this is true for any arbitrary $g$ we have $H$ is a normal subgroup.
+\end{proof}
+
+Since here there is an unique $q-$Sylow subgroup it is normal by the lemma.
+
+Now let $n_p$ be the number of $p-$Sylow subgroups. Then $n_p\mid q$ and $n_p\equiv 1\bmod p$. Therefore $n_p\in \{1,q\}$. We know $p\nmid q-1$. Therefore $n_p=1$. Hence there is unique $p-$Sylow Subgroup. Call it $P$. Now the only common element of $P$ and $Q$ is the identity element $e$. Therefore $|P\cup Q|=p+q-1$. And $|G|=pq\geq 2q>q+p-1$. Hence $G\setminus (P\cup Q)\neq \emptyset$. Let $g\in G\setminus (P\cup Q)$. Then order of $g$ is neither $p$ nor $q$ since $g\notin P$, $g\notin Q$. But order of $g$ divides $|G|=pq$. Hence order of $g$ is $pq$. Therefore $g$ generates the whole group $G$. Hence if $p\nmid q-1$ then every such group is cyclic.
+\end{itemize}	
+}\parinf
+
+[Me and Soumyadeep solved this together.]\parinn
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p2% problem reference text
+	}
+There are $100$ students that take a test and get a score in the set $\{0,1,2,\dots, 100\}$. Each student $i$ has a number $d_i$ he dislikes and is happy if his score and the sum of all his friends' score is not $d_i$ more than some multiple of $101$. Show that there are scores such that every student is happy.
+\end{problem}
+\solve{	
+Let $S_i$ denote the set of students who are friends of the student $i$. Let $x_i$ be the number student $i$ got. Now student $i$ is happy iff $$x_i+\sum\limits_{j\in S_i}x_j\not\equiv d_i\bmod 101\iff x_i\not\equiv d_i-\sum\limits_{j\in S_i}x_j\bmod 101$$Now let $I_i$ is the indicator random variable if student $i$ is happy. That is $I_i=1$ if student $i$ is happy and $I_i=0$ otherwise. Then $$\bbP[I_i=1]=\bbP\lt[x_i\not\equiv d_i-\sum\limits_{j\in S_i}x_j\bmod 101\rt]=\frac{100}{101}$$Now $$\bbE\lt[\sum_{i=1}^{100}I_i\rt]=\sum_{i=1}^{100}\bbE[I_i]=\sum_{i=1}^{100}\frac{100}{101}>99$$Hence $\bbP\lt[\sum\limits_{i=1}^{100}I_i=100\rt]>0$. Therefore there exists scores such that every student is happy.
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{problem}{%problem statement
+	}{p3% problem reference text
+	}
+Let $R$ be a principal ideal domain. Show that:
+\begin{itemize}[label=$\bullet$]
+	\item  Every proper ideal of $R$ is a product of finitely many maximal ideals, which are uniquely determined up to order.
+\item An ideal $P$ of $R$ is said to be primary if for all $a, b \in R$ such that $a b \in P$ and $a \notin P$, there exists $m>0$ such that $b^m \in P$. Show that $P$ is primary iff $P=\left\langle p^m\right\rangle$ for some $m$ and some $p$ that is either prime or 0 .
+\item Let $P_1, \ldots, P_n$ be primary ideals such that $P_i=\left\langle p_i^{m_i}\right\rangle$ for primes $p_i$ that are not associates. Show that the product of these ideals equals their intersection.
+\item Every proper ideal of $R$ is an intersection of finitely many primary ideals, which are uniquely determined up to order.
+\end{itemize}
+\end{problem}
+\solve{	
+\begin{itemize}[label=$\bullet$]
+	\item  $R$ is a principal ideal domain. Hence $R$ is also an unique factorization domain. Now let $I$ is a proper ideal of $R$. Since $R$ is a principal ideal domain $\exs\ x\in R$ such that $I=\la x\ra$. Now since $R$ is also an unique factorization domain the element $x$ can be written uniquely as a finite product of prime elements of $R$ up to associates such that   $ x =  p_1^{e_1}\cdots  p_k ^{e_k}$. Then we claim $\la x\ra =\la p_1\ra^{e_1}\cdots \la p_k\ra^{e_k}$.
+	\begin{lemma}\label{lm31}
+		If $p$ is a prime element in $R$ then for any $k$, $\la p^k\ra=\la p\ra^k$
+	\end{lemma}
+\begin{proof}
+	Let $a\in \la p^k\ra$. Then $\exs\ r\in R$ such that $a=rp^k$. But then $rp\in \la p\ra$ and $p\in \la p \ra$ Therefore $rp^k\in \la p \ra^k$. Therefore $\la p^k\ra \subseteq \la p \ra^k$. Now let $b\in \la p\ra^k$. Then $\exs\ r_1,\dots, r_k\in R$ such that $b=\prod\limits_{i=1}^k r_ip=\lt[\prod\limits_{i=1}^k r_i\rt]p^k$. Denote $r\coloneqq \prod\limits_{i=1}^k r_i$. Then $b=rp^k$. Hence $b\in \la p^k\ra$. Therefore $\la p\ra^k\subseteq \la p^k\ra$. Hence we have $\la p^k\ra=\la p \ra^k$. 
+\end{proof}
+	\begin{lemma}\label{lm32}
+		$\la x\ra =\la p_1^{e_1}\ra\cdots \la p_k^{e_k}\ra$
+	\end{lemma}
+\begin{proof}
+	Let $a\in \la x\ra$. Then there exists $r\in R$ such that $a=rx$. Since   $ x =  p_1^{e_1}\cdots  p_k ^{e_k}$ we have $a=rp_1^{e_1}\cdots  p_k ^{e_k}$. Therefore $rp_1^{e_1}\in \la p_1^{e_1}\ra $ and $p_i\in \la p_i^{e_i}\ra$ for all $i\in\{2,\dots, k\}$. Therefore $a\in \la p_1^{e_1}\ra\cdots \la p_k^{e_k}\ra$. Hence $\la x\ra \subseteq \la p_1^{e_1}\ra\cdots \la p_k^{e_k}\ra$. \parinn
+	
+	Now let $b\in \la p_1^{e_1}\ra\cdots \la p_k^{e_k}\ra$. Then there exists $r_1,\dots, r_k\in R$ such that $b=\prod\limits_{i=1}^k(r_ip_i^{e_i})=\lt[\prod\limits_{i=1}^kr_i\rt]\prod\limits_{i=1}^kp_i^{e_i}$. Now denote  $r\coloneqq \prod\limits_{i=1}^kr_i$. Then $b=r\prod\limits_{i=1}^k p_i^{e_i}=rx$. Therefore $b\in \la x\ra$. Hence $\la p_1^{e_1}\ra\cdots \la p_k^{e_k}\ra\subseteq \la x\ra$. Therefore $\la x\ra = \la p_1^{e_1}\ra\cdots \la p_k^{e_k}\ra$. 
+\end{proof}
+Hence $\la x\ra =\la p_1^{e_1}\ra\cdots \la p_k^{e_k}\ra$. Now using \lemref{lm31} we have $$\la x\ra =\la p_1^{e_1}\ra\cdots \la p_k^{e_k}\ra=\la p_1\ra^{e_1}\cdots \la p_k\ra^{e_k}$$
+
+Therefore $\la x\ra$ is the product  of finitely many prime ideals. Now we will show that prime ideals are maximal ideals in a principal ideal domain.
+\begin{lemma}
+	Every nonzero prime ideal in a principal ideal domain is maximal ideal.
+\end{lemma}
+\begin{proof}
+	Let $\la p\ra$ be a nonzero prime ideal in the principal ideal domain. Let $I=\la y\ra$ where $y\in R$ be any idea which contains $\la p\ra$. We will show that $I=\la p\ra$ or $I=R$. Since $\la p\ra \subseteq I$ we have $p\in I$. Therefore there exists $r\in R$ such that $p=ry$. Since $\la p\ra$ is a prime ideal and $ry\in \la p\ra$ either $r\in \la p \ra$ or $y\in \la p \ra$. If $y\in \la p\ra$  then $\la y\ra=\la p\ra$.. But if $r\in \la p\ra$ then $\exs\ s\in R$ such that $r=ps$. Then $p=ry=psy\implies sx=1$. Therefore $y$ is an unit. Therefore $I=R$. Hence $\la p\ra$ is a maximal ideal
+\end{proof}
+Since $\la x\ra = \la p_1\ra^{e_1}\cdots \la p_k\ra^{e_k}$, $\forall\ i\in[k]$, $\la p_i\ra$ is a maximal ideal. Therefore $\la x\ra$ can be written as a finitely many product of maximal ideals which are uniquely determined up to order. 
+	\item Suppose $P$ is nonzero ideal. Since $R$ is a principal ideal domain it is also an unique factorization domain. Since $P$ is an ideal of $R$ let $P$ is generated by $x\in R$. Therefore the element $x$ can be written uniquely as a finite product of prime elements of $R$ up to associates such that   $ x =  p_1^{e_1}\cdots  p_k ^{e_k} $. Let $x_i\coloneqq \prod\limits_{j=i}^{n} p_j^{e_j}$.\parinn 
+	
+	Let $P$ is primary ideal. Then we have $x=p_1 ^{e_1}x_2$. So if $p_1 ^{e_1}\notin P$ then $x_2^{m_2}\in P$ for some $m_2\in\bbN$, $m_2>0$. If $p_1 ^{e_1}\in P$ then $P=\la p_1 ^{e_1}\ra$ and we are done otherwise $x_2^{m_2}\in P$. Now $x_2^{m_2}=\prod\limits_{j=2}^{n} p_j^{e_jm_2}$. Since $x_2^{m_2}\in P$ we have $x_2^{m_2}=xr$ for some $r\in R$. Now $$x_2^{m_2}=xr\implies \prod\limits_{j=2}^{n} p_j^{e_jm_2}=r\prod\limits_{j=1}^{n} p_j^{e_j}\implies  \prod\limits_{j=2}^{n} p_j^{(m_2-1)e_j}=rp_1^{e_1} \implies p_1^{e_1}\mid \prod\limits_{j=1}^{n} p_i^{(m_2-1)e_i} $$Therefore  $\exs\ i\in\{2,\dots, k\}$ such that $p_1\mid p_i^{(m_2-1)e_i}$. So $p_1$ and $p_i$ are associates which is not possible unless $m_2=1$ or $P=0$. Hence $m_2=1$. Therefore $x_2\in P$. 
+	
+	Now suppose $x_i\in P$ for any $i\in\{2,\dots, k\}$. Then $x_i=p_i^{e_i}x_{i+1}$. Therefore is $p_i^{e_i}\notin P$ then $x_{i+1}^{m_{i+1}}\in P$ for some $m_{i+1}\in \bbN$ and $m_{i+1}>0$. If $p_i^{e_i}\in P$ then $P=\la p_i^{e_i}\ra$ and we are done. Else $x_{i+1}^{m_{i+1}}\in P$. Now $$x_{i+1}^{m_{i+1}}=\prod_{j=i+1}^k p_j^{e_jm_{i+1}}$$Since $x_{i+1}^{m_{i+1}}\in P$, $\exs\ r_{i+1}\in R$ such that $x_{i+1}^{m_{i+1}}=r_{i+1}\prod\limits_{j=1}^{n} p_j^{e_j}$. Then we have $$\prod_{j=i+1}^k p_j^{e_jm_{i+1}}=r_{i+1}\prod\limits_{j=1}^{n} p_j^{e_j}\implies\prod_{j=i+1}^k p_j^{(m_{i+1}-1)e_j}=r\prod_{j=1}^ip_j^{e_j} \implies p_j\mid \prod_{j=i+1}^k p_j^{(m_{i+1}-1)e_j}\ \forall\ j\in[i]$$Therefore for all $j\in [i]$, $\exs\ j_l\in \{i+1,\dots, k\}$ such that $$p_j\mid p_{j_l}^{(m_{i+1}-1)e_{j_l}}$$Therefore $p_j$ and $p_{j_l}$ are associates which is not possible unless $m_{i+1}=1$ or $P=0$. Therefore $m_{i+1}=1$. Hence $x_{i+1}\in P$. 
+	
+	Therefore we can continue like this and obtain either $p_1^{e_1}\in P\implies P=\la p_1^{e_1}\ra$ or else  $p_1^{e_1}\notin P \implies x_2\in P$. For second case either  then  $p_2^{e_2}\in P\implies P=\la p_2^{e_2}\ra$ or else  $p_2^{e_2}\notin P\implies x_3\in P$.  For second case  then  $p_3^{e_3}\in P\implies P=\la p_3^{e_3}\ra$ or else  $p_3^{e_3}\notin P\implies x_4\in P$. Continuing like this we have if $x_i\in P$ then either $p_i^{e_i}\in P\implies P=\la p_i^{e_i}\ra$ or $p_i^{e_i}\notin P\implies x_{i+1}\in P$. And at the end we get either $p_{k-1}^{e_{k-1}}\in P\implies P=\la p_{k-1}^{e_{k-1}}$ else  $p_{k-1}^{e_{k-1}}\notin P\implies x_k=p_k^{e_k}\in P\implies P=\la p_k^{e_k}\ra$. Therefore we obtain $\exs \ i\in[k]$ such that $P=\la p_i^{e_i}\ra $. 
+	
+	
+	Now suppose $P=\la p^m\ra$. Now let $ab\in P$ where $a,b\in R$. Suppose $a\notin P$. Since $ab\in P$, $p^m\mid ab\implies p\mid ab$. Since $p$ is prime $p\mid a$ or $p\mid b$. Now we will show that if $b^k\notin P$ for all $K\in \bbN$ then $a\in P$. Now $b^k\notin P$ for all $k\in \bbN$. Hence $p^m\nmid b^k$ for all $k\in\bbN$. Therefore $p\nmid b$ since otherwise $p^n\mid b^n$. Therefore $p\mid a$. Since $p^n\mid ab$ and $p^n\nmid b$ we have $p^n\mid a$. Therefore $a\in P$. Hence $P$ is primary ideal. 
+	\item Let $a\in \prod\limits_{i=1}^n \la p_i^{m_i}\ra$. Then $\exs\ r_i\in R$ for all $i\in [n]$ such that $$a=\prod\limits_{i=1}^n r_ip_i^{m_i}= \underbrace{\lt[\prod\limits_{i=1}^n r_i\rt]}_{r}\prod\limits_{i=1}^n p_i^{m_i}= r\prod\limits_{i=1}^n p_i^{m_i}$$Now $r\in R$. And $r\prod\limits_{i=1}^n p_i^{m_i}=\lt[r\prod\limits_{i\neq j} p_i^{m_i}\rt]p_j^{m_j}\in \la p_j^{m_j}\ra$ for all $j\in[n]$. Hence $r\prod\limits_{i=1}^n p_i^{m_i}\in \la p_j^{m_j}\ra$ for all $j\in[n]$. Therefore $r\prod\limits_{i=1}^n p_i^{m_i}\in \bigcap\limits_{i=1}^n \la p_i^{m_i}\ra$. Hence $\prod\limits_{i=1}^n \la p_i^{r_i}\ra \subseteq \bigcap\limits_{i=1}^n \la p_i^{m_i}\ra$.\parinn
+	
+	Let $a\in \bigcap \limits_{i=1}^n \la p_i^{m_i}\ra$. Then $\exs \ r_i\in R$ such that $a=r_ip_i^{m_i}$. Now  $$r_1p_1^{m_1}=r_2p_2^{m_2}\implies p_1\mid r_2p_2^{m_2},p_2\mid r_1p_1^{m_1}\implies p_1\mid p_2\text{ or }p_1\mid r_2\text{ and }p_2\mid p_1\text{ or }p_2\mid r_1$$Since $p_1$ and $p_2$ are not associates we have $p_1\mid r_2$ and $p_2\mid r_1$. Since $p_1\nmid p_2$ and $p_2\nmid p_1$ we have $p_1^{m_1}\mid r_2$ and $p_2^{m_2}\mid r_1$. So let $r_1=p_2^{m_2}r_1^{(2)}$ where $r^{(1)}\in R$. Then $a=p_1^{m_1}p_2^{m_2}r_1^{(2)}$. Now suppose we have $a=r_1^{(i)}\prod\limits_{j=1}^i p_j^{m_j}$ where $r_1^{(i)}\in R$. Now $a=p_{i+1}^{m_{i+1}}r_{i+1}$. Therefore $$r_1^{(i)}\prod\limits_{j=1}^i p_j^{m_j}=p_{i+1}^{m_{i+1}}r_{i+1}\implies p_{i+1}^{m_{i+1}}\mid r_1^{(i)}\prod\limits_{j=1}^i p_j^{m_j}\implies p_{i+1}\mid r_1^{(i)}\text{ or }\exs\ j\in [i],\ p_{i+1}\mid p_j^{m_j}$$But $p_{i+1}$ and $p_j$ for all $j\in[i]$ are not associates. Therefore $p_{i+1}\nmid p_j^{m_j}$ for all $j\in[i]$. Hence $p_{i+1}\mid r_1^{(i)}$. Therefore $p_{i+1}^{m_{i+1}}\mid r_1^{(i)}$. Hence suppose $r_{1}^{(i)}=p_{i+1}^{m_{i+1}}r_1^{(i+1)}$ where $r_1^{(i+1)}\in R$. Therefore $a=r_1^{(i+1)}\prod\limits_{j=1}^{i+1}p_j^{m_j}$. Therefore for $i=n$ we get $a=r_1^{(n)}\prod\limits_{j=1}^n p_j^{m_j}$. Denote $r\coloneqq r_1^{(n)}$. Then $a=r\prod\limits_{i=1}^n p_i^{m_i}$.  Now $rp_1^{m_1}\in \la p_1^{m_1}$ and for all $i\in\{2,\dots, n\} $ we have $p_i^{m_i}\in \la p_i^{m_i}\ra$. Therefore $a=r_1^{(n)}\prod\limits_{j=1}^n p_j^{m_j}\in \prod\limits_{i=1}^n \la p_i^{m_i}\ra$. Hence $\bigcap\limits_{i=1}^n \la p_i^{m_i}\ra \subseteq \prod\limits_{i=1}^n \la p_i^{m_i}\ra$. Therefore we have $\bigcap\limits_{i=1}^n \la p_i^{m_i}\ra = \prod\limits_{i=1}^n \la p_i^{m_i}\ra$
+\item $R$ is a principal ideal domain. Hence $R$ is also an unique factorization domain. Now let $I$ is a proper ideal of $R$. Since $R$ is a principal ideal domain $\exs\ x\in R$ such that $I=\la x\ra$. Now since $R$ is also an unique factorization domain the element $x$ can be written uniquely as a finite product of prime elements of $R$ up to associates such that   $ x =  p_1^{e_1}\cdots  p_k ^{e_k}$. Hence by \lemref{lm32} we have $\la x\ra =\prod\limits_{i=1}^k \la p_i^{e_i}\ra$. Now by te second part for all $i\in[k]$, $\la p_i^{e_i}\ra$ are primary ideals. Now by the last part we know $\prod\limits_{i=1}^k \la p_i^{e_i}\ra=\bigcap\limits_{i=1}^k \la p_i^{e_i}\ra$. Therefore we have $I=\la x\ra= \bigcap\limits_{i=1}^k \la p_i^{e_i}\ra$. Hence every proper ideal of $R$ is an intersection of finitely many primary ideals, which are uniquely determined up to order.
+\end{itemize}
+
+}\parinf
+
+[Me and Soumyadeep solved this together.]\parinn
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+	}{p4% problem reference text
+	}
+Shuffles and permutations.
+\begin{itemize}[label=$\bullet$]
+	\item Show that two permutations $\pi$ and $\sigma$ are conjugates if and only if they have the same cycle structure, i.e., for all $i$, both $\pi$ and $\sigma$ have the same number of cycles of length $i$.
+\item Find the smallest $m>1$ for which there are two cyclic permutations $\pi, \sigma \in S_m$ such that $\pi \circ \sigma \circ \pi^{-1} \circ \sigma^{-1}$ is a cyclic permutation.
+\item The riffle shuffle on a standard deck of playing cards is the shuffle where one partitions the cards into a top half and a bottom half, and, starting from the
+lowest card in the top half, interleaves cards from the two halves. Show that the riffle shuffle is not complete, i.e. there is no distribution $\mathcal{D}$ on $\mathbb{N}$ such that sampling a number $n$ from $\mathcal{D}$ and performing $n$ riffle shuffles starting from a perfectly ordered deck of cards yields a uniformly random deck of cards.
+
+More generally, a set of $k$ shuffles is said to be complete if there is a distribution $\mathcal{D}$ over finite strings with alphabet $[k]$ such that sampling a string $s$ from $\mathcal{D}$ and performing shuffles $s_1, s_2, \ldots$ (in order) starting from a perfectly ordered deck of cards yields a uniformly random deck of cards. What is the size of the smallest complete set of shuffles that contains the riffle shuffle?
+\end{itemize}
+\end{problem}\parinf
+\textit{\textbf{Solution:}}\parinn
+\begin{itemize}
+	\item Let $\pi$ and $\sg$ are conjugates. Then $\exs$ a permutation $\tau$ such that $\pi=\tau\sg\tau^{-1}$. Suppose $\sg(i)=j$. Then $$\pi(\tau(i))=\tau\sg\tau^{-1}(\tau(i))=\tau\sg(i)=\tau(j)$$Therefore if $i_1\to i_2\to \dots, i_k\to i_1$ is a $k$ length cycle in $\sg$. Then $\tau(i_1)\to \tau(i_2)\to \cdots\to \tau(i_k)\to \tau(i_1)$ is also cycle in $\pi$. So each $k$ length cycle in $\sg$ corresponds to a $k$ length cycle in $\pi$ for all $k$. Therefore $\pi$ and $\sg$ has the same cycle structure.
+	\parinn
+	
+	Let $\pi$ and $\sg$ have same cycle structure. Let $i_1\to i_2\o\cdots i_k\to i_1$  be a $k$ length cycle in $\sg$ and $j_1\to j_2\o\cdots j_k\to j_1$ be a $k$ length cycle in $\pi$. Then let $\tau $ be the permutation such that $\tau(i_l)=j_l$ for each $l\in[k]$. Then $$\tau\sg\tau^{-1}(j_l)=\tau\sg(i_l)=\tau(i_{l+1})=j_{l+1}\quad\text{where by $i{k+1}, j_{k+1}$ we mean $i_1,j_1$}$$We do this for all $k$ length cycles in $\sg$ and $\pi$ for all $k$. Therefore we get a permutation $\tau $ such that $\pi=\tau\sg\tau^{-1}$. Hence $\pi$ and $\tau $ are conjugates.
+	\item For any two permutations $\sg,\pi$ we call $\sg\circ\pi\circ \sg^{-1}\circ\pi^{-1}$ as the commutator of $\sg$ and $\pi$ and denote by $[\sg,\pi]$. $m=2$ is not possible since $S_2=\{id, (12)\}$ where $id$ is not a cyclic permutation. $(12)(12)=id$. Therefore $m>3$. Now for $m=3$ we have only two 3 length cycles which are $(123)$ and $(132)$ and $(123)^{-1}=(132)$. So we can not take $\pi=(123)$ and $\sg=(132)$ since $\pi\sg\pi^{-1}\sg^{-1}=id$. So $\pi=\sg$. In that case we have $(123)(123)=(132)$ and $(132)(132)=(123)$. So $$(123)(123)(132)(132)=id\qquad (132)(132)(123)(123)=id$$So in case of $S_3$ this is not possible. Now for $S_4$ we have calculated all possible commutators of all 6 $4-$length cycles in $S_4$ with the following python code:
+
+
+\begin{lstlisting}[language=Python]
+from sympy.combinatorics import Permutation, PermutationGroup
+# We have taken (0,1,2,3) instead of (1,2,3,4) to make the code work
+cycle_1 = Permutation([1, 2, 3, 0])  # (0 1 2 3)
+cycle_2 = Permutation([1, 3, 0, 2])  # (0 1 3 2)
+cycle_3 = Permutation([2, 3, 1, 0])  # (0 2 1 3)
+cycle_4 = Permutation([2, 0, 3, 1])  # (0 2 3 1)
+cycle_5 = Permutation([3, 2, 0, 1])  # (0 3 1 2)
+cycle_6 = Permutation([3, 0, 1, 2])  # (0 3 2 1)
+	
+six_cycles = [cycle_1, cycle_2, cycle_3, cycle_4, cycle_5, cycle_6]
+
+# Function to compute the commutator of two permutations
+def commutator(p1, p2):
+	return p1 * p2 * p1**-1 * p2**-1
+
+# Compute all commutators of 4-cycles
+for sigma in six_cycles:
+	for tau in six_cycles:
+		print(sigma,  tau, commutator(sigma, tau))
+\end{lstlisting}
+
+And we got the following table:
+
+\begin{align*}
+	 & [(1 2 3 4), (1 2 3 4)]= id        &  & [(1 2 3 4), (1 2 4 3)]= (1 4 3)    & [(1 2 3 4), (1 3 2 4)] & = (2 4 3)    \\
+	 & [(1 2 3 4), (1 3 4 2)]= (1 3 2) &  & [(1 2 3 4), (1 4 2 3)]= (1 4 2)    & [(1 2 3 4), (1 4 3 2)] & = id        \\
+	 & [(1 2 4 3), (1 2 3 4)]= (1 3 4)    &  & [(1 2 4 3), (1 2 4 3)]= id        & [(1 2 4 3), (1 3 2 4)] & = (1 3 2) \\
+	 & [(1 2 4 3), (1 3 4 2)]=    id     &  & [(1 2 4 3), (1 4 2 3)]= (2 3 4)    & [(1 2 4 3), (1 4 3 2)] & = (1 4 2)    \\
+	 & [(1 3 2 4), (1 2 3 4)]= (2 3 4)    &  & [(1 3 2 4), (1 2 4 3)]= (1 2 3) & [(1 3 2 4), (1 3 2 4)] & = id      \\
+	 & [(1 3 2 4), (1 3 4 2)]= (1 4 2)    &  & [(1 3 2 4), (1 4 2 3)]= id        & [(1 3 2 4), (1 4 3 2)] & = (1 4 3)    \\
+	 & [(1 3 4 2), (1 2 3 4)]= (1 2 3) &  & [(1 3 4 2), (1 2 4 3)]= id      & [(1 3 4 2), (1 3 2 4)] & = (1 2 4)    \\
+	 & [(1 3 4 2), (1 3 4 2)]= id        &  & [(1 3 4 2), (1 4 2 3)]= (1 4 3)    & [(1 3 4 2), (1 4 3 2)] & = (2 4 3)    \\
+	 & [(1 4 2 3), (1 2 3 4)]= (1 2 4)    &  & [(1 4 2 3), (1 2 4 3)]= (2 4 3)    & [(1 4 2 3), (1 3 2 4)] & = id        \\
+	 & [(1 4 2 3), (1 3 4 2)]= (1 3 4)    &  & [(1 4 2 3), (1 4 2 3)]= id        & [(1 4 2 3), (1 4 3 2)] & = (1 3 2) \\
+	 & [(1 4 3 2), (1 2 3 4)]= id        &  & [(1 4 3 2), (1 2 4 3)]= (1 2 4)    & [(1 4 3 2), (1 3 2 4)] & = (1 3 4)    \\
+	 & [(1 4 3 2), (1 3 4 2)]= (2 3 4)    &  & [(1 4 3 2), (1 4 2 3)]=(1 2 3) & [(1 4 3 2), (1 4 3 2)] & = id
+\end{align*}
+Hence in case $S_4$ such two permutations are not possible. Now in $S_5$ take $\sg=(12345)$ and $\pi=(13542)$. Then $$\sg^{-1}=(54321)=(15432)\qquad \pi^{-1}=(24531)=(12453)$$Now we have $$\sg\circ\pi=(143)\qquad \sg^{-1}\circ\pi^{-1}=(253)$$Therefore $$[\sg,\pi]=\sg\circ\pi\circ \sg^{-1}\circ\pi^{-1}=(143)(253)=(14532)$$Therefore the smallest $m$ is $5$. 
+\end{itemize}\parinf
+
+[Me and Soumyadeep solved this together.]\parinn	
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+}{p5% problem reference text
+}
+Prove/disprove:
+\begin{itemize}[label=$\bullet$]
+	\item If $R$ is a ring with identity but without any proper right ideals, the $R$ is a division ring.
+\item Let $n$ be an integer and $R$ be a ring such that $r^n=r$ for all $r \in R$. Then, the characteristic of $R$ is square-free. Moreover, if $n$ is even, $R$ has characteristic 2 .
+\item The sum of two principal ideals is a principal ideal.
+\end{itemize}
+\end{problem}
+\solve{
+	\begin{itemize}[label=$\bullet$]
+		\item Let $a$ be an element of $R$, $a\neq 0$. Now if $\la a \ra\subsetneq R$ then $R$ has a proper ideal which is not possible. Hence $aR=R$. So $1\in aR$. Therefore $\exs\ b\in R$ such that $ab=1$. Now we also have $bR=R$. Therefore $\exs\ c\in R$ such that $bc=1$. Then we have $$a=a(bc)=(ab)c=c$$So the multiplicative inverse of $a$ exists in $R$ and it is $b$.  Therefore $a$ is an unit. Since $a$ is an arbitrary nonzero element in $R$, $R$ is a division ring. 
+		
+		So the statement is True.
+		\item Let $r$ be any element of $R$. Let $m$ denotes the characteristic of $R$. Suppose $m$ is not square free. Then there exists a prime $p$ such that $p^2\mid m$. Now we have $(pr)^n=pr$. 
+		\begin{lemma}
+			$(pr)^n=p^nr^n$ for all positive integer $n$.
+		\end{lemma}
+		\begin{proof}
+			We will show this by induction. For $n=1$ this is true. Hence the base case follows. Suppose this is true for $n-1$.  Then $$(pr)^n=(pr)^{n-1}\sum_{i=1}^pr=p^{n-1}r^{n-1}\sum_{i=1}^p r=\sum_{i=1}^p p^{n-1}r^{n}=p^nr^n$$
+		\end{proof}
+		
+		So now $$(pr)^n=p^nr^n=p^nr=pr\implies (p^n-p)r=0$$ Therefore $m\mid p^n-p$. Now $p^2\mid m$. Therefore $p^2\mid p^n-p$. Now $p^n-p=p(p^{n-1}-1)$. Hence $p\mid p^{n-1}-1$ but that is not possible. Hence $m$ is square free.
+		
+		Now let $p$ be a prime such that $p\mid m$. Let $r$ be any element of $R$. Now $((p-1)r )^n=(p-1)r$ and we have $((p-1)r)^n=(p-1)^nr^n=(p-1)^n r$. Therefore $((p-1)^n-(p-1))r=0$. Therefore $m\mid (p-1)^n-(p-1)$. Therefore ${p\mid (p-1)^n-(p-1)}\implies {p\mid (p-1)((p-1)^{n-1}-1)}\implies {p\mid (p-1)^{n-1}-1}\implies (p-1)^{n-1}\equiv 1\bmod p$. Now $$(p-1)\equiv -1\bmod p\implies (p-1)^{n-1}\equiv (-1)^{n-1}\equiv -1\bmod p\implies 1\equiv -1\bmod p\implies 2\equiv 0\bmod p$$Now $2\equiv 0\bmod p$ is only possible when $p=2$. Therefore the only prime that divides $p$ is $2$. Hence $m=2$. 	So the statement is True.
+		
+		\item In the ring $\bbZ[x]$ take the ideals $\la 3\ra$ and $\la x\ra$. Now the sum of these two ideals contains both $3$ and $x$ and therefore $\la 3\ra+\la x\ra=\la 3,x\ra$. Which is not a principal ideal domain. 
+		
+		Hence this statement is false.
+	\end{itemize}
+}\parinf
+
+[Me and Soumyadeep solved this together.]\parinn
+\end{document}

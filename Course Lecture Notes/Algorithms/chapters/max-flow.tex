@@ -1,4 +1,4 @@
-\chapter{Maximum Flow}
+\chapter{Maximum Flow}\label{max-flow}
 \section{Flow}
 Suppose we are given a directed graph $G=(V,E)$ with a source vertex $s$ and a target vertex $t$. And additionally for every edge $e\in E$ we are given a number $c_e\in \bbZ_0$ which is called the capacity of the edge.
 \begin{Definition}{Flow}{flow}
@@ -497,31 +497,31 @@ Now we need a bound on the number of push operations. We will count separately t
 \end{proof}
 
 
-Now we will count the number of non-saturating pushes. For such pushes along any edge $(v,u)$ the $\textit{excess}_f(v)$ goes to $0$. We define the potential function for a preflow $f$, $$\phi(f)=\sum_{v:\textit{ excess}_f(v)>0}l(v)$$Now $\phi(f)\geq 0$ for all preflow $f$ and initially at the start of the algorithm $\phi(f^0)=0$. 
+Now we will count the number of non-saturating pushes. For such pushes along any edge $(v,u)$ the $\textit{excess}_f(v)$ goes to $0$. We define the potential function for a preflow $f$, $$\Phi(f)=\sum_{v:\textit{ excess}_f(v)>0}l(v)$$Now $\Phi(f)\geq 0$ for all preflow $f$ and initially at the start of the algorithm $\Phi(f^0)=0$. 
 
 \begin{lemma}{}{nonsatpushleveldecrease1}
-	For each non-saturating push  $\phi(f)$ decreases by at least 1.
+	For each non-saturating push  $\Phi(f)$ decreases by at least 1.
 \end{lemma}
 \begin{proof}
-	Suppose 	at any iteration $i$  a non-saturating push occur along an edge $(v,w)$. Therefore $l(w)=l(v)-1$. We will show that $\phi(f^i)\leq \phi(f^{i-1})-1$.		We have $\dl=\textit{excess}_{f^{i-1}}(v)$. Now if $(v,w)$ is a forward edge then new flow along $(v,w)$ is $f^i(v,w)=f^{i-1}(v,w)+\textit{excess}_{f^{i-1}}(v)$. Since $(v,w)\in \textit{out}(v)$ 
+	Suppose 	at any iteration $i$  a non-saturating push occur along an edge $(v,w)$. Therefore $l(w)=l(v)-1$. We will show that $\Phi(f^i)\leq \Phi(f^{i-1})-1$.		We have $\dl=\textit{excess}_{f^{i-1}}(v)$. Now if $(v,w)$ is a forward edge then new flow along $(v,w)$ is $f^i(v,w)=f^{i-1}(v,w)+\textit{excess}_{f^{i-1}}(v)$. Since $(v,w)\in \textit{out}(v)$ 
 		$$\textit{excess}_{f^i}(v)=\sum_{e\in \textit{in}(v)}f^i(e)-\sum_{e\in \textit{out}(v)}f^i(e)=          \sum_{e\in \textit{in}(v)}f^{i-1}(e)-\sum_{e\in \textit{out}(v)\setminus\{(v,w)\}}f^{i-1}(e)-f^i(v,w)  =   \textit{excess}_{f^{i-1}}(v)-\dl=0$$ Otherwise if $(v,w)$ is a backward edge. Then  ew flow along $(w,v)$ is  $f^i(w,v)=f^{i-1}(w,v)-\textit{excess}_{f^{i-1}}(v)$. Since $(w,v)\in \textit{in}(v)$ $$\textit{excess}_{f^i}(v)=\sum_{e\in \textit{in}(v)}f^i(e)-\sum_{e\in \textit{out}(v)}f^i(e)=    f^{i}(w,v) +     \sum_{e\in \textit{in}(v)\setminus\{(w,v)\}}f^{i-1}(e)-\sum_{e\in \textit{out}(v)}f^{i-1}(e)  =  -\dl+ \textit{excess}_{f^{i-1}}(v)=0$$In both cases $\textit{excess}_{f^i}(v)=0$. Therefore 	 $v$ goes out of the summation. 		Now there are two cases depending on the value of $\textit{excess}_{f^{i-1}}(w)$\begin{itemize}[label=$\bullet$]
 			\item \textbf{Case 1:}
-		If $\textit{excess}_{f^{i-1}}(w)>0$ i.e. $w$ had excess flow before push operation then $\phi(f^{i-1})$ decreases by $l(v)$ i.e. $\phi(f^i)=\phi(f^{i-1})-l(v)$. Since $l(w)=l(v)-1$ and by  \hyperref[obs-labelsmonotone]{Observation \ref{obs-labelsmonotone}} $l(v)\geq 1$. Therefore $\phi(f^i)=\phi(f^{i-1})-l(v)\leq \phi(f^{i-1})-1$.
-	\item \textbf{Case 2:}	If $\textit{excess}_{f^{i-1}}(w)=0$, then $\textit{excess}_{f^i}(w)=\textit{excess}_{f^{i-1}}(w)+\dl>0$ since $\dl=\textit{excess}_{f^{i-1}}(v)>0$ and therefore $\phi(f^i)=\phi(f^{i-1})-l(v)+l(w)=\phi(f^{i-1})-1$
+		If $\textit{excess}_{f^{i-1}}(w)>0$ i.e. $w$ had excess flow before push operation then $\Phi(f^{i-1})$ decreases by $l(v)$ i.e. $\Phi(f^i)=\Phi(f^{i-1})-l(v)$. Since $l(w)=l(v)-1$ and by  \hyperref[obs-labelsmonotone]{Observation \ref{obs-labelsmonotone}} $l(v)\geq 1$. Therefore $\Phi(f^i)=\Phi(f^{i-1})-l(v)\leq \Phi(f^{i-1})-1$.
+	\item \textbf{Case 2:}	If $\textit{excess}_{f^{i-1}}(w)=0$, then $\textit{excess}_{f^i}(w)=\textit{excess}_{f^{i-1}}(w)+\dl>0$ since $\dl=\textit{excess}_{f^{i-1}}(v)>0$ and therefore $\Phi(f^i)=\Phi(f^{i-1})-l(v)+l(w)=\Phi(f^{i-1})-1$
 		\end{itemize}
-Hence for both the cases $\phi(f^i)\leq \phi(f^{i-1})-1$. Therefore $\phi(f^{i-1})$ decreases by at least 1.
+Hence for both the cases $\Phi(f^i)\leq \Phi(f^{i-1})-1$. Therefore $\Phi(f^{i-1})$ decreases by at least 1.
 \end{proof}
 
 
 \begin{observation}
-	For relabeling operation $\phi(f)$ increases by $1$.
+	For relabeling operation $\Phi(f)$ increases by $1$.
 \end{observation}
-Since there are at most $2n^2$ relabeling operations by  \corref{relabel2n2}, $\phi(f)$ increases by at most $2n^2$ with relabeling operations.
+Since there are at most $2n^2$ relabeling operations by  \corref{relabel2n2}, $\Phi(f)$ increases by at most $2n^2$ with relabeling operations.
 \begin{observation}
-	For each saturating push $\textit{excess}_f(v,w)$ might not go to $0$ and therefore $\phi$ might increase.
+	For each saturating push $\textit{excess}_f(v,w)$ might not go to $0$ and therefore $\Phi$ might increase.
 \end{observation}
-Now by \lmref{satpush2mn} total number of saturated pushes is at most $2mn$. And by \corref{eachvertexlabel2n} each vertex has label at most $2n$. Hence in total $\phi(f)$ can increase at most $2mn\times 2n=4mn^2$ by saturated pushes. Hence $\phi(f)$ increases at most $2n^2+2mn\times 2m=O(mn^2)$.
+Now by \lmref{satpush2mn} total number of saturated pushes is at most $2mn$. And by \corref{eachvertexlabel2n} each vertex has label at most $2n$. Hence in total $\Phi(f)$ can increase at most $2mn\times 2n=4mn^2$ by saturated pushes. Hence $\Phi(f)$ increases at most $2n^2+2mn\times 2m=O(mn^2)$.
 
 
-Now $$\#\text{Non-saturating Pushes}  \leq \text{Total decrease in }\phi\leq \text{Total increase in }\phi\leq 2n^2+4mn^2=O(mn^2)$$
+Now $$\#\text{Non-saturating Pushes}  \leq \text{Total decrease in }\Phi\leq \text{Total increase in }\Phi\leq 2n^2+4mn^2=O(mn^2)$$
 Therefore total number of iterations of the \prb{While} loop is $\#$Relabeling$+\#$Saturated Push$+\#$Non-saturated Push$= 2n^2+2mn+O(mn^2)=O(mn^2)$.  There fore the algorithm takes $O(mn^2)$ iteration. In each iteration it takes $O(m+n)$ time. Therefore the runtime of the algorithm is $O(mn^2)O(n+m)=O(m^2n^2)$. 

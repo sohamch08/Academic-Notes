@@ -1,6 +1,6 @@
 \chapter{Greedy Algorithm}
 
-\section{Maximal Matching}
+\section{Maximal Matching}\label{greedy:max-matching}
 
 \begin{algoprob}
 	\problemtitle{Maximal Matching}
@@ -9,7 +9,7 @@
 \end{algoprob}
 Before diving into the algorithm to find a matching or maximal matching we first define what is a matching.
 \begin{Definition}{Matching}{}
-	For a graph $G=(V,E)$ a matching $M\subseteq E$ is a set of edges such that no two edges in $M$ are incident on same vertex.
+	Given a graph $G=(V,E)$, $M\subseteq E$ is said to be a matching if $M$ is an independent set of edges i.e. no two edges of $M$ are incident on same vertex.
 \end{Definition}
 \begin{Definition}{Maximal Matching}{}
 	For a graph $G=(V,E)$ a matching $M\subseteq E$ is maximal if it cannot be extended and still by adding an edge.

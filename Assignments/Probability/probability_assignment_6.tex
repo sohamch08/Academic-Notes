@@ -1,0 +1,304 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage{amsmath,mathtools,mathdots,adjustbox,wrapfig}
+\usepackage{amssymb,amsthm}  % assumes amsmath package installed
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{mdframed}
+%\usepackage{subfig}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=doc!80,
+    citecolor=myr,
+    filecolor=myr,      
+    urlcolor=doc!80,
+    pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
+}
+\usepackage[most,many,breakable]{tcolorbox}
+\usepackage{tikz}
+%\usepackage{caption}
+\usepackage{mathpazo}
+\usepackage[skip=0.333\baselineskip]{caption}
+\usepackage{subcaption}
+% Use the libertine package for the Libertine font
+\usepackage{libertine}
+\usepackage[libertine]{newtxmath}
+\usepackage{libertine}
+\usepackage{physics}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+\usepackage{float}
+\usepackage{pgfplots}
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+
+\input{../assignment-problem-box}
+
+\newtheorem{lemma}{Lemma}
+\renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\qed\bigskip\\}
+% To give references for any problem use like this
+% suppose the problem number is p3 then 2 options either 
+% \hyperref[p:p3]{<text you want to use to hyperlink> \ref{p:p3}}
+%                  or directly 
+%                   \ref{p:p3}
+
+
+
+\input{../../letterfonts}
+
+\input{../../macros}
+
+\setlength{\parindent}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 6}\\
+    Email: \href{soham.chatterjee@tifr.res.in}{soham.chatterjee@tifr.res.in} \hfill Dept: STCS\\
+    \normalsize Course: Probability Theory \hfill Date: \today
+    \\  \noindent\rule{7in}{2.8pt}
+}
+
+[All the problems I discussed with Spandan, Soumyadeep]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement 
+		[D] Exercise 1.1
+    }{p1% problem reference text
+    }
+A fair coin is tossed repeatedly with results $Y_0,Y_1,Y_2,\dots$ that are $0$ r $1$ with probability $\frac12$ each. For $n\geq 1$ let $X_n=Y_n+Y_{n-1}$ be the number of $1$'s in the $(n-1){th}$ and $n^{th}$ tosses. Is $X_n$ a Markov chain?
+\end{problem}
+\solve{
+We claim that $X_n$ is not a markov chain.  Now $\bbP(X_3=2\mid X_2=1, X_1=2)=0$ since $X_1=2$ means $Y_0=Y_1=1$ and therefore $X_2=1$ means $Y_2=0$. Then it is not possible for $X_3=2$. But  $\bbP(X_3=2\mid X_2=1)=\bbP(Y_3=1)=\frac12$. Therefore $\bbP(X_3=2\mid X_2=1, X_1=2)\neq \bbP(X_3=2\mid X_2=1)$. Hence $X_n$ is not a Markov chain.
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		[D] Exercise 1.58
+    }{p2% problem reference text
+    }
+Consider the general chain with state space $S=\{1,2\}$ and write the transition probability as $$\begin{array}{ccc}
+	& 1 & 2\\
+	1 & 1-a & a\\ 2 & b & 1-b
+\end{array}$$Use the Markov Property to show that $$P(X_{n+1}=1)-\frac{b}{a+b}=(1-a-b)\lt\{P(X_n=1)-\frac{b}{a+b}\rt\}$$and then conclude $$P(X_{n}=1)=\frac{b}{a+b}+(1-a-b)^n\lt\{P(X_0=1)-\frac{b}{a+b}\rt\}$$This shows that if $0<a+b<2$, then $\bbP(X_n=1)$ converges exponentially fast to its limiting value $\frac{b}{a+b}$.
+\end{problem}
+\solve{
+We have \begin{align*}
+	\bbP(X_{n+1}=1)&=\bbP(X_{n+1}=1\mid X_n =1)\bbP(X_n=1)+\bbP(X_{n+1} =1\mid X_n=2)\bbP(X_n=2)\\
+	& =(1-a)\bbP(X_n=1)+b\bbP(X_n=2)= (1-a)\bbP(X_n=1)+b[1-\bbP(X_n=1)] = b+(1-a-b)\bbP(X_n=1)
+\end{align*}Therefore we have $$	\bbP(X_{n+1}=1)-\frac{b}{a+b}= b+(1-a-b)\bbP(X_n=1)-\frac{b}{a+b}=(1-a-b)\lt\{P(X_n=1)-\frac{b}{a+b}\rt\}$$Now from this we have \begin{align*}
+	\bbP(X_{n}=1)-\frac{b}{a+b}& =(1-a-b)\lt\{P(X_{n-1}=1)-\frac{b}{a+b}\rt\}\\
+	&= (1-a-b)^2\lt\{P(X_{n-2}=1)-\frac{b}{a+b}\rt\}\\
+			& \ \ \vdots\qquad \qquad \qquad \vdots\\
+			&= (1-a-b)^{n-1}\lt\{P(X_{1}=1)-\frac{b}{a+b}\rt\}\\
+			&= (1-a-b)^{n}\lt\{P(X_{0}=1)-\frac{b}{a+b}\rt\}
+\end{align*}
+Therefore $P(X_{n}=1)=\frac{b}{a+b}+(1-a-b)^n\lt\{P(X_0=1)-\frac{b}{a+b}\rt\}$
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{problem}{%problem statement
+		[D] Exercise 1.59: Bernouli-Laplace model of Diffusion
+    }{p3
+    % problem reference text
+    }
+Consider two urns each of which contains $m$ balls; $b$ of these $2m$ balls are black and remaining $2m-b$ are white. We say that the system is in state $i$ if the first urn contains $i$ black balls and $m-i$ white balls while the second contains $b-i$ black balls and $m-b+i$ white balls. Each trial consists of choosing a ball at random from each urn and exchanging the two. Let $X_n$ be the state of the system after $n$ exchanges have been made. $X_n$ is a Markov chain. \begin{enumerate}[label=(\alph*)]
+	\item Compute its transition probability
+	\item Verify that the stationary distribution is given by $$\pi(i)=\frac{\dps{\binom{b}{i}\binom{2m-b}{m-i}}}{\dps{\binom{2m}{m}}}$$
+	\item Can you give a simple intuitive explanation why the formula in (b) gives
+	the right answer?
+\end{enumerate}
+\end{problem}
+\solve{
+\begin{enumerate}[label=(\alph*)]
+	\item Let $X_n=i$ for some $n$. Hence in the first urn there are $i$ black balls. If $X_{n+1}=i+1$ then we have to pick a white ball from first urn and a black ball from second urn. Therefore $$p(i,i+1)=\frac{m-i}{m}\,\frac{b-i}{m}=\frac{(m-i)(b-i)}{m^2}$$ Now if $X_{n+1}=i-1$ then we have to pick a black ball from the first urn and a white ball from the second urn. Hence $$p(i,i-1)=\frac{i}{m}\,\frac{m-b+i}{m}=\frac{i(m-b+i)}{m^2}$$Now if $X_{n+1}=i$ then two cases are possible. Either we picked white balls from both the urns or we picked black balls from both urns. So $$p(i,i)=\frac{m-i}{m}\,\frac{m-b+i}{m}+\frac{i}{m}\,\frac{b-i}{m}=\frac{(m-i)(m-b+i)+i(b-i)}{m^2}$$So now we have the transition probability matrix.
+	\item Let $\pi$ be the stationary distribution. Then $\pi p=\pi$. Now by balance equation we should have$$\pi(i)p(i,j)=p(j,i)\pi(j)\implies \frac{\pi(i)}{\pi(j)}=\frac{p(j,i)}{p(i,j)}$$Therefore we have $$\frac{\pi(i+1)}{\pi(i)}=\frac{p(i,i+1)}{p(i+1,i)}=\frac{\frac{(m-i)(b-i)}{m^2}}{\frac{(i+1)(m-b+(i+1))}{m^2}}=\frac{(m-i)(b-i)}{(i+1)(m-b+i+1)}$$Now given that $$
+		\frac{\pi(i+1)}{\pi(i)} = \frac{\frac{\dps{\binom{b}{i+1}\binom{2m-b}{m-(i+1)}}}{\dps{\binom{2m}{m}}}}{\frac{\dps{\binom{b}{i}\binom{2m-b}{m-i}}}{\dps{\binom{2m}{m}}}}= \frac{\binom{b}{i+1}}{\binom{b}{i}}\,\frac{\binom{2m-b}{m-i-1}}{\binom{2m-b}{m-i}}=\frac{b-i}{i+1}\, \frac{m-i}{m-b+i+1}=\frac{\pi(i+1)}{\pi(i)}$$Therefore $\pi$ is  a stationary distribution
+	\item  $\pi(i)$ is the probability of picking  $i$ black balls from $m$ balls picked among the $2m$ balls and put them into the first urn. Since we are picking two random balls from two urns and then swapping them we will gradually converge to the probability of  that there are $i$ black balls in first urn. So the stationary distribution will be as in part (b).
+\end{enumerate}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{problem}{%problem statement
+		[D] Exercise 1.61: Random Walk on Clock
+	}{p4% problem reference text
+	}
+Consider the numbers $1,2,\dots, 12$ written around  a ring as they usually are on a clock. Consider a Markov chain at that at any point jumps with equal probability to the two adjacent numbers.  \begin{enumerate}[label=(\alph*)]
+	\item What is the expected number of steps that $X_n$ will take to return to its starting position?
+	\item What is the probability $X_n$ will visit all the other states before returning to its starting position?
+\end{enumerate}
+\end{problem}
+\solve{
+\begin{enumerate}[label=(\alph*)]
+	\item At any point it jumps with with equal probability to the two adjacent numbers. Therefore we have for $i\in [12]$, $p(i,i+1)=p(i,i-1)=\frac12$  where for $i=1$, by $p(1,0)$ we mean $p(1,12)$ and for $i=12$, by $p(12,13)$ we mean $p(12,1)$. Now for this transition matrix let $\pi$ be the stationary distribution. Hence $\pi p=\pi$. So we have $\pi(i)=\frac1{12}$ for all $i\in[12]$. Therefore we have $\bbE_iT_i=\frac1{\pi(i)}=12$. 
+	\item Let the starting position be $1$. Then from $1$ it will go to $2$ with probability $\frac12$ or we will go from $1$ to $12$ with probability $\frac12$. Since both the cases are similar we will study the case where we moved to $2$ from $1$. Now from $2$ we have to reach $1$ where it hits $12$ before hitting $1$. Now this is also the same as a random walk on a line from where the vertices are from $0$ then $2$ to $12$ and then $1$ and at each point it will move forward with probability $\frac12$ and move backward with probability $\frac12$ with $0$ and $1$ being the absorbing states. So for simplicity we rename the vertices $i$ to be $i-1$ for all $i\in\{2,\dots, 12\}$ and rename $1$ to be $12$. So we are in the new line starting from $1$ we want to go to the state $12$ without hitting $0$. Let $f(k)=\bbP[\text{Visiting $12$ starting from $k$ without hitting $0$}]$. Then we have $$f(1)=\frac12 f(2),\ f(2)=\frac12f(1)+\frac12f(3),\ \dots,\  f(k)=\frac12f(k-1)+\frac12f(k+1),\ \dots,\ f(11)=\frac12+\frac12f(10)$$Now $f(1)=\frac12 f(2)$. $$f(2)=\frac12f(1)+\frac12f(3)\implies \frac14f(2)+\frac12f(3)\implies f(2)=\frac23f(3)$$Solving like this we get $f(k)=\frac{k}{k+1}f(k+1)$ for $k\in[11]$. Therefore we have $$\prod_{i=1}^{11}f(i)=\prod_{i=1}^{11} \frac{i}{i+1}f(i+1)\implies f(1)=\frac1{12}$$Hence with probability $\frac12\frac1{12}+\frac12\frac1{12}=\frac1{12}$  we will visit all the other states before returning to its starting position. 
+\end{enumerate}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{problem}{%problem statement
+}{p5% problem reference text
+}
+\begin{enumerate}[label=(\alph*)]
+\item Let $\tau_i$ be the time a Markov chain $\left\{X_n\right\}$ takes to reach state 1 starting from state $i$, and let $v_i=\bbE[\tau_i]$, Show that for $i>1$,
+$$
+v_i=1+\sum_{j>0} p(i, j) v_j
+$$
+(Hint: conditioning). If we let $v_1=0$, write the column vector $\vec{v}=\left(v_1, \ldots, v_J\right)^T$ as the solution of a matrix equation.
+\item A spider hunting a fly moves between location 1 and 2 according to a Markov chain and the transition matrix is
+$$
+\left(\begin{array}{ll}
+	0.7 & 0.3 \\
+	0.3 & 0.7
+\end{array}\right)
+$$
+starting at location 1. The fly, unaware of the spider, starts in location 2 and moves according to a Markov chain with transition matrix
+$$
+\left(\begin{array}{ll}
+	0.4 & 0.6 \\
+	0.6 & 0.4
+\end{array}\right)
+$$
+
+Show that the progress for the hunt, except for knowing the location where it ends, can be described by a 3-state Markov chain with one absorbing state. Obtain the transition matrix for this chain, and find the probability that at time $n$ the spider and the fly are both at their initial locations. What is the average duration of the hunt?
+\end{enumerate}
+\end{problem}
+\solve{
+\begin{enumerate}[label=(\alph*)]
+	\item We have $$v_i=\bbE[\tau_i]=\sum_{j>0}\bbE[\tau_i\mid X_1=j]p(i,j)=\sum_{j>0}(1+\bbE[\tau_j])p(i,j)=\sum_{j>0}p(i,j)+\sum_{j>0}v_jp(i,j)=1+\sum_{j>0}p(i,j)v_j$$
+	\item We will keep the value$=$position of fly$-$position of spider as the states of the new 3-state Markov Chain. Then the states of the Markov chain are $\{-1,0,1\}$ where $-1$ when fly is at position 1 and spider is at position 2 and $1$ when fly is at position $2$ and spider is at position $1$ and $0$ is when both fly and spider are at same position and therefore $0$ is the absorbing state. We will denote the transition matrix of fly by $p_f$ and transition matrix of spider by $p_s$. So \begin{align*}
+		p(-1,-1) & =p_f(1,1)p_s(2,2)=0.7\times 0.4=0.28                                  \\
+		p(-1,0)  & =p_f(1,2)p_s(2,2)+p_f(1,1)p_s(2,1)=0.3\times 0.4+ 0.7\times 0.6=0.54  \\
+		p(-1,1)  & =p_f(1,2)p_s(2,1)= 0.3\times 0.6=0.18                                 \\
+		         &                                                                       \\
+		p(0,0)   & =1                                                                    \\
+		         &                                                                       \\
+		p(1,-1)  & =p_f(2,1)p_s(1,2)=0.3\times 0.6=0.18                                  \\
+		p(1,0)   & =p_f(2,2)p_s(1,2)+p_f(2,1)p_s(1,1)= 0.7\times 0.6 +0.3\times 0.4=0.54 \\
+		p(1,1)   & =p_f(2,2)p_s(1,1)= 0.7\times 0.4=0.28
+	\end{align*}So we have the transition matrix. Let $T$ be the random variable for number of steps to reach $0$. So if $T=n$ then at time $n$  the hunt happens. Now let $f(n)=\bbP[X_n=-1\mid X_0=-1]$ and $g(n)=\bbP[X_n=1\mid X_0=1]$. Now $f(1)=0.28$ and $g(1)=0.18$. Now \begin{multline*}
+	f(n)=\bbP[X_n=-1\mid X_0=-1]=\bbP[X_n=-1\mid X_{n-1}=-1,X_0=-1]\bbP[X_{n-1}=-1\mid X_0=-1]\\
+	+\bbP[X_n=-1\mid X_{n-1}=1,X_0=-1]\bbP[X_{n-1}=1\mid X_0=-1]=0.28f(n-1)+0.18g(n-1)
+\end{multline*}And
+\begin{multline*}
+	g(n)=\bbP[X_n=1\mid X_0=-1]=\bbP[X_n=1\mid X_{n-1}=-1,X_0=-1]\bbP[X_{n-1}=-1\mid X_0=-1]\\
+	+\bbP[X_n=1\mid X_{n-1}=1,X_0=-1]\bbP[X_{n-1}=1\mid X_0=-1]=0.18f(n-1)+0.28g(n-1)
+\end{multline*}Hence we get \begin{align*}
+f(n)+g(n)&=0.46(f(n-1)+g(n-1))=(0.46)^2(f(n-2)+g(n-2))=\cdots =(0.46)^{n-1}(f(1)+g(1))=0.46^n\\
+f(n)-g(n)& = 0.1(f(n-1)-g(n-1))=(0.1)^2(f(n-2)-g(n-2))=\cdots =(0.1)^{n-1}(f(1)-g(1))=0.1^n
+\end{align*}
+Therefore $f(n)=\frac{0.46^n+0.1^n}2$ and $g(n)=\frac{0.46^n-0.1^n}2$. Now $0$ is the absorbing state. Therefore $$\bbP[X_n=0\mid X_0=-1]=1-\bbP[X_n=-1\mid X_0=-1]-\bbP[X_-1\mid X_0=-1]=1-(f(n)+g(n))=1-0.46^n$$So let $\tau(n)=\bbP[X_n=0\mid X_0=-1]=1-0.46^n$. In that case the hunt happens at $T=n$ is $$\bbP[T=n]=\tau(n)-\tau(n-1)=0.46^{n-1}-0.46^n=0.46^{n-1}0.54$$Therefore $T$ has the geometric distribution with success probability $0.54$. Therefore $\bbE[T]=\frac1{0.54}$. 
+\end{enumerate}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 6
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{problem}{%problem statement
+		[D] Exercise 1.38
+	}{p6% problem reference text
+	}
+An individual has three umbrellas, some at her office, and some at home. If she is leaving home in the morning (or leaving work at night) and it is raining, she will take an umbrella, if one is there. Otherwise she gets wet. Assume that independent of the past, it rains on each trip with probability $0.2$. To formulate a Markov chain, let $X_n$ be the number of umbrellas at her current location. \begin{enumerate}[label=(\alph*)]
+	\item Find the transition probability for this Markov chain.
+	\item Calculate the limiting fraction of time she gets wet.
+\end{enumerate}
+\end{problem}
+\solve{
+\begin{enumerate}[label=(\alph*)]
+	\item Since there are $3$ umbrellas $X_n\in \{0,1,2,3\}$ for all $n$. If $X_n=i$, for some $n$ where $i\neq 0$ in the other location there are $3-i$ many umbrellas. So $X_{n+1}$ is either $3-i+1$ if it rains or $3-i$ if it doesn't rain. In both cases $X_n+X_{n+1}\geq 3$. So there fore if $i+j< 3$ then $\bbP(i,j)=0$. Therefore $\bbP(i,3-i+1)=\bbP[\text{It rains}]=0.2$ and $\bbP(i,3-i)=\bbP[\text{It doesn't rain}]=0.8$. Now if $X_n0$ for some $n$ then other place has all  3 umbrellas. So she can not take any umbrella with her. So $X_{n+1}=3$. Hence $\bbP(0,0)=1$. Hence the transition probability matrix is the following: $$\begin{array}{c|c|c|c|c}
+		 & 0 & 1 & 2 & 3 \\ \hline 
+		 0 & 0 & 0 & 0 & 1\\ \hline
+		 1 & 0 & 0 & 0.8 & 0.2 \\ \hline
+		 2 & 0 & 0.8 & 0.2 & 0 \\ \hline
+		 3 & 0.8 & 0.2 & 0 & 0 
+	\end{array}\implies P=\mat{0 & 0 & 0 & 1\\ 
+	 0 & 0 & 0.8 & 0.2 \\ 
+	 0 & 0.8 & 0.2 & 0 \\ 
+	 0.8 & 0.2 & 0 & 0 } $$
+	\item let $\pi$ be the stationary distribution. Then we have $\pi P=\pi$. So we have the equations $$0.8\pi(3)=\pi(0)\quad 0.8\pi(2)+0.2\pi(3)=\pi(1) \quad 0.8\pi(1)+0.2\pi(2)=\pi(2) \quad \pi(0)+0.2\pi(1)=\pi(3)$$So from this we have $\pi(1)=\pi(2)=\pi(3)=\frac{\pi(0)}{0.8}=\pi(0)\frac{5}4$. Therefore $\pi(0)=\frac4{19}$. Hence the limiting fraction of time she gets wet is $\pi(0)\times \bbP[\text{It rains}]=\frac{4}{19}\times 0.2=\frac{4}{85}$. 
+\end{enumerate}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 7
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{problem}{%problem statement
+		[D] Exercise 1.68: Coupon collector's problem 
+	}{p7% problem reference text
+	}
+We are interested now in the time it takes to collect a set of $N$ baseball cards. Let $T_k$ be the number of cards we have to buy before we have $k$  that are distinct. Clearly $T_1=1$. A little more thought reveals that if each time we get a card chosen at random from all $N$ possibilities, then for $k\geq 1$, $T_{k+1}-T_k$ has a geometric distribution with success probability $\frac{N-k}{N}$. Use this to show that the mean time to collect a set of $N$ baseball cards is $\approx N\log N$, while the variance is $\approx N^2\sum\limits_{k=1}^{\infty}\frac1{k^2}$.
+\end{problem}
+\solve{
+	We know $T_{k+1}-T_k$ has geometric distribution with success probability $\frac{N-k}{N}$. Therefore $\bbE[T_{k+1}-T_k]=\frac{N}{N-k}$ and $\Var[T_{k+1}-T_k]=\frac{1-\frac{N-k}{N}}{\frac{(N-k)^2}{N^2}}=\frac{N^2}{(N-k)^2}-\frac{N}{N-k}$. Now we are asked to find $\bbE[T_N]$. So we have \begin{align*}
+		\bbE[T_N] & =\bbE[T_1]+\sum_{i=2}^N\bbE[T_i-T_{i-1}] =1+\sum_{i=2}^N\frac{N}{N-k}=1+N\sum_{i=2}^N \frac{1}{k}\approx N\log N
+	\end{align*}Now we know $T_{k+1}-T_k$ for all $k$ are all independent of each other. Hence we have \begin{align*}
+	\Var[T_N] & =\Var[T_1]+\sum_{k=2}^N\Var[T_k-T_{k-1}]\\ &=0+\sum_{k=2}^N\frac{N^2}{(N-k)^2}-\frac{N}{N-k}\\
+	&=\sum_{k=2}^N\frac{N^2}{(N-k)^2}-\sum_{k=2}^N\frac{N}{N-k}\\
+	& \approx N^2\sum_{k=1}^N\frac{1}{k^2}-N\sum_{k=1}^N\frac{1}{k} \approx N^2\sum_{k=1}^{\infty}\frac{1}{k^2}-N\log N
+\end{align*}Now the function $N^2\sum\limits_{k=1}^{\infty}\frac{1}{k^2}$ is much larger than $N\log N$ as $N\to \infty$. So we have $\Var[T_n]\approx N^2\sum\limits_{k=1}^{\infty}\frac{1}{k^2}$. 
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 8
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{problem}{%problem statement
+		[D] Exercise 1.69: Algorithmic efficiency
+	}{p8% problem reference text
+	}
+The simplex method minimizes linear functions by
+moving between extreme points of a polyhedral region so that each transition
+decreases the objective function. Suppose there are n extreme points and they
+are numbered in increasing order of their values. Consider the Markov chain in
+which $p(1,1)=1$ and $p(i,j)=\frac1{i-1}$ for $j<i$. In words, when we leave $j$ we are equally like to go to any of the extreme points with better value. 
+\begin{enumerate}[label=(\alph*)]
+		\item Use (1.27) to show that $i>1$ $$\bbE_iT_1=1+\frac12+\cdots+\frac1{i-1}$$
+		\item Let $I_j=1$ if the chain visits $j$ on the way from $n$ to $1$. Show that for $j<n$ $$\bbP[I_j=1\mid I_{j+1}, \dots, I_n]=\frac1j$$to get another proof of the result and conclude that $I_1,\dots, I_{n-1}$ are independent. 
+	\end{enumerate}
+\end{problem}
+\solve{
+\begin{enumerate}[label=(\alph*)]
+	\item Now notice that $\bbE_1T_1=0$ and $\bbE_2T_1=1$. We will prove the expression with induction. So for base case $i=1,2$ it follows. Let this is true for $1,\dots, i-1$. Now we have  using \hyperref[p:p5]{Problem \ref{p:p5} (a)}\begin{align*}
+		\bbE_i(T_1)&=1+\sum_{j=2}^{i-1}p(i,j)\bbE_jT_1=1+\sum_{j=2}^{i-1}\frac{\bbE_jT_1}{i-1}\\
+		&=1+\frac1{i-1}\sum_{j=2}^{i-1}\sum_{k=1}^{j-1}\frac1k & [\text{Inductive Hypothesis}]\\
+		&=1+\frac1{i-1}\sum_{k=1}^{i-1}\sum_{j=k+1}^{i-1}\frac1k\\
+		& =1+\frac1{i-1}\sum_{k=1}^{i-1}\frac{i-1-(k+1)+1}{k}\\
+		& =1+\frac1{i-1}\sum_{k=1}^{i-1}\frac{i-k-1}{k}  =1+\frac1{i-1}\sum_{k=1}^{i-1}\lt[\frac{i-1}{k}-1\rt]=\sum_{k=1}^{i-1}\frac1k
+	\end{align*}
+\item Given $I_{j+1},I_{j+2},\dots, I_n$ the chain is equally likely to visit each of the remaining spots. Hence we have $\bbP[I_j=1\mid I_{j+1}, \dots, I_n]=\frac1j$
+\end{enumerate}
+}
+\end{document}
