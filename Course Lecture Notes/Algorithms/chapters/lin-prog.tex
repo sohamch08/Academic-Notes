@@ -1,1 +1,153 @@
 \chapter{Linear Programming}
+\section{Introduction}
+\dfn{Linear Program}{A linear programming problem asks for a vector $x\in \bbR^d$ that maximizes or minimizes a given linear function, among all vectors $x$ that satisfy given set of linear inequalities.}
+
+The general form of a maximization linear programming problem is the following: given $c\in \bbR^n$, $b\in \bbR^m$, $a_i\in\bbR^n$ for each $i\in [m]$ then 
+\begin{maxi*}
+	{}{c^Tx}{}{}
+	\addConstraint{ a_i^Tx\leq b_i}{\quad\forall\ i\in[p]}
+	\addConstraint{ a_i^Tx= b_i}{\quad\forall\ i\in\{p+1,\dots, p+q\}}
+	\addConstraint{ a_i^Tx\geq b_i}{\quad\forall\ i\in\{p+q+1,\dots,m\}}
+	\addConstraint{x_j\geq 0}{\quad\forall j\in [k]}
+	\addConstraint{x_j\leq 0}{\quad\forall j\in [\{k+1,\dots, k+l\}\quad \text{(Some $x_j$'s are free)}}
+\end{maxi*}
+
+The similar goes for minimization linear programming problem. For maximization problem we can always  write the LP in the form 
+\begin{maxi*}
+	{}{c^T\hat{x}}{}{}
+	\addConstraint{ \hat{a}_i^Tx\leq b'_i}{\quad\forall\ i\in[m]}
+	\addConstraint{x'_j\geq 0}{\quad\forall j\in [n]}
+\end{maxi*}And then the LP is said to be in the \textit{\textbf{canonical form}}.
+What we can do is the following: \begin{itemize}
+	\item For $i\in \{p+q+1,\dots, m\}$, we can replace $a_i^Tx\leq b_i$ with $-a_i^Tx\geq -b_i$
+	\item For $i\in \{p+1,\dots, p+q\}$, we can replace with two constraints $a_i^Tx\geq b_i$ and $a_i^Tx\leq b_i$
+	\item For $j\in \{k+1\dots, k+l\}$, we can replace $x_j\leq 0$ with $-x_j\geq 0$ 
+	\item For $j\in \{k+l+1\dots, n\}$, we can replace the free $x_j$'s with $x_j^+-x_j^-$ all the equations where $x_j^+,x_j^-\geq 0$
+\end{itemize}This way we can always get a LP of that form. Now we can replace the $\hat{a_i}$ for $i\in [m]$ with a matrix $A\in \bbR^{m\times n}$ and replace the constraint   $\hat{a}_i^Tx\leq b'_i$, $\forall $ $i\in[m]$ with $Ax\leq b$
+\begin{center}
+	\begin{minipage}{0.35\textwidth}
+		\begin{maxi*}
+			{}{c^Tx}{}{}
+			\addConstraint{Ax\leq b}
+			\addConstraint{x\geq 0}
+		\end{maxi*}
+	\end{minipage}	\begin{minipage}{0.35\textwidth}
+	\begin{mini*}
+		{}{c^Tx}{}{}
+		\addConstraint{Ax\geq b}
+		\addConstraint{x\geq 0}
+	\end{mini*}
+\end{minipage}
+\end{center}
+\section{Geometry of LP}
+\begin{Definition}{Feasible Point and Region}{}
+	A point $x\in \bbR^n$ is {\textit{feasible}} with respect to some LP if it satisfies all the linear constraints. The set of all feasible points is called the {\textit{feasible region}} for that LP.
+\end{Definition}Feasible region of a LP has a particularly nice geometric structure. Before that we will first introduce some geometric terminologies used in the linear programming context: 
+\dfn{Hyperplane, Polyhedron, Polytope}{\begin{itemize}
+		\item \textbf{Line}: The set $\{x+\lm d, \lm\in \bbR\}$ is line for any $x,d\in\bbR^n$.
+		\item \textbf{Hyperplane}: The set  $\{x\in \bbR^n\colon a^x=b\}$ is a hyperplane for any $a\in \bbR^n$ and $b\in \bbR$.
+		\item \textbf{Hyperspace}: The set  $\{x\in \bbR^n\colon a^x\leq b\}$ is a hyperspace or half-space for any $a\in \bbR^n$ and $b\in \bbR$.
+		\item \textbf{Polyhedron}: A polyhedron is the intersection of a finite set of half-spaces i.e. the set $\{x\in\bbR^n\colon Ax\leq b\}$ for any $A\in\bbR^{n\times m}$, $b\in \bbR^m$. 
+		\item \textbf{Polytope}: A bounded polyhedron is called a polytope.
+\end{itemize}} Now it is not hard to verify that any polyhedron is a convex set i.e. if a polyhedron contains two points  then it contains the entire line segment joining those two points.
+\begin{lemma}{}{}
+	Polyhedron is a convex set
+\end{lemma}
+
+Hence the feasible region of a LP creates a polyhedron in $\bbR^n$. And $c^Tx$ is the  hyperplane normal to the vector $c$ and the objective of the LP is by moving the plane normal to the vector $c$ for which point in the polyhedron the hyperplane  $c^Tx$ has the highest value. Since polyhedron can be unbounded there may not exists any point $x$ where $c^Tx$ is maximum.
+
+
+	Suppose we have a LP \begin{maxi*}
+		{}{c^Tx}{}{}
+		\addConstraint{Ax\leq b}
+		\addConstraint{x\geq 0}
+	\end{maxi*}Let $P$ be the polyhedron $P=\{x\in \bbR^n\colon Ax\leq b\}$. Then given $x^*\in P$ if any constraint $a_i^Tx^*=b_i$ then this constrain is said to be \textit{tight} or \textit{binding} or \textit{active} at $x^*$. Now two constraints $a_i^Tx\leq b_i$ and $a_j^Tx\leq b_j$ are said to be linearly independent if $a_i$ and $a_j$ are linearly independent. 
+
+\begin{Definition}{Basic Solution and Basic Feasible Solution}{}
+	$x^*\in \bbR^n$ is a basic solution if $n$ linearly independent constraints are active at $x^*$ (Doesn't need to  be feasible).\parinn
+	
+	$x^*\in\bbR^n$ is a basic feasible solution if $x^*$ is a basic solution and $x^*\in P$. The basic feasible solutions are also called \textit{corners} of a polyhedron.
+\end{Definition}
+\begin{Theorem}{}{}
+	Given a LP 	\begin{mini*}
+		{}{c^Tx}{}{}
+		\addConstraint{Ax\geq b}
+		\addConstraint{x\geq 0}
+	\end{mini*}Let $P$ is the polyhedron $\{x\in\bbR^n\colon Ax\leq b, x\geq0\}$ . Suppose $P$ is non-empty and has at least one basic feasible solution  then either the optimal value is $-\infty$ or there is an optimal basic feasible solution. 
+\end{Theorem}
+
+\begin{Theorem}{}{}
+	If polyhedron $P$ does not contain a line it contains at least one basic feasible solution (Hence if $P$ is bounded it contains at least one basic feasible solution).
+\end{Theorem}
+
+With this geometry in hand, we can easily picture two pathological cases where a given linear programming problem has no solution. The first possibility is that there are no feasible points; in this case the problem is called \textit{infeasible}. The second possibility is that there are feasible points at which the objective function is arbitrarily large; in this case, we call the problem \textit{unbounded}. The same polyhedron could be unbounded for some objective functions but not others, or it could be unbounded for every objective function.
+
+\begin{Example}{}{}
+	\begin{itemize}
+		\item \textbf{Maximum Matchings:} Given undirected  graph $G=(V,E)$. Say variable $x_e$ for each $e\in E$, $x_e=1\implies e$ in matching and $x_e=0$ otherwise.
+		\begin{maxi*}
+			{}{\sum\limits_{e\in E}x_e}{}{}
+			\addConstraint{}{\sum\limits_{e\text{ incident on }v}x_e\leq 1}{\quad \forall \ v\in V}
+			\addConstraint{}{x_e\geq 0}{\quad \forall\ e\in E}
+			\addConstraint{}{x_e\in \{0,1\}}{\quad \forall\ e\in E}
+		\end{maxi*}
+	\begin{observation*}
+		$M$ is a matching iff $\{x\colon x_e=1\text{ if }e\in M, =0\text{ otherwise}\}$ is a feasible solution
+	\end{observation*}
+		\item \textbf{Maximum $s-t$ Flow:} Given directed graph $G=(V,E)$ with vertices $s,t$ and capacity $c_e$ on edges. Say variable $x_e$ for each edge and equal to flow on that edge. Then the LP of this problem:
+				\begin{maxi*}
+			{}{\sum\limits_{e\in \textit{out}(s)}x_e}{}{}
+			\addConstraint{}{\sum\limits_{e\in\textit{in}(v)}x_e-\sum\limits_{c\in\textit{out}(v)}x_e=0}{\quad \forall \ v\in V, v\neq s,t}
+			\addConstraint{}{c_e\geq x_e\geq 0}{\quad \forall\ e\in E}
+		\end{maxi*}
+	\end{itemize}
+\end{Example}
+
+We will now introduce a theorem without proof that for any LP with  a polytope we can find a solution in polynomial time.
+\begin{Theorem}{}{lp-solve-polytime}
+	Let $P=\{x\in\bbR^n\colon Ax\geq b\}$ be a polytope. Then we can find an optimal basic feasible solution for the LP $\min c^Tx$ where $x\in P$ in polynomial time.
+\end{Theorem}
+\section{LP Integrality}
+For the LP for matchings in bipartite graphs $G=(L\cup R,E)$ we have:
+		\begin{maxi*}
+	{}{\sum\limits_{e\in E}x_e}{}{}
+	\addConstraint{}{\sum\limits_{e\text{ incident on }v}x_e\leq 1}{\quad \forall \ v\in V}
+	\addConstraint{}{x_e\geq 0}{\quad \forall\ e\in E}
+\end{maxi*}
+We want $x_e\in \{0,1\}$ i.e. we want to have integral solution for this LP
+\begin{question}{}{}
+	LP's can give fractional solutions. When is solution integral?
+\end{question}
+Sufficient Condition: Every basic feasible solution of the feasible polytope is integral i.e. $x^*$ is basic feasible solution $\implies x^*\in \bbZ^n$. If all basic feasible solution are integral then for all $I\subseteq [m]$ with $|I|=n$, $A_I^{-1}b_I$ is integral. Let $x=A_I^{-1}b_I$ Then $j^{th}$ component $x_j=\frac{|A_I^j|}{|A|}$ (Cramer's Rule).
+\subsection{Totally Unimodular Matrix}
+\begin{Definition}{Totally Unimodular Matrix (TUM)}{}
+	A matrix $A\in \{0,1,-1\}^{m\times n}$ is totally unimodular (TU) if every square submatrix of $A$ has determinant $-1,0,1$.
+\end{Definition}Hence in the above LP is $A$ is TU and $b$ is integral then all basic feasible solutions are integral.
+\begin{lemma}{}{}
+	Let $A$ be TUM and $b\in \bbZ^n$ then $P=\{x\colon Ax\geq b\}$ is integral i.e. every basic feasible solution is integral.
+\end{lemma}
+
+Hence using \thmref{lp-solve-polytime} if the polytope is integral we can find optimal integral solution in polynomial time. We will now discuss properties of Totally Unimodular Matrix.
+\begin{lemma}{}{tum-prop}
+	$A\in \{0,1,-1\}^{m\times n}$ is TU iff the following are TU:
+	\begin{enumerate}[label=(\roman*)]
+		\item $-A$
+		\item $A^T$
+		\item $\mat{A & e_i}$, $\mat{A & -e_i}$
+		\item $\mat{A& I}$, $\mat{A & -I}$
+		\item $\mat{A & A_i}$, $\mat{A & -A_i}$ where $A_i$ is the $i^{th}$ column of $A$. 
+	\end{enumerate}
+\end{lemma}
+
+
+\begin{corolary}{}{}
+	If $A$ is TUM and $a,b,c,d\in\bbZ^n$ are integer vectors then the polytope $Q=\{x\in \bbR^n\colon a\leq Ax\leq b, c\leq x\leq d\}$ is integral.
+\end{corolary}
+\begin{proof}
+	We can combine the four inequalities in one inequality. Consider the matrix $\mat{A & -A & I & -I}^T$. Then the given polytope is $$Q=\lt\{x\in\bbZ^n\colon \mat{A \\ -A \\ I \\ -I} x\leq \mat{b \\-a\\ d \\ -c}\rt\}$$By \lmref{tum-prop}, $\mat{A & -A & I & -I}^T$ is a TUM since $A$ is TUM. Therefore the polytope $Q$ is integral.
+\end{proof}
+The following theorem lets us to give a necessary and sufficient condition to check if a given matrix is TUM. Again we will accept the following theorem without the proof since the proof is a little nontrivial.
+\begin{Theorem}{}{}
+	Let $A\in\{-1,0,1\}^{m\times n}$. Then $A$ is TU iff every set $S\subseteq [n]$ can be partitioned into $S_1, S_2$ such that $$\sum_{i\in S_1}A_i-\sum_{i\in S_2}A_i\in \{-1,0,1\}^m$$where $A_i$ is the $i^{th}$ column of $A$. 
+\end{Theorem}
+\section{Duality}
