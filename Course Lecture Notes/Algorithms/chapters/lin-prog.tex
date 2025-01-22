@@ -146,8 +146,11 @@ Hence using \thmref{lp-solve-polytime} if the polytope is integral we can find o
 \begin{proof}
 	We can combine the four inequalities in one inequality. Consider the matrix $\mat{A & -A & I & -I}^T$. Then the given polytope is $$Q=\lt\{x\in\bbZ^n\colon \mat{A \\ -A \\ I \\ -I} x\leq \mat{b \\-a\\ d \\ -c}\rt\}$$By \lmref{tum-prop}, $\mat{A & -A & I & -I}^T$ is a TUM since $A$ is TUM. Therefore the polytope $Q$ is integral.
 \end{proof}
+
 The following theorem lets us to give a necessary and sufficient condition to check if a given matrix is TUM. Again we will accept the following theorem without the proof since the proof is a little nontrivial.
 \begin{Theorem}{}{}
-	Let $A\in\{-1,0,1\}^{m\times n}$. Then $A$ is TU iff every set $S\subseteq [n]$ can be partitioned into $S_1, S_2$ such that $$\sum_{i\in S_1}A_i-\sum_{i\in S_2}A_i\in \{-1,0,1\}^m$$where $A_i$ is the $i^{th}$ column of $A$. 
+	Let $A\in\{-1,0,1\}^{m\times n}$. Then $A$ is TU iff every set $S\subseteq [n]$ can be partitioned into $S_1, S_2$ such that $$\sum_{i\in S_1}A_i-\sum_{i\in S_2}A_i\in \{-1,0,1\}^m$$where $A_i$ is the $i^{th}$ column of $A$. C
 \end{Theorem}
+
+Now using this theorem we will show that the polytope for bipartite maximum matching is integral.
 \section{Duality}
