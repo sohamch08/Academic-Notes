@@ -1,0 +1,84 @@
+\documentclass[twoside]{article}
+\usepackage{url}
+
+\usepackage[nottoc,numbib]{tocbibind}
+\input{preamble-article}
+\input{letterfonts}
+\input{macros}
+
+\definecolor{mycolor1}{HTML}{00B85C}
+\definecolor{mycolor2}{HTML}{01110A}
+
+
+\newcommand*{\titre}[2]{\begingroup
+	\newlength{\drop}
+	\setlength{\drop}{0.1\textheight}
+	\centering
+	\settowidth{\unitlength}{\Huge\scshape\bfseries CSS.307.1: Algebra, Number Theory \hspace{10pt}}
+	\vspace*{\baselineskip}
+	\rule{\unitlength}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
+	\rule{\unitlength}{0.4pt}\\[\baselineskip]
+	{\Huge\scshape\color{white} #1}\\[\baselineskip]
+	{\large\itshape Instructor: #2}\\[\baselineskip]
+	{\large\itshape TIFR 2025, Jan-May}\\[0.2\baselineskip]
+	\rule{\unitlength}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}
+	\rule{\unitlength}{1.6pt}\\[4\baselineskip]
+	{\Large\scshape Scribe: Soham Chatterjee\\[10mm] sohamchatterjee999@gmail.com \\[2mm] Website: \href{https://sohamch08.github.io/}{\textcolor{black}{sohamch08.github.io}} }\par
+	\endgroup}
+	
+
+
+
+
+
+
+\makeatletter
+\newcommand{\ostar}{\mathbin{\mathpalette\make@circled\star}}
+\newcommand{\make@circled}[2]{%
+	\ooalign{$\m@th#1\smallbigcirc{#1}$\cr\hidewidth$\m@th#1#2$\hidewidth\cr}%
+}
+\newcommand{\smallbigcirc}[1]{%
+	\vcenter{\hbox{\scalebox{0.77778}{$\m@th#1\bigcirc$}}}%
+}
+\makeatother
+
+
+
+\begin{document}
+	
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+\thispagestyle{empty}
+\begin{titlepage}
+	
+\begin{tikzpicture}[remember picture,overlay]
+	\node [xshift=\paperwidth/2,yshift=\paperheight/2] at (current page.south west)[minimum width=\paperwidth,minimum height=\paperheight,top color=mycolor1,bottom color=mycolor2]{};
+\end{tikzpicture}\\[3\baselineskip]
+	
+	\titre{CSS.307.1: Algebra, Number Theory\\[2mm] and Computation}{Mrinal Kumar}
+\end{titlepage}
+
+
+%----------------------------------------------------------------------------------------
+%	TOC PAGE
+%----------------------------------------------------------------------------------------
+\pagebreak
+\thispagestyle{empty}
+{
+	\hypersetup{linkcolor=mytoccolor}
+	\tableofcontents
+}
+\newpage
+\pagestyle{fancy}  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% Body
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\setcounter{page}{1}
+\input{sections/basic-algebra}
+
+%\bibliographystyle{alpha}
+%\bibliography{algorithms_refs}
+
+\end{document}

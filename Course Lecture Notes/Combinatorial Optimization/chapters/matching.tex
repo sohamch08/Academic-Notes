@@ -1,0 +1,240 @@
+\chapter{Bipartite Matching}
+\dfnc{Bipartite Graph}{A graph $G'(V,E)$ is bipartite if the vertex set is partitioned into two sets $V=L\sqcup R$ and the edges are between the two partitions i.e. $E\subseteq L\times R$.}
+%\handout{1: Bipartite Matching}{T. Kavitha}{Soham Chatterjee}
+In This chapter we will look into two main problems in Bipartite graphs: Maximum Matching and Minimum cost Perfect Matching.
+\section{Maximum Matching}
+
+\begin{algoprob}
+	\problemtitle{Bipartite Maximum Matching}
+	\probleminput{Graph $G=(L\sqcup R,E)$}
+	\problemquestion{Find a maximum matching $M\subseteq E$ of $G$}
+\end{algoprob}
+
+First we will solve finding maximum matching in bipartite graphs first. Then we will extend the algorithm to general graphs. We will
+
+%Later we will also see an algorithm to decide if a bipartite graph has a perfect matching or not.
+\subsection{Using Max Flow}
+One approach to find a maximum matching is by using the max-flow algorithm. For this we introduce 2 new vertices $s$ and $t$ where there is an edge from $s$ to every vertex in $L$ and there is an edge from every vertex in $R$ to $t$ and all edges have capacity $1$. Let the constructed graph is $G'=(V', E')$ where $V'=L\cup R\cup\{s,t\}$ and $E'=E\cup \{(s,v)\colon v\in L\}\cup \{(v,t)\colon v\in R\}$.
+
+Then the max-flow for this directed graph is the maximum matching of the bipartite graph. In the following claim we will prove that this indeed gives the maximum matching. 
+\begin{lemma}{}{}
+	For a max-flow the flow through any edge is either 0 or 1.
+\end{lemma}
+\begin{proof}
+	The Edmonds-Karp algorithm takes a $s\rightsquigarrow t$ path in the residual graph and send the flow equal to the minimum of all the capacities of edges in that path. Since the capacities are all 1 the flow also equals to 1. Therefore at each iteration of Edmonds-Karp the amount of flow added is also integral. Therefore in the final max-flow the flow through each edge is integral. Now since the flow in any edge is always less than or equal to the capacity it is either 0 or 1.
+\end{proof}
+
+Therefore the max-flow of the modified graph is always some non-negative integer. Now we have e lemma that value of max-flow gives a maximum matching.
+\begin{lemma}{}{}
+	If there exists a max-flow of value $k$ in the modified graph $G'=(V',E')$ if and only there is a maximum matching of size $k$ in $G'(L\cup R, E)$. 
+\end{lemma}
+\begin{proof}
+	Suppose $G'$ has a matching $M$ of size $k$. Let $M=\{(u_i,v_i)\colon i\in[k]\}$ where $u_i\in L$ and $v_i\in R$ for all $i\in[k]$. Then we have the flow $f$, $f(s,u_i)=f(u_i,v_i)=f(v_i,t)=1$ for all $i\in[k]$. This flow has value $k$. Now suppose the max-flow is more than $k$. Let the value of the max-flow is $l$, $l>k$. Since each edge has capacities 1 and by previous lemma each edge has integral flow there are $l$ vertices in $L$ which have positive flow from $s$. Then from each of these $l$ vertices there is only one edge going to a vertex in $R$ which has positive flow. Now it is not possible that from two vertices of $L$ the flow goes to one vertex in $R$ since for all edges joining vertices of $R$ and $t$ has capacity 1. Therefore from each of those vertices of $L$ they goes to distinct $l$ vertices of $R$. Therefore these $l$ edges  create a matching of $G$. So we have a matching which has size more than the maximum matching. Contradiction. Therefore the value of the max-flow is $k$.
+	
+	Now suppose there is a max-flow $f$ of value $k$. Since flow through each edge is integral by the similar argument as above we get a matching of size $k$. Now if $M$ is a maximum matching which has size more than $k$, suppose $l>k$ then consider the flow  $f$, $f(s,u_i)=f(u_i,v_i)=f(v_i,t)=1$ for all $i\in[l]$ where  $M=\{(u_i,v_i)\colon i\in[l]\}$ has flow of value $l$ which is greater than the max-flow. Hence contradiction. Therefore the maximum matching is has size $k$.
+\end{proof}
+
+
+Therefore from the max-flow if we take the edges from $L$ to $R$ which has positive flow they construct the maximum matching. So we have the following algorithm: 13
+\begin{algorithm}\DontPrintSemicolon
+	\KwIn{$G=(L\cup R,E)$ bipartite graph}
+	\KwOut{Find a maximum matching}
+	\Begin{$V\longleftarrow A\cup B\cup \{s,t\}$, 	$E'\longleftarrow E$\;
+		\For{$v\in L$}{$E'\longleftarrow E'\cup \{(s,v)\}$
+		}
+		\For{$v\in R$}{$E'\longleftarrow E'\cup \{(v,t)\}$
+		}
+		\For{$e\in E'$}{$c_e\longleftarrow 1$}
+		$f\longleftarrow\prb{Edmonds-Karp}(G'=(V,E'), \{c_e\colon e\in E'\})$\;
+		\Return{$\{e\colon f(e)>0, e\in E\}$}
+	}
+	\caption{\prb{BP-Max-Matching-Flow}}
+\end{algorithm} 
+
+Therefore the algorithm successfully returns a maximum matching of the bipertite graph. But we don't know any algorithm for finding maximum matching in general graphs using max-flow. In the next algorithm we will use something called Augmenting paths to find a maximum matching which we will extend to general graphs.
+\subsection{Using Augmenting Paths}\label{section:bp-augment-path}
+\begin{Definition}{Alternating Path and Augmenting Path}{}
+	In a graph $G=(V,E)$ and $M$ be a matching in $G$. Then an $M$-alternating path is where the edges from $M$ and $E\setminus M$ appear alternatively.\parinn
+	
+	An $M$-alternating path between two unmatched (also called exposed) vertices is called an $M$-augmenting path. 
+\end{Definition}
+
+Given a matching $M$ and if there exists an $M$-augmenting path $p$ then we can obtain a larger matching $M'=M\oplus p$ then  So if $M$ is maximum matching then there is no augmenting path in $G$.
+\begin{Theorem}{}{bergesthm}
+	A matching $M$ is maximum if and only if there are no $M$-augmenting path in $G$.
+\end{Theorem}
+\begin{proof}
+	Suppose $M$ is maximum. If there is an $M$-augmenting path $p$ in $G$ then $M\oplus p$  gives a matching with larger size. But that contradicts the fact that $M$ is a maximum matching. Hence there are no $M$-augmenting paths in $G$.
+	
+	For the other direction we will show that if $M$ is not a maximum matching then there is an augmenting path. So let's assume that. Also assume that $N$ be a maximum matching. Then $|N|>|M|$. Consider the graph $M\oplus N$. In the graph $M\oplus N$ every vertex has degree at most 2. Therefore the connected components of $M\oplus N$ are paths and cycles. Now since $G$ is bipartite the cycles in $M\oplus N$ are of even length and the edges of $M$ and $N$ appears alternatively in the cycles. So for each cycle in $M\oplus N$ there are equal number of edges from $M$ and edges from $N$. Now in the paths edges from $M$ and $N$ appears alternatively  too. Therefore in an even path number of edges from $M$ is equal to number of edges from $N$. And in a odd path either number of edges from $N$ is one more than the number of edges from $M$ or the opposite. Since we know $|N|>|M|$ there must exists at least one odd path $p$ which has number of edges of $N$ is one more than the number of edges from $M$. In that case the path starts and ends with edges from $N$. This path $p$ is an $M$-augmenting path. Therefore there exists an $M$-augmenting path in $G$ if $M$ is now a maximum matching. 
+\end{proof}
+
+
+Now let $M$ is not a maximum matching. Then we will find a $M$-augmenting path in $G$ by constructing the \textit{Hungarian Forest}. Our algorithm will be starting with empty set iteratively find augmenting paths and then take a symmetric difference with the matching set and continue like this till we can not find an augmenting path. 
+
+\begin{algorithm}
+	\DontPrintSemicolon
+	\KwIn{$G=(L\cup R,E)$}
+	\KwOut{Find maximum matching $M\subseteq E$.}
+	\Begin{$M\longleftarrow \emptyset$\;
+		\While{$\exs$ $M$-augmenting path}{$p\longleftarrow$ $M$-augmenting path\;
+			$M\longleftarrow M\oplus p$}
+		\Return{$M$}}
+	\caption{\prb{Find-Maximum-Matching}}
+\end{algorithm}
+\subsubsection{Hungarian Forest}
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}                                                 
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (A) at (0,0) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (B1) at (-1,-1) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (B2) at (0,-1) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (B3) at (1,-1) {};
+		\foreach \x in {1,3}{\draw[dashed] (A) -- (B\x);}
+		\draw[dashed,  red!80!black] (A) -- (B2);
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (C1) at (-1,-2) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (C2) at (0,-2) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (C3) at (1,-2) {};
+		\draw (B1) -- (C1);
+		\draw[  red!80!black] (B2) -- (C2);
+		\draw (B3) -- (C3);
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (D1) at (-1.5,-3) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (D2) at (-0.5,-3) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (D3) at (0,-3) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (D4) at (1,-3) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (D11) at (-1.5,-4) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (D12) at (-0.5,-4) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (D13) at (0,-4) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (D14) at (1,-4) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (D23) at (0,-5) {};
+		\draw[dashed] (C1) -- (D1);
+		\draw[dashed] (C1) -- (D2);
+		\draw[dashed,  red!80!black] (C2) -- (D3);
+		\draw[dashed] (C3) -- (D4);
+		\foreach \x in {1,2,4} {\draw (D\x) -- (D1\x);}
+		\draw[ red] (D3) -- (D13);
+		\draw[red, dashed] (D13) -- (D23);
+		%\draw[dashed] (C3) -- (D5);
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (E) at (3,0) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (E1) at (2.5,-1) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (E2) at (3,-1) {};
+		%\node[draw, circle,minimum size=4pt, inner sep=0pt] (E5) at (6,-2) {};
+		\foreach \x in {1,2}{\draw[dashed] (E) -- (E\x);}
+		%\draw[  red!80!black] (D3) -- (E3);
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (F1) at (2.5,-2) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (F2) at (3,-2) {};
+		\foreach \x in {1,2}{\draw (E\x) -- (F\x);}
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (G1) at (2.5,-3) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (G2) at (2,-3) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (G3) at (3,-3) {};
+		\draw[dashed] (F1) -- (G1);
+		\draw[dashed] (F1) -- (G2);
+		\draw[dashed] (F2) -- (G3);
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (H1) at (2.5,-4) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (H2) at (2,-4) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (H3) at (3,-4) {};
+		\foreach \x in {1,2,3}{\draw(G\x) -- (H\x);}
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (I) at (4,0) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (I1) at (4,-1) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (I2) at (4,-2) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (I3) at (4,-3) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (I4) at (4,-4) {};
+		\draw[dashed] (I) -- (I1);
+		\draw (I1) -- (I2);
+		\draw (I3) -- (I4);
+		\draw[dashed] (I2) -- (I3);
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (J) at (5.75,0) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (J1) at (5,-1) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (J2) at (5.5,-1) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (J3) at (6,-1) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (J4) at (6.5,-1) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (H1) at (5,-2) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (H2) at (5.5,-2) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (H3) at (6,-2) {};
+		\node[draw, circle,minimum size=4pt, inner sep=0pt] (H4) at (6.5,-2) {};
+		\foreach \x in {1,2,3,4}{\draw[dashed](J) -- (J\x);\draw(J\x) -- (H\x);}
+		%\draw (0,0) node[above]{$v$};
+		\draw (-2.5,0.2) node[above]{\underline{Level}};
+		\foreach \x in {0,1,2,3,4,5}{\draw (-2.5,-\x) node{\x};}
+		\draw[-latex] (7.5,0) node[right]{Unmatched vertices} -- (6,0) ;
+		\draw[-latex] (7.5,-1.5) node[right]{Matching edges} -- (6.7,-1.5) ;
+		\draw[-latex] (7.5,-0.5) node[right]{Unmatched edges} -- (6.3,-0.5) ;C
+	\end{tikzpicture}
+	\caption{Hungarian Forest}
+\end{figure}
+
+We will start from each of unmatched vertices in $L$ then we will start \textit{Breadth-First-Search} where we will not repeat the vertices we have already visited and at odd level we will take matching edges and at even levels we will take unmatched edges. We stop when no new vertices can be found. Then we do the same for the unmatched vertices in $R$ also. Now continuing like this stating at any unmatched vertex if we stop at off level then we have already found a augmenting path and otherwise all the paths from unmatched vertices end at an even level. Lets call the forest $F$.
+
+\begin{align*}
+	&\mcO_L\colon\text{Vertices of $L$ that occur in odd levels}&& \mcO_R\colon\text{Vertices of $R$ that occur in odd levels}\\
+	&\mcE_L\colon\text{Vertices of $L$ that occur in odd levels}&& \mcE_R\colon\text{Vertices of $R$ that occur in even levels}\\
+	&\mcU_L\colon\text{Vertices of $L$ that are unreachable}&& \mcU_R\colon\text{Vertices of $R$ that are unreachable}
+\end{align*}
+
+Following the construction of Hungarian Forest we have the following observations:
+
+\begin{observation}
+	In the forest $F$ there are no edges between vertices at levels separated by 2. 
+\end{observation}
+\begin{observation}\label{evens-matched}
+	All even vertices except the vertices in level 0 are matched.
+\end{observation}
+
+\subsubsection{Vertex Cover}
+Now we have to  show the algorithm always outputs a augmenting path. Instead of showing that we will show if the algorithm can not find an $M$-augmenting path then $M$ is a maximum matching. We will show that using vertex cover.
+
+\begin{Definition}{Vertex Cover}{}
+	$C\subseteq V$ is a vertex cover if every edge $e\in E$ has at least one end point in $C$
+\end{Definition}
+\begin{lemma}{}{}
+	For any matching $M$ and any vertex cover $C$, $|M|\leq |C|$
+\end{lemma}
+\begin{proof}
+	Since for every edge $e\in E$, $e\cup C\neq \emptyset$ for all the edges in $M$ at least one end point of each edge is in $C$ therefore $|M|\leq |C|$.
+\end{proof}
+
+\begin{Theorem}{K\"{o}nig-Egerv\'{a}ry, 1931}{}
+	In a bipartite graph, the size of a maximum matching is equal to the size of minimum vertex cover.
+\end{Theorem}
+\begin{proof}
+	Consider the set $C=\mcO_L\cup \mcO_R\cup \mcU_L$. Now $|C|=|\mcO_L|+|\mcO_R|+|\mcU_L|$. All the odd level vertices of $L\cup R$ are matched by the construction of Hungarian forest. And all the unmatched vertices of $L$ are matched with unmatched vertices of $R$. Therefore $|\mcO_L|+|\mcO_R|+|\mcU_L|=|M|$. Hence if $C$ is a vertex cover then $C$ will be the minimum size vertex cover and $M$ will be the maximum matching. We will show that this is a vertex cover with the following claim:
+	\begin{claimwidth}
+		\begin{claim}{}{}
+			$\mcO_L\cup \mcO_R\cup \mcU_L$ is a vertex cover.
+		\end{claim}
+		\begin{proof}
+			Now there is no edge in $\mcE_L\times \mcE_R$ otherwise it will make an $M$-augmenting path. There is also no edge in $\mcE_L\times \mcU_R$  otherwise $\mcU_R$ will not be unreachable. Hence all the other edges are incident on at least  one of the three sets $\mcO_L,\mcO_R,\mcU_L$. So $\mcO_L\sqcup \mcO_R\sqcup \mcU_L$ is a vertex cover. 
+		\end{proof}
+	\end{claimwidth}
+	Therefore the minimum size vertex cover and the maximum matching has the same size.
+\end{proof}
+
+Hence if the algorithm can not find an $M$-augmenting path we have shown that we obtain a  minimum size vertex cover which has the same size as $M$ which makes $M$ to be the maximum matching. Hence the construction of Hungarian Forest always returns a $M$-augmenting path if $M$ is not maximum matching.
+\section{Minimum Cost Perfect Matching}
+\begin{algoprob}
+	\problemtitle{Bipartite Min Cost Perfect Matching}
+	\probleminput{Graph $G=(L\sqcup R,E)$ with $|L|=|R|$ and cost function $c:E\to\bbR$.}
+	\problemquestion{Find a perfect matching $M$ with minimum cost $c(M)=\sum\limits_{e\in M}c(e)$}
+\end{algoprob}
+
+WLOG we can always assume $G$ is the complete bipartite graph. Since if its not complete then we can add those edges with their cost being $\infty$. So from now on we will assume $G$ is a complete bipartite graph. 
+
+We will first write a integer program for this problem. Since the bipartite graph is complete we will take a $n\times n$ symbolic matrix $X$ and cost function is also a $n\times n$ matrix $C$. \parinf\vspace*{5mm}
+
+Integer Program:\begin{mini*}
+	{}{\sum\limits_{i,j}c_{i,j}x_{i,j}}{}{}
+	\addConstraint{}{\sum_{j=1}^nx_{i,j}=1}{\quad\forall\ i\in[n]}
+	\addConstraint{}{\sum_{i=1}^nx_{i,j}=1}{\quad\forall\ j\in[n]}
+	\addConstraint{}{x_{i,j}\in\{0,1\}}{\quad\forall\ i,j\in[n]}
+\end{mini*}
+
+\parinn 
+
+We will see the LP-relaxation of this by replacing the constraint $x_{i,j}\in\{0,1\}$ by $0\leq x_{i,j}\leq 1$. 
+
+\begin{mini*}
+	{}{\sum\limits_{i,j}c_{i,j}x_{i,j}}{}{}
+	\addConstraint{}{\sum_{j=1}^nx_{i,j}=1}{\quad\forall\ i\in[n]}
+	\addConstraint{}{\sum_{i=1}^nx_{i,j}=1}{\quad\forall\ j\in[n]}
+	\addConstraint{}{x_{i,j}\geq 0}{\quad\forall\ i,j\in[n]}
+\end{mini*}
