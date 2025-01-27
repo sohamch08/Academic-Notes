@@ -1,6 +1,6 @@
 \chapter{Bipartite Matching}
 \dfnc{Bipartite Graph}{A graph $G'(V,E)$ is bipartite if the vertex set is partitioned into two sets $V=L\sqcup R$ and the edges are between the two partitions i.e. $E\subseteq L\times R$.}
-%\handout{1: Bipartite Matching}{T. Kavitha}{Soham Chatterjee}
+
 In This chapter we will look into two main problems in Bipartite graphs: Maximum Matching and Minimum cost Perfect Matching.
 \section{Maximum Matching}
 
@@ -21,7 +21,7 @@ Then the max-flow for this directed graph is the maximum matching of the biparti
 	For a max-flow the flow through any edge is either 0 or 1.
 \end{lemma}
 \begin{proof}
-	The Edmonds-Karp algorithm takes a $s\rightsquigarrow t$ path in the residual graph and send the flow equal to the minimum of all the capacities of edges in that path. Since the capacities are all 1 the flow also equals to 1. Therefore at each iteration of Edmonds-Karp the amount of flow added is also integral. Therefore in the final max-flow the flow through each edge is integral. Now since the flow in any edge is always less than or equal to the capacity it is either 0 or 1.
+	The \prb{Edmonds-Karp} algorithm takes a $s\rightsquigarrow t$ path in the residual graph and send the flow equal to the minimum of all the capacities of edges in that path. Since the capacities are all 1 the flow also equals to 1. Therefore at each iteration of \prb{Edmonds-Karp} the amount of flow added is also integral. Therefore in the final max-flow the flow through each edge is integral. Now since the flow in any edge is always less than or equal to the capacity it is either 0 or 1.
 \end{proof}
 
 Therefore the max-flow of the modified graph is always some non-negative integer. Now we have e lemma that value of max-flow gives a maximum matching.
@@ -82,7 +82,10 @@ Now let $M$ is not a maximum matching. Then we will find a $M$-augmenting path i
 		\Return{$M$}}
 	\caption{\prb{Find-Maximum-Matching}}
 \end{algorithm}
-\subsubsection{Hungarian Forest}
+
+\subsubsection{Construction of Hungarian Forest}
+In the algorithm we will find an $M$-augmenting path by constructing what is called a \textit{Hungarian Forest}.
+
 \begin{figure}[h]
 	\centering
 	\begin{tikzpicture}                                                 
@@ -171,6 +174,7 @@ We will start from each of unmatched vertices in $L$ then we will start \textit{
 	&\mcU_L\colon\text{Vertices of $L$ that are unreachable}&& \mcU_R\colon\text{Vertices of $R$ that are unreachable}
 \end{align*}
 
+
 Following the construction of Hungarian Forest we have the following observations:
 
 \begin{observation}
@@ -180,8 +184,8 @@ Following the construction of Hungarian Forest we have the following observation
 	All even vertices except the vertices in level 0 are matched.
 \end{observation}
 
-\subsubsection{Vertex Cover}
-Now we have to  show the algorithm always outputs a augmenting path. Instead of showing that we will show if the algorithm can not find an $M$-augmenting path then $M$ is a maximum matching. We will show that using vertex cover.
+\subsubsection{Min Vertex Cover and Maximum Matching.}
+We have to  show the algorithm always outputs a augmenting path. Instead of showing that we will show if the algorithm can not find an $M$-augmenting path then $M$ is a maximum matching. We will show that using vertex cover.
 
 \begin{Definition}{Vertex Cover}{}
 	$C\subseteq V$ is a vertex cover if every edge $e\in E$ has at least one end point in $C$
@@ -210,6 +214,9 @@ Now we have to  show the algorithm always outputs a augmenting path. Instead of 
 \end{proof}
 
 Hence if the algorithm can not find an $M$-augmenting path we have shown that we obtain a  minimum size vertex cover which has the same size as $M$ which makes $M$ to be the maximum matching. Hence the construction of Hungarian Forest always returns a $M$-augmenting path if $M$ is not maximum matching.
+
+Now in the algorithm construction of the Hungarian forest takes $O(|V|+|E|)$ time complexity. Therefore time to find an $M$-augmenting path in each iteration of the while loop takes $O(|V|+|E|)$ time. Now in each iteration the matching size increases by 1. So the while loop will go on for at most $O(|V|)$ iterations. Hence total time taken by the algorithm is $O(n^2)$ where $|V|=n$.
+
 \section{Minimum Cost Perfect Matching}
 \begin{algoprob}
 	\problemtitle{Bipartite Min Cost Perfect Matching}
