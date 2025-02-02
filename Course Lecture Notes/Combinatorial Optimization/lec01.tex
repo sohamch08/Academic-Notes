@@ -74,7 +74,7 @@ Given a matching $M$ and if there exists an $M$-augmenting path $p$ then we can 
 \begin{proof}
 	Suppose $M$ is maximum. If there is an $M$-augmenting path $p$ in $G$ then $M\oplus p$  gives a matching with larger size. But that contradicts the fact that $M$ is a maximum matching. Hence there are no $M$-augmenting paths in $G$.
 	
-	For the other direction we will show that if $M$ is not a maximum matching then there is an augmenting path. So let's assume that. Also assume that $N$ be a maximum matching. Then $|N|>|M|$. Consider the graph $M\oplus N$. In the graph $M\oplus N$ every vertex has degree at most 2. Therefore the connected components of $M\oplus N$ are paths and cycles. Now since $G$ is bipartite the cycles in $M\oplus N$ are of even length and the edges of $M$ and $N$ appears alternatively in the cycles. So for each cycle in $M\oplus N$ there are equal number of edges from $M$ and edges from $N$. Now in the paths edges from $M$ and $N$ appears alternatively  too. Therefore in an even path number of edges from $M$ is equal to number of edges from $N$. And in a odd path either number of edges from $N$ is one more than the number of edges from $M$ or the opposite. Since we know $|N|>|M|$ there must exists at least one odd path $p$ which has number of edges of $N$ is one more than the number of edges from $M$. In that case the path starts and ends with edges from $N$. This path $p$ is an $M$-augmenting path. Therefore there exists an $M$-augmenting path in $G$ if $M$ is now a maximum matching. 
+	For the other direction we will show that if $M$ is not a maximum matching then there is an augmenting path. So let's assume that. Also assume that $N$ be a maximum matching. Then $|N|>|M|$. Consider the graph $M\oplus N$. In the graph $M\oplus N$ every vertex has degree at most 2. Therefore the connected components of $M\oplus N$ are paths and cycles. Now since $G$ is bipartite the cycles in $M\oplus N$ are of even length and the edges of $M$ and $N$ appears alternatively in the cycles. So for each cycle in $M\oplus N$ there are equal number of edges from $M$ and edges from $N$. Now in the paths edges from $M$ and $N$ appears alternatively  too. Therefore in an even path number of edges from $M$ is equal to number of edges from $N$. And in a odd path either number of edges from $N$ is one more than the number of edges from $M$ or the opposite. Since we know $|N|>|M|$ there must exists at least one odd path $p$ which has number of edges of $N$ is one more than the number of edges from $M$. In that case the path starts and ends with edges from $N$. This path $p$ is an $M$-augmenting path. Therefore there exists an $M$-augmenting path in $G$ if $M$ is not a maximum matching. 
 \end{proof}
 
 
@@ -174,7 +174,7 @@ In the algorithm we will find an $M$-augmenting path by constructing what is cal
 	\caption{Hungarian Forest}
 \end{figure}
 
-We will start from each of unmatched vertices in $L$ then we will start \textit{Breadth-First-Search} where we will not repeat the vertices we have already visited and at odd level we will take matching edges and at even levels we will take unmatched edges. We stop when no new vertices can be found. Then we do the same for the unmatched vertices in $R$ also. Now continuing like this stating at any unmatched vertex if we stop at off level then we have already found a augmenting path and otherwise all the paths from unmatched vertices end at an even level. Lets call the forest $F$.
+We will start from each of unmatched vertices in $L$ then we will start \textit{Breadth-First-Search} where we will not repeat the vertices we have already visited and at odd level we will take matching edges and at even levels we will take unmatched edges. We stop when no new vertices can be found. Then we do the same for the unmatched vertices in $R$ also. Now continuing like this starting at any unmatched vertex if we stop at odd level then we have already found a augmenting path and otherwise all the paths from unmatched vertices end at an even level. Lets call the forest $F$.
 
 \begin{align*}
 	&\mcO_L\colon\text{Vertices of $L$ that occur in odd levels}&& \mcO_R\colon\text{Vertices of $R$ that occur in odd levels}\\
@@ -202,7 +202,7 @@ We have to  show the algorithm always outputs a augmenting path. Instead of show
 	For any matching $M$ and any vertex cover $C$, $|M|\leq |C|$
 \end{lemma}
 \begin{proof}
-	Since for every edge $e\in E$, $e\cup C\neq \emptyset$ for all the edges in $M$ at least one end point of each edge is in $C$ therefore $|M|\leq |C|$.
+	Since for every edge $e\in E$, $e\cap C\neq \emptyset$ for all the edges in $M$ at least one end point of each edge is in $C$ therefore $|M|\leq |C|$.
 \end{proof}
 
 \begin{Theorem}{K\"{o}nig-Egerv\'{a}ry, 1931}{}
@@ -223,7 +223,7 @@ We have to  show the algorithm always outputs a augmenting path. Instead of show
 
 Hence if the algorithm can not find an $M$-augmenting path we have shown that we obtain a  minimum size vertex cover which has the same size as $M$ which makes $M$ to be the maximum matching. Hence the construction of Hungarian Forest always returns a $M$-augmenting path if $M$ is not maximum matching.
 
-Now in the algorithm construction of the Hungarian forest takes $O(|V|+|E|)$ time complexity. Therefore time to find an $M$-augmenting path in each iteration of the while loop takes $O(|V|+|E|)$ time. Now in each iteration the matching size increases by 1. So the while loop will go on for at most $O(|V|)$ iterations. Hence total time taken by the algorithm is $O(n^2)$ where $|V|=n$.
+Now in the algorithm construction of the Hungarian forest takes $O(|V|+|E|)$ time complexity. Therefore time to find an $M$-augmenting path in each iteration of the while loop takes $O(|V|+|E|)$ time. Now in each iteration the matching size increases by 1. So the while loop will go on for at most $O(|V|)$ iterations. Hence total time taken by the algorithm is $O(mn+n^2)=O(mn)$ where $m=|E|$ and  $|V|=n$.
 
 \section{Minimum Cost Perfect Matching}
 \begin{algoprob}

@@ -66,13 +66,14 @@ Given a matching $M$ and if there exists an $M$-augmenting path $p$ then we can 
 \begin{proof}
 	Suppose $M$ is maximum. If there is an $M$-augmenting path $p$ in $G$ then $M\oplus p$  gives a matching with larger size. But that contradicts the fact that $M$ is a maximum matching. Hence there are no $M$-augmenting paths in $G$.
 	
-	For the other direction we will show that if $M$ is not a maximum matching then there is an augmenting path. So let's assume that. Also assume that $N$ be a maximum matching. Then $|N|>|M|$. Consider the graph $M\oplus N$. In the graph $M\oplus N$ every vertex has degree at most 2. Therefore the connected components of $M\oplus N$ are paths and cycles. Now since $G$ is bipartite the cycles in $M\oplus N$ are of even length and the edges of $M$ and $N$ appears alternatively in the cycles. So for each cycle in $M\oplus N$ there are equal number of edges from $M$ and edges from $N$. Now in the paths edges from $M$ and $N$ appears alternatively  too. Therefore in an even path number of edges from $M$ is equal to number of edges from $N$. And in a odd path either number of edges from $N$ is one more than the number of edges from $M$ or the opposite. Since we know $|N|>|M|$ there must exists at least one odd path $p$ which has number of edges of $N$ is one more than the number of edges from $M$. In that case the path starts and ends with edges from $N$. This path $p$ is an $M$-augmenting path. Therefore there exists an $M$-augmenting path in $G$ if $M$ is now a maximum matching. 
+	For the other direction we will show that if $M$ is not a maximum matching then there is an augmenting path. So let's assume that. Also assume that $N$ be a maximum matching. Then $|N|>|M|$. Consider the graph $M\oplus N$. In the graph $M\oplus N$ every vertex has degree at most 2. Therefore the connected components of $M\oplus N$ are paths and cycles. Now since $G$ is bipartite the cycles in $M\oplus N$ are of even length and the edges of $M$ and $N$ appears alternatively in the cycles. So for each cycle in $M\oplus N$ there are equal number of edges from $M$ and edges from $N$. Now in the paths edges from $M$ and $N$ appears alternatively  too. Therefore in an even path number of edges from $M$ is equal to number of edges from $N$. And in a odd path either number of edges from $N$ is one more than the number of edges from $M$ or the opposite. Since we know $|N|>|M|$ there must exists at least one odd path $p$ which has number of edges of $N$ is one more than the number of edges from $M$. In that case the path starts and ends with edges from $N$. This path $p$ is an $M$-augmenting path. Therefore there exists an $M$-augmenting path in $G$ if $M$ is not a maximum matching. 
 \end{proof}
 
 
 Now let $M$ is not a maximum matching. Then we will find a $M$-augmenting path in $G$ by constructing the \textit{Hungarian Forest}. Our algorithm will be starting with empty set iteratively find augmenting paths and then take a symmetric difference with the matching set and continue like this till we can not find an augmenting path. 
 
 \begin{algorithm}
+	\label{find-max-matching}
 	\DontPrintSemicolon
 	\KwIn{$G=(L\cup R,E)$}
 	\KwOut{Find maximum matching $M\subseteq E$.}
@@ -166,7 +167,7 @@ In the algorithm we will find an $M$-augmenting path by constructing what is cal
 	\caption{Hungarian Forest}
 \end{figure}
 
-We will start from each of unmatched vertices in $L$ then we will start \textit{Breadth-First-Search} where we will not repeat the vertices we have already visited and at odd level we will take matching edges and at even levels we will take unmatched edges. We stop when no new vertices can be found. Then we do the same for the unmatched vertices in $R$ also. Now continuing like this stating at any unmatched vertex if we stop at off level then we have already found a augmenting path and otherwise all the paths from unmatched vertices end at an even level. Lets call the forest $F$.
+We will start from each of unmatched vertices in $L$ then we will start \textit{Breadth-First-Search} where we will not repeat the vertices we have already visited and at odd level we will take matching edges and at even levels we will take unmatched edges. We stop when no new vertices can be found. Then we do the same for the unmatched vertices in $R$ also. Now continuing like this starting at any unmatched vertex if we stop at odd level then we have already found a augmenting path and otherwise all the paths from unmatched vertices end at an even level. Lets call the forest $F$.
 
 \begin{align*}
 	&\mcO_L\colon\text{Vertices of $L$ that occur in odd levels}&& \mcO_R\colon\text{Vertices of $R$ that occur in odd levels}\\
@@ -194,10 +195,10 @@ We have to  show the algorithm always outputs a augmenting path. Instead of show
 	For any matching $M$ and any vertex cover $C$, $|M|\leq |C|$
 \end{lemma}
 \begin{proof}
-	Since for every edge $e\in E$, $e\cup C\neq \emptyset$ for all the edges in $M$ at least one end point of each edge is in $C$ therefore $|M|\leq |C|$.
+	Since for every edge $e\in E$, $e\cap C\neq \emptyset$ for all the edges in $M$ at least one end point of each edge is in $C$ therefore $|M|\leq |C|$.
 \end{proof}
 
-\begin{Theorem}{K\"{o}nig-Egerv\'{a}ry, 1931}{}
+\begin{Theorem}{K\"{o}nig-Egerv\'{a}ry, 1931}{konig-egervary}
 	In a bipartite graph, the size of a maximum matching is equal to the size of minimum vertex cover.
 \end{Theorem}
 \begin{proof}
@@ -215,8 +216,17 @@ We have to  show the algorithm always outputs a augmenting path. Instead of show
 
 Hence if the algorithm can not find an $M$-augmenting path we have shown that we obtain a  minimum size vertex cover which has the same size as $M$ which makes $M$ to be the maximum matching. Hence the construction of Hungarian Forest always returns a $M$-augmenting path if $M$ is not maximum matching.
 
-Now in the algorithm construction of the Hungarian forest takes $O(|V|+|E|)$ time complexity. Therefore time to find an $M$-augmenting path in each iteration of the while loop takes $O(|V|+|E|)$ time. Now in each iteration the matching size increases by 1. So the while loop will go on for at most $O(|V|)$ iterations. Hence total time taken by the algorithm is $O(n^2)$ where $|V|=n$.
-
+Now in the algorithm construction of the Hungarian forest takes $O(|V|+|E|)$ time complexity. Therefore time to find an $M$-augmenting path in each iteration of the while loop takes $O(|V|+|E|)$ time. Now in each iteration the matching size increases by 1. So the while loop will go on for at most $O(|V|)$ iterations. Hence total time taken by the algorithm is $O(mn+n^2)=O(mn)$ where $m=|E|$ and  $|V|=n$.
+\subsection{Hall's Theorem}
+We will use K\"{o}nig-Egerv\'{a}ry Theorem to prove Hall's Marriage Theorem, which establishes a necessary and sufficient condition for the existence of a perfect matching in a bipartite graph.
+\begin{Theorem}{Hall's Theorem, 1935}{}
+	A bipartite graph $G=(L\cup R,E)$ has an $L$-perfect matching if and only if for all $S\subseteq L$: $|N(S)|\geq |S|$
+\end{Theorem}
+\begin{proof}
+	Suppose $G$ has a $L$-perfect matching. Let $M$ be the $L$-perfect matching. Then let $S\subseteq L$. Then $N(S)\supseteq T$ where $T\coloneqq\{v\in R\colon (u,v)\in M, u\in S\}$. Then $|T|=|S|$. Therefore we have $|N(S)|\geq |T|=|S|$. 
+	
+	Now suppose for all $S\subseteq L$, $|S|\leq |N(S)|$. Suppose $G$ doesn't have a perfect matching. Let $M$ be a maximum $L$-matching in $G$. So $|M|<|L|$. Let $C$ be the minimum vertex cover. By \hyperref[th:konig-egervary]{K\"{o}nig-Egerv\'{a}ry Theorem} $|C|=|M|$. Therefore $|C|<|L|$. Hence take $S=\{u\in L\colon u\notin C\}$ and take $T=R\cap C$. Therefore we have $N(S)\subseteq T$. Hence we have $$|C|=|L\cap C|+|T|=|L|-|S|+|T|\implies |S|=|L|-|C|+|T|\geq |T|\geq |N(S)|$$Hence we got a set $S\subseteq L$ for which $|S|> |N(S)|$. Hence contradiction \ctr. Therefore $G$ has a $L$-perfect matching.
+\end{proof}
 \section{Minimum Cost Perfect Matching}
 \begin{algoprob}
 	\problemtitle{Bipartite Min Cost Perfect Matching}
@@ -226,7 +236,7 @@ Now in the algorithm construction of the Hungarian forest takes $O(|V|+|E|)$ tim
 
 WLOG we can always assume $G$ is the complete bipartite graph. Since if its not complete then we can add those edges with their cost being $\infty$. So from now on we will assume $G$ is a complete bipartite graph. 
 \subsection{Constructing an LP}
-We will first write a integer program for this problem. Since the bipartite graph is complete we will take a $n\times n$ symbolic matrix $X$ and cost function is also a $n\times n$ matrix $C$. \parinf\vspace*{5mm}
+We will first write a integer program for this problem. Since the bipartite graph is complete we will take a $n\times n$ symbolic matrix $X$ and cost function is also a $n\times n$ matrix $C$ where $c_{i,j}=c(i,j)$ for the edge $(i,j)\in E$.\parinf\vspace*{5mm}
 
 Integer Program:\begin{mini*}
 	{}{\sum\limits_{i,j}c_{i,j}x_{i,j}}{}{}
@@ -254,23 +264,73 @@ We will see the LP-relaxation of this by replacing the constraint $x_{i,j}\in\{0
 	$u\in Q$ is an extreme point of a set $Q$ if $u$ cannot be written as $\lm x+(1-\lm)y$ where $x,y\in Q$, $x\neq y$ and $\lm\in(0,1)$.
 \end{Definition}
 \subsection{Finding Extreme Point of the LP}
-We aim to show in the following theorem that the extreme points of the polyhedron \( P \) correspond to perfect matchings in a bipartite graph. Specifically, we will prove that any doubly stochastic matrix is a convex combination of permutation matrices, which represent perfect matchings. This implies that every extreme point of \( P \) is a \( 0-1 \) vector, corresponding to a permutation matrix.
+We aim to show in the following theorem that the extreme points of the polytope \( P \) correspond to perfect matchings in a bipartite graph. Every perfect matching corresponds to a permutation matrix. Therefore specifically, we will prove that any doubly stochastic matrix is a convex combination of permutation matrices. This implies that every extreme point of \( P \) is a \( 0-1 \) vector, corresponding to a permutation matrix.
 \begin{Theorem}{Birkhoff-Von Neumann Theorem, 1946}{}
 	Every doubly stochastic matrix can be written as a convex combination of permutation matrices.
 \end{Theorem}
 \begin{proof}
-	Suppose there exists values $u_i$ $\forall\ i\in A$ and $v_j$ $\forall\ j\in B$ such that $$u_i+v_j\leq c_{i,j}\ \forall\ i\in A, j\in B$$Then for any perfect matching $M$ we have $$\sum_{(i,j)\in M}c_{i,j}\geq \sum_{i\in A}u_i+\sum_{j\in B}v_j$$Therefore $\sum\limits_{i\in A}u_i+\sum\limits_{j\in B}v_j$ gives a lower bound on the cost of minimum cost perfect matching for the bipartite graph. So to get the best lower bound we would like to maximize this quantity. So we have the following LP:
-	\begin{maxi*}{}{\sum_{i\in A}u_i\sum_{j\in B}v_j}{}{}
-		\addConstraint{}{u_i+v_j\leq c_{i,j}}{\quad \forall\ i\in A,j\in B}
-	\end{maxi*}Let $D$ be the polyhedron generated by the constraint $u_i+v_j\leq c_{i,j}$ $\forall\ i\in A,j\in B$. Now consider any $x\in P$. Then we have $$\sum_{i\in A}\sum_{j\in B}c_{i,j}x_{i,j}\geq \sum_{i\in A}\sum_{j\in B}(u_i+v_j)x_{i,j}=\lt(\sum_{i\in u_i}\sum_{j\in B}x_{i,j}\rt)+\lt(\sum_{j\in B}v_j\sum_{i\in A}x_{i,j}\rt)=\sum_{i\in A}u_i+\sum_{j\in B}v_j$$Therefore we have $$\min\limits_{\text{perfect matching $M$}}\sum_{(i,j)\in M}c_{i,j}\geq \min\limits_{x\in P}\sum_{i\in A}\sum_{j\in B}c_{i,j}x_{i,j}\geq \max\limits_{(u,v)\in D}\sum_{i\in A}u_i+\sum_{j\in B}v_j$$Thus we get a primal-dual relation between the two LP problems.
-
-Now our goal is to come up with a perfect matching $M$ and $(u,v)\in D$ such that $\sum\limits_{(i,j)\in M}c_{i,j}=\sum\limits_{i\in A}u_i+\sum\limits_{j\in B}v_j$. Then $M$ will be optimal solution to the LP-relaxation. However for a given $u,v$ we may not be able to find a perfect matching among the edges with $w_{i,j}=0$. 
-
-We will describe an algorithm now which performs a series of iterations to obtain an appropriate $u$ and $v$. 
-\begin{algorithm}\DontPrintSemicolon
-Initialize $u_i \longleftarrow 0$ $\forall\ i\in A$\;
-$v_j\longleftarrow \min\limits_{i\in A}c_{i,j}$ $\forall \ j\in B$.
-\end{algorithm}
-
-
+	Suppose there exists values $u_i$ $\forall\ i\in L$ and $v_j$ $\forall\ j\in R$ such that $$u_i+v_j\leq c_{i,j}\ \forall\ i\in L, j\in R$$Then for any perfect matching $M$ we have $$\sum_{(i,j)\in M}c_{i,j}\geq \sum_{i\in L}u_i+\sum_{j\in R}v_j$$Therefore $\sum\limits_{i\in L}u_i+\sum\limits_{j\in R}v_j$ gives a lower bound on the cost of minimum cost perfect matching for the bipartite graph. So to get the best lower bound we would like to maximize this quantity. So we have the following LP:
+	\begin{maxi*}{}{\sum_{i\in L}u_i+\sum_{j\in R}v_j}{}{}
+		\addConstraint{}{u_i+v_j\leq c_{i,j}}{\quad \forall\ i\in L,j\in R}
+	\end{maxi*}Let $D$ be the polyhedron generated by the constraint $u_i+v_j\leq c_{i,j}$ $\forall\ i\in L,j\in R$. Now consider any $X\in P$. Then we have $$\sum_{i\in L}\sum_{j\in R}c_{i,j}x_{i,j}\geq \sum_{i\in L}\sum_{j\in R}(u_i+v_j)x_{i,j}=\lt(\sum_{i\in u_i}\sum_{j\in R}x_{i,j}\rt)+\lt(\sum_{j\in R}v_j\sum_{i\in L}x_{i,j}\rt)=\sum_{i\in L}u_i+\sum_{j\in R}v_j$$Therefore we have $$\min\limits_{\text{perfect matching $M$}}\sum_{(i,j)\in M}c_{i,j}\geq \min\limits_{x\in P}\sum_{i\in L}\sum_{j\in R}c_{i,j}x_{i,j}\geq \max\limits_{(u,v)\in D}\sum_{i\in L}u_i+\sum_{j\in R}v_j$$Thus we get a primal-dual relation between the two LP problems.
+	
+	Now our goal is to come up with a perfect matching $M$ and $(u,v)\in D$ such that $\sum\limits_{(i,j)\in M}c_{i,j}=\sum\limits_{i\in L}u_i+\sum\limits_{j\in R}v_j$. Then $M$ will be optimal solution to the LP-relaxation. Given solution $u^*,v^*$ of the dual LP a perfect matching $M$ would satisfy equality if it contains only the edges $(i,j)$ such that $c_{i,j}=u_i+v_j$ by \textit{complementary slackness}. But for a given $(u,v)$ we may not be able to find a perfect matching among the edges with $c_{i,j}=u_i+v_j$. 
+	
+	We will describe an algorithm now which performs a series of iterations to obtain an appropriate $u$ and $v$. It maintains a feasible solution for the dual problem and finds an ``almost" primal feasible solution $x$ satisfying complementary slackness. Satisfying complementary slackness we are working in the subgraph $G'=(V,E')$ where $E'=\{(i,j)\colon c_{i,j}=u_i+v_j\}$.
+	\begin{algorithm}\DontPrintSemicolon
+		\KwIn{Complete bipartite graph $G=(L\sqcup R, E)$ with $|L|=n$ and cost function $c:E\to\bbR$}
+		\KwOut{Find minimum cost perfect matching}
+		\Begin{Initialize $u_i \longleftarrow 0$ $\forall\ i\in L$\;
+			$v_j\longleftarrow \min\limits_{i\in L}c_{i,j}$ $\forall \ j\in R$\;
+			\While{True}{
+				$E'\longleftarrow \{(i,j)\colon c_{i,j}=u_i+v_j\}$\;
+				$M\longleftarrow \hyperref[find-max-matching]{\prb{Find-Maximum-Matching}}(G'=(V,E'))$\;
+				\If{$M$ is perfect matching}{\Return{$M$}}
+				$\dl\longleftarrow \min\limits_{i\in \mcE_L}\min\limits_{j\in  \mcE_R\cup \mcU_R}(c_{i,j}-u_i-v_j)$\;
+				$u_i\longleftarrow u_i+\dl$, $\forall\ i\in\mcE_L$\;
+				$v_j\longleftarrow v_j-\dl$, $\forall\ i\in\mcO_R$\;
+		}}
+		\caption{\prb{Min-Cost-BPM}}
+	\end{algorithm}
+	
+	In the algorithm when $M$ is not a perfect matching then it updates $u,v$ to get a new feasible solution which has value $\sum\limits_{i\in L}u_i+\sum\limits_{j\in R}v_j$ greater than before which we will prove now and then runs the while loop again.
+	
+	In the \prb{Find-Maximum-Matching} algorithm if $M$ is not a perfect matching then $C=\mcO_L\cup \mcO_R\cup\mcU_L$ is the minimum vertex cover of $G=(V,E')$. In order to update $u,v$ to get $u',v'$ we will use the information of the minimum vertex cover. 
+	
+	By the algorithm we obtain new $u',v'$ where \begin{align*}
+		u'_i=\begin{cases}
+			u_i+\dl & \forall\ i\in \mcE_L\\
+			u_i & \forall\ i\in \mcO_L\cup \mcU_L
+		\end{cases}  && v'_j=\begin{cases}
+			v_i-\dl & \forall\ i\in \mcO_R\\
+			v_i & \forall\ i\in \mcE_R\cup \mcU_R
+		\end{cases} 
+	\end{align*}
+	\begin{claimwidth}
+		\begin{claim}{}{}
+			$(\hat{u},\hat{v})$ is also a feasible solution of the LP \begin{maxi*}{}{\sum_{i\in L}u_i+\sum_{j\in R}v_j}{}{}
+				\addConstraint{}{u_i+v_j\leq c_{i,j}}{\quad \forall\ i\in L,j\in R}
+			\end{maxi*} with $$\sum\limits_{i\in L}\hat{u}_i+\sum\limits_{j\in R}\hat{v}_j> \sum\limits_{i\in L}u_i+\sum\limits_{j\in R}v_j$$
+		\end{claim}
+		\begin{proof}
+			The edges in $G'=(V,E')$ are in $\mcO_L\times \mcE_R$, $\mcE_L\times \mcO_R$ and $\mcU_L\times \mcU_R$. Therefore $\mcE_L\cup \mcE_R\cup \mcU_R$ is an independent set. Let after updating the vectors $u,v$ we denote it by $\hat{u},\hat{v}$. For edges in $(i,j)\in E\cap (\mcO_L\times\mcE_R \cup   \mcU_L\times \mcU_R)$ we have $\hat{u}_i=u_i$ and $\hat{v}_j=v_j$. Therefore  $$\hat{u}_i+\hat{v}_j=u_i+v_j\leq c_{i,j}$$For edges in $(i,j)\in  \mcE_L\times \mcO_R$ we have $\hat{u}_i=u_i+\dl$ and $\hat{v}_j=v_j-\dl$. Therefore  $$\hat{u}_i+\hat{v}_j=u_i+\dl+v_j-\dl=u_i+v_j\leq c_{i,j}$$Therefore $(\hat{u},\hat{v})$ is a feasible solution of the LP. 
+			
+			Now we have $$
+			\sum\limits_{i\in L}\hat{u}_i+\sum\limits_{j\in R}\hat{v}_j-\sum\limits_{i\in L}u_i-\sum\limits_{j\in R}v_j=\dl(|\mcE_L|-|\mcO_R|)=\dl(|L|-|C|)=\dl(n-|C|)$$
+			Since every vertex of $\mcO_R$ is matched and matched with vertices of $\mcE_L$ and $\mcE_L$ also contains the starting unmatched vertices of $L$ we have $|\mcE_L|>|\mcO_R|$. Hence the value strictly increases.
+		\end{proof}
+		\begin{claim}{}{}
+			In each iteration of while loop size of the edge set $E'$ increases by 1.
+		\end{claim}
+		\begin{proof}
+			In any iteration of the while loop in the graph $G'=(V,E')$ none of the the edges in $\mcE_L\times (\mcE_R\cup \mcU_R)$ are present. Now in line 9 we are taking $\dl$ to be the minimum of $c_{i,j}-u_i-v_j$ over all edges of $\mcE_L\times (\mcE_R\cup \mcU_R)$. Let that edge is $(i',j')$. Then $c_{i',j'}-u_i-v_j=\dl$. Then in line 10 the algorithm updates $\hat{u}_{i'}=u_{i'}+\dl$ but $\hat{v}_{j'}$ is unchanged since $j'\in \mcE_R\cup\mcU_R$. Then in the next iteration of the while loop we have for the edge $(i',j')$ $$c_{i',j'}-\hat{u}_{i'}-\hat{v}_{j'}=c_{i',j'}-u_{i'}-\dl-v_{j'}=0$$Therefore the edge $(i',j')$ is in the edge set constructed in line 5 in the next iteration of the while loop. Since each time one edge is becoming tight the edge set is increasing by 1 in each iteration of the while loop.
+		\end{proof}
+	\end{claimwidth}
+	Since each time one edge is becoming tight the edge set is increasing by one and henceforth the algorithm terminates. Therefore in after $O(n^2)$  iterations all the edges has been added and therefore the  matching found is perfect. Therefore the overall running time of the algorithm is thus $O(n^2)\times O(n^3)=O(n^5)$.
+	
+	Now since carefully choosing the cost function we can make any extreme point of the polytope of LP be the optimum solution of the linear program this proves that all the extreme points are integral.
 \end{proof}
+
+Therefore we have proved both that we can find the minimum cost perfect matching in a bipartite graph in $O(n^5)$ times and every doubly stochastic matrix can be written as a convex combination of permutation matrix.
+
+

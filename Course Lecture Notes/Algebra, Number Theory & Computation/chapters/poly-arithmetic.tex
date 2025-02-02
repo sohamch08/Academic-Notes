@@ -1,3 +1,54 @@
 \chapter{Polynomial Arithmetic}
 \section{Multiplication}
-\section{Division}
+\section{Fast Division}
+\begin{algoprob}
+	\problemtitle{Polynomial Division}
+	\probleminput{$f,g\in\bbF[X]$, $\deg (f,g)\leq d$}
+	\problemoutput{Quotient and reminder when $f$ is divided by $g$.}
+\end{algoprob}
+
+Suppose $\deg f=a$ and $\deg g=b$. Let $(q,r)\in \bbF[X]$ are the quotient and remainder when $f$ is divided by $g$ i.e. $f=qg+r$. Therefore $\deg q=a-b$ and $m\coloneqq \deg r<b$. 
+%\subsection{Long Division Algorithm}
+
+We can follow the long division algorithm to find $(q,r)$. This algorithm takes $O(a-b)=O(d)$ many iteration to find $q$. And in each iteration we subtract a polynomial from another polynomial by multiplying one of them with power of $x$. For the multiplying with power $x$ is just shifting of the coefficients. For the subtraction of polynomials it takes $O(d)$ time. Therefore each iteration of the algorithm takes $O(d)$ time complexity. Therefore the long division algorithm takes $O(d^2)$ time complexity. 
+
+%\subsection{Fast Division Algorithm}
+If we can obtain $q$ from $f,g$ then we can get $r$ by following the equation $r=f-gq$.  
+\subsection{Reversal of Polynomials}
+\begin{idea*}
+	Reversal of Polynomials i.e. if $f\in \bbF[X]$ such that $f=f_0+f_1X+\cdots+f_aX^a$ then $$rev(f)=f_0X^a+f_1X^{a-1}+\cdots+f_a=f\lt(\frac1X\rt)X^a$$
+\end{idea*}
+
+\nt{We have $\deg f\geq \deg(rev(f))$. Degree of $rev(f)$ can be strictly lesser than the degree of $f$. For example if $f_0=0$ and $f_1\neq 0$, since $rev(f)=X^af\lt(\frac1X\rt)$ the degree of $rev(f)$ is $a-1$.}
+
+So using reversal we will review the equation $f=gq+r$:
+\begin{align*}
+	& f=qg+r\\
+	\iff & X^af\lt(\frac1X\rt)=X^a\lt[q\lt(\frac1X\rt)g\lt(\frac1X\rt)+r\lt(\frac1X\rt)\rt]\\
+	\iff & X^af\lt(\frac1X\rt)=X^aq\lt(\frac1X\rt)g\lt(\frac1X\rt)+X^ar\lt(\frac1X\rt)\\
+	\iff & rev(f)=rev(q)rev(g)+X^{a-m}rev(r) 
+\end{align*}
+Now we know $a\geq b>m\implies a-m\geq b-m>0$. Therefore $X^{a-m}rev(r)$ is multiple of some nontrivial power of $X$. Now also we have $$a-m>a-b=\deg q\geq \deg(rev(q))$$ Therefore we have $$rev(f)\equiv rev(q)rev(g)\bmod {X^{a-m}}$$Since $a-m\geq a-b+1$ we have $$rev(q)\bmod {X^{a-m}}\equiv rev(q)\bmod {X^{a-b+1}}\equiv rev(q)$$Therefore we have $$rev(f)\equiv rev(q)rev(g)\bmod {X^{a-b+1}}$$
+
+Hence it suffices to recover $rev(q)$ in order to recover $q$ from here. So the problem now reduced to finding a solution $h\in\bbF[X]$ for the system $\tdf-h\tdg\equiv 0\bmod{X^N}$.
+\subsection{Find solution of \texorpdfstring{$\tdf-h\tdg\equiv 0\bmod {X^N}$}{f-fg=0 mod X\^N}}
+\begin{algoprob}
+	\problemtitle{Solve $\tdf-h\tdg\equiv 0\bmod {X^N}$}
+	\probleminput{$\tdf,\tdg\in\bbF[X]$, $\deg (f,g)\leq d$, $\tdf(0),\tdg(0)\neq 0$ with $N\in\bbN$}
+	\problemoutput{Find solution $h$ for the equation $\tdf-h\tdg\equiv 0\bmod {X^N}$}
+\end{algoprob}
+\begin{lemma}{}{}
+	There is an unique $h\in\bbF[X]$ satisfying $\tdf-h\tdg\equiv 0\bmod{X^N}$.
+\end{lemma}
+\begin{proof}
+	Let $\deg \tdf=k$ and $\deg\tdg=l$. Then Suppose $\tdf=\sum\limits_{i=0}^k\tdf_iX^i$ and $\tdg=\sum\limits_{i=0}^l\tdg_iX^i$. Then we can write the equation  $\tdf-h\tdg\equiv 0\bmod{X^N}$ as a linear system like the following: $$\mat{\tdg_0 & \\ \tdg_1 & \tdg_0&\\ \tdg_2&\tdg_1&\tdg_0 & \\ \vdots
+		& & & \ddots & \\ & & & & &}\mat{h_0\\ h_1 \\ h_2\\ \vdots \\ h_{k-l}}=\mat{\tdf_0\\ \tdf_1\\ \vdots \\ \tdf_k}$$Lets call the matrix $G$. Since $\tdg_0\neq 0$ the $G$ has nonzero elements in the diagonal. Since the $G$ is lower triangular the determinant of the $G$ is nonzero. Therefore there exists unique solution solution for $h$.
+\end{proof}
+
+But we don't know how to find inverse of $G$ in near linear time. So we cannot find $h$ like this.
+\begin{idea*}
+	Find a power series solution for $h=\frac{\tdf}{\tdg}\bmod {X^N}$ in $\bbF\llbracket X\rrbracket\supseteq \bbF[X]$ since in $\bbF\llbracket X\rrbracket$ inverse of $\tdg$ exists
+\end{idea*}
+\begin{lemma}{}{}
+	For every power series $P=\sum\limits_{i=0}^{\infty}P_iX^i\in\bbF\llbracket X\rrbracket$, $P$ has a multiplicative inverse iff $_0\neq 0$.
+\end{lemma}
