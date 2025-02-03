@@ -50,5 +50,56 @@ But we don't know how to find inverse of $G$ in near linear time. So we cannot f
 	Find a power series solution for $h=\frac{\tdf}{\tdg}\bmod {X^N}$ in $\bbF\llbracket X\rrbracket\supseteq \bbF[X]$ since in $\bbF\llbracket X\rrbracket$ inverse of $\tdg$ exists
 \end{idea*}
 \begin{lemma}{}{}
-	For every power series $P=\sum\limits_{i=0}^{\infty}P_iX^i\in\bbF\llbracket X\rrbracket$, $P$ has a multiplicative inverse iff $_0\neq 0$.
+	For every power series $P=\sum\limits_{i=0}^{\infty}P_iX^i\in\bbF\llbracket X\rrbracket$, $P$ has a multiplicative inverse iff $P_0\neq 0$.
 \end{lemma}
+
+Since we are dealing with the equation $\tdf-h\tdg\equiv 0\bmod{X^N}$ and $\tdg(0)\neq 0$ there exists a power series solution for $h$. We will see two algorithms to find $h\in \bbF\llbracket X\rrbracket$.
+
+\subsubsection{Algorithm I}
+ \begin{align*}
+ 	\frac{\tdf(X)}{\tdg(X)}\bmod{X^N}  = \frac{\tdf(X)}{\tdg(X)}\;\frac{\tdg(-X)}{\tdg(-X)}\bmod{X^N} = \frac{\tdf(X)\tdg(-X)}{\tdg(X)\tdg(-X)}\bmod{X^N}
+ \end{align*}Now $\tdg(X)\tdg(-X)$ is an even function. Therefore $\exs\ G\in\bbF[X]$ and $\deg G\leq d$ such that $G(X^2)=\tdg(X)\tdg(-X)$. Now we can also decompose $\tdf(X)=\tdf_0(X^2)+X\tdf_1(X^2)$ and $\tdg(-X)=\tdg_0(X^2)+X\tdg_0(X^2)$. Then we have 
+\begin{align*}
+	 \tdf(X)\tdg(-X) & = \lt(\tdf_0(X^2)+X\tdf_1(X^2)\rt)\lt(\tdg_0(X^2)+X\tdg_1(X^2)\rt)\\
+	 & = \underbrace{\lt[ \tdf_0(X^2)\tdg_0(X^2)+X^2\tdf_1(X^2)\tdg_1(X^2)\rt]}_{F_0(X^2)}+X\underbrace{\lt[\tdf_1(X^2)\tdg_0(X^2)+\tdf_0(X^2)\tdg_1(X^2)\rt]}_{F_1(X^2)}\\
+	 &=F_0(X^2)+XF_1(X^2) & [\deg F_i\leq d\ \forall i\in\{0,1\}]
+\end{align*}Therefore we have \begin{align*}
+\frac{\tdf(X)}{\tdg(X)}\bmod{X^N}  & = \frac{F_0(X^2)}{G(X^2)}+X\frac{F_1(X^2)}{G(X^2)}\bmod{X^N} \\
+	& = \underbrace{\frac{F_0(X^2)}{G(X^2)}\bmod{X^N}}_{\lt.\frac{F_0(Z)}{G(Z)}\bmod{Z^{\frac{N}2}}\rt|_{Z=X^2}}+X\;\underbrace{\frac{F_0(X^2)}{G(X^2)}\bmod{X^N}}_{\lt.\frac{F_1(Z)}{G(Z)}\bmod{Z^{\frac{N}2}}\rt|_{Z=X^2}}
+\end{align*}
+
+Now we recurse. So the algorithm is
+\begin{algorithm}
+	\DontPrintSemicolon
+	\KwIn{$\tdf,\tdg\in\bbF[X]$, $\deg (f,g)\leq d$, $\tdf(0),\tdg(0)\neq 0$ with $N\in\bbN$}
+	\KwOut{Find solution $h$ for the equation $\tdf-h\tdg\equiv 0\bmod {X^N}$}
+	\Begin{Construct $G,F_0,F_1$\;
+	Compute $\frac{F_0(Z)}{G(Z)}\bmod{Z^{\frac{N}2}}$, $\frac{F_1(Z)}{G(Z)}\bmod{Z^{\frac{N}2}}$\;
+		Set $Z\longleftarrow X^2$ and combine and return}
+	\caption{Solve $\tdf-h\tdg\equiv 0\bmod {X^N}$}
+\end{algorithm}
+
+Now we have that $$\frac{F_1(Z)}{G(Z)}\bmod{Z^{\frac{N}2}}=\frac{F_1(Z)\bmod{Z^{\frac{N}2}}}{G(Z)\bmod{Z^{\frac{N}2}}}\bmod{X^{\frac{N}2}}$$Hence the degree got reduced by half. So in the recursion step we can reduce the degree with this. \parinf\vspace{5mm}
+
+\textbf{Time Complexity:} If $T(N)$ is the total time taken while solving for modulo $X^{N}$ then we have the recursion relation $$T(N)\leq 2T\lt(\frac{N}2\rt)+10M(N)$$Hence the total running time of this algorithm is $T(N)=M(N)\log N=Npoly(\log N)$\parinn
+\subsubsection{Algorithm II}
+Here we can divide $h$ into two parts with each part of degrees $< \frac{N}2$. Then $h(X)=h_0(X)+X^{\frac{N}2}h_1(X)$ where $\deg h_0<\frac{N}2$ and $\deg h_1<\frac{N}2$. Then we have 
+$$
+	\tdf-\lt(h_0+h_1X^{\frac{N}2}\rt)\tdg\equiv 0\bmod{X^N} \implies (\tdf-h_0\tdg)-X^{\frac{N}2}h_1\tdg\equiv 0 \bmod{X^N} $$Hence we have $\tdf-h_0\tdg\equiv 0\bmod{X^{\frac{N}2}}$. Therefore we have $$X^{\frac{N}2}\mid \tdf-h_0\tdg\implies \tdf-h_0\tdg=X^{\frac{N}2}$$ Hence $$X^{\frac{N}2}p-X^{\frac{N}2}h_1\tdg\equiv 0\bmod{X^{N}}\implies p-h_1\tdg\equiv 0\bmod{X^{\frac{N}2}}$$
+	
+	\newpage Therefore we have the following algorithm
+
+\begin{algorithm}
+	\DontPrintSemicolon
+	\KwIn{$\tdf,\tdg\in\bbF[X]$, $\deg (f,g)\leq d$, $\tdf(0),\tdg(0)\neq 0$ with $N\in\bbN$}
+	\KwOut{Find solution $h$ for the equation $\tdf-h\tdg\equiv 0\bmod {X^N}$}
+	\Begin{Construct $h_0,h_1$\;
+	Solve $\tdf-h_0\tdg\equiv 0\bmod{X^{\frac{N}2}}$\;
+$R\longleftarrow \frac{\tdf-h_0\tdg}{X^{\frac{N}2}}$\;
+Solve $R-h_1\tdg\equiv 0\bmod{X^{\frac{N}2}}$\;
+Output $h_0+X^{\frac{N}2}h_1$
+}
+	\caption{Solve $\tdf-h\tdg\equiv 0\bmod {X^N}$}
+\end{algorithm}\parinf\vspace{5mm}
+
+\textbf{Time Complexity:} If $T(N)$ is the total time taken while solving for modulo $X^{N}$ then we have the recursion relation $$T(N)\leq 2T\lt(\frac{N}2\rt)+O(M(N))$$Hence the total running time of this algorithm is $T(N)=O(M(N)\log N)=Npoly(\log N)$\parinn
