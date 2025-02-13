@@ -9,7 +9,7 @@
 \lecture{1: Bipartite Matching}{T. Kavitha}{Soham Chatterjee}
 
 
-A graph $G'(V,E)$ is bipartite if the vertex set is partitioned into two sets $V=L\sqcup R$ and the edges are between the two partitions i.e. $E\subseteq L\times R$. Here we will look two main problems in Bipartite graphs: Maximum Matching and Minimum cost Perfect Matching.
+A graph $G(V,E)$ is bipartite if the vertex set is partitioned into two sets $V=L\sqcup R$ and the edges are between the two partitions i.e. $E\subseteq L\times R$. Here we will look two main problems in Bipartite graphs: Maximum Matching and Minimum cost Perfect Matching.
 \section{Maximum Matching}
 
 \begin{algoprob}
@@ -32,9 +32,9 @@ Then the max-flow for this directed graph is the maximum matching of the biparti
 	The \prb{Edmonds-Karp} algorithm takes a $s\rightsquigarrow t$ path in the residual graph and send the flow equal to the minimum of all the capacities of edges in that path. Since the capacities are all 1 the flow also equals to 1. Therefore at each iteration of \prb{Edmonds-Karp} the amount of flow added is also integral. Therefore in the final max-flow the flow through each edge is integral. Now since the flow in any edge is always less than or equal to the capacity it is either 0 or 1.
 \end{proof}
 
-Therefore the max-flow of the modified graph is always some non-negative integer. Now we have e lemma that value of max-flow gives a maximum matching.
+Therefore the max-flow of the modified graph is always some non-negative integer. Now we have a lemma that value of max-flow gives a maximum matching.
 \begin{lemma}{}{}
-	If there exists a max-flow of value $k$ in the modified graph $G'=(V',E')$ if and only there is a maximum matching of size $k$ in $G'(L\cup R, E)$. 
+	There exists a max-flow of value $k$ in the modified graph $G'=(V',E')$ if and only there is a maximum matching of size $k$ in $G'(L\cup R, E)$. 
 \end{lemma}
 \begin{proof}
 	Suppose $G'$ has a matching $M$ of size $k$. Let $M=\{(u_i,v_i)\colon i\in[k]\}$ where $u_i\in L$ and $v_i\in R$ for all $i\in[k]$. Then we have the flow $f$, $f(s,u_i)=f(u_i,v_i)=f(v_i,t)=1$ for all $i\in[k]$. This flow has value $k$. Now suppose the max-flow is more than $k$. Let the value of the max-flow is $l$, $l>k$. Since each edge has capacities 1 and by previous lemma each edge has integral flow there are $l$ vertices in $L$ which have positive flow from $s$. Then from each of these $l$ vertices there is only one edge going to a vertex in $R$ which has positive flow. Now it is not possible that from two vertices of $L$ the flow goes to one vertex in $R$ since for all edges joining vertices of $R$ and $t$ has capacity 1. Therefore from each of those vertices of $L$ they goes to distinct $l$ vertices of $R$. Therefore these $l$ edges  create a matching of $G$. So we have a matching which has size more than the maximum matching. Contradiction. Therefore the value of the max-flow is $k$.
@@ -43,7 +43,7 @@ Therefore the max-flow of the modified graph is always some non-negative integer
 \end{proof}
 
 
-Therefore from the max-flow if we take the edges from $L$ to $R$ which has positive flow they construct the maximum matching. So we have the following algorithm: 13
+Therefore from the max-flow if we take the edges from $L$ to $R$ which has positive flow they construct the maximum matching. So we have the following algorithm: 
 \begin{algorithm}\DontPrintSemicolon
 	\KwIn{$G=(L\cup R,E)$ bipartite graph}
 	\KwOut{Find a maximum matching}
@@ -53,13 +53,13 @@ Therefore from the max-flow if we take the edges from $L$ to $R$ which has posit
 		\For{$v\in R$}{$E'\longleftarrow E'\cup \{(v,t)\}$
 		}
 		\For{$e\in E'$}{$c_e\longleftarrow 1$}
-		$f\longleftarrow\prb{Edmonds-Karp}(G'=(V,E'), \{c_e\colon e\in E'\})$\;
+		$f\longleftarrow\prb{Ford-Fulkerson}(G'=(V,E'), \{c_e\colon e\in E'\})$\;
 		\Return{$\{e\colon f(e)>0, e\in E\}$}
 	}
 	\caption{\prb{BP-Max-Matching-Flow}}
 \end{algorithm} 
 
-Therefore the algorithm successfully returns a maximum matching of the bipertite graph. But we don't know any algorithm for finding maximum matching in general graphs using max-flow. In the next algorithm we will use something called Augmenting paths to find a maximum matching which we will extend to general graphs.
+Therefore the algorithm successfully returns a maximum matching of the bipartite graph. But we don't know any algorithm for finding maximum matching in general graphs using max-flow. In the next algorithm we will use something called Augmenting paths to find a maximum matching which we will extend to general graphs.
 \subsection{Using Augmenting Paths}\label{section:bp-augment-path}
 \begin{Definition}{Alternating Path and Augmenting Path}{}
 	In a graph $G=(V,E)$ and $M$ be a matching in $G$. Then an $M$-alternating path is where the edges from $M$ and $E\setminus M$ appear alternatively.\parinn
@@ -67,9 +67,9 @@ Therefore the algorithm successfully returns a maximum matching of the bipertite
 	An $M$-alternating path between two unmatched (also called exposed) vertices is called an $M$-augmenting path. 
 \end{Definition}
 
-Given a matching $M$ and if there exists an $M$-augmenting path $p$ then we can obtain a larger matching $M'=M\oplus p$ then  So if $M$ is maximum matching then there is no augmenting path in $G$.
+Given a matching $M$ and if there exists an $M$-augmenting path $p$ then we can obtain a larger matching $M'=M\oplus p$.  So if $M$ is maximum matching then there is no augmenting path in $G$.
 \begin{Theorem}{}{bergesthm}
-	A matching $M$ is maximum if and only if there are no $M$-augmenting path in $G$.
+	A matching $M$ is maximum if and only if there are no $M$-augmenting paths in $G$.
 \end{Theorem}
 \begin{proof}
 	Suppose $M$ is maximum. If there is an $M$-augmenting path $p$ in $G$ then $M\oplus p$  gives a matching with larger size. But that contradicts the fact that $M$ is a maximum matching. Hence there are no $M$-augmenting paths in $G$.
@@ -209,7 +209,7 @@ We have to  show the algorithm always outputs a augmenting path. Instead of show
 	In a bipartite graph, the size of a maximum matching is equal to the size of minimum vertex cover.
 \end{Theorem}
 \begin{proof}
-	Consider the set $C=\mcO_L\cup \mcO_R\cup \mcU_L$. Now $|C|=|\mcO_L|+|\mcO_R|+|\mcU_L|$. All the odd level vertices of $L\cup R$ are matched by the construction of Hungarian forest. And all the unmatched vertices of $L$ are matched with unmatched vertices of $R$. Therefore $|\mcO_L|+|\mcO_R|+|\mcU_L|=|M|$. Hence if $C$ is a vertex cover then $C$ will be the minimum size vertex cover and $M$ will be the maximum matching. We will show that this is a vertex cover with the following claim:
+	Consider the set $C=\mcO_L\cup \mcO_R\cup \mcU_L$. Now $|C|=|\mcO_L|+|\mcO_R|+|\mcU_L|$. All the odd level vertices of $L\cup R$ are matched by the construction of Hungarian forest. And all the unreachable vertices of $L$ are matched with unreachable vertices of $R$. Therefore $|\mcO_L|+|\mcO_R|+|\mcU_L|=|M|$. Hence if $C$ is a vertex cover then $C$ will be the minimum size vertex cover and $M$ will be the maximum matching. We will show that this is a vertex cover with the following claim:
 	\begin{claimwidth}
 		\begin{claim}{}{}
 			$\mcO_L\cup \mcO_R\cup \mcU_L$ is a vertex cover.

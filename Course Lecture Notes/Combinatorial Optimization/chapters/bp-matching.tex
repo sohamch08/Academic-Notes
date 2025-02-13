@@ -1,5 +1,5 @@
 \chapter{Bipartite Matching}
-\dfnc{Bipartite Graph}{A graph $G'(V,E)$ is bipartite if the vertex set is partitioned into two sets $V=L\sqcup R$ and the edges are between the two partitions i.e. $E\subseteq L\times R$.}
+\dfnc{Bipartite Graph}{A graph $G(V,E)$ is bipartite if the vertex set is partitioned into two sets $V=L\sqcup R$ and the edges are between the two partitions i.e. $E\subseteq L\times R$.}
 
 In This chapter we will look into two main problems in Bipartite graphs: Maximum Matching and Minimum cost Perfect Matching.
 \section{Maximum Matching}
@@ -24,9 +24,9 @@ Then the max-flow for this directed graph is the maximum matching of the biparti
 	The \prb{Edmonds-Karp} algorithm takes a $s\rightsquigarrow t$ path in the residual graph and send the flow equal to the minimum of all the capacities of edges in that path. Since the capacities are all 1 the flow also equals to 1. Therefore at each iteration of \prb{Edmonds-Karp} the amount of flow added is also integral. Therefore in the final max-flow the flow through each edge is integral. Now since the flow in any edge is always less than or equal to the capacity it is either 0 or 1.
 \end{proof}
 
-Therefore the max-flow of the modified graph is always some non-negative integer. Now we have e lemma that value of max-flow gives a maximum matching.
+Therefore the max-flow of the modified graph is always some non-negative integer. Now we have a lemma that value of max-flow gives a maximum matching.
 \begin{lemma}{}{}
-	If there exists a max-flow of value $k$ in the modified graph $G'=(V',E')$ if and only there is a maximum matching of size $k$ in $G'(L\cup R, E)$. 
+	There exists a max-flow of value $k$ in the modified graph $G'=(V',E')$ if and only there is a maximum matching of size $k$ in $G'(L\cup R, E)$. 
 \end{lemma}
 \begin{proof}
 	Suppose $G'$ has a matching $M$ of size $k$. Let $M=\{(u_i,v_i)\colon i\in[k]\}$ where $u_i\in L$ and $v_i\in R$ for all $i\in[k]$. Then we have the flow $f$, $f(s,u_i)=f(u_i,v_i)=f(v_i,t)=1$ for all $i\in[k]$. This flow has value $k$. Now suppose the max-flow is more than $k$. Let the value of the max-flow is $l$, $l>k$. Since each edge has capacities 1 and by previous lemma each edge has integral flow there are $l$ vertices in $L$ which have positive flow from $s$. Then from each of these $l$ vertices there is only one edge going to a vertex in $R$ which has positive flow. Now it is not possible that from two vertices of $L$ the flow goes to one vertex in $R$ since for all edges joining vertices of $R$ and $t$ has capacity 1. Therefore from each of those vertices of $L$ they goes to distinct $l$ vertices of $R$. Therefore these $l$ edges  create a matching of $G$. So we have a matching which has size more than the maximum matching. Contradiction. Therefore the value of the max-flow is $k$.
@@ -35,7 +35,7 @@ Therefore the max-flow of the modified graph is always some non-negative integer
 \end{proof}
 
 
-Therefore from the max-flow if we take the edges from $L$ to $R$ which has positive flow they construct the maximum matching. So we have the following algorithm: 13
+Therefore from the max-flow if we take the edges from $L$ to $R$ which has positive flow they construct the maximum matching. So we have the following algorithm: 
 \begin{algorithm}\DontPrintSemicolon
 	\KwIn{$G=(L\cup R,E)$ bipartite graph}
 	\KwOut{Find a maximum matching}
@@ -45,13 +45,13 @@ Therefore from the max-flow if we take the edges from $L$ to $R$ which has posit
 		\For{$v\in R$}{$E'\longleftarrow E'\cup \{(v,t)\}$
 		}
 		\For{$e\in E'$}{$c_e\longleftarrow 1$}
-		$f\longleftarrow\prb{Edmonds-Karp}(G'=(V,E'), \{c_e\colon e\in E'\})$\;
+		$f\longleftarrow\prb{Ford-Fulkerson}(G'=(V,E'), \{c_e\colon e\in E'\})$\;
 		\Return{$\{e\colon f(e)>0, e\in E\}$}
 	}
 	\caption{\prb{BP-Max-Matching-Flow}}
 \end{algorithm} 
 
-Therefore the algorithm successfully returns a maximum matching of the bipertite graph. But we don't know any algorithm for finding maximum matching in general graphs using max-flow. In the next algorithm we will use something called Augmenting paths to find a maximum matching which we will extend to general graphs.
+Therefore the algorithm successfully returns a maximum matching of the bipartite graph. But we don't know any algorithm for finding maximum matching in general graphs using max-flow. In the next algorithm we will use something called Augmenting paths to find a maximum matching which we will extend to general graphs.
 \subsection{Using Augmenting Paths}\label{section:bp-augment-path}
 \begin{Definition}{Alternating Path and Augmenting Path}{}
 	In a graph $G=(V,E)$ and $M$ be a matching in $G$. Then an $M$-alternating path is where the edges from $M$ and $E\setminus M$ appear alternatively.\parinn
@@ -59,9 +59,9 @@ Therefore the algorithm successfully returns a maximum matching of the bipertite
 	An $M$-alternating path between two unmatched (also called exposed) vertices is called an $M$-augmenting path. 
 \end{Definition}
 
-Given a matching $M$ and if there exists an $M$-augmenting path $p$ then we can obtain a larger matching $M'=M\oplus p$ then  So if $M$ is maximum matching then there is no augmenting path in $G$.
+Given a matching $M$ and if there exists an $M$-augmenting path $p$ then we can obtain a larger matching $M'=M\oplus p$.  So if $M$ is maximum matching then there is no augmenting path in $G$.
 \begin{Theorem}{}{bergesthm}
-	A matching $M$ is maximum if and only if there are no $M$-augmenting path in $G$.
+	A matching $M$ is maximum if and only if there are no $M$-augmenting paths in $G$.
 \end{Theorem}
 \begin{proof}
 	Suppose $M$ is maximum. If there is an $M$-augmenting path $p$ in $G$ then $M\oplus p$  gives a matching with larger size. But that contradicts the fact that $M$ is a maximum matching. Hence there are no $M$-augmenting paths in $G$.
@@ -202,7 +202,7 @@ We have to  show the algorithm always outputs a augmenting path. Instead of show
 	In a bipartite graph, the size of a maximum matching is equal to the size of minimum vertex cover.
 \end{Theorem}
 \begin{proof}
-	Consider the set $C=\mcO_L\cup \mcO_R\cup \mcU_L$. Now $|C|=|\mcO_L|+|\mcO_R|+|\mcU_L|$. All the odd level vertices of $L\cup R$ are matched by the construction of Hungarian forest. And all the unmatched vertices of $L$ are matched with unmatched vertices of $R$. Therefore $|\mcO_L|+|\mcO_R|+|\mcU_L|=|M|$. Hence if $C$ is a vertex cover then $C$ will be the minimum size vertex cover and $M$ will be the maximum matching. We will show that this is a vertex cover with the following claim:
+	Consider the set $C=\mcO_L\cup \mcO_R\cup \mcU_L$. Now $|C|=|\mcO_L|+|\mcO_R|+|\mcU_L|$. All the odd level vertices of $L\cup R$ are matched by the construction of Hungarian forest. And all the unreachable vertices of $L$ are matched with unreachable vertices of $R$. Therefore $|\mcO_L|+|\mcO_R|+|\mcU_L|=|M|$. Hence if $C$ is a vertex cover then $C$ will be the minimum size vertex cover and $M$ will be the maximum matching. We will show that this is a vertex cover with the following claim:
 	\begin{claimwidth}
 		\begin{claim}{}{}
 			$\mcO_L\cup \mcO_R\cup \mcU_L$ is a vertex cover.
@@ -225,7 +225,7 @@ We will use K\"{o}nig-Egerv\'{a}ry Theorem to prove Hall's Marriage Theorem, whi
 \begin{proof}
 	Suppose $G$ has a $L$-perfect matching. Let $M$ be the $L$-perfect matching. Then let $S\subseteq L$. Then $N(S)\supseteq T$ where $T\coloneqq\{v\in R\colon (u,v)\in M, u\in S\}$. Then $|T|=|S|$. Therefore we have $|N(S)|\geq |T|=|S|$. 
 	
-	Now suppose for all $S\subseteq L$, $|S|\leq |N(S)|$. Suppose $G$ doesn't have a perfect matching. Let $M$ be a maximum $L$-matching in $G$. So $|M|<|L|$. Let $C$ be the minimum vertex cover. By \hyperref[th:konig-egervary]{K\"{o}nig-Egerv\'{a}ry Theorem} $|C|=|M|$. Therefore $|C|<|L|$. Hence take $S=\{u\in L\colon u\notin C\}$ and take $T=R\cap C$. Therefore we have $N(S)\subseteq T$. Hence we have $$|C|=|L\cap C|+|T|=|L|-|S|+|T|\implies |S|=|L|-|C|+|T|\geq |T|\geq |N(S)|$$Hence we got a set $S\subseteq L$ for which $|S|> |N(S)|$. Hence contradiction \ctr. Therefore $G$ has a $L$-perfect matching.
+	Now suppose for all $S\subseteq L$, $|S|\leq |N(S)|$. Suppose $G$ doesn't have a perfect matching. Let $M$ be a maximum $L$-matching in $G$. So $|M|<|L|$. Let $C$ be the minimum vertex cover. By \hyperref[th:konig-egervary]{K\"{o}nig-Egerv\'{a}ry Theorem} $|C|=|M|$. Therefore $|C|<|L|$. Hence take $S=\{u\in L\colon u\notin C\}$ and take $T=R\cap C$. Therefore we have $N(S)\subseteq T$. Hence we have $$|C|=|L\cap C|+|T|=|L|-|S|+|T|\implies |S|=|L|-|C|+|T|> |T|\geq |N(S)|$$Hence we got a set $S\subseteq L$ for which $|S|> |N(S)|$. Hence contradiction \ctr. Therefore $G$ has a $L$-perfect matching.
 \end{proof}
 \section{Minimum Cost Perfect Matching}
 \begin{algoprob}
@@ -272,7 +272,7 @@ We aim to show in the following theorem that the extreme points of the polytope 
 	Suppose there exists values $u_i$ $\forall\ i\in L$ and $v_j$ $\forall\ j\in R$ such that $$u_i+v_j\leq c_{i,j}\ \forall\ i\in L, j\in R$$Then for any perfect matching $M$ we have $$\sum_{(i,j)\in M}c_{i,j}\geq \sum_{i\in L}u_i+\sum_{j\in R}v_j$$Therefore $\sum\limits_{i\in L}u_i+\sum\limits_{j\in R}v_j$ gives a lower bound on the cost of minimum cost perfect matching for the bipartite graph. So to get the best lower bound we would like to maximize this quantity. So we have the following LP:
 	\begin{maxi*}{}{\sum_{i\in L}u_i+\sum_{j\in R}v_j}{}{}
 		\addConstraint{}{u_i+v_j\leq c_{i,j}}{\quad \forall\ i\in L,j\in R}
-	\end{maxi*}Let $D$ be the polyhedron generated by the constraint $u_i+v_j\leq c_{i,j}$ $\forall\ i\in L,j\in R$. Now consider any $X\in P$. Then we have $$\sum_{i\in L}\sum_{j\in R}c_{i,j}x_{i,j}\geq \sum_{i\in L}\sum_{j\in R}(u_i+v_j)x_{i,j}=\lt(\sum_{i\in u_i}\sum_{j\in R}x_{i,j}\rt)+\lt(\sum_{j\in R}v_j\sum_{i\in L}x_{i,j}\rt)=\sum_{i\in L}u_i+\sum_{j\in R}v_j$$Therefore we have $$\min\limits_{\text{perfect matching $M$}}\sum_{(i,j)\in M}c_{i,j}\geq \min\limits_{x\in P}\sum_{i\in L}\sum_{j\in R}c_{i,j}x_{i,j}\geq \max\limits_{(u,v)\in D}\sum_{i\in L}u_i+\sum_{j\in R}v_j$$Thus we get a primal-dual relation between the two LP problems.
+	\end{maxi*}Let $D$ be the polyhedron generated by the constraint $u_i+v_j\leq c_{i,j}$ $\forall\ i\in L,j\in R$. Now consider any $X\in P$. Then we have $$\sum_{i\in L}\sum_{j\in R}c_{i,j}x_{i,j}\geq \sum_{i\in L}\sum_{j\in R}(u_i+v_j)x_{i,j}=\lt(\sum_{i\in L}\sum_{j\in R}x_{i,j}\rt)+\lt(\sum_{j\in R}v_j\sum_{i\in L}x_{i,j}\rt)=\sum_{i\in L}u_i+\sum_{j\in R}v_j$$Therefore we have $$\min\limits_{\text{perfect matching $M$}}\sum_{(i,j)\in M}c_{i,j}\geq \min\limits_{x\in P}\sum_{i\in L}\sum_{j\in R}c_{i,j}x_{i,j}\geq \max\limits_{(u,v)\in D}\sum_{i\in L}u_i+\sum_{j\in R}v_j$$Thus we get a primal-dual relation between the two LP problems.
 	
 	Now our goal is to come up with a perfect matching $M$ and $(u,v)\in D$ such that $\sum\limits_{(i,j)\in M}c_{i,j}=\sum\limits_{i\in L}u_i+\sum\limits_{j\in R}v_j$. Then $M$ will be optimal solution to the LP-relaxation. Given solution $u^*,v^*$ of the dual LP a perfect matching $M$ would satisfy equality if it contains only the edges $(i,j)$ such that $c_{i,j}=u_i+v_j$ by \textit{complementary slackness}. But for a given $(u,v)$ we may not be able to find a perfect matching among the edges with $c_{i,j}=u_i+v_j$. 
 	
@@ -282,11 +282,15 @@ We aim to show in the following theorem that the extreme points of the polytope 
 		\KwOut{Find minimum cost perfect matching}
 		\Begin{Initialize $u_i \longleftarrow 0$ $\forall\ i\in L$\;
 			$v_j\longleftarrow \min\limits_{i\in L}c_{i,j}$ $\forall \ j\in R$\;
+			$\prb{willMatchingInc}\longleftarrow True$\;
 			\While{True}{
 				$E'\longleftarrow \{(i,j)\colon c_{i,j}=u_i+v_j\}$\;
-				$M\longleftarrow \hyperref[find-max-matching]{\prb{Find-Maximum-Matching}}(G'=(V,E'))$\;
-				\If{$M$ is perfect matching}{\Return{$M$}}
-				$\dl\longleftarrow \min\limits_{i\in \mcE_L}\min\limits_{j\in  \mcE_R\cup \mcU_R}(c_{i,j}-u_i-v_j)$\;
+				\If{\prb{willMatchingInc} $==True$}{$M\longleftarrow \hyperref[find-max-matching]{\prb{Find-Maximum-Matching}}(G'=(V,E'))$\;
+					\If{$M$ is perfect matching}{\Return{$M$}}}
+				$(\hat{i},\hat{j})\longleftarrow \arg\min\limits_{i\in \mcE_L}\min\limits_{j\in  \mcE_R\cup \mcU_R}(c_{i,j}-u_i-v_j)$\;
+				\If{$(\hat{i},\hat{j})\in \mcE_L\times \mcU_R$}{\prb{willMatchingInc} $\longleftarrow False$\;
+					Relabel vertices to obtain $\mcO_L,\mcO_R,\mcE_L,\mcE_R,\mcU_L,\mcU_R$}
+				$\dl\longleftarrow c_{(\hat{i},\hat{j})}-u_{\hat{i}}-v_{\hat{j}}$\;
 				$u_i\longleftarrow u_i+\dl$, $\forall\ i\in\mcE_L$\;
 				$v_j\longleftarrow v_j-\dl$, $\forall\ i\in\mcO_R$\;
 		}}
@@ -323,14 +327,18 @@ We aim to show in the following theorem that the extreme points of the polytope 
 			In each iteration of while loop size of the edge set $E'$ increases by 1.
 		\end{claim}
 		\begin{proof}
-			In any iteration of the while loop in the graph $G'=(V,E')$ none of the the edges in $\mcE_L\times (\mcE_R\cup \mcU_R)$ are present. Now in line 9 we are taking $\dl$ to be the minimum of $c_{i,j}-u_i-v_j$ over all edges of $\mcE_L\times (\mcE_R\cup \mcU_R)$. Let that edge is $(i',j')$. Then $c_{i',j'}-u_i-v_j=\dl$. Then in line 10 the algorithm updates $\hat{u}_{i'}=u_{i'}+\dl$ but $\hat{v}_{j'}$ is unchanged since $j'\in \mcE_R\cup\mcU_R$. Then in the next iteration of the while loop we have for the edge $(i',j')$ $$c_{i',j'}-\hat{u}_{i'}-\hat{v}_{j'}=c_{i',j'}-u_{i'}-\dl-v_{j'}=0$$Therefore the edge $(i',j')$ is in the edge set constructed in line 5 in the next iteration of the while loop. Since each time one edge is becoming tight the edge set is increasing by 1 in each iteration of the while loop.
+			In any iteration of the while loop in the graph $G'=(V,E')$ none of the the edges in $\mcE_L\times (\mcE_R\cup \mcU_R)$ are present. Now in line 15 we are taking $\dl$ to be the minimum of $c_{i,j}-u_i-v_j$ over all edges of $\mcE_L\times (\mcE_R\cup \mcU_R)$. Let that edge is $(i',j')$. Then $c_{i',j'}-u_i-v_j=\dl$. Then in line 16 the algorithm updates $\hat{u}_{i'}=u_{i'}+\dl$ but $\hat{v}_{j'}$ is unchanged since $j'\in \mcE_R\cup\mcU_R$. Then in the next iteration of the while loop we have for the edge $(i',j')$ $$c_{i',j'}-\hat{u}_{i'}-\hat{v}_{j'}=c_{i',j'}-u_{i'}-\dl-v_{j'}=0$$Therefore the edge $(i',j')$ is in the edge set constructed in line 6 in the next iteration of the while loop. The edges in $(\mcE_L\times \mcO_R)\cup (\mcO_L\times \mcE_R)\cup (\mcU_L\times \mcU_R)$ continue to remain tight after our update of $u_i,v_j$ values. Since each time one edge is becoming tight the edge set is increasing by 1 in each iteration of the while loop.
 		\end{proof}
 	\end{claimwidth}
-	Since each time one edge is becoming tight the edge set is increasing by one and henceforth the algorithm terminates. Therefore in after $O(n^2)$  iterations all the edges has been added and therefore the  matching found is perfect. Therefore the overall running time of the algorithm is thus $O(n^2)\times O(n^3)=O(n^5)$.
-	
-	Now since carefully choosing the cost function we can make any extreme point of the polytope of LP be the optimum solution of the linear program this proves that all the extreme points are integral.
+	Since each time one edge is becoming tight the edge set is increasing by one and henceforth the algorithm terminates. Therefore in after $O(n^2)$  iterations all the edges has been added and therefore the  matching found is perfect. 
+
+Now if an edge of $\mcE_L\times\mcU_R$ becomes tight then the maximum matching continues to remain maximum matching. So only the labels of vertices are changed and new odd, even and unreachable sets are obtained. Therefore we don't need to run the algorithm for maximum matching again.  So it takes $O(n^2)$ time for such iterations. 
+
+When an edge of $\mcE_L\times\mcE_R$ becomes tight then there exists an augmenting path and the size of the maximum matching increases. In this case only we run the \prb{Find-Maximum-Matching} algorithm on the tight edges. In each such iterations  the size of the maximum matching increases. Therefore there can be $O(n)$ iterations of this kind. Therefore in these iterations it takes $O(n^3)$. 
+
+Therefore the total time taken by the algorithm is $O(n^2)\times O(n^2)+O(n)\times O(n^3)=O(n^4)$. Now since carefully choosing the cost function we can make any extreme point of the polytope of LP be the optimum solution of the linear program this proves that all the extreme points are integral.
 \end{proof}
 
-Therefore we have proved both that we can find the minimum cost perfect matching in a bipartite graph in $O(n^5)$ times and every doubly stochastic matrix can be written as a convex combination of permutation matrix.
+Therefore we have proved both that we can find the minimum cost perfect matching in a bipartite graph in $O(n^4)$ times and every doubly stochastic matrix can be written as a convex combination of permutation matrix.
 
 
