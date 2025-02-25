@@ -1,0 +1,383 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage{amsmath,mathtools,mathdots,graphicx,adjustbox,xcolor}
+\usepackage{amssymb,amsthm}  % assumes amsmath package installed
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=doc!80,
+	citecolor=myr,
+	filecolor=myr,      
+	urlcolor=doc!80,
+	pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
+}
+\usepackage[most,many,breakable]{tcolorbox}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{kpfonts}
+\usepackage{libertine}
+\usepackage{physics}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+\usepackage{float,marvosym}
+
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+
+\input{../assignment-problem-box}
+\DeclareMathOperator{\nae}{NAE}
+\newtheorem{lemma}{Lemma}
+\renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\qed\bigskip\\}
+% To give references for any problem use like this
+% suppose the problem number is p3 then 2 options either 
+% \hyperref[p:p3]{<text you want to use to hyperlink> \ref{p:p3}}
+%                  or directly 
+%                   \ref{p:p3}
+
+
+
+\input{../../letterfonts}
+
+\input{../../macros}
+
+\setlength{\parindent}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 1}\\
+		Email: \href{soham.chatterjee@tifr.res.in}{soham.chatterjee@tifr.res.in} \hfill Dept: STCS, TIFR\\
+		\normalsize Course: Complexity Theory \hfill Date: \today}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+\begin{problem}{%problem statement
+		Classification of problems
+	}{p1% problem reference text
+}
+For each of these problems, mention (with justification) if they are in \sfP, or not (known to be) in \sfP, or in \sfN\sfP, or in \textsf{coNP}, or is \sfN\sfP-hard, or is \textsf{coNP}-hard etc.
+\begin{enumerate}[label=(\alph*)]
+	\item Factoring $=\{(1^n,1^k)\colon \text{$n$ has a prime factor less than $k$}\}$
+	\item Contradiction = $\{\la\varphi\ra\colon \la\varphi\ra\text{ encodes a formula that is false for every assignment}\}$
+
+(For example, $\la x_1\wedge \neg x_1\ra$ is in the language)
+\item EquivalentFormulas$ =\lt\{(\la\varphi_1\ra,\la\varphi_2\ra)\colon \text{\begin{tabular}{c}
+		$\la\varphi_1\ra$, $\la\varphi_2\ra$ encode two formulas such that\\
+		 for all $x$ we have $\varphi_1(x)=\varphi_2(x)$.
+\end{tabular} }\rt\}$
+\end{enumerate}
+\end{problem}
+\solve{	
+\begin{enumerate}[label=(\alph*)]
+	\item Factoring is in \sfP since the numbers $n$ and $k$ are given in unary form the algorithm can go over every number from 1 to $k$ and test if there is a prime factor which divides $n$. Since division can be done in polynomial time this algorithm is polynomial time. 
+	\item Contradiction is in \textsf{coNP} since the complement of Contradiction is the set of formulas which not false for all assignment i.e. there exists at least one assignment for which formula is not false which is basically SAT and SAT is in \textsf{NP}. Since SAT is \sfN\sfP-hard Contradiction is \textsf{coNP}-hard. Therefore Contradiction is \textsf{coNP}-complete.
+	\item Let $\varphi_1(x)=\varphi_2(x)$ for all $x$. Then consider the formula $\varphi_1\xor \varphi_2$ where $\xor$ is the XOR operation and $$x_1\xor x_2=(x_1\wedge \neg x_2)\vee (\neg x_1\wedge x_2)$$ Then we have $$\varphi_1(x)=\varphi_2(x)\ \forall\ x\iff (\varphi_1\xor \varphi_2)(x)=\text{False} \ \forall\ x$$So we have reduced EquivalentFormulas to Contradiction. Therefore EquivalentFormulas is in \textsf{coNP}. Now we will show a polynomial time many-one reduction from TAUT to EquivalentFormulas. Let $\la\varphi\ra\in $TAUT. Then consider $(\la\varphi\ra, \la 1\ra)$ where $\la 1\ra$ is the boolean formula which always returns true. Then we have $$\la\varphi\ra\in \text{TAUT}\iff (\la\varphi\ra, \la 1\ra)\in \text{EquivalentFormulas}$$Therefore EquivalentFormulas is \textsf{coNP}-hard. So it is \textsf{coNP}-complete.
+\end{enumerate}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\begin{problem}{%problem statement
+		Properties of reductions
+	}{p2% problem reference text
+	}
+We'll use $L_1\leq^{\text{poly}}_m L_2$ to denote that there is a polynomial-time many-one reduction from $L_1$ to $L_2$. 
+
+Answer each of the questions with True/False with brief justifications
+\begin{enumerate}[label=(\alph*)]
+	\item If $L_1\leq^{\text{poly}}_m L_2$, then $\ov{L_2}\leq^{\text{poly}}_m \ov{L_1}$
+	\item If $L_1\leq^{\text{poly}}_mL_2$, then $\ov{L_1}\leq^{\text{poly}}_m\ov{L_2}$.
+	\item If $L$ is \text{NP}-hard, then $\ov{L}$ is \textsf{coNP}-hard
+	\item If $L_1\leq^{\text{lin}}_mL_2$ and $L_2\leq^{\text{lin}}_mL_3$. (Here, $\leq^{\text{lin}}_m$ refers to linear-time many-one reductions).
+	\item If $L_1\leq^{\text{quad}}_mL_2$ and $L_2\leq^{\text{quad}}_mL_3$, then $L_1\leq^{\text{quad}}_mL_3$. (here $\leq^{\text{quad}}_m$ refers to quadratic time many-one reductions.)
+\end{enumerate}
+\end{problem}
+\solve{	
+\begin{enumerate}[label=(\alph*)]
+ \item False. For example take $L_1$ to be any language in \textsf{P} and $L_2$ to be any \textsf{NP}-complete language (SAT). Then $\ov{L_1}\in \textsf{P}$ and $\ov{L_2}$ is \textsf{coNP}-complete (We proved in \hyperref[p:p1]{Question \ref{p:p1}.b}). So if $\ov{L_2}\leq^{\text{poly}}_m \ov{L_1}$ that means $\textsf{P}=\textsf{coNP}$ which is unlikely to happen.
+ \item True. Since $L_1\leq^{\text{poly}}_mL_2$ there exists a polynomial time computable function $f:\Sg^*\to\Sg^*$ such that $x\in L_1\iff f(x)\in L_2$. Hence we can also write this as $x\notin L_1\iff f(x)\notin L_2$ which is equivalent to $x\in\ov{L_1}\iff f(x)\in \ov{L_2}$. Therefore the same function $f$ works in reducing $\ov{L_1}$ to $\ov{L_2}$. Therefore $\ov{L_1}\leq^{\text{poly}}_m\ov{L_2}$
+ \item True. Let $L' \in\textsf{coNP}$. Then $\ov{L'}\in \textsf{NP}$. Since $L$ is \textsf{NP}-hard we have $\ov{L'}\leq^{\text{poly}}_m L$. By using the above result we have $L'\leq^{\text{poly}}_m\ov{L}$. Since $L'$ is any arbitrary language of \textsf{coNP}, $L$ is \textsf{coNP}-hard.
+ \item True. Since $L_1\leq^{\text{lin}}_mL_2$ there exists a linear-time computable function $f:\Sg^*\to\Sg^*$ such that $x\in L_1\iff f(x)\in L_2$. Since $L_2\leq^{\text{lin}}_mL_3$ there exists a linear-time computable function $g:\Sg^*\to\Sg^*$ such that $x\in L_2\iff f(x)\in L_3$. Hence $$x\in L_1\iff g\circ f(x)\in L_3$$Now since $f$ and $g$ are both linear time computable function their composition is also a linear time computable function. Therefore $L_1\leq^{\text{lin}}_mL_3$.
+ \item False. Since $L_1\leq^{\text{quad}}_mL_2$ there exists a quadratic-time computable function $f:\Sg^*\to\Sg^*$ such that $x\in L_1\iff f(x)\in L_2$. Since $L_2\leq^{\text{quad}}_mL_3$ there exists a quadratic-time computable function $g:\Sg^*\to\Sg^*$ such that $x\in L_2\iff f(x)\in L_3$. Since composition of two quadratic functions not necessarily a quadratic function. I.e for example if $|f(x)|=|x|^2$ and $|g(x)|=|x|^2$ then $|g\circ f(x)|=|x|^4$ which is not quadratic with respect to $|x|$. Hence there may not be any quadratic-time many-one reduction from $L_1$ ot $L_3$. 
+\end{enumerate}
+}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		Verifier perspective of \textsf{NP}
+	}{p3% problem reference text
+	}
+In class, we gave a \textit{machine-based} definition of the class \textsf{NP}. Often times, the following alternate definition is used..
+\begin{center}
+	\begin{minipage}{0.9\textwidth}
+		A language $L\subseteq \Sg^*$ is said to be in \textsf{NP} if and only if there is a language $V_L\in\textsf{P}$, and constants $c,n_0$ such that for any $x\in\Sg^*$ with $|x|>n_0$, we have $x\in \sfL$ if and only if there is a string $w\in\Sg^*$ with $|w|\leq|x|^c$ such that $(x,w)\in V_L$
+	\end{minipage}
+\end{center}
+
+Formally prove that the above definition is equivalent to the definition we saw in class. (That is, any language that satisfies the above property is computable by a non-deterministic TM running in poly($n$) time, and vice-versa.)
+
+\end{problem}
+\solve{
+Suppose $N$ is a  nondeterministic turing machine $N$ and $L\coloneqq L(N)$. Then there exists constants $n_0,c\in\bbN$ such that $x\in L\iff N(x)=$ Accept in $|x|^c$ time  for all $|x|>n_0$.  Now $N$ has two transition functions $\Gm_0$ and $\Gm_1$. $N$ accepts $x$ if and only if there is a sequence of use of $\Gm_0$ and $\Gm_1$ which accepts $x$. Let $w\in\{0,1\}^{p(|x|)}$ where $i^{th}$ bit of $w$ denotes that at $i^{th}$ step in $N$ the $\Gm_i$ transition function was used. Then consider the deterministic turing machine $M$ which on the input $(x,w)$ does a deterministic simulation of $N$ on $x$ following $w$ applying the transition functions $\Gm_0$ and $\Gm_1$ accordingly. 
+
+Consider the language $$V_L=\{(x,w)\mid x\in L,\ w\in\{0,1\}^c, \text{ $N$ accepts $x$ following $w$} \}$$The way constructed $M$ we have $$(x,w)\in V_L\iff M(x,w)=\text{Accept}$$Therefore $V_L\in\sfP$.
+
+Now \begin{align*}
+	x\in L& \iff \exs\ w\in\{0,1\}^c \text{ such that $N$ accepts $x$ following transition $w$}\\
+	& \iff\text{$M$ accepts $(x,w)$}\\
+	&\iff (x,w)\in V_L
+\end{align*}
+
+Now suppose $L\subseteq \Sg^*$ such that there is a language $V_L\in\textsf{P}$, and constants $c,n_0$ such that for any $x\in\Sg^*$ with $|x|>n_0$, we have $x\in \sfL$ if and only if there is a string $w\in\Sg^*$ with $|w|\leq|x|^c$ such that $(x,w)\in V_L$. Since $V_L\in\sfP$ there exists a polynomial time turing machine $M$ which decides $V_L$. Then there exists a polynomial time deterministic turing machine $M$ deciding $V_L$.
+
+
+Consider the nondeterministic turing machine $N$ with two transition functions $\Gm_0$ and $\Gm_1$. For the first $c$ steps if $\Gm_0$ is used then it writes $0$ in the tape and if $\Gm_1$ is used it writes $1$ in the tape. Suppose in the first $c$ steps the binary string written on the tape in $w$. After the first $c$ steps both the transition functions becomes equal and they run $M$ on the input $(x,w)$. If $x$ is in $L$ then there exists $w\in\{0,1\}^c$ such that $(x,w)\in V_L$. So $N$ in the first $c$ steps guesses $w$ and then runs $(x,w)$. Hence if 
+\begin{align*}
+	x\in L&\iff\exs\ w\in\{0,1\}^c\text{ such that }(x,w)\in V_L\\
+	& \iff N(x)=\text{Accept}
+\end{align*}
+Therefore the two definitions of $\sfN\sfP$ are equivalent to each other.
+
+}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		Operations on languages
+	}{p4% problem reference text
+	}
+\begin{enumerate}[label=(\alph*)]
+\item If $L_1,L_2$ are two languages in \textsf{NP}, show that the languages $L_1\cap L_2$ and $L_1\cup L_2$ are in \textsf{NP} as well.
+\item For any three languages $L_1,L_2,L_3$, $$\text{Maj}(L_1,L_2,L_3)=\{x\colon x\text{ is in at least two of the $L_i$'s}\}.$$Show that, if $L_1,L_2,L_3\in\textsf{NP}$, then the language Maj($L_1,L_2,L_3$) is also in \sfN\sfP.
+\item For two languages $L_1,L_2$, let $L_1\xor L_2=\{x\in\Sg^*\mid x\text{ is in exactly one of $L_1,L_2$}\}$. If $L_1,L_2\in \textsf{NP}\cap\textsf{coNP}$, show that $L_1\xor L_2\in\textsf{NP}\cap \textsf{coNP}$ as well.
+\end{enumerate}
+\end{problem}
+\solve{
+\begin{enumerate}[label=(\alph*)]
+	\item $L_1,L_2\in\sfN\sfP$. Hence there exists $V_{L_1},V_{L_2}\in \sfP$ and constants $c_1,n_0^1$ and $c_2,n_0^2$ such that for any $x_1,x_2\in \Sg^*$ with $|x_1|>n_0^1$, $|x_2|>n_0^2$ then $x_1\in L_1\iff \exs\ w_1\in\Sg^*$ with $|w_1|\leq|x_1|^{c_1}$ such that $(x_1,w_1)\in V_{L_1}$ and $x_2\in L_2\iff\exs\ w_2\in\Sg^*$ with $|w_2|\leq |x_2|^{c_2}$ such that $(x_2,w_2)\in V_{L_2}$.\parinn
+	
+	Then take  $c=c_1+c_2+1$ and $n_0=\max\{n_0^1,n_0^2\}$. Then we have for any $x\in \Sg^*$ with $|x|>n_0$, $x\in L_1\cap L_2\iff \exs \ w_1\#w_2\in \Sg^*$ with $|w_1\#w_2|\leq |x|^{c}$ such that $(x,w_1)\in V_{L_1}$ and $(x,w_2)\in V_{L_2}$. So construct the language $V_{L_1\cap L_2}=(x,w_1\#w_2)$. where $$(x,w_1\#w_2)\in V_{L_1\cap L_2}\iff (x,w_1)\in V_{L_1}, (x,w_2)\in V_{L_2}$$Since $V_{L_1},V_{L_2}\in\sfP$ there exists polynomial time turing machines $M_1,M_2$ such that $(x,w)\in V_{L_1}\iff M_1(x,w)=$Accept and $(x,w)\in V_{L_2}\iff M_2(x,w)=$Accept. So the turing machine $M$ for $V_{L_1\cap L_2}$ on input $(x,w_1\#w_2)$ runs both $M_1$ on $(x,w_1)$ and $M_2$  on $(x,w_2)$ in parallel and accepts if both of them accepts.So $M$ is a polynomial time turing machine since both $M_1$ and $M_2$ are polynomial time turing machine and $L(M)=V_{L_1\cap L_2}$. Therefore $V_{L_1\cap L_2}\in \sfP$. Therefore $L_1\cap L_2$ is in $\textsf{NP}$.
+	
+	Take $c=\max\{c_1,c_2\}$ and $n_0=\max{n_0^1,n_0^1}$. If $x\in L_1\cup L_2$ then either $x\in L_1$ or $x\in L_2$. Then there exists $w\in\Sg^*$ with $|w|\leq|x|^c$ such that either $(x,w)\in V_{L_1}$ or $(x,w)\in V_{L_2}$. So $(x,w) \in V_{L_1\cap L_2}$. Hence $x\in L_1\cap L_2\iff \exs \ w\in \Sg^*$ with $|w|\leq |x|^c$ such that $(x,w)\in V_{L_1\cup L_2}$. Let $M_1$ and $M_2$ be the polynomial time turing machines for $V_{L_1}$ and $V_{L_2}$ respectively. Then consider the turing machine $M$ which on input $(x,w)$ runs both $M_1$ and $M_2$ on $(x,w)$ in parallel and accepts in one of them accepts otherwise rejects. So $M$ is a polynomial time turing machine since both $M_1$ and $M_2$ are polynomial time turing machine and $L(M)=V_{L_1\cup L_2}$. So $V_{L_1\cup L_2}\in \sfP$. Therefore $L_1\cup L_2\in \sfN\sfP$.
+	
+	\item Given $\text{Maj}(L_1,L_2,L_3)=\{x\colon x\text{ is in at least two of the $L_i$'s}\}.$ Hence $x \in\text{Maj}(L_1,L_2,L_3)\iff x\in L_1\cap L_2$ or $x\in L_2\cap L_3$ or $x\in L_3\cap L_1$. Therefore $$\text{Maj}(L_1,L_2,L_3)=(L_1\cap L_2)\cup (L_2\cap L_3)\cup (L_3\cap L_1)$$Since $L_1,L_2,L_3\in \sfN\sfP$. Then by results above $L_1\cap L_2, L_2\cap L_3,L_3\cap L_1\in\sfN\sfP$ and again by results above we have $(L_1\cap L_2)\cup (L_2\cap L_3)\in\sfN\sfP$ and henceforth $(L_1\cap L_2)\cup (L_2\cap L_3)\cup (L_3\cap L_1)\in \sfN\sfP$.
+	\item Since $L_1,L_2\in \sfN\sfP\cap \textsf{coNP}$ we have $\ov{L_1},\ov{L_2}\in \sfN\sfP\cap \textsf{coNP}$. Now $L_1\xor L_2=\{x\in\Sg^*\mid x\text{ is in exactly one of $L_1,L_2$}\}$. Hence $x\in L_1\xor L_2\iff x\in L_1, x\notin L_2$ or $x\in L_2,x\notin L_1$. Hence we have $$L_1\xor L_2=(L_1\cap \ov{L_2})\cup (\ov{L_2}\cap L_2)$$Since $L_1,\ov{L_1}, L_2,\ov{L_2}\in\sfN\sfP$ we have $L_1\cap \ov{L_2}\in \sfN\sfP$ and $\ov{L_1}\cap L_2\in\sfN\sfP$. And therefore $(L_1\cap \ov{L_2})\cup (\ov{L_2}\cap L_2)\in\sfN\sfP$. Hence $L_1\xor L_2\in\sfN\sfP$.
+\end{enumerate}
+ }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		Not-all-equal-SAT
+	}{p5% problem reference text
+	}
+The `not-all-equal' function $\nae(x_1,\dots, x_k)$ is the Boolean function that is true when not all the values of $x_1,\dots, x_k $ are equal (that is, it is false only on the inputs $000\cdots 0$ and $111\cdots 1$).
+
+$\nae$-SAT is the constraint satisfaction problem where each constraint is the above $\nae$-function. An instance of $\nae$-SAT is satisfiable if there is an assignment to the variables that satisfy all the constraints. (Similar to how CNF-SAT had the constants as the `OR' function.)\begin{enumerate}[label=(\alph*)]
+	\item Consider the following purported reduction from CNF-SAT to NAE-SAT:
+	\begin{center}
+		\begin{minipage}{0.9\textwidth}
+		Consider a new varibale $z$. For each clause of the form, $(x_i\vee x_j\vee x_k)$ in the CNF, add the constraint $\nae(x_i,x_j,x_k,z)$ to the $\nae$ instance.
+		\end{minipage}
+	\end{center}
+
+Prove that this is a legitimate reduction from CNF-SAT to NAE-SAT
+\item If we begin with an instance of $3$CNF-SAT, then we end up with an instance of 4NAE-SAT in the above reduction. Give a polynomial-time many-one reduction from $4$NAE-SAT to $3$NAE-SAT.
+\item What is $2$NAE-SAT problem? Do you know it by a different name? Is it in \sfP?
+\end{enumerate}
+\end{problem}
+\solve{
+\begin{enumerate}[label=(\alph*)]
+\item Suppose the NAE-SAT instance obtained from $\vph$ is $C$. We will show $$\vph\in \text{CNF-SAT}\iff C\in\text{NAE-SAT}$$Let $\varphi$ is a CNF-SAT formula. Let there exists a satisfying assignment $y$ such that $\varphi(y)=$True. Let $x_i\vee x_j\vee x_k$ is a clause of $\vph$. Since $y$ satisfies this clause at least one of the variables in $x_i,x_j,x_k$ is set to be true in $y$. Hence setting $z$ to be False in $\nae(x_i,x_j,x_k,z)$ is also satisfied. Since all of the clauses are satisfied by $y$, in each clause at least one of the variables is set to be True by $y$. Hence setting $z$ to be False satisfies that not all assignments are equal for each NAE constraint corresponding to the clauses. Therefore the corresponding formula NAE-SAT$(x_1,\dots, x_k,z)$ is satisfiable.\parinn
+
+Now suppose the constructed NAE-SAT instance has a satisfiable assignment. Hence in each clause there is at least one variable set to True and at least one variable set to False. Hence if we flip the assignment of each variable then still this is true that in each clause at least one variable is set to True and at least variable set to False. Hence flipping the assignments for all variable still gives a satisfying assignment.  Hence if the variable is $z$ is set to True we flip the assignment otherwise we dont do anything. From the assignment we remove the assignment corresponding to the varible $z$. This is a satisfying assignment for the CNF-SAT formula $\vph$ since for each clause there is at least one variable set to True as $z$ is set to False. Hence with this assignment each clause of $\vph$ is satisfied. Therefore $\vph$ is satisfiable. 
+
+ Therefore the given reduction is a legitimate polynomial time many-one reduction from CNF-SAT to NAE-SAT
+ \item Let $C$ is a  $4$NAE-SAT instance. Let NAE($w,x,y,z$) is a constraint of $C$. Then suppose $a$ is a new variable. Then we remove the constraint NAE($w,x,y,z$) from $C$ and add the following two constraints $$\text{NAE}(w,x,a)\qquad \nae(\neg a,y,z)$$For every constraint of $C$ we introduce a new variable and do this and finally we get a $3\nae$-SAT instance $C'$ from $C$. Now we will show $$C\text{ is satisfiable}\iff C'\text{ is satisfiable}$$\parinn
+ 
+ 
+ Since in each clause a new variable is used it is equivalent to show that $$\nae(w,x,y,z)\text{ is satisfiable}\iff \nae(w,x,a)\wedge \nae(\neg a,y,z)\text{ is satisfiable}$$
+ 
+ Let $\nae(w,x,y,z)\text{ is satisfiable}$. Then there is at least one variable set to True and at least one variable set to False. Now there are two possible case. One of th pairs $\{\{w,x\},\{y,z\}\}$ set to same value. WLOG suppose $w,x$ set to same value. Then $y,z$ are set to different values. Hence in $\nae(\neg a,y,z)$, $a$ can be set to any value but in $\nae(w,x,a)$ since both $w,x$ are set to same value $a$ has to be set the other. This way both $\nae(w,x,a)$ and $\nae(\neg a,y,z)$ are satisfied. If all the pairs in $\{\{w,x\},\{y,z\}\}$ are set to different values then $w,x$ are set to different values and $y,z$ are set to different values. Hence for any value of $a$ both $\nae(w,x,a)$ and $\nae(\neg a,y,z)$ are satisfied.  Therefore  $\nae(w,x,a)\wedge \nae(\neg a,y,z)$ is satisfied.
+ 
+ Now let $\nae(w,x,a)\wedge \nae(\neg a,y,z)$ is satisfied. WLOG suppose $a$ is set to be True. Then $w,x$ are set to different values. Therefore in $w,x,y,z$ there is at least one variable set to True and one variable set to False. Therefore $\nae(w,x,y,z)$ is satisfied.
+ 
+ Therefore this gives a polynomial-time many-one reduction from $4$NAE-SAT to $3$NAE-SAT.
+ \item Consider the problem $2$Colourable$\coloneqq \{\la G\ra \mid G\text{ is a 2 colourable graph}\}$. We will show $2$NAE-SAT is reducible to $2$Colourable. Let $C$ be a $2$NAE-SAT instance with $n$ variables. Now consider the graph $G=(V,E)$ with the vertex set is of size $2n$ with where $V=\{x_i,\neg x_i\mid \forall\ i\in[n]\}$ Now $\forall\ i\in[n]$, $(x_i,\neg x_i)\in E$. For all $\nae(x_i,x_j)$ constraint in $C$ put the edge $(x_i,x_j)\in E$ where $x_i,x_j$ are literals.  Then if $C$ is satisfiable then we colour  the literals which are set to True to Red colour and the literals which are set to False to Blue colour. For edges of the form $(x_i,\neg x_i)$ if one is True then other is False so these edges satisfies the $2$Colourable property. For edges of the form $(x_i,x_j)$ the constraint $\nae(x_i,x_j)$ is satisfied. So one is set to True and other is set to False. Therefore the edge also satisfies the $2$Colourable property. Therefore the graph $G$ is indeed $2$Colourable.\parinn
+ 
+ Now suppose $G$ is $2$Colourable. Then for every variable $x_i$ if the literal $x_i$ is coloured Red then we set $x_i$ variable to be True otherwise False. Then for each constraint in $C$ the corresponding edge satisfies the $2$Colourable property. Therefore one of the variable is set to True and other variable is set to False. Hence the constraint is satisfied. Therefore each constraint of $C$ is satisfied. Therefore $C$ is satisfied.
+ 
+ This reduction is polynomial time many-one reduction. Therefore $2$NAE-SAT$\leq_m^{\text{poly}}2$Colourable. Now we can check if a graph is $2$Colourable by taking any vertex and start \prb{Breadth-First-Search} from that vertex and in each layer we colour the vertex in that layer with the other colour compared to the previous layer. If a vertex appears in both odd layers and even layers then the graph is no $2$Colourable otherwise it is $2$Colourable. Hence $2$Colourable is in \sfP. Therefore $2$NAE-SAT is in \sfP.
+\end{enumerate}
+}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 7
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		Equations that have integer solutions
+	}{p7% problem reference text
+}
+\textcolor{gray}{Hat-tip: This problem is from Ryan O'Donnel's complexity course}
+\begin{enumerate}[label=(\alph*)]
+		\item Consider the following language
+	$$L=\lt\{(a,b)\colon a,b\in\bbZ,\text{\begin{tabular}{c}
+			there exists integers $x,y$\\ such that $x^2+ay+b=0$
+	\end{tabular}}\rt\}$$
+		
+		Here the inputs $a,b$ are provided in binary.
+		
+		Prove that $L\in\sfN\sfP$.
+		\item Consider the following language
+		$$L=\lt\{(a,b,c)\colon a,b,c\in\bbZ,\text{\begin{tabular}{c}
+				there exists integers $x,y,z$\\ such that $x^3+ay^2+bz+c=0$
+		\end{tabular}}\rt\}$$
+		
+		I don't know if this problem is in \sfN\sfP. Why do you think that is so?
+	\end{enumerate}
+
+\end{problem}
+\solve{\begin{enumerate}[label=(\alph*)]
+		\item $x^2+ay+b=0$ where $a,b\in\bbZ$. Now if $a=0$ then $-b$ has to be a perfect square. Suppose $a\neq 0$. WLOG we can assume $a>0$ since otherwise we will change sign of $y$. Then $$x^2+ay+b=0\iff y=-\frac{x^2+b}{a}\implies x^2+b\equiv 0\bmod{a}$$Suppose $\exs\ 0\leq c<a$ such that $-b\equiv c^2\bmod a\iff -b=c^2+ak$ for some integer $k$. Then take $y=k$ then we have $ay+b=ak+b=ak-c^2-ak=-c^2$. Hence $x=c$. So if $x^2+ay+b=0$ as an integral solution for $(x,y)$ then $\exs c\in \{0,\dots, |a|\}$ such that $c^2+b\equiv 0\bmod{|a|}$. Since $a$ is given in binary, the binary expression of $c$ takes at most the same number of bits as $a$ needed. Therefore the non-deterministic machine will guess $c$ and then verify if $c^2+b\equiv 0\bmod{|a|}$ and accept if its true.
+		\item Let $b\neq 0$. WLOG we can assume $b>0$ Then $$x^3+ay^2+bz+c=0\implies x^3+ay^3+c\equiv 0\bmod b$$If $x^3+ay^3+c\equiv 0\bmod b$ has a solution then we can take $z=-\frac{x^3+ay^3+c}b$. So if there is a solution for $(x,y,z)$ for $(a,b,c)$ then there exists solution for $x,y,z$ where $x,y\in [b]$ and $z$ is polynoimally bounded by $x,y$. Such $x,y$ takes at most same bit complexity as $b$. Therefore if $b\neq 0$ then there are solutions which is polynomially bounded by the bit complexity of $b$. 
+		
+		Let $b=0$. There may be instances of $(a,0,c)$ for which integral solutions for $x,y,z$ can absurdly larger compared to $a,c$. In that case we don't know how to give a polynomially bounded certificate in terms of the bit complexity of $a,b,c$ to calculate the integral solutions and verify. That is why this problem may not be in \textsf{NP}
+\end{enumerate}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 8
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\begin{problem}{%problem statement
+		Block-respecting TMs
+	}{p8% problem reference text
+}
+Let $B:\bbN\to\bbN$ be ``reassonable" function (increasing, time-constructible, yada,yada). A deterministic Turing machine $M$ is said to be $B\textit{-block-respecting}$ if it has the following: property:
+\begin{center}
+	\begin{minipage}{0.9\textwidth}
+		Consider a length $n$ input $x$. The tape(s) of the Turing machine are split into contiguous blocks of length $B(n)$ each. Each head of the Turing Maxhine crosses a block-boundary only at time-steps that are integer multiples of $B(n)$.
+		
+		(That is, within each block of $B(n)$ time steps, each head operates only within a particular block)
+	\end{minipage}
+\end{center}
+
+Given a deterministic Turing machine $M$ that runs in time $T(n)$, and a ``reasonable" function $B:\bbN\to\bbN$, construct a deterministic $B$-block-respecting Truing machine $M'$ for the same language while ensuring the running time of $M'$ is $O(T(n))$.
+
+\noindent\adjustbox{rotate=180,lap=0pt}{
+	\parbox{\textwidth}{
+[Hint: Suppose the machine $M$ uses $k$ tapes, you could perhaps make use of the above picture and use $3k$ tapes.]
+	}
+}
+	\end{problem}
+
+\solve{
+Let the input length is $n$. We will use $B$ instead of $B(n)$ from now on. Let $M$ uses $k$ tapes. We will create a $B$-block-respecting turing machine $M'$ which has $3k$ tapes and uses 3 tapes for each tape of $M$. $M'$ has 3 copies of content of each tape of $M$. First we divide the content of each tape of $M'$ and $M$ into blocks of $B$.
+
+Let $L^j_i$ denotes the $j^{th}$ block in certain $i^{th}$ tape of $M$. Let at some time the head inside the block $L_j^i$. Then consider the corresponding 3 tapes in $M'$. The head positions are as follows: \begin{itemize}
+	\item In the first tape at the end of $L_{j-1}^i$
+	\item In the second tape the head position is same as the head position in $i^{th}$ tape in $M$ in $L_{j}^i$.
+	\item In the third tape at the start of $L_{j+1}^i$
+\end{itemize}
+When the head in $L_j^i$ in $i^{th}$ tape of $M$ is working the head in the second tape of $M'$ in $L_{j}^i$ works same. Now at some point if the head in $i^{th}$ tape of $M$ goes to $L_{j+1}^i$ but within the time period $B$ then the the head of the second tape remains at the end of $L_j^i$ and the now the head at the third tape at start of $L_{j+1}^i$ starts to work similar to as the head in $i^{th}$ tape of $M$. And within the same $B$ time period if the head in $i^{th}$ tape of $M$ comes back to $L_{j}^i$ then the head at the third tape stops at the start of $L_{j+1}^i$ and the head at the end of $L_j^i$ in second tape starts working. Similarly if the head in $i^{th}$ tape of $M$ goes to $L_{j-1}^i$ then the head in second tape stops at the start of $L_j^i$ and the head in first tape at the end of $L_{j-1}^i$ starts working. If within the same $B$ time period comes back to $L_j^i$ in $i^{th}$ tape of $M$ the head at the first tape stops at the end of $L_{j-1}^i$ and the head at the second tape at the start of $L_j^i$ starts working. 
+
+The above happens till the $B$ time period. Once the $B$ time period ends then let  the head in $i^{th}$ tape of $M$ is in somewhere in $L_j^i$ then the heads of $M'$ in the corresponding 3 tapes  are at the end of $L_{j-1}^i$ in first tape, same position as the head in $i^{th}$ tape of $M$ in $L_j^i$ in second tape of $M'$ in $L_j^i$ and at the start of $L_{j+1}^i$ in the third tape. Now head at the second tape goes to the start of $L_j^i$ and then spends the rest of the $B$ time period there. During this time the head at the third tape at the start of $L_{j+1}^i$ comes to the start of the $L_{j+1}^i$ spends the rest of the $B$ time period. Then both the heads of second tape and third tape goes to start of $L_{j-1}^i$ and then copies the content of $L_{j-1}^i$ from first step to the second tape and third tape. This takes another $B$ time. Then heads of all 3 tapes goes to the end of the $L_{j-1}^i$. Then goes to the start of $L_j^i$ and starts to copy the content of $L_j^i$ of second tape in $L_j^i$ of first tape and third tape and goes to end of $L_j^i$. This takes another $B$ time. Then all three tapes goes to the start of $L_{j+1}^i$ and then copies the content of $L_{j+1}^i$ from the third tape to the first and second tape. This takes $B$ time. Now all the three tapes comes back to the start of $L_{j+1}^i$. Then the head of second tape and first tape goes to end of $L_{j}^i$. Then the heads in the second tape goes to the same position as head in $i^{th}$ tape of $M$ the head and during that time the head of the first tape goes to the end of $L_j^i$. And then it goes to start of $L_{j-1}^i$ and then spends $B$ time there. Hence in total this whole process takes at most $10B$ time. 
+
+This turing machine simulates each $B$ time period of $M$ in $11B$ time. Hence this turing machine takes $\frac{T(n)}{B}\times 11B=O(T(n))$ time. 
+}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 8
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		Improving the time-hierarchy theorem
+	}{p6% problem reference text
+}
+For this problem, you may assume that any `reasonable-looking' function is time-constructible. And whenever you see functions like $n^2 \log ^{3 / 4}(n)$, assume that there is an implicit ceiling to make sure this is an integer etc. (Basically don't worry about technicalities!)
+In class we proved that the deterministic time hierarchy theorem that stated the following:
+
+Suppose $t_1, t_2: \mathbb{N} \rightarrow \mathbb{N}$ are non-decreasing time-constructible functions with $t_1(n), t_2(n) \geq n$. If we have $t_1(n) \log t_1(n)=o\left(t_2(n)\right)$, then we have $\textsf{DTIME}\left(t_1\right) \subsetneq$ $\textsf{DTIME}\left(t_2\right)$.
+\begin{enumerate}[label=(\alph*)]
+\item	Let $t_1, t_2, f: \mathbb{N} \rightarrow \mathbb{N}$ be time-constructible non-decreasing functions that satisfy $t_1(n), t_2(n), f(n) \geq n$. Show that $\textsf{DTIME}\left(t_1(n)\right)=\textsf{DTIME}\left(t_2(n)\right)$ implies
+	$$
+	\textsf{DTIME}\left(t_1(f(n))\right)=\textsf{DTIME}\left(t_2(f(n))\right)
+	$$
+	
+\noindent\adjustbox{rotate=180,lap=0pt}{
+	\parbox{0.95\textwidth}{
+		[Hint: Padding]
+	}
+}
+\item Show that $\textsf{DTIME}\left(n^2\right) \subsetneq \textsf{DTIME}\left(n^2 \log ^{3 / 4}(n)\right)$.
+
+\noindent\adjustbox{rotate=180,lap=0pt}{
+	\parbox{0.95\textwidth}{
+				[Hint: You may have to use the above part multiple times]
+	}
+}
+\item  Extend this to show that for any rational number $a, \varepsilon$ satisfying $a>1$ and $0<\varepsilon<1$, we have
+	$$
+	\textsf{DTIME}\left(n^a\right) \subsetneq \textsf{DTIME}\left(n^a(\log n)^{\varepsilon}\right)
+	$$
+\end{enumerate}
+	\end{problem}
+\solve{
+\begin{enumerate}[label=(\alph*)]
+	\item Let $L\in \textsf{DTIME}(t_1(f(n)))$. Then there exists a deterministic Turing machine $M$ which runs in $O(t_1(f(n)))$ time decides $L$. Now consider the language $L_{\textit{pad}}$ where $$L_{\textit{pad}}\coloneqq \lt\{\tdx=\la x,1^{f(|x|)}\ra\mid x\in L\rt\}$$Consider the turing machine $M^{\textit{pad}}$ 
+	\begin{center}
+		\begin{tabular}{rl}
+			$M^{\textit{pad}}$ : & Input $\tdx$\\
+			& Check if $\tdx$ of the form $\la x,1^{m}\ra$ where $m=f(|x|)$. Reject otherwise\\
+			& Run $M$ on the input $x$.\\
+			& Accepts if $M$ accepts otherwise reject.
+		\end{tabular}
+	\end{center}
+
+To check the input of the form $\la x,1^{f(|x|)-|x|}\ra$ it takes $O(f(|x|))$. Time Then it runs $M$ which takes $O(t_1(f(|x|))$ time. Therefore $L_{\textit{pad}}\in \textsf{DTIME}(t_1(n))$. Since $\textsf{DTIME}\left(t_1(n)\right)=\textsf{DTIME}\left(t_2(n)\right)$ there exists a turing machine $M'$ which runs in $O(t_2(n))$ time and decides $L_{\textit{pad}}$. So consider the turing machine $M''$
+	\begin{center}
+	\begin{tabular}{rl}
+		$M''$ : & Input $x$\\
+		& Build $\tdx=\la x,1^{f(|x|)}\ra$\\
+		& Run $M'$ on $\tdx$.\\
+		& Accept if $M'$ accepts otherwise reject
+	\end{tabular}
+\end{center}
+
+Certainly $M''$ runs in $O(t_2(f(n)))$ time. Therefore $L''\in \textsf{DTIME}(t_2(f(n)))$. Hence $$	\textsf{DTIME}\left(t_1(f(n))\right)\subseteq \textsf{DTIME}\left(t_2(f(n))\right)$$ With similarly argument by switching $t_1$ and $t_2$ we can show $	\textsf{DTIME}\left(t_1(f(n))\right)\supseteq \textsf{DTIME}\left(t_2(f(n))\right)$. Therefore we have $	\textsf{DTIME}\left(t_1(f(n))\right)= \textsf{DTIME}\left(t_2(f(n))\right)$
+\item Suppose $\textsf{DTIME}\left(n^2\right) = \textsf{DTIME}\left(n^2 \log ^{\frac34}(n)\right)$. Let $f(n)=n\log ^{\frac38}n$. Then by using the previous part we have that $$\textsf{DTIME}\left(f^2(n)\right) = \textsf{DTIME}\left(f^2(n) \log ^{\frac34}(f(n))\right)$$Now $$f^2(n)=\lt(n\log^{\frac38}n\rt)^2=n^2\log^{\frac34}n$$And $$\log (f(n))=\log \lt(n\log^{\frac38}n\rt)=\log n+\log \lt(\frac38\log n\rt)=\log n+\log\frac38+\log\log n=\Theta(\log n)$$Hence $f^2(n)\log^{\frac34}(f(n))=\Theta\lt(n^2\log^{\frac34}n\log^{\frac34}n\rt)=\Theta(n^2\log^{\frac32}n)$. Therefore we have $$\textsf{DTIME}(n^2)=\textsf{DTIME}(n^2\log^{\frac34}n)=\textsf{DTIME}(n^2\log^{\frac32}n)$$But $\textsf{DTIME}(n^2)\subsetneq \textsf{DTIME}(n^2\log^{\frac32}n)$ by time hierarchy theorem. Hence contradiction \ctr Therefore $\textsf{DTIME}\left(n^2\right) \subsetneq \textsf{DTIME}\left(n^2 \log ^{\frac34}(n)\right)$.
+\item Let $N=\lt\lceil \log \frac1{\eps}\rt\rceil+1$. Then $2^N\cdot\eps>1$. Now suppose $\textsf{DTIME}(n^a)=\textsf{DTIME}(n^a\log^{\eps}n)$. Let $f_1(n)=n\log^{\frac{\eps}a}n$. Then we have $\textsf{DTIME}(f_1^a(n))=\textsf{DTIME}(f^a(n)\log^{\eps}(f_1(n)))$. Now $f_1^a(n)=n^a\log^{\eps}n$ and $$\log (n\log^{\frac{\eps}a}n)=\log n+\log\frac{\eps}a+\log\log n=\Theta(\log n)$$Therefore $\textsf{DTIME}(f_1^a(n)\log^{\eps}(f_1(n)))=\textsf{DTIME}(n^a\log^{\eps}n\log ^{\eps}n)=\textsf{DTIME}(n^a\log^{2\eps}n)$. Hence $$\textsf{DTIME}(n^a)=\textsf{DTIME}(n^a\log^{2\eps}n)$$Now choose $f_2(n)=n\log^{\frac{2\eps}a}n$. Then by similar calculation we have $$\textsf{DTIME}(n^a)=\textsf{DTIME}(n^a\log^{2\eps}n)=\textsf{DTIME}(n^a\log^{4\eps}n)$$Continuing like this at $k^{th}$ step we have $$\textsf{DTIME}(n^a)=\textsf{DTIME}(n^a\log^{2^{k-1}\eps}n)=\textsf{DTIME}(n^a\log^{2^k\eps}n)\implies \textsf{DTIME}(n^a)=\textsf{DTIME}(n^a\log^{2^k\eps}n)$$ the function $f_k(n)=n\log^{\frac{2^k\eps}a}n$. Then we get $$\textsf{DTIME}(n^a)=\textsf{DTIME}(n^a\log^{2^k\eps}n)=\textsf{DTIME}(n^a\log^{2^{k+1}\eps}n)$$Continuing like this after $N$ steps we get $$\textsf{DTIME}(n^a)=\textsf{DTIME}(n^a\log^{2^{N}\eps}n)$$But now $2^N\eps>1$. Hence $n^a\log n=o(n^a\log^{2^{N}\eps}n)$. Therefore this violets the time hierarchy theorem. Hence contradiction \ctr Therefore $$
+\textsf{DTIME}\left(n^a\right) \subsetneq \textsf{DTIME}\left(n^a(\log n)^{\varepsilon}\right)
+$$
+\end{enumerate}
+}
+\end{document}
