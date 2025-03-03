@@ -1,0 +1,201 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage{amsmath,mathtools,mathdots,graphicx,adjustbox,xcolor}
+\usepackage{amssymb,amsthm}  % assumes amsmath package installed
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=doc!80,
+	citecolor=myr,
+	filecolor=myr,      
+	urlcolor=doc!80,
+	pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
+}
+\usepackage[most,many,breakable]{tcolorbox}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{kpfonts}
+\usepackage{libertine}
+\usepackage{physics}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+\usepackage{float,marvosym}
+
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+
+\input{../assignment-problem-box}
+\DeclareMathOperator{\nae}{NAE}
+\newtheorem{lemma}{Lemma}
+\renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\qed\bigskip\\}
+% To give references for any problem use like this
+% suppose the problem number is p3 then 2 options either 
+% \hyperref[p:p3]{<text you want to use to hyperlink> \ref{p:p3}}
+%                  or directly 
+%                   \ref{p:p3}
+
+\DeclareMathOperator{\trac}{\textsf{Trace}}
+\DeclareMathOperator{\range}{Range}
+\DeclareMathOperator{\mult}{Mult}
+
+
+\input{../../letterfonts}
+
+\input{../../macros}
+
+\setlength{\parindent}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 1}\\
+		Email: \href{soham.chatterjee@tifr.res.in}{soham.chatterjee@tifr.res.in} \hfill Dept: STCS, TIFR\\
+		\normalsize Course: Algebra, Number Theory and Computation \hfill Date: \today}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+\begin{problem}{%problem statement
+		\hfill 5 Points
+	}{p1% problem reference text
+}
+Let $\bbF$ be a field of characteristic equal to $p$. Then, show that over the polynomial ring $\bbF[x,y]$, $(x+y)^p=x^p+y^p$
+\end{problem}
+\solve{	
+\begin{lemma}
+	$p\mid \binom{p}{k}\iff 0<k<p$
+\end{lemma}
+\begin{proof}
+	Let $0<k<p$. Then $\binom{p}{k}=\frac{p!}{k!(p-k)!}$. As $0<k<p$, $0<p-k<p$. Since $p$ is a prime none of numbers from $0$ to $\max\{k,p-k\}$ divides $p$. Therefore $p$ never gets canceled out in $\binom{p}{k}$. Hence $p\mid\binom{p}{k}$. 
+	
+	Now suppose $p\mid \binom{p}{k}$. Now $$\binom{p}{k}=\frac{p!}{k!}{(p-k)!}=\frac{\prod\limits_{i=1}^k(p-k+i)}{k!}=\frac{\prod\limits_{i=1}^{p-k}(k+i)}{(p-k)!}$$Now the highest power of $p$ that divides $\prod\limits_{i=1}^k(p-k+i)$ and $\prod\limits_{i=1}^{p-k}(k+i)$ is 1. Therefore $p\nmid k!$ and $p\nmid (p-k)!$. Therefore $k<p$ and $p-k<p$. Hence we have $0<k<p$.
+\end{proof}
+
+So now using the lemma we have $(x+y)^p=x^p+y^p+\sum\limits_{i=1}^{p-1}\binom{p}{i}x^{p-i}y^i=x^p+y^p+p\cdot C$ where $p\cdot  C=\sum\limits_{i=1}^{p-1}\binom{p}{i}x^{p-i}y^i$. Since the characteristic of the field is $p$ we have $p\cdot C=0$. Hence $(x+y)^p=x^p+y^p$.
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newpage
+
+\begin{problem}{%problem statement
+	\hfill 20 Points
+	}{p2% problem reference text
+	}
+Let $q$ be a prime power and let $k>0$ be a natural number. The polynomial $\trac(x)$ is defined as $$\trac(x)=x+x^q+x^{q^2}+\cdots +x^{q^{k-1}}$$
+\begin{enumerate}[label=(\alph*)]
+	\item \textbf{(5 points)} Show that for every $\alpha\in\bbF_{q^k}$, $\trac(\alpha)\in\bbF_q$.
+	\item \textbf{(5 points)} Show that when viewed as a map from the vector space $\bbF_{q^k}$ to $\bbF_q$. $\trac$ is $\bbF_q$-linear.
+	\item \textbf{(10 points)} Using the properties of $\trac$, conclude that for \textit{every}  $\bbF_q$ linear map $L$ from $\bbF_{q^k}$ to $\bbF_q$, there is an $\alpha_L\in\bbF_{q^k}$ such that  for all $\beta\in\bbF_{q^k}$, $L(\beta)=\trac(\alpha_L\cdot \beta)$.
+\end{enumerate}
+\end{problem}
+\solve{	
+\begin{enumerate}[label=(\alph*)]
+ \item The Frobenius  map $\vph:\bbF_{q^k}\to\bbF_{q^k}$, where $\vph(x)=x^q$ is an automorphism and it is $\bbF_q$-linear and the only elements for which $\vph(x)=x$ are the elements of $\bbF_q$.
+ \begin{lemma}
+	The maps $\trac$ and $\vph$ commutes over $\bbF_{q^k}$.
+\end{lemma}
+\begin{proof}
+	\begin{align*}
+		\trac\circ\vph(x)=\trac(x^q)&=x^q+(x^q)^{q}+(x^q)^{q^2}+\cdots+(x^q)^{q^{k-1}}\\
+		& = x^q+\lt(x^{q^2}\rt)^q+\lt(x^{q^3}\rt)^q+\cdots +\lt(x^{q^{k-1}}\rt)^q\\
+		& = \lt(x+x^q+x^{q^2}+\cdots +x^{q^{k-1}}\rt)^q=\lt(\trac(x)\rt)^q=\vph\circ\trac(x)
+	\end{align*}
+Hence two maps commutes.
+\end{proof}
+
+Now notice that for any $\alpha\in\bbF_{q^k}$ $$\trac(\alpha)^q=\trac(\alpha^q)=\sum\limits_{i=0}^{k-1}(\alpha^q)^{q^i}=\sum\limits_{i=0}^{k-1}\alpha^{q^{i+1}}=\sum\limits_{i=1}^{k}\alpha^{q^i}=\sum\limits_{i=0}^{k-1}\alpha^{q^i}=\trac(\alpha)$$ 
+The third from the last inequality is true is because $\alpha^{q^k}=\alpha$ for all $\alpha\in\bbF_{q^k}$. Hence for all $\alpha\in\range(\trac)$. $\vph(\alpha)=\alpha$. Now the only elements which remains same under the Frobenius map are the elements of $\bbF_q$. Therefore $\range(\trac)\subseteq \bbF_q$. So the for all $\alpha\in\bbF_{q^k}$, $\trac(\alpha)\in\bbF$.
+\item Suppose $a,b\in\bbF_{q^k}$ and $\alpha\in \bbF_q$. Then we have \begin{multline*}
+	\trac(\alpha\cdot a+b)=\sum\limits_{i=0}^{k-1}(\alpha\cdot a+b)^{q^i}=\sum\limits_{i=0}^{k-1}(\alpha\cdot a )^{q^i}+b^{q^i}=\sum\limits_{i=0}^{k-1} \lt(\alpha\cdot a^{q^i}+b^{q^i}\rt)\\=\alpha\lt(\sum\limits_{i=0}^{k-1}a^{q_i}\rt)+\lt(\sum\limits_{i=0}^{k-1}b^{q_i}\rt)=\alpha\trac(a)+\trac(b)
+\end{multline*}
+Therefore $\trac(x)$ is a $\bbF_q$-linear map.
+\item Let $S=\{ L:\bbF_{q^k}\to \bbF_q\mid L\text{ is } \bbF_{q}-\text{linear}\}$. As $\bbF_{q^k}$ forms a vector space over $\bbF_q$ the set $S$ also forms a vector space over $\bbF_q$ and actually called the dual of $\bbF_q$. Since dimension of the vector space $\bbF_{q^k}$ over $\bbF_q$ is $k$ we have the dimension of $S$ over $\bbF_q$ is also $k$. \parinn
+
+Now since dimension of $\bbF_{q^k}$ is $k$ over $\bbF_q$ there exists $k $ elements of $\bbF_{q^k}$, $\{\beta_1,\dots, \beta_k\}\subseteq \bbF_{q^k}$ such that they form a basis of $\bbF_{q^k}$ over $\bbF_{q}$. Then consider the collection of maps $\{\trac(\beta_i\cdot x)\mid i\in[k]\}$. We will show that these maps are linearly independent. And since they are $\bbF_q$-linear they are in $S$. Since they form a $k$ size collection of linearly independent $\bbF_q$-linear maps they span the set $S$.
+\begin{lemma}
+	$\{\trac(\beta_i\cdot x)\mid i\in[k]\}$ are linearly independent.
+\end{lemma}
+\begin{proof}
+	Suppose they are linearly dependent. Let there exists $\gm_i\in\bbF_q$ for all $i\in[k]$ not all zero such that $\sum\limits_{i=1}^k\gm_i\trac(\beta_i\cdot x)\equiv 0$. Then we have $$\sum\limits_{i=1}^k\gm_i\trac(\beta_i\cdot x)=\sum_{i=1}^k\gm_i\cdot\beta_i\trac(\cdot x)=\lt(\sum_{i=1}^k\gm_i\beta_i\rt)\trac(x)$$Therefore $\lt(\sum\limits_{i=1}^k\gm_i\beta_i\rt)\trac(x)\equiv0$ for all $x\in\bbF_{q^k}$. Since $\beta_i's$ are linearly independent $\trac(\alpha)\equiv 0$ for all $\alpha\in\bbF_{q^k}$. But that means every element of $\bbF_{q^k}$ is a root of $\trac(x)$ but that is not possible since $\deg\trac(x)=q^{k-1}$. Therefore $\trac(x)$ is a zero polynomial which is not true. Hence contradiction. Therefore $\{\trac(\beta_i\cdot x)\mid i\in[k]\}$ are linearly independent.
+\end{proof}
+
+Therefore the set $\{\trac(\beta_i\cdot x)\mid i\in[k]\}$ spans the set of $\bbF_q$-linear maps over $\bbF_{q^k}$. Now let $L\in S$. Then there exists $\gm_i\in\bbF$ for all $i\in[k]$ such that $L=\sum\limits_{i=1}^k \gm_i\trac(\beta_i\cdot x)=\sum\limits_{i=1}^k \trac(\gm_i\beta_i\cdot x)=\trac\lt(\lt(\sum\limits_{i=1}^k \gm_i\beta_i\rt)x\rt)=L(\alpha_L\cdot x)$ where $\alpha_L=\sum\limits_{i=1}^k \gm_i\beta_i$.
+\end{enumerate}
+}
+%\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		\hfill 10 Points
+	}{p3% problem reference text
+	}
+Let $q$ be a prime power, $k>0$ be a natural number and let $S\subset \bbF_{q^k}$ be a subspace of $\bbF_{q^k}$ of dimension $s$, when we view $\bbF_{q^k}$ as a $k$ dimensional linear space over $\bbF_q$. Consider the polynomial $P_S(x)$ defined as $$P_S(x)=\prod_{\alpha\in S}(x-\alpha )$$Show that there exist $\beta_1,\beta_2,\dots, \beta_s\in\bbF_{q^k}$ such that $$P_S(x)=x_{q^s}+\beta_1x^{q^{s-1}}+\beta_2x^{q^{s-2}}+\cdots +\beta_sx$$
+
+\end{problem}
+\solve{
+
+}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+\hfill 20 Points
+	}{p4% problem reference text
+	}
+Let $\alpha_1,\alpha_2,\dots, \alpha_n$ distinct elements of some field $\bbF$. And, let $V(\alpha_1,\alpha_2,\dots, \alpha_n)$ be the $n\times n$ matrix whose $(i,j)$ entry equals $\alpha_i^{j-1}$.
+\begin{enumerate}[label=(\alph*)]
+\item \textbf{(5 points)} Show that $V$ has rank equal to $n$.
+\item \textbf{(10 points)} Show that the determinant of $V$ equals $\prod\limits_{i<j}(\alpha_j-\alpha_i)$
+\item \textbf{(5 points)} For every $\beta_1,\beta_2\dots, \beta_n\in \bbF$, show that there is a unique polynomial $f\in\bbF[x]$ of degree at most $n-1$ such that for every $i\in\{1,2,\dots, n\}$, $f(\alpha_i)=\beta_i$.
+\end{enumerate}
+\end{problem}
+\solve{
+\begin{enumerate}[label=(\alph*)]
+\item Suppose the rank of $V$ is less than $n$. Then the columns of $V$ are linearly dependent. Then there exists $\beta_j\in\bbF$ for all $j\in[n]$ not all zero such that for all $i\in[n]$ $\sum\limits_{j=1}^n \beta_j\cdot \alpha_i^{j-1}=0$. Then consider the polynomial $f\in\bbF[x]$ where $f(x)=\sum\limits_{i=1}^n\beta_i x^{i-1}$. Then we conclude that $f(\alpha_i)=0$ for all $i\in[n]$. Therefore roots of $f$ are $\alpha_1,\alpha_2,\dots, \alpha_n$. But $\deg f\leq n-1$. Hence $f$ cannot have more than $n-1$ roots. Hence contradiction. Therefore rank of $V$ is $n$.
+
+\item 
+
+\item Consider the vector $\hat{f}=\mat{f_0 & f_1 & \cdots & f_{n-1}}^T$ where $f_i$'s denote the coefficients of the polynomial $f(x)=\sum\limits_{i=0}^n f_ix^i$ for which $f(\alpha_i)=\beta_i$ and the vector $b=\mat{\beta_1 & \beta_2 & \cdots & \beta_n}^T$. Now such a polynomial $f$ exists if and only if the equation $V\hat{f}=b$ is satisfied. Since $V$ has full rank $V$ is invertible. Hence we get a $\hat{f}=V^{-1}b$. Therefore the equation has a unique solution. Hence there exists an unique polynomial $f$ such that $f(\alpha_i)=\beta_i$.
+\end{enumerate}
+ }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+\hfill 20 Points	}{p5% problem reference text
+	}
+Let $\bbF$ be any field. $\alpha\in\bbF$ is said to be a zero (or root) of multiplicity at least $k$ of a non-zero polynomial $f(x)\in\bbF[x]$ if $f(\alpha)=\del{f}{x}(\alpha)=\cdots=\del{^{k-1}f}{x^{k-1}}(\alpha)=0$ and $\del{^kf}{x^k}(\alpha)\neq 0$.\begin{enumerate}[label=(\alph*)]
+	\item (\textbf{10 points}) Show that $\alpha$ is a zero of multiplicity at least $k$ of $f$ if and only if $(x-\alpha)^k$ divides $f(x)$.
+	\item(\textbf{10 points}) If $\alpha_1,\alpha_2,\dots,\alpha_t$ are distinct elements of $\bbC$, then show that $$\sum\limits_{i=1}^t(\mult(f,\alpha_i))\leq \text{Degree}(f)$$where $\mult(f,\alpha_i)$ denotes the multiplicity of $f$ at $\alpha_i$.
+\end{enumerate}
+\end{problem}
+\solve{
+\begin{enumerate}[label=(\alph*)]
+\item 
+\end{enumerate}
+}
+\end{document}

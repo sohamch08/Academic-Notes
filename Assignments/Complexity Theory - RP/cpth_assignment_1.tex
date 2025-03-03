@@ -246,7 +246,6 @@ Now suppose the constructed NAE-SAT instance has a satisfiable assignment. Hence
 		Equations that have integer solutions
 	}{p7% problem reference text
 }
-\textcolor{gray}{Hat-tip: This problem is from Ryan O'Donnel's complexity course}
 \begin{enumerate}[label=(\alph*)]
 		\item Consider the following language
 	$$L=\lt\{(a,b)\colon a,b\in\bbZ,\text{\begin{tabular}{c}
@@ -281,6 +280,8 @@ Now suppose the constructed NAE-SAT instance has a satisfiable assignment. Hence
 		Block-respecting TMs
 	}{p8% problem reference text
 }
+\textcolor{gray}{Hat-tip: This problem is from Ryan O'Donnel's complexity course}
+
 Let $B:\bbN\to\bbN$ be ``reassonable" function (increasing, time-constructible, yada,yada). A deterministic Turing machine $M$ is said to be $B\textit{-block-respecting}$ if it has the following: property:
 \begin{center}
 	\begin{minipage}{0.9\textwidth}
@@ -302,7 +303,7 @@ Given a deterministic Turing machine $M$ that runs in time $T(n)$, and a ``reaso
 \solve{
 Let the input length is $n$. We will use $B$ instead of $B(n)$ from now on. Let $M$ uses $k$ tapes. We will create a $B$-block-respecting turing machine $M'$ which has $3k$ tapes and uses 3 tapes for each tape of $M$. $M'$ has 3 copies of content of each tape of $M$. First we divide the content of each tape of $M'$ and $M$ into blocks of $B$.
 
-Let $L^j_i$ denotes the $j^{th}$ block in certain $i^{th}$ tape of $M$. Let at some time the head inside the block $L_j^i$. Then consider the corresponding 3 tapes in $M'$. The head positions are as follows: \begin{itemize}
+Let $L^j_i$ denotes the $j^{th}$ block in certain $i^{th}$ tape of $M$. Let at some time the head inside the block $L_j^i$. Then consider the corresponding 3 tapes in $M'$. The head positions are as follows: \begin{itemize}[itemsep=-2mm,topsep=0pt]
 	\item In the first tape at the end of $L_{j-1}^i$
 	\item In the second tape the head position is same as the head position in $i^{th}$ tape in $M$ in $L_{j}^i$.
 	\item In the third tape at the start of $L_{j+1}^i$
@@ -312,7 +313,10 @@ When the head in $L_j^i$ in $i^{th}$ tape of $M$ is working the head in the seco
 The above happens till the $B$ time period. Once the $B$ time period ends then let  the head in $i^{th}$ tape of $M$ is in somewhere in $L_j^i$ then the heads of $M'$ in the corresponding 3 tapes  are at the end of $L_{j-1}^i$ in first tape, same position as the head in $i^{th}$ tape of $M$ in $L_j^i$ in second tape of $M'$ in $L_j^i$ and at the start of $L_{j+1}^i$ in the third tape. Now head at the second tape goes to the start of $L_j^i$ and then spends the rest of the $B$ time period there. During this time the head at the third tape at the start of $L_{j+1}^i$ comes to the start of the $L_{j+1}^i$ spends the rest of the $B$ time period. Then both the heads of second tape and third tape goes to start of $L_{j-1}^i$ and then copies the content of $L_{j-1}^i$ from first step to the second tape and third tape. This takes another $B$ time. Then heads of all 3 tapes goes to the end of the $L_{j-1}^i$. Then goes to the start of $L_j^i$ and starts to copy the content of $L_j^i$ of second tape in $L_j^i$ of first tape and third tape and goes to end of $L_j^i$. This takes another $B$ time. Then all three tapes goes to the start of $L_{j+1}^i$ and then copies the content of $L_{j+1}^i$ from the third tape to the first and second tape. This takes $B$ time. Now all the three tapes comes back to the start of $L_{j+1}^i$. Then the head of second tape and first tape goes to end of $L_{j}^i$. Then the heads in the second tape goes to the same position as head in $i^{th}$ tape of $M$ the head and during that time the head of the first tape goes to the end of $L_j^i$. And then it goes to start of $L_{j-1}^i$ and then spends $B$ time there. Hence in total this whole process takes at most $10B$ time. 
 
 This turing machine simulates each $B$ time period of $M$ in $11B$ time. Hence this turing machine takes $\frac{T(n)}{B}\times 11B=O(T(n))$ time. 
-}
+}\parinf
+
+[Me, Nishant, Shubham discussed together]
+\parinn
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -379,5 +383,8 @@ Certainly $M''$ runs in $O(t_2(f(n)))$ time. Therefore $L''\in \textsf{DTIME}(t_
 \textsf{DTIME}\left(n^a\right) \subsetneq \textsf{DTIME}\left(n^a(\log n)^{\varepsilon}\right)
 $$
 \end{enumerate}
-}
+}\parinf
+
+[Me, Nishant, Shubham discussed together]
+\parinn
 \end{document}
