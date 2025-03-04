@@ -133,7 +133,7 @@ Now since dimension of $\bbF_{q^k}$ is $k$ over $\bbF_q$ there exists $k $ eleme
 	$\{\trac(\beta_i\cdot x)\mid i\in[k]\}$ are linearly independent.
 \end{lemma}
 \begin{proof}
-	Suppose they are linearly dependent. Let there exists $\gm_i\in\bbF_q$ for all $i\in[k]$ not all zero such that $\sum\limits_{i=1}^k\gm_i\trac(\beta_i\cdot x)\equiv 0$. Then we have $$\sum\limits_{i=1}^k\gm_i\trac(\beta_i\cdot x)=\sum_{i=1}^k\gm_i\cdot\beta_i\trac(\cdot x)=\lt(\sum_{i=1}^k\gm_i\beta_i\rt)\trac(x)$$Therefore $\lt(\sum\limits_{i=1}^k\gm_i\beta_i\rt)\trac(x)\equiv0$ for all $x\in\bbF_{q^k}$. Since $\beta_i's$ are linearly independent $\trac(\alpha)\equiv 0$ for all $\alpha\in\bbF_{q^k}$. But that means every element of $\bbF_{q^k}$ is a root of $\trac(x)$ but that is not possible since $\deg\trac(x)=q^{k-1}$. Therefore $\trac(x)$ is a zero polynomial which is not true. Hence contradiction. Therefore $\{\trac(\beta_i\cdot x)\mid i\in[k]\}$ are linearly independent.
+	Suppose they are linearly dependent. Let there exists $\gm_i\in\bbF_q$ for all $i\in[k]$ not all zero such that $\sum\limits_{i=1}^k\gm_i\trac(\beta_i\cdot x)\equiv 0$. Then we have $$\sum\limits_{i=1}^k\gm_i\trac(\beta_i\cdot x)=\sum_{i=1}^k\trac((\gm_i\beta_i)\cdot x)=\trac\lt(\lt(\sum_{i=1}^k\gm_i\beta_i\rt)x\rt)$$Therefore $\trac\lt(\lt(\sum\limits_{i=1}^k\gm_i\beta_i\rt)\alpha\rt)=0$ for all $\alpha\in\bbF_{q^k}$. Since $\beta_i's$ are linearly independent $\sum\limits_{i=1}^k\gm_i\beta_i\neq 0$. Let $\dl\coloneqq \sum\limits_{i=1}^k\gm_i\beta_i$. Then $\trac(\dl\cdot \alpha)= 0$ for all $\alpha\in\bbF_{q^k}$. But that means every element of $\bbF_{q^k}$ is a root of $\trac(x)$ but that is not possible since $\deg\trac(x)=q^{k-1}$. Hence contradiction. Therefore $\{\trac(\beta_i\cdot x)\mid i\in[k]\}$ are linearly independent.
 \end{proof}
 
 Therefore the set $\{\trac(\beta_i\cdot x)\mid i\in[k]\}$ spans the set of $\bbF_q$-linear maps over $\bbF_{q^k}$. Now let $L\in S$. Then there exists $\gm_i\in\bbF$ for all $i\in[k]$ such that $L=\sum\limits_{i=1}^k \gm_i\trac(\beta_i\cdot x)=\sum\limits_{i=1}^k \trac(\gm_i\beta_i\cdot x)=\trac\lt(\lt(\sum\limits_{i=1}^k \gm_i\beta_i\rt)x\rt)=L(\alpha_L\cdot x)$ where $\alpha_L=\sum\limits_{i=1}^k \gm_i\beta_i$.
@@ -153,6 +153,32 @@ Let $q$ be a prime power, $k>0$ be a natural number and let $S\subset \bbF_{q^k}
 
 \end{problem}
 \solve{
+The dimension of $S$ over $\bbF_q$ in $\bbF_{q^k}$ is $s$. Therefore there exists $\gm_1,\dots, \gm_s$ which forms a basis of $S$ over $\bbF_q$. Denote the followings:
+$$M(x)\coloneqq\mat{
+	\gm_1 & \gm_1^q & \gm_1^{q^2} & \cdots & \gm_1^{q^s}\\
+	\gm_2 & \gm_2^q & \gm_2^{q^2} & \cdots & \gm_2^{q^s}\\
+	\vdots& \vdots  & \vdots   	  & \ddots & \vdots 	\\
+	\gm_s & \gm_s^q & \gm_s^{q^2} & \cdots & \gm_s^{q^s}\\
+	x & x^q & x^{q^2} & \cdots & x^{q^s}}\qquad  \dl\coloneqq\det\matp{	\gm_1 & \gm_1^q & \gm_1^{q^2} & \cdots & \gm_1^{q^{s-1}}\\
+	\gm_2 & \gm_2^q & \gm_2^{q^2} & \cdots & \gm_2^{q^{s-1}}\\
+	\vdots& \vdots  & \vdots   	  & \ddots & \vdots 	\\
+	\gm_s & \gm_s^q & \gm_s^{q^2} & \cdots & \gm_s^{q^{s-1}} }$$
+Then consider the polynomial $f(x)=\det(M(x))$. Clearly we have $$f(x)=\dl x^{q^s}+f_1x^{q^{s-1}}+f_2x^{q^{s-2}}+\cdots +f_s x$$ for some $f_i\in\bbF_{q^k}$ for all $i\in[s]$.  Now if $\dl=0$ then  matrix $\mat{	\gm_1 & \gm_1^q & \gm_1^{q^2} & \cdots & \gm_1^{q^{s-1}}\\
+	\gm_2 & \gm_2^q & \gm_2^{q^2} & \cdots & \gm_2^{q^{s-1}}\\
+	\vdots& \vdots  & \vdots   	  & \ddots & \vdots 	\\
+	\gm_s & \gm_s^q & \gm_s^{q^2} & \cdots & \gm_s^{q^{s-1}}}$ is not full rank i.e. the rows of the matrix are not linearly independent. Hence $\gm_i$'s are not linearly independent which is not possible. Therefore $\dl\neq 0$. Hence the polynomial $f(x)$ has degree $x^{q^s}$. Now consider the modified polynomial $\tdf(x)=x^{q^s}+\sum\limits_{i=1}^s\tdf_ix^{q^i}$ where $\tdf_i=\frac{f_i}{\dl}$
+\begin{lemma}
+$\rank(M(\alpha))<n\iff \alpha\in S$
+\end{lemma}
+\begin{proof}
+	Let $\alpha\in S$. Then there exists $c_i\in\bbF_q$ such that $\alpha=\sum\limits_{i=1}^k c_i\beta_i$. Then $\alpha^{q^j}=\sum\limits_{i=1}^k c_j\beta_i^{q^j}$ for all $j\in\bbZ_{\geq 0}$. There for the rows of $M(\alpha)$ are not linearly independent. Hence $\rank(M(x))<n$.
+	
+	Now suppose $\rank(M(\alpha))<n$ for some $\alpha\in \bbF_{q^k}$. Then the rows of $M(\alpha)$ are not linearly independent. Hence there exists $c_i\in \bbF_q$ for all $i\in[k]$ such that $\sum\limits_{i=1}^kc_i\gm_i=\alpha$. Hence $\alpha\in S$.
+\end{proof}
+
+Hence with the lemma we get that $$\det(M(\alpha))=0\iff \rank(M(\alpha))<n\iff \alpha\in S$$Hence the roots of $\tdf$ are all the elements of $S$. 
+
+Now both $\tdf$ and $P_S$ are nonzero, monic, has degree $x^{q^s}$ and they have the same set of roots. Therefore $\tdf(x)=P_S(x)$. Therefore we can express $P_S(x)$ as $$P_S(x)=x^{q^s}+\tdf_1x^{q^[s-1]}+\tdf_2x^{q^{s-2}}+\cdots +\tdf_sx$$
 
 }
 \newpage
@@ -176,11 +202,29 @@ Let $\alpha_1,\alpha_2,\dots, \alpha_n$ distinct elements of some field $\bbF$. 
 \begin{enumerate}[label=(\alph*)]
 \item Suppose the rank of $V$ is less than $n$. Then the columns of $V$ are linearly dependent. Then there exists $\beta_j\in\bbF$ for all $j\in[n]$ not all zero such that for all $i\in[n]$ $\sum\limits_{j=1}^n \beta_j\cdot \alpha_i^{j-1}=0$. Then consider the polynomial $f\in\bbF[x]$ where $f(x)=\sum\limits_{i=1}^n\beta_i x^{i-1}$. Then we conclude that $f(\alpha_i)=0$ for all $i\in[n]$. Therefore roots of $f$ are $\alpha_1,\alpha_2,\dots, \alpha_n$. But $\deg f\leq n-1$. Hence $f$ cannot have more than $n-1$ roots. Hence contradiction. Therefore rank of $V$ is $n$.
 
-\item 
-
+\item We will prove this using induction on $n$. For base case $n=1$. $V(\alpha)$ contains only one element $1$. Hence this is true. Suppose this is true for $n-1$. Now 
+\begin{align*}
+	\det\matp{	
+	1&\alpha_1 & \alpha_1^2 & \alpha_1^{3} & \cdots & \alpha_1^{{n-1}}\\
+	1&\alpha_2 & \alpha_2^2 & \alpha_2^{3} & \cdots & \alpha_2^{{n-1}}\\
+	\vdots& \vdots  & \vdots   	  & \ddots & \vdots 	\\
+	1&\alpha_n & \alpha_n^2 & \alpha_n^{3} & \cdots & \alpha_n^{{n-1}}}& =\det\matp{	
+	1& 0& 0 & 0 & \cdots & 0\\
+	1&\alpha_2-\alpha_1 & \alpha_2^2-\alpha_1\alpha_2  & \alpha_2^{3}-\alpha_1\alpha_2^{2} & \cdots & \alpha_2^{{n-1}}-\alpha_1\alpha_2^{{n-2}}\\
+	\vdots& \vdots  & \vdots   	  & \ddots & \vdots 	\\
+	1&\alpha_n-\alpha_1 & \alpha_n^2-\alpha_1\alpha_n & \alpha_n^{3}-\alpha_1\alpha_n^{2} & \cdots & \alpha_n^{{n-1}}-\alpha_1\alpha_n^{{n-2}}}\\[2mm]
+	& = \prod_{i=2}^n(\alpha_i-\alpha_1)\det\matp{	
+		1 & \alpha_2 & \alpha_2^{2} & \cdots & \alpha_2^{{n-2}}\\
+		\vdots& \vdots  & \vdots   	  & \ddots & \vdots 	\\
+		1 & \alpha_n & \alpha_n^{2} & \cdots &\alpha_n^{{n-2}}}
+\end{align*}By inductive hypothesis we have $$\det(V(\alpha_2,\dots, \alpha_n))=
+\det\matp{	
+1 & \alpha_2 & \alpha_2^{2} & \cdots & \alpha_2^{{n-2}}\\
+\vdots& \vdots  & \vdots   	  & \ddots & \vdots 	\\
+1 & \alpha_n & \alpha_n^{2} & \cdots &\alpha_n^{{n-2}}}=\prod_{2\leq i<j\leq n}(\alpha_j-\alpha_i)$$Therefore $$\det(V(\alpha_1,\dots,\alpha_n))=\prod\limits_{1\leq i<j\leq n}(\alpha_j-\alpha_i)$$ Therefore by mathematical induction this is true for all $n\in\bbN$.
 \item Consider the vector $\hat{f}=\mat{f_0 & f_1 & \cdots & f_{n-1}}^T$ where $f_i$'s denote the coefficients of the polynomial $f(x)=\sum\limits_{i=0}^n f_ix^i$ for which $f(\alpha_i)=\beta_i$ and the vector $b=\mat{\beta_1 & \beta_2 & \cdots & \beta_n}^T$. Now such a polynomial $f$ exists if and only if the equation $V\hat{f}=b$ is satisfied. Since $V$ has full rank $V$ is invertible. Hence we get a $\hat{f}=V^{-1}b$. Therefore the equation has a unique solution. Hence there exists an unique polynomial $f$ such that $f(\alpha_i)=\beta_i$.
 \end{enumerate}
- }
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Problem 5
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -195,7 +239,30 @@ Let $\bbF$ be any field. $\alpha\in\bbF$ is said to be a zero (or root) of multi
 \end{problem}
 \solve{
 \begin{enumerate}[label=(\alph*)]
-\item 
+\item We will denote $f^{(i)}(x)=\del{^if}{x^i}(x)$ where $f^{(0)}(x)=f(x)$. \parinn
+
+$(\Leftarrow):$ We will prove this using induction on $k$> For base case $k=1$. Then $(x-\alpha)\mid f(x)$. Hence $\alpha$ is a root of $f$. Therefore $\alpha$ is a zero of $f$ with multiplicity at least $1$. Suppose this is true for $k-1$. Now we will show for $k$. Let $(x-\alpha)^k\mid f(x)$. Since $\alpha$ is a root of $f$ we have  $f(x)=(x-\alpha)g(x)$ for some $g(x)\in\bbF[x]$. Now $(x-\alpha)^{k-1}\mid g(x)$. Therefore by inductive hypothesis $\alpha$ is a zero of $g$ with multiplicity at least $k-1$ i.e. $g^{(i)}(\alpha)=0$ for all $i\in\{0,\dots, k-2\}$ and since $g$ is not a zero polynomial there exists $l>k-2$ such that $g^{(l)}(\alpha)\neq 0$. 
+\begin{lemma}
+	$f^{(i)}(x)=ig^{(i-1)}(x)+(x-\alpha)g^{(i)}(x)$
+\end{lemma}
+\begin{proof}
+	We will prove this using induction on $i$. For base case $i=1$. Then $f^{(1)}(x)=g(x)+(x-\alpha)g^{(1)}(x)$. So base case is true. Let this is true for $i-1$. Now \begin{multline*}
+		f^{(i-1)}=(i-1)g^{(i-2)}(x)+(x-\alpha)g^{(i-1)}(x)\implies\\
+		f^{(i)}(x)=(i-1)g^{(i-1)}(x)+g^{(i-1)}(x)+(x-\alpha)g^{(i)}=ig^{(i-1)}(x)+(x-\alpha)g^{(i)}(x)
+	\end{multline*}
+	Hence by mathematical induction this is true.
+\end{proof}
+
+Therefore $f^{(i)}(\alpha)=ig^{(i-1)}(\alpha)=0$ for all $i\in[k-1]$ and $f^{(l+1)}(\alpha)=(l+1)g^{(l)}(\alpha)\neq 0$ where $l>k-2$. Therefore $f^{(i)}(\alpha)=0$ for all $i\in\{0,\dots, k-1\}$ and $f^{(l+1)}(\alpha)\neq 0$ where $l+1>k-1$. Therefore $\alpha$ is a zero of $f$ with multiplicity at least $k$.
+
+
+$(\Rightarrow):$ We will do induction on $k$. For base case $k=1$. Then $f(\alpha)=0$ and $\del{f}{x}(\alpha)\neq 0$. Therefore $(x-\alpha)\mid f$. Hence the base case follows. Now suppose this is true for $k-1$. 
+
+We will prove for $k$. Now $f^{(i)}(\alpha)=0$ for all $i\in\{0,\dots, k-1\}$ and there exists $l>k-1$ such that $f^{(l)}(\alpha)\neq 0$. Therefore $f(x)=(x-\alpha)g(x)$ for some $g\in\bbF[x]$. Then $f^{(i)}(x)=ig^{(i-1)}(x)+(x-\alpha)g^{(i)}(x)$.
+Now consider the polynomial $g(x)$. We have $g^{(i)}(\alpha)=0$ for all $i\in\{0,\dots,k-2\}$ and $g^{(l-1)}(\alpha)\neq 0$. Hence $\alpha$ is a zero of $g$ with multiplicity at least $k-1$. Therefore by inductive hypothesis we have $(x-\alpha)^{k-1}\mid g(x)$.  Hence $(x-\alpha)^k\mid f(x)$. Therefore by mathematical induction this is true.
+\item Since $f$ is over $\bbC$, $f$ completely splits over $\bbC$. Now for any $\alpha\in\bbC$ we have by the above part that $(x-\alpha)^{\mult(f,\alpha)}\mid f(x)$. \parinn
+
+We will prove this by induction on $n$. For base case $n=1$ then for $\alpha_1$ we have $$(x-\alpha_1)^{\mult(f,\alpha_1)}\mid f(x)\implies (x-\alpha_1)^{\mult(f,\alpha_1)}g_1(x)=f(x)\implies \mult(f,\alpha_1)\leq \text{Degree}(f)$$So base case follows. Suppose this is true for $n-1$. We will prove for $n$ now. Now if $\mult(f,\alpha_i)=0$ for any $i\in[n]$ then $$\sum_{j=1}^n\mult(f,\alpha_j)=\sum_{j=1,j\neq i}^n\mult(f,\alpha_i)$$Therefore by inductive hypothesis this is true. So assume $\mult(f,\alpha_i)>0$ for all $i\in[n]$. Then $f(x)=(x-\alpha_1)^{\mult(f,\alpha_1)}g(x)$ for some $g\in\bbC[x]$. Hence $\deg (f)=\mult(f,\alpha_1)+\deg (g)$. Now $(x-\alpha_i)$'s are relatively coprime with each other. Therefore $(x-\alpha_i)^{\mult(f,\alpha_i)}$'s are also relatively coprime with each other. Hence $(x-\alpha_i)^{\mult(f,\alpha_i)}\mid g(x)$ for all $i\in\{2,\dots, n\}$. Now by inductive hypothesis we have $\sum\limits_{i=2}^n\mult(f,\alpha_i)\leq \text{Degree}(g)$. Therefore we have $\sum\limits_{i=1}^n\mult(f,\alpha_i)\leq \text{Degree}(f)$. Hence this is true for all $n$.
 \end{enumerate}
 }
 \end{document}
