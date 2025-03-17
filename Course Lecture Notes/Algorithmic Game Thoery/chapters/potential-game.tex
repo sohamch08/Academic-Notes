@@ -1,0 +1,150 @@
+\chapter{Potential Games}
+\section{Best Response Dynamics}
+The existence of a Nash equilibrium is clearly a desirable property of a strategic game. In this chapter and the next we discuss some natural classes of games that do have a Nash equilibrium. The \textit{Best-Response-Dynamics} is a straightforward procedure by which players search for a pure
+Nash equilibrium ($\pne$) of a game. 
+
+\begin{algorithm}\DontPrintSemicolon
+\Begin{
+\For{$t=1,\dots, T$}{
+	\If{$t=1$}{Each player plays an arbitrary pure strategy}
+	\Else{Pick a player $i\in[n]$\;
+	$s_i^t\longleftarrow \arg\min\limits_{s_i\in S_i}c_i(s_i,s_{-i}^{t-1})$\;
+$s_j^t\longleftarrow s_j^{t-1}\ \forall\ j\in[n]$, $j\neq i$}
+}
+}
+	
+\caption{\textsc{Best-Response-Dynamics} (\textsf{BRD})}
+\end{algorithm}
+
+
+\nt{Best-response dynamics can only halt at a $\pne$ and it cycles in any game without one. It can also cycle in games that have a $\pne$. For example consider the following 2 player.}
+
+\section{Network (Atomic) Congestion Games}
+\begin{definition}{Network (Atomic) Congestion Games}{}
+	A network (atomic) congestion game or in short NCG consists of the following:
+	\begin{itemize}[itemsep=-1mm]
+		\item A directed graph $G=(V,E)$.
+		\item $N$ players where  each player $i\in[n]$ has some source-sink pair $(s_i,t_i)\in V\times V$ associated with it.
+		\item Edge cost functions $c_e:[n]\to \bbR$ for each edge $e\in E$.
+		\item Player $i\in[N]$ has strategy set $S_i=$ Set of all $s_i\rightsquigarrow t_i$ paths in $G$. $S=\bigtimes\limits_{i=1}^N S_i$.
+		\item For a strategy profile $f\in S$ (often called \textit{flow}), let $n_e(f)=|\{i\colon e\in f_i\}|$. Then the cost to player $i$ of strategy profile $f$ is $C_i(f)=\sum\limits_{e\in S_i}c_e(n_e(f))$. 
+	\end{itemize}
+\end{definition}
+
+So we can define (atomic) NCG by the tuple $$\Big(G=(V,E),N,\{(s_i,t_i)\mid i\in[N]\}, \{c_e:[N]\to \bbR_{\geq 0}\mid e\in E\}\Big)$$
+
+Note that unlike the last few lectures where we’ve been talking about utility-maximization games,
+this is a \hyperref[def:cost-min-game]{cost-minimization game}. But of course we could just let a player’s utility be the negative
+of its cost and everything would work as you expect.
+\begin{lemma}{}{ncg-pne}
+	Every NCG has a $\pne$.
+\end{lemma}
+\begin{proof}
+	Given a strategy profile $f\in S$, we will define a potential function $\Phi:S\to\bbR_{\geq 0}$ with the property that if $f$ is not an equilibrium then $\exs\ f'\in S$ such that $\Phi(f)>\Phi(f')$. Thus if $f^*\in S$ minimizes $\Phi$ then $f^*$ must be a $\pne$.
+	
+	Consider the potential function $\Phi:S\to\bbR_{\geq 0}$: $$\Phi(s)=\sum_{e\in E}\sum_{i=1}^{n_e(f)}c_e(i)$$Now it is enough to calculate the change in potential when a player deviates to any other strategy since for $f,f'\in S$ $$\Phi(f)-\Phi(f')=\sum_{i=0}^{N-1} \Phi(f^{(i)})-\Phi(f^{(i+1)})$$ where $f^{(i)}=(f_1',f_2',\dots, f_i',f_{i+1},\dots, f_N)$ and for $f^{(0)}=f$. Now for any strategy profile $f\in S$ if the player $i$ deviates to the strategy $f_i'\in S_i$ then \begin{align*}
+		C_i(f)-C_i(f'_i,f_{-i}) & = \lt[  \sum_{e\in f_i\cap f_i'}c_e(n_e(f))+\sum_{e\in f_i\setminus f_i'}c_e(n_e(f))\rt]-\lt[  \sum_{e\in f_i\cap f_i'}c_e(n_e(f_i',f_{-i}))+\sum_{e\in f_i'\setminus f_i}c_e(n_e(f_i',f_{-i}))\rt]\\
+		&=  \sum_{e\in f_i\cap f_i'}\underbrace{c_e(n_e(f))-c_e(n_e(f_i',f_{-i}))}_{=0} + \sum_{e\in f_i\setminus f_i'}c_e(n_e(f))-\sum_{e\in f_i'\setminus f_i}c_e(n_e(f_i',f_{-i}))\\
+		& = \sum_{e\in f_i\setminus f_i'}c_e(n_e(f))-\sum_{e\in f_i'\setminus f_i}c_e(n_e(f)+1)\\
+	\end{align*}Therefore the change in the potential is \begin{align*}
+	\Phi(f)-\Phi(f_i',f_{-i}) & = \sum_{e\in E}\sum_{i=1}^{n_e(f)} c_e(i)-\sum_{e\in E}\sum_{i=1}^{n_e(f_i',f_{-i})} c_e(i)\\
+	& =\sum_{e\in E}\lt[\sum_{i=1}^{n_e(f)} c_e(i)-\sum_{i=1}^{n_e(f_i',f_{-i})} c_e(i)\rt]\\
+	&=\sum_{e\in f_i\setminus f_i'}c_e(n_e(f))-\sum_{e\in f_i'\setminus f_i}c_e(n_e(f)+1)\\
+	& = C_i(f)-C_i(f'_i,f_{-i})
+\end{align*}So the change in potential is exactly equal to the change in the cost of the player who deviates. Therefore if $f$ is not a $\pne$ then $\exs\ i\in[N]$ such that $\exs\ f_i'\in S_i$ such that $c_i(f)-c_i(f_i',f_{-i})>0$ and therefore $\Phi(f)-\Phi(f_i',f_{-i})>0$. Hence every NCG has a $\pne$.
+\end{proof}
+
+\section{Potential Games}
+\begin{definition}{Potential Game}{}
+	A game $\Gm$ is a potential game if there exists a potential function $\Phi:S\to\bbR_{\geq 0}$ where $S$ is the set of strategy profiles such that $\forall\ s\in S$ and $s_i'\in S_i$ $C_i(s)-C_i(s_i',s_{-i})=\Phi(s)-\Phi(s_i',s_{-i})$
+\end{definition}
+ 
+ In the proof of \thmref{ncg-pne} we showed that every NCG is a potential game. Now we will show that every potential game has a $\pne$.
+ \begin{Theorem}{}{}
+ 	Every potential game has a Pure Nash Equilibrium
+ \end{Theorem}
+\begin{proof}
+	For a potential game $\Gm$ let $\Phi$ is the potential function for $\Gm$. Then $C_i(s)-C_i(s_i',s_{-i})=\Phi(s)-\Phi(s_i',s_{-i})$. Now consider the strategy profile $s=\arg\min\limits_{s\in S}\Phi(s)$. If any player had incentive to deviate there would be a strategy profile with smaller potential which is not possible by the definition of $s$. Therefore $s$ also has the minimum cost. Therefore $s$ is $\pne$. 
+\end{proof}
+
+\begin{lemma}{}{}
+	Best Response Dynamics cannot cycle in a potential game.
+\end{lemma}
+\begin{proof}
+	In each iteration of the $\brd$ every time any player deviates to play a best response the potential must decrease. Hence $\brd$ cannot cycle.
+\end{proof}
+
+Suppose there exists a time $T$ such that every player was chosen in the $\brd$ to choose their best response in the Best response algorithm. Then:
+\begin{lemma}{}{}
+	Let $s^*\in S$ be the strategy profile at time $t$. If $s^*$ is the strategy profile after $T$ further steps of $\brd$ then $s^*$ is a $\pne$.
+\end{lemma}
+\begin{proof}
+	Since in every $T$ steps every player has the option to deviate to another strategy but chose not to. Therefore for each player $i\in[N]$, for all $s_i'\in S_i$, $C_i(s)\leq C_i(s_i',s_{-i})$. Therefore clearly $s^*$ is a $\pne$. 
+\end{proof}
+\begin{lemma}{}{}
+	Let $s^\in S$ be the strategy profile after $T|S|$ steps of $\brd$. Then $s^*$ is a $\pne$.
+\end{lemma}
+\begin{proof}
+	Since $\brd$ cannot cycle, $\exs\ s\in S$ that must have persisted fro $T$ time steps. Therefore by the previous lemma this must be a $\pne$.
+\end{proof}
+
+\begin{Theorem}{}{}
+	In a finite potential game from an arbitrary initial outcome the Best Response Dynamics converges to a $\pne$ if $\exs\ T\in\bbN$ such that in every $T$ steps of $\brd$ every player is chosen at least once.
+\end{Theorem}
+
+Since every (Atomic) NCG is a potential game we have the following corollary:
+\begin{corolary}{}{}
+	In an (Atomic) NCG, $\brd$ converges to a $\pne$ if $\exs\ T\in\bbN$ such that in every $T$ steps of $\brd$ every player is chosen at least once. or ``every player is chosen infinitely often".
+\end{corolary}
+
+
+\subsection{General Congestion Games}
+General Congestion Games are generalized version of (atomic) NCG. We will show that they are also potential game.
+\begin{definition}{General Congestion Games}{}
+	A basic definition general Congestion Games or CG consists of the following: $$\Big(E,N, \{S_i\mid i\in[N]\}, \{c_e:[N]\to \bbR_{\geq 0}\mid e\in E\}\Big)$$
+	\begin{itemize}[itemsep=-1mm]
+		\item A base set $E$ of congestible elements.
+		\item $N$ players.
+		\item For each player $i\in[N]$ a finite set of strategies $S_i$ where $S_i\subseteq 2^E$. $S=\bigtimes\limits_{i=1}^N S_i$.
+		\item Cost functions $c_e:[N]\to \bbR$ for each element $e\in E$.
+		\item For a strategy profile $s\in S$ (often called \textit{flow}), let $n_e(s)=|\{i\colon e\in s_i\}|$. Then the cost to player $i$ of strategy profile $s$ is $C_i(s)=\sum\limits_{e\in S_i}c_e(n_e(s))$. 
+	\end{itemize}
+\end{definition}
+
+ Consider the  function $\Phi:S\to \bbR_{\geq 0}$ where for any strategy profile $s\in S$, $$\Phi(s)=\sum\limits_{e\in E}\sum\limits_{i=1}^{n_e(s)}c_e(i)$$ that is the same function as the potential function in the case of NCG. This is also a potential function for general CG's which makes general CG's are also potential game.
+\subsection{Max Cut Game}
+
+\begin{definition}{Max Cut Game}{}
+	A max cut game consists of the following:
+	\begin{enumerate}[itemsep=-1mm]
+		\item An undirected weighted graph, $G=(V,E)$ and $w:E\to\bbR$.
+		\item $N$ players.
+		\item For each player $i\in[N]$, has 2 strategies: $S_i=\{L,R\}$. $S=\bigtimes\limits_{i=1}^N S_i$.	
+		\item Utility functions $u_i:S\to \bbR_{\geq 0}$ for each player $i\in[N]$. For any strategy profile $s\in S$,  $u_i(s)=\sum\limits_{\substack{e=\{i,j\}\\ s_i\neq s_j}}w_e$
+	\end{enumerate}
+\end{definition}
+
+The max cut game is also a potential game. Consider the potential function $\Phi:S\to\bbR_{\geq 0}$ where for any strategy profile $s\in S$, $$\Phi(s)=\sum_{\substack{e=\{i,j\}\\ s)i\neq s_j}}w_e$$With this function we can prove that the Max Cut game is indeed a potential game and henceforth there exists a $\pne$.
+\section{Class: \textsf{PLS}}
+\begin{definition}{$\pls$ (Polynomial Local Search)}{}
+	A local search problem $L$ has a set of problem instances $D_L\subseteq \Sg^*$ where any $I\in D_L$ is a particular problem instance. For each instance $I\in D_L$ there exists a finite solution set $F_L(I)\subseteq \Sg^*$. Let $R_L$ be the relation that models $L$ i.e. $$R_L\coloneqq \{(I,s)\mid I\in D_L,s\in F_L(I)\}$$ Then $R_L$ is in $\pls$ if:\begin{enumerate}[label=(\roman*)]
+		\item The size of every solution $s\in F_L(I)$ for any $I\in D_L$ is polynomially bounded in the size of $I$.
+		\item The problem instances $I\in D_L$ and the solutions $s\in F_L(I)$ are polynomial time verifiable.
+		\item There is a polynomial time computable function $C_L:X\to \bbR_{\geq 0}$ that returns for each $I\in D_L$ and each $s\in F_L(I)$ the cost where  $X\coloneqq \bigcup\limits_{I\in D_L}\{I\}\times F_L(I)$.
+		\item There is a polynomial time computable function $N:(I,s)\mapsto S$ where $S\subseteq F_L(I)$ i.e. returns the set of neighbors for each $I\in D_L$ and each $s\in F_L(I)$.
+	\end{enumerate}
+\end{definition}
+
+Note that for each $I\in D_L$ and each $s\in F_L(I)$ using (iii) and (iv) we can find a neighboring solutions of lower cost of $s$ or determine $s$ is locally minimal. The problem we want to focus is to find a locally minimal cost solution given an instance $I$ of $L$.
+
+\begin{definition}{$\pls$-Reductions}{}
+	fgsd
+\end{definition}
+%https://panageas.github.io/agt22slides/Lecture9.pdf
+\begin{Theorem}{}{}
+	The Max Cut Game is $\pls$-complete
+\end{Theorem}
+
+\begin{Theorem}{}{}
+	General Congestion Games are $\pls$-complete
+\end{Theorem}

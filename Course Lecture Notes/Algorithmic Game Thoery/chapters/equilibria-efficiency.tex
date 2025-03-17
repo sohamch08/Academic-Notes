@@ -1,0 +1,41 @@
+\chapter{Efficiency of Equilibria}
+Here we are going to leave aside for now the question of how a game arrived at an equilibrium and instead we will study `\textit{quality of equilibria}'. We want to study how close to optimal the equilibria of a game are. But for that we have to define this `closeness' and `optimal'  by introducing cost to every strategy and we basically want to find a equilibria which very close to the minimum cost strategy profile.
+\section{Cost Minimization Games}
+\begin{definition}{Cost Minimization Games}{cost-min-game}
+	It is a game with $n$ players $[n]$, with their strategy sets $S_1,\dots, S_n$  where $S=\bigtimes\limits_{i=1}^n S_i$ and a cost function $C_i:S\to \bbR$ for each $i\in[n]$. 
+\end{definition}
+ 
+There is an objective function $f:S\to \bbR$ with which the different strategy profiles are compared. There are many common choices for $f$. Conventionally the concepts $\pne$, $\mne$, $\ce$, $\cce$ are defined for utility-maximization games with all of its inequalities reversed. But the two definitions are completely equivalent.\begin{itemize}
+	\item \textbf{Pure Nash Equilibria}: A strategy profile $s\in S$ of a cost-minimization game $\Gm$ is a \textit{Pure Nash Equilibrium} if for every player $i\in[n]$ and for all $s'_i\in S_i$, $C_i(s)\leq C_i(s_i',s_{-i})$.
+	\item \textbf{Mixed Nash Equilibria}: A mixed strategy profile $\sg\in \Sg$ of a cost-minimization game $\Gm$ is a \textit{Mixed Nash Equilibria} if for every player $i\in[n]$ and for all $s_i'\in S_i$, $\underset{s\sim \sg}{\bbE}[C_i(s)]\leq \underset{s\sim \sg}{\bbE}[C_i(s_i',s_{-i})]$
+	\item \textbf{Correlated Equilibria}: A distribution $\mu$ over $S$ of a cost-minimization game $\Gm$ is a \textit{Correlated Equilibria} if for every player $i\in[n]$ and for all $s_i'\in S_i$, $\underset{s\sim \mu}{\bbE}[C_i(s)\mid s_i]\leq \underset{s\sim \mu}{\bbE}[C_i(s_i',s_{-i})\mid s_i]$
+	\item \textbf{Coarse Correlated Equilibria}: A distribution $\mu$ over $S$ of a cost-minimization game $\Gm$ is a \textit{Coarse Correlated Equilibria} if for every player $i\in[n]$ and for all $s_i'\in S_i$, $\underset{s\sim \mu}{\bbE}[C_i(s)]\leq \underset{s\sim \mu}{\bbE}[C_i(s_i',s_{-i})]$
+\end{itemize}
+
+\section{Pareto Optimality}
+\begin{definition}{Pareto Optimal Strategy}{}
+Given a game $\Gm$, a strategy profile $s\in S$	is pareto optimal also denoted by \textsf{PO} if $\not\exists\ s'\in S$ such that $$\forall\ i\in[n],\ c_i(s')\leq c_i(s)\qquad\exs\ i\in[n]\ c_i(s')<c_i(s)$$or equivalently for all $s'\in S$, either $\forall\ i\in[n]$, $c_i(s)=c_i(s')$ or $\exs\ i\in[n]$, $c_i(s')>c_i(s)$.
+\end{definition}
+
+Economists call Pareto Optimality ``efficiency". \textsf{PO} induces a partial order over the set of all strategy profiles. Let $s,s'\in S$. We say that $s>_ps'$ if $\forall\ i\in[n],\ c_i(s')\leq c_i(s)$ and $\exs\ i\in[n]\ c_i(s')<c_i(s)$.
+
+To introduce a total order we can think of  social welfare function for example:
+\begin{enumerate}[label=(\arabic*)]
+	\item Utilitarian Social Welfare: For any $s\in S$, $C(s)=\sum\limits_{i=1}^n c_i(s)$
+	\item Nash Social Welfare: For any $s\in S$, $C(s)=\sum\limits_{i=1}^n c_i(s)$
+	\item Egalitarian Social Welfare: For any $s\in S$, $C(s)=\max\limits_{i=1}^n c_i(s)$
+\end{enumerate}This allows us to quantitatively see how good or bad a equilibrium is by comparing two strategy profiles. Typically by ``social welfare" we mean utilitarian social welfare. We will focus on calculating utilitarian social welfare from now on.
+\section{Price of Anarchy}
+
+For a game $\Gm$ we also want to know how bad is the social welfare at equilibrium compared to the best possible social welfare. This ratio is know as Price of Anarchy.
+\begin{definition}{Price of Anarchy}{}
+	We denote it by $\poa$. For a game $\Gm$:\begin{align*}
+		\poa(\Gm)& =\frac{\text{Social welfare of ``worst equilibrium"}}{\text{Optimal social welfare}}\\
+		&= \frac{\max\lt\{\sum\limits_{i=1}^n c_i(s)\colon s\in S\text{ is an $\mne$}\rt\}}{\min\lt\{\sum\limits_{i=1}^n c_i(s)\colon s\in S\rt\}}
+	\end{align*}
+\end{definition}
+\subsection{\textbf{\textsf{PoA}} of Network (Atomic) Congestion Games}
+\begin{Theorem}{}{poa-ncg}
+	The $\poa$ in network congestion games with affine cost functions is $\frac{5}2$.
+\end{Theorem}
+
