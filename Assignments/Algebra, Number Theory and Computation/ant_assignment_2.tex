@@ -1,0 +1,206 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage{amsmath,mathtools,mathdots,graphicx,adjustbox,xcolor}
+\usepackage{amssymb,amsthm}  % assumes amsmath package installed
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=doc!80,
+	citecolor=myr,
+	filecolor=myr,      
+	urlcolor=doc!80,
+	pdftitle={Assignment}, %%%%%%%%%%%%%%%%   WRITE ASSIGNMENT PDF NAME  %%%%%%%%%%%%%%%%%%%%
+}
+\usepackage[most,many,breakable]{tcolorbox}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{kpfonts}
+\usepackage{libertine}
+\usepackage{physics}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+\usepackage{float,marvosym}
+
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+
+\input{../assignment-problem-box}
+\DeclareMathOperator{\nae}{NAE}
+\newtheorem{lemma}{Lemma}
+\renewenvironment{proof}{\noindent{\it \textbf{Proof:}}\hspace*{1em}}{\qed\bigskip\\}
+% To give references for any problem use like this
+% suppose the problem number is p3 then 2 options either 
+% \hyperref[p:p3]{<text you want to use to hyperlink> \ref{p:p3}}
+%                  or directly 
+%                   \ref{p:p3}
+
+\DeclareMathOperator{\trac}{\textsf{Trace}}
+\DeclareMathOperator{\range}{Range}
+\DeclareMathOperator{\mult}{Mult}
+
+
+\input{../../letterfonts}
+
+\input{../../macros}
+
+\setlength{\parindent}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\textsf{\noindent \large\textbf{Soham Chatterjee} \hfill \textbf{Assignment - 2}\\
+		Email: \href{soham.chatterjee@tifr.res.in}{soham.chatterjee@tifr.res.in} \hfill Dept: STCS, TIFR\\
+		\normalsize Course: Algebra, Number Theory and Computation \hfill Date: \today}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		\hfill 15 Points
+	}{p1% problem reference text
+}
+Assume that $\mathbb{F}$ is any large enough field. 
+
+Earlier in the course, we saw that for every $d \in \mathbb{N}$ and for every set of points $\left\{\left(\alpha_i, \gamma_i\right): i \in\right.$ $\{1,2, \ldots, d+1\}\} \subseteq \mathbb{F}^2$ with $\alpha_i \neq \alpha_j$ for all $i \neq j$, there is a unique univariate polynomial $P$ of degree at most $d$ such that for all $i \in\{1,2, \ldots, d+1\}, P\left(\alpha_i\right)=\gamma_i$.
+
+In this question, you will show that this property does not extend to polynomials in a larger number of variables. Show that for every $d \geq 2$, there exists a set of points $\left\{\left(\alpha_i, \beta_i, \gamma_i\right)\right.$ : $\left.i \in\left\{1,2, \ldots,\binom{d+2}{2}\right\}\right\} \subseteq \mathbb{F}^3$ with $\left(\alpha_i, \beta_i\right) \neq\left(\alpha_j, \beta_j\right)$ for all $i \neq j$, such that for every bivariate polynomial $P(x, y) \in \mathbb{F}[x, y]$ of total degree at most $d$,
+$$
+\exists i \in\left\{1,2, \ldots,\binom{d+2}{2}\right\}, \quad P\left(\alpha_i, \beta_i\right) \neq \gamma_i .
+$$
+\end{problem}
+\solve{	
+We will show that even for $d+2$ points $\{(\alpha_i,\beta_i,\gm_i)\}_{i\in[d+2]}$ such that for every bivariate polynomial $P(x,y)\in \bbF[x,y]$ of total degree at most $d$ such that $\exs\ i\in[d+2]$, $P(\alpha_i,\beta_i)\neq\gm_i$. Consider any univariate polynomial $f(x)\in \bbF[x]$ with degree $d$. Let $\alpha_i\in\bbF$, $i\in[d+2]$ where $\alpha_i\neq \alpha_j$ for $i\neq j$ and $i,j\in [d+2]$. So consider the points $$\{(\alpha_i,\beta,f(\alpha_i))\}_{i\in[d+1]}\cup \{(\alpha_{d+2},\beta, f(\alpha_{d+2})+1)\}$$ for some $\beta\in \bbF$. Suppose there exists a bivariate polynomial $P(x,y)\in \bbF[x,y]$ with total degree at most $d$ which passes through all these points. Then $P(\alpha_i,\beta)=f(\alpha_i)$ for all $i\in[d+1]$ and $P(\alpha_{d+2},\beta)=f(\alpha_{d+2})+1$. Therefore consider the univariate polynomial $g(x)=P(x,\beta)$. Since total degree of $P$ is at most $d$ therefore $\deg(g)\leq d$. Therefore $g(\alpha_i)=f(\alpha_i)$ for all $i\in[d+1]$ and $g(\alpha_{d+2})=f(\alpha_{d+2})+1$. Now there exist an unique polynomial of degree at most $d$ which passes through the points $(\alpha_i,f(\alpha_i))$ for all $i\in [d+1]$. Since $g$ and $f$ both passes through them we have $g=f$. But $f$ doesn't passes through $(\alpha_{d+2},f(\alpha_{d+2})+1)$ and $g$ does. Which is not possible. Hence contradiction. No bivariate polynomial of total degree at most $d$ passes through these $d+2$ points. 
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newpage
+
+\begin{problem}{%problem statement
+	\hfill 25 Points
+	}{p2% problem reference text
+	}
+A set $\left\{f_1(x), f_2(x), \ldots, f_k(x)\right\}$ of polynomials over a set $\mathbb{F}$ are said to be linearly independent over $\mathbb{F}$ there are no $\alpha_1, \alpha_2, \ldots, \alpha_n \in \mathbb{F}$ that are not all zeros such that $\sum_i \alpha_i f_i$ is the identically zero polynomial. In this problem, we will explore some equivalent ways of characterizing linear independence of univariate polynomials.\begin{enumerate}[label=(\alph*)]
+	\item \textbf{(5 points)} Let $d$ be an upper bound on the degree of $f_i \mathrm{~s}$ and let $M$ be an $k \times(d+1)$ matrix over $\mathbb{F}$ where $M(i, j)$ equals the coefficient of $x^j$ in the polynomial $f_i$. In other words, row $i$ of $\mathbb{F}$ is just the coefficient vector of $f_i$. Show that $\left\{f_1(x), f_2(x), \cdots, f_k(x)\right\}$ are linearly independent over $\mathbb{F}$ if and only if the matrix $M$ has rank $k$.
+\item \textbf{(15 points)} Let $\mathbb{F}$ be a field of characteristic zero or larger than $d$, and let $W$ be a $k \times k$ matrix with its $i^{\text {th }}$ column being equal to $\left(f_i, \frac{d f_i}{d x}, \ldots, \frac{d^{k-1} f_i}{d x^{k-1}}\right)$. Show that $\left\{f_1(x), f_2(x), \ldots, f_k(x)\right\}$ are linearly independent over $\mathbb{F}$ if and only if the determinant of $W$ is a non-zero polynomial.
+\item \textbf{(5 points)} Can we relax the requirement on the field in the above problem ? For instance, does linear independence of $\left\{f_1(x), f_2(x), \ldots, f_k(x)\right\}$ continue to be characterized by the singularity of $W$ for finite fields of characteristic $p$ with $0<p<d$?
+\end{enumerate}
+\end{problem}
+\solve{	
+\begin{enumerate}[label=(\alph*)]
+\item Since the matrix $M$ has $k$ many rows the rank of matrix can be at most $k$. So we will show that $f_1(x)$, $f_2(x)$, $\cdots$, $f_k(x)$ are not linearly independent i.e. linearly dependent if and only if rank of $M$ is $<k$. Let $f_{i,j}$ denote the coefficient of $x^j$ of $f_i$. Let $M_i$ denote the $i^{th}$ column of $M$.
+\begin{center}
+\begin{tabular}{r@{\hskip 1.5pt}c@{\hskip 1.5pt}l}
+	$f_1(x)$, $f_2(x)$, $\cdots$, $f_k(x)$ linearly dependent & $\iff$ & $\exs\ \alpha_i\in\bbF$ for $i\in[n]$ not all zero such that  $ \sum\limits_{i=1}^n\alpha_if_i(x)=0$ \\
+	                                                          & $\iff$ & $\sum\limits_{i=1}^n \alpha_i f_{i,j}=0$ for all $j\in [d]$.                                         \\
+	                                                          & $\iff$ & $\sum\limits_{i=1}^n \alpha_i M_i=0$                                                                 \\
+	                                                          & $\iff$ & Columns of $M$ are linearly dependent.                                                               \\
+	                                                          & $\iff$ & $\rank(M)<k$.
+\end{tabular}
+\end{center}
+\item We will show $f_1(x),f_2(x),\dots, f_k(x)$ are linear dependent if and only if determinant of $W$ is zero. Let $\frac{d^0f_i}{d x^0}$ denotes $f_i(x)$  for all $i\in[n]$.  
+\begin{center}
+\begin{tabular}{r@{\hskip 1.5pt}c@{\hskip 1.5pt}l}
+	$f_1(x)$, $f_2(x)$, $\cdots$, $f_k(x)$ linearly dependent & $\iff$ & $\exs\ \alpha_i\in\bbF$ for $i\in[n]$ not all zero such that  $ \sum\limits_{i=1}^n\alpha_if_i(x)=0$ \\
+	                                                          & $\iff$ & $\frac{d^j}{dx^j}\lt[\sum\limits_{i=1}^n \alpha_i f_{i}(x)\rt]\equiv0$ for all $j\in \{0,\dots, k-1\}$.                                         \\
+	                                                          & $\iff$ & $\sum\limits_{i=1}^n \alpha_i\frac{d^jf_i}{dx^j}\equiv0$ for all $j\in \{0,\dots, k-1\}$.                                                                  \\
+	                                                          & $\iff$ & $\sum\limits_{i=1}^n \alpha_iW_i\equiv0$\\
+	                                                          & $\iff$ & Columns of $M$ are linearly dependent.                                                               \\
+	                                                          & $\iff$ & $\det(W)\equiv0$.
+\end{tabular}
+\end{center}
+\item Suppose $p=k=2$. $f_1(x)=x^4$ and $f_2(x)=x^6$. Then $$W=\mat{x^4 & x^6\\ 0 & 0}\implies \det(W)=0$$ Here $x^4$ and $x^6$ are linearly independent but the determinant of the matrix is $0$. Therefore we cannot relax the requirement on the field characteristic being less than the degree of the polynomials. But if we make the characteristic bigger than the degree bound then all the steps of the proof in the above follows concluding that the polynomials are linearly independent if and only if the determinant of the matrix is non-zero polynomial.
+\end{enumerate}
+}
+%\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+		\hfill 15 Points
+	}{p3% problem reference text
+	}
+For $i \in\{1,2, \ldots, k\}$, let $\mathbf{x}_i=\left(x_{i, 1}, x_{i, 2}, \ldots, x_{i, n}\right)$ be disjoint $n$-tuples of variables. For $n$ variate polynomials $f_1(\mathbf{y}), \ldots, f_k(\mathbf{y}) \in \mathbb{C}\left[y_1, y_2, \ldots, y_n\right]$, let $M$ be the $k \times k$ matrix such that $M_{i, j}=f_i\left(\mathbf{x}_j\right)$.
+Show that $f_1(\mathbf{y}), f_2(\mathbf{y}), \ldots, f_k(\mathbf{y})$ are linearly independent over $\mathbb{C}$ if and only if the determinant of $M$ is non-zero.
+\end{problem}
+\solve{
+We will show that $f_1(\mathbf{y}), f_2(\mathbf{y}), \ldots, f_k(\mathbf{y})$ are linearly dependent over $\bbC$ if and only if determinant of $M$ is zero. Let $M_i$ denote the $i^{th}$ row of $M$.
+
+\begin{center}
+	\begin{tabular}{rcl}
+		$f_1(\mathbf{y}), f_2(\mathbf{y}), \ldots, f_k(\mathbf{y})$ linearly dependent & $\iff$ & $\exs\ \alpha_i\in \bbC$ for all $i\in[n]$ not all zero such that $\sum\limits_{i\in [n]} \alpha_if_i(\mathbf{y})\equiv 0$\\
+		&$\iff $& $\forall\ j\in[n]$, $\sum\limits_{i\in [n]} \alpha_if_i(\mathbf{x}_j)\equiv 0$\\
+		& $\iff$ &  $\sum\limits_{i\in [n]} \alpha_iM_i \equiv 0$\\
+		& $\iff$ & Rows of $M$ are not linearly independent\\
+		&$\iff$ & $\det(M)=0$
+	\end{tabular}
+
+\end{center}
+Hence we get that $f_1(\mathbf{y}), f_2(\mathbf{y}), \ldots, f_k(\mathbf{y})$ are linearly independent over $\mathbb{C}$ if and only if the determinant of $M$ is non-zero.
+}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Problem 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}{%problem statement
+\hfill 15 Points
+	}{p4% problem reference text
+	}
+Design an efficient deterministic algorithm that takes as input the description of a finite field $\mathbb{F}$ and a univariate polynomial $f \in \mathbb{F}[x]$ and decides if $f$ is an irreducible polynomial.
+\end{problem}
+\solve{
+We have the following lemma:
+\begin{lemma}
+	Let  $f\in \bbF[x]$ be a polynomial with $\deg (f)=d$ where $\bbF$ is a finite field.. $f$ is irreducible if and only if \begin{enumerate}
+		\item $f\mid x^{q^d}-x$
+		\item $gcd\lt(f,x^{q^{\frac{d}{t}}}-x\rt)=1$ for all prime divisor $t$ of $d$.
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	Let $f$ is irreducible. Now we know if $g$ is a irreducible then $g\mid x^{q^d}-x\iff \deg(g)\mid d$. Since $\deg(f)=d$, $f\mid x^{q^d}-x$. And since $d\nmid \frac{d}{t}$ for all prime divisor $t$ of $d$ we have $f\nmid x^{q^{\frac{d}{t}}}-x$. Therefore $gcd\lt(f,x^{q^{\frac{d}{t}}}-x\rt)=1$ for all prime divisor $t$ of $d$.
+	
+	Now suppose $f$ satisfies both properties. Suppose $f$ is not irreducible. Let $g$ is an irreducible factor of $f$ and $\deg(g)<d$. Then $\deg(g)\mid \frac{d}{t'}$ for some prime divisor $t'$ of $d$. Therefore $g\mid x^{q^{\frac{d}{t'}}}-x$. Therefore $g\mid gcd\lt(f,x^{q^{\frac{d}{t'}}}-x\rt)$ which contradicts that $gcd\lt(f,x^{q^{\frac{d}{t}}}-x\rt)=1$ for all prime divisor $t$ of $d$. Hence contradiction \ctr $f$ is irreducible.
+\end{proof}
+\begin{algorithm}
+\SetKwComment{Comment}{//}{}
+\DontPrintSemicolon
+\KwIn{Description of finite field $\bbF$ and $f\in \bbF[x]$ with $\deg (f)=d$.}
+\KwOut{Decide if $f$ is irreducible}
+\Begin{
+\If{$d=0$}{\Return{``Reducible"}}
+\If{$d=1$}{\Return{``Irreducible"}}
+$g\longleftarrow$ Compute $x^{q^d}\pmod f$ by repeated squaring\;
+\If{$g\neq x$}{\Return{``Reducible"}}
+$h\longleftarrow x$\;
+\For{$i=1,\dots, d-1$}{
+$h\longleftarrow$ Compute $h^{q}\pmod f$ by repeated squaring\Comment*{Computes $x^{q^i}\bmod f$}
+\If{$\deg(gcd(h-x,f))\geq 1$}{\Return{``Reducible"}}
+}
+\Return{``Irreducible"}
+}
+\caption{Efficient Deterministic Irreducibility Testing}
+\end{algorithm}
+
+The lemma above gives the correctness of the algorithm. We only have to calculate the number of field operations of the algorithm. Now to compute $g=x^{q^d}$ it takes $d\log q$ many multiplications in the repeated squaring. Now in each multiplication two $d-1$ degree polynomial since each time we are multiplying modulo $f$. Therefore to compute $g$ it take $O(dM(d)\log q)$ many field operations. Now at any iteration of the for loop $h$ is a polynomial with degree at most $d$. Therefore to compute $h^q$ repeated squaring it takes $O(\log q)$ many multiplications of degree $d$ polynomials which takes at most $O(M(d)\log q)$ field operations. Both $h-x$ and $f$ has degree at most $d$. So the $gcd(h-x,f)$ can be computed using $O(M(d)\log d)$ field operations. So each iteration takes $O(M(d)(\log d+\log q))$ many field operations. Since there are $d$ iterations of the for loop it takes $O(dM(d)(\log q+\log d))$ field operations to check if $f$ is irreducible.
+}
+\end{document}

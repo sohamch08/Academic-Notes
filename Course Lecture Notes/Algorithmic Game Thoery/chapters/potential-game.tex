@@ -27,7 +27,7 @@ $s_j^t\longleftarrow s_j^{t-1}\ \forall\ j\in[n]$, $j\neq i$}
 		\item $N$ players where  each player $i\in[n]$ has some source-sink pair $(s_i,t_i)\in V\times V$ associated with it.
 		\item Edge cost functions $c_e:[n]\to \bbR$ for each edge $e\in E$.
 		\item Player $i\in[N]$ has strategy set $S_i=$ Set of all $s_i\rightsquigarrow t_i$ paths in $G$. $S=\bigtimes\limits_{i=1}^N S_i$.
-		\item For a strategy profile $f\in S$ (often called \textit{flow}), let $n_e(f)=|\{i\colon e\in f_i\}|$. Then the cost to player $i$ of strategy profile $f$ is $C_i(f)=\sum\limits_{e\in S_i}c_e(n_e(f))$. 
+		\item For a strategy profile $f\in S$ (often called \textit{flow}), let $n_e(f)=|\{i\colon e\in f_i\}|$. Then the cost to player $i$ of strategy profile $f$ is $C_i(f)=\sum\limits_{e\in s_i}c_e(n_e(f))$. 
 	\end{itemize}
 \end{definition}
 
@@ -107,7 +107,7 @@ General Congestion Games are generalized version of (atomic) NCG. We will show t
 		\item $N$ players.
 		\item For each player $i\in[N]$ a finite set of strategies $S_i$ where $S_i\subseteq 2^E$. $S=\bigtimes\limits_{i=1}^N S_i$.
 		\item Cost functions $c_e:[N]\to \bbR$ for each element $e\in E$.
-		\item For a strategy profile $s\in S$ (often called \textit{flow}), let $n_e(s)=|\{i\colon e\in s_i\}|$. Then the cost to player $i$ of strategy profile $s$ is $C_i(s)=\sum\limits_{e\in S_i}c_e(n_e(s))$. 
+		\item For a strategy profile $s\in S$ (often called \textit{flow}), let $n_e(s)=|\{i\colon e\in s_i\}|$. Then the cost to player $i$ of strategy profile $s$ is $C_i(s)=\sum\limits_{e\in s_i}c_e(n_e(s))$. 
 	\end{itemize}
 \end{definition}
 
@@ -124,27 +124,61 @@ General Congestion Games are generalized version of (atomic) NCG. We will show t
 	\end{enumerate}
 \end{definition}
 
-The max cut game is also a potential game. Consider the potential function $\Phi:S\to\bbR_{\geq 0}$ where for any strategy profile $s\in S$, $$\Phi(s)=\sum_{\substack{e=\{i,j\}\\ s)i\neq s_j}}w_e$$With this function we can prove that the Max Cut game is indeed a potential game and henceforth there exists a $\pne$.
+So like general congestion games we can denote a Max Cut game by the tuple $(G,w,N)$. The max cut game is also a potential game. Consider the potential function $\Phi:S\to\bbR_{\geq 0}$ where for any strategy profile $s\in S$, $$\Phi(s)=\sum_{\substack{e=\{i,j\}\\ s)i\neq s_j}}w_e$$With this function we can prove that the Max Cut game is indeed a potential game and henceforth there exists a $\pne$.
+
 \section{Class: \textsf{PLS}}
 \begin{definition}{$\pls$ (Polynomial Local Search)}{}
 	A local search problem $L$ has a set of problem instances $D_L\subseteq \Sg^*$ where any $I\in D_L$ is a particular problem instance. For each instance $I\in D_L$ there exists a finite solution set $F_L(I)\subseteq \Sg^*$. Let $R_L$ be the relation that models $L$ i.e. $$R_L\coloneqq \{(I,s)\mid I\in D_L,s\in F_L(I)\}$$ Then $R_L$ is in $\pls$ if:\begin{enumerate}[label=(\roman*)]
 		\item The size of every solution $s\in F_L(I)$ for any $I\in D_L$ is polynomially bounded in the size of $I$.
 		\item The problem instances $I\in D_L$ and the solutions $s\in F_L(I)$ are polynomial time verifiable.
-		\item There is a polynomial time computable function $C_L:X\to \bbR_{\geq 0}$ that returns for each $I\in D_L$ and each $s\in F_L(I)$ the cost where  $X\coloneqq \bigcup\limits_{I\in D_L}\{I\}\times F_L(I)$.
-		\item There is a polynomial time computable function $N:(I,s)\mapsto S$ where $S\subseteq F_L(I)$ i.e. returns the set of neighbors for each $I\in D_L$ and each $s\in F_L(I)$.
+		\item There is a polynomial time computable function $C_L:\Sg^*\times \Sg^*\to \bbR_{\geq 0}$ that returns for each $I\in D_L$ and each $s\in F_L(I)$ the cost $C_L(I,s)$.
+		\item There is a polynomial time computable function $N:(I,s)\mapsto S$ where $S\subseteq F_L(I)$ i.e. returns the set of neighbors of lower cost for each $I\in D_L$ and each $s\in F_L(I)$ or states the $s$ is locally optimal.
 	\end{enumerate}
 \end{definition}
 
 Note that for each $I\in D_L$ and each $s\in F_L(I)$ using (iii) and (iv) we can find a neighboring solutions of lower cost of $s$ or determine $s$ is locally minimal. The problem we want to focus is to find a locally minimal cost solution given an instance $I$ of $L$.
 
+\begin{goal}
+	Find a locally minimal cost solution given an instance $I$ of $L$.
+\end{goal}
+Finding $\pne$ in a Congestion Game (\textsf{PNE-CG}) is in $\pls$. Also finding $\pne $  in a Max Cut Game is in $\pls$.
+\begin{lemma}{}{}
+	$\textsf{PNE-CG}\in \pls$
+\end{lemma}
+\begin{proof}
+	We will show that computing $\pne$ in congestion games is an instance of $\pls$ by fist describing conditions needed for $\pls$. Suppose $\Big(E,N, \{S_i\mid i\in[N]\}, \{c_e:[N]\to \bbR_{\geq 0}\mid e\in E\}\Big)$ be any instance of CG.
+	\begin{enumerate}[label=(\roman*)]
+		\item Any strategy profile is a solution for a specific instance of congestion games. Now each element of strategy profile by definition of CG is a subset of the base set $E$. Therefore size of any strategy profile is polynomially bounded by the size of the instance of the CG.
+		\item For solution for the CG has to be valid strategy profile. So given any $N$-tuple of subsets of $E$ we can check if the $i^{th}$ element of the tuple is in $S_i$ for all $i\in[N]$ in polynomial time.
+		\item For any strategy profile $s\in S$ we return the potential function for the CG as the cost function $\Phi(s)=\sum\limits_{e\in E}\sum\limits_{j=1}^{n_e(s)}c_e(i)$. This function is a polynomial time computable function.
+		\item Given a strategy profile $s$ it checks if it is a $\pne$ by checking if we can switch the strategy of agent $i$ from $s_i$ to $s_i'$ such that $\Phi(s)>\Phi(s_i',s_{-i})$ for all agents.  If reduces then returns those strategy profiles. This is also polynomial time computable.
+	\end{enumerate}
+Therefore \textsf{PNE-CG} is in $\pls$.
+\end{proof}
 \begin{definition}{$\pls$-Reductions}{}
-	fgsd
+	A local search problem $L_1$ is $\pls$-reducible to another local search problem $L_2$, denoted by $L_1\leq_{\pls}L_2$ if there are two polynomial time computable functions $f:D_{L_1}\to D_{L_2}$ and $g:(I_1,s_2)\mapsto s_1$ where $I_1, D_{L_1}$, $s_2\in F_{L_2}(f(I_1))$ and $s_1\in F_{L_1}(I_1)$ such that:\begin{enumerate}[label=(\roman*)]
+		\item If $I_1$ is an instance of $L_1$ then $f(I_1)$ is an instance of $L_2$
+		\item If $s_2$ is an solution of $f(I_1)$ of $L_2$ then $g(I_1,s_2)$ is a solution for $I_1$ of $L_1$
+		\item If $s_2$ is a local optimum for instance $f(I_1)$ of $L_2$ then $f(I_1,s_2)$ has to be a local optimum for instance $I_1$ of $L_1$.
+	\end{enumerate}
 \end{definition}
 %https://panageas.github.io/agt22slides/Lecture9.pdf
 \begin{Theorem}{}{}
 	The Max Cut Game is $\pls$-complete
 \end{Theorem}
 
+We will not prove this but using this theorem we will prove the next theorem about general congestion games.
+
 \begin{Theorem}{}{}
 	General Congestion Games are $\pls$-complete
 \end{Theorem}
+\begin{proof}
+	We already shown that general congestion games are in $\pls$. For completeness we will show a $\pls$-reduction from the Max Cut Game. Let $\Gm=(G,w,N)$ be an instance of a max cut game. We will create a congestion game $\Gm'=\Big(E',N, \{S_i\mid i\in[N]\}, \{c_e:[N]\to \bbR_{\geq 0}\mid e\in E\}\Big)$ with $N$ players.
+	
+	\begin{itemize}
+		\item $E'$: For each edge $e\in E$ add two elements $e_L$ and $e_R$ to $E'$. So $E'=\{e_L,e_R\mid e\in E\}$.
+		\item $S_i$: Each player $i\in[N]$ has two strategies $S_i=\lt\{\{e_L\mid e\text{ incident on $i$}\}, \{e_R\mid e\text{ incident on $i$}\}\rt\}$. Thus if $e=\{i,j\}\in E$ then the elements $e_L$, $e_R$ can be used by exactly 2 players $i$ and $j$ in $\Gm'$.
+		\item $c_e:$ Define $c_{e_L}(1)=c_{e_R}(1)=0$ and $c_{e_L}(2)=c_{e_R}(2)=w(e)$.
+	\end{itemize}
+This defines a general congestion games. Now consider a strategy profile $s$ in $\Gm'$. Then $C_i(s)=\sum\limits_{\substack{j:\{i,j\}\in E\\ s_j\neq s_i}}e_{i,j}$. Therefore the local minimum in the $\Gm'$ gives a local minimum in $\Gm$. Hence max cut game is $\pls$-reducible to general congestion game.
+\end{proof}

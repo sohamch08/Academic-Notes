@@ -1,0 +1,65 @@
+\chapter{Price of Anarchy Bounds in Smooth Games}
+\section{Facility Location Game}
+\begin{definition}{Facility Location Game}{}
+	A Facility Location Game consists of \begin{enumerate}[label=(\roman*)]
+		\item There is a set $L$, of $n$ locations.
+		\item $SP$ is the set of $k$ service providers or players.
+		\item Player $i\in SP$ has its strategy set some $S_i\subseteq L$. For player $i$, $S_i$ represents the places where player $i$ might build a facility. For some player $i\in SP$, it may also be the case that $S_i=\emptyset$, i.e. player $i$ prefers nowhere.
+		\item A set $C$ of $m$ clients. 
+		\item Each client $j\in C$ has some value $\pi_j\geq 0$. Think of this as how much the client is willing to pay for the service that the facilities provide.
+		\item For all $l\in L$ and $j\in C$ let $c(l,j)$ is the transportation cost.
+		\item For all $i\in SP$ and $j\in C$ let $p(i,j)$ is the price of $i$ for serving $j$.
+	\end{enumerate}
+\end{definition}
+
+
+\begin{assumption}We will have the following assumptions for the game:
+	\begin{itemize}
+		\item $c(l,j)\neq c(l',j)$ for all $l,l'\in L$, $l\neq l'$ and $j\in C$.
+		\item $\pi_j\geq c(l,j)$ for all $l\in L$ and $j\in C$.
+	\end{itemize}
+\end{assumption}
+\subsection{Utilities: Definition}
+We will define the utilities of client and service providers. Let $s\in S$ be any strategy profile. If a client $j\in C$ chooses the service provider $i\in SP$  then we denote $SP(j)=i$. 
+
+So for any client $j\in C$ the utility for strategy profile $s$ is $$u_j(s)=\pi_j-p(SP(j),j)$$  and for  any service provider $i\in SP$, the utility of $i$ is $$u_i(s)=\sum\limits_{j\colon SP(j)=i}p(i,j)-c(s_i,j)$$ Now we define the utilitarian social welfare for a strategy profile $s$ to be $$V(s)=\sum\limits_{i\in SP}u_i(s)+\sum\limits_{j\in C}u_j(s)=\sum\limits_{j\in C}\pi_j-c\lt(s\st_{SP(j)},j\rt)$$
+To make the utilities of every service provider to be non-negative we have another assumption:
+\begin{assumption}
+	For any strategy profile $s$, $\forall\ i\in SP$ and $\forall\ j\in C$, $p(i,j)\geq c(s_i,j)$
+\end{assumption}
+\begin{remark}
+	This social welfare considers the clients as players as well but with simple strategies choosing the least price service provider
+\end{remark}
+
+\subsection{Choosing Prices}
+Note that technically prices too are chosen by the service providers. However we will show that given a strategy profile the prices are fixed at equilibrium.
+
+Now the service provider $i$ at location $s_i$ can get profit from client $j\in C$ only if it's the closest i.e. transportation cost satisfies $c(s_i,j)\leq c(l,j)$ for all $j\in L$.  Any client $j\in C$ chooses the service provider $i\in SP$ if the price charged by the $i$ to $j$ is minimum i.e. $p(i,j)=\min\limits_{i'\in SP}p(i',j)$.
+\begin{observation*}
+	For any client $j\in C$ and any service provider $i\in SP$ in a strategy profile $s$,  $SP(j)=i$ if \begin{enumerate}[label=(\roman*)]
+		\item $i\in \arg\min\limits_{i'\in SP}p(i,j)$
+		\item $c(s_i,j)=\min\limits_{i'\in SP}c(s_{i'},j)$
+	\end{enumerate}
+\end{observation*}
+
+\begin{lemma}{}{}
+	For any client $j\in C$ and any service provider $i\in SP$ in a strategy profile $s$,  $SP(j)=i$ if\begin{enumerate}[label=(\roman*)]
+		\item $c(s_i,j)=\min\limits_{i'\in SP}c(s_{i'},j)$
+		\item $p(i,j)=\max\lt\{c(s_i,j),\min\limits_{\substack{i'\in SP\\ i'\neq i'}}c(s_{i'},j)\rt\}$
+			\end{enumerate}
+\end{lemma}
+\begin{proof}
+	The first condition directly follows from the observation.  We will prove the second one.   Let $\hat{i}=\arg\min\limits_{i'\neq i}c(s_{i'},j)$. Suppose $c(s_i,j)<c(s_{\hat{i}},j)$. Then we have to show $p(i,j)=c(s_{\hat{i}},j)$.  
+	
+	Since the service providers want to maximize their utility they want to maximize the price charged to client. Now if $p(i,j)\neq c(s_{\hat{i}},j)$ then we can assume $p(i,j)>c(s_{\hat{i}},j)$. If $p(i,j)>c(s_{\hat{i}},j)$ then if $p(\hat{i},j)=\frac12\lt(p(i,j)+c(s_{\hat{i}},j)\rt)$ then $p(\hat{i},j)<p(i,j)$. Hence $SP(j)=\hat{i}$ but we are given $SP(j)=i$. Hence contradiction \ctr Hence we have the lemma.
+\end{proof}
+\subsection{Potential Game}
+We will now show that Facility Location Game is a potential game. We will take the function $V$ which is the total utilitarian social welfare as the potential function of the game. And we will show now that this follows the condition of potential games.
+\begin{Theorem}{}{}
+	For any strategy profile $s$, for all $i\in SP$, $\forall\ s_i'\in S_i$ $$V(s_i',s_{-i})-V(s)=u_i(s_i',s_{-i})-u_i(s)$$
+\end{Theorem}
+
+
+\section{Smooth Games}
+
+\section{Load Balancing Game}

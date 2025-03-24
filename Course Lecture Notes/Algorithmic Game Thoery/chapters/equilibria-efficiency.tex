@@ -31,11 +31,221 @@ For a game $\Gm$ we also want to know how bad is the social welfare at equilibri
 \begin{definition}{Price of Anarchy}{}
 	We denote it by $\poa$. For a game $\Gm$:\begin{align*}
 		\poa(\Gm)& =\frac{\text{Social welfare of ``worst equilibrium"}}{\text{Optimal social welfare}}\\
-		&= \frac{\max\lt\{\sum\limits_{i=1}^n c_i(s)\colon s\in S\text{ is an $\mne$}\rt\}}{\min\lt\{\sum\limits_{i=1}^n c_i(s)\colon s\in S\rt\}}
+		&= \frac{\max\lt\{\sum\limits_{i=1}^n C_i(s)\colon s\in S\text{ is an $\pne$}\rt\}}{\min\lt\{\sum\limits_{i=1}^n C_i(s)\colon s\in S\rt\}}
 	\end{align*}
 \end{definition}
 \subsection{\textsf{PoA} of Network (Atomic) Congestion Games}
+
 \begin{Theorem}{}{poa-ncg}
 	The $\poa$ in network congestion games with affine cost functions is $\frac{5}2$.
 \end{Theorem}
+\begin{proof}We will prove this in two stages. First we will show that the lower bound for $\poa$ for NCG is at least $\frac52$ by constructing an example. Then we will show the upper bound.\vspace*{2mm}
+\parinf
 
+\textbf{Lower Bound $\geq \frac52$:}
+\vspace*{2mm}
+
+\begin{minipage}{0.4\textwidth}
+	\captionsetup{type=figure}
+		\begin{center}
+		\begin{tikzpicture}[shorten >=1pt, auto,scale=0.8]
+			\tikzstyle{every state}=[fill={rgb:black,1;white,10}, minimum size=1.5cm]
+			
+			% Arrange nodes with increased distance
+			\node[state] (0) at (0, 3)                {$t_1,s_3,t_4$};
+			\node[state] (1) at (-3, -1.5)               {$s_1,s_2$};
+			\node[state] (2) at (3, -1.5)                {$t_2,t_3,s_4$};
+			
+			% Define all the edges with labels
+			\path[-latex] (1) edge[bend right=20] node[below] {$x$} (2);
+			\path[-latex] (2) edge[bend right=20] node[above] {$0$} (1);
+			\path[-latex] (1) edge[bend left=20] node[above] {$x$} (0);
+			\path[-latex] (0) edge[bend left=20] node[below] {$0$} (1);
+			\path[-latex] (0) edge[bend right=20] node[below] {$x$} (2);
+			\path[-latex] (2) edge[bend right=20] node[above] {$x$} (0);
+		\end{tikzpicture}
+	\end{center}
+%\caption{NCG: $\poa$ Lower Bound}
+\end{minipage}\hfill
+\begin{minipage}{0.57\textwidth}
+	Consider the NCG with 4 players drawn on the left. \parinn
+	
+	The optimal cost for this NCG is when every player uses the single-edge $s_i\to t_i$ paths. And the cost for each such path is $1$ as none of these 4 edges is used by more than 1 player. So the optimal value is $4$. Note that this is also a $\pne$.
+	
+	Now we will calculate the worst $\pne$. Every player uses the $2$-edge $s_i\to t_i$ paths. Then the costs for each players are 
+	
+		\begin{enumerate*}[label=\arabic*:, itemjoin={,\   }, itemjoin*={,\   }]
+		\item 3
+		\item 3
+		\item 2
+		\item 2
+	\end{enumerate*}\parinf
+
+Therefore total cost is $10$. Hence $\poa\geq \frac{10}4=\frac52$.
+\end{minipage}
+
+\newpage
+\parinf
+
+\textbf{Upper Bound $\leq \frac52$:}
+\vspace*{2mm}
+\begin{claimwidth}
+\begin{lemma}{}{}
+	For any NCG with $N$ players if $s$ is any strategy profile and $s^*$ is a $\pne$ then $C(s^*)\leq \frac52 C(s)$.
+\end{lemma}
+\begin{proof}
+	For each player $i\in [N]$ we have 
+	\[	C_i(s^*)  \leq C_i(s_i,s_{-i}^*) = \sum\limits_{e\in s_i\cap s_i^*}c_e(n_e(s^*))+\sum\limits_{e\in s_i\setminus s_i^*} c_e(n_e(s^*)+1)\leq \sum\limits_{e\in s_i}c_e(n_e(s^*)+1)\] Now summing over all players we get the total cost \begin{align*}
+		C(s^*) =\sum\limits_{i\in[N]}c_i(s^*) & = \sum\limits_{i\in[N]}\sum\limits_{e\in s_i}c_e(n_e(s^*)+1)\\
+		& =\sum\limits_{e\in E}c_e(n_e(s^*)+1)n_e(s)\\
+		& = \sum\limits_{e\in E}\Big(a_e(n_e(s^*)+1)+b_e\Big)n_e(s)& [\text{Let $c_e(i)=a_ei+b_e$, $a_e,b_e\geq  0$}]\\
+		& = \sum\limits_{e\in E}a_en_e(s)(n_e(s^*)+1)+b_en_e(s)\\
+		& \leq \sum\limits_{e\in E}a_e\lt(\frac53n_e^2(s)+\frac13n_e^2(s^*)\rt)+b_en_e(s) & \lt[x,y\in\bbZ,x(y+1)\leq \frac53x^2+\frac13y^2\rt]\\
+		& = \sum\limits_{e\in E}n_e(s)\lt(\frac53a_en_e(s)+b_e\rt)+\frac13a_en_e^2(s^*)\\
+		& \leq \frac53\sum\limits_{e\in E}n_e(s)(a_en_e(s)+b_e)+\frac13 \sum\limits_{e\in E}n_e(s^*)(a_en_e(s^*)+b_e)\\
+		& = \frac53C(s)+\frac13C(s^*) 
+	\end{align*}
+Therefore we get $$C(s^*)\leq \frac53C(s)+\frac13C(s^*)\implies \frac23C(s^*)\leq \frac53C(s)\implies C(s^*)\leq \frac52C(s)$$Hence we have the lemma.
+\end{proof}
+\end{claimwidth}
+
+
+Using the lemma for any $\pne$ $s^*\in S$ and any strategy profile $s\in S$ we have $C(s^*)\leq \frac52C(s)$. Therefore the worst cost $\pne$ and the optimal strategy profile  also follows the inequality. Therefore the $\poa$ is at most $\frac52$. Therefore we get the upper bound also.
+\end{proof}
+
+\section{Global Connection Games}
+\begin{definition}{Global Connection Games}{}
+	A Global Connection Games or in short GCG consists of the following:$$\Big(G=(V,E),N,\{(s_i,t_i)\mid i\in[N]\}, \{c_e \mid e\in E,c_e\geq 0\}\Big)$$
+	\begin{itemize}[itemsep=-1mm]
+		\item A directed graph $G=(V,E)$.
+		\item $N$ players where  each player $i\in[n]$ has some source-sink pair $(s_i,t_i)\in V\times V$ associated with it.
+		\item Edge costs $c_e$ for each edge $e\in E$ where $c_e\geq 0$.
+		\item Player $i\in[N]$ has strategy set $S_i=$ Set of all $s_i\rightsquigarrow t_i$ paths in $G$. $S=\bigtimes\limits_{i=1}^N S_i$.
+		\item For a strategy profile $f\in S$, let $n_e(f)=|\{i\colon e\in f_i\}|$. Then the cost to player $i$ of strategy profile $f$ is $C_i(f)=\sum\limits_{e\in s_i}\frac{c_e}{n_e(f)}$ i.e. the cost of edge is divides equally among all the players using that edge.
+	\end{itemize}
+\end{definition}
+
+Therefore for any strategy profile the total cost is $$C(f)=\sum\limits_{i\in[N]}C_i(f)=\sum\limits_{i\in[N]}\sum\limits_{e\in s_i}\frac{c_e}{n_e(s)}=\sum\limits_{\substack{e\in E\\ n_e(f)>0}}c_e$$
+
+\begin{lemma}{}{}
+	GCG is a potential game
+\end{lemma}
+\begin{proof}
+	Consider the function $\Phi:S\to \bbR_{\geq 0}$ where for any strategy profile $f\in S$  $$\Phi(f)=\sum\limits_{e\in E}\sum\limits_{j=1}^{n_e(f)}\frac{c_e}{j}=\sum\limits_{\substack{e\in E\\ n_e(f)\geq 1}}c_eH_{n_e(s)}$$where $H_n$ is the $n^{th}$ harmonic number. Then we  have for any $f\in S$ and $f_i'\in S_i$ \begin{align*}
+		\Phi(f)-\Phi(f_i',f_{-i}) & =\sum\limits_{e\in E}\sum\limits_{j=1}^{n_e(f)}\frac{c_e}{j}-\sum\limits_{e\in E}\sum\limits_{j=1}^{n_e(f_i',f_{-i})}\frac{c_e}{j}      =\sum\limits_{e\in E}\lt[\sum\limits_{j=1}^{n_e(f)}\frac{c_e}{j}-\sum\limits_{k=1}^{n_e(f_i',f_{-i})}\frac{c_e}{k}\rt]                                                                                                                                                         \\
+		                          & = \sum\limits_{e\in E\setminus f_i\cup f_i'}\lt[\sum\limits_{j=1}^{n_e(f)}\frac{c_e}{j}-\sum\limits_{k=1}^{n_e(f_i',f_{-i})}\frac{c_e}{k}\rt]+\sum\limits_{e\in f_i\cap f_{i}'}\lt[\sum\limits_{j=1}^{n_e(f)}\frac{c_e}{j}-\sum\limits_{k=1}^{n_e(f_i',f_{-i})}\frac{c_e}{k}\rt]+\sum\limits_{e\in f_i\setminus f_i'}\lt[\sum\limits_{j=1}^{n_e(f)}\frac{c_e}{j}-\sum\limits_{k=1}^{n_e(f_i',f_{-i})}\frac{c_e}{k}\rt] \\
+		                          & \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad+\sum\limits_{e\in f_i'\setminus f_i}\lt[\sum\limits_{j=1}^{n_e(f)}\frac{c_e}{j}-\sum\limits_{k=1}^{n_e(f_i',f_{-i})}\frac{c_e}{k}\rt]                                                                                                                                                                                             \\
+		                          & =\sum\limits_{e\in f_i\cap f_{i}'}\underbrace{\lt[\sum\limits_{j=1}^{n_e(f)}\frac{c_e}{j}-\sum\limits_{k=1}^{n_e(f_i',f_{-i})}\frac{c_e}{k}\rt]}_{0}+\sum\limits_{e\in f_i\setminus f_i'}\lt[\sum\limits_{j=1}^{n_e(f)}\frac{c_e}{j}-\sum\limits_{k=1}^{n_e(f_i',f_{-i})}\frac{c_e}{k}\rt] +\sum\limits_{e\in f_i'\setminus f_i}\lt[\sum\limits_{j=1}^{n_e(f)}\frac{c_e}{j}-\sum\limits_{k=1}^{n_e(f_i',f_{-i})}\frac{c_e}{k}\rt]\\
+		                          &=\sum\limits_{e\in f_i\cap f_{i}'}\lt[\sum\limits_{j=1}^{n_e(f)}\frac{c_e}{j}-\sum\limits_{k=1}^{n_e(f_i',f_{-i})}\frac{c_e}{k}\rt]+\sum\limits_{e\in f_i\setminus f_i'}\frac{c_e}{n_e(f)} -\sum\limits_{e\in f_i'\setminus f_i}\frac{c_e}{n_e(f_i',f_{-i})} = C_i(f)-C_i(f_i',f_{-i})
+	\end{align*}
+Therefore GCG is a potential game.
+\end{proof}
+\begin{Theorem}{}{}
+The $\poa$ for any GCG with $N$ players is $N$.
+\end{Theorem}
+\begin{proof}
+Like the case for NCG we will prove this in two stages. First we will show that the lower bound for $\poa$ for GCG with $N$ players is at least $N$ by constructing an example. Then we will show the upper bound.\vspace*{2mm}
+\parinf
+
+\textbf{Lower Bound $\geq N$:}
+\vspace*{2mm}
+
+\begin{minipage}{0.4\textwidth}
+	\captionsetup{type=figure}
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt, auto,scale=0.8]
+			\tikzstyle{every state}=[fill={rgb:black,1;white,10}, minimum size=0.8cm]
+			
+			% Arrange nodes with increased distance
+			\node[state] (0) at (2,0)                {$s$};
+			\node[state] (1) at (-2,0)               {$t$};
+			
+			% Define all the edges with labels
+			\path[-latex] (1) edge[bend right=30] node[below] {$N$} (0);
+			\path[-latex] (1) edge[bend left=30] node[above] {$1+\eps$} (0);
+
+		\end{tikzpicture}
+	\end{center}
+	%\caption{NCG: $\poa$ Lower Bound}
+\end{minipage}\hfill
+\begin{minipage}{0.57\textwidth}
+	Consider the GCG with 5 players drawn on the left where for each player $i\in[N]$, $s_i=s$ and $t_i=t$. \parinn
+	
+	The optimal cost for this GCG is when every player uses the edge with cost $1+\eps$. Hence the total cost is $1+\eps$.
+	
+	Now we will calculate the worst $\pne$. Every player uses the edge with cost $N$. Therefore total cost is $N$. Hence $\poa\geq \frac{N}{1+\eps}\geq N$.
+\end{minipage}
+\vspace*{2mm}
+
+\textbf{Upper Bound $\leq N$:}
+\vspace*{2mm}
+
+Let $\Gm$ be any GCG. Suppose $s^*$ be any $\pne$ of $\Gm$ and $s_{\textsc{opt}}$ is the optimal strategy profile. \begin{claimwidth}
+	\begin{claim}{}{}
+		$C_i(s^*)\leq \text{cost}(s_{\textsc{opt}_i})$ where $\text{cost}(s_{\textsc{opt}_i})=\sum\limits_{e\in s_{\textsc{opt}_i}}c_e$.
+	\end{claim}
+\begin{proof}
+	Suppose not. Then 	$C_i(s^*)> \text{cost}(s_{\textsc{opt}_i})$. Now we have $$C_i(s_{\textsc{opt}_i},s^*_{-i})=\sum\limits_{e\in s_{\textsc{opt}_i}}\frac{c_e}{n_e(s_{\textsc{opt}_i},s^*_{-i})}\leq  \sum\limits_{e\in s_{\textsc{opt}_i}}{c_e}=\text{cost}(s_{\textsc{opt}_i})$$Therefore we get $C_i(s^*)>C_i(s_{\textsc{opt}_i},s^*_{-i})$.   But $s^*$ is a $\pne$. Hence contradiction \ctr 
+\end{proof}
+\end{claimwidth}
+
+Therefore we have $$C(s^*)=\sum\limits_{i\in[N]}C_i(s^*)\leq \sum\limits_{i\in[N]} \text{cost}(s_{\textsc{opt}_i})\leq \sum\limits_{i\in[N]}\sum\limits_{e\in s_{\textsc{opt}_i}}c_e\leq \sum\limits_{i\in[N]}\sum\limits_{e\in s_{\textsc{opt}_i}}N\cdot\frac{c_e}{n_e(s_{\textsc{opt}})}=N\sum\limits_{i\in[N]}C_i(s_{\textsc{opt}})=N\cdot C(s_{\textsc{opt}}) $$Hence we get that $\poa(\Gm)\leq N$.
+\end{proof}
+
+\section{Price of Stability}
+In the case of GCG we can see that always comparing the worst Pure Nash Equilibria with the optimal strategy may lead to very large value. So instead sometimes we prefer to compare the best $\pne$ and the optimal strategy.
+\begin{definition}{Price of Stability}{}
+	We denote it by $\pos$. For a game $\Gm$:\begin{align*}
+		\pos(\Gm)& =\frac{\text{Social welfare of ``best equilibrium"}}{\text{Optimal social welfare}}\\
+		&= \frac{\min\lt\{\sum\limits_{i=1}^n C_i(s)\colon s\in S\text{ is an $\pne$}\rt\}}{\min\lt\{\sum\limits_{i=1}^n C_i(s)\colon s\in S\rt\}}
+	\end{align*}
+\end{definition}
+
+\subsection{$\pos$ of Global Connection Games}
+\begin{lemma}{}{}
+	In a GCG with $N$ players the $\pos$ is at least $H_N$.
+\end{lemma}
+\begin{proof}
+	We will prove this using an example of GCG.
+	\vspace*{2mm}
+	
+	\begin{center}
+			\begin{tikzpicture}[shorten >=1pt, auto,scale=0.8]
+				\tikzstyle{every state}=[fill={rgb:black,1;white,10}, minimum size=0.7cm]
+	\node[state] (0) at (-3.5,0)                {$s_1$};
+	\node[state] (1) at (-1.75,0)                {$s_2$};
+	\node[state] (2) at (0,0)                {$s_3$};
+	\node (3) at (1.5,0)                {$\cdots$};
+	\node[state] (4) at (3,0)                {$s_N$};
+	\node[state] (5) at (0,3)                {$t$};
+	\node[state] (6) at (0,-3)                {};
+\path[-latex] (0) edge node[left]{$1$} (5);
+\path[-latex] (1) edge node[left]{$\frac12$} (5);
+\path[-latex] (2) edge node[left]{$\frac13$} (5);
+\path[-latex] (4) edge node[left]{$\frac1N$} (5);
+\path[-latex] (0) edge node[left]{$0$} (6);
+\path[-latex] (1) edge node[left]{$0$} (6);
+\path[-latex] (2) edge node[left]{$0$} (6);
+\path[-latex] (4) edge node[left]{$0$} (6);
+\path[-latex] (6) edge[bend right=90, looseness=2.2] node[right]{$1+\eps$} (5);
+
+			\end{tikzpicture}
+	\end{center}
+
+		Consider the GCG with $N$ players drawn on the left where for each player $i\in[N]$,  $t_i=t$. 		The optimal cost for this GCG is when every player goes to $t$ using the edge with $0$ weight and then the edge with cost $1+\eps$. Hence the total optimal cost is $1+\eps$.
+		
+		Now we will calculate the best $\pne$. The only $\pne$ is when every player uses the direct  edge with cost $\frac1i$ for each  player $i\in[N]$. Therefore total cost is $H_N$. Hence $\pos$ is $\frac{H_N}{1+\eps}\geq H_N$.
+\end{proof}
+\begin{lemma}{}{}
+	The $\pos$ of any $GCG$ with $N$ players is at most $H_N$.
+\end{lemma}
+\begin{proof}
+	Suppose $\Gm$ be any GCG. Let $f$ be any strategy profile and $f^*$ minimizes $\Phi$. Hence $f^*$ is an $\pne$ and $\Phi(f^*)\leq \Phi(f)$. Then we have $$C(f)=\sum\limits_{\substack{e\in E\\ n_e(f)>0}}c_e=\frac1{H_N}\sum\limits_{\substack{e\in E\\ n_e(f)>0}}c_eH_N\geq \frac1{H_N}\sum\limits_{\substack{e\in E\\ n_e(f)>0}}c_eH_{n_e(f)}=\frac1{H_N}\Phi(f)\geq \frac1{H_N}\phi(f^*)$$Now  $\forall \ f'\in S$ we have $$\Phi(f')=\sum\limits_{\substack{e\in E\\ n_e(f')\geq 1}}c_eH_{n_e(f')}\geq \sum\limits_{\substack{e\in E\\ n_e(f')\geq 1}}c_e=C(f')$$Therefore we get $C(f)\geq \frac1{H_N}C(f^*)$. Hence $\pos(\Gm)\leq H_N$.
+\end{proof}
+
+\nt{The general form of argument for potential games goes like this: If $\alpha C(s)\leq \Phi(s)\leq \beta C(s)$, then $\pos\leq \frac{\beta}{\alpha}$ }
+
+Therefore with these two lemmas we get the final theorem:
+\begin{Theorem}{}{}
+	The $\pos$ of any Global Connection Games with $N$ players is the  $H_N$ where $H_N$ is $N^{th}$ harmonic number.
+\end{Theorem}
