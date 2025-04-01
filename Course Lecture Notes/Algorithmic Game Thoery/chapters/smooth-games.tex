@@ -1,6 +1,6 @@
 \chapter{Price of Anarchy Bounds in Smooth Games}
 \section{Facility Location Game}
-\begin{definition}{Facility Location Game}{}
+\begin{Definition}{Facility Location Game}{}
 	A Facility Location Game consists of \begin{enumerate}[label=(\roman*)]
 		\item There is a set $L$, of $n$ locations.
 		\item $SP$ is the set of $k$ service providers or players.
@@ -10,7 +10,7 @@
 		\item For all $l\in L$ and $j\in C$ let $c(l,j)$ is the transportation cost.
 		\item For all $i\in SP$ and $j\in C$ let $p(i,j)$ is the price of $i$ for serving $j$.
 	\end{enumerate}
-\end{definition}
+\end{Definition}
 
 
 \begin{assumption}We will have the following assumptions for the game:
@@ -42,7 +42,7 @@ Now the service provider $i$ at location $s_i$ can get profit from client $j\in 
 	\end{enumerate}
 \end{observation*}
 
-\begin{lemma}{}{}
+\begin{lemma}{}{price-in-flg}
 	For any client $j\in C$ and any service provider $i\in SP$ in a strategy profile $s$,  $SP(j)=i$ if\begin{enumerate}[label=(\roman*)]
 		\item $c(s_i,j)=\min\limits_{i'\in SP}c(s_{i'},j)$
 		\item $p(i,j)=\max\lt\{c(s_i,j),\min\limits_{\substack{i'\in SP\\ i'\neq i'}}c(s_{i'},j)\rt\}$
@@ -58,8 +58,52 @@ We will now show that Facility Location Game is a potential game. We will take t
 \begin{Theorem}{}{}
 	For any strategy profile $s$, for all $i\in SP$, $\forall\ s_i'\in S_i$ $$V(s_i',s_{-i})-V(s)=u_i(s_i',s_{-i})-u_i(s)$$
 \end{Theorem}
-
+\begin{proof}
+	We will show that $u_i(s_i'=\emptyset, s_{-i})-u_i(s)=V(s'_i=\emptyset, s_{-i})-V(s)$. Now we have $$V(s)=\sum\limits_{j\in C} \pi_j-c\lt(s\st_{SP(j)},j\rt)=\sum\limits_{j\in C}\pi_j-\min\limits_{i'\in SP}c(s_{i'},j)\qquad V(s_i',s_{-i})=\sum\limits_{j\in C}\pi_j-\min\limits_{\substack{i\in SP\\ i'\neq i}}c(s_{i'},j) $$Therefore $$V(s_i'=\emptyset, s_{-i})-V(s)=\sum\limits_{j\in C}\min\limits_{i'\in SP}c(s_{i'},j)-\min\limits_{\substack{i\in SP\\ i'\neq i}}c(s_{i'},j)$$Now for $j\in C$ for which $SP(j)\neq i$ we have $\min\limits_{i'\in SP}c(s_{i'},j)=\min\limits_{\substack{i\in SP\\ i'\neq i}}c(s_{i'},j$. By \lmref{price-in-flg} we have $\min\limits_{\substack{i\in SP\\ i'\neq i}}c(s_{i'},j=p(i,j)$ for $SP(j)=i$. Then we have $$V(s_i'=\emptyset, s_{-i})-V(s)=\sum\limits_{j:SP(j)=i}p(i,j)-c(s_i,j)=u_i(s_i',s_{-i})-u_i(s)$$Therefore $V$ is a potential function of satisfying the condition of potential game. Hence Facility Location Game is a potential game.
+\end{proof}
+\begin{corolary}{}{}
+	The $\pos$ of Facility Location Games is $1$
+\end{corolary}
+\begin{proof}
+	Since the potential function and the utility functions are same the strategy which maximizes the utility and the $\pne$ which has maximum utility are the same strategy profiles. Therefore $\pos$ is $1$.
+\end{proof}
+\section{Valid Utility Games}
 
 \section{Smooth Games}
+\begin{Definition}{$(\lm,\mu)$-smooth Cost Minimization Game}{}
+	A cost minimization game is $(\lm,\mu)$ smooth if for all strategy profiles $s,s'\in S$ $$\sum\limits_{i=1}^n c_i(s'_i,s_{-i})\leq \lm \textit{cost}(s')+\mu\textit{cost}(s)$$
+\end{Definition}
 
+Therefore (Atomic) Network Congestion Games is $\lt(\frac53,\frac13\rt)$-smooth. If a game is $(\lm,\mu)$ smooth then we get an upper bound on the $\poa$ directly. 
+\begin{Theorem}{}{}
+	For any $(\lm,\mu)$-smooth cost-minimization game the $\poa\leq \frac{\lm}{1-\mu}$. 
+\end{Theorem}
+\begin{proof}
+	Let $s^*$ be an equilibrium and $s$ be minimum cost strategy profile. Since the game is $(\lm,\mu)$ smooth we have $$\textit{cost}(s^*)=\sum\limits_{i=1}^n c_i(s^*)\leq \sum\limits_{i=1}^n c_i(s_i,s_{-i}^*)\leq \lm \textit{cost}(s)+\mu\textit{cost}(s^*)$$Therefore $\frac{\textit{cost}(s^*)}{\textit{cost}(s)}\leq \frac{\lm}{1-\mu}$.
+\end{proof}
+\subsection{Bound of \textsf{PoA} for \textsf{CCE}}
+We can also extend this bound of $\poa$ for coarse correlated equilibriums too. So we have the following theorem:
+\begin{Theorem}{}{}
+	For a $(\lm,\mu)$-smooth cost-minimization game, the $\poa$ for $\cce$'s is at most $\frac{\lm}{1-\mu}$.
+\end{Theorem}
+\begin{proof}
+	We know the distribution $\sD\in\Delta_{|S|}$ is a $\cce$ if $\forall \ i\in[n]$, $\forall\ s_i'\in S_i$, $\underset{s\sim \sD}{\bbE}[c_i(s)]\leq \underset{s\sim \sD}{\bbE}[c_i(s_i',s_{-i})]$. Let $s^*$ be the minimum cost pure strategy profile. Then we have 
+	\[	\underset{s\sim \sD}{\bbE}[\textit{cost}(s)] =\sum_{i=1}^n \underset{s\sim \sD}{\bbE}[c_i(s)]\leq \sum_{i=1}^n \underset{s\sim \sD}{\bbE}[c_i(s_i^*,s_{-i})]\leq \sum_{i=1}^n \lm \underset{s\sim \sD}{\bbE}[c_i(s^*)]+\mu\underset{s\sim \sD}{\bbE}[c_i(s)]=\lm \textit{cost}(s^*)+\mu \underset{s\sim \sD}{\bbE}[\textit{cost}(s)]\]Therefore we have $\frac{\underset{s\sim \sD}{\bbE}[\textit{cost}(s)]}{\textit{cost}(s^*)}\leq \frac{\lm}{1-\mu}$. Hence we have the upper bound $\poa$. 
+
+\end{proof}
+\subsection{Bound of \textsf{PoA} for \texorpdfstring{$\varepsilon$}{ε}-\textsf{PNE}}
+\begin{Definition}{$\veps-\pne$}{}
+	For a cost-minimization game $s\in S$ is an $\veps-\pne$ if $\forall \ i\in[n]$, $\forall\ s_i'\in S_i$ if $$c_i(s_i',s_{-i})\geq \frac{1}{1+\veps}c_i(s)$$\end{Definition}
+
+We can extend the bound of $\poa$ for $\pne$'s  to even approximate $\pne$'s too but we don't get the exact $\frac{\lm}{1-\mu}$ bound. Instead there is a 
+
+\subsection{Utility Maximization}
+\begin{Definition}{$(\lm,\mu)$-smooth Utility Maximization Game}{}
+	A utility maximization game is $(\lm,\mu)$ smooth if for all strategy profiles $s,s'\in S$ $$\sum\limits_{i=1}^n u_i(s'_i,s_{-i})\geq \lm U(s')-\mu U(s)$$
+\end{Definition}
+
+Therefore any Valid Utility Game is $(1,1,)$-smooth game. And like in the case of cost minimization game we get an upper bound on the $\poa$ for utility maximization game.
+\begin{Theorem}{}{}
+	For any $(\lm,\mu)$-smooth utility maximization game the $\poa\leq \frac{\lm}{1+\mu}$. 
+\end{Theorem}
 \section{Load Balancing Game}
