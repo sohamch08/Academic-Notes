@@ -1,0 +1,24 @@
+% This file defines the font theme "wildcat" for the beamer class in LaTeX.
+% It is intended for users who have already installed the required fonts on their system.
+% The font settings in this file customize the appearance of various elements in a presentation.
+% Specifically, it changes the title font to "Campton Medium", the author font to "Campton Light",
+% the frametitle font to "Campton Medium", and the section font to "Campton Light".
+% It also sets the boldface sans font to "Akkurat Pro" and the mono font to "TeX Gyre Cursor".
+\mode<presentation>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This is only for those who have already installed these fonts on their system.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Change title font to Campton Light
+\setbeamerfont{title}{family=\fontspec{Campton Medium}, size=\LARGE}
+\setbeamerfont{author}{family=\fontspec{Campton Light}, size=\small}
+\setbeamerfont{frametitle}{family=\fontspec{Campton Medium}, size=\Large}
+\setbeamerfont{section}{family=\fontspec{Campton Light}, size=\LARGE}
+
+% Set boldface sans font
+\setsansfont[BoldFont={Akkurat Pro}]{Akkurat Light Pro}
+
+% Set mono font
+\setmonofont{TeX Gyre Cursor}
+
+
+\mode<all>

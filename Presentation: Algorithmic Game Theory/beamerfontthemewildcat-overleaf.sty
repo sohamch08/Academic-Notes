@@ -1,0 +1,21 @@
+% This file defines the font theme for the "wildcat" beamer theme.
+% It sets the fonts for the title, author, frametitle, and section headings.
+% The title font is set to "TeX Gyre Heros" using the fontspec package.
+% The main body font is set to "TeX Gyre Adventor" using the setsansfont command.
+% The mono font is set to "TeX Gyre Cursor" using the setmonofont command.
+% This file should be included in the beamer theme file to apply the desired font styles.
+\mode<presentation>
+
+% Change title font to Campton Light
+\setbeamerfont{title}{family=\fontspec{TeX Gyre Heros}, size=\LARGE}
+\setbeamerfont{author}{family=\fontspec{TeX Gyre Heros}, size=\small}
+\setbeamerfont{frametitle}{family=\fontspec{TeX Gyre Heros}, size=\Large}
+\setbeamerfont{section}{family=\fontspec{TeX Gyre Heros}, size=\LARGE}
+
+% Set main body font
+\setsansfont{TeX Gyre Adventor}
+
+% Set mono font
+\setmonofont{TeX Gyre Cursor}
+
+\mode<all>

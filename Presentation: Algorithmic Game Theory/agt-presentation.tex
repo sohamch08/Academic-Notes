@@ -1,0 +1,233 @@
+% !TEX TS-program = xelatex
+\documentclass[aspectratio=1610]{beamer}
+\usepackage[T1]{fontenc}
+\usetheme{wildcat}
+\usepackage{xcolor, mathtools, optidef}
+\DeclareMathOperator{\poa}{\mathsf{PoA}}
+\input{../letterfonts}
+\input{macros}
+\title{Bounding $\poa$ using LP, QP and Fenchel Duality}
+\date{April 2025}
+\author{Soham Chatterjee}
+
+% You change the titlegraphic to whatever you want, or comment it out to remove it.
+% \titlegraphic{\includegraphics[scale=0.25]{logo-northwestern.pdf}}
+
+% % You can directly change the colors using the following macros.
+% % You must redefine colors AFTER the theme is loaded.
+% % For example, these provide shades of Yale Blue (#00356b)
+% \definecolor{wcprimary}{RGB}{0,53,107}      % Main color
+% \definecolor{wcprimary140}{RGB}{0, 34, 70}
+% \definecolor{wcprimary130}{RGB}{0, 40, 80}
+% \definecolor{wcprimary120}{RGB}{0, 45, 91}
+% \definecolor{wcprimary110}{RGB}{0, 50, 102}
+% \definecolor{wcprimary40}{RGB}{153, 174, 196}
+% \definecolor{wcprimary30}{RGB}{179, 194, 211}
+% \definecolor{wcprimary20}{RGB}{204, 215, 225}
+% \definecolor{wcprimary10}{RGB}{230, 235, 240}
+
+% % Now for the alerted orange (#bd5319) and example green (#5f712d)
+% \definecolor{wcalerted}{RGB}{189,83,25}
+% \definecolor{wcexample}{RGB}{95,113,45}
+
+% % If you want to change the slide background color, 
+% % you can use the following command:
+%\setbeamercolor{background canvas}{bg=nupurple10!30}
+
+% % Turn off section slides
+% \AtBeginSection{}
+
+% Change the font theme
+%\usefonttheme{wildcat-overleaf}
+
+% Change the bg pattern manually: Simple Single Color
+% \renewcommand{\bgpattern}{
+%     \draw[color=wcprimary,fill=wcprimary] (0,0) rectangle (\paperwidth,\paperheight);
+% }
+
+\definecolor{doc}{RGB}{0,60,110}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+\definecolor{mybg}{HTML}{F2F2F9}
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{myexamplebg}{HTML}{F2FBF8}
+\definecolor{myexamplefr}{HTML}{88D6D1}
+\definecolor{myexampleti}{HTML}{2A7F7F}
+\definecolor{mydefinitbg}{HTML}{E5E5FF}
+\definecolor{mydefinitfr}{HTML}{3F3FA3}
+\definecolor{notesgreen}{RGB}{0,162,0}
+\definecolor{myp}{RGB}{197, 92, 212}
+\definecolor{mygr}{HTML}{2C3338}
+\definecolor{myred}{RGB}{127,0,0}
+\definecolor{myyellow}{RGB}{169,121,69}
+\definecolor{OrangeRed}{HTML}{ED135A}
+\definecolor{Dandelion}{HTML}{FDBC42}
+\definecolor{light-gray}{gray}{0.95}
+\definecolor{Emerald}{HTML}{00A99D}
+\definecolor{RoyalBlue}{HTML}{0071BC}
+\definecolor{mytoccolor}{HTML}{886830}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+% \begin{frame}{Table of Contents}
+%     \tableofcontents
+% \end{frame}
+
+\begin{frame}{Introduction}
+    The Wildcat theme is a Beamer theme for Northwestern University, but which can be modified easily with different colors, fonts, and even background patterns. 
+    \\ ~ \\
+    The theme is inspired by the \href{https://github.com/matze/mtheme}{Metropolis theme} by Matthias Vogelgesang. It incorporates the Northwestern University facet design pattern, but otherwise has a clean, simple look, and relatively few bells and whistles. It is licensed under the GNU GENERAL PUBLIC LICENSE.
+\end{frame}
+\section{Weighted Congestion Games}
+\begin{frame}
+    \frametitle{Definitions}
+    \begin{itemize}
+        \item $\mcN$: Set of players
+        \item $\mcE$: The ground set of resources
+        \item For each player $j \in \mcN$, let $S_j\subseteq 2^{\mcE}$ be the set of strategies available to player $j$. Let $S=\bigtimes\limits_{j\in\mcN}S_i$.
+        \item For each $j\in \mcN$ and each $e\in \mcE$ there is a weight of the resource $w_{ej}\in\bbR^+$.
+        \item For each $e\in \mcE$ the cost of resource $e$ is an affine function $C_e:\bbR\to\bbR$ where $c_e(x)=a_e\cdot x+b_e$
+        \item For any strategy profile $f\in S$, the cost of player $j$ is $\mathcolor{RoyalBlue}{\textbf{Cost}(f)_j=\sum\limits_{e\in f_j}w_{ej}\cdot c_e(l_e(f))}$ where $\mathcolor{RoyalBlue}{l_e(f)=\sum\limits_{j':e\in f_{j'}}w_{ej'}}$ is the load on resource $e$. Do $$\text{Cost}(f)=\sum_{j\in\mcN}\sum_{e\in f_j}w_{ej}\cdot c_e(l_e(f))=\sum_{e\in\mcE}a_e\cdot l_e(f)+b_e\cdot l_e(f)$$
+    \end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Convex program of WCG}
+
+\framesubtitle{Setting up the variables}
+For any player $j\in\mcN$ and $f_j\in S_j$ let          \only<1>{
+    \(
+    \color{myr}\boldsymbol{L_{j,f_j} = \sum\limits_{e \in f_j} w_{ej} \cdot c_e(w_{ej})}
+    \)
+}
+% From slide 2 onwards: Normal weight and black
+\only<2->{
+    \(
+    L_{j,f_j} = \sum\limits_{e \in f_j} w_{ej} \cdot c_e(w_{ej})
+    \)
+}i.e. the cost incurred by player $j$ when it plays strategy $f_j$.\pause
+
+\begin{itemize}[itemsep=2em, topsep=2em]
+    \item  \only<2>{$\mathcolor{myr}{\boldsymbol{x\st_{j,f_j}}}$} \only<3->{$x\st_{j,f_j}$} $\coloneqq$ Variable for player $j$ playing strategy $f_j$ for all $j\in\mcN$ and $f_j\in S_j$\pause
+
+    \item {$\mathcolor{myr}{\boldsymbol{y_e}}$} $\coloneqq$ Variable for the load on resource $e$ for all $e\in\mcE$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Convex program of WCG}
+    \framesubtitle{Quadratic Program}  
+\begin{mini*}{}{\sum_{j\in\mcN}\sum_{f_j\in S_j}x\st_{j,f_j}\cdot L\st_{j,f_j}+\sum_{e\in\mcE}a_e\cdot y_e^2}{}{}
+    \addConstraint{\sum_{f_j\in S_j}x\st_{j,f_j}}{\leq 1}{\quad\forall\ j\in\mcN}
+    \addConstraint{\sum_{j\in\mcN}\sum_{f_j\in S_j}\sum_{e\in f_j}w_{ej}\cdot x\st_{j,f_j}}{\leq y_e}{\quad\forall \ e\in\mcE}
+    \addConstraint{x\st_{j,f_j}}{\geq 0}{\quad \forall\ j\in\mcN,\ f_j\in S_j}
+\end{mini*}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Box Examples (Default)}
+    You can also just use the Beamer default blocks in the usual way. The default is non-rounded corners, non-shaded.
+    \begin{block}{Main Block}
+    This is an example block
+    \end{block}
+    \begin{alertblock}{Alert Box}
+    This is an alert box
+    \end{alertblock}
+    \begin{exampleblock}{Example Box}
+        This is an example box
+    \end{exampleblock}
+    \end{frame}
+
+\begin{frame}{Font Style: Default}
+    The theme uses the official Northwestern fonts, which are Campton (for titles) and Akkurat Pro (for copy). These are not free fonts, so you will need to purchase (and install) them if you want to use them.
+    \\ ~ \\
+    The wildcat theme uses the OTF files directly, so as long as you have the OTFs in a similar relative directory as the demo files, it should work (this includes on Overleaf). If you have installed them, you can look at the \texttt{\textbackslash beamerfontthemewildcat-installed.sty} file to see how to use the installed fonts.
+    \\ ~ \\
+    Note: You need to us XeLaTeX or LuaLaTeX to compile in order to use custom fonts. If you use PDFLaTeX, you will get an error.
+\end{frame}
+
+\begin{frame}{Font Style: Overleaf \& Local}
+    There is also a font theme called \texttt{wildcat-overleaf} which will load fonts available from Overleaf (as well as local \LaTeX ~ installations). To use this, you just need to specify in your preamble the following command \textit{after} loading the theme: 
+    \texttt{\textbackslash usefonttheme\{wildcat-overleaf\}}
+\end{frame}
+
+\begin{frame}[fragile]{Font Style: Default in Overleaf}
+    An alternative is to upload the OTF or TTF files to your Overleaf directory, and then change the \texttt{beamerfontthemewildcat.sty} files to specify those font files rather than the font family generally. Alternatively, simply add the lines of code directly to your preamble \textit{after} loading the theme:
+    \footnotesize
+    \begin{verbatim}
+% Create new font families from OTF fonts
+\newfontfamily\CamptonMedium[Path=fonts/Campton/, Extension=.otf]{Campton Medium}
+\newfontfamily\CamptonLight[Path=fonts/Campton/, Extension=.otf]{Campton Light}
+
+% Change title font to Campton
+\setbeamerfont{title}{family=\CamptonMedium, size=\LARGE}
+\setbeamerfont{author}{family=\CamptonLight, size=\small}
+\setbeamerfont{frametitle}{family=\CamptonMedium, size=\Large}
+\setbeamerfont{section}{family=\CamptonLight, size=\LARGE}
+    \end{verbatim}
+\end{frame}
+
+\begin{frame}{Font Style: Examples}
+    Here is what the body font will look like under normal usage:
+    \begin{itemize}
+        \item Regular
+        \item \textit{Italic}
+        \item \textbf{Bold}
+        \item \textbf{\textit{Bold Italic}}
+        \item \alert{Alert}
+        \item \alert{\textit{Alert Italic}}
+        \item Math: $$e = \lim_{n \rightarrow \infty}\left(1+\frac{1}{n}\right)^{n}$$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Sections}
+    You can use \texttt{\textbackslash section\{\}} to group slides into sections. This will automatically add a section title slide at the beginning of each section.
+    \\ ~ \\
+    You can turn this off by adding \texttt{\textbackslash AtBeginSection\{\}} to your preamble (this tells beamer to do precisely nothing when a new section starts).
+\end{frame}
+
+
+\section{Section Example}
+
+\begin{frame}[fragile]{Advanced: Altering the background pattern}
+    The background pattern is created using the \texttt{tikz} package. You can modify the background pattern by changing the \texttt{beamerinnerthemewildcat.sty} file. The background pattern is created in the \texttt{\textbackslash bgpattern} command defined at the top of the file.
+    \\ ~ \\
+    You don't necessarily need to change the file itself. You can just re-define those commands in your preamble. For example, if you wanted to change the background pattern to be just the main color, you could use the following code in your preamble: \\
+    
+    \scriptsize
+    \begin{verbatim}
+\renewcommand{\bgpattern}{
+    \draw[color=wcprimary,fill=wcprimary] (0,0) rectangle (\paperwidth,\paperheight);
+}
+    \end{verbatim} 
+\end{frame}
+
+
+
+
+% Blank Frame
+\begin{frame}[plain]{}
+    Here is a blank frame. You can use this to add a blank page to your presentation. You can specify this via:
+    \\ ~ \\
+    \texttt{\textbackslash begin\{frame\}[plain]\{\}} \\
+    \texttt{...} \\
+    \texttt{\textbackslash end\{frame\}}
+\end{frame}
+
+% Standout frame
+\begin{frame}{Standout Slides}
+    You can use the \texttt{standout} command to create a slide with a large font and no title. This is useful for a slide that you want to stand out, but which doesn't need a title.
+    \\ ~ \\
+    \texttt{\textbackslash standout\{Questions?\}}
+
+\end{frame}
+
+\standout{Questions?}
+
+
+\end{document}
