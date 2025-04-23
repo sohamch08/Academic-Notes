@@ -1,8 +1,10 @@
-% !TEX TS-program = xelatex
+% !TEX program = xelatex
 \documentclass[aspectratio=1610]{beamer}
 \usepackage[T1]{fontenc}
 \usetheme{wildcat}
 \usepackage{xcolor, mathtools, optidef}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing, arrows.meta, shapes, calc, positioning}
 \DeclareMathOperator{\poa}{\mathsf{PoA}}
 \input{../letterfonts}
 \input{macros}
@@ -45,7 +47,7 @@
 %     \draw[color=wcprimary,fill=wcprimary] (0,0) rectangle (\paperwidth,\paperheight);
 % }
 
-\definecolor{doc}{RGB}{0,60,110}
+\definecolor{doc}{HTML}{DCBCD0}
 \definecolor{myg}{RGB}{56, 140, 70}
 \definecolor{myb}{RGB}{45, 111, 177}
 \definecolor{myr}{RGB}{199, 68, 64}
@@ -93,7 +95,7 @@
         \item For each player $j \in \mcN$, let $S_j\subseteq 2^{\mcE}$ be the set of strategies available to player $j$. Let $S=\bigtimes\limits_{j\in\mcN}S_i$.
         \item For each $j\in \mcN$ and each $e\in \mcE$ there is a weight of the resource $w_{ej}\in\bbR^+$.
         \item For each $e\in \mcE$ the cost of resource $e$ is an affine function $C_e:\bbR\to\bbR$ where $c_e(x)=a_e\cdot x+b_e$
-        \item For any strategy profile $f\in S$, the cost of player $j$ is $\mathcolor{RoyalBlue}{\textbf{Cost}(f)_j=\sum\limits_{e\in f_j}w_{ej}\cdot c_e(l_e(f))}$ where $\mathcolor{RoyalBlue}{l_e(f)=\sum\limits_{j':e\in f_{j'}}w_{ej'}}$ is the load on resource $e$. Do $$\text{Cost}(f)=\sum_{j\in\mcN}\sum_{e\in f_j}w_{ej}\cdot c_e(l_e(f))=\sum_{e\in\mcE}a_e\cdot l_e(f)+b_e\cdot l_e(f)$$
+        \item For any strategy profile $f\in S$, the cost of player $j$ is $\mathcolor{mytheoremfr}{\textbf{Cost}(f)_j=\sum\limits_{e\in f_j}w_{ej}\cdot c_e(l_e(f))}$ where $\mathcolor{mytheoremfr}{l_e(f)=\sum\limits_{j':e\in f_{j'}}w_{ej'}}$ is the load on resource $e$. Do $$\text{Cost}(f)=\sum_{j\in\mcN}\sum_{e\in f_j}w_{ej}\cdot c_e(l_e(f))=\sum_{e\in\mcE}a_e\cdot l_e(f)+b_e\cdot l_e(f)$$
     \end{itemize}
 \end{frame}
 \begin{frame}
@@ -102,7 +104,7 @@
 \framesubtitle{Setting up the variables}
 For any player $j\in\mcN$ and $f_j\in S_j$ let          \only<1>{
     \(
-    \color{myr}\boldsymbol{L_{j,f_j} = \sum\limits_{e \in f_j} w_{ej} \cdot c_e(w_{ej})}
+    \color{myr}{L\st_{j,f_j} = \sum\limits_{e \in f_j} w_{ej} \cdot c_e(w_{ej})}
     \)
 }
 % From slide 2 onwards: Normal weight and black
@@ -119,113 +121,161 @@ For any player $j\in\mcN$ and $f_j\in S_j$ let          \only<1>{
 \end{itemize}
 \end{frame}
 
+% \begin{frame}{Convex program of WCG}
+%     \framesubtitle{Quadratic Program}  
+% \begin{mini*}{}{\sum_{j\in\mcN}\sum_{f_j\in S_j}x\st_{j,f_j}\cdot L\st_{j,f_j}+\sum_{e\in\mcE}a_e\cdot y_e^2}{}{}
+%     \addConstraint{\sum_{f_j\in S_j}x\st_{j,f_j}}{\leq 1}{\quad\forall\ j\in\mcN}
+%     \addConstraint{\sum_{j\in\mcN}\sum_{f_j\in S_j}\sum_{e\in f_j}w_{ej}\cdot x\st_{j,f_j}}{\leq y_e}{\quad\forall \ e\in\mcE}
+%     \addConstraint{x\st_{j,f_j}}{\geq 0}{\quad \forall\ j\in\mcN,\ f_j\in S_j}
+% \end{mini*}
+    
+% \end{frame}
+
 \begin{frame}{Convex program of WCG}
     \framesubtitle{Quadratic Program}  
-\begin{mini*}{}{\sum_{j\in\mcN}\sum_{f_j\in S_j}x\st_{j,f_j}\cdot L\st_{j,f_j}+\sum_{e\in\mcE}a_e\cdot y_e^2}{}{}
+    
+    \visible<1->{\begin{mini*}{}{\sum_{j\in\mcN}\sum_{f_j\in S_j}x\st_{j,f_j}\cdot L\st_{j,f_j}+\sum_{e\in\mcE}a_e\cdot y_e^2}{}{}
+        \addConstraint{\sum_{f_j\in S_j}x\st_{j,f_j}}{\leq 1}{\quad\forall\ j\in\mcN}
+        \addConstraint{\sum_{j\in\mcN}\sum_{f_j\in S_j}\sum_{e\in f_j}w_{ej}\cdot x\st_{j,f_j}}{\leq y_e}{\quad\forall \ e\in\mcE}
+        \addConstraint{x\st_{j,f_j}}{\geq 0}{\quad \forall\ j\in\mcN,\ f_j\in S_j}
+    \end{mini*}}
+    
+    \only<2>{  \begin{tikzpicture}[remember picture, overlay]
+        % Coordinates for the first constraint
+        \coordinate (constraint) at ($(current page.center)+(2,0.2)$);
+        
+        % UPWARD-FACING curly brace under the first constraint
+        \draw 
+            ($(constraint)+(-2.6,-0.65)$) rectangle ($(constraint)+(1.5,+0.45)$);
+            
+        % Arrow start point (below the brace)
+        \coordinate (arrowstart) at ($(constraint)+(0,-0.65)$);
+        
+       
+            % Explanation box
+            \node[draw, fill=doc, 
+                  text width=10cm, align=left,line width=1pt, 
+                  below left=1cm and -1.5cm of arrowstart] (explanation) {
+                This constraint makes sure only one strategy is played by each player.
+            };
+            
+            % Straight tapered arrow
+            \fill[black, draw=black] 
+                (arrowstart) -- 
+                ($(explanation.north)-(0.2,0)$) -- 
+                ($(explanation.north)+(0.2,0)$) -- 
+                cycle;                
+    \end{tikzpicture}}  
+    \only<3>{  \begin{tikzpicture}[remember picture, overlay]
+        % Coordinates for the first constraint
+        \coordinate (constraint) at ($(current page.center)+(2,0.2)$);
+        
+        % UPWARD-FACING curly brace under the first constraint
+        \draw 
+            ($(constraint)+(-4.65,-1.85)$) rectangle ($(constraint)+(1.5,-0.65)$);
+            
+        % Arrow start point (below the brace)
+        \coordinate (arrowstart) at ($(constraint)+(-2.5,-1.85)$);
+        
+       
+            % Explanation box
+            \node[draw, fill=doc, 
+                  text width=11cm, align=left,line width=1pt, 
+                  below left=1cm and -5cm of arrowstart] (explanation) {
+                This constraint makes sure that the load on each resource is at least sum of the weights of the players using that resource.
+            };
+            
+            % Straight tapered arrow
+            \fill[black, draw=black] 
+                (arrowstart) -- 
+                ($(explanation.north)+(0.2,0)$) -- 
+                ($(explanation.north)+(0.4,0)$) -- 
+                cycle;                
+    \end{tikzpicture}}
+\end{frame}
+
+\begin{frame}{Dual Program}
+We denote the dual variables by $\{\mu_j\}_{j\in\mcN}$, $\{\Phi_e\}_{e\in\mcE}$ and $\{\Psi_e\}_{e\in\mcE}$. Then we use the Fenchel Duality to obtain the dual  of the convex program.
+\only<1>{\begin{maxi*}{}{\sum_{j\in\mcN}\mu_j-\sum_{e\in\mcE} \frac1{4a_e}\cdot \Phi_e^2}{}{}
+    \addConstraint{\mu_j-\sum\limits_{e\in f_j}w_{e,j}\cdot \Psi_e}{\leq L\st_{j,f_j}}{\quad\forall\ j\in\mcN,f_j\in S_j}
+    \addConstraint{\Psi_e}{\leq\Phi_e}{\quad\forall\ e\in\mcE}
+    \addConstraint{\mu_j}{\geq 0}{\quad\forall\ j\in\mcN}
+    \addConstraint{\Phi_e}{\geq 0}{\quad\forall\ e\in\mcE}
+\end{maxi*}}
+
+\only<2>{\begin{maxi*}{}{\sum_{j\in\mcN}\mu_j-\sum_{e\in\mcE} \frac1{4a_e}\cdot \Phi_e^2}{}{}
+    \addConstraint{\mu_j-\sum\limits_{e\in f_j}w_{e,j}\cdot \Phi_e}{\leq L\st_{j,f_j}}{\quad\forall\ j\in\mcN,f_j\in S_j}
+    \addConstraint{\mu_j}{\geq 0}{\quad\forall\ j\in\mcN}
+    \addConstraint{\Phi_e}{\geq 0}{\quad\forall\ e\in\mcE}
+\end{maxi*}}\pause
+
+\begin{tblock}{Remark}
+    We can take $\Phi_e=\Psi_e$ for all $e\in \mcE$ as from every \textsf{CCE} we will assign $\Phi_e$ and $\Psi_e$ to be the same value
+\end{tblock}
+
+
+\end{frame}
+
+\begin{frame}{$\left(1+\frac1\dl\right)$-Approximate Solution from Primal}
+
+    Consider the following changed primal program:
+    \begin{mini*}{}{\mathcolor{myr}{\boldsymbol{\frac1{\dl}}}\sum_{j\in\mcN}\sum_{f_j\in S_j}x\st_{j,f_j}\cdot L\st_{j,f_j}+\sum_{e\in\mcE}a_e\cdot y_e^2}{}{}
     \addConstraint{\sum_{f_j\in S_j}x\st_{j,f_j}}{\leq 1}{\quad\forall\ j\in\mcN}
     \addConstraint{\sum_{j\in\mcN}\sum_{f_j\in S_j}\sum_{e\in f_j}w_{ej}\cdot x\st_{j,f_j}}{\leq y_e}{\quad\forall \ e\in\mcE}
     \addConstraint{x\st_{j,f_j}}{\geq 0}{\quad \forall\ j\in\mcN,\ f_j\in S_j}
 \end{mini*}
-    
+
+If $\dl=1$ we get our original program. For any $\dl>0$ we get a $\lt(1+\frac1{\dl}\rt)$-approximate solution.
 \end{frame}
 
-\begin{frame}
-    \frametitle{Box Examples (Default)}
-    You can also just use the Beamer default blocks in the usual way. The default is non-rounded corners, non-shaded.
-    \begin{block}{Main Block}
-    This is an example block
-    \end{block}
-    \begin{alertblock}{Alert Box}
-    This is an alert box
-    \end{alertblock}
-    \begin{exampleblock}{Example Box}
-        This is an example box
-    \end{exampleblock}
-    \end{frame}
+\begin{frame}{Dual don't need to change}
+    Taking the dual of the new program we get the following:
+    \begin{maxi*}{}{\sum_{j\in\mcN}\mu_j-\sum_{e\in\mcE} \frac1{4a_e}\cdot \Phi_e^2}{}{}
+    \addConstraint{\mu_j-\sum\limits_{e\in f_j}w_{e,j}\cdot \mathcolor{myr}{\boldsymbol{\Phi_e}}}{\leq \mathcolor{myr}{\boldsymbol{\frac{L\st_{j,f_j}}{\dl}}}}{\quad\forall\ j\in\mcN,f_j\in S_j}
+    \addConstraint{\mu_j}{\geq 0}{\quad\forall\ j\in\mcN}
+    \addConstraint{\Phi_e}{\geq 0}{\quad\forall\ e\in\mcE}
+    \end{maxi*}
 
-\begin{frame}{Font Style: Default}
-    The theme uses the official Northwestern fonts, which are Campton (for titles) and Akkurat Pro (for copy). These are not free fonts, so you will need to purchase (and install) them if you want to use them.
-    \\ ~ \\
-    The wildcat theme uses the OTF files directly, so as long as you have the OTFs in a similar relative directory as the demo files, it should work (this includes on Overleaf). If you have installed them, you can look at the \texttt{\textbackslash beamerfontthemewildcat-installed.sty} file to see how to use the installed fonts.
-    \\ ~ \\
-    Note: You need to us XeLaTeX or LuaLaTeX to compile in order to use custom fonts. If you use PDFLaTeX, you will get an error.
+So instead if we work with the old dual program and scale our variables $\mu_j$, $\Phi_e$ and $\Psi_e$ by $\frac1{\dl}$ we still get a feasible solution to the new dual program.
 \end{frame}
-
-\begin{frame}{Font Style: Overleaf \& Local}
-    There is also a font theme called \texttt{wildcat-overleaf} which will load fonts available from Overleaf (as well as local \LaTeX ~ installations). To use this, you just need to specify in your preamble the following command \textit{after} loading the theme: 
-    \texttt{\textbackslash usefonttheme\{wildcat-overleaf\}}
-\end{frame}
-
-\begin{frame}[fragile]{Font Style: Default in Overleaf}
-    An alternative is to upload the OTF or TTF files to your Overleaf directory, and then change the \texttt{beamerfontthemewildcat.sty} files to specify those font files rather than the font family generally. Alternatively, simply add the lines of code directly to your preamble \textit{after} loading the theme:
-    \footnotesize
-    \begin{verbatim}
-% Create new font families from OTF fonts
-\newfontfamily\CamptonMedium[Path=fonts/Campton/, Extension=.otf]{Campton Medium}
-\newfontfamily\CamptonLight[Path=fonts/Campton/, Extension=.otf]{Campton Light}
-
-% Change title font to Campton
-\setbeamerfont{title}{family=\CamptonMedium, size=\LARGE}
-\setbeamerfont{author}{family=\CamptonLight, size=\small}
-\setbeamerfont{frametitle}{family=\CamptonMedium, size=\Large}
-\setbeamerfont{section}{family=\CamptonLight, size=\LARGE}
-    \end{verbatim}
-\end{frame}
-
-\begin{frame}{Font Style: Examples}
-    Here is what the body font will look like under normal usage:
+\begin{frame}{Setting the Dual Variables}
+    Let $\sg$ is any \textsf{CCE} of the  game. Set
     \begin{itemize}
-        \item Regular
-        \item \textit{Italic}
-        \item \textbf{Bold}
-        \item \textbf{\textit{Bold Italic}}
-        \item \alert{Alert}
-        \item \alert{\textit{Alert Italic}}
-        \item Math: $$e = \lim_{n \rightarrow \infty}\left(1+\frac{1}{n}\right)^{n}$$
-    \end{itemize}
+        \item $\mu_j=\dfrac1{\dl}\cdot\underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]$
+        \item $\Phi_e=\dfrac1{\dl}\cdot a_e\cdot \underset{f\sim \sg}{\bbE}[l_e(f)]$
+    \end{itemize}\pause
+
+    \begin{align*}
+        \text{Cost}_j(f_j,\theta_{-j}) & \leq \sum_{e\in f_j}w_{e,j}\cdot (a_e(l_e(\theta)+w_{e,j})+b_e)\\
+        & = \sum_{e\in f_j}w_{e,j}(a_e\cdot w_{e,j}+b_e)+\sum_{e\in f_j}w_{e,j}\cdot a_e\cdot l_e(\theta)\\
+        & = L\st_{j,f_j}+\sum_{e\in f_j}w_{e,j}\cdot a_e\cdot l_e(\theta)
+    \end{align*}
 \end{frame}
 
-\begin{frame}{Sections}
-    You can use \texttt{\textbackslash section\{\}} to group slides into sections. This will automatically add a section title slide at the beginning of each section.
-    \\ ~ \\
-    You can turn this off by adding \texttt{\textbackslash AtBeginSection\{\}} to your preamble (this tells beamer to do precisely nothing when a new section starts).
+\begin{frame}{Bound on \textsf{PoA} : I}
+    \vspace*{-8mm}
+    \begin{align*}
+        \sum_{e\in \mcE} \frac1{ a_e}\cdot a_e^2\cdot \underset{f\sim \sg}{\bbE}[l_e(f)]^2 & = \sum_{e\in \mcE}  a_e\cdot\underset{f\sim \sg}{\bbE}[l_e(f)]^2 \\
+        & \leq \underset{f\sim \sg}{\bbE}\lt[ \sum_{e\in\mcN} a_e\cdot l_e^2(f)  \rt]& [\text{Jensen}]\\
+        & \leq \underset{f\sim \sg}{\bbE}\lt[ \sum_{e\in\mcN} \text{Cost}_j(f)\rt] =\sum_{j\in\mcN}\underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]
+    \end{align*}
+\end{frame}
+\begin{frame}{Bound on \textsf{PoA} : II}
+    \begin{align*}
+        \text{Primal-Sol} & \geq \sum\limits_{j\in \mcN}\frac1{\dl}\cdot \underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]-\sum_{e\in \mcE}\frac1{\dl^2}\cdot \frac1{4}a_e\cdot \underset{f\sim \sg}{\bbE}[l_e(f)]^2\\
+        & \geq  \frac{1}{\dl}\sum_{j\in\mcN}\underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]-\frac1{4\cdot \dl^2}\cdot \sum_{e\in \mcE}\underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]\\
+        & = \frac{4\dl-1}{4\dl^2}\sum_{e\in \mcE}\underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]
+    \end{align*}\pause
+
+Primal is $\lt(1+\frac1{\dl}\rt)$-approximate solution to the optimal solution. So we get a bound of $\mathcolor{myr}{\lt(1+\frac1{\dl}\rt)\dfrac{4\dl^2}{4\dl-1}}$ bound on $\textsf{PoA}$.  Take $\dl=\frac{1+\sqrt{5}}{4}$ you will get a bound of $\mathcolor{myr}{1+\Phi}$ where $\Phi$ is the golden ratio.
 \end{frame}
 
-
-\section{Section Example}
-
-\begin{frame}[fragile]{Advanced: Altering the background pattern}
-    The background pattern is created using the \texttt{tikz} package. You can modify the background pattern by changing the \texttt{beamerinnerthemewildcat.sty} file. The background pattern is created in the \texttt{\textbackslash bgpattern} command defined at the top of the file.
-    \\ ~ \\
-    You don't necessarily need to change the file itself. You can just re-define those commands in your preamble. For example, if you wanted to change the background pattern to be just the main color, you could use the following code in your preamble: \\
-    
-    \scriptsize
-    \begin{verbatim}
-\renewcommand{\bgpattern}{
-    \draw[color=wcprimary,fill=wcprimary] (0,0) rectangle (\paperwidth,\paperheight);
-}
-    \end{verbatim} 
-\end{frame}
+\section{Simultaneous Second-Price Auctions}
 
 
 
 
-% Blank Frame
-\begin{frame}[plain]{}
-    Here is a blank frame. You can use this to add a blank page to your presentation. You can specify this via:
-    \\ ~ \\
-    \texttt{\textbackslash begin\{frame\}[plain]\{\}} \\
-    \texttt{...} \\
-    \texttt{\textbackslash end\{frame\}}
-\end{frame}
 
-% Standout frame
-\begin{frame}{Standout Slides}
-    You can use the \texttt{standout} command to create a slide with a large font and no title. This is useful for a slide that you want to stand out, but which doesn't need a title.
-    \\ ~ \\
-    \texttt{\textbackslash standout\{Questions?\}}
-
-\end{frame}
 
 \standout{Questions?}
 
