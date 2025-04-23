@@ -74,7 +74,7 @@
 \begin{document}
 
 \begin{frame}
-\titlepage
+	\titlepage
 \end{frame}
 
 % \begin{frame}{Table of Contents}
@@ -82,44 +82,44 @@
 % \end{frame}
 
 \begin{frame}{Introduction}
-    The Wildcat theme is a Beamer theme for Northwestern University, but which can be modified easily with different colors, fonts, and even background patterns. 
-    \\ ~ \\
-    The theme is inspired by the \href{https://github.com/matze/mtheme}{Metropolis theme} by Matthias Vogelgesang. It incorporates the Northwestern University facet design pattern, but otherwise has a clean, simple look, and relatively few bells and whistles. It is licensed under the GNU GENERAL PUBLIC LICENSE.
+	The Wildcat theme is a Beamer theme for Northwestern University, but which can be modified easily with different colors, fonts, and even background patterns.
+	\\ ~ \\
+	The theme is inspired by the \href{https://github.com/matze/mtheme}{Metropolis theme} by Matthias Vogelgesang. It incorporates the Northwestern University facet design pattern, but otherwise has a clean, simple look, and relatively few bells and whistles. It is licensed under the GNU GENERAL PUBLIC LICENSE.
 \end{frame}
 
 \section{Weighted Congestion Games}
 \begin{frame}
-    \frametitle{Definitions}
-    \begin{itemize}
-        \item $\mcN$: Set of players
-        \item $\mcE$: The ground set of resources
-        \item For each player $j \in \mcN$, let $S_j\subseteq 2^{\mcE}$ be the set of strategies available to player $j$. Let $S=\bigtimes\limits_{j\in\mcN}S_i$.
-        \item For each $j\in \mcN$ and each $e\in \mcE$ there is a weight of the resource $w_{ej}\in\bbR^+$.
-        \item For each $e\in \mcE$ the cost of resource $e$ is an affine function $C_e:\bbR\to\bbR$ where $c_e(x)=a_e\cdot x+b_e$
-        \item For any strategy profile $f\in S$, the cost of player $j$ is $\mathcolor{mytheoremfr}{\textbf{Cost}(f)_j=\sum\limits_{e\in f_j}w_{ej}\cdot c_e(l_e(f))}$ where $\mathcolor{mytheoremfr}{l_e(f)=\sum\limits_{j':e\in f_{j'}}w_{ej'}}$ is the load on resource $e$. Do $$\text{Cost}(f)=\sum_{j\in\mcN}\sum_{e\in f_j}w_{ej}\cdot c_e(l_e(f))=\sum_{e\in\mcE}a_e\cdot l_e(f)+b_e\cdot l_e(f)$$
-    \end{itemize}
+	\frametitle{Definitions}
+	\begin{itemize}
+		\item $\mcN$: Set of players
+		\item $\mcE$: The ground set of resources
+		\item For each player $j \in \mcN$, let $S_j\subseteq 2^{\mcE}$ be the set of strategies available to player $j$. Let $S=\bigtimes\limits_{j\in\mcN}S_i$.
+		\item For each $j\in \mcN$ and each $e\in \mcE$ there is a weight of the resource $w_{ej}\in\bbR^+$.
+		\item For each $e\in \mcE$ the cost of resource $e$ is an affine function $C_e:\bbR\to\bbR$ where $c_e(x)=a_e\cdot x+b_e$
+		\item For any strategy profile $f\in S$, the cost of player $j$ is $\mathcolor{mytheoremfr}{\textbf{Cost}(f)_j=\sum\limits_{e\in f_j}w_{ej}\cdot c_e(l_e(f))}$ where $\mathcolor{mytheoremfr}{l_e(f)=\sum\limits_{j':e\in f_{j'}}w_{ej'}}$ is the load on resource $e$. Do $$\text{Cost}(f)=\sum_{j\in\mcN}\sum_{e\in f_j}w_{ej}\cdot c_e(l_e(f))=\sum_{e\in\mcE}a_e\cdot l_e(f)+b_e\cdot l_e(f)$$
+	\end{itemize}
 \end{frame}
 \begin{frame}
-\frametitle{Convex program of WCG}
+	\frametitle{Convex program of WCG}
 
-\framesubtitle{Setting up the variables}
-For any player $j\in\mcN$ and $f_j\in S_j$ let          \only<1>{
-    \(
-    \color{myr}{L\st_{j,f_j} = \sum\limits_{e \in f_j} w_{ej} \cdot c_e(w_{ej})}
-    \)
-}
-% From slide 2 onwards: Normal weight and black
-\only<2->{
-    \(
-    L_{j,f_j} = \sum\limits_{e \in f_j} w_{ej} \cdot c_e(w_{ej})
-    \)
-}i.e. the cost incurred by player $j$ when it plays strategy $f_j$.\pause
+	\framesubtitle{Setting up the variables}
+	For any player $j\in\mcN$ and $f_j\in S_j$ let          \only<1>{
+		\(
+		\color{myr}{L\st_{j,f_j} = \sum\limits_{e \in f_j} w_{ej} \cdot c_e(w_{ej})}
+		\)
+	}
+	% From slide 2 onwards: Normal weight and black
+	\only<2->{
+		\(
+		L\st_{j,f_j} = \sum\limits_{e \in f_j} w_{ej} \cdot c_e(w_{ej})
+		\)
+	}i.e. the cost incurred by player $j$ when it plays strategy $f_j$.\pause
 
-\begin{itemize}[itemsep=2em, topsep=2em]
-    \item  \only<2>{$\mathcolor{myr}{\boldsymbol{x\st_{j,f_j}}}$} \only<3->{$x\st_{j,f_j}$} $\coloneqq$ Variable for player $j$ playing strategy $f_j$ for all $j\in\mcN$ and $f_j\in S_j$\pause
+	\begin{itemize}[itemsep=2em, topsep=2em]
+		\item  \only<2>{$\mathcolor{myr}{\boldsymbol{x\st_{j,f_j}}}$} \only<3->{$x\st_{j,f_j}$} $\coloneqq$ Variable for player $j$ playing strategy $f_j$ for all $j\in\mcN$ and $f_j\in S_j$\pause
 
-    \item {$\mathcolor{myr}{\boldsymbol{y_e}}$} $\coloneqq$ Variable for the load on resource $e$ for all $e\in\mcE$
-\end{itemize}
+		\item {$\mathcolor{myr}{\boldsymbol{y_e}}$} $\coloneqq$ Variable for the load on resource $e$ for all $e\in\mcE$
+	\end{itemize}
 \end{frame}
 
 % \begin{frame}{Convex program of WCG}
@@ -129,309 +129,396 @@ For any player $j\in\mcN$ and $f_j\in S_j$ let          \only<1>{
 %     \addConstraint{\sum_{j\in\mcN}\sum_{f_j\in S_j}\sum_{e\in f_j}w_{ej}\cdot x\st_{j,f_j}}{\leq y_e}{\quad\forall \ e\in\mcE}
 %     \addConstraint{x\st_{j,f_j}}{\geq 0}{\quad \forall\ j\in\mcN,\ f_j\in S_j}
 % \end{mini*}
-    
+
 % \end{frame}
 
 \begin{frame}{Convex program of WCG}
-    \framesubtitle{Quadratic Program}  
-    
-    \visible<1->{\begin{mini*}{}{\sum_{j\in\mcN}\sum_{f_j\in S_j}x\st_{j,f_j}\cdot L\st_{j,f_j}+\sum_{e\in\mcE}a_e\cdot y_e^2}{}{}
-        \addConstraint{\sum_{f_j\in S_j}x\st_{j,f_j}}{\leq 1}{\quad\forall\ j\in\mcN}
-        \addConstraint{\sum_{j\in\mcN}\sum_{f_j\in S_j}\sum_{e\in f_j}w_{ej}\cdot x\st_{j,f_j}}{\leq y_e}{\quad\forall \ e\in\mcE}
-        \addConstraint{x\st_{j,f_j}}{\geq 0}{\quad \forall\ j\in\mcN,\ f_j\in S_j}
-    \end{mini*}}
-    
-    \only<2>{  \begin{tikzpicture}[remember picture, overlay]
-        % Coordinates for the first constraint
-        \coordinate (constraint) at ($(current page.center)+(2,0.2)$);
-        
-        % UPWARD-FACING curly brace under the first constraint
-        \draw 
-            ($(constraint)+(-2.6,-0.65)$) rectangle ($(constraint)+(1.5,+0.45)$);
-            
-        % Arrow start point (below the brace)
-        \coordinate (arrowstart) at ($(constraint)+(0,-0.65)$);
-        
-       
-            % Explanation box
-            \node[draw, fill=doc, 
-                  text width=10cm, align=left,line width=1pt, 
-                  below left=1cm and -1.5cm of arrowstart] (explanation) {
-                This constraint makes sure only one strategy is played by each player.
-            };
-            
-            % Straight tapered arrow
-            \fill[black, draw=black] 
-                (arrowstart) -- 
-                ($(explanation.north)-(0.2,0)$) -- 
-                ($(explanation.north)+(0.2,0)$) -- 
-                cycle;                
-    \end{tikzpicture}}  
-    \only<3>{  \begin{tikzpicture}[remember picture, overlay]
-        % Coordinates for the first constraint
-        \coordinate (constraint) at ($(current page.center)+(2,0.2)$);
-        
-        % UPWARD-FACING curly brace under the first constraint
-        \draw 
-            ($(constraint)+(-4.65,-1.85)$) rectangle ($(constraint)+(1.5,-0.65)$);
-            
-        % Arrow start point (below the brace)
-        \coordinate (arrowstart) at ($(constraint)+(-2.5,-1.85)$);
-        
-       
-            % Explanation box
-            \node[draw, fill=doc, 
-                  text width=11cm, align=left,line width=1pt, 
-                  below left=1.2cm and -5cm of arrowstart] (explanation) {
-                This constraint makes sure that the load on each resource is at least sum of the weights of the players using that resource.
-            };
-            
-            % Straight tapered arrow
-            \fill[black, draw=black] 
-                (arrowstart) -- 
-                ($(explanation.north)+(0.2,0)$) -- 
-                ($(explanation.north)+(0.4,0)$) -- 
-                cycle;                
-    \end{tikzpicture}}
+	\framesubtitle{Quadratic Program}
+
+	\visible<1->{\begin{mini*}{}{\sum_{j\in\mcN}\sum_{f_j\in S_j}x\st_{j,f_j}\cdot L\st_{j,f_j}+\sum_{e\in\mcE}a_e\cdot y_e^2}{}{}
+			\addConstraint{\sum_{f_j\in S_j}x\st_{j,f_j}}{\leq 1}{\quad\forall\ j\in\mcN}
+			\addConstraint{\sum_{j\in\mcN}\sum_{f_j\in S_j}\sum_{e\in f_j}w_{ej}\cdot x\st_{j,f_j}}{\leq y_e}{\quad\forall \ e\in\mcE}
+			\addConstraint{x\st_{j,f_j}}{\geq 0}{\quad \forall\ j\in\mcN,\ f_j\in S_j}
+		\end{mini*}}
+
+	\only<2>{  \begin{tikzpicture}[remember picture, overlay]
+			% Coordinates for the first constraint
+			\coordinate (constraint) at ($(current page.center)+(2,0.2)$);
+
+			% UPWARD-FACING curly brace under the first constraint
+			\draw
+			($(constraint)+(-2.6,-0.65)$) rectangle ($(constraint)+(1.5,+0.45)$);
+
+			% Arrow start point (below the brace)
+			\coordinate (arrowstart) at ($(constraint)+(0,-0.65)$);
+
+
+			% Explanation box
+			\node[draw, fill=doc,
+				text width=10cm, align=left,line width=1pt,
+				below left=1cm and -1.5cm of arrowstart] (explanation) {
+				This constraint makes sure only one strategy is played by each player.
+			};
+
+			% Straight tapered arrow
+			\fill[black, draw=black]
+			(arrowstart) --
+			($(explanation.north)-(0.2,0)$) --
+			($(explanation.north)+(0.2,0)$) --
+			cycle;
+		\end{tikzpicture}}
+	\only<3>{  \begin{tikzpicture}[remember picture, overlay]
+			% Coordinates for the first constraint
+			\coordinate (constraint) at ($(current page.center)+(2,0.2)$);
+
+			% UPWARD-FACING curly brace under the first constraint
+			\draw
+			($(constraint)+(-4.65,-1.85)$) rectangle ($(constraint)+(1.5,-0.65)$);
+
+			% Arrow start point (below the brace)
+			\coordinate (arrowstart) at ($(constraint)+(-2.5,-1.85)$);
+
+
+			% Explanation box
+			\node[draw, fill=doc,
+				text width=11cm, align=left,line width=1pt,
+				below left=1.2cm and -5cm of arrowstart] (explanation) {
+				This constraint makes sure that the load on each resource is at least sum of the weights of the players using that resource.
+			};
+
+			% Straight tapered arrow
+			\fill[black, draw=black]
+			(arrowstart) --
+			($(explanation.north)+(0.2,0)$) --
+			($(explanation.north)+(0.4,0)$) --
+			cycle;
+		\end{tikzpicture}}
 \end{frame}
 
 \begin{frame}{Dual Program}
-We denote the dual variables by $\{\mu_j\}_{j\in\mcN}$, $\{\Phi_e\}_{e\in\mcE}$ and $\{\Psi_e\}_{e\in\mcE}$. Then we use the Fenchel Duality to obtain the dual  of the convex program.
-\only<1>{\begin{maxi*}{}{\sum_{j\in\mcN}\mu_j-\sum_{e\in\mcE} \frac1{4a_e}\cdot \Phi_e^2}{}{}
-    \addConstraint{\mu_j-\sum\limits_{e\in f_j}w_{e,j}\cdot \Psi_e}{\leq L\st_{j,f_j}}{\quad\forall\ j\in\mcN,f_j\in S_j}
-    \addConstraint{\Psi_e}{\leq\Phi_e}{\quad\forall\ e\in\mcE}
-    \addConstraint{\mu_j}{\geq 0}{\quad\forall\ j\in\mcN}
-    \addConstraint{\Phi_e}{\geq 0}{\quad\forall\ e\in\mcE}
-\end{maxi*}}
+	We denote the dual variables by $\{\mu_j\}_{j\in\mcN}$, $\{\Phi_e\}_{e\in\mcE}$ and $\{\Psi_e\}_{e\in\mcE}$. Then we use the Fenchel Duality to obtain the dual  of the convex program.
+	\only<1>{\begin{maxi*}{}{\sum_{j\in\mcN}\mu_j-\sum_{e\in\mcE} \frac1{4a_e}\cdot \Phi_e^2}{}{}
+			\addConstraint{\mu_j-\sum\limits_{e\in f_j}w_{e,j}\cdot \Psi_e}{\leq L\st_{j,f_j}}{\quad\forall\ j\in\mcN,f_j\in S_j}
+			\addConstraint{\Psi_e}{\leq\Phi_e}{\quad\forall\ e\in\mcE}
+			\addConstraint{\mu_j}{\geq 0}{\quad\forall\ j\in\mcN}
+			\addConstraint{\Phi_e}{\geq 0}{\quad\forall\ e\in\mcE}
+		\end{maxi*}}
 
-\only<2>{\begin{maxi*}{}{\sum_{j\in\mcN}\mu_j-\sum_{e\in\mcE} \frac1{4a_e}\cdot \Phi_e^2}{}{}
-    \addConstraint{\mu_j-\sum\limits_{e\in f_j}w_{e,j}\cdot \Phi_e}{\leq L\st_{j,f_j}}{\quad\forall\ j\in\mcN,f_j\in S_j}
-    \addConstraint{\mu_j}{\geq 0}{\quad\forall\ j\in\mcN}
-    \addConstraint{\Phi_e}{\geq 0}{\quad\forall\ e\in\mcE}
-\end{maxi*}}\pause
+	\only<2>{\begin{maxi*}{}{\sum_{j\in\mcN}\mu_j-\sum_{e\in\mcE} \frac1{4a_e}\cdot \Phi_e^2}{}{}
+			\addConstraint{\mu_j-\sum\limits_{e\in f_j}w_{e,j}\cdot \Phi_e}{\leq L\st_{j,f_j}}{\quad\forall\ j\in\mcN,f_j\in S_j}
+			\addConstraint{\mu_j}{\geq 0}{\quad\forall\ j\in\mcN}
+			\addConstraint{\Phi_e}{\geq 0}{\quad\forall\ e\in\mcE}
+		\end{maxi*}}\pause
 
-\begin{tblock}{Remark}
-    We can take $\Phi_e=\Psi_e$ for all $e\in \mcE$ as from every \textsf{CCE} we will assign $\Phi_e$ and $\Psi_e$ to be the same value
-\end{tblock}
+	\begin{tblock}{Remark}
+		We can take $\Phi_e=\Psi_e$ for all $e\in \mcE$ as from every \textsf{CCE} we will assign $\Phi_e$ and $\Psi_e$ to be the same value
+	\end{tblock}
 
 
 \end{frame}
 
 \begin{frame}{$\left(1+\frac1\dl\right)$-Approximate Solution from Primal}
 
-    Consider the following changed primal program:
-    \begin{mini*}{}{\mathcolor{myr}{\boldsymbol{\frac1{\dl}}}\sum_{j\in\mcN}\sum_{f_j\in S_j}x\st_{j,f_j}\cdot L\st_{j,f_j}+\sum_{e\in\mcE}a_e\cdot y_e^2}{}{}
-    \addConstraint{\sum_{f_j\in S_j}x\st_{j,f_j}}{\leq 1}{\quad\forall\ j\in\mcN}
-    \addConstraint{\sum_{j\in\mcN}\sum_{f_j\in S_j}\sum_{e\in f_j}w_{ej}\cdot x\st_{j,f_j}}{\leq y_e}{\quad\forall \ e\in\mcE}
-    \addConstraint{x\st_{j,f_j}}{\geq 0}{\quad \forall\ j\in\mcN,\ f_j\in S_j}
-\end{mini*}
+	Consider the following changed primal program:
+	\begin{mini*}{}{\mathcolor{myr}{\boldsymbol{\frac1{\dl}}}\sum_{j\in\mcN}\sum_{f_j\in S_j}x\st_{j,f_j}\cdot L\st_{j,f_j}+\sum_{e\in\mcE}a_e\cdot y_e^2}{}{}
+		\addConstraint{\sum_{f_j\in S_j}x\st_{j,f_j}}{\leq 1}{\quad\forall\ j\in\mcN}
+		\addConstraint{\sum_{j\in\mcN}\sum_{f_j\in S_j}\sum_{e\in f_j}w_{ej}\cdot x\st_{j,f_j}}{\leq y_e}{\quad\forall \ e\in\mcE}
+		\addConstraint{x\st_{j,f_j}}{\geq 0}{\quad \forall\ j\in\mcN,\ f_j\in S_j}
+	\end{mini*}
 
-If $\dl=1$ we get our original program. For any $\dl>0$ we get a $\lt(1+\frac1{\dl}\rt)$-approximate solution.
+	If $\dl=1$ we get our original program. For any $\dl>0$ we get a $\lt(1+\frac1{\dl}\rt)$-approximate solution.
 \end{frame}
 
 \begin{frame}{Dual don't need to change}
-    Taking the dual of the new program we get the following:
-    \begin{maxi*}{}{\sum_{j\in\mcN}\mu_j-\sum_{e\in\mcE} \frac1{4a_e}\cdot \Phi_e^2}{}{}
-    \addConstraint{\mu_j-\sum\limits_{e\in f_j}w_{e,j}\cdot \mathcolor{myr}{\boldsymbol{\Phi_e}}}{\leq \mathcolor{myr}{\boldsymbol{\frac{L\st_{j,f_j}}{\dl}}}}{\quad\forall\ j\in\mcN,f_j\in S_j}
-    \addConstraint{\mu_j}{\geq 0}{\quad\forall\ j\in\mcN}
-    \addConstraint{\Phi_e}{\geq 0}{\quad\forall\ e\in\mcE}
-    \end{maxi*}
+	Taking the dual of the new program we get the following:
+	\begin{maxi*}{}{\sum_{j\in\mcN}\mu_j-\sum_{e\in\mcE} \frac1{4a_e}\cdot \Phi_e^2}{}{}
+		\addConstraint{\mu_j-\sum\limits_{e\in f_j}w_{e,j}\cdot \mathcolor{myr}{\boldsymbol{\Phi_e}}}{\leq \mathcolor{myr}{\boldsymbol{\frac{L\st_{j,f_j}}{\dl}}}}{\quad\forall\ j\in\mcN,f_j\in S_j}
+		\addConstraint{\mu_j}{\geq 0}{\quad\forall\ j\in\mcN}
+		\addConstraint{\Phi_e}{\geq 0}{\quad\forall\ e\in\mcE}
+	\end{maxi*}
 
-So instead if we work with the old dual program and scale our variables $\mu_j$, $\Phi_e$ and $\Psi_e$ by $\frac1{\dl}$ we still get a feasible solution to the new dual program.
+	So instead if we work with the old dual program and scale our variables $\mu_j$, $\Phi_e$ and $\Psi_e$ by $\frac1{\dl}$ we still get a feasible solution to the new dual program.
 \end{frame}
 \begin{frame}{Setting the Dual Variables}
-    Let $\sg$ is any \textsf{CCE} of the  game. Set
-    \begin{itemize}
-        \item $\mu_j=\dfrac1{\dl}\cdot\underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]$
-        \item $\Phi_e=\dfrac1{\dl}\cdot a_e\cdot \underset{f\sim \sg}{\bbE}[l_e(f)]$
-    \end{itemize}\pause
+	Let $\sg$ is any \textsf{CCE} of the  game. Set
+	\begin{itemize}
+		\item $\mu_j=\dfrac1{\dl}\cdot\underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]$
+		\item $\Phi_e=\dfrac1{\dl}\cdot a_e\cdot \underset{f\sim \sg}{\bbE}[l_e(f)]$
+	\end{itemize}\pause
 
-    \begin{align*}
-        \text{Cost}_j(f_j,\theta_{-j}) & \leq \sum_{e\in f_j}w_{e,j}\cdot (a_e(l_e(\theta)+w_{e,j})+b_e)\\
-        & = \sum_{e\in f_j}w_{e,j}(a_e\cdot w_{e,j}+b_e)+\sum_{e\in f_j}w_{e,j}\cdot a_e\cdot l_e(\theta)\\
-        & = L\st_{j,f_j}+\sum_{e\in f_j}w_{e,j}\cdot a_e\cdot l_e(\theta)
-    \end{align*}\pause
+	\begin{align*}
+		\text{Cost}_j(f_j,\theta_{-j}) & \leq \sum_{e\in f_j}w_{e,j}\cdot (a_e(l_e(\theta)+w_{e,j})+b_e)                                 \\
+		                               & = \sum_{e\in f_j}w_{e,j}(a_e\cdot w_{e,j}+b_e)+\sum_{e\in f_j}w_{e,j}\cdot a_e\cdot l_e(\theta) \\
+		                               & = L\st_{j,f_j}+\sum_{e\in f_j}w_{e,j}\cdot a_e\cdot l_e(\theta)
+	\end{align*}\pause
 
-    \begin{tblock}{Remark}
-        It is a feasible solution to the dual program. 
-    \end{tblock}
+	\begin{tblock}{Remark}
+		It is a feasible solution to the dual program.
+	\end{tblock}
 \end{frame}
 
 
 \begin{frame}{Bound on \textsf{PoA} : I}
-    \vspace*{-8mm}
-    \begin{align*}
-        \sum_{e\in \mcE} \frac1{ a_e}\cdot a_e^2\cdot \underset{f\sim \sg}{\bbE}[l_e(f)]^2 & = \sum_{e\in \mcE}  a_e\cdot\underset{f\sim \sg}{\bbE}[l_e(f)]^2 \\
-        & \leq \underset{f\sim \sg}{\bbE}\lt[ \sum_{e\in\mcN} a_e\cdot l_e^2(f)  \rt]& [\text{Jensen}]\\
-        & \leq \underset{f\sim \sg}{\bbE}\lt[ \sum_{e\in\mcN} \text{Cost}_j(f)\rt] =\sum_{j\in\mcN}\underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]
-    \end{align*}
+	\vspace*{-8mm}
+	\begin{align*}
+		\sum_{e\in \mcE} \frac1{ a_e}\cdot a_e^2\cdot \underset{f\sim \sg}{\bbE}[l_e(f)]^2 & = \sum_{e\in \mcE}  a_e\cdot\underset{f\sim \sg}{\bbE}[l_e(f)]^2                                                                                        \\
+		                                                                                   & \leq \underset{f\sim \sg}{\bbE}\lt[ \sum_{e\in\mcN} a_e\cdot l_e^2(f)  \rt]                                                           & [\text{Jensen}] \\
+		                                                                                   & \leq \underset{f\sim \sg}{\bbE}\lt[ \sum_{e\in\mcN} \text{Cost}_j(f)\rt] =\sum_{j\in\mcN}\underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]
+	\end{align*}
 \end{frame}
 \begin{frame}{Bound on \textsf{PoA} : II}
-    \begin{align*}
-        \text{Primal-Sol} & \geq \sum\limits_{j\in \mcN}\frac1{\dl}\cdot \underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]-\sum_{e\in \mcE}\frac1{\dl^2}\cdot \frac1{4}a_e\cdot \underset{f\sim \sg}{\bbE}[l_e(f)]^2\\
-        & \geq  \frac{1}{\dl}\sum_{j\in\mcN}\underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]-\frac1{4\cdot \dl^2}\cdot \sum_{e\in \mcE}\underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]\\
-        & = \frac{4\dl-1}{4\dl^2}\sum_{e\in \mcE}\underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]
-    \end{align*}\pause
+	\begin{align*}
+		\text{Primal-Sol} & \geq \sum\limits_{j\in \mcN}\frac1{\dl}\cdot \underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]-\sum_{e\in \mcE}\frac1{\dl^2}\cdot \frac1{4}a_e\cdot \underset{f\sim \sg}{\bbE}[l_e(f)]^2 \\
+		                  & \geq  \frac{1}{\dl}\sum_{j\in\mcN}\underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]-\frac1{4\cdot \dl^2}\cdot \sum_{e\in \mcE}\underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]               \\
+		                  & = \frac{4\dl-1}{4\dl^2}\sum_{e\in \mcE}\underset{f\sim \sg}{\bbE}[\text{Cost}_j(f)]
+	\end{align*}\pause
 
-Primal is $\lt(1+\frac1{\dl}\rt)$-approximate solution to the optimal solution. So we get a bound of $\mathcolor{myr}{\lt(1+\frac1{\dl}\rt)\dfrac{4\dl^2}{4\dl-1}}$ bound on $\textsf{PoA}$.  Take $\dl=\frac{1+\sqrt{5}}{4}$ you will get a bound of $\mathcolor{myr}{1+\Phi}$ where $\Phi$ is the golden ratio.
+	Primal is $\lt(1+\frac1{\dl}\rt)$-approximate solution to the optimal solution. So we get a bound of $\mathcolor{myr}{\lt(1+\frac1{\dl}\rt)\dfrac{4\dl^2}{4\dl-1}}$ bound on $\textsf{PoA}$.  Take $\dl=\frac{1+\sqrt{5}}{4}$ you will get a bound of $\mathcolor{myr}{1+\phi}$ where $\phi$ is the golden ratio.
 \end{frame}
 \standout{Questions?}
 
 
 \section{Simultaneous Second-Price Auctions}
 \begin{frame}{Definition}
-    \begin{itemize}
-        \item $\mcM$: Set of $m$ items
-        \item $\mcN$: Set of $n$ players\pause
-        
-        \item For each player $j \in \mcN$, $v_j:2^{\mcM}\to \bbR_{\geq 0}$ is the valuation function of player $j$ of $T\subseteq \mcM$. $v_j$ is submodular.\pause
+	\begin{itemize}
+		\item $\mcM$: Set of $m$ items
+		\item $\mcN$: Set of $n$ players\pause
 
-        \item Each player $j$ submits a bid $b_j\in\bbR^{m}_{\geq 0}$ which follows $\sum\limits_{i\in T}b_{ij}\leq v_j(T)$ for all $T\subseteq \mcM$.\pause
- 
-        \item Let $W_j(b)$ denote the set of items won by player $j\in\mcN$ when the bids are $b$. \pause
+		\item For each player $j \in \mcN$, $v_j:2^{\mcM}\to \bbR_{\geq 0}$ is the valuation function of player $j$ of $T\subseteq \mcM$. $v_j$ is submodular.\pause
 
-        \item Let $p(i,b)$ is the second highest bid for item $i$ when the bids are $b$.\pause
+		\item Each player $j$ submits a bid $b_j\in\bbR^{m}_{\geq 0}$ which follows $\sum\limits_{i\in T}b_{ij}\leq v_j(T)$ for all $T\subseteq \mcM$.\pause
 
-        \item Let $u_j(b)$ be the utility of player $j$ when the bids are $b$. Then $u_j(b)=v_j(W_j(b))-\sum\limits_{i\in W_j(b)}p(i,b)$.\pause
- 
-        \item Auctions of each item follows Second-Price auctions rule.
-    \end{itemize}\vspace{3mm}\pause
+		\item Let $W_j(b)$ denote the set of items won by player $j\in\mcN$ when the bids are $b$. \pause
 
-    GOAL: Maximize the social welfare of the players $V(b)=\sum\limits_{j\in\mcN}v_j(W_j(b))$
+		\item Let $p(i,b)$ is the second highest bid for item $i$ when the bids are $b$.\pause
+
+		\item Let $u_j(b)$ be the utility of player $j$ when the bids are $b$. Then $u_j(b)=v_j(W_j(b))-\sum\limits_{i\in W_j(b)}p(i,b)$.\pause
+
+		\item Auctions of each item follows Second-Price auctions rule.
+	\end{itemize}\vspace{3mm}\pause
+
+	GOAL: Maximize the social welfare of the players $V(b)=\sum\limits_{j\in\mcN}v_j(W_j(b))$
 \end{frame}
 
 \begin{frame}
-    \frametitle{Property of  Biddings}
-    \begin{theorem}
-        $\forall\ j\in\mcN$, $\forall\ T\subseteq \mcM$, $\forall \ b\in\bbR^{m\times n}_{\geq 0}$, $\exs\ b_j(T)\in\bbR^{m}_{\geq 0}$ such that $$u_j(b_j(T),b_{-j})\geq v_j(T)-\sum\limits_{i\in T}\max\limits_{j'\in \mcN\setminus \{j\}}\{b_{ij'}\}$$
-    \end{theorem}\pause
-    \vspace*{5mm}
+	\frametitle{Property of  Biddings}
+	\begin{theorem}
+		$\forall\ j\in\mcN$, $\forall\ T\subseteq \mcM$, $\forall \ b\in\bbR^{m\times n}_{\geq 0}$, $\exs\ b_j(T)\in\bbR^{m}_{\geq 0}$ such that $$u_j(b_j(T),b_{-j})\geq v_j(T)-\sum\limits_{i\in T}\max\limits_{j'\in \mcN\setminus \{j\}}\{b_{ij'}\}$$
+	\end{theorem}\pause
+	\vspace*{5mm}
 
 
-\visible<2->{Let $T=\{1,\dots, i\}$. Take $b_{ij}^*=v_j(1,2,\dots, i)-v_j(1,2,\dots, i-1)$. Take $b_j(T)=b^*_j$}\vspace*{5mm}
+	\visible<2->{Let $T=\{1,\dots, i\}$. Take $b_{ij}^*=v_j(1,2,\dots, i)-v_j(1,2,\dots, i-1)$. Take $b_j(T)=b^*_j$}\vspace*{5mm}
 
-\visible<3->{Observe: $\sum\limits_{i\in T'}b^*_{i,j}\leq v_j(T')$ for all $T'\subseteq T$ by submodularity and for $T=T'$ its equality.}
+	\visible<3->{Observe: $\sum\limits_{i\in T'}b^*_{i,j}\leq v_j(T')$ for all $T'\subseteq T$ by submodularity and for $T=T'$ its equality.}
 
 \end{frame}
 
 \begin{frame}
-    \frametitle{Proof of Theorem}
-\begin{align*}
-    u_j(b_j(T),b_{-j}) & = v_j(T^*)-\sum\limits_{i\in T^*}\max\limits_{j'\in\mcN\setminus \{j\}}\{b_{ij'}\}\\
-    & \geq v_j(T^*)-\sum\limits_{i\in T^*} \max\limits_{j'\in\mcN\setminus \{j\}}\{b_{ij'}\} + \lt[\sum_{i\in T\setminus T^*}b_{i,j}^*-\max\limits_{j'\in\mcN\setminus \{j\}}\{b_{ij'}\} \rt]\\
-    & \geq v_j(T)-\sum\limits_{i\in T}\max\limits_{j'\in \mcN\setminus \{j\}}\{b_{ij'}\} 
-\end{align*}
+	\frametitle{Proof of Theorem}
+	\begin{align*}
+		u_j(b_j(T),b_{-j}) & = v_j(T^*)-\sum\limits_{i\in T^*}\max\limits_{j'\in\mcN\setminus \{j\}}\{b_{ij'}\}                                                                                                      \\
+		                   & \geq v_j(T^*)-\sum\limits_{i\in T^*} \max\limits_{j'\in\mcN\setminus \{j\}}\{b_{ij'}\} + \lt[\sum_{i\in T\setminus T^*}b_{i,j}^*-\max\limits_{j'\in\mcN\setminus \{j\}}\{b_{ij'}\} \rt] \\
+		                   & \geq v_j(T)-\sum\limits_{i\in T}\max\limits_{j'\in \mcN\setminus \{j\}}\{b_{ij'}\}
+	\end{align*}
 \end{frame}
 
 
 \begin{frame}{LP Formulation}
-    \begin{itemize}
-        \item $x\st_{j,T}$ $\coloneqq$ Variable for player $j$ winning item $T$.
-    \end{itemize}\pause
+	\begin{itemize}
+		\item $x\st_{j,T}$ $\coloneqq$ Variable for player $j$ winning item $T$.
+	\end{itemize}\pause
 
-\visible<2->{\begin{maxi*}
-    {}{\sum_{T\subseteq \mcM}\sum_{j\in\mcN}x\st_{j,T}\cdot v_j(T)}{}{}
-    \addConstraint{\sum_{j\in\mcN}\sum_{i\in T}x\st_{j,T}}{\leq 1}{\quad \forall\ i\in\mcM}
-    \addConstraint{\sum_{T\subseteq \mcM}x\st_{j,T}}{\leq 1}{\quad \forall\ j\in\mcN}
-    \addConstraint{x\st_{j,T}}{\geq 0}{\quad \forall\ j\in\mcN,\ T\subseteq \mcM}
-\end{maxi*}}
+	\visible<2->{\begin{maxi*}
+			{}{\sum_{T\subseteq \mcM}\sum_{j\in\mcN}x\st_{j,T}\cdot v_j(T)}{}{}
+			\addConstraint{\sum_{j\in\mcN}\sum_{i\in T}x\st_{j,T}}{\leq 1}{\quad \forall\ i\in\mcM}
+			\addConstraint{\sum_{T\subseteq \mcM}x\st_{j,T}}{\leq 1}{\quad \forall\ j\in\mcN}
+			\addConstraint{x\st_{j,T}}{\geq 0}{\quad \forall\ j\in\mcN,\ T\subseteq \mcM}
+		\end{maxi*}}
 
-\only<3>{  \begin{tikzpicture}[remember picture, overlay]
-    % Coordinates for the first constraint
-    \coordinate (constraint) at ($(current page.center)+(2,0.2)$);
-    
-    % UPWARD-FACING curly brace under the first constraint
-    \draw 
-        ($(constraint)+(-3.9,-1.1)$) rectangle ($(constraint)+(0.63,0.05)$);
-        
-    % Arrow start point (below the brace)
-    \coordinate (arrowstart) at ($(constraint)+(-2,-1.1)$);
-    
-   
-        % Explanation box
-        \node[draw, fill=doc, 
-              text width=10cm, align=left,line width=1pt, 
-              below left=2cm and -4cm of arrowstart] (explanation) {
-            This constraint makes sure no item is over-allocated i.e. each item is sold to only one player.
-        };
-        
-        % Straight tapered arrow
-        \fill[black, draw=black] 
-            (arrowstart) -- 
-            ($(explanation.north)-(0.2,0)$) -- 
-            ($(explanation.north)+(0.2,0)$) -- 
-            cycle;                
-\end{tikzpicture}}  
+	\only<3>{  \begin{tikzpicture}[remember picture, overlay]
+			% Coordinates for the first constraint
+			\coordinate (constraint) at ($(current page.center)+(2,0.2)$);
 
-\only<4>{  \begin{tikzpicture}[remember picture, overlay]
-    % Coordinates for the first constraint
-    \coordinate (constraint) at ($(current page.center)+(2,0.2)$);
-    
-    % UPWARD-FACING curly brace under the first constraint
-    \draw 
-        ($(constraint)+(-3.5,-2.2)$) rectangle ($(constraint)+(0.63,-1.1)$);
-        
-    % Arrow start point (below the brace)
-    \coordinate (arrowstart) at ($(constraint)+(-3,-2.25)$);
-    
-   
-        % Explanation box
-        \node[draw, fill=doc, 
-              text width=10cm, align=left,line width=1pt, 
-              below left=1cm and -5cm of arrowstart] (explanation) {
-            This constraint makes sure each agent receives exactly one set from $2^{\mcM}$.
-        };
-        
-        % Straight tapered arrow
-        \fill[black, draw=black] 
-            (arrowstart) -- 
-            ($(explanation.north)-(0.6,0)$) -- 
-            ($(explanation.north)-(1,0)$) -- 
-            cycle;                
-\end{tikzpicture}}
+			% UPWARD-FACING curly brace under the first constraint
+			\draw
+			($(constraint)+(-3.9,-1.1)$) rectangle ($(constraint)+(0.63,0.05)$);
+
+			% Arrow start point (below the brace)
+			\coordinate (arrowstart) at ($(constraint)+(-2,-1.1)$);
+
+
+			% Explanation box
+			\node[draw, fill=doc,
+				text width=10cm, align=left,line width=1pt,
+				below left=2cm and -4cm of arrowstart] (explanation) {
+				This constraint makes sure no item is over-allocated i.e. each item is sold to only one player.
+			};
+
+			% Straight tapered arrow
+			\fill[black, draw=black]
+			(arrowstart) --
+			($(explanation.north)-(0.2,0)$) --
+			($(explanation.north)+(0.2,0)$) --
+			cycle;
+		\end{tikzpicture}}
+
+	\only<4>{  \begin{tikzpicture}[remember picture, overlay]
+			% Coordinates for the first constraint
+			\coordinate (constraint) at ($(current page.center)+(2,0.2)$);
+
+			% UPWARD-FACING curly brace under the first constraint
+			\draw
+			($(constraint)+(-3.5,-2.2)$) rectangle ($(constraint)+(0.63,-1.1)$);
+
+			% Arrow start point (below the brace)
+			\coordinate (arrowstart) at ($(constraint)+(-3,-2.25)$);
+
+
+			% Explanation box
+			\node[draw, fill=doc,
+				text width=10cm, align=left,line width=1pt,
+				below left=1cm and -5cm of arrowstart] (explanation) {
+				This constraint makes sure each agent receives exactly one set from $2^{\mcM}$.
+			};
+
+			% Straight tapered arrow
+			\fill[black, draw=black]
+			(arrowstart) --
+			($(explanation.north)-(0.6,0)$) --
+			($(explanation.north)-(1,0)$) --
+			cycle;
+		\end{tikzpicture}}
 \end{frame}
 
 
 \begin{frame}{Dual Program}
 
-    \begin{mini*}
-        {}{\sum_{j\in\mcN}y_j+\sum_{i\in\mcM}z_i}{}{}
-        \addConstraint{y_j+\sum_{i\in T}z_i}{\geq v_j(T)}{\quad \forall\ j\in\mcN,\ T\subseteq \mcM}
-        \addConstraint{z_i}{\geq 0}{\quad \forall\ i\in\mcM}
-        \addConstraint{y_j}{\geq 0}{\quad \forall\ j\in\mcN}
-    \end{mini*}
+	\begin{mini*}
+		{}{\sum_{j\in\mcN}y_j+\sum_{i\in\mcM}z_i}{}{}
+		\addConstraint{y_j+\sum_{i\in T}z_i}{\geq v_j(T)}{\quad \forall\ j\in\mcN,\ T\subseteq \mcM}
+		\addConstraint{z_i}{\geq 0}{\quad \forall\ i\in\mcM}
+		\addConstraint{y_j}{\geq 0}{\quad \forall\ j\in\mcN}
+	\end{mini*}
 
-    
-\end{frame} 
+
+\end{frame}
 
 \begin{frame}{Setting the Dual Variables}
-    Given a \textsf{CCE} $\sg$ of the game, we set the dual variables as follows:
-    \begin{itemize}
-        \item $y_j=\underset{b\sim \sg}{\bbE}[u_j(b)]$ for all $j\in\mcN$.\pause
-        
-        \item $z_i=\underset{b\sim \sg}{\bbE}  \lt[\max\limits_{j\in\mcN}b_{ij}\rt]$ for all $i\in\mcM$.
-    \end{itemize}\pause
+	Given a \textsf{CCE} $\sg$ of the game, we set the dual variables as follows:
+	\begin{itemize}
+		\item $y_j=\underset{b\sim \sg}{\bbE}[u_j(b)]$ for all $j\in\mcN$.\pause
 
-    Since $\sg$ is an $\textsf{CCE}$ $$\underset{b\sim \sg}{\bbE}[u_j(b)]\geq \underset{b\sim \sg}{\bbE}\lt[u_j(b_j(T),b_{-j})\rt]\qquad \forall\ T\subseteq \mcM$$\pause
+		\item $z_i=\underset{b\sim \sg}{\bbE}  \lt[\max\limits_{j\in\mcN}b_{ij}\rt]$ for all $i\in\mcM$.
+	\end{itemize}\pause
 
-    By the theorem $$u_j(b_j(T),b_{-j})\geq v_j(T)-\sum\limits_{i\in T}\max\limits_{j'\in \mcN\setminus \{j\}}\{b_{ij'}\}\geq v_j(T)-\sum\limits_{i\in T}\max\limits_{j'\in \mcN}\{b_{ij'}\}$$ \pause
+	Since $\sg$ is an $\textsf{CCE}$ $$\underset{b\sim \sg}{\bbE}[u_j(b)]\geq \underset{b\sim \sg}{\bbE}\lt[u_j(b_j(T),b_{-j})\rt]\qquad \forall\ T\subseteq \mcM$$\pause
 
-So $\underset{b\sim \sg}{\bbE}[u_j(b)]\geq v_j(T)-\sum\limits_{i\in T}\underset{b\sim \sg}{\bbE}\lt[\max\limits_{j'\in \mcN}\{b_{ij'}\}\rt]$. So it is feasible solution to the dual program.
+	By the theorem $$u_j(b_j(T),b_{-j})\geq v_j(T)-\sum\limits_{i\in T}\max\limits_{j'\in \mcN\setminus \{j\}}\{b_{ij'}\}\geq v_j(T)-\sum\limits_{i\in T}\max\limits_{j'\in \mcN}\{b_{ij'}\}$$ \pause
+
+	So $\underset{b\sim \sg}{\bbE}[u_j(b)]\geq v_j(T)-\sum\limits_{i\in T}\underset{b\sim \sg}{\bbE}\lt[\max\limits_{j'\in \mcN}\{b_{ij'}\}\rt]$. So it is feasible solution to the dual program.
 
 \end{frame}
 \begin{frame}{Bound on \textsf{PoA}}
-    \begin{align*}
-        \text{Primal-Sol} & \leq \sum_{j\in\mcN}\underset{b\sim \sg}{\bbE}[u_j(b)]+\sum_{i\in\mcM}\underset{b\sim \sg}{\bbE}\lt[\max\limits_{j\in \mcN}\{b_{ij}\}\rt]\\
-        & = \underset{b\sim \sg}{\bbE}\lt[\sum_{j\in\mcN}u_j(b)\rt]+\underset{b\sim \sg}{\bbE}\lt[\sum_{i\in\mcM}\max\limits_{j\in \mcN}\{b_{ij}\}\rt]\\
-        & \leq 2\cdot \underset{b\sim \sg}{\bbE}[V(b)]
-    \end{align*}\pause
+	\begin{align*}
+		\text{Primal-Sol} & \leq \sum_{j\in\mcN}\underset{b\sim \sg}{\bbE}[u_j(b)]+\sum_{i\in\mcM}\underset{b\sim \sg}{\bbE}\lt[\max\limits_{j\in \mcN}\{b_{ij}\}\rt]    \\
+		                  & = \underset{b\sim \sg}{\bbE}\lt[\sum_{j\in\mcN}u_j(b)\rt]+\underset{b\sim \sg}{\bbE}\lt[\sum_{i\in\mcM}\max\limits_{j\in \mcN}\{b_{ij}\}\rt] \\
+		                  & \leq 2\cdot \underset{b\sim \sg}{\bbE}[V(b)]
+	\end{align*}\pause
 
-    So we get a bound of \textcolor{myr}{2}.
+	So we get a bound of \textcolor{myr}{2}.
 
 \end{frame}
 \standout{Questions?}
 
 \section{Facility Location Games}
 
+\begin{frame}{Definition}
+	\begin{itemize}
+		\item $\mcM$: Set of $m$ clients (Indexed by $i$)
+		\item $\mcN$: Set of $n$ service providers (Indexed by $j$)
+		\item $\mcL$: Set of locations (Indexed by $l$)\pause
+		
+        \item Each player $j\in \mcN$ has its strategy set of locations $S_j\subseteq \mcL$. $S=\bigotimes\limits_{j\in\mcN}S_j$\pause
+		
+        \item Each client $i\in \mcM$ has some value $\pi_j\geq 0$ for the service money he is wiling to pay.\pause
+        
+        \item There is a cost $c(l,i)$ for serving the client $i\in\mcM$ from the location $l\in\mcL$
+	\end{itemize}
 
+
+\end{frame}
+
+\begin{frame}{More Definitions}
+Each supplier chooses a single location $l\in S_j$ to set up a facility and offers prices  to the clients. \pause
+
+Let $s\in S$ be any strategy profile.\begin{itemize}
+    \item $\mcK(s)$: Set of locations chosen by the suppliers in $s$ i.e. $\mcK(s)=\bigcup\limits_{j\in\mcN}\{s_j\}$\pause
+    
+    \item $p_s(i,j)$: Price charged from client $i$ by supplier $j$ in strategy profile $s$.\vspace*{3mm}\pause
+    
+    \item $P_j(i,l,s_{-j})$: Profit of supplier $j$ from client $i$ when it is served from location $l$ and the other suppliers are playing $s_{-j}$.\vspace*{3mm}\pause
+    
+    \item $D_i(s)$: Savings of client $i$ in strategy profile $s$ which is $\pi_i-p_s(i,SP(i))$.\vspace*{3mm}\pause
+    
+    \item Total utility of the supplier $j\in\mcN$ is $u_j(s)=\sum\limits_{i:SP(i)=j}P_j(i,s_j,s_{-j})$\pause
+    
+    
+    \item $V(s)$: Social welfare of the strategy profile  $s$, $W(s)=\sum\limits_{j\in\mcN}u_j(s)+\sum\limits_{i\in\mcM}D_i(s)$
+\end{itemize}
+
+\end{frame}
+\begin{frame}{Choosing Prices}
+% \begin{tblock}{Observation}
+%     $\forall \ s\in S$, $\forall\ i\in\mcM$, $\forall\ j\in\mcN$, $SP(i)=j$ if \begin{enumerate}[label=(\roman*)]
+%         \item $j\in\arg\min\limits_{j'\in \mcN}p_s(i,j')$
+%         \item $c(s_j,i)=\min\limits_{j'\in\mcN}c(s_{j'},i)$
+%     \end{enumerate}
+% \end{tblock}\pause
+
+\begin{theorem}
+    For any strategy profile $s$, for any client $i$ and supplier $j$,  $SP(i)=j$ \begin{enumerate}[label=(\roman*)]
+        \item $c(s_j,i)=\min\limits_{j'\in\mcN}c(s_{j'},i)$
+        \item $p_s(i,j)=\max\lt\{ c(s_j,i),\min\limits_{l\in \mcK(s)\setminus\{s_j\}}c(l,i)\rt\}$
+    \end{enumerate}
+\end{theorem}\pause
+
+A suppler can serve all the clients $i\in\mcM$ from location $l$ if the service cost $c(l,i)$ is the least and offer a price which is the second cheapest.\pause
+
+$$P_j(i,l,s_{-j})=\begin{cases}
+    \min\limits_{l'\in \mcK(s)\setminus \{s_j\}}c(l',i)- c(l,i) & \text{If $c(l,i)\leq c(l',i)$}\\
+    0 & \text{Otherwise}
+\end{cases}$$\pause
+
+$$W(s)=\sum\limits_{j\in\mcN}u_j(s)+\sum\limits_{i\in\mcM}D_i(s)=\sum\limits_{i\in\mcM}\pi_i-c(s\st_{SP(i)},i)$$
+\end{frame}
+
+
+\begin{frame}{LP Formulation}
+    \begin{itemize}
+        \item $x\st_{ijl}$ $\coloneqq$ Variable indicating if the supplier $j$ serves the client $i$ from location $l$.
+        \item $x\st_{jl}$ $\coloneqq$ Variable indicating if the supplier $j$  opens a facility at location $l$.
+    \end{itemize}\pause
+
+    \begin{maxi*}{}{\sum_{j\in\mcN}\sum_{l\in S_j}\sum_{i\in\mcM}(\pi_i-c(l,i))\cdot x\st_{ijl}}{}{}
+        \addConstraint{\sum_{j\in\mcN}\sum_{l\in S_j}x\st_{ijl}}{\leq 1}{\quad \forall\ i\in\mcM}
+        \addConstraint{\sum_{j\in \mcN}x\st_{jl}}{\leq 1}{\quad \forall\ l\in \mcL}
+        \addConstraint{\sum_{k\in S_j}x\st_{jl}}{\leq 1}{\quad \forall\ j\in \mcN}
+        \addConstraint{x\st_{ijl}}{\leq x\st_{jl}}{\quad \forall\ i\in\mcM,\  j\in\mcN,\ i\in \mcM,\ l\in S_j}
+        \addConstraint{x\st_{ijl}}{\geq 0}{\quad \forall\ i\in\mcM,\ j\in\mcN,\ l\in S_j}
+    \end{maxi*}
+\end{frame}
+\begin{frame}{Dual Program}
+We denote the dual variables by $\{\alpha_j\}_{j\in\mcN}$, $\{\beta_i\}_{i\in\mcM}$, $\{\gm_l\}_{l\in \mcL}$ and $\{z\st_{ijl}\}_{i\in\mcM,j\in\mcN,l\in S_j}$. \pause
+
+
+    \begin{mini*}{}{  \sum\limits_{j\in\mcN}\alpha_j+\sum\limits_{i\in\mcM}\beta_i+\sum_{l\in\mcL}\gm_l  }{}{}
+        \addConstraint{\beta_i+z\st_{ijl}}{\geq \pi_i-c_{il}}{\quad \forall\ i\in\mcM,\ j\in\mcN,\ l\in S_j}
+        \addConstraint{\gm_l+\alpha_j}{\geq \sum_{i\in\mcM}z\st_{ijl}}{\quad \forall\ j\in\mcN,\ l\in S_j}
+        \addConstraint{\alpha_j}{\geq 0}{\quad \forall\ j\in\mcN}
+        \addConstraint{\beta_i}{\geq 0}{\quad \forall\ i\in\mcM}
+    \end{mini*}
+\end{frame}
+\begin{frame}{Setting the Dual Variables}
+\end{frame}
 \end{document}
