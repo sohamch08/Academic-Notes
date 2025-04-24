@@ -82,10 +82,29 @@
 % \end{frame}
 
 \begin{frame}{Introduction}
-	The Wildcat theme is a Beamer theme for Northwestern University, but which can be modified easily with different colors, fonts, and even background patterns.
-	\\ ~ \\
-	The theme is inspired by the \href{https://github.com/matze/mtheme}{Metropolis theme} by Matthias Vogelgesang. It incorporates the Northwestern University facet design pattern, but otherwise has a clean, simple look, and relatively few bells and whistles. It is licensed under the GNU GENERAL PUBLIC LICENSE.
+	\begin{itemize}
+        \item \textbf{Pure Nash Equilibria}: A strategy profile $s\in S$ of a cost-minimization game $\Gm$ is a \textit{Pure Nash Equilibrium} if for every player $i\in[n]$ and for all $s'_i\in S_i$, $u_i(s)\geq u_i(s_i',s_{-i})$.
+        \item \textbf{Mixed Nash Equilibria}: A mixed strategy profile $\sg\in \Sg$ of a cost-minimization game $\Gm$ is a \textit{Mixed Nash Equilibria} if for every player $i\in[n]$ and for all $s_i'\in S_i$, $\underset{s\sim \sg}{\bbE}[u_i(s)]\geq \underset{s\sim \sg}{\bbE}[u_i(s_i',s_{-i})]$
+        \item \textbf{Coarse Correlated Equilibria}: A distribution $\mu$ over $S$ of a cost-minimization game $\Gm$ is a \textit{Coarse Correlated Equilibria} if for every player $i\in[n]$ and for all $s_i'\in S_i$, $\underset{s\sim \mu}{\bbE}[u_i(s)]\geq \underset{s\sim \mu}{\bbE}[u_i(s_i',s_{-i})]$
+    \end{itemize}\vspace*{5mm}\pause
+
+    $\textsf{PNE}\subseteq \textsf{MNE}\subseteq \textsf{CCE}\subseteq \textsf{CCE}$.
 \end{frame}
+
+\begin{frame}{Fenchel and Lagrangian Duality}
+    Given convex problem:\begin{mini*}{}{f(x)}{}{}
+        \addConstraint{h_i(x)}{\leq 0}{\quad \forall\ i\in[m]}
+        \addConstraint{l_j(x)}{= 0}{\quad \forall\ j\in[r]}
+    \end{mini*}\pause
+
+    Define Lagrangian $\mcL(x,u,v)=f(x)+\sum\limits_{i=1}^m u_ih_i(x)+\sum\limits_{j=1}^r v_jl_j(x)$. Define $$g(u,v)=\inf\limits_{x}\mcL(x,u,v)$$\pause
+    
+    The dual of the convex problem:\begin{maxi*}{}{g(u,v)}{}{}
+    	\addConstraint{u}{\geq 0}{}
+    \end{maxi*}
+
+\end{frame}
+
 
 \section{Weighted Congestion Games}
 \begin{frame}
@@ -96,11 +115,11 @@
 		\item For each player $j \in \mcN$, let $S_j\subseteq 2^{\mcE}$ be the set of strategies available to player $j$. Let $S=\bigtimes\limits_{j\in\mcN}S_i$.
 		\item For each $j\in \mcN$ and each $e\in \mcE$ there is a weight of the resource $w_{ej}\in\bbR^+$.
 		\item For each $e\in \mcE$ the cost of resource $e$ is an affine function $C_e:\bbR\to\bbR$ where $c_e(x)=a_e\cdot x+b_e$
-		\item For any strategy profile $f\in S$, the cost of player $j$ is $\mathcolor{mytheoremfr}{\textbf{Cost}(f)_j=\sum\limits_{e\in f_j}w_{ej}\cdot c_e(l_e(f))}$ where $\mathcolor{mytheoremfr}{l_e(f)=\sum\limits_{j':e\in f_{j'}}w_{ej'}}$ is the load on resource $e$. Do $$\text{Cost}(f)=\sum_{j\in\mcN}\sum_{e\in f_j}w_{ej}\cdot c_e(l_e(f))=\sum_{e\in\mcE}a_e\cdot l_e(f)+b_e\cdot l_e(f)$$
+		\item For any strategy profile $f\in S$, the cost of player $j$ is $\mathcolor{myr}{\textbf{Cost}(f)_j=\sum\limits_{e\in f_j}w_{ej}\cdot c_e(l_e(f))}$ where $\mathcolor{myr}{l_e(f)=\sum\limits_{j':e\in f_{j'}}w_{ej'}}$ is the load on resource $e$. Do $$\text{Cost}(f)=\sum_{j\in\mcN}\sum_{e\in f_j}w_{ej}\cdot c_e(l_e(f))=\sum_{e\in\mcE}a_e\cdot l_e(f)+b_e\cdot l_e(f)$$
 	\end{itemize}
 \end{frame}
 \begin{frame}
-	\frametitle{Convex program of WCG}
+    \frametitle{Convex program of WCG}
 
 	\framesubtitle{Setting up the variables}
 	For any player $j\in\mcN$ and $f_j\in S_j$ let          \only<1>{
@@ -116,9 +135,9 @@
 	}i.e. the cost incurred by player $j$ when it plays strategy $f_j$.\pause
 
 	\begin{itemize}[itemsep=2em, topsep=2em]
-		\item  \only<2>{$\mathcolor{myr}{\boldsymbol{x\st_{j,f_j}}}$} \only<3->{$x\st_{j,f_j}$} $\coloneqq$ Variable for player $j$ playing strategy $f_j$ for all $j\in\mcN$ and $f_j\in S_j$\pause
+		\item $x\st_{j,f_j}$  $\coloneqq$ Variable for player $j$ playing strategy $f_j$ for all $j\in\mcN$ and $f_j\in S_j$\pause
 
-		\item {$\mathcolor{myr}{\boldsymbol{y_e}}$} $\coloneqq$ Variable for the load on resource $e$ for all $e\in\mcE$
+		\item $y_e$ $\coloneqq$ Variable for the load on resource $e$ for all $e\in\mcE$
 	\end{itemize}
 \end{frame}
 
@@ -483,7 +502,7 @@ Let $s\in S$ be any strategy profile.\begin{itemize}
     \end{enumerate}
 \end{theorem}\pause
 
-A suppler can serve all the clients $i\in\mcM$ from location $l$ if the service cost $c(l,i)$ is the least and offer a price which is the second cheapest.\pause
+Since prices charged by suppliers doesn't depend on which supplier charges we can as well take all the locations distinct.\pause
 
 $$P_j(i,l,s_{-j})=\begin{cases}
     \min\limits_{l'\in \mcK(s)\setminus \{s_j\}}c(l',i)- c(l,i) & \text{If $c(l,i)\leq c(l',i)$}\\
@@ -520,5 +539,33 @@ We denote the dual variables by $\{\alpha_j\}_{j\in\mcN}$, $\{\beta_i\}_{i\in\mc
     \end{mini*}
 \end{frame}
 \begin{frame}{Setting the Dual Variables}
+We set the dual variables as follows:
+
+\begin{itemize}
+    \item $\alpha_j=\underset{s\sim \sg}{\bbE}[u_j(s)]$ for all $j\in\mcN$.\pause
+    
+    \item $\beta_i=\underset{s\sim \sg}{\bbE}[D_i(s)]$ for all $i\in\mcM$.\pause    
+    
+    \item $z\st_{ijl}=\underset{s\sim \sg}{\bbE}[P_j(i,l,s_{-j})]$ for all $i\in\mcM$, $j\in\mcN$ and $l\in S_j$.\pause
+    
+    \item Define $W_l(s)=u_j(s)$ if $l\in \mcK(s)$ and $s_j=l$ for some $j\in\mcN$ and otherwise $0$. Then $\gm_l=\underset{s\sim \sg}{\bbE}[W_l(s)]$ for all $l\in \mcL$.
+\end{itemize}
+\end{frame}
+\begin{frame}{Feasibility Checking}
+\begin{itemize}
+    \item     $\pi_i-p_s(i,SP(i))\geq \pi_i-c(l,i)$ for any $l\in \mcL$ . Now $P_j(i,l,s_{-j})\neq 0$ when $l=SP(i)$. Then clearly $\pi_i-p_s(i,SP(i))+P_j(i,SP(i),s_{-j})=\pi_i-c(SP(i),i)$ and for other locations $P_j(i,l,s_{-j})=0$. So the first constraint is satisfied\pause
+    
+    \item If $l\in \mcK(s)$ then $W_l(s)=\sum\limits_{i\in\mcM}P_j(i,l,\theta_{-j})$ for some $j\in\mcN$ such that $s_j=l$. So it satisfies the second constraint. If $l\notin \mcK(s)$. $u_j(s)\geq P_j(i,l,s_{-j})$ since $\sg$ is a \textsf{CCE}. So the second constraint is satisfied.
+\end{itemize}
+
+
+\end{frame}
+\begin{frame}{Bound on \textsf{PoA}}
+$\sum\limits_{j\in\mcN}\alpha_j+\sum\limits_{i\in\mcM}\beta_i$ is the expected social welfare under the distribution $\sg$. \vspace*{5mm}
+
+$\sum\limits_{l\in\mcL}W_l(s)$ is at most the social welfare since $\sg$ is a \textsf{CCE}. \vspace*{5mm}
+
+So by Weak Duality $$\text{Primal-Sol}\leq \sum\limits_{j\in\mcN}\alpha_j+\sum\limits_{i\in\mcM}\beta_i+\sum\limits_{l\in\mcL}\gm_l\leq 2\cdot \underset{s\sim \sg}{\bbE}[V(s)]$$
+
 \end{frame}
 \end{document}
