@@ -8,7 +8,7 @@
 \DeclareMathOperator{\poa}{\mathsf{PoA}}
 \input{../letterfonts}
 \input{macros}
-\title{Bounding $\poa$ using LP, QP and Fenchel Duality}
+\title{Bounding $\poa$ using Linear and Quadratic Programming}
 \date{April 2025}
 \author{Soham Chatterjee}
 
@@ -88,10 +88,10 @@
         \item \textbf{Coarse Correlated Equilibria}: A distribution $\mu$ over $S$ of a cost-minimization game $\Gm$ is a \textit{Coarse Correlated Equilibria} if for every player $i\in[n]$ and for all $s_i'\in S_i$, $\underset{s\sim \mu}{\bbE}[u_i(s)]\geq \underset{s\sim \mu}{\bbE}[u_i(s_i',s_{-i})]$
     \end{itemize}\vspace*{5mm}\pause
 
-    $\textsf{PNE}\subseteq \textsf{MNE}\subseteq \textsf{CCE}\subseteq \textsf{CCE}$.
+    $\textsf{PNE}\subseteq \textsf{MNE}\subseteq \textsf{CCE}$.
 \end{frame}
 
-\begin{frame}{Fenchel and Lagrangian Duality}
+\begin{frame}{Lagrangian Duality}
     Given convex problem:\begin{mini*}{}{f(x)}{}{}
         \addConstraint{h_i(x)}{\leq 0}{\quad \forall\ i\in[m]}
         \addConstraint{l_j(x)}{= 0}{\quad \forall\ j\in[r]}
@@ -103,6 +103,13 @@
     	\addConstraint{u}{\geq 0}{}
     \end{maxi*}
 
+\end{frame}
+\begin{frame}{Fenchel Duality}
+Let $f:\bbR^n\to\bbR$ is a convex function. Then the convex conjugate of $f$ is the function $$f^*(y)=\sup\limits_{x\in\bbR^n}\{\la y,x\ra-f(x)\}$$\vspace*{5mm}\pause
+
+	\begin{theorem}[Fenchel Duality]
+        Let $f:X\to\bbR,g:Y\to\bbR$ are two convex functions and $A:X\to Y$ any bounded linear map. Suppose $$p^*=\inf\limits_{x\in X}\{f(x)+g(Ax)\}\quad \text{and}\quad d^*=\sup\limits_{y\in Y}\{-f^*(A^*y)-g^*(-y)\}$$where $A^*$ is the adjoint of $A$. Then $p^*\geq d^*$
+    \end{theorem}
 \end{frame}
 
 
