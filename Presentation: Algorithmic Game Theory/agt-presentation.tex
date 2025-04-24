@@ -231,7 +231,7 @@ Let $f:\bbR^n\to\bbR$ is a convex function. Then the convex conjugate of $f$ is 
 		\end{maxi*}}
 
 	\only<2>{\begin{maxi*}{}{\sum_{j\in\mcN}\mu_j-\sum_{e\in\mcE} \frac1{4a_e}\cdot \Phi_e^2}{}{}
-			\addConstraint{\mu_j-\sum\limits_{e\in f_j}w_{e,j}\cdot \Phi_e}{\leq L\st_{j,f_j}}{\quad\forall\ j\in\mcN,f_j\in S_j}
+			\addConstraint{\mu_j-\sum\limits_{e\in f_j}w_{e,j}\cdot \mathcolor{red}{\Phi_e}}{\leq L\st_{j,f_j}}{\quad\forall\ j\in\mcN,f_j\in S_j}
 			\addConstraint{\mu_j}{\geq 0}{\quad\forall\ j\in\mcN}
 			\addConstraint{\Phi_e}{\geq 0}{\quad\forall\ e\in\mcE}
 		\end{maxi*}}\pause
@@ -465,7 +465,7 @@ Let $f:\bbR^n\to\bbR$ is a convex function. Then the convex conjugate of $f$ is 
 		\item $\mcN$: Set of $n$ service providers (Indexed by $j$)
 		\item $\mcL$: Set of locations (Indexed by $l$)\pause
 		
-        \item Each player $j\in \mcN$ has its strategy set of locations $S_j\subseteq \mcL$. $S=\bigotimes\limits_{j\in\mcN}S_j$\pause
+        \item Each player $j\in \mcN$ has its strategy set of locations $S_j\subseteq \mcL$. $S=\bigtimes\limits_{j\in\mcN}S_j$\pause
 		
         \item Each client $i\in \mcM$ has some value $\pi_j\geq 0$ for the service money he is wiling to pay.\pause
         
