@@ -83,9 +83,11 @@
 
 \begin{frame}{Introduction}
 	\begin{itemize}
-        \item \textbf{Pure Nash Equilibria}: A strategy profile $s\in S$ of a cost-minimization game $\Gm$ is a \textit{Pure Nash Equilibrium} if for every player $i\in[n]$ and for all $s'_i\in S_i$, $u_i(s)\geq u_i(s_i',s_{-i})$.
-        \item \textbf{Mixed Nash Equilibria}: A mixed strategy profile $\sg\in \Sg$ of a cost-minimization game $\Gm$ is a \textit{Mixed Nash Equilibria} if for every player $i\in[n]$ and for all $s_i'\in S_i$, $\underset{s\sim \sg}{\bbE}[u_i(s)]\geq \underset{s\sim \sg}{\bbE}[u_i(s_i',s_{-i})]$
-        \item \textbf{Coarse Correlated Equilibria}: A distribution $\mu$ over $S$ of a cost-minimization game $\Gm$ is a \textit{Coarse Correlated Equilibria} if for every player $i\in[n]$ and for all $s_i'\in S_i$, $\underset{s\sim \mu}{\bbE}[u_i(s)]\geq \underset{s\sim \mu}{\bbE}[u_i(s_i',s_{-i})]$
+        \item \textbf{Pure Nash Equilibria}: A strategy profile $s\in S$ of a  game $\Gm$ is a \textit{Pure Nash Equilibrium} if for every player $i\in[n]$ and for all $s'_i\in S_i$, $u_i(s)\geq u_i(s_i',s_{-i})$.\vspace*{5mm}\pause
+        
+        \item \textbf{Mixed Nash Equilibria}: A mixed strategy profile $\sg\in \Sg$ of a  game $\Gm$ is a \textit{Mixed Nash Equilibria} if for every player $i\in[n]$ and for all $s_i'\in S_i$, $\underset{s\sim \sg}{\bbE}[u_i(s)]\geq \underset{s\sim \sg}{\bbE}[u_i(s_i',s_{-i})]$\vspace*{5mm}\pause
+        
+        \item \textbf{Coarse Correlated Equilibria}: A distribution $\mu$ over $S$ of a  game $\Gm$ is a \textit{Coarse Correlated Equilibria} if for every player $i\in[n]$ and for all $s_i'\in S_i$, $\underset{s\sim \mu}{\bbE}[u_i(s)]\geq \underset{s\sim \mu}{\bbE}[u_i(s_i',s_{-i})]$
     \end{itemize}\vspace*{5mm}\pause
 
     $\textsf{PNE}\subseteq \textsf{MNE}\subseteq \textsf{CCE}$.
@@ -301,7 +303,7 @@ Let $f:\bbR^n\to\bbR$ is a convex function. Then the convex conjugate of $f$ is 
 
 	Primal is $\lt(1+\frac1{\dl}\rt)$-approximate solution to the optimal solution. So we get a bound of $\mathcolor{myr}{\lt(1+\frac1{\dl}\rt)\dfrac{4\dl^2}{4\dl-1}}$ bound on $\textsf{PoA}$.  Take $\dl=\frac{1+\sqrt{5}}{4}$ you will get a bound of $\mathcolor{myr}{1+\phi}$ where $\phi$ is the golden ratio.
 \end{frame}
-\standout{Questions?}
+%\standout{Questions?}
 
 
 \section{Simultaneous Second-Price Auctions}
@@ -455,7 +457,7 @@ Let $f:\bbR^n\to\bbR$ is a convex function. Then the convex conjugate of $f$ is 
 	So we get a bound of \textcolor{myr}{2}.
 
 \end{frame}
-\standout{Questions?}
+
 
 \section{Facility Location Games}
 
