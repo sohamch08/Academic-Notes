@@ -1,0 +1,156 @@
+% !TEX program = xelatex
+\documentclass[aspectratio=1610]{beamer}
+\usepackage[T1]{fontenc}
+\usetheme{wildcat}
+\usepackage{xcolor, mathtools, optidef}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing, arrows.meta, shapes, calc, positioning}
+\DeclareMathOperator{\poa}{\mathsf{PoA}}
+\input{../letterfonts}
+\input{macros}
+\title{Super-Polynomial Lower Bound of TSP Extended Formula}
+\date{May 2025}
+\author{Soham Chatterjee}
+
+% You change the titlegraphic to whatever you want, or comment it out to remove it.
+% \titlegraphic{\includegraphics[scale=0.25]{logo-northwestern.pdf}}
+
+% % You can directly change the colors using the following macros.
+% % You must redefine colors AFTER the theme is loaded.
+% % For example, these provide shades of Yale Blue (#00356b)
+% \definecolor{wcprimary}{RGB}{0,53,107}      % Main color
+% \definecolor{wcprimary140}{RGB}{0, 34, 70}
+% \definecolor{wcprimary130}{RGB}{0, 40, 80}
+% \definecolor{wcprimary120}{RGB}{0, 45, 91}
+% \definecolor{wcprimary110}{RGB}{0, 50, 102}
+% \definecolor{wcprimary40}{RGB}{153, 174, 196}
+% \definecolor{wcprimary30}{RGB}{179, 194, 211}
+% \definecolor{wcprimary20}{RGB}{204, 215, 225}
+% \definecolor{wcprimary10}{RGB}{230, 235, 240}
+
+% % Now for the alerted orange (#bd5319) and example green (#5f712d)
+% \definecolor{wcalerted}{RGB}{189,83,25}
+% \definecolor{wcexample}{RGB}{95,113,45}
+
+% % If you want to change the slide background color, 
+% % you can use the following command:
+%\setbeamercolor{background canvas}{bg=nupurple10!30}
+
+% % Turn off section slides
+% \AtBeginSection{}
+
+% Change the font theme
+%\usefonttheme{wildcat-overleaf}
+
+% Change the bg pattern manually: Simple Single Color
+% \renewcommand{\bgpattern}{
+%     \draw[color=wcprimary,fill=wcprimary] (0,0) rectangle (\paperwidth,\paperheight);
+% }
+
+\definecolor{doc}{HTML}{DCBCD0}
+\definecolor{myg}{RGB}{56, 140, 70}
+\definecolor{myb}{RGB}{45, 111, 177}
+\definecolor{myr}{RGB}{199, 68, 64}
+\definecolor{mybg}{HTML}{F2F2F9}
+\definecolor{mytheorembg}{HTML}{F2F2F9}
+\definecolor{mytheoremfr}{HTML}{00007B}
+\definecolor{myexamplebg}{HTML}{F2FBF8}
+\definecolor{myexamplefr}{HTML}{88D6D1}
+\definecolor{myexampleti}{HTML}{2A7F7F}
+\definecolor{mydefinitbg}{HTML}{E5E5FF}
+\definecolor{mydefinitfr}{HTML}{3F3FA3}
+\definecolor{notesgreen}{RGB}{0,162,0}
+\definecolor{myp}{RGB}{197, 92, 212}
+\definecolor{mygr}{HTML}{2C3338}
+\definecolor{myred}{RGB}{127,0,0}
+\definecolor{myyellow}{RGB}{169,121,69}
+\definecolor{OrangeRed}{HTML}{ED135A}
+\definecolor{Dandelion}{HTML}{FDBC42}
+\definecolor{light-gray}{gray}{0.95}
+\definecolor{Emerald}{HTML}{00A99D}
+\definecolor{RoyalBlue}{HTML}{0071BC}
+\definecolor{mytoccolor}{HTML}{886830}
+
+
+\renewcommand{\P}{\ensuremath{\mathsf{P}}}
+\newcommand{\PSPACE}{\ensuremath{\mathsf{PSPACE}}}
+\newcommand{\TQBF}{\ensuremath{\mathsf{TQBF}}}
+\newcommand{\CONP}{\ensuremath{\mathsf{coNP}}}
+\newcommand{\NP}{\ensuremath{\mathsf{NP}}}
+\newcommand{\ONP}{\ensuremath{\mathsf{ONP}}}
+\newcommand{\EXP}{\ensuremath{\mathsf{EXP}}}
+\newcommand{\RP}{\ensuremath{\mathsf{RP}}}
+\newcommand{\RE}{\ensuremath{\mathsf{RE}}}
+\newcommand{\RL}{\ensuremath{\mathsf{RL}}}
+\newcommand{\R}[1]{\ensuremath{\mathsf{R#1}}}
+\newcommand{\BPP}{\ensuremath{\mathsf{BPP}}}
+\newcommand{\SIZE}{\ensuremath{\mathsf{SIZE}}}
+\newcommand{\DTIME}{\ensuremath{\mathsf{DTIME}}}
+\newcommand{\DSPACE}{\ensuremath{\mathsf{DSPACE}}}
+\newcommand{\NL}{\ensuremath{\mathsf{NL}}}
+\newcommand{\NSIZE}{\ensuremath{\mathsf{NSIZE}}}
+\newcommand{\poly}{\ensuremath{\mathsf{poly}}}
+\newcommand{\AC}{\ensuremath{\mathsf{AC}}}
+\newcommand{\NC}{\ensuremath{\mathsf{NC}}}
+\newcommand{\PH}{\ensuremath{\mathsf{PH}}}
+\newcommand{\SAT}{\ensuremath{\mathsf{SAT}}}
+\newcommand{\CONE}{\ensuremath{\mathsf{coNEXP}}}
+\newcommand{\NE}{\ensuremath{\mathsf{NEXP}}}
+
+% ibliographystyle{alpha}
+% \bibliography{refs}\b
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+% \begin{frame}{Table of Contents}
+%     \tableofcontents
+% \end{frame}
+
+\begin{frame}{Introduction}
+	\begin{definition}[Travelling Salesman]
+		Given a graph $G=(V,E)$, $S\subseteq V$ and weights $w:E\to \bbR$ find minimum weight cycle which visits every vertex of $S$ exactly once.
+	\end{definition}\pause
+
+	We will focus on $S=V$. 
+	\begin{itemize}
+        \item We know Traveling Salesman Problem is $\NP$-complete. 
+        \item In [Yannkakis, 1988, STOC] he proved every symmetric LP for the TSP has expnential size.
+        \item Here we will show TSP admits no polynomial-size LP.
+        \item This proof also shows unconditional super-polynomial lower bound on the number of inequalities.
+        \item Therefore it is impossible to prove $\P=\NP$ by means of a polynomial size LP.
+    \end{itemize}
+\end{frame}
+\begin{frame}{Definitions}
+	Let $P=\{x\in\bbR^n\mid Ax\leq b\}=conv(V)$ is a polytope  with $A\in\bbR^{m\times d}, b\in \bbR^m$ and $V\subseteq \bbR^d$. We will consider $V$ as the characteristic vector for all hamiltonian paths.\pause
+
+	\begin{definition}[Extension Polytope]
+		An extension of $P$ is a polytope $Q\subseteq \bbR^{d+e}$ such that there is a linear map $\pi:\bbR^{d+e}\to\bbR^{d}$ such that $\pi(Q)=P$.
+	\end{definition}\pause
+
+	\begin{definition}[Extended Formula]
+			An EF $Q$ is an extension of $P$ is a linear system in variable s $(x,y)$ such that $$x\in P\iff \exs\ y\ (x,y)\in Q$$\pause
+
+			Extension complexity of $P$ is the minimum size  EF of $P$ where size of a polytope is the number inequalities. We denote by $xc(P)$.
+	\end{definition}
+\end{frame}
+\begin{frame}{Some Polytopes}
+
+	\begin{itemize}
+		\item $TSP(n)$ is the traveling salesman polytope for $K_n=(V_n,E_n)$. Let $C\subseteq E_n$ denotes a tour of $K_n$. Then $\chi^C$ denotes the characteristic vector of $C$. Then \pause
+		
+		$$TSP(n)\coloneqq conv\{\chi^C\mid C\subseteq E_n\text{ is a tour of $K_n$}\}$$\pause
+
+		\item Given $G=(V,E)$, for any $S\subseteq V$, $\chi^S$ denote characteristic vector of $S$. Then\pause
+		
+		$$IND(G)\coloneqq conv\{\chi^S\mid S\text{ is independent set of $G$}\}$$
+		\item The correlation polytope $COR(n)$ is $$COR(n)\coloneqq conv\{bb^T\mid b\in\{0,1\}^n\}$$
+	\end{itemize}
+
+
+\end{frame}
+    
+\end{document}
