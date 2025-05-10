@@ -109,7 +109,7 @@
 % \begin{frame}{Table of Contents}
 %     \tableofcontents
 % \end{frame}
-
+\section{Introduction}
 \begin{frame}{Introduction}
 	\begin{definition}[Travelling Salesman]
 		Given a graph $G=(V,E)$, $S\subseteq V$ and weights $w:E\to \bbR$ find minimum weight cycle which visits every vertex of $S$ exactly once.
@@ -134,8 +134,18 @@
 	\begin{definition}[Extended Formula]
 			An EF $Q$ is an extension of $P$ is a linear system in variable s $(x,y)$ such that $$x\in P\iff \exs\ y\ (x,y)\in Q$$\pause
 
-			Extension complexity of $P$ is the minimum size  EF of $P$ where size of a polytope is the number inequalities. We denote by $xc(P)$.
 	\end{definition}
+\end{frame}
+\begin{frame}{Extension Complexity}
+	Extension complexity of $P$ is the minimum size  EF of $P$ where size of a polytope is the number inequalities. We denote by $xc(P)$.\pause\vspace*{1cm}
+
+	\begin{lemma}
+		Let $P,Q$ and $F$ be polytopes. Then the following holds:
+		\begin{enumerate}[label=(\roman*)]
+			\item If $F$ is an extension of $P$ then $xc(F)\geq xc(P)$.
+			\item If $F$ is a face of $Q$ then $xc(Q)\geq xc(F)$.
+		\end{enumerate}
+	\end{lemma}
 \end{frame}
 \begin{frame}{Some Polytopes}
 
@@ -149,8 +159,15 @@
 		$$IND(G)\coloneqq conv\{\chi^S\mid S\text{ is independent set of $G$}\}$$
 		\item The correlation polytope $COR(n)$ is $$COR(n)\coloneqq conv\{bb^T\mid b\in\{0,1\}^n\}$$
 	\end{itemize}
-
-
 \end{frame}
-    
+\begin{frame}{Proof Flow}
+	\begin{enumerate}[label=Step \arabic*:]
+		\item First we will prove $xc(COR(n))=2^{\Om(n)}$\pause \vspace*{5mm}
+	
+		\item For all $n$, $\exs\ $ graph $G_n$ with $n$ vertices such that $xc(IND(G_n))\geq xc(COR(n'))$ where $n'=n^{\frac1d}$ for some $d>1$.\pause\vspace*{5mm}
+		 
+		\item For any $n$-vertex graph $G$, $IND(G)$ is linear projection of a face of $TSP(k)$ where $k=O(n^2)$. 
+	\end{enumerate}
+\end{frame}
+\section{Correlation Polytope Lower Bound}
 \end{document}
