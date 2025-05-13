@@ -106,24 +106,26 @@
 	\titlepage
 \end{frame}
 
-% \begin{frame}{Table of Contents}
-%     \tableofcontents
-% \end{frame}
-\section{Introduction}
+
+
 \begin{frame}{Introduction}
 	\begin{definition}[Travelling Salesman]
 		Given a graph $G=(V,E)$, $S\subseteq V$ and weights $w:E\to \bbR$ find minimum weight cycle which visits every vertex of $S$ exactly once.
 	\end{definition}\pause
 
-	We will focus on $S=V$. 
+	We will focus on $S=V$.
 	\begin{itemize}
-        \item We know Traveling Salesman Problem is $\NP$-complete. 
-        \item In [Yannkakis, 1988, STOC] he proved every symmetric LP for the TSP has expnential size.
-        \item Here we will show TSP admits no polynomial-size LP.
-        \item This proof also shows unconditional super-polynomial lower bound on the number of inequalities.
-        \item Therefore it is impossible to prove $\P=\NP$ by means of a polynomial size LP.
-    \end{itemize}
+		\item We know Traveling Salesman Problem is $\NP$-complete.
+		\item In [Yannkakis, 1988, STOC] he proved every symmetric LP for the TSP has expnential size.
+		\item Here we will show TSP admits no polynomial-size LP.
+		\item This proof also shows unconditional super-polynomial lower bound on the number of inequalities.
+		\item Therefore it is impossible to prove $\P=\NP$ by means of a polynomial size LP.
+	\end{itemize}
 \end{frame}
+\begin{frame}{Table of Contents}
+    \tableofcontents
+\end{frame}
+\section{Preliminaries}
 \begin{frame}{Definitions}
 	Let $P=\{x\in\bbR^n\mid Ax\leq b\}=conv(V)$ is a polytope  with $A\in\bbR^{m\times d}, b\in \bbR^m$ and $V\subseteq \bbR^d$. We will consider $V$ as the characteristic vector for all hamiltonian paths.\pause
 
@@ -132,7 +134,7 @@
 	\end{definition}\pause
 
 	\begin{definition}[Extended Formula]
-			An EF $Q$ is an extension of $P$ is a linear system in variable s $(x,y)$ such that $$x\in P\iff \exs\ y\ (x,y)\in Q$$\pause
+		An EF $Q$ is an extension of $P$ is a linear system in variable s $(x,y)$ such that $$x\in P\iff \exs\ y\ (x,y)\in Q$$\pause
 
 	\end{definition}
 \end{frame}
@@ -147,27 +149,191 @@
 		\end{enumerate}
 	\end{lemma}
 \end{frame}
+\begin{frame}{Slack Matrix}
+	\begin{definition}
+		Let $P=\{x\in\bbR^n\mid Ax\leq b\}=conv(V)$ is a polytope  with $A\in\bbR^{m\times d}, b\in \bbR^m$ and $V\subseteq \bbR^d$. Let $V=\{v_1,\dots, v_n\}$. Then $S\in\bbR^{m\times n}_{0}$ is called the slack matrix of $P$ wrt $Ax\leq b$ and $V$ where $$S(i,j)=b_i-A_iv_j$$
+	\end{definition}
+
+	Some times we may refer to the submatrix of slack matrix induced by rows corresponding to facets as the slack matrix of $P$ denoted by $S(P)$.
+
+	% \begin{theorem}
+	% 	The following are equivalent:\begin{enumerate}[label=(\roman*)]
+	% 		\item $S$ has non-negative rank at most $r$.
+	% 		\item $P$ has an extension of size at most $r$.
+	% 		\item $P$ has an EF of size at most $r$.
+	% 	\end{enumerate}
+	% \end{theorem}
+\end{frame}
 \begin{frame}{Some Polytopes}
 
 	\begin{itemize}
 		\item $TSP(n)$ is the traveling salesman polytope for $K_n=(V_n,E_n)$. Let $C\subseteq E_n$ denotes a tour of $K_n$. Then $\chi^C$ denotes the characteristic vector of $C$. Then \pause
-		
-		$$TSP(n)\coloneqq conv\{\chi^C\mid C\subseteq E_n\text{ is a tour of $K_n$}\}$$\pause
 
-		\item Given $G=(V,E)$, for any $S\subseteq V$, $\chi^S$ denote characteristic vector of $S$. Then\pause
-		
-		$$IND(G)\coloneqq conv\{\chi^S\mid S\text{ is independent set of $G$}\}$$
+		      $$TSP(n)\coloneqq conv\{\chi^C\mid C\subseteq E_n\text{ is a tour of $K_n$}\}$$\pause
+
+		\item Given $G=(V,E)$, for any $S\subseteq V$, $\chi^S$ denote characteristic vector of $S$. Then the independent set polytope\pause
+
+		      $$IND(G)\coloneqq conv\{\chi^S\mid S\text{ is independent set of $G$}\}$$
 		\item The correlation polytope $COR(n)$ is $$COR(n)\coloneqq conv\{bb^T\mid b\in\{0,1\}^n\}$$
 	\end{itemize}
 \end{frame}
 \begin{frame}{Proof Flow}
+	\begin{theorem}
+		$xc(TSP(n))=2^{\Om\left(n^{\frac14}\right)}$
+	\end{theorem}\pause
+
 	\begin{enumerate}[label=Step \arabic*:]
 		\item First we will prove $xc(COR(n))=2^{\Om(n)}$\pause \vspace*{5mm}
-	
+
 		\item For all $n$, $\exs\ $ graph $G_n$ with $n$ vertices such that $xc(IND(G_n))\geq xc(COR(n'))$ where $n'=n^{\frac1d}$ for some $d>1$.\pause\vspace*{5mm}
-		 
-		\item For any $n$-vertex graph $G$, $IND(G)$ is linear projection of a face of $TSP(k)$ where $k=O(n^2)$. 
+
+		\item For any $n$-vertex graph $G$, $IND(G)$ is linear projection of a face of $TSP(k)$ where $k=O(n^2)$.
 	\end{enumerate}
 \end{frame}
+
+\section{Covering Bound of Matrix and Non-negative Factorization}
+
+
+\begin{frame}{Covering Bound of Matrix with Rectangles}
+	\begin{itemize}
+		\item Let $M\in\{0,1\}^{n\times n}$ matrix. \pause\vspace*{5mm}
+		
+		\item A monochromatic rectangle $R$ in $M$ means a submatrix $N$ of $M$ whose all entries are $1$.\pause\vspace*{5mm}
+		
+		\item A collection of rectangles $\mcC$ covers $M$ if their union covers all the nonzero entries of $M$.\pause\vspace*{5mm}
+		
+		\item $|\mcC|$ is called a covering bound of $M$. $Cov(X)=\min\{|\mcC|\colon \mcC\text{ covers $M$}\}$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Covering Bound of Simple Matrix}
+	Consider A matrix $X$ of dimension $2^n\times 2^n$ where the rows and columns are indexed by strings from $\{0,1\}^n$. Let $X(a,b)=(1-a^Tb)^2$ where $a,b\in\{0,1\}^n$.\pause\vspace*{5mm}
+	
+	\begin{theorem}[Yannkakis, 1988, STOC]
+		Every monochromatic rectangle cover of $suppmat(X)$ has size $2^{\Om(n)}$ i.e. $$Cov(suppmat(X))\geq 2^{\Om(n)}$$
+	\end{theorem}
+\end{frame}
+
+\begin{frame}{Non-negative Factorization}
+	\begin{itemize}
+		\item A rank $r$ non-negative factorization of a matrix $M$ is a factorization $M=TU$ where $T,U$ are non-negative matrix with $r$ columns and $r$ rows respectively.\pause
+		
+		\item Non-negative rank of $M$ is the minimum rank of a non-negative factorization of $M$. Denote it by $\Rank_+(M)$.
+	\end{itemize}\pause
+		\begin{theorem}[Factorization Theorem]
+		For a polytope $P=\{x\mid Ax\leq b\}$ where $S$ is the slack matrix of $P$ the following are equivalent:\begin{enumerate}[label=(\roman*)]
+			\item $S$ has non-negative rank at most $r$.
+			\item $P$ has an extension of size at most $r$.
+			\item $P$ has an EF of size at most $r$.
+		\end{enumerate}
+	\end{theorem}
+	
+	We get $xc(P)=\Rank_+(S)$.
+\end{frame}
+
+
+\begin{frame}{Factorization and Covering Bound Relation}
+	For any matrix $M\in\bbR^{m\times n}$ let $suppmat(M)\in\{0,1\}^{m\times n}$ is a matrix where the $(i,j)^{th}$ element is $1$ if $M(i,j)\neq 0$ and otherwise $0$.\vspace*{1cm}
+
+	\begin{theorem}[Yannkakis, 1988, STOC]
+		Let $M$ be any matrix with non-negative real entries. Then $$\Rank_+(M)\geq Cov(suppmat(M))$$
+	\end{theorem}
+\end{frame}
 \section{Correlation Polytope Lower Bound}
+\begin{frame}{Polytope equations}
+	Consider the inner product of two matrices $A,B\in\bbR^{m\times n}$ be $\la A,B\ra=Tr(A^TB)$\pause
+
+	For all $a\in \{0,1\}^n$ there are some $b\in\{0,1\}^n$ such that $$\la 2\text{diag}(a)-aa^T,bb^T\ra=1$$ \begin{align*}
+		1-\la \text{diag}(a)-aa^T,bb^T\ra & = 1-2\la \text{diag}(a),bb^T\ra+\la aa^T,bb^T\ra\\
+		& = 1-2a^Tb+(a^Tb)^2=(1-a^Tb)^2
+	\end{align*}\pause%Hence take $b$ such that $\text{supp}(b)\subseteq [n]\setminus\text{supp}(a)$.\pause
+
+	\begin{tblock}{Remark}
+		Because of above prove for all $b\in COR(n)$, for all $a\in\{0,1\}^n $, $\la 2\text{diag}(a)-aa^T,bb^T\ra\leq 1$. 
+	\end{tblock}
+	Hence let $A,b$ be such that $COR(n)=\{x\mid Ax\leq b\}$ where $(A,b)$ includes these inequities. So the slack matrix $S$ of $COR(n)$ contains $X$.
+\end{frame}
+\begin{frame}{Lower Bound}
+	Let $S$ is the slack matrix of $COR(n)$. Then $S$ contains the matrix $X$. \vspace*{5mm}
+	
+	\begin{itemize}
+		\item By Factorization Theorem $xc(COR(n))=\Rank_+(S)$.\pause \vspace*{5mm}
+		
+		\item Since $X$ is submatrix of $S$ we have $\Rank_+(S)\geq \Rank_+(X)$.\pause\vspace*{5mm}
+		
+		
+		\item By Covering-Factorization Relation $\Rank_+(X)\geq Cov(suppmat(X))\geq 2^{\Om(n)}$.
+	\end{itemize}\vspace*{5mm}
+		
+	\begin{theorem}
+		$xc(COR(n))=2^{\Om(n)}$.
+	\end{theorem}
+\end{frame}
+\section{Independent Set Polytope Lower Bound}
+\begin{frame}{New Graph Construction}
+	Let fix an $n$. Now consider the complete graph $K_n$. Now we will construct a graph $H_n=(V_n,E_n)$ with $O(n^2)$ vertices.\pause
+	
+	\begin{itemize}
+		\item Each vertex $i\in K_n$ there is a 2-clique on $i,\hat{i}$ in $H_n$.\pause
+		
+		\item Each edge $(i,j)\in K_n$ \begin{itemize}
+			\item There is a 4-clique on the vertices $\{ij,\hat{i}j,i\hat{j},\hat{i}\hat{j}\}$.
+			\item The additional edges\begin{align*}
+				(i,\hat{i}j)  && (\hat{i},ij) && (j,i\hat{j}) && (\hat{j}, ij)\\
+				(i,\hat{i}\hat{j}) && (\hat{i},i\hat{j}) && (j,\hat{i}\hat{j}) && (\hat{j},\hat{i}j)
+			\end{align*}
+		\end{itemize}
+	\end{itemize}\pause
+
+	Let $F$ is the face of $IND(H_n)$ containing independent sets which have exactly one vertex from each vertex-clique and one vertex from each edge-clique
+\end{frame}
+\begin{frame}{$COR(n)$ Inside  Independent Set Polytope}
+	Take the linear map $\pi:\bbR^{V_n}\to \bbR^{n\times n}$. Let $\pi(x)=y$. Then $$y_{ij}=y_{ji}=x_{ij}$$\pause
+	\begin{itemize}
+		\item $S$ is independent set of $H_n$. $\chi^S$ is the characteristic vector.\pause
+		
+		\item Define $b\in \{0,1\}^n$ where $b_i=1$ iff $ii\in S$ otherwise $0$
+	\end{itemize}\pause
+
+	Observe: For edge $(i,j)\in K_n$, $ij\in S\iff ii,jj\in S$.
+
+	Then $\pi(\chi^S)=bb^T$. So $\pi(F)\subseteq COR(n)$\pause
+
+	\begin{itemize}
+		\item $b\in\{0,1\}^n$. Consider $bb^T$. \pause
+		
+		\item $S$ contains a vertex $ii$ if $b_i=1$ and $S$ contains $\hat{i}$ if $b_i=0$.
+	\end{itemize} \pause
+
+	$\chi^S\in F$. So $\pi(\chi^S)=bb^T$. So $$\pi(F)=COR(n)$$ So $COR(n)$ is a face of $IND(H_n)$.
+\end{frame}
+\begin{frame}{Lower Bound}
+	Above $H_n$ has $2n+\binom{n}2$ vertices.\pause\vspace*{5mm}
+	
+	\begin{itemize}
+		\item For any $n$ consider $p$ to be the maximum such that $2p+\binom{p}2\leq n$. \vspace*{5mm}\pause
+		
+		\item Take the graph $H_p$ and add $n-2p-\binom{p}2$ isolated vertices to construct $G_n$. \vspace*{5mm}\pause
+		
+		\item $IND(H_p)$ isomorphic to $IND(G_n)$
+	\end{itemize}\pause
+
+	$$xc(IND(G_n))=xc(IND(H_p))\geq xc(COR(p))\geq 2^{\Om(p)}=2^{\Om\lt(n^{\frac12}\rt)}$$
+\begin{theorem}
+	For all $n\in\bbN$ there exists graph $G_n$, $xc(IND(G_n))=2^{\Om\lt(n^{\frac12}\rt)}$
+\end{theorem}
+\end{frame}
+\section{TSP Polytope Lower Bound}
+\begin{frame}
+	\begin{theorem}[Yannkakis, 1988, STOC]
+		Every $p$-vertex graph $G$, $IND(G)$ is the linear projection of a face of $TSP(n)$ with $n=O(p^2)$.
+	\end{theorem}
+\vspace*{5mm}\pause
+
+	Therefore 
+	
+	$$xc(TSP(n))\geq xc(IND(G_p))=2^{\Om\lt(p^{\frac12}\rt)}=2^{\Om\lt(n^{\frac14}\rt)}$$
+\end{frame}
+
+\standout{Thank You}
 \end{document}
