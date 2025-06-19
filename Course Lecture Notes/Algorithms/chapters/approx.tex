@@ -1,6 +1,80 @@
-\chapter{Approximation Algorithms using Linear Programming}
+\chapter{Approximation Algorithms using LP}
+In this chapter we will study some approximation algorithms using linear programming to  get better approximation ratios of the optimal solution.
 \section{Set Cover}
-\subsection{\texorpdfstring{$f$}{f}-Approximation Algorithm}
+\begin{algoprob}
+	\problemtitle{$\prb{Set Cover}$}
+	\probleminput{$\mcU$: Universe of all elements $e_1,\dots, e_n$
+
+    $\mcS=\{S_1,\dots, S_m\}$, $S_i\subseteq \mcU$ forall $i\in[m]$
+
+    Function $c:\mcS\to\bbZ_+$}
+	\problemquestion{Given $\mcU,\mcS$ and the function $c$ find $T\subseteq [m]$ such that $\bigcup\limits_{i\in T}S_i=\mcU$ to minimize the total cost $\sum\limits_{i\in T}c(S_i)$ }
+\end{algoprob}
+Since the special case of Set Cover is basically the Vertex Cover problem we discussed earlier, we know that Set Cover is $\mathsf{NP}$-hard.
+\begin{Theorem}{}{}
+    Set Cover is $\mathsf{NP}$-hard. 
+\end{Theorem}
+Since we are going to find approximate solutions using LP let's first write the linear program for Set Cover:
+\begin{mini*}
+{}{\sum\limits_{S\in\mcS}c(S)x_S}{}{}
+\addConstraint{\sum\limits_{S:e\in S}x_S}{\geq 1}{\quad\forall\ e\in \mcU}
+\addConstraint{x_S}{\geq 0}{\quad\forall\ S\in \mcS}
+\end{mini*}
+
+\subsection{Frequency \texorpdfstring{$f$}{f}-Approximation Algorithm}
+Let for any element $e\in\mcU$, $f_e$ is the frequency of the element $e$ in $\mcS$ i.e. $f_e=|\{S\in\mcS\colon e\in S\}|$. Then let $f=\max\{f_e\colon e\in \mcU\}$. Then we want to find a $f$-approximation algorithm for set cover. 
+\begin{question}
+    For vertex cover what is $f$?
+\end{question}
+For all $e\in E$ we have $f_e=2$ since the elements of universe corresponds to the edges and sets corresponds to vertices and each edge constained in exactly 2 sets. So $f=2$.
+
+\begin{algorithm}\DontPrintSemicolon
+    \KwIn{$\mcU,\mcS,c$}
+    \KwOut{$T\subseteq [m]$ such that $\bigcup\limits_{i\in T}S_i=\mcU$ and $\sum\limits_{i\in T}c(S_i)$ is minimized}
+    \Begin{
+        $T\longleftarrow\emptyset$\;
+        $\hat{x}\longleftarrow 0^{|\mcS|}$\;
+        Let $x^*$ is the optimal solution of the LP for Set Cover problem\;
+        \For{$S_i\in \mcS$}{
+            \If{$x^*_{S_i}\geq \frac1f$}{
+                $T\longleftarrow T\cup\{i\}$\;
+                $\hat{x}_{S_i}\longleftarrow 1$
+            }
+        }
+        \Return{$T$}
+    }
+    \caption{$f$-Approximate Algorithm}
+\end{algorithm}
+\begin{lemma}{}{}
+    $\hat{x}$ is a feasible solution.
+\end{lemma}
+\begin{proof}
+    For all $e\in \mcU$ there are at most $f$ sets containing $e$. Thus at most $f$ terms in the summation in $LHS$ of the first constraint for each $e\in \mcU$ Thus in $x^*$ at least one such term is $\geq \frac1f$.
+\end{proof}
+\begin{lemma}{}{}
+    $\sum\limits_{S\in \mcS}c(S)\hat{x}_S\leq f\cdot \sum\limits_{S\in\mcS}c(S)x^*_S$
+\end{lemma}
+\begin{proof}
+    In $\hat{x}$ if $\hat{x}_S=1$ that means $x^*_S\geq \frac1f$. Therefore we have the lemma.
+\end{proof}
+
+Hence with this algorithm we can get a $f$-approximation for Set Cover problem. But this is not good enough since one element can be in too many sets and then it doesn't give a good approximation. In the next sections we will show how to get a better approximation ratio.
+
 \subsection{\texorpdfstring{$O(n\log n)$}{O(nlogn)}-Approximation Algorithm through Randomized Rounding}
-\subsection{\texorpdfstring{$f$}{f}-Approximation Algorithm through Dual Fitting}
+
+\begin{algorithm}\DontPrintSemicolon
+    \KwIn{$\mcU,\mcS,c$}
+    \KwOut{$T\subseteq [m]$ such that $\bigcup\limits_{i\in T}S_i=\mcU$ and $\sum\limits_{i\in T}c(S_i)$ is minimized}
+    \Begin{
+        $\hat{x}\longleftarrow 0^{|\mcS|}$\;
+        Let $x^*$ is the optimal solution of the LP for Set Cover problem\;
+        \For{$S\in \mcS$}{
+            Set $\hat{x}_S\longleftarrow 1$ with probability $x^*_S$.
+        }
+        \Return{$\hat{x}$}
+    }
+    \caption{$n\log n$-Approximate Algorithm}
+\end{algorithm}
+
+\subsection{Frequency \texorpdfstring{$f$}{f}-Approximation Algorithm through Dual Fitting}
 \section{Makespan Minimization}

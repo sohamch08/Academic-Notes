@@ -151,6 +151,202 @@ The following theorem lets us to give a necessary and sufficient condition to ch
 \begin{Theorem}{}{}
 	Let $A\in\{-1,0,1\}^{m\times n}$. Then $A$ is TU iff every set $S\subseteq [n]$ can be partitioned into $S_1, S_2$ such that $$\sum_{i\in S_1}A_i-\sum_{i\in S_2}A_i\in \{-1,0,1\}^m$$where $A_i$ is the $i^{th}$ column of $A$. C
 \end{Theorem}
+\subsection{Integrality of Some Well-Known Polytopes}
+Now using this theorem we will show that the polytope for bipartite maximum matching is integral. The LP for bipartite maximum matching is given by:
+\begin{maxi*}
+	{}{\sum\limits_{e\in E}x_e}{}{}
+	\addConstraint{}{\sum\limits_{e\text{ incident on }v}x_e\leq 1}{\quad \forall \ v\in V}
+	\addConstraint{}{x_e\geq 0}{\quad \forall\ e\in E}
+\end{maxi*} 
+\begin{lemma}{}{bp-max-matching-polytope-integral}
+	The polytope for bipartite maximum matching is integral.
+\end{lemma}
+\begin{proof}
+	Let $A$ be the matrix for the polytope. Now clearly from the construction of the polytope we have $A\in\{0,1\}^{n\times m}$ where $n=|V|$ and $m=|E|$. Now we will show that $A^{T}$ is TUM. Let $L$ and $R$ are the two sets of vertices in the bipartite graph. Now suppose $S\subseteq L\cup R$. Then take $S_1=S\cap L$ and $S_2=S\cap R$. Then for any row $e\in E$, we have $$\sum\limits_{i\in S_1}A_i-\sum\limits_{i\in S_2}A_i\in\{-1,0,1\}$$Hence $A^T$ is TUM and therefore by \lmref{tum-prop} $A$ is TUM. Hence the polytope for bipartite maximum matching is integral.
+\end{proof}
+\nt{For general graphs this polytope is not integral. Consider the triangle graph $K_3$. Then the point $\lt(\frac{1}{2},\frac{1}{2},\frac12\rt)$ is a feasible solution but not in the convex hull of the integral solutions $(1,0,0)$, $(0,1,0)$ and $(0,0,1)$.}
+\begin{lemma}{}{max-flow-polytope-integral}
+	The LP for $s-t$ max flow  is \begin{maxi*}
+			{}{\sum\limits_{e\in \textit{out}(s)}x_e}{}{}
+			\addConstraint{}{\sum\limits_{e\in\textit{in}(v)}x_e-\sum\limits_{c\in\textit{out}(v)}x_e=0}{\quad \forall \ v\in V, v\neq s,t}
+			\addConstraint{}{c_e\geq x_e\geq 0}{\quad \forall\ e\in E}
+		\end{maxi*}Then the max flow polytope is integral.
+\end{lemma}
+\begin{proof}
+	Let $A$ be the matrix for the polytope. We will show that $A$ is TUM. Given $S\subseteq V\setminus\{s,t\}$ take $S_1=S$ and $S_2=\emptyset$. By the first condition of the polytope for all vertices we already have satisfied the condition $$\sum\limits_{i\in S_1}A_i-\sum\limits_{i\in S_2}A_i=0\in\{-1,0,1\}^m$$Therefore the polytope is TUM and hence integral.
+\end{proof}
 
-Now using this theorem we will show that the polytope for bipartite maximum matching is integral.
 \section{Duality}
+Suppose we have the following LP:
+\begin{mini*}
+{}{x_1+2x_2}{}{}
+\addConstraint{x_1-x_2}{}{\geq 3}
+\addConstraint{2x_1+x_2}{}{\geq 1}
+\addConstraint{x_1,x_2}{}{\geq 0}
+\end{mini*}Suppose we want to have a lower bount on the optimal solution of the LP. Then we will try to find a linear combination of the constriants such that in the LHS we obtain some thing which is at most the objective function and on the RHS we get the lower bound. So let we multiply the first constraint with $y_1$, second with $y_2$. For now $y_1,y_2$ are unknowns. Then we have the following:\begin{align*}
+	x_1+2x_2 & \geq (y_1+2y_2)x_1+(-y_1+y_2)x_2\\
+	& = y_1(x_1-x_2)+y_2(2x_1+x_2)\geq 3y_1+y_2
+\end{align*}
+But we also have the conditions that the coefficients of $x_1$ and $x_2$ can not be more than the coefficients of $x_1$ and $x_2$ in the objective function respectively. So we have the following conditions:
+\begin{align*}
+	y_1 +2y_2 & \leq 1\\
+	-y_1+y_2 & \leq 2
+\end{align*}So now we have found a maximization LP which gives us a lower bound on the optimal solution of the original LP:
+\begin{maxi*}
+{}{3y_1+y_2}{}{}
+\addConstraint{y_1+2y_2}{}{\leq 1}
+\addConstraint{-y_1+y_2}{}{\leq 2}
+\addConstraint{y_1,y_2}{}{\geq 0}
+\end{maxi*}This is called the \textit{dual} of the original LP. The original LP is called the \textit{primal} of the dual. The primal and dual are related in a very nice way. The following theorem gives us the relation between primal and dual.
+
+For every minimization LP there is a dual LP that provides a lower bound on the optimal value of the primal LP.
+\nt{If the Primal LP is unbounded then the dual LP is infeasible.}
+\begin{lemma}{}{}
+	Dual of Dual is the primal LP
+\end{lemma}
+\subsection{Dualization of LP}
+If the primal LP is in canonical form then we have the following:
+\begin{center}
+	\begin{minipage}{0.35\textwidth}
+		\begin{maxi*}
+			{}{c^Tx}{}{}
+			\addConstraint{Ax\leq b}
+			\addConstraint{x\geq 0}
+		\end{maxi*}
+		\begin{center}
+			$\boxed{\text{Primal}}$
+		\end{center}
+	\end{minipage}	$\iff$\begin{minipage}{0.35\textwidth}
+	\begin{mini*}
+		{}{b^Ty}{}{}
+		\addConstraint{A^Ty\leq c}
+		\addConstraint{x\geq 0}
+	\end{mini*}
+	\begin{center}
+		$\boxed{\text{Dual}}$
+	\end{center}
+\end{minipage}
+\end{center}
+But if the primal LP is not in the canonical form then we have two options: either we can convert the primal to the canonical form and the dualize it or we can directly dualize the primal LP. The following method gives us a way to dualize the primal LP without converting it tot the canonical form.
+
+\begin{center}
+	\begin{minipage}{0.45\textwidth}
+		\begin{maxi*}
+			{}{c^Tx}{}{}
+			\addConstraint{A_jx}{\geq b_j}{\quad\forall\ j\in[d]}
+			\addConstraint{A_jx}{= b_j}{\quad\forall\ j\in\{d+1,\dots, m\}}
+			\addConstraint{x_i}{\geq 0}{\quad\forall\ i\in[k]}
+			\addConstraint{x_i}{\text{ is free}}{\quad\forall\ i\in\{k+1,\dots, n\}}
+		\end{maxi*}
+		\begin{center}
+			$\boxed{\text{Primal}}$
+		\end{center}
+	\end{minipage}	$\iff$\hspace{5mm} \begin{minipage}{0.4\textwidth}
+	\begin{mini*}
+		{}{b^Ty}{}{}
+		\addConstraint{\sum_{j=1}^mA_{ji}y_j}{\leq c_i}{\quad\forall\ i\in[k]}
+		\addConstraint{\sum_{j=1}^mA_{ji}y_j}{= c_j}{\quad\forall\ i\in\{k+1,\dots, n\}}
+		\addConstraint{y_j}{\geq 0}{\quad\forall\ j\in[d]}
+			\addConstraint{y_j}{\text{ is free}}{\quad\forall\ i\in\{d+1,\dots, m\}}
+	\end{mini*}
+	\begin{center}
+		$\boxed{\text{Dual}}$
+	\end{center}
+\end{minipage}
+\end{center}
+So we have the following observations:
+\begin{observation*}In dualization of a LP which is not in canonical form
+	\begin{center}
+		\begin{tabular}{rcl}
+			\underline{Primal} &&\underline{Dual}\\
+			Non-negative variables & $\iff$ & Inequality constraints\\
+			Free variables & $\iff$ & Equality constraints
+		\end{tabular}
+	\end{center}
+\end{observation*}
+\subsection{Weak and Strong Duality} 
+Now as the motivation for constructing the dual LP. We have the following theorem which proves the any feasible solution of the dual LP indeed gives a lower bound on the optimal solution of the primal LP.
+\begin{Theorem}{Weak Duality Theorem}{weak-duality}
+If $x,y$ are feasible solutions for the primal and dual LPs respectively and then $c^Tx\geq b^Ty$.
+\end{Theorem}
+\begin{proof}
+	We have \begin{align*}
+		b^T\leq \sum\limits_{j=1}^d y_j(A_j x)+\sum\limits_{j=d+1}^m y_j(A_j x)=\sum\limits_{j=1}^dy_jA_jx=\sum\limits_{j=1}^m\sum\limits_{i=1}^n y_j A_{ji}x_i=\sum\limits_{i=1}^n x_i\sum\limits_{j=1}^m A_{ji}y_j\leq \sum\limits_{i=1}^m x_ic_i=c^x
+	\end{align*}Hence we have the theorem.
+\end{proof}
+
+We also have a much stronger theorem which tells us that the optimal solutions of the primal and dual LPs are equal. 
+\begin{Theorem}{Strong Duality Theorem}{strong-duality}
+	Let the primal and dual LP are feasible and $x^*,y^*$ are the optimal solutions of the primal and dual LPs respectively. Then $c^Tx^*=b^Ty^*$.
+\end{Theorem}
+Notice that if for any feasible solution $y$ of the dual LP is $c^Tx^*=b^Ty$ then $y$ must be the optimal solution of the dual LP. 
+\subsection{Complementary Slackness}
+\begin{question}{}{}
+	Suppose we have optimal solutions $x^*,y^*$ of the primal and dual LPs respectively. What can be said about which constraints are tight in the primal and dual?
+\end{question}
+\begin{Theorem}{Complementary Slackness}{complementary-slackness}
+	Let $x^*,y^*$ be the optimal solutions of the primal and dual LPs respectively iff:
+	\begin{enumerate}[label=(\roman*)]
+		\item If $A_jx^*>b_j$ then $y_j^*=0$.
+		\item If ${A^i}^Ty^*<c_i$ then $x_i^*=0$.
+	\end{enumerate}
+\end{Theorem}
+\begin{proof}
+	Suppose $x^*,y^*$ are the optimal solutions of the primal and dual LPs respectively. Then by \hyperref[th:strong-duality]{Strong Duality Theorem}. Now by \hyperref[th:weak-duality]{Weak Duality Theorem} we have $$\sum\limits_{i=1}^k x_i\sum\limits_{j=1}^m A_{ji}y_j+\sum\limits_{i=k+1}^n x_i\sum\limits_{j=1}^m A_{ji}y_j=\sum\limits_{i=1}^k x_ic_i+\sum\limits_{i=k+1}^n x_ic_i$$So we have $$\sum\limits_{i=1}^k x_i\sum\limits_{j=1}^m A_{ji}y_j=\sum\limits_{i=1}^k x_ic_i$$Hence either $x_i=0$ or $\sum\limits_{j=1}^m A_{ji}y_j=c_i$ for all $i\in[k]$. So ${A^i}^Ty^*<c_i$ implies $x_i^*=0$. Similarly we have $A_jx^*>b_j$ then $y_j^*=0$.
+\end{proof}
+\subsection{Max-Flow Min-Cut Theorem}\label{another-proof-max-flow-min-cut}
+So here using LP-duality we give another proof of \hyperref[th:maxflowmincut]{Max-Flow Min-Cut Theorem}. The LP for maximum flow is given by:
+\begin{maxi*}
+	{}{\sum\limits_{e\in \textit{out}(s)}x_e}{}{}
+	\addConstraint{\sum\limits_{e\in\textit{in}(v)}x_e-\sum\limits_{c\in\textit{out}(v)}x_e}{=0}{\quad \forall \ v\in V, v\neq s,t}
+	\addConstraint{c_e}{\geq x_e}{\quad \forall\ e\in E}
+	\addConstraint{x_e}{\geq 0}{\quad \forall\ e\in E}
+\end{maxi*}We can convert this LP by adding  edges of $in(s)$ and giving them capacity $0$. So we have the modified LP: 
+\begin{maxi*}
+	{}{\sum\limits_{e\in \textit{out}(s)}x_e-\sum\limits_{e\in \textit{in}(s)}x_e}{}{}
+	\addConstraint{\sum\limits_{e\in\textit{in}(v)}x_e-\sum\limits_{c\in\textit{out}(v)}x_e}{=0}{\quad \forall \ v\in V, v\neq s,t}
+	\addConstraint{c_e}{\geq x_e}{\quad \forall\ e\in E}
+	\addConstraint{x_e}{\geq 0}{\quad \forall\ e\in E}
+\end{maxi*}For the first constraint we have the variables $\alpha_v$ and for the second constrain we have the variables $\beta_e$. So the dual of this LP is given by:\begin{mini*}
+	{}{\sum_{e\in E}c_e\beta_e}{}{}
+	\addConstraint{-\alpha_u+\alpha_v+\beta_e}{\geq 0}{\quad \forall\ e=(u,v)\in E, u,v\notin \{s,t\}}
+	\addConstraint{\alpha_v}{\geq 0}{\quad \forall\ v\in V, v\neq s,t}
+	\addConstraint{\beta_e}{\geq 0}{\quad \forall\ e\in E}
+\end{mini*}Now  we can add $\alpha_s=1$ and $\alpha_t=0$ to the dual LP and obtain the modified dual LP:
+\begin{mini*}
+	{}{\sum_{e\in E}c_e\beta_e}{}{}
+	\addConstraint{\beta_e}{\geq \alpha_u-\alpha_v+}{\quad \forall\ e=(u,v)\in E, u,v\notin \{s,t\} }
+	\addConstraint{\alpha_v}{\geq 0}{\quad \forall\ v\in V, v\neq s,t}
+	\addConstraint{\beta_e}{\geq 0}{\quad \forall\ e\in E}
+	\addConstraint{\alpha_s}{=1}{}
+	\addConstraint{\alpha_t}{=0}{}
+\end{mini*}
+Now for the max-flow LP we already proved in \lmref{max-flow-polytope-integral} that the polytope is integral. By \lmref{tum-prop} the polytope for the dual is also integral. Let $x^*,(\alpha^*,\beta^*)$ be the optimal solution of the primal and dual LPs respectively. Now by \hyperref[th:complementary-slackness]{Complementary Slackness} we have the following: $$x_e^*>0\implies \beta_e^*=\alpha_u^*-\alpha_v^*\qquad \text{and}\qquad \beta_e^*>0\implies x_e^*=c_e$$Now $\alpha_s^*=1$. Let $X=\{v\colon \alpha_v^*\geq 1\}$. Then $s\in X$ and $t\notin X$. Hence $X$ is a $s-t$ cut. Now consider an edge $(u,v)$ out of $X$. Then $$\alpha_u^*\geq 1\text{ and }\alpha_v^*<1\implies \beta_e^*>0\implies x_e^*=c_e$$And for an edge $e=(u,v)$ in to $X$ $$x_e^*>0,\alpha_u^*<1, \alpha_v^*\geq 1\implies \beta_e^*<0$$ Hence for an edge $e$ into $X$, $x_e^*=0$. Hence maximum flow is equal to the $\sum\limits_{e\in \textit{out}(X)} c_e$ and this is the minimum cut. 
+\subsection{Maximum Bipartite Matching minimum Vertex Cover}
+The maximum bipartite matching problem is given by the following LP:
+\begin{maxi*}
+	{}{\sum\limits_{e\in E}x_e}{}{}
+	\addConstraint{}{ \sum\limits_{e\text{ incident on }v}{x_e\leq 1}}{\quad \forall \ v\in V}
+	\addConstraint{}{x_e\geq 0}{\quad \forall\ e\in E}
+\end{maxi*}The dual of the LP si given by \begin{mini*}
+	{}{\sum\limits_{v\in V}y_v}{}{}
+	\addConstraint{y_u+y_v}{\geq 1}{\quad \forall \ (u,v)\in E}
+	\addConstraint{y_v}{\geq 0}{\quad \forall \ v\in V}
+\end{mini*}Since  in \lmref{bp-max-matching-polytope-integral} we have proved the polytope for bipartite maximum matching is integral the polytope for the dual is also integral.
+\begin{Definition}{Vertex Cover}{}
+	Given $G=(V,E)$ a vertex cover is a subset $C\subseteq V$ such that $\forall\ e\in E$ at least one of the endpoints of $e$ is in $C$. 
+\end{Definition}
+Then we have the following lemma:
+\begin{lemma}{}{}
+	Let $C$ be a vertex cover. Then there exists a dual feasible solution $y$ such that $\sum\limits_{v}y_v=|C|$.
+\end{lemma}
+\begin{proof}
+	Consider the vector $y\in\{0,1\}^{|V|}$ such that $y_v=1$ if $v\in C$ and $y_v=0$ otherwise. Then we have the lemma.
+\end{proof}
+\begin{lemma}{}{}
+	Let $y$ be an integral dual solution. Then $C=\{v\colon y_v\geq 1\}$ is a vertex cover.
+\end{lemma}
+\begin{proof}
+	For every edge $e=(u,v)$ we have $y_u+y_v\geq 1$. So either $y_u\geq 1$ or $y_v\geq 1$ as $y$ is integral. Hence either $u\in C$ or $v\in C$. Hence every edge is covered by $C$ and hence $C$ is a vertex cover.
+\end{proof}
+\nt{In general graphs computing a minimum sized vertex cover in $\mathsf{NP}$-hard. But since for bipartite graph  the polytope is integral we can compute minimum weight vertex cover in polynomial time.}
