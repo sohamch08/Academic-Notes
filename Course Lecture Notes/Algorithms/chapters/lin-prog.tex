@@ -292,8 +292,10 @@ Notice that if for any feasible solution $y$ of the dual LP is $c^Tx^*=b^Ty$ the
 	\end{enumerate}
 \end{Theorem}
 \begin{proof}
-	Suppose $x^*,y^*$ are the optimal solutions of the primal and dual LPs respectively. Then by \hyperref[th:strong-duality]{Strong Duality Theorem}. Now by \hyperref[th:weak-duality]{Weak Duality Theorem} we have $$\sum\limits_{i=1}^k x_i\sum\limits_{j=1}^m A_{ji}y_j+\sum\limits_{i=k+1}^n x_i\sum\limits_{j=1}^m A_{ji}y_j=\sum\limits_{i=1}^k x_ic_i+\sum\limits_{i=k+1}^n x_ic_i$$So we have $$\sum\limits_{i=1}^k x_i\sum\limits_{j=1}^m A_{ji}y_j=\sum\limits_{i=1}^k x_ic_i$$Hence either $x_i=0$ or $\sum\limits_{j=1}^m A_{ji}y_j=c_i$ for all $i\in[k]$. So ${A^i}^Ty^*<c_i$ implies $x_i^*=0$. Similarly we have $A_jx^*>b_j$ then $y_j^*=0$.
+	Suppose $x^*,y^*$ are the optimal solutions of the primal and dual LPs respectively. Then by \hyperref[th:strong-duality]{Strong Duality Theorem}  we have $$\sum\limits_{i=1}^k x_i\sum\limits_{j=1}^m A_{ji}y_j+\sum\limits_{i=k+1}^n x_i\sum\limits_{j=1}^m A_{ji}y_j=\sum\limits_{i=1}^k x_ic_i+\sum\limits_{i=k+1}^n x_ic_i$$So we have $$\sum\limits_{i=1}^k x_i\sum\limits_{j=1}^m A_{ji}y_j=\sum\limits_{i=1}^k x_ic_i$$Hence either $x_i=0$ or $\sum\limits_{j=1}^m A_{ji}y_j=c_i$ for all $i\in[k]$. So ${A^i}^Ty^*<c_i$ implies $x_i^*=0$. Similarly we have $A_jx^*>b_j$ then $y_j^*=0$.
 \end{proof}
+
+There is also a relaxed version of the complementary slackness theorem, \thmref{relaxed-cs} which is useful in practice. It is explained in the next chapter.
 \subsection{Max-Flow Min-Cut Theorem}\label{another-proof-max-flow-min-cut}
 So here using LP-duality we give another proof of \hyperref[th:maxflowmincut]{Max-Flow Min-Cut Theorem}. The LP for maximum flow is given by:
 \begin{maxi*}
