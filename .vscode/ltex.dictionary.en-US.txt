@@ -6,3 +6,5 @@ Primality
 matchings
 Karger-Stein
 Karger
+Vandermonde
+recursing

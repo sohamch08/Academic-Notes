@@ -31,19 +31,19 @@ In this section we will show an algorithm to find the median of a given set of d
 	\KwIn{Set $S$ of $n$ distinct integer and $k\in[n]$}
 	\KwOut{$k^{th}$ smallest integer in $S$}
 	\Begin{
-%$n\longleftarrow |S|$\;
-\If{$|S|\leq 100$}{Sort $S$, \Return{$k^{th}$ smallest element in $S$}}	
-$z\longleftarrow \prb{Approximate-Split}(S)$\hspace{1cm}
-($z$ is the $r^{th}$ smallest element for some $r\in \lt[\frac{n}{4},\frac{3n}{4}\rt]$)\;
-$S_L\longleftarrow \{x\in S\mid x\leq z\}$, $S_R\longleftarrow \{x\in S\mid x>z\}$\;
-\If{$k\leq |S_L|$}{\Return{\prb{Rank-Find}$(S_L,k)$}}
-\Return{\prb{Rank-Find}$(S_R,k-|S_L|)$}
-}
-\caption{\prb{Rank-Find}(S,k)}
+		%$n\longleftarrow |S|$\;
+		\If{$|S|\leq 100$}{Sort $S$, \Return{$k^{th}$ smallest element in $S$}}
+		$z\longleftarrow \prb{Approximate-Split}(S)$\hspace{1cm}
+		($z$ is the $r^{th}$ smallest element for some $r\in \lt[\frac{n}{4},\frac{3n}{4}\rt]$)\;
+		$S_L\longleftarrow \{x\in S\mid x\leq z\}$, $S_R\longleftarrow \{x\in S\mid x>z\}$\;
+		\If{$k\leq |S_L|$}{\Return{\prb{Rank-Find}$(S_L,k)$}}
+		\Return{\prb{Rank-Find}$(S_R,k-|S_L|)$}
+	}
+	\caption{\prb{Rank-Find}(S,k)}
 \end{algorithm}
 \parinn
 
-Certainly if we can solve $\prb{Rank-Find}(S,k)$ for all $k\in[n]$ we can also solve $\prb{Median-Find}$. We will try to use both the problems and recurse to solve \prb{Rank-Find} in linear time. 
+Certainly if we can solve $\prb{Rank-Find}(S,k)$ for all $k\in[n]$ we can also solve $\prb{Median-Find}$. We will try to use both the problems and recurse to solve \prb{Rank-Find} in linear time.
 
 In the above algorithm $rank(z)\in \lt[\frac{n}{4},\frac{3n}{4}\rt]$. So $\frac{n}4\leq |S_L|,|S_R|\leq \frac{3n}4$. For now suppose $\prb{Rank-Find}(S,k)$ takes $T_{RF}(n)$ time and $\prb{Approximate-Split}(S)$ takes $T_{AS}(n)$ time. Then the time taken by the algorithm is  $$T_{RF}(n)\leq O(n)+T_{AS}(n)+T_{RF}\lt(\frac{3n}4\rt)$$
 \subsection{Solve \prb{Approximate-Split} using \prb{Rank-Find}}
@@ -53,7 +53,7 @@ We first divide $S$ into groups of $5$ elements. So take $t=\lt\lceil\frac{n}5\r
 	\includegraphics{images/approx-split-using-rankfind}
 \end{figure}
 
-After sorting each of the groups we takes the medians of each group. Let $z$ be the median of the medians. We claim that $rank(z)\in  \lt[\frac{n}{4},\frac{3n}{4}\rt]$. 
+After sorting each of the groups we takes the medians of each group. Let $z$ be the median of the medians. We claim that $rank(z)\in  \lt[\frac{n}{4},\frac{3n}{4}\rt]$.
 
 \begin{algorithm}
 	\DontPrintSemicolon
@@ -67,7 +67,7 @@ After sorting each of the groups we takes the medians of each group. Let $z$ be 
 		$T\longleftarrow \{h_i\mid i\in[t]\}$\;
 		\Return{$\prb{Rank-Find}\lt(T,\lt\lfloor \frac{t}{2}\rt\rfloor\rt)$}\;
 	}
-\caption{\prb{Approximate-Split}$(S)$}
+	\caption{\prb{Approximate-Split}$(S)$}
 \end{algorithm}
 
 So in the picture among elements in upper left the highest element is $z$ and among the elements in lower right the lowest element is $z$. We will show that the number of elements smaller than $z$ is between $\frac{n}{4} $ and $\frac{3n}{4}$. Lets call the set of elements in upper left box is $S_u$ and the set of elements in lower right box is $S_d$.
@@ -94,7 +94,7 @@ Hence using \prb{Approximate-Split} the final algorithm for \prb{Rank-Find} is t
 		\KwOut{$k^{th}$ smallest integer in $S$}
 		\Begin{
 			%$n\longleftarrow |S|$\;
-			\If{$|S|\leq 100$}{Sort $S$, \Return{$k^{th}$ smallest element in $S$}}	
+			\If{$|S|\leq 100$}{Sort $S$, \Return{$k^{th}$ smallest element in $S$}}
 			$t\longleftarrow\lt\lceil\frac{n}{5}\rt\rceil$\;
 			$S_i\longleftarrow i^{th}$ block of 5 elements in $S$ for $i\in [t-1]$\; $S_t\longleftarrow$ Whatever is left in $S$\;
 			\For{$i\in [t]$}{Sort $S_i$, Let $h_i$ be the median of $S_i$}
