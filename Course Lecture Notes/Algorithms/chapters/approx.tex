@@ -231,7 +231,7 @@ We'll use the variable $x_{ij}$ as an indicator for $j^{th}$ job assigned to $i^
     \addConstraint{\sum_{j\in\mcJ}P_{ij}x_j}{\leq T}{\quad\forall\ i\in \mcM}
     \addConstraint{x_{ij}}{\geq 0}{\quad\forall \ i\in\mcM,j\in\mcJ}
 \end{mini*} 
-So here the first constrain basically says that every job assigned to some machine. The second constraint says that for every machine the total time taken by the machine to complete the jobs should be at most the makespan where $T$ denotes the makespan. But this LP is not good enought. Consider the following example where there is only one job and $P_{i1}=m$ then $\operatorname{OPT}_{LP}=1$ by setting $x_{i1}=\frac1m$ where as actually the optimal makespan is $m$. Hence this LP will not work. We have to strengthen the LP.
+So here the first constrain basically says that every job assigned to some machine. The second constraint says that for every machine the total time taken by the machine to complete the jobs should be at most the makespan where $T$ denotes the makespan. But this LP is not good enough. Consider the following example where there is only one job and $P_{i1}=m$ then $\operatorname{OPT}_{LP}=1$ by setting $x_{i1}=\frac1m$ where as actually the optimal makespan is $m$. Hence this LP will not work. We have to strengthen the LP.
 
 So now assume we already know the optimal makespan $T$. Then if any $P_{ij}>T$ then we know that we can't assign the $j^{th}$ job to $i^{th}$ machine. So now we have the new updated LP:
 
@@ -246,3 +246,67 @@ This basically checks the feasibility for a specific $T$. Hence now we can do a 
 \begin{Theorem}{}{}
 	By binary search $O(\log n)$ round we can find the smallest $T$ such that $LP(T)$ is feasible.
 \end{Theorem}
+
+Now suppose we have the smallest feasible time. Let's call this $\hat{T}$. Then $\hat{T}\leq \operatorname{OPT}_I$. Let $\tdx$ is the basic feasible solution for $\hat{T}$. We will now show a polynomial time algorithm to obtain an integral assignment with makespan $=2\hat{T}$.
+
+\subsection{Rounding to Get \texorpdfstring{$2$}{2}-Approximate Solution}
+Now we have the smallest feasible time $\hat{T}$ and the basic feasible solution for that $\tdx$. Now we can thing $\tdx$ as a weighted bipartite graph between $\mcJ$ and $\mcM$ with fractional weights i.e. one job assigned to multiple machines fractionally. Let the graph is $G=(L\sqcup R,E)$ where $e=(i,j)\in E$, if $\tdx_{ij}>0$ with $w(i,j)=\tdx_{ij}$. Hence we also have for all $(i,j)\in E$, $\tdx_{ij}\leq \hat{T}$. 
+\begin{lemma}{}{}
+	In $\tdx$ at least $n-m$ jobs are assigned integrally.
+\end{lemma}
+\begin{proof}
+	There are total $n+m+nm$ constraints in the LP. But the LP is $nm$ dimensional. Therefore at $\tdx$, $nm$ constraints are tight. So at most $m+n$ constraints of the type $x_{ij}\geq 0$ are not tight i.e.  at most $m+n$ many $\tdx_{ij}$ are not zero. Suppose $\alpha$ jobs are set integrally and $\beta $ fractionally. So for each of the $\beta $ jobs it is assigned to at least  $2$ machines. Now each of the $\tdx_{ij}$ corresponds to an edge of the graph. Therefore we have the following two equations:$$\alpha+\beta=n,\quad \alpha+2\beta\leq m+n\implies \beta\leq m\implies \alpha\geq n-m$$Therefore there at least $n-m$ jobs which are assigned integrally.
+\end{proof}
+\begin{lemma}{}{}
+	In every connected component of $G$, $\#\text{edges}\leq \#\text{vertices}$.
+\end{lemma}
+\begin{proof}
+	In the graph $G$, as we showed earlier at most $m+n$ constraints of the type $x_{ij}\geq 0$ are not tight i.e.  at most $m+n$ many $\tdx_{ij}$ are not zero. Hence $$\#\text{edges}=|\{\tdx_{ij}\mid \tdx_{ij}>0\}|\leq m+n=\#\text{vertices}$$
+
+	Suppose $C$ is a connected component. Let $\mcJ_C$, $\mcM_C$ be the jobs and machines of $C$ and $\tdx|_C$ is $\tdx$ restricted to $C$. Then $\tdx|_C$ is a basic feasible solution for the instance restricted to $\mcM_C$, $\mcJ_C$ with $\hat{T}$ being a feasible time. If $\tdx|_C$ was not feasible for $\mcM_C$ and $\mcJ_C$ then there exists $y_C$ and $z_C$ with $y_C\neq z_C$ such that $\  wtdx|_C=\lm y_C+(1-\lm)z_C$ where $\lm\in(0,1)$. Then $$\tdx=\lm\lt(y_C,\tdx|_{\ovC}\rt)+(1-\lm)\lt(z_C,\tdx|_{\ovC}\rt)$$ Then $\tdx$ can not be a basic feasible solution. And therefore by the same logic as above we have in the connected component $\#\text{edges}\leq \#\text{vertices}$. Since $C$ is arbitrary connected component this is true for every connected component.
+\end{proof}
+
+Now we create a feasible solution $\hat{x}$ for $2\hat{T}$. We first initiate $\hat{x}$ setting all $0$'s. We fix a connected component $C$ in $G$. We call a vertex in $\mcJ_C\cup \mcM_C$ leaf if it has degree $1$. If for any job $j\in \mcJ_C$ it is assigned integrally in $\tdx|_C$ then $j$ is a leaf. So we remove the node $j$ and assign the job to the machine $i\in \mcM_C$, $j$ is connected to.  This also removes the edge incident on $j$. 
+
+After doing this we still have $\#\text{edges}\leq \#\text{vertices}$ because we basically removed same number of jobs and edges from the graph. But now every job is connected to at least two machines. 
+
+If a machine $i\in\mcM_C$ is a leaf, let the edge incident on $i$ is $(i,j)$ then we remove both $i,j$ from te graph and assign the job $j$ to machine $i$ i.e. basically we set $\hat{x}_{ij}=1$. So the load added to $i^{th}$ machine is at most $\hat{T}$. We do this for every leaf machine.
+
+Now the graph has no leaves remaining. Since the graph is bipartite it is an even cycle. So find a matching of jobs to machines in the cycle and assign the jobs accordingly i.e. if $M$ is a matching and $e=(i,j)\in M$ then set $\hat{x}_{ij}=1$.\newpage
+
+So we have the following final algorithm:
+
+\begin{algorithm}
+\DontPrintSemicolon
+\KwIn{$\mcM,\mcJ,P$ where $|\mcM|=m$, $|\mcJ|=n$ and $P\in\bbZ_0^{m\times n}$}
+\KwOut{$\sg:\mcJ\to\mcM$ assignment of jobs to machines to minimize $\max\{l_i\colon i\in \mcM\}$ where $l_i=\sum\limits_{j:\sg(j)=i}P_{ij}$ i.e. time taken by machine $i$ to complete all jobs assigned by $\sg$}
+\Begin{
+	Do binary search to find the minimum feasible $T$ for the LP.\;
+	Let $\hat{T}$ is the minimum feasible time and $\tdx$ is the basic feasible solution.\;
+	Construct the weighted graph $G=(\mcM\sqcup \mcJ,E)$ where $(i,j)\in E$ if $\tdx_{ij}>0$ and $w(i,j)=\tdx_{i,j}$.\;
+	$\mcC\longleftarrow$ Connected Components of $G$.\;
+	\For{$C\in\mcC$}{
+		\While{$\exs\ j\in\mcJ_C$ such that $\deg(j)=1$}{
+			Let $(i,j)\in E$\;
+			$\sg(j)\longleftarrow i$\;
+			$\mcJ\longleftarrow\mcJ\setminus\{j\}$
+		}
+		\While{$\exs\ i\in\mcM_C$ such that $\deg(i)=1$}{
+			Let $(i,j)\in E$\;
+			$\sg(j)\longleftarrow i$\;
+			$\mcM\longleftarrow\mcM\setminus\{i\}$\;
+			$\mcJ\longleftarrow\mcJ\setminus\{j\}$
+		}
+		$M\longleftarrow$\hyperref[augmenting-bp-matching]{\textsc{BP-Matching-Augmenting-Path}}. $M$ will be a perfect matching.\;
+		\For{$e=(i,j)\in M$}{
+			$\sg(j)\longleftarrow i$\;
+		}
+	}
+	\Return{$\sg$}
+}
+\caption{Makespan $2$-Approximate Algorithm}
+\end{algorithm}
+
+This algorithm works in polynomial time since solving the LP,  constructing the weighted graph and finding the connected components can be done in polynomial time and then for every component the while loops and finding matching can also be done in polynomial time. So the algorithm is polynomial time.
+
+This algorithm gives a $2$-approximate solution because each machine $i$ is assigned the jobs it is set integrally and another job $j$ if $\tdx_{ij}>0$. 
