@@ -14,7 +14,7 @@
 	\newlength{\drop}
 	\setlength{\drop}{0.1\textheight}
 	\centering
-	\settowidth{\unitlength}{\Huge\scshape La matière et fsdfdsf\hspace{3pt}-temps}
+	\settowidth{\unitlength}{\Huge\scshape La matiere et fsdfdsf\hspace{3pt}-temps}
 	\vspace*{\baselineskip}
 	\rule{\unitlength}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
 	\rule{\unitlength}{0.4pt}\\[\baselineskip]
@@ -53,6 +53,8 @@
 
 \usetikzlibrary{arrows.meta, automata, calc,bending,positioning, quotes,
 	overlay-beamer-styles}
+
+\pgfplotsset{compat=1.18}
 
 \begin{document}
 
@@ -100,9 +102,9 @@
 % \input{chapters/kruskal-data-structure}
 % \input{chapters/red-black-tree-structure}
 % \input{chapters/max-flow}
-% \input{chapters/randomized-algo}
-% \input{chapters/derandomization}
-% \input{chapters/global-min-cut}
+\input{chapters/randomized-algo}
+\input{chapters/derandomization}
+\input{chapters/global-min-cut}
 \input{chapters/matching}
 % \input{chapters/lin-prog}
 % \input{chapters/approx}
