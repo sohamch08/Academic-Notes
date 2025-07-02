@@ -356,7 +356,7 @@ There is also a survey, \cite{Idel_2016_Aro} on use of matrix scaling in differe
 
 \section{Matching in General Graphs}
 Here we give a similar algorithm\footnote{I learned this algorithm in both Algorithm course by Umang and Combinatorial Optimization course by Kavitha. So I am mixing their notes here.} for finding maximum matching in general graph as in the case of bipartite graphs in \autoref{section:bp-augment-path}. We will give a similar characterization for the maximum matching in general graphs. First we will show an extension of Berge's lemma to general graphs.
-\begin{Theorem}{}{}
+\begin{Theorem}{Berge's Lemma}{berge-lemma}
 	For any graph $G=(V,E)$, $M\subseteq E$ is a maximal matching if and only if there is no augmenting paths in $G$.
 \end{Theorem}
 \begin{proof}
@@ -411,3 +411,8 @@ Let $B$ be a blossom in $G$. Then the new graph is $G?B=(V',E')$ where $$V'=(V\s
 \begin{Theorem}{}{}
 	Let $B$ be a blossom wrt $M$. $M$ is a maximum matching in $G$ if and only if $M/B$ is a maximum matching in $G/B$.
 \end{Theorem}
+\begin{proof}
+$(\Longrightarrow):$ Suppose $M/B$ is not maximum matching in $G/B$. Let $N$ is a matching in $G/B$ larger than $M/B$. Now if $N$ has no edge incident to $v_b$ then $N$ is also a matching in $B$. Let $N'$ is the matching in $G$. If there is an edge $(u,v_b)$ incident on $v_b$ in $N$ then we can expand the blossom $B$ and get the matching where the base of $B$ is matched with $u$ and other vertices of $B$ are matched inside $B$. So we have the matching $N'=(N\setminus\{e\})\cup \{(u,w)\}$ where $w$ in $B$ connected to $u$ in $G$. Since $|N'|=|N|>|M/B|$ and $B$ has $\frac{|B|-1}2$ matching edges we have $|N|+\frac{|B|-1}2>|M/B|+\frac{|B|-1}2=|M|$. But $M$ is maximum matching in $G$. Hence, contradiction. Therefore, $M/B$ is a maximum matching in $G/B$.
+
+$(\Longleftarrow):$ Suppose $M$ is not a maximum matching in $G$. Now WLOG we can assume the blossom has an empty stem. Otherwise, if $Q$ is the stem of $B$ we can consider the matching $M'=M\oplus Q$. So now we will call
+\end{proof}
