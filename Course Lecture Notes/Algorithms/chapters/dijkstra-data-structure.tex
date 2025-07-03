@@ -405,7 +405,7 @@ The \textsc{Fib-Extract-Min} function extracts the minimum node from the Fibonac
 
 The procedure \textsc{Consolidate} uses an auxiliary array of size $A$ of size $D$ which we will choose later. For each $i\leq D$ it keeps a heap of degree $i$. And if it finds two heaps of same degree then it makes the one with higher key to be the child of the other one. The function \textsc{Fib-Heap-Link} does this process of linking two heaps of same degree.
 
-Of course in order to allocate array we have to know how to calculate the upper bound for $D$ on the maximum degree. We will show an upper bound of $O(\log n)$ in \autoref{max-degree-bound}
+Of course in order to allocate array we have to know how to calculate the upper bound for $D$ on the maximum degree. We will show an upper bound of $O(\log n)$ in \autoref{max-degree-bound}.
 
 
 \subsection{Decreasing Key of a Node}
@@ -422,6 +422,11 @@ Let $x$ be any node in a Fibonacci heap, and suppose that $x.\emph{degree}=k$. L
 Let $x$ be a node in a Fibonacci heap and let $k=x.\emph{degree}$. Then $$\emph{size}(x)\geq F_{k+2}\geq \phi^k$$
 \end{lemma}
 \begin{proof}
-
+We will prove this using induction. For $k=0$, $F_2=1$ so this is obviously true. For $k=1$ there is one child of $x$. Hence, $\emph{size}(x)=2=F_3$. Suppose this is true for $1,\dots, k-1$. Let $y_1,\dots, y_k$ are the children of $x$  in the order in which they were linked to $x$. By the above lemma we have $y_1.\emph{degree}\geq 0$ and $y_i.\emph{degree}\geq i-2$ for all $i=2,\dots, k$. Hence, by Induction hypothesis we have $\emph{size}(y_i)\geq F_{i-2}$ for all $i=2,\dots, k$. Therefore, \[
+	\emph{size}(x) \geq 1+\sum\limits_{i=1}^{k}\emph{size}(y_k)\geq 2+\sum\limits_{i=2}^kF_{k}=1+\sum\limits_{i=0}^k F_k=F_{k+2}\geq \phi^k
+\]Hence, we have the lemma.
 \end{proof}
+\begin{corollary}{}{}
+	The maximum degree of any node in \textsc{Consolidate}	is $O(\log n)$.
+\end{corollary}
 \subsection{Time Complexity Analysis of Dijkstra}
