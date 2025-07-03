@@ -270,7 +270,7 @@ Instead of keeping just one Heap we will now keep an array of Heaps. We will als
 		               & \prb{Extract-Min}                                       & \prb{Decrease-Key}                                 \\
 		Linear Array   & $O(n)$                                                  & $\mathcolor{red}{\boxed{\mathcolor{black}{O(1)}}}$ \\
 		Min-Heap       & $\mathcolor{red}{\boxed{\mathcolor{black}{O(\log n)}}}$ & $O(\log n)$                                        \\[2mm]
-		Fibonacci Heap & $O(\log n)^*$                                           & $O(1)$
+		Fibonacci Heap & $O(\log n)^*$                                           & $O(1)^*$
 	\end{tabular}
 \end{center}
 The * is because  in Fibonacci Heap the amortized time taken by \prb{Extract-Min} is  $O(\log n)$.
@@ -367,7 +367,7 @@ The \textsc{Fib-Extract-Min} function extracts the minimum node from the Fibonac
 		\begin{algorithm}[H]
 			\caption{\textsc{Consolidate}$(F)$}
 			\DontPrintSemicolon
-			Initialize array $A[0,\dots, H.n]$ with \emph{None} elements.\;
+			Initialize array $A[0,\dots, D(n)]$ with \emph{None} elements.\;
 			\For{$x\in F.\emph{rootlist}$}{
 				$d\longleftarrow x.\emph{degree}$\;
 				\If{$A[d]==None$}{
@@ -403,13 +403,59 @@ The \textsc{Fib-Extract-Min} function extracts the minimum node from the Fibonac
 	\end{minipage}
 \end{center}
 
-The procedure \textsc{Consolidate} uses an auxiliary array of size $A$ of size $D$ which we will choose later. For each $i\leq D$ it keeps a heap of degree $i$. And if it finds two heaps of same degree then it makes the one with higher key to be the child of the other one. The function \textsc{Fib-Heap-Link} does this process of linking two heaps of same degree.
+Here $D(n)$ denotes the maximum degree a node can have after \textsc{Consolidate}. The procedure \textsc{Consolidate} uses an auxiliary array of size $A$ of size $D$ which we will choose later. For each $i\leq D(n)$ it keeps a heap of degree $i$. And if it finds two heaps of same degree then it makes the one with higher key to be the child of the other one. The function \textsc{Fib-Heap-Link} does this process of linking two heaps of same degree.\parinn
 
-Of course in order to allocate array we have to know how to calculate the upper bound for $D$ on the maximum degree. We will show an upper bound of $O(\log n)$ in \autoref{max-degree-bound}.
+Of course in order to allocate array we have to know how to calculate the upper bound for $D(n)$ on the maximum degree. We will show an upper bound of $O(\log n)$ in \autoref{max-degree-bound}.
 
 
 \subsection{Decreasing Key of a Node}
-
+In this section we will show how to decrease a key of a node in a Fibonacci heap in $O(1)$ amortized time. The \textsc{Fib-Decrease-Key} function decreases the key value of the target node then if the min-heap order the node is in is violated then we use the \textsc{Cascading-Cut} function to restore the min-heap property again. These two functions operates like the following:
+\begin{center}
+	\begin{minipage}{0.45\textwidth}
+		\begin{algorithm}[H]
+			\caption{\textsc{Fib-Decrease-Key}$(F,x,k)$}
+			\DontPrintSemicolon
+			\If{$k>x.\emph{key}$}{
+				\Return{Error}
+			}
+			$x.\emph{key}\longleftarrow k$\;
+			$y\longleftarrow x.\emph{parent}$\;
+			\If{$y\neq None$ and $x.\emph{key}<y.\emph{key}$}{
+				\textsc{Cut}$(F,x,y)$\;
+				\textsc{Cascading-Cut}$(F,y)$\;
+			}
+			\If{$k<F.\min.\emph{key}$}{
+				$F.\min\longleftarrow x$
+			}
+		\end{algorithm}
+	\end{minipage}\hfill
+	\begin{minipage}{0.45\textwidth}
+		\begin{algorithm}[H]
+			\caption{\textsc{Cascading-Cut}$(F,y)$}
+			\DontPrintSemicolon
+			% $z\longleftarrow y.\emph{parent}$\;
+			\If{$y.\emph{parent}\neq None$}{
+				\If{$y.\emph{lost}==0$}{
+					$y.\emph{lost}\longleftarrow 1$\;
+				}
+				\Else{
+					\textsc{Cut}$(F,y,y.\emph{parent})$\;
+					\textsc{Cascading-Cut}$(F,y.\emph{parent})$
+				}
+			}
+		\end{algorithm}
+		\begin{algorithm}[H]
+			\caption{\textsc{Cut}$(F,x,y)$}
+			\DontPrintSemicolon
+			Remove $x$ from $y.\emph{child}$\;
+			$y.\emph{degree}\longleftarrow y.\emph{degree}-1$\;
+			$F.\emph{rootlist}.\emph{append}(x)$\;
+			$x.\emph{parent}\longleftarrow None$\;
+			$x.\emph{lost}\longleftarrow 0$\;
+		\end{algorithm}
+	\end{minipage}
+\end{center}
+After decreasing the key of the target node if the min-heap order has been violated then we start by cutting the link between $x$ and its parent by adding it to the rootlist.
 \subsection{Bounding the Maximum Degree}\label{max-degree-bound}
 To prove that the amortized time of \textsc{Fib-Extract-Min} and \textsc{Fib-Delete} is $O(\log n)$ we must show that upper bound of the maximum degree of any node after \textsc{Consolidate} function is $O(\log n)$. In particular, we will show its $\lt\lfloor \log_{\phi}n\rt\rfloor$ where $\phi$ is the golden ratio.
 \begin{lemma}{}{}
