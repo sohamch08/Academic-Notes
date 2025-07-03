@@ -411,9 +411,17 @@ Of course in order to allocate array we have to know how to calculate the upper 
 \subsection{Decreasing Key of a Node}
 
 \subsection{Bounding the Maximum Degree}\label{max-degree-bound}
-To prove that the ammortized time of \textsc{Fib-Extract-Min} and \textsc{Fib-Delete} is $O(\log n)$ we must show that upper bound of the maximum degree of any node after \textsc{Consolidate} function is $O(\log n)$. In particular we will show its $\lt\lfloor \log_{\phi}n\rt\rfloor$ where $\phi$ is the golden ratio.
+To prove that the amortized time of \textsc{Fib-Extract-Min} and \textsc{Fib-Delete} is $O(\log n)$ we must show that upper bound of the maximum degree of any node after \textsc{Consolidate} function is $O(\log n)$. In particular, we will show its $\lt\lfloor \log_{\phi}n\rt\rfloor$ where $\phi$ is the golden ratio.
 \begin{lemma}{}{}
-Let $x$ be any node in a Fibonacci heap, and suppose that $x.\emph{degree}=k$. Let $y_1,\dots, y_k$ denote the children of $x$ in the order in which they were linked to $x$ from the earlist to the latest. Then $y_1.\emph{degree}\geq 0$ and $y_i.\emph{degree}\geq i-2$ for $i=2,\dots, k$.
+Let $x$ be any node in a Fibonacci heap, and suppose that $x.\emph{degree}=k$. Let $y_1,\dots, y_k$ denote the children of $x$ in the order in which they were linked to $x$ from the earliest to the latest. Then $y_1.\emph{degree}\geq 0$ and $y_i.\emph{degree}\geq i-2$ for $i=2,\dots, k$.
 \end{lemma}
+\begin{proof}
+	Obviously $y_1.\emph{degree}\geq 0$. The only function that adds a child to a node is the function \textsc{Consolidate}. Now for $i\geq 2$, $y_i$ was linked to $x$ when all of $y_1,\dots, y_{i-1}$ were children of $x$, and therefore we must have had $x.\emph{degree}\geq i-1$. Because node $y_i$ is linked to $x$ only if $x\emph{degree}=y_i.\emph{degree}$ we must also have $y_i.\emph{degree}\geq i-1$. Since then node $y_i$ has lost at most one child, since it would have been cut from $x$ by \textsc{Cascading-Cut} if it had lost two children. We conclude that $y_i.\emph{degree}\geq i-2$. 
+\end{proof}
+\begin{lemma}{}{}
+Let $x$ be a node in a Fibonacci heap and let $k=x.\emph{degree}$. Then $$\emph{size}(x)\geq F_{k+2}\geq \phi^k$$
+\end{lemma}
+\begin{proof}
 
+\end{proof}
 \subsection{Time Complexity Analysis of Dijkstra}
