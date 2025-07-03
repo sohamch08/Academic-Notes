@@ -7,7 +7,7 @@
 
 This is the problem we will discuss in this chapter. In this chapter we will often use the term `shortest distance' to denote the minimum weight path distance. One of the most famous algorithm for finding out minimum weight paths to all vertices from a given source vertex is Dijkstra's Algorithm
 \section{Dijkstra Algorithm}
-We will assume that the graph is given as adjacency list. Dijkstra Algorithm is basically dynamic programming. Suppose $\delta(v)$ is the shortest path distance from $s\rightsquigarrow v$.  Then we have the following relation: 
+We will assume that the graph is given as adjacency list. Dijkstra Algorithm is basically dynamic programming. Suppose $\delta(v)$ is the shortest path distance from $s\rightsquigarrow v$.  Then we have the following relation:
 $$\delta(v)=\min\limits_{u:(u,v)\in E}\{\delta(u)+e(u,v)\}$$And suppose for any vertex $v\in V-\{s\}$, $dist(v)$ be the distance from $s$ estimated by the algorithm at any point. This is why  Dijkstra's algorithm maintains a set $S$  of vertices   whose final shortest-path weights from the source $s$ have already been determined. The algorithm repeatedly selects the vertex $u\in V-S$ with minimum shortest-path estimate and estimates the distances of neighbors of $u$. So here is the algorithm:
 
 \begin{algorithm}
@@ -24,22 +24,22 @@ $$\delta(v)=\min\limits_{u:(u,v)\in E}\{\delta(u)+e(u,v)\}$$And suppose for any 
 			\For{$e=(u,v)\in E$}{$dist(v)\longleftarrow \min\{dist(v), dist(u)+w(u,v)\}$}
 		}
 	}
-\caption{\prb{Dijkstra}$(G,s,W)$}
+	\caption{\prb{Dijkstra}$(G,s,W)$}
 \end{algorithm}
 
 Here below we give an example of how the Dijkstra algorithm works:
 %\begin{center}
-	
+
 \begin{figure}[h]
 	\centering
-\begin{tikzpicture}[
-		node distance = 12mm and 14mm,
-		every state/.append style = {inner sep=0pt, fill=gray!10,
-			minimum size=7mm},
-		every edge/.style = {draw, -Stealth, bend angle=15},
-		auto=right,
+	\begin{tikzpicture}[
+			node distance = 12mm and 14mm,
+			every state/.append style = {inner sep=0pt, fill=gray!10,
+					minimum size=7mm},
+			every edge/.style = {draw, -Stealth, bend angle=15},
+			auto=right,
 		]
-		
+
 		%
 		%	\draw[blue!20, line width=5pt] 	(s1) to                     (s2);
 		%
@@ -60,7 +60,7 @@ Here below we give an example of how the Dijkstra algorithm works:
 			(s4) edge ["$9$"]						(s3)
 			(s4) edge [bend right, "$3$"]			(s2);
 		\end{scope}
-		
+
 		\begin{scope}[shift={(0,0)}]
 			\node (s1) [state,fill=gray!30,label={left:$s$},fill=black,text=white]         {$\boldsymbol{0}$};
 			\node (s2) [state, above right=of s1]   {$\boldsymbol{10}$};
@@ -68,7 +68,7 @@ Here below we give an example of how the Dijkstra algorithm works:
 			\node (s4) [state,fill=gray!30, below right =of s1]   {$\boldsymbol{5}$};
 			\node (s5) [state, right=of s4]          {$\boldsymbol{10}$};
 			\draw[blue!20, line width=5pt] (s1) -- (s2);
-			\draw[blue!20, line width=5pt] (s1) -- (s4);	
+			\draw[blue!20, line width=5pt] (s1) -- (s4);
 			\draw   (s1) edge [ "$10$"]             			(s2)
 			(s1) edge ["$5$"]									(s4)
 			(s2) edge ["$1$"]             						(s3)
@@ -77,11 +77,11 @@ Here below we give an example of how the Dijkstra algorithm works:
 			(s5) edge [bend right,"$6$"]  						(s3)
 			(s5) edge [bend left=80,looseness=1.2,"$7$", swap]	(s1)
 			(s4) edge ["$2$"] 									(s5)
-			(s4) edge ["$9$"]									(s3)			     			
+			(s4) edge ["$9$"]									(s3)
 			(s4) edge [bend right, "$3$"]						(s2);
-			
+
 		\end{scope}
-		
+
 		\begin{scope}[shift={(6,0)}]
 			\node (s1) [state,label={left:$s$},fill=black,text=white]         {$\boldsymbol{0}$};
 			\node (s2) [state, above right=of s1]   {$\boldsymbol{8}$};
@@ -90,7 +90,7 @@ Here below we give an example of how the Dijkstra algorithm works:
 			\node (s5) [state, right=of s4,fill=gray!30]          {$\boldsymbol{7}$};
 			\draw[red!20, line width=5pt] (s1) -- (s4);
 			\draw[blue!20, line width=5pt] (s4) to [bend right=15] (s2);
-			\draw[blue!20, line width=5pt] (s4) -- (s5);	
+			\draw[blue!20, line width=5pt] (s4) -- (s5);
 			\draw[blue!20, line width=5pt] (s4) -- (s3);
 			\draw   (s1) edge [ "$10$"]             			(s2)
 			(s1) edge ["$5$"]									(s4)
@@ -103,7 +103,7 @@ Here below we give an example of how the Dijkstra algorithm works:
 			(s4) edge ["$9$"]									(s3)
 			(s4) edge [bend right, "$3$"]						(s2);
 		\end{scope}
-		
+
 		\begin{scope}[shift={(-6,-6)}]
 			\node (s1) [state,fill=gray!30,label={left:$s$},fill=black,text=white]      {$\boldsymbol{0}$};
 			\node (s2) [state,fill=gray!30, above right=of s1]   						{$\boldsymbol{8}$};
@@ -112,9 +112,9 @@ Here below we give an example of how the Dijkstra algorithm works:
 			\node (s5) [state, right=of s4,fill=black,text=white]          {$\boldsymbol{7}$};
 			\draw[red!20, line width=5pt] (s1) -- (s4);
 			\draw[red!20, line width=5pt] (s4) to [bend right=15] (s2);
-			\draw[red!20, line width=5pt] (s4) -- (s5);	
+			\draw[red!20, line width=5pt] (s4) -- (s5);
 			\draw[blue!20, line width=5pt] (s5) to [bend right=15] (s3);
-			\draw[blue!20, line width=5pt] (s5) to [bend left=80,looseness=1.3]	(s1);	
+			\draw[blue!20, line width=5pt] (s5) to [bend left=80,looseness=1.3]	(s1);
 			\draw   (s1) edge [ "$10$"]             			(s2)
 			(s1) edge ["$5$"]									(s4)
 			(s2) edge ["$1$"]             						(s3)
@@ -126,7 +126,7 @@ Here below we give an example of how the Dijkstra algorithm works:
 			(s4) edge ["$9$"]									(s3)
 			(s4) edge [bend right, "$3$"]						(s2);
 		\end{scope}
-		
+
 		\begin{scope}[shift={(0,-6)}]
 			\node (s1) [state,fill=gray!30,label={left:$s$},fill=black,text=white]         {$\boldsymbol{0}$};
 			\node (s2) [state, above right=of s1,fill=black,text=white]   {$\boldsymbol{8}$};
@@ -135,9 +135,9 @@ Here below we give an example of how the Dijkstra algorithm works:
 			\node (s5) [state, right=of s4,fill=black,text=white]          {$\boldsymbol{7}$};
 			\draw[red!20, line width=5pt] (s1) -- (s4);
 			\draw[red!20, line width=5pt] (s4) to [bend right=15] (s2);
-			\draw[red!20, line width=5pt] (s4) -- (s5);	
-			\draw[red!20, line width=5pt] (s5) to [bend right=15] (s3);	
-			\draw[blue!20, line width=5pt] (s2) -- (s3);	
+			\draw[red!20, line width=5pt] (s4) -- (s5);
+			\draw[red!20, line width=5pt] (s5) to [bend right=15] (s3);
+			\draw[blue!20, line width=5pt] (s2) -- (s3);
 			\draw   (s1) edge [ "$10$"]             			(s2)
 			(s1) edge ["$5$"]									(s4)
 			(s2) edge ["$1$"]             						(s3)
@@ -149,7 +149,7 @@ Here below we give an example of how the Dijkstra algorithm works:
 			(s4) edge ["$9$"]									(s3)
 			(s4) edge [bend right, "$3$"]						(s2);
 		\end{scope}
-		
+
 		\begin{scope}[shift={(6,-6)}]
 			\node (s1) [state,fill=gray!30,label={left:$s$},fill=black,text=white]         {$\boldsymbol{0}$};
 			\node (s2) [state, above right=of s1,fill=black,text=white]   {$\boldsymbol{8}$};
@@ -158,9 +158,9 @@ Here below we give an example of how the Dijkstra algorithm works:
 			\node (s5) [state,fill=gray!30, right=of s4,fill=black,text=white]          {$\boldsymbol{7}$};
 			\draw[red!20, line width=5pt] (s1) -- (s4);
 			\draw[red!20, line width=5pt] (s4) to [bend right=15] (s2);
-			\draw[red!20, line width=5pt] (s4) -- (s5);	
+			\draw[red!20, line width=5pt] (s4) -- (s5);
 			%	\draw[red!20, line width=5pt] (s5) to [bend right=15] (s3);	
-			\draw[red!20, line width=5pt] (s2) -- (s3);	
+			\draw[red!20, line width=5pt] (s2) -- (s3);
 			\draw   (s1) edge [ "$10$"]             			(s2)
 			(s1) edge ["$5$"]									(s4)
 			(s2) edge ["$1$"]             						(s3)
@@ -172,8 +172,8 @@ Here below we give an example of how the Dijkstra algorithm works:
 			(s4) edge ["$9$"]									(s3)
 			(s4) edge [bend right, "$3$"]						(s2);
 		\end{scope}
-	\end{tikzpicture} 
-\caption{The execution of Dijkstra’s algorithm. The source s is the leftmost vertex. The 	shortest-path estimates appear within the vertices, and shaded edges indicate predecessor values. Black vertices are in the set $S$ and at any iteration of while loop the shaded vertex has the minimum value. At any iteration the red edges are the edges considered in minimum weight path from $s$ using only vertices in $S$.}
+	\end{tikzpicture}
+	\caption{The execution of Dijkstra’s algorithm. The source s is the leftmost vertex. The 	shortest-path estimates appear within the vertices, and shaded edges indicate predecessor values. Black vertices are in the set $S$ and at any iteration of while loop the shaded vertex has the minimum value. At any iteration the red edges are the edges considered in minimum weight path from $s$ using only vertices in $S$.}
 \end{figure}
 %\end{center}      
 %\begin{tikzpicture}[
@@ -244,14 +244,14 @@ Here below we give an example of how the Dijkstra algorithm works:
 
 Suppose at any iteration $t$, let $dist_t(v)$ denotes the distance $v$ from $s$ calculated by algorithm for any $v\in V$ and $S^{(t)}$ denote the content of $S$ at $t^{th}$ iteration. In order to show that the algorithm correctly computes the distances we prove the following lemma:
 \begin{Theorem}{}{}
-	For each $v\in S^{(t)}$, $\dl(v)=dist_t(v)$ for any iteration $t$. 
+	For each $v\in S^{(t)}$, $\dl(v)=dist_t(v)$ for any iteration $t$.
 \end{Theorem}
 \begin{proof}
 	We will prove this induction. Base case is $|S^{(1)}|=1$. $S$ grows in size. Then only time $|S^{(1)}|=1$ is when $S^{(1)}=\{s\}$ and $d(s)=0=\dl(s)$. Hence for base case this is correct.
-	
-	Suppose this is also true for $t-1$. Let at $t^{th}$ iteration the vertex $u\in V-S$ is picked. By induction hypothesis for all $v\in S^{(t)}-\{u\}$, $dist_t(v)=dist_{t-1}(v)=\dl(v)$. So we have to show that $dist_{t}(u)=\dl(u)$. 
-	
-	Suppose for contradiction the shortest path from $s\rightsquigarrow u$ is $P$ and has total weight $=\dl(u)=w(P)<dist_t(u)$. Now $P$ starts with vertices from $S^{(t)}$ by eventually leaves $S$. Let $(x,y)$ be the first edge in $P$ which leaves $S$ i.e. $x\in S$ but $y\notin S$. By inductive hypothesis $dist_t(x)=\dl(x)$. Let $P_y$ denote the path $s\rightsquigarrow y$ following $P$. Since $y$ appears before $u$ we have $$w(P_y)=\dl(y)\leq \dl(u)=w(P)$$Now $$dist_t(y)\leq dist_t(x)+w(x,y)$$ since $y$ is adjacent to $x$. Therefore $$dist_t(y)\leq dist_t(x)+w(x,y)=\dl(y)\leq dist_t(y)\implies dist_t(y)=\dl(y)$$Now since both $u,y\notin S^{(t)}$ and the algorithm picked up $u$ we have $\dl(u)<dist_t(u)\leq dist_t(y)=\dl(y)$. But we can not have both $\dl(y)\leq \dl(u)$ and $\dl(u)<\dl(y)$. Hence contradiction. Therefore $\dl(u)=dist_t(u)$. Hence by mathematical induction for any iteration $t$, for all $v\in S^{(t)}$, $\dl(v)=dist_t(v)$. 
+
+	Suppose this is also true for $t-1$. Let at $t^{th}$ iteration the vertex $u\in V-S$ is picked. By induction hypothesis for all $v\in S^{(t)}-\{u\}$, $dist_t(v)=dist_{t-1}(v)=\dl(v)$. So we have to show that $dist_{t}(u)=\dl(u)$.
+
+	Suppose for contradiction the shortest path from $s\rightsquigarrow u$ is $P$ and has total weight $=\dl(u)=w(P)<dist_t(u)$. Now $P$ starts with vertices from $S^{(t)}$ by eventually leaves $S$. Let $(x,y)$ be the first edge in $P$ which leaves $S$ i.e. $x\in S$ but $y\notin S$. By inductive hypothesis $dist_t(x)=\dl(x)$. Let $P_y$ denote the path $s\rightsquigarrow y$ following $P$. Since $y$ appears before $u$ we have $$w(P_y)=\dl(y)\leq \dl(u)=w(P)$$Now $$dist_t(y)\leq dist_t(x)+w(x,y)$$ since $y$ is adjacent to $x$. Therefore $$dist_t(y)\leq dist_t(x)+w(x,y)=\dl(y)\leq dist_t(y)\implies dist_t(y)=\dl(y)$$Now since both $u,y\notin S^{(t)}$ and the algorithm picked up $u$ we have $\dl(u)<dist_t(u)\leq dist_t(y)=\dl(y)$. But we can not have both $\dl(y)\leq \dl(u)$ and $\dl(u)<\dl(y)$. Hence contradiction. Therefore $\dl(u)=dist_t(u)$. Hence by mathematical induction for any iteration $t$, for all $v\in S^{(t)}$, $\dl(v)=dist_t(v)$.
 \end{proof}
 
 Therefore by the lemma  after all iterations $S$ has all the vertices with their shortest distances from $s$ and henceforth the algorithm runs correctly.
@@ -264,19 +264,156 @@ Therefore by the lemma  after all iterations $S$ has all the vertices with their
 \section{Amortized Analysis}
 
 \section{Data Structure 3: Fibonacci Heap}
-Instead of keeping just one Heap we will no keep an array of Heaps. We will also discard the idea of binary trees. We will now use a data structure which will take the benefit of the faster time of both the data structure. I.e.
-%\begin{center}
-%	\begin{tabular}{c|c|c}
-%		& \prb{Extract-Min} & \prb{Decrease-Key}\\
-%		Linear Array & $O(n)$ & $\mathcolor{red}{\boxed{\mathcolor{black}{O(1)}}}$\\
-%		Min-Heap & $\mathcolor{red}{\boxed{\mathcolor{black}{O(\log n)}}}$ & $O(\log n)$\\[2mm]
-%		Fibonacci Heap & $O(\log n)^*$ & $O(1)$
-%	\end{tabular}
-%\end{center}
+Instead of keeping just one Heap we will now keep an array of Heaps. We will also discard the idea of binary trees. We will now use a data structure which will take the benefit of the faster time of both the data structure. I.e.
+\begin{center}
+	\begin{tabular}{c|c|c}
+		               & \prb{Extract-Min}                                       & \prb{Decrease-Key}                                 \\
+		Linear Array   & $O(n)$                                                  & $\mathcolor{red}{\boxed{\mathcolor{black}{O(1)}}}$ \\
+		Min-Heap       & $\mathcolor{red}{\boxed{\mathcolor{black}{O(\log n)}}}$ & $O(\log n)$                                        \\[2mm]
+		Fibonacci Heap & $O(\log n)^*$                                           & $O(1)$
+	\end{tabular}
+\end{center}
 The * is because  in Fibonacci Heap the amortized time taken by \prb{Extract-Min} is  $O(\log n)$.
 
- Since Fibonacci heap is an array of heaps there is a \textit{rootlist} which is the list of all the roots of all the heaps in the Fibonacci heap. There is a \textit{min-pointer} which points to the root with the minimum key. For each node in the Fibonacci heap we have a pointer to its parent and  we keep 3 variables. The 3 variables are \textit{degree}, \textit{size} and \textit{lost} where \textit{lost} is a Boolean Variable. For any node $x$ in the Fibonacci heap the $x.\textit{degree}$ is the number of children $x$ has, $x.\textit{size}$ is the number of nodes in the tree rooted at $x$ and $x.\textit{lost}$ is 1 if and only if $x$ has lost a child before. Why any node will lost a child that explanation we will give later. With this set up let's dive into the data structure.
- 
- \subsection{Inserting Node}
- To insert a node we call the \prb{Fib-Insert} function and in the function the algorithm initiates the node with setting up all the pointers and variables then add the node to the \textit{rootlist}. 
+Since Fibonacci heap is an array of heaps there is a \emph{rootlist} which is the list of all the roots of all the heaps in the Fibonacci heap. There is a \emph{min-pointer} which points to the root with the minimum key. For each node in the Fibonacci heap we have a pointer to its parent and  we keep 3 variables. The 3 variables are \emph{degree}, \emph{size} and \emph{lost} where \emph{lost} is a Boolean Variable. \begin{itemize}
+	\item For any node $x$ in the Fibonacci heap the $x.\emph{degree}$ is the number of children $x$ has.
+	\item $x.\emph{size}$ is the number of nodes in the tree rooted at $x$.
+	\item $x.\emph{lost}$ is 1 if and only if $x$ has lost a child before.
+\end{itemize} Why any node will lose a child that explanation we will give later. With this set up let's dive into the data structure.
 
+\subsection{Inserting Node}
+To insert a node we call the \prb{Fib-Insert} function and in the function the algorithm initiates the node with setting up all the pointers and variables then add the node to the \emph{rootlist}.\parinf
+
+\begin{minipage}{0.45\textwidth}
+	\begin{algorithm}[H]
+		\DontPrintSemicolon
+		\caption{\textsc{Fib-Create-Node}$(v)$}
+		$x.\emph{degree}\longleftarrow 0$\;
+		$x.\emph{parent}\longleftarrow None$\;
+		$x.\emph{child}\longleftarrow None$\;
+		$x.\emph{lost}\longleftarrow 0$\;
+		$x.\emph{key}\longleftarrow v$\;
+		\Return{$x$}
+	\end{algorithm}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+	\begin{algorithm}[H]
+		\DontPrintSemicolon
+		\caption{\textsc{Fib-Insert}$(F,v)$}
+		$x\longleftarrow \textsc{Create-Node}(v)$\;
+		\If{$F.\min==None$}{
+			$F.\emph{rootlist}\longleftarrow [x]$\;
+			$F.\min\longleftarrow x$\;
+		}
+		\Else{
+			$F.\emph{rootlist}.\emph{append}(x)$\;
+			\If{$x.key<F.\min.key$}{
+				$F.min\longleftarrow x$
+			}
+		}
+	\end{algorithm}
+\end{minipage}
+
+All of this can be done in $O(1)$ time. Therefore, to insert a node in the Fibonacci heap it takes $O(1)$ time.
+\subsection{Union of Fibonacci Heaps}
+To unite to Fibonacci heaps $F_1$ and $F_2$ we simply concatenate the root lists of $F_1$ and $F_2$ and then determine the new minimum node.
+\begin{algorithm}
+	\DontPrintSemicolon
+	\caption{\textsc{Fib-Union}$(F_1,F_2)$}
+	$F\longleftarrow \textsc{Make-Fib-Heap}$\;
+	$F.\min\longleftarrow F_1.\min$\;
+	$F.\emph{rootlist}\longleftarrow F_1.\emph{rootlist} ++ F_2.\emph{rootlist}$\;
+	\If{$F_2.\min<F_1.\min$}{
+		$F.\min\longleftarrow F_2.\min$
+	}
+	\Return{$F$}
+\end{algorithm}
+All the operations here can be done in constant time. Hence, \textsc{Fib-Union} takes $O(1)$ time.
+\subsection{Extracting the Minimum Node}
+The \textsc{Fib-Extract-Min} function extracts the minimum node from the Fibonacci heap $F$ and then rearranges the heap array. It works by first making a root node out of each of the minimum node's children and removing the minimum node from the rootlist. It then consolidates the root list by linking roots of equal degree until at most one root remains of each degree.
+\begin{center}
+	\begin{minipage}{0.45\textwidth}
+		\begin{algorithm}[H]
+			\caption{\textsc{Fib-Extract-Min}$(F)$}
+			\DontPrintSemicolon
+			$z\longleftarrow F.\min$\;
+			\If{$z\neq None$}{
+				\For{$x\in z.\emph{child}$}{
+					$F.\emph{rootlist}.\emph{append}(x)$\;
+					$x.\emph{parent}\longleftarrow None$
+				}
+				Remove $z$ from $F.\emph{rootlist}$\;
+				\If{$z==z.\emph{right}$}{
+					$F.\min\longleftarrow None$\;
+				}
+				\Else{
+					$F.\min\longleftarrow z.\emph{right}$
+					\emph{consolidate}($F$)
+				}
+			}
+			\Return{$z$}
+		\end{algorithm}
+		\vspace{3.6cm}
+
+		\begin{algorithm}[H]
+			\caption{\textsc{Fib-Heap-Link}$(H,y,x)$}
+			\DontPrintSemicolon
+			Remove $y$ from $F.\emph{rootlist}$\;
+			$y.\emph{parent}\longleftarrow x$\;
+			$y.\emph{lost}\longleftarrow 0$
+		\end{algorithm}
+	\end{minipage}\hfill
+	\begin{minipage}{0.5\textwidth}
+		\begin{algorithm}[H]
+			\caption{\textsc{Consolidate}$(F)$}
+			\DontPrintSemicolon
+			Initialize array $A[0,\dots, H.n]$ with \emph{None} elements.\;
+			\For{$x\in F.\emph{rootlist}$}{
+				$d\longleftarrow x.\emph{degree}$\;
+				\If{$A[d]==None$}{
+					$A[d]\longleftarrow x$
+				}
+				\While{$A[d]\neq None$}{
+					$y\longleftarrow A[d]$\;
+					\If{$y.\emph{key}<x.\emph{key}$}{
+						Exchange $x$ with $y$
+					}
+					\emph{Fib-Heap-Link}$(F,y,x)$\;
+					$A[d]\longleftarrow None$\;
+					$d\longleftarrow d+1$\;
+				}
+				$A[d]\longleftarrow x$
+			}
+			$F.\min\longleftarrow None$\;
+			\For{$i=0$ to $D$}{
+				\If{$A[i]\neq None$}{
+					\If{$F.\min==None$}{
+						$F.\emph{rootlist}\longleftarrow [A[i]]$\;
+						$F.\min\longleftarrow A[i]$\;
+					}
+					\Else{
+						$F.\emph{rootlist}.\emph{append}(A[i])$\;
+						\If{$A[i].\emph{key}<F.\min.\emph{key}$}{
+							$F.\min\longleftarrow A[i]$
+						}
+					}
+				}
+			}
+		\end{algorithm}
+	\end{minipage}
+\end{center}
+
+The procedure \textsc{Consolidate} uses an auxiliary array of size $A$ of size $D$ which we will choose later. For each $i\leq D$ it keeps a heap of degree $i$. And if it finds two heaps of same degree then it makes the one with higher key to be the child of the other one. The function \textsc{Fib-Heap-Link} does this process of linking two heaps of same degree.
+
+Of course in order to allocate array we have to know how to calculate the upper bound for $D$ on the maximum degree. We will show an upper bound of $O(\log n)$ in \autoref{max-degree-bound}
+
+
+\subsection{Decreasing Key of a Node}
+
+\subsection{Bounding the Maximum Degree}\label{max-degree-bound}
+To prove that the ammortized time of \textsc{Fib-Extract-Min} and \textsc{Fib-Delete} is $O(\log n)$ we must show that upper bound of the maximum degree of any node after \textsc{Consolidate} function is $O(\log n)$. In particular we will show its $\lt\lfloor \log_{\phi}n\rt\rfloor$ where $\phi$ is the golden ratio.
+\begin{lemma}{}{}
+Let $x$ be any node in a Fibonacci heap, and suppose that $x.\emph{degree}=k$. Let $y_1,\dots, y_k$ denote the children of $x$ in the order in which they were linked to $x$ from the earlist to the latest. Then $y_1.\emph{degree}\geq 0$ and $y_i.\emph{degree}\geq i-2$ for $i=2,\dots, k$.
+\end{lemma}
+
+\subsection{Time Complexity Analysis of Dijkstra}
