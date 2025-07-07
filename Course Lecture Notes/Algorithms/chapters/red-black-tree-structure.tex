@@ -99,3 +99,157 @@ We call the number of black nodes on any simple path from  but not including a n
 		In this example the root has to be black. The other two internal nodes can not be black since otherwise the path from the leaf of the root to root has only 2 black nodes but in the path from bottom most leaf to root will have 3. Then those two internal nodes has to be red. But that violates the property that a red node can not have a red child. Hence, this tree can not be colored in a way that satisfies the properties of a red-black tree.
 	\end{minipage}
 }
+
+Since by the lemma the R-B tree has height at most $O(\log n)$ and it is a binary search tree we can perform search of a node using \textsc{Find} in $O(\log n)$ time. So now we will focus on the insertion and deletion operations in a red-black tree.  To insert or delete a node in a red-black tree we will  rotations to balance the tree again. So first we will visit rotations.
+\section{Rotation}
+A rotation is a local operation that changes the structure of a binary tree without violating the binary search tree property. There are two types of rotations: left rotation and right rotation.
+
+When we do a left rotation on a node we assume that its right child is not NIL. The left rotation ``pivots'' around the link from the node to its right child and makes the right child the new root of the subtree with the ode as its left child.  Similarly, we can explain the right rotation. The rotations behave like the following:
+
+\begin{figure}[!h]
+	\centering
+	\begin{tikzpicture}[
+			every node/.style={align=center, line width=0.15mm},
+			level 1/.style={level distance=1cm, sibling distance=1.5cm},  % Adjusted distance for level 1
+			level 2/.style={sibling distance=1.5cm},   % Adjusted distance for level 2
+			square/.style={draw, shape=rectangle, minimum width=0.5cm, minimum height=0.5cm, inner sep=0pt, text width=0.5cm, text centered},
+			circle/.style={draw, shape=circle, minimum width=0.5cm, minimum height=0.5cm, inner sep=0pt, text width=0.5cm, text centered},
+			filled/.style={fill=white, , draw, line width=0.12mm},  % Style for filled nodes
+			every edge/.style = {draw, latex'-latex' , line width=0.3mm, dotted,},
+			parentarrow/.style={line width=0.12mm},  % Style for arrows from nodes to children
+		]
+
+		% Leftmost tree
+		\node (AA0) {}
+		child{
+				node[circle] (A2) {$v$}
+				child {node[circle] (B2) {$u$}
+						child {node[square] (D2) {$\beta$} edge from parent[parentarrow]}
+						child {node[square] (E2) {$\gm$} }
+						edge from parent[parentarrow]
+					}
+				child {node[square,filled] (C2) {$\alpha$} edge from parent[parentarrow]}
+			}
+		child [missing] { node (AA5) {} };
+		% Right tree
+		\begin{scope}[shift={(6,0)}]
+			\node (A0) {}
+			child{
+					node[circle] (A1) {$u$}
+					child {node[circle] (B1) {$v$}
+							child {node[square] (D1) {$\alpha$} edge from parent[parentarrow]}
+							child {node[square] (E1) {$\beta$} }
+							edge from parent[parentarrow]
+						}
+					child {node[square,filled] (C1) {$\gm$} edge from parent[parentarrow]}
+				}
+			child [missing] { node (A5) {} };
+
+		\end{scope}
+
+		\draw[thick, -left to] ($(C2)+(1,0.05)$) -- node[midway, above] {Left Rotate} ($(B1)+(-1,0.05)$);
+		\draw[thick, -left to] ($(B1)+(-1,-0.05)$) -- node[midway, below] {Right Rotate}($(C2)+(1,-0.05)$)  ;
+	\end{tikzpicture}
+	\caption{Left and Right rotate about $u-v$}
+\end{figure}\parinf
+
+\begin{minipage}{0.46\textwidth}
+	\begin{algorithm}[H]
+	\caption{\textsc{Left-Rotate}$({T,x})$}
+	\DontPrintSemicolon
+	$y\longleftarrow x.\emph{right}$\;
+	$x.\emph{right}\longleftarrow y.\emph{left}$\;
+	\If{$y.\emph{left}\neq \emph{NIL}$}{
+		$y.\emph{left}.\emph{parent}\longleftarrow x$\;
+	}
+	$y.\emph{parent}\longleftarrow x.\emph{parent}$\;
+	\If{$x.\emph{parent}==\emph{NIL}$}{
+		$T.\emph{root}\longleftarrow y$\;
+	}
+	\ElseIf{$x== x.\emph{parent}.\emph{left}$}{
+		$x.\emph{parent}.\emph{left}\longleftarrow y$\;
+	}
+	\Else{
+		$x.\emph{parent}.\emph{right}\longleftarrow y$\;
+	}
+	$y.\emph{left}\longleftarrow x$\;
+	$x.\emph{parent}\longleftarrow y$
+\end{algorithm}
+\end{minipage}\hfill
+\begin{minipage}{0.46\textwidth}
+	\begin{algorithm}[H]
+		\caption{\textsc{Right-Rotate}$({T,x})$}
+		\DontPrintSemicolon
+		$y\longleftarrow x.\emph{left}$\;
+		$x.\emph{left}\longleftarrow y.\emph{right}$\;
+		\If{$y.\emph{right}\neq \emph{NIL}$}{
+			$y.\emph{right}.\emph{parent}\longleftarrow x$\;
+		}
+		$y.\emph{parent}\longleftarrow x.\emph{parent}$\;
+		\If{$x.\emph{parent}==\emph{NIL}$}{
+			$T.\emph{root}\longleftarrow y$\;
+		}
+		\ElseIf{$x== x.\emph{parent}.\emph{left}$}{
+			$x.\emph{parent}.\emph{left}\longleftarrow y$\;
+		}
+		\Else{
+			$x.\emph{parent}.\emph{right}\longleftarrow y$\;
+		}
+		$y.\emph{right}\longleftarrow x$\;
+		$x.\emph{parent}\longleftarrow y$
+	\end{algorithm}
+\end{minipage}\parinn
+
+Both \textsc{Left-Rotate} and \textsc{Right-Rotate} take $O(1)$ time. Only some constantly many pointers are changed by rotation all other attributes in a node remain the same. 
+\section{Insertion}
+We will now describe how to insert a node in a red-black tree in $O(\log n)$ time. We will insert the node in the tree in place of a leaf replacing a NIL node. After that we will color the node red and then use rotations to increase the height of the node at each iteration until the properties of a red-black tree are satisfied. 
+
+Let the node added is $v$. We define the attribute \emph{uncle} which is basically sibling of the parent. Since at the time of addition we coloring the node red it is not hampering the number of black nodes in the path from root to any leaf. So only time it violates the properties of a red-black tree is when the parent of the node is red. Now two cases can happen:
+\begin{enumerate}[label=Case \Roman*:, leftmargin=*]
+	\item $v.\emph{uncle}.color$=Red: Then $v.\emph{parent}.\emph{parent}$  is black. 
+	\begin{figure}[!h]
+	\centering
+	\begin{tikzpicture}[
+			every node/.style={align=center, line width=0.15mm},
+			level 1/.style={level distance=1.5cm, sibling distance=1.8cm},  % Adjusted distance for level 1
+			level 2/.style={sibling distance=1.8cm},   % Adjusted distance for level 2
+			redVertex/.style={draw, shape=circle, minimum width=1.1cm, minimum height=0.5cm, inner sep=0pt, text width=0.5cm, text centered, text=red!75!black, color=red},
+			blackVertex/.style={draw, shape=circle, minimum width=1.1cm, minimum height=0.5cm, inner sep=0pt, text width=0.5cm, text centered},
+			every edge/.style = {draw, latex'-latex' , line width=0.3mm, dotted,},
+			Rparentarrow/.style={line width=0.12mm, color=red},  % Style for arrows from nodes to children
+			parentarrow/.style={line width=0.12mm}
+		]
+
+		% Leftmost tree
+		\node (AA0) {}
+		child{
+				node[blackVertex] (A2) {$v.p.p$}
+				child {node[redVertex] (B2) {$v.p$}
+						child {node[blackVertex] (D2) {$v.s$} edge from parent[parentarrow]}
+						child {node[redVertex] (E2) {$v$} }
+						edge from parent[parentarrow]
+					}
+				child {node[redVertex] (C2) {$v.u$} edge from parent[parentarrow]}
+			}
+		child [missing] { node (AA5) {} };
+		% Right tree
+		\begin{scope}[shift={(6,0)}]
+			\node (A0) {}
+			child{
+					node[redVertex] (A1) {$v.p.p$}
+					child {node[blackVertex] (B1) {$v.p$}
+							child {node[blackVertex] (D1) {$v.s$} edge from parent[parentarrow]}
+							child {node[redVertex] (E1) {$v$} }
+							edge from parent[parentarrow]
+						}
+					child {node[blackVertex] (C1) {$v.u$} edge from parent[parentarrow]}
+				}
+			child [missing] { node (A5) {} };
+
+		\end{scope}
+
+		\draw[thick, -latex] ($(C2)+(1,0.05)$) -- node[midway, above] {Recolor} ($(B1)+(-1,0.05)$);
+	\end{tikzpicture}
+\end{figure}
+In this case we can recolor $v.\emph{parent}.\emph{parent}$ to red and both $v.\emph{parent}$ and $v.\emph{uncle}$ to be black. This will preserve the number of black nodes in any simple path from root to any leaf. 
+\end{enumerate}
