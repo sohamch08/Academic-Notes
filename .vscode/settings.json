@@ -1,8 +1,653 @@
 {
-    "grammarly.selectors": [
+    "workbench.iconTheme": "material-icon-theme",
+    "[latex]": {
+        "editor.defaultFormatter": "nickfode.latex-formatter"
+    },
+    // Set the font
+    "editor.fontFamily": "'JetBrains Mono', Consolas, 'Courier New', monospace",
+    // Set the font size
+    "editor.fontSize": 13,
+    // Turn on font ligatures
+    "editor.fontLigatures": true,
+    // Set letter spacing
+    "editor.letterSpacing": 0.4,
+    // Enable smooth scrolling in the editor
+    "editor.smoothScrolling": true,
+    "editor.wordWrap": "bounded",
+    "editor.wrappingStrategy": "advanced",
+    "files.autoSave": "afterDelay",
+    "latex-workshop.formatting.latex": "latexindent",
+    "latex-workshop.intellisense.file.exclude": [
+        "**/*.aux",
+        "**/*.bbl",
+        "**/*.bcf",
+        "**/*.blg",
+        "**/*.idx",
+        "**/*.ind",
+        "**/*.lof",
+        "**/*.lot",
+        "**/*.out",
+        "**/*.toc",
+        "**/*.acn",
+        "**/*.acr",
+        "**/*.alg",
+        "**/*.glg",
+        "**/*.glo",
+        "**/*.gls",
+        "**/*.ist",
+        "**/*.fls",
+        "**/*.log",
+        "**/*.nav",
+        "**/*.snm",
+        "**/*.synctex.gz",
+        "**/*.run.xml"
+    ],
+    "latex-workshop.latex.autoClean.run": "onSucceeded",
+    "latex-workshop.synctex.afterBuild.enabled": true,
+    "cSpell.userWords": [
+        "affinely",
+        "Karger",
+        "makespan",
+        "mincut",
+        "multigraph",
+        "polynomially",
+        "polytope",
+        "unimodular"
+    ],
+    "latex-workshop.latex.clean.fileTypes": [
+        "%DOCFILE%.aux",
+        "%DOCFILE%.bbl",
+        "%DOCFILE%.blg",
+        "%DOCFILE%.idx",
+        "%DOCFILE%.ind",
+        "%DOCFILE%.lof",
+        "%DOCFILE%.lot",
+        "%DOCFILE%.out",
+        "%DOCFILE%.toc",
+        "%DOCFILE%.acn",
+        "%DOCFILE%.acr",
+        "%DOCFILE%.alg",
+        "%DOCFILE%.glg",
+        "%DOCFILE%.glo",
+        "%DOCFILE%.gls",
+        "%DOCFILE%.fls",
+        "%DOCFILE%.log",
+        "%DOCFILE%.fdb_latexmk",
+        "%DOCFILE%.snm",
+        "%DOCFILE%.synctex(busy)",
+        "%DOCFILE%.synctex.gz(busy)",
+        "%DOCFILE%.nav",
+        "%DOCFILE%.vrb",
+        "%DOCFILE%.synctex.gz"
+    ],
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/*.olean": true
+    },
+    "workbench.editor.tabSizing": "fixed",
+    "latex-workshop.latex.recipes": [
+        // {
+        //     "name": "latexmk (xelatex)",
+        //     "tools": [
+        //         "xelatexmk"
+        //     ]
+        // },
         {
-            "language": "latex",
-            "scheme": "file"
+            "name": "latexmk",
+            "tools": [
+                "latexmk"
+            ]
+        },
+        {
+            "name": "latexmk (latexmkrc)",
+            "tools": [
+                "latexmk_rconly"
+            ]
+        },
+        {
+            "name": "latexmk (lualatex)",
+            "tools": [
+                "lualatexmk"
+            ]
+        },
+        {
+            "name": "latexmk (xelatex)",
+            "tools": [
+                "xelatexmk"
+            ]
+        },
+        {
+            "name": "pdflatex -> bibtex -> pdflatex * 2",
+            "tools": [
+                "pdflatex",
+                "bibtex",
+                "pdflatex",
+                "pdflatex"
+            ]
+        },
+        {
+            "name": "Compile Rnw files",
+            "tools": [
+                "rnw2tex",
+                "latexmk"
+            ]
+        },
+        {
+            "name": "Compile Jnw files",
+            "tools": [
+                "jnw2tex",
+                "latexmk"
+            ]
+        },
+        {
+            "name": "Compile Pnw files",
+            "tools": [
+                "pnw2tex",
+                "latexmk"
+            ]
+        },
+        {
+            "name": "tectonic",
+            "tools": [
+                "tectonic"
+            ]
+        },
+        {
+            "name": "onelatex",
+            "tools": ["pdflatex"]
         }
-    ]
+    ],
+    // "editor.bracketPairColorization.enabled": false,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": "active",
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "cSpell.customDictionaries": {
+        "custom-dictionary-user": {
+            "name": "custom-dictionary-user",
+            "path": "~/.cspell/custom-dictionary-user.txt",
+            "addWords": true,
+            "scope": "user"
+        }
+    },
+    "latex-utilities.liveReformat.snippets": [
+
+        {
+            "prefix": "([A-Za-z}\\)\\]])(\\d)$",
+            "body": "$1_$2",
+            "mode": "maths",
+            "triggerWhenComplete": true,
+            "description": "auto subscript"
+        },
+        {
+            "prefix": "([A-Za-z}\\)\\]]) ?_(\\d\\d)$",
+            "body": "$1_{$2}",
+            "mode": "maths",
+            "triggerWhenComplete": true,
+            "description": "auto escape subscript"
+        },
+        {
+            "prefix": "(\\S) ([\\^_])$",
+            "body": "$1$2",
+            "mode": "maths",
+            "triggerWhenComplete": true,
+            "description": "remove extraneous sub/superscript space",
+            "priority": 2
+        },
+        {
+            "prefix": "([A-Za-z}\\)\\]]) ?\\^ ?(\\d\\d|[\\+\\-] ?(?:\\d|[A-Za-z]|\\\\\\w+))$",
+            "body": "$1^{$2}",
+            "mode": "maths",
+            "triggerWhenComplete": true,
+            "description": "auto escape superscript",
+            "priority": 2
+        },
+        {
+            "prefix": "([^ &\\\\\\+\\-=<>\\|!~@])([\\+\\-=<>])$",
+            "body": "$1 $2",
+            "mode": "maths",
+            "priority": -1,
+            "description": "whitespace before operators",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "([\\+\\-=<>])([^ &\\\\\\+\\-=<>\\|!~])$",
+            "body": "$1 $2",
+            "mode": "maths",
+            "priority": -1,
+            "description": "whitespace after operators",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "=>$",
+            "body": "\\implies ",
+            "mode": "maths",
+            "description": "⇒",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "=<$",
+            "body": "\\impliedby ",
+            "mode": "maths",
+            "description": "implied by",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "//$",
+            "body": "\\frac{$$1}{$$2} ",
+            "mode": "maths",
+            "description": "fraction (empty)",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "(([\\d\\.]+)|([\\d\\.]*)(\\\\)?([A-Za-z]+)((\\^|_)(\\{\\d+\\}|\\d|[A-Za-z]|\\\\\\w+))*!?)\\/$",
+            "body": "\\frac{$1}{$$1}$$0",
+            "mode": "maths",
+            "description": "fraction (from regex)",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "([\\)\\]}]) ?/$",
+            "body": "SPECIAL_ACTION_FRACTION",
+            "mode": "maths",
+            "description": "fraction (parsed)",
+            "triggerWhenComplete": true,
+            "noPlaceholders": false
+        },
+        {
+            "prefix": "sympy$",
+            "body": "sympy $$1 sympy",
+            "mode": "maths",
+            "description": "sympy block",
+            "triggerWhenComplete": false
+        },
+        {
+            "prefix": "sympy.+$",
+            "body": "SPECIAL_ACTION_BREAK",
+            "mode": "maths",
+            "triggerWhenComplete": true,
+            "priority": 2
+        },
+        {
+            "prefix": "sympy ?(.+?) ?sympy ?$",
+            "body": "SPECIAL_ACTION_SYMPY",
+            "mode": "maths",
+            "priority": 3,
+            "description": "sympy",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "(^|[^\\\\])\\biff$",
+            "body": "$1\\iff ",
+            "mode": "maths",
+            "description": "⇔",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "(^|[^\\\\])\\binn$",
+            "body": "$1\\in ",
+            "mode": "maths",
+            "description": "in",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "(^|[^\\\\])\\bnotin$",
+            "body": "$1\\not\\in ",
+            "mode": "maths",
+            "description": "∈",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": " ?!=$",
+            "body": " \\neq ",
+            "mode": "maths",
+            "description": "neq",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "==$",
+            "body": "&= ",
+            "mode": "maths",
+            "description": "aligned equal",
+            "priority": 1,
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": " ?~=$",
+            "body": " \\approx ",
+            "mode": "maths",
+            "description": "≈",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": " ?~~$",
+            "body": " \\sim ",
+            "mode": "maths",
+            "description": "∼",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": " ?>=$",
+            "body": " \\geq ",
+            "mode": "maths",
+            "description": "≥",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": " ?<=$",
+            "body": " \\leq ",
+            "mode": "maths",
+            "description": "≤",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": " ?>>$",
+            "body": " \\gg ",
+            "mode": "maths",
+            "description": "≫",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": " ?<<$",
+            "body": " \\ll ",
+            "mode": "maths",
+            "description": "≪",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": " ?xx$",
+            "body": " \\times ",
+            "mode": "maths",
+            "description": "×",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "(^|[^\\\\]\\b|[ ,\\)\\]\\}]\\w*)(to|->)$",
+            "body": "$1\\to ",
+            "mode": "maths",
+            "description": "→",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": " ?(?:\\|->|!>)$",
+            "body": " \\mapsto ",
+            "mode": "maths",
+            "description": "↦",
+            "priority": 1.1,
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "(^|[^\\\\])a(?:rc)?(sin|cos|tan|cot|csc|sec)$",
+            "body": "$1\\arc$2 ",
+            "mode": "maths",
+            "description": "arc(trig)",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "(^|[^\\\\])(sin|cos|tan|cot|csc|sec|min|max|log|exp)$",
+            "body": "$1\\$2 ",
+            "mode": "maths",
+            "description": "un-backslashed operator",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "(^|[^\\\\])(pi)$",
+            "body": "$1\\$2",
+            "mode": "maths",
+            "description": "pi",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "((?:\\b|\\\\)\\w{1,7})(,\\.|\\.,)$",
+            "body": "\\vec{$1}",
+            "mode": "maths",
+            "description": "vector",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "(\\\\?[\\w\\^]{1,7})~ $",
+            "body": "\\tilde{$1}",
+            "mode": "maths",
+            "description": "tilde",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\bbar$",
+            "body": "\\overline{$$1}",
+            "mode": "maths",
+            "description": "overline",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\b(\\\\?[\\w\\^{}]{1,3})bar$",
+            "body": "\\overline{$1}",
+            "mode": "maths",
+            "description": "overline",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "(^|[^\\\\])\\bhat$",
+            "body": "$1\\hat{$$1}",
+            "mode": "maths",
+            "description": "hat",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\b([\\w\\^{}])hat$",
+            "body": "\\hat{$1}",
+            "mode": "maths",
+            "description": "hat",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\\\\\)(\\w)$",
+            "body": "\\) $1",
+            "mode": "any",
+            "description": "space after inline maths",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\\\\\\\\\\\$",
+            "body": "\\setminus ",
+            "mode": "maths",
+            "description": "∖ (setminus)",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\bpmat$",
+            "body": "\\begin{pmatrix} $$1 \\end{pmatrix} ",
+            "mode": "maths",
+            "description": "pmatrix",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\bbmat$",
+            "body": "\\begin{bmatrix} $$1 \\end{bmatrix} ",
+            "mode": "maths",
+            "description": "bmatrix",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\bpart$",
+            "body": "\\frac{\\partial $${1:V}}{\\partial $${2:x}} ",
+            "mode": "maths",
+            "description": "partial derivative",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\bsq$",
+            "body": "\\sqrt{$$1}",
+            "mode": "maths",
+            "description": "√",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": " ?sr$",
+            "body": "^2",
+            "mode": "maths",
+            "description": "²",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": " ?cb$",
+            "body": "^3",
+            "mode": "maths",
+            "description": "³",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\bEE$",
+            "body": "\\exists ",
+            "mode": "maths",
+            "description": "∃",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\bAA$",
+            "body": "\\forall ",
+            "mode": "maths",
+            "description": "∀",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\b([A-Za-z])([A-Za-z])\\2$",
+            "body": "$1_$2",
+            "mode": "maths",
+            "description": "subscript letter",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\b([A-Za-z])([A-Za-z])\\2?p1$",
+            "body": "$1_{$2+1}",
+            "mode": "maths",
+            "description": "subscript letter + 1",
+            "priority": 2,
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\bdint$",
+            "body": "\\int_{$${1:-\\infty}}^{$${2:\\infty}} ",
+            "mode": "maths",
+            "description": "∫ₐᵇ",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "([^ \\\\])  $",
+            "body": "$1\\, ",
+            "mode": "maths",
+            "description": "add maths whitespace \\,",
+            "priority": -1,
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "([^ \\\\])\\\\, {2,4}$",
+            "body": "$1\\: ",
+            "mode": "maths",
+            "description": "add maths whitespace \\:",
+            "priority": 0.1,
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "([^ \\\\])\\\\: {2,4}$",
+            "body": "$1\\; ",
+            "mode": "maths",
+            "description": "add maths whitespace \\;",
+            "priority": 0.2,
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "([^ \\\\])\\\\; {2,4}$",
+            "body": "$1\\ ",
+            "mode": "maths",
+            "description": "add maths whitespace \\ ",
+            "priority": 0.3,
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "([^ \\\\])\\\\ {2,4}$",
+            "body": "$1\\quad ",
+            "mode": "maths",
+            "description": "add maths whitespace quad",
+            "priority": 0.4,
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "([^ \\\\])\\\\quad {2,4}$",
+            "body": "$1\\qquad ",
+            "mode": "maths",
+            "description": "add maths whitespace qquad",
+            "priority": 0.5,
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\bset$",
+            "body": "\\\\{$$1\\\\} ",
+            "mode": "maths",
+            "description": "set {}",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": " ?\\|\\|$",
+            "body": " \\mid ",
+            "mode": "maths",
+            "description": "∣",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "< ?>$",
+            "body": "\\diamond ",
+            "mode": "maths",
+            "description": "⋄",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\bcase$",
+            "body": "\\begin{cases} $$1 \\end{cases} ",
+            "mode": "maths",
+            "description": "cases",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "(^|[^\\\\])\\bst$",
+            "body": "$1\\text{s.t.} ",
+            "mode": "maths",
+            "description": "such that",
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "\\+ ?-$",
+            "body": "\\pm ",
+            "mode": "maths",
+            "description": "±",
+            "priority": 1,
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "- ?\\+$",
+            "body": "\\mp ",
+            "mode": "maths",
+            "description": "∓",
+            "priority": 1,
+            "triggerWhenComplete": true
+        },
+        {
+            "prefix": "(?:([A-Za-z0-9]|\\\\\\w{,7})|\\(([^\\)]+)\\))C(?:([A-Za-z0-9]|\\\\\\w{,7})|\\(([^\\)]+)\\))$",
+            "body": "\\binom{$1$2}{$3$4}",
+            "mode": "maths",
+            "priority": 2,
+            "description": "binomial",
+            "triggerWhenComplete": true
+        }
+    ],
+    "workbench.colorTheme": "Horizon Bold",
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "explorer.confirmPasteNative": false
+
 }

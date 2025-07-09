@@ -1,0 +1,105 @@
+snippet `\\begin` "begin environment" A
+\\begin{$1}
+    $2
+\\end{$1}
+endsnippet
+
+snippet `\\end` "end environment" A
+\\end{$1}
+endsnippet
+
+snippet `\\sum` "summation" A
+\\sum\\limits_{$1}$2
+endsnippet
+
+snippet `\\usum` "summation with upper bound" A
+\\sum\\limits_{$1}^{$2}$3
+endsnippet
+
+snippet `\\prod` "product" A
+\\prod\\limits_{$1}$2
+endsnippet
+
+snippet `\\uprod` "product with upper bound" A
+\\prod\\limits_{$1}^{$2}$3
+endsnippet
+
+snippet `\\algorithm` "algorithm write" A 
+\\begin{algorithm}[$1]
+    \\caption{$2}
+    \\DontPrintSemicolon
+    $3
+\\end{algorithm}
+endsnippet
+
+snippet `\\input` "algorithm input" A 
+\\KwIn{$1}
+endsnippet
+
+snippet `\\input` "algorithm output" A 
+\\KwOut{$1}
+endsnippet
+
+snippet `\\setcomment` "Algorithm comment set" A 
+\\SetKwComment{Comment}{// }{}
+endsnippet
+
+snippet `\\comment` "Algorithm comment" A 
+\\Comment*{$1}
+endsnippet
+
+snippet `\\(?i:if)` "algorithm IF block" A 
+\\If{$1}{
+    $2
+}
+endsnippet
+
+snippet `\\(?i:e)lse` "algorithm Else block" A 
+\\Else{
+    $1
+}
+endsnippet
+
+snippet `\\(?i:f)orloop` "algorithm FOR loop" A 
+\\For{$1}{
+    $2
+}
+endsnippet
+
+snippet `\\(?i:w)hileloop` "algorithm WHILE loop" A 
+\\While{$1}{
+    $2
+}
+endsnippet
+
+snippet `\\algoproblem` "algorithm problem" A 
+\\begin{algoprob}
+    \\problemtitle{$1}
+    \\probleminput{$2}
+    \\problemquestion{$3}
+\\end{algoprob}
+endsnippet
+
+snippet `\\envcenter` "center environment" A 
+\\begin{center}
+    $1
+\\end{center}
+endsnippet
+
+snippet `\\minipage` "Minipage environment" A 
+\\begin{minipage}{$1\\textwidth}
+    $2
+\\end{minipage}
+endsnippet
+
+snippet `\\itemize` "Itemize environment" A 
+\\begin{itemize}
+    \\item $1
+\\end{itemize}
+endsnippet
+
+snippet `\\enumerate` "enumerate environment" A 
+\\begin{enumerate}[$1]
+    \\item $2
+\\end{enumerate}
+endsnippet

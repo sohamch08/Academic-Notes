@@ -1,0 +1,44 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.terminal.focus"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.focusActiveEditorGroup"
+  },
+  {
+    "key": "ctrl+shift+space",
+    "command": "latex-workshop.build",
+    "args": "latexmk",
+    "when": "!config.latex-workshop.bind.altKeymap.enabled && !virtualWorkspace && editorLangId =~ /^latex$|^latex-expl3$|^doctex$|^rsweave$|^jlweave$|^pweave$/"
+  },
+  {
+    "key": "ctrl+alt+b",
+    "command": "-latex-workshop.build",
+    "when": "!config.latex-workshop.bind.altKeymap.enabled && !virtualWorkspace && editorLangId =~ /^latex$|^latex-expl3$|^doctex$|^rsweave$|^jlweave$|^pweave$/"
+  },
+  {
+    "key": "Ctrl+space",
+    "when": "resourceExtname == .tex",
+    "command": "latex-workshop.recipes",
+    "args": "onelatex"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "editor.action.insertSnippet",
+    "args": {
+      "snippet": "\\textsc{$1}$0"
+    },
+    "when": "editorTextFocus && editorLangId == 'latex'"
+  },
+  {
+    "key": "ctrl+i",
+    "command": "editor.action.insertSnippet",
+    "args": {
+      "snippet": "\\emph{$1}$0"
+    },
+    "when": "editorTextFocus && editorLangId == 'latex'"
+  }
+]
