@@ -4,7 +4,7 @@
 	\probleminput{Weighted undirected graph $G=(V,E)$ and weights of edges $W=\{w_e\in\bbZ_0\colon e\in E\}$.}
 	\problemquestion{Find a spanning tree $T\subseteq E$ such that $\sum\limits_{e\in T}w_e$ is minimum.}
 \end{algoprob}
-In this chapter we will discuss this problem. We will first discuss the Kruskal algorithm which gives a greedy solution to the problem. Then we will discuss the data structure that we can use to implement the Kruskal algorithm efficiently. 
+In this chapter we will discuss this problem. We will first discuss the Kruskal algorithm which gives a greedy solution to the problem. Then we will discuss the data structure that we can use to implement the Kruskal algorithm efficiently.
 \section{Kruskal Algorithm}
 \begin{center}
 	\hspace*{4mm}\begin{tikzpicture}[vertex/.style={circle, draw, fill=white, inner sep=2pt}]
@@ -63,10 +63,351 @@ In this chapter we will discuss this problem. We will first discuss the Kruskal 
 		\end{scope}
 	\end{tikzpicture}
 \end{center}
-The Kruskal algorithm uses a concept of component. 
-\section{Data Structure 1: Array}
+The Kruskal algorithm uses a concept of component to find the minimum spanning tree.
+\begin{Definition}{Component}{}
+	In a graph $G=(V,E)$, a \emph{component} is a maximal subgraph $G'=(V',E')$ of $G$ such that \begin{enumerate}[label=(\arabic*)]
+		\item $(V',E')$ is connected.
+		\item $\forall\ v\notin V'$, there is no edge $e\in E$ such that $e$ connects $v$ to any vertex in $V'$.
+	\end{enumerate}
+\end{Definition}
+In Kruskal algorithm we maintain a set of components each of them is a tree so basically we maintain a forest. And we find a safe edge which is always the least weight edge in the graph that connects two distinct components and add that edge to the collection of edges in the forest and update the components.
 
+So the algorithm first sorts the edges in non-decreasing order of their weights. Then it initializes a forest $F$ with all the vertices in the graph and no edges. Then it iterates through the sorted edges and checks if the edge connects two distinct components. If it does, then it adds the edge to the forest and merges the two components. The algorithm stops when we have $n-1$ edges in the forest.
+\begin{algorithm}[]
+	\SetKwComment{Comment}{// }{}
+	\caption{\textsc{Kruskal Algorithm}}
+	\DontPrintSemicolon
+	\KwIn{$G=(V,E)$, and weights of edges $W=\{w_e\in\bbZ_0\colon e\in E\}$}
+	\KwOut{A minimum spanning tree $T\subseteq E$ of $G$}
+	\Begin{
+		\If{$G$ is not connected}{
+			\Return{None}\Comment*{Use DFS or BFS}
+		}
+		$T\longleftarrow\emptyset$\;
+		Sort the edges in $E$ in non-decreasing order of their weights so that $w(e_1)\leq w(e_2)\leq\cdots \leq w(e_m)$\;
+		\For{$i=1,\dots, m$}{
+			Let $e_i=(u,v)$\;
+			\If{$T\cup\{e_i\}$ is acyclic}{
+				$T\longleftarrow T\cup\{e_i\}$
+			}
+			\If{$|T|=|V|-1$}{
+				\Return{$T$}\;
+			}
+		}
+	}
+\end{algorithm}
+We have shown in \lmref{graphic-matroid} that the set of collection of acyclic sets in any graph is a matroid. Hence, here we are basically finding a base of the graphic matroid with minimum weight. The algorithm is exactly similar to the greedy algorithm for finding max-weight base of a matroid in \autoref{matroid-max-weight-base}. So you can use the similar arguments to show that the algorithm is correct and returns the minimum spanning tree of the graph.
+
+Now in the algorithm the checking of $T\cup \{e_i\}$ is acyclic can be done by checking if both the end points are in same component or not. And if they are not then we need to combine those to components. But there comes a question:
+\begin{question}{}
+	What it means to give a component?
+\end{question}
+We will use some vertex to represent the component. We keep a pointer $v.\emph{parent}$ for each vertex which points to representative of component $v$ is in. Hence, we need a data structure that can do the following two operations efficiently:
+\begin{itemize}[label=$\bullet$]
+	\item \textsc{Find}$(u)$: Returns the component $u$ is in.
+	\item \textsc{Union}$(u,v)$: Merges the components of $u$ and $v$ into a single component.
+\end{itemize}
+So we can use the updated algorithm to implement the Kruskal algorithm  using proper data structure:
+\begin{algorithm}[]
+	\SetKwComment{Comment}{// }{}
+	\caption{\textsc{Kruskal Algorithm}}
+	\DontPrintSemicolon
+	\KwIn{$G=(V,E)$, and weights of edges $W=\{w_e\in\bbZ_0\colon e\in E\}$}
+	\KwOut{A minimum spanning tree $T\subseteq E$ of $G$}
+	\Begin{
+		\If{$G$ is not connected}{
+			\Return{None}\Comment*{Use DFS or BFS}
+		}
+		$T\longleftarrow\emptyset$\;
+		Sort the edges in $E$ in non-decreasing order of their weights so that $w(e_1)\leq w(e_2)\leq\cdots \leq w(e_m)$\;
+		\For{$i=1,\dots, m$}{
+			Let $e_i=(u,v)$\;
+			\If{$\textsc{Find}(u)\neq \textsc{Find}(v)$}{
+				$T\longleftarrow T\cup\{e_i\}$\;
+				\textsc{Union}$(u,v)$
+			}
+			\If{$|T|=|V|-1$}{
+				\Return{$T$}\;
+			}
+		}
+	}
+\end{algorithm}
+The Kruskal Algorithm calls $m$ times the \textsc{Find} operation and $n$ times the \textsc{Union} operation.
+\section{Data Structure 1: Linear Array}
+We create an $n$ length array $A$ which hold the parent pointer of each vertex. Initially for all vertices $A[v]=v$. So \textsc{Array-Find}$(u)$ will just return $A[u]$. Hence \textsc{Find} takes $O(1)$ time. For \textsc{Union}$(u,v)$ we use the following:
+\begin{algorithm}[]
+	\caption{\textsc{Array-Union}$(u,v)$}
+	\DontPrintSemicolon
+	\If{$A[u]\neq A[v]$}{
+	\For{$i=1,\dots, n$}{
+	\If{ $A[i]==A[v]$}{
+	$A[i]\longleftarrow A[u]$\;
+	}
+	}
+	}
+\end{algorithm}
+Therefore, \textsc{Array-Union}$(u,v)$ takes $O(n)$ time. Hence, the time complexity of the Kruskal algorithm using this data structure is $m\cdot O(1)+n\cdot O(n)=O(m+n^2)=O(n^2)$.
 \section{Data Structure 2: Left Child Right Siblings Tree}
+Using an array is not efficient enough.  One place we can optimize is if given the components is there a faster way to get the vertices in the component?  We can use the following tricks to optimize:
+\begin{enumerate}[]
+	\item For every representative of a component, store pointers to all vertices in that component.
+	\item Change representative for the smaller component while doing \textsc{Union}$(u,v)$.
+\end{enumerate}
+\subsection{Construction}
+So now every representative of a component we point to one vertex which is also in the component. And from that vertex we can iterate through all the vertices in that component. So basically we can immagine a 2 level tree where all the children point towards the root which is the representative of the component. The root points to one of the children take the left most child. And then all the other children points to the immediate right child of the root.
+\begin{center}
+	\usetikzlibrary{arrows.meta}
+	\begin{tikzpicture}[vertex/.style={circle, draw, fill=white, inner sep=2pt}]
+		\begin{scope}
+			\node at (-2,0) {Initially we had:};
+			\node[vertex] (1) at (0, 0) {};
+			\node[vertex] (21) at (1, 0) {};
+			\node[vertex] (22) at (1, -1) {};
+			\node[vertex] (31) at (3, 0) {};
+			\node[vertex] (32) at (2, -1) {};
+			\node[vertex] (33) at (3, -1) {};
+			\node[vertex] (34) at (4, -1) {};
+			\node[vertex] (41) at (5, 0) {};
+			\node[vertex] (42) at (5, -1) {};
+			\path (1) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (1);
+			\path (21) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (21);
+			\path (31) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (31);
+			\path (41) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (41);
+			\draw[-{Latex[length=1mm]}] (22) -- (21);
+			\draw[-{Latex[length=1mm]}] (42) -- (41);
+			\foreach \x in {2,3,4} {
+			\draw[-{Latex[length=1mm]}] (3\x) -- (31);
+			}
+			\path (31) edge[bend right=30, -{Latex[length=1mm]}, red] node[midway, left, font=\tiny] {Want} (32);
+			\path (32) edge[-{Latex[length=1mm]}, red] node[midway, below, font=\tiny] {Want} (33);
+		\end{scope}
+		\begin{scope}[shift={(0,-2)}]
+			\node at (-2,0) {Now we will do:};
+			\node[vertex] (1) at (0, 0) {};
+			\node[vertex] (21) at (1, 0) {};
+			\node[vertex] (22) at (1, -1) {};
+			\node[vertex] (31) at (3, 0) {};
+			\node[vertex] (32) at (2, -1) {};
+			\node[vertex] (33) at (3, -1) {};
+			\node[vertex] (34) at (4, -1) {};
+			\node[vertex] (41) at (5, 0) {};
+			\node[vertex] (42) at (5, -1) {};
+			\path (1) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (1);
+			\path (21) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (21);
+			\path (31) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (31);
+			\path (41) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (41);
+			\foreach \x in {2,4} {
+					\draw[-right to,shorten <=1.15mm, shorten >=1.15mm] ($(\x2)+(0.02,0)$) -- ($(\x1)+(0.02,0)$);
+					\draw[-right to,shorten <=1.15mm, shorten >=1.15mm] ($(\x1)+(-0.02,0)$) -- ($(\x2)+(-0.02,0)$);
+				}
+			\foreach \x in {3,4} {
+			\draw[-{Latex[length=1mm]}] (3\x) -- (31);
+			}
+			\draw[-right to,shorten <=1mm, shorten >=1.2mm] ($(32)+(0.03,0)$) -- ($(31)+(0.03,0)$);
+			\draw[-right to,shorten <=1mm, shorten >=1.2mm] ($(31)+(-0.03,0)$) -- ($(32)+(-0.03,0)$);
+			\draw[-{Latex[length=1mm]}] (32) -- (33);
+			\draw[-{Latex[length=1mm]}] (33) -- (34);
+		\end{scope}
+	\end{tikzpicture}
+	\captionof{figure}{Left Child Right Sibling}
+\end{center}
+We can also store a variable to store the number of vertices in the component so that we can use it to compare the size of two components and then update for the smaller one. Therefore, the data structure now stores:
+\begin{itemize}
+	\item $v.\emph{parent}$ for each $v$ which points to the vertex representing the component $v$ is in.
+	\item $v.\emph{size}$ for size of the component for each component representative $v$.
+	\item $v.\emph{left}$ for the left most child for each component representative $v$.
+	\item $v.\emph{right}$ for the immediate right sibling of $v$ for all vertices in a component which are not  representatives of the components.
+\end{itemize}\parinf
+
+This data structure is called Left Child Right Sibling. So in this data structure the \textsc{LCRS-Find}$(u)$ just returns the value of $u.\emph{parent}$. Hence, \textsc{LCRS-Find} takes $O(1)$ time. 
+\subsection{\textsc{LCRS-Union} Function}
+For the \textsc{LCRS-Union} function we do the following
+\begin{algorithm}[]
+	\caption{\textsc{LCRS-Union}$(u,v)$}
+	\DontPrintSemicolon
+	$up\longleftarrow u.\emph{parent}$\; $vp\longleftarrow v.\emph{parent}$\;
+	\If{$up\neq vp$}{
+		\If{$up==u$}{
+			$u.\emph{parent}\longleftarrow vp$\; $u.\emph{right}\longleftarrow vp.\emph{left}$\;
+			$vp.\emph{left}\longleftarrow u$\; $vp.\emph{size}\longleftarrow vp.\emph{size}+1$\;
+		}
+		\ElseIf{$up.\emph{size}\leq vp.\emph{size}$}{
+			$up.\emph{right}\longleftarrow u$\;
+			$x\longleftarrow up$\;
+			\While{$x.\emph{right}==None$}{
+				$x.\emph{parent}\longleftarrow vp$, $x\longleftarrow x.\emph{right}$
+			}
+			$x.\emph{right}\longleftarrow vp.\emph{left}$\;
+			$vp.\emph{left}\longleftarrow up.\emph{left}$\;
+			$vp.\emph{left}\longleftarrow up$\;
+			$vp.\emph{size}\longleftarrow vp.\emph{size}+\emph{up}.size$\;
+		}
+		\Else{
+			$vp.\emph{right}\longleftarrow v$\;
+			$x\longleftarrow vp$\;
+			\While{$x.\emph{right}==None$}{
+				$x.\emph{parent}\longleftarrow up$, $x\longleftarrow x.\emph{right}$
+			}
+			$x.\emph{right}\longleftarrow up.\emph{left}$\;
+			$up.\emph{left}\longleftarrow vp.\emph{left}$\;
+			$up.\emph{left}\longleftarrow vp$\;
+			$up.\emph{size}\longleftarrow up.\emph{size}+\emph{vp}.size$\;
+		}
+	}
+\end{algorithm}
+
+Below we have shown how the \textsc{LCRS-Union} function works.
+\begin{figure}[!h]
+	\centering
+	\begin{tikzpicture}[vertex/.style={circle, draw, fill=white, inner sep=2pt}]
+		\begin{scope}
+			\node at (-1,0) {(a)};
+			\node[vertex] (21) at (0, 0) {};
+			\node[vertex] (22) at (0, -1) {};
+			\node[vertex] (31) at (2, 0) {};
+			\node[vertex] (32) at (1, -1) {};
+			\node[vertex] (33) at (2, -1) {};
+			\node[vertex] (34) at (3, -1) {};
+			\node[xshift=-0.3cm] at (0,0) {$up$};
+			\node[xshift=0.3cm] at (2,0) {$vp$};
+			\path (21) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (21);
+			\path (31) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (31);
+			\draw[-right to,shorten <=1.15mm, shorten >=1.15mm] ($(22)+(0.02,0)$) -- ($(21)+(0.02,0)$);
+			\draw[-right to,shorten <=1.15mm, shorten >=1.15mm] ($(21)+(-0.02,0)$) -- ($(22)+(-0.02,0)$);
+			\foreach \x in {3,4} {
+			\draw[-{Latex[length=1mm]}] (3\x) -- (31);
+			}
+			\draw[-right to,shorten <=1mm, shorten >=1.2mm] ($(32)+(0.03,0)$) -- ($(31)+(0.03,0)$);
+			\draw[-right to,shorten <=1mm, shorten >=1.2mm] ($(31)+(-0.03,0)$) -- ($(32)+(-0.03,0)$);
+			\draw[-{Latex[length=1mm]}] (32) -- (33)  node[below]{$v$};
+			\draw[-{Latex[length=1mm]}] (33) -- (34);
+			\node at (22) [below] {$u$};
+		\end{scope}
+		\begin{scope}[shift={(5,0)}]
+			\node at (0,0) {(b)};
+			\node[vertex] (21) at (0, -1) {};
+			\node[vertex] (22) at (1, -1) {};
+			\node[vertex] (31) at (3, 0) {};
+			\node[vertex] (32) at (2, -1) {};
+			\node[vertex] (33) at (3, -1) {};
+			\node[vertex] (34) at (4, -1) {};
+			\node[below] at (0, -1) {$up$};
+			\node[xshift=0.3cm] at (3,0) {$vp$};
+			\draw[-{Latex[length=1mm]}] (22) -- (21);
+			\path (21) edge[bend right=30, red, -{Latex[length=1mm]}] node [midway, below, font=\tiny, yshift=0.05cm]{\emph{right}} (22);
+			\path (21) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (21);
+			\path (31) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (31);
+			\foreach \x in {3,4} {
+			\draw[-{Latex[length=1mm]}] (3\x) -- (31);
+			}
+			\draw[-right to,shorten <=1mm, shorten >=1.2mm] ($(32)+(0.03,0)$) -- ($(31)+(0.03,0)$);
+			\draw[-right to,shorten <=1mm, shorten >=1.2mm] ($(31)+(-0.03,0)$) -- ($(32)+(-0.03,0)$);
+			\draw[-{Latex[length=1mm]}] (32) -- (33)  node[below]{$v$};
+			\draw[-{Latex[length=1mm]}] (33) -- (34);
+			\node at (22) [below] {$u$};
+		\end{scope}
+		\begin{scope}[shift={(11,0)}]
+			\node at (0,0) {(c)};
+			\node[vertex] (21) at (0, -1) {};
+			\node[vertex] (22) at (1, -1) {};
+			\node[vertex] (31) at (3, 0) {};
+			\node[vertex] (32) at (2, -1) {};
+			\node[vertex] (33) at (3, -1) {};
+			\node[vertex] (34) at (4, -1) {};
+			\node[below] at (0, -1) {$up$};
+			\node[xshift=0.3cm] at (3,0) {$vp$};
+			\path (21) edge[-{Latex[length=1mm]}] node [midway, below, font=\tiny, yshift=0.05cm]{\emph{right}} (22);
+			\path (21) edge [bend left=15, -{Latex[length=1mm]}, red] node [midway, above, font=\tiny, rotate=13,yshift=-0.05cm] {\emph{parent}} (31);
+			\path (22) edge [-{Latex[length=1mm]}, red] node [midway, above, font=\tiny, rotate=22, xshift=-0.3cm, yshift=-0.09cm] {\emph{parent}} (31);
+			\path (31) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (31);
+			\draw[-{Latex[length=1mm]}] (21) -- (22);
+			\foreach \x in {3,4} {
+			\draw[-{Latex[length=1mm]}] (3\x) -- (31);
+			}
+			\draw[-right to,shorten <=1mm, shorten >=1.2mm] ($(32)+(0.03,0)$) -- ($(31)+(0.03,0)$);
+			\draw[-right to,shorten <=1mm, shorten >=1.2mm] ($(31)+(-0.03,0)$) -- ($(32)+(-0.03,0)$);
+			\draw[-{Latex[length=1mm]}] (32) -- (33)  node[below]{$v$};
+			\draw[-{Latex[length=1mm]}] (33) -- (34);
+			\node at (22) [below] {$u$};
+		\end{scope}
+		\begin{scope}[shift={(-1,-3)}]
+			\node at (0,0) {(d)};
+			\node[vertex] (21) at (0, -1) {};
+			\node[vertex] (22) at (1, -1) {};
+			\node[vertex] (31) at (3, 0) {};
+			\node[vertex] (32) at (2, -1) {};
+			\node[vertex] (33) at (3, -1) {};
+			\node[vertex] (34) at (4, -1) {};
+			\node[below] at (0, -1) {$up$};
+			\node[xshift=0.3cm] at (3,0) {$vp$};
+			\path (21) edge[-{Latex[length=1mm]}] node [midway, below, font=\tiny, yshift=0.05cm]{\emph{right}} (22);
+			\path (21) edge [bend left=15, -{Latex[length=1mm]}] node [midway, above, font=\tiny, rotate=13,yshift=-0.05cm] {\emph{parent}} (31);
+			\path (22) edge [-{Latex[length=1mm]}] node [midway, above, font=\tiny, rotate=22, xshift=-0.3cm, yshift=-0.09cm] {\emph{parent}} (31);
+			\draw[-{Latex[length=1mm]},red] (22) -- node [midway, below, font=\tiny, yshift=0.05cm]{\emph{right}} (32);
+			\path (31) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (31);
+			\draw[-{Latex[length=1mm]}] (21) -- (22);
+			\foreach \x in {3,4} {
+			\draw[-{Latex[length=1mm]}] (3\x) -- (31);
+			}
+			\draw[-right to,shorten <=1mm, shorten >=1.2mm] ($(32)+(0.03,0)$) -- ($(31)+(0.03,0)$);
+			\draw[-right to,shorten <=1mm, shorten >=1.2mm] ($(31)+(-0.03,0)$) -- ($(32)+(-0.03,0)$);
+			\draw[-{Latex[length=1mm]}] (32) -- (33)  node[below]{$v$};
+			\draw[-{Latex[length=1mm]}] (33) -- (34);
+			\node at (22) [below] {$u$};
+		\end{scope}
+		\begin{scope}[shift={(5,-3)}]
+			\node at (0,0) {(e)};
+			\node[vertex] (21) at (0, -1) {};
+			\node[vertex] (22) at (1, -1) {};
+			\node[vertex] (31) at (3, 0) {};
+			\node[vertex] (32) at (2, -1) {};
+			\node[vertex] (33) at (3, -1) {};
+			\node[vertex] (34) at (4, -1) {};
+			\node[below] at (0, -1) {$up$};
+			\node[xshift=0.3cm] at (3,0) {$vp$};
+			\path (21) edge[-{Latex[length=1mm]}]  (22);
+			\path (22) edge [-{Latex[length=1mm]}]  (31);
+			\draw[-{Latex[length=1mm]}] (22) --  (32);
+			\path (31) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (31);
+			\draw[-{Latex[length=1mm]}] (21) -- (22);
+			\foreach \x in {3,4} {
+			\draw[-{Latex[length=1mm]}] (3\x) -- (31);
+			}
+			\draw[-{Latex[length=1mm]}] (32) -- (31);
+			\draw[-{Latex[length=1mm]}] (32) -- (33)  node[below]{$v$};
+			\draw[-{Latex[length=1mm]}] (33) -- (34);
+			\draw[-{Latex[length=1mm]}] (21) -- (31);
+			\node at (22) [below] {$u$};
+			\path (31) edge [bend right=15, -{Latex[length=1mm]}, red] node [midway, above, font=\tiny, rotate=13,yshift=-0.05cm] {\emph{left}} (21);
+		\end{scope}
+		\begin{scope}[shift={(11,-3)}]
+			\node at (0,0) {(f)};
+			\node[vertex] (21) at (0, -1) {};
+			\node[vertex] (22) at (1, -1) {};
+			\node[vertex] (31) at (3, 0) {};
+			\node[vertex] (32) at (2, -1) {};
+			\node[vertex] (33) at (3, -1) {};
+			\node[vertex] (34) at (4, -1) {};
+			\path (21) edge[-{Latex[length=1mm]}]  (22);
+			\path (22) edge [-{Latex[length=1mm]}]  (31);
+			\draw[-{Latex[length=1mm]}] (22) --  (32);
+			\path (31) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (31);
+			\draw[-{Latex[length=1mm]}] (21) -- (22);
+			\foreach \x in {3,4} {
+			\draw[-{Latex[length=1mm]}] (3\x) -- (31);
+			}
+			\draw[-{Latex[length=1mm]}] (32) -- (31);
+			\draw[-{Latex[length=1mm]}] (32) -- (33)  node[below]{$v$};
+			\draw[-{Latex[length=1mm]}] (33) -- (34);
+			\node at (22) [below] {$u$};
+			\draw[-right to,shorten <=1 mm, shorten >=1.5mm] ($(21)+(0.03,0.02)$) -- ($(31)+(0.03,0.02)$);
+			\draw[-right to,shorten <=1mm, shorten >=1.2mm] ($(31)+(-0.03,0.05)$) -- ($(21)+(-0.03,0.05)$);
+		\end{scope}
+	\end{tikzpicture}
+	\caption{A run of \textsc{LCRS-Union}$(u,v)$}
+\end{figure}
+This way we can unite two components and update the corresponding component representative in the vertices of the smaller component. In the next section we will analyze the amortized time complexity of the \textsc{LCRS-Union} function
+\subsection{Amortized analysis of \textsc{LCRS-Union}}
 
 \section{Data Structure 3: Union Find}
 \subsection{Analyzing the Union-Find Data-Structure}
@@ -75,13 +416,13 @@ We call a node in the union-find data-structure a \textit{leader} if it is the r
 	Once a node stop being a {leader} (i.e. the node in top of a tree). it can never become a leader again.
 \end{lemma}
 \begin{proof}
-	A node $x$ stops being a {leader} only because of the \prb{Union} operation which made $x$ child of a node $y$ which is a {leader} of a tree. From this point on, the only operation that might change the parent pointer of $x$ is the \prb{Find} operation which traverses through $x$. Since path-compression only change the parent pointer of $x$ to point to some other node $y$. Therefore the parent pointer of $x$ will never become equal to itself i.e. $x$ can never be a {leader} again. Hence once $x$ stops being a {leader} it can never be a {leader} again.
+	A node $x$ stops being a {leader} only because of the \prb{Union} operation which made $x$ child of a node $y$ which is a {leader} of a tree. From this point on, the only operation that might change the parent pointer of $x$ is the \prb{Find} operation which traverses through $x$. Since path-compression only change the parent pointer of $x$ to point to some other node $y$. Therefore, the parent pointer of $x$ will never become equal to itself i.e. $x$ can never be a {leader} again. Hence, once $x$ stops being a {leader} it can never be a {leader} again.
 \end{proof}
 \begin{lemma}{}{}
 	Once a node stop being a leader then its rank is fixed.
 \end{lemma}
 \begin{proof}
-	The rank of a node changes only by an \prb{Union} operation. But the \prb{Union} operation only changes the rank of nodes that are {leader} after the operation is done. Therefore once a node stops being a {leader} it's rank will not being changed by an \prb{Union} operation. Hence once a node stop being a leader then its rank is fixed.
+	The rank of a node changes only by a \prb{Union} operation. But the \prb{Union} operation only changes the rank of nodes that are {leader} after the operation is done. Therefore, once a node stops being a {leader} it's rank will not being changed by a \prb{Union} operation. Hence, once a node stop being a leader then its rank is fixed.
 \end{proof}
 \begin{lemma}{}{}
 	Ranks are monotonically increasing in the reversed trees, as we travel from a node to
@@ -108,7 +449,7 @@ Define $N(r)=\#$vertices with rank at least $k$. Then by the above lemma we have
 	The time to perform a single find operation when we perform union by rank and path
 	compression is $O(\log n)$ time.
 \end{lemma}
-We will show that we can do much better. In fact we will show that for $m$ operations over $n$ elements the overall running time is $O((n+m)\log ^*n)$
+We will show that we can do much better. In fact, we will show that for $m$ operations over $n$ elements the overall running time is $O((n+m)\log ^*n)$
 
 \begin{lemma}{}{}
 	During a single $\prb{Find}(x)$ operation, the number of jumps between blocks along the search path is $O(\log^*n)$.

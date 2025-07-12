@@ -412,7 +412,7 @@ Therefore $M$ is a matroid
 Therefore $M$ is a matroid.
 \end{proof}
 \item \textbf{Graphic Matroid:} Given a graph $G=(V,E)$ $E$ is the ground set and take $$\mcI=\{E'\subseteq E\colon E'\text{ is acyclic} \}$$
-\begin{lemma}{}{}
+\begin{lemma}{}{graphic-matroid}
 	$M=(E,\mcI)$ defined as above is a matroid
 \end{lemma}
 \begin{proof}
@@ -434,7 +434,7 @@ Therefore $M$ is a matroid.
 \end{proof}
 This matroid is also called Metric Matroid.
 \end{itemize}
-\subsection{Finding Max Weight Base}
+\subsection{Finding Max Weight Base}\label{matroid-max-weight-base}
 \begin{algoprob}
 	\problemtitle{Max Weight Base}
 	\probleminput{A matroid $M=(E,I)$ is given as an input as an oracle and a weight function $W:E\to \bbR$.}

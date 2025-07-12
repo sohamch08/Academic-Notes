@@ -10,3 +10,4 @@ Vandermonde
 recursing
 rootlist
 Kruskal
+matroid
