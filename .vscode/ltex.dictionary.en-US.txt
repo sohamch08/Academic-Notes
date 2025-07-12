@@ -9,3 +9,4 @@ Karger
 Vandermonde
 recursing
 rootlist
+Kruskal
