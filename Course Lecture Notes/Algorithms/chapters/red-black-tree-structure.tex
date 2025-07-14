@@ -20,11 +20,11 @@ A red-black tree is a special type of binary search tree with one extra bit of s
 	\begin{minipage}{0.49\textwidth}
 		\centering
 		\usetikzlibrary{trees,arrows,positioning, calc}
-		\begin{tikzpicture}[very thick,
+		\begin{tikzpicture}[
 				level/.style={sibling distance=30mm/#1},
 				level distance=10mm,
-				redVertex/.style={draw,fill=black!10!white,circle,minimum size=20pt,inner sep=0pt},
-				blackVertex/.style={draw,fill=black,   circle,minimum size=20pt,inner sep=0pt, text=white, font=\bfseries},
+				redVertex/.style={draw=red!80!black,fill=black!10!white,circle,minimum size=20pt,inner sep=0pt, text=red},
+				blackVertex/.style={draw,fill=black!10!white,   circle,minimum size=20pt,inner sep=0pt},
 				nil/.style={draw,fill=black,rectangle,rounded corners, minimum size=18pt,inner sep=0pt, text=white}]
 			\node [blackVertex] (r){29}
 			child {
@@ -35,14 +35,14 @@ A red-black tree is a special type of binary search tree with one extra bit of s
 							child {node [nil] {NIL}}
 						}
 					child [sibling distance=22mm] {
-							node [redVertex] {24}
+							node [blackVertex] {24}
 							child [sibling distance=15mm] {
-									node [blackVertex] {18}
+									node [redVertex] {18}
 									child {node [nil] {NIL}}
 									child {node [nil] {NIL}}
 								}
 							child [sibling distance=15mm] {
-									node [blackVertex] {26}
+									node [redVertex] {26}
 									child {node [nil] {NIL}}
 									child {node [nil] {NIL}}
 								}
