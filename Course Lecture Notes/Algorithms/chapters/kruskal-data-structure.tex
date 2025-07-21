@@ -219,7 +219,7 @@ We can also store a variable to store the number of vertices in the component so
 	\item $v.\emph{right}$ for the immediate right sibling of $v$ for all vertices in a component which are not  representatives of the components.
 \end{itemize}\parinf
 
-This data structure is called Left Child Right Sibling. So in this data structure the \textsc{LCRS-Find}$(u)$ just returns the value of $u.\emph{parent}$. Hence, \textsc{LCRS-Find} takes $O(1)$ time. 
+This data structure is called Left Child Right Sibling. So in this data structure the \textsc{LCRS-Find}$(u)$ just returns the value of $u.\emph{parent}$. Hence, \textsc{LCRS-Find} takes $O(1)$ time.
 \subsection{\textsc{LCRS-Union} Function}
 For the \textsc{LCRS-Union} function we do the following
 \begin{algorithm}[]
@@ -409,20 +409,106 @@ Below we have shown how the \textsc{LCRS-Union} function works.
 This way we can unite two components and update the corresponding component representative in the vertices of the smaller component. In the next section we will analyze the amortized time complexity of the \textsc{LCRS-Union} function
 \subsection{Amortized analysis of \textsc{LCRS-Union}}
 \begin{lemma}{}{}
-For any vertex $v\in V$, $v.\emph{parent}$ can change at most $O(\log n)$ times.
+	For any vertex $v\in V$, $v.\emph{parent}$ can change at most $O(\log n)$ times.
 \end{lemma}
 \begin{proof}
-Initially size of $v$'s component is $1$. Each time $v.\emph{parent}$ is changed the size of the component $v$ is in becomes at least double. Therefore, at most $O(\log n)$ times $v.\emph{parent}$ can change. 
+	Initially size of $v$'s component is $1$. Each time $v.\emph{parent}$ is changed the size of the component $v$ is in becomes at least double. Therefore, at most $O(\log n)$ times $v.\emph{parent}$ can change.
 \end{proof}\parinn
 
 Now since there are $n$ vertices at most $O(n\log n)$ times change of \emph{parent} for any vertex happens. Now change of \emph{parent} for any vertex happens only in \textsc{LCRS-Union} function. Total time taken by all the \textsc{LCRS-Union} operations is $O(n\log n)$ time. Since \textsc{LCRS-Union} was called $n$ times the amortized cost of \textsc{LCRS-Union} is $O(\log n)$.
 \subsection{Time Complexity Analysis of Kruskal}
-We have shown above that \textsc{LCRS-Find} takes $O(1)$ time and amortized cost of \textsc{LCRS-Union} is $O(\log n)$. Since \textsc{LCRS-Find} is called $m$ times and \textsc{LCRS-Union} is called $n$ times the total run time of Kruskal Algorithm using the Left Child Right Sibling data structure is $O(m+n\log n)$. 
+We have shown above that \textsc{LCRS-Find} takes $O(1)$ time and amortized cost of \textsc{LCRS-Union} is $O(\log n)$. Since \textsc{LCRS-Find} is called $m$ times and \textsc{LCRS-Union} is called $n$ times the total run time of Kruskal Algorithm using the Left Child Right Sibling data structure is $O(m+n\log n)$.
 \section{Data Structure 3: Union Find}
-\subsection{Analyzing the Union-Find Data-Structure}
+We will now give up on the idea of height $1$ trees to optimize more. Representative of a component is still vertex at root, but we will do the following: changes:
+\begin{itemize}
+	\item \textsc{Union} just changes parent pointers of root nodes, but it takes $O(1)$.
+	\item Instead of size, we will maintain a variable \emph{rank} of a component roughly which can be thought of as height of the component.
+	\item For \textsc{Union} root of smaller rank will be changed to point to root of the component of larger rank.
+	\item The \textsc{Find} operation does something called path compression which we will explain later.
+\end{itemize}
+To implement this data structure we will use a tree for each component and every node has a \emph{parent} pointer. And there we will use the \textsc{Find} and \textsc{Union} operations.
+
+Our goal is to run Kruskal algorithm in almost $O(n+m)$ time. More precisely $O((n+m)\log^* n)$ time where $\log ^*n$ is the number of times we need to compose $\log $ on $n$ to get $1$.
+\subsection{\textsc{Find} Operation}
+The \textsc{Find} operation does something called path compression i.e. for any vertex $v\in V$, if \textsc{Find}$(v)$ is called then it starts from $v$ changes it's parent to the root of the component $v$ is in and then it moves to its parent and changes his parent to be the root and move to his parent and keep on doing like that till it reaches the root. In other words in path from the root to $v$, for every vertex in that path the \textsc{Find} operation changes the \emph{parent} pointer to the root.
+\begin{center}
+	\usetikzlibrary{arrows.meta}
+	\begin{tikzpicture}[vertex/.style={circle, draw, fill=white, inner sep=2pt}]
+		\begin{scope}
+			\node[vertex] (1) at (0, 0) {$v_1$};
+			\node[vertex] (22) at (1.5, -1) {$v_3$};
+			\node[vertex] (21) at (-1.5, -1) {$v_2$};
+			\node[vertex] (31) at (-1.5, -2) {$v_4$};
+			\node[vertex] (32) at (0.8, -2) {$v_5$};
+			\node[vertex] (33) at (2.2, -2) {$v_6$};
+			\node[vertex] (41) at (-0.5, -3) {$v_9$};
+			\node[vertex] (42) at (-1.5, -3) {$v_8$};
+			\node[vertex] (43) at (-2.5, -3) {$v_7$};
+			\path (1) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (1);
+			\draw[-{Latex[length=1mm]}] (21) -- (1);
+			\draw[-{Latex[length=1mm]}] (22) -- (1);
+			\draw[-{Latex[length=1mm]}] (31) -- (21);
+			\draw[-{Latex[length=1mm]}] (32) -- (22);
+			\draw[-{Latex[length=1mm]}] (33) -- (22);
+			\draw[-{Latex[length=1mm]}] (41) -- (31);
+			\draw[-{Latex[length=1mm]}] (42) -- (31);
+			\draw[-{Latex[length=1mm]}] (43) -- (31);
+		\end{scope}
+		\begin{scope}[shift={(10,0)}]
+			\node[vertex] (A1) at (0, 0) {$v_1$};
+			\node[vertex] (A22) at (1.5, -1) {$v_3$};
+			\node[vertex] (A21) at (0, -1) {$v_2$};
+			\node[vertex] (A31) at (-1.25, -1) {$v_4$};
+			\node[vertex] (A32) at (0.8, -2) {$v_5$};
+			\node[vertex] (A33) at (2.2, -2) {$v_6$};
+			\node[vertex] (A41) at (-0.55, -2) {$v_7$};
+			\node[vertex] (A42) at (-1.95, -2) {$v_8$};
+			\node[vertex] (A43) at (-2.5, -1) {$v_9$};
+			\path (A1) edge [out=120, in=60, loop, min distance=0.4cm, -{Latex[length=1mm]}] (A1);
+			\draw[-{Latex[length=1mm]}] (A21) -- (A1);
+			\draw[-{Latex[length=1mm]}] (A22) -- (A1);
+			\draw[-{Latex[length=1mm]}] (A31) -- (A1);
+			\draw[-{Latex[length=1mm]}] (A32) -- (A22);
+			\draw[-{Latex[length=1mm]}] (A33) -- (A22);
+			\draw[-{Latex[length=1mm]}] (A41) -- (A31);
+			\draw[-{Latex[length=1mm]}] (A42) -- (A31);
+			\draw[-{Latex[length=1mm]}] (A43) -- (A1);
+		\end{scope}
+		\draw[thick, -{Latex[length=2mm]}, shorten <=2mm, shorten >= 2mm] (22) -- node[midway, above] {\textsc{Find}$(v_9)$} (A43);
+	\end{tikzpicture}
+	\captionof{figure}{Path compression during \textsc{Find}$(v_9)$ operation}
+\end{center}
+Here is the pseudocode of the \textsc{Find} operation below:
+\begin{algorithm}[]
+	\caption{\textsc{Find}$(v)$}
+	\DontPrintSemicolon
+	\If{$v.\emph{parent}\neq v$}{
+		$v.\emph{parent}\longleftarrow \textsc{Find}(v.\emph{parent})$\;
+	}
+	\Return{$v.\emph{parent}$}
+\end{algorithm}We will not discuss the amortized cost of this operation. Instead, we will do it in \autoref{analysis-union-find}.
+\subsection{\textsc{Union} Operation}
+For the \textsc{Union} operation we change the root of smaller rank to point to the root of the component of larger rank. So for the \textsc{Union}$(u,v)$ operation we assume that $u$, $v$ are the roots of their respective components. 
+\begin{algorithm}[]
+	\caption{\textsc{Union}$(u,v)$}
+	\SetKwComment{Comment}{// }{}
+	\DontPrintSemicolon
+	\If{$u.\emph{rank}>v.\emph{rank}$}{
+		$v.\emph{parent}\longleftarrow v$\;
+	}
+	\ElseIf{$v.\emph{rank}>u.\emph{rank}$}{
+		$u.\emph{parent}\longleftarrow v$\;
+	}
+	\Else{
+		$v.\emph{parent}\longleftarrow u$\;
+		$v.\emph{rank}\longleftarrow v.\emph{rank}+1$
+	}
+\end{algorithm}
+Since in \textsc{Union}$(u,v)$ we assume $u,v$ are component representatives before using \textsc{Union}$(u,v)$ we use \textsc{Find} on $u$ and $v$ to get the roots of their components, and then we apply \textsc{Union} on the roots. Hence, \textsc{Union}$(u,v)$ takes $O(1)$ time.
+\subsection{Analyzing the Union-Find Data-Structure}\label{analysis-union-find}
 We call a node in the union-find data-structure a \emph{leader} if it is the root of the (reversed) tree.
 \begin{lemma}{}{}
-	Once a node stop being a {leader} (i.e. the node in top of a tree). it can never become a leader again.
+	Once a node stop being a {leader} (i.e. the node in top of a tree). It can never become a leader again.
 \end{lemma}
 \begin{proof}
 	A node $x$ stops being a {leader} only because of the \prb{Union} operation which made $x$ child of a node $y$ which is a {leader} of a tree. From this point on, the only operation that might change the parent pointer of $x$ is the \prb{Find} operation which traverses through $x$. Since path-compression only change the parent pointer of $x$ to point to some other node $y$. Therefore, the parent pointer of $x$ will never become equal to itself i.e. $x$ can never be a {leader} again. Hence, once $x$ stops being a {leader} it can never be a {leader} again.

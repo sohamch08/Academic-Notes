@@ -1,0 +1,348 @@
+\documentclass[10pt]{beamer}
+
+\usetheme{metropolis}
+\usepackage{appendixnumberbeamer}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+\DeclareMathOperator{\order}{Order}
+
+\title{Universal Optimality of Dijkstra ALgorithm}
+\subtitle{Using Fibonacci-Like Priority Queue with Working Sets}
+\date{\today}
+\author{Soham Chatterjee}
+\institute{Oral Qualifier, STCS}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+\metroset{block=fill}
+\begin{document}
+
+\maketitle
+
+\begin{frame}{Table of contents}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}[fragile]{Metropolis}
+
+  The \themename theme is a Beamer theme with minimal visual noise
+  inspired by the \href{https://github.com/hsrmbeamertheme/hsrmbeamertheme}{\textsc{hsrm} Beamer
+  Theme} by Benjamin Weiss.
+
+  Enable the theme by loading
+
+  \begin{verbatim}    \documentclass{beamer}
+    \usetheme{metropolis}\end{verbatim}
+
+  Note, that you have to have Mozilla's \emph{Fira Sans} font and XeTeX
+  installed to enjoy this wonderful typography.
+\end{frame}
+\begin{frame}[fragile]{Sections}
+  Sections group slides of the same topic
+
+\begin{verbatim}    \section{Elements}\end{verbatim}
+
+  for which \themename provides a nice progress indicator \ldots
+\end{frame}
+
+\section{Lower Bounding Query Complexity}
+
+\begin{frame}{$OPT_Q(G)=\Omega(\log(\order(G)))$}
+	\begin{theorem}
+      For any directed or undirected graph $G$, any algorithm for the DO problem needs $\Omega(\log(\order(G)))$ comparison queries in expectation.
+  \end{theorem}%\pause
+
+  \begin{itemize}
+      \item Let $A$ is any correct algorithm and  $L\in \order(G)$. 
+      \item Given $L$ we have a weight assignment $w_L$ such that $L$ is unique order obtained from $w_L$ upon running Dijkstra. For each $L$ fix $w_L$. Let $\mathcal{W}$ be the collection of all such $w_L$. %\pause
+      \item Let $C_L\in\{-1,0,1\}^*$ be the sequence of answers of comparisons made by $A$ on $(G,w_L)$. Then $\mathcal{C}:\mathcal{W}\to \{-1,0,1\}^*$, $\mathcal{C}(w_L)=C_L$ is a ternary prefix free code.%\pause
+      \item By Shannon's source coding theorem for symbol codes any such code has expected length $\Omega(\log(|\mathcal{W}|))=\Omega(\log(\order(G)))$
+  \end{itemize} 
+  
+\end{frame}
+
+\begin{frame}{Barrier Sequence}
+    Let $T$ be any tree. A \emph{Barrier}, $B\subseteq V(T)$ is a set of nodes where for any two vertices $u,v\in B$, $u$ is not ancestor of $v$ in $T$. \setlength{\parindent}{1cm}
+
+    For two disjoint barriers, $B_1\prec B_2$ if no node of $B_2$ is predecessor of a node in $B_1$.
+
+    $(B_1,\dots, B_k)$ is a \emph{barrier sequence} if whenever $i<j$, $B_i\prec B_j$. 
+\vfill
+
+    \begin{theorem}
+        A sequence $(B_1,\dots, B_k)$ of pairwise disjoint vertex sets is barrier sequence if and only if for all $1\leq i\leq j\leq k$, $v\in B_j$ is not ancestor of any $u\in B_i$ in $T$.
+    \end{theorem}
+\end{frame}
+
+\begin{frame}{Barriers Give Lower Bounds}
+    \begin{theorem}
+        Let $T$ be any spanning tree and $(B_1,\dots, B_k)$ be a barrier sequence of $T$. Then $\log(\order(G))=\Omega\left(\sum\limits_{i=1}^k|B_i|\log|B_i|\right)$
+    \end{theorem}
+
+    \begin{itemize}
+        \item We have $\log(\order(G))\geq \log(\order(T))$. We'll show $\log(\order(T))\geq |B_1|!|B_2|!\cdots|B_k|!$. 
+        \item Delete vertices of $B_k$ to get $T'$. By induction for the barrier sequence $(B_1,\dots, B_{k-1})$ for $T'$, $\log(\order(T'))\geq |B_1|!|B_2|!\cdots|B_{k-1}|!$. 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Barriers Give Lower Bounds}
+
+    \begin{itemize}
+        \item We can order vertices of $B_k$ in any order we want. There are $|B_k|!$ many orders. 
+        \item 
+    \end{itemize}
+\end{frame}
+
+{
+\metroset{titleformat frame=allcaps}
+\begin{frame}{All caps}
+	This frame uses the \texttt{allcaps} title format.
+
+	\begin{alertblock}{Potential Problems}
+		This title format is not as problematic as the \texttt{allsmallcaps} format, but basically suffers from the same deficiencies. So please have a look at the documentation if you want to use it.
+	\end{alertblock}
+\end{frame}
+}
+
+\section{Elements}
+
+\begin{frame}[fragile]{Typography}
+      \begin{verbatim}The theme provides sensible defaults to
+\emph{emphasize} text, \alert{accent} parts
+or show \textbf{bold} results.\end{verbatim}
+
+  \begin{center}becomes\end{center}
+
+  The theme provides sensible defaults to \emph{emphasize} text,
+  \alert{accent} parts or show \textbf{bold} results.
+\end{frame}
+
+\begin{frame}{Font feature test}
+  \begin{itemize}
+    \item Regular
+    \item \textit{Italic}
+    \item \textsc{Small Caps}
+    \item \textbf{Bold}
+    \item \textbf{\textit{Bold Italic}}
+    \item \textbf{\textsc{Bold Small Caps}}
+    \item \texttt{Monospace}
+    \item \texttt{\textit{Monospace Italic}}
+    \item \texttt{\textbf{Monospace Bold}}
+    \item \texttt{\textbf{\textit{Monospace Bold Italic}}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Lists}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.33\textwidth}
+      Items
+      \begin{itemize}
+        \item Milk \item Eggs \item Potatoes
+      \end{itemize}
+
+    \column{0.33\textwidth}
+      Enumerations
+      \begin{enumerate}
+        \item First, \item Second and \item Last.
+      \end{enumerate}
+
+    \column{0.33\textwidth}
+      Descriptions
+      \begin{description}
+        \item[PowerPoint] Meeh. \item[Beamer] Yeeeha.
+      \end{description}
+  \end{columns}
+\end{frame}
+\begin{frame}{Animation}
+  \begin{itemize}[<+- | alert@+>]
+    \item \alert<4>{This is\only<4>{ really} important}
+    \item Now this
+    \item And now this
+  \end{itemize}
+\end{frame}
+\begin{frame}{Figures}
+  \begin{figure}
+    \newcounter{density}
+    \setcounter{density}{20}
+    \begin{tikzpicture}
+      \def\couleur{alerted text.fg}
+      \path[coordinate] (0,0)  coordinate(A)
+                  ++( 90:5cm) coordinate(B)
+                  ++(0:5cm) coordinate(C)
+                  ++(-90:5cm) coordinate(D);
+      \draw[fill=\couleur!\thedensity] (A) -- (B) -- (C) --(D) -- cycle;
+      \foreach \x in {1,...,40}{%
+          \pgfmathsetcounter{density}{\thedensity+20}
+          \setcounter{density}{\thedensity}
+          \path[coordinate] coordinate(X) at (A){};
+          \path[coordinate] (A) -- (B) coordinate[pos=.10](A)
+                              -- (C) coordinate[pos=.10](B)
+                              -- (D) coordinate[pos=.10](C)
+                              -- (X) coordinate[pos=.10](D);
+          \draw[fill=\couleur!\thedensity] (A)--(B)--(C)-- (D) -- cycle;
+      }
+    \end{tikzpicture}
+    \caption{Rotated square from
+    \href{http://www.texample.net/tikz/examples/rotated-polygons/}{texample.net}.}
+  \end{figure}
+\end{frame}
+\begin{frame}{Tables}
+  \begin{table}
+    \caption{Largest cities in the world (source: Wikipedia)}
+    \begin{tabular}{@{} lr @{}}
+      \toprule
+      City & Population\\
+      \midrule
+      Mexico City & 20,116,842\\
+      Shanghai & 19,210,000\\
+      Peking & 15,796,450\\
+      Istanbul & 14,160,467\\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{frame}
+\begin{frame}{Blocks}
+  Three different block environments are pre-defined and may be styled with an
+  optional background color.
+
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+      \begin{block}{Default}
+        Block content.
+      \end{block}
+
+      \begin{alertblock}{Alert}
+        Block content.
+      \end{alertblock}
+
+      \begin{exampleblock}{Example}
+        Block content.
+      \end{exampleblock}
+
+    \column{0.5\textwidth}
+
+      \metroset{block=fill}
+
+      \begin{block}{Default}
+        Block content.
+      \end{block}
+
+      \begin{alertblock}{Alert}
+        Block content.
+      \end{alertblock}
+
+      \begin{exampleblock}{Example}
+        Block content.
+      \end{exampleblock}
+
+  \end{columns}
+\end{frame}
+\begin{frame}{Math}
+  \begin{equation*}
+    e = \lim_{n\to \infty} \left(1 + \frac{1}{n}\right)^n
+  \end{equation*}
+\end{frame}
+\begin{frame}{Line plots}
+  \begin{figure}
+    \begin{tikzpicture}
+      \begin{axis}[
+        mlineplot,
+        width=0.9\textwidth,
+        height=6cm,
+      ]
+
+        \addplot {sin(deg(x))};
+        \addplot+[samples=100] {sin(deg(2*x))};
+
+      \end{axis}
+    \end{tikzpicture}
+  \end{figure}
+\end{frame}
+\begin{frame}{Bar charts}
+  \begin{figure}
+    \begin{tikzpicture}
+      \begin{axis}[
+        mbarplot,
+        xlabel={Foo},
+        ylabel={Bar},
+        width=0.9\textwidth,
+        height=6cm,
+      ]
+
+      \addplot plot coordinates {(1, 20) (2, 25) (3, 22.4) (4, 12.4)};
+      \addplot plot coordinates {(1, 18) (2, 24) (3, 23.5) (4, 13.2)};
+      \addplot plot coordinates {(1, 10) (2, 19) (3, 25) (4, 15.2)};
+
+      \legend{lorem, ipsum, dolor}
+
+      \end{axis}
+    \end{tikzpicture}
+  \end{figure}
+\end{frame}
+\begin{frame}{Quotes}
+  \begin{quote}
+    Veni, Vidi, Vici
+  \end{quote}
+\end{frame}
+
+{%
+\setbeamertemplate{frame footer}{My custom footer}
+\begin{frame}[fragile]{Frame footer}
+    \themename defines a custom beamer template to add a text to the footer. It can be set via
+    \begin{verbatim}\setbeamertemplate{frame footer}{My custom footer}\end{verbatim}
+\end{frame}
+}
+
+\begin{frame}{References}
+  Some references to showcase [allowframebreaks] \cite{knuth92,ConcreteMath,Simpson,Er01,greenwade93}
+\end{frame}
+
+\section{Conclusion}
+
+\begin{frame}{Summary}
+
+  Get the source of this theme and the demo presentation from
+
+  \begin{center}\url{github.com/matze/mtheme}\end{center}
+
+  The theme \emph{itself} is licensed under a
+  \href{http://creativecommons.org/licenses/by-sa/4.0/}{Creative Commons
+  Attribution-ShareAlike 4.0 International License}.
+
+  \begin{center}\ccbysa\end{center}
+
+\end{frame}
+
+\begin{frame}[standout]
+  Questions?
+\end{frame}
+
+\appendix
+
+\begin{frame}[fragile]{Backup slides}
+  Sometimes, it is useful to add slides at the end of your presentation to
+  refer to during audience questions.
+
+  The best way to do this is to include the \verb|appendixnumberbeamer|
+  package in your preamble and call \verb|\appendix| before your backup slides.
+
+  \themename will automatically turn off slide numbering and progress bars for
+  slides in the appendix.
+\end{frame}
+
+\begin{frame}[allowframebreaks]{References}
+
+  \bibliography{demo}
+  \bibliographystyle{abbrv}
+
+\end{frame}
+
+\end{document}
