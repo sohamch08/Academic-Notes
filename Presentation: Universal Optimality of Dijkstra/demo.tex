@@ -97,230 +97,93 @@
 
     \begin{itemize}
         \item We can order vertices of $B_k$ in any order we want. There are $|B_k|!$ many orders. 
-        \item 
+        \item For each order of $B_k$ and any order of $\order(T')$ we can just concatenate them to get an order of $T$.
+    \end{itemize}
+\vfill
+
+    So finally we got the result: 
+    \begin{alertblock}{Result}
+		If $T$ is a spanning tree of $G$ and $(B_1,\dots, B_k)$ is a barrier sequence for $T$ then $$OPT_Q(G)=\Omega\left(\sum\limits_{i=1}^k|B_i|\log|B_i|\right)$$
+	\end{alertblock}
+\end{frame}
+
+\begin{frame}{Construction of Barrier Sequence}
+    Consider running Dijkstra algorithm until some time. Let $S$ is the set of nodes that are in the priority queue. 
+    \begin{itemize}
+        \item Notice that $S$ are the leaves of the partial exploration tree built so far which is a subgraph of final exploration tree.
+        \item Therefore, $S$ is an incomparable set of the final exploration tree.
+        \item $S$ forms a barrier. 
+    \end{itemize}\vfill
+
+    \begin{alertblock}{Result}
+		At any time of the algorithm the set of elements in the priority queue forms a barrier
+	\end{alertblock}
+\end{frame}
+\begin{frame}{Intersecting Coloring}
+    \begin{definition}[Intersecting Coloring]
+      An intersecting coloring of $\mathcal{I}$ with $k$ colors is a function $C:\mathcal{I}\to [k]$ that assigns a color to every interval and additionally for every color $i\in[k]$, $\bigcap\limits_{I\in\mathcal{I}, C(I)=i}I\neq \emptyset$.
+    \end{definition}\vfill
+
+    Every intersecting coloring induces a barrier sequence in the exploration tree in following way: For any color $c$, \begin{itemize}
+        \item  $B_c=\{v\in V(G)\mid C(I(v))=c\}$
+        \item $t_c=\min\{t\mid \forall\ v\in B_c, t\in I(v)\}$
+        \item Order $\{B_c\}$ by increasing order of $\{t_c\}$. WLOG $t_1<\cdots <t_k$. 
+        \item $(B_1,\dots, B_k)$ is a barrier sequence.
     \end{itemize}
 \end{frame}
 
-{
-\metroset{titleformat frame=allcaps}
-\begin{frame}{All caps}
-	This frame uses the \texttt{allcaps} title format.
+\begin{frame}{Intersecting Coloring Gives Lower Bounds}
+    Let $C$ be an intersecting coloring of $\mathcal{I}$ with $k$ colors. 
+    Let $(B_1,\dots, B_k)$ is the barrier sequence induced by $C$. Then let the energy of $C$ is defined to be $$E(C)=\sum\limits_{i=1}^k|B_i|\log |B_i|$$
+\vfill
 
-	\begin{alertblock}{Potential Problems}
-		This title format is not as problematic as the \texttt{allsmallcaps} format, but basically suffers from the same deficiencies. So please have a look at the documentation if you want to use it.
+    \begin{alertblock}{Result}
+		If $\mathcal{I}$ is the interval set induced by Dijkstra and $C$ be any arbitrary intersecting coloring of $\mathcal{I}$ then $$OPT_Q(G)=\Omega(E(C))$$
 	\end{alertblock}
 \end{frame}
-}
 
-\section{Elements}
+\begin{frame}{Good Intersecting Coloring gives Optimality}
+    \textbf{Goal:} Find an intersecting coloring of $\mathcal{I}$, $C$ such that $E(C)\geq Cost(\mathcal{I})$ 
 
-\begin{frame}[fragile]{Typography}
-      \begin{verbatim}The theme provides sensible defaults to
-\emph{emphasize} text, \alert{accent} parts
-or show \textbf{bold} results.\end{verbatim}
+    \begin{itemize}
+        \item Then time complexity of all \textsc{ExtractMin} operations is $O(n+Cost(\mathcal{I}))=O(n+E(C))$.
+        \item We have  $OPT_Q(G)=\Omega (E(C))$. 
+        \item So overall Cost of \textsc{ExtractMin} in Dijkstra is upper bounded by $O(n+OPT_Q(G))$. 
+        \item Dijkstra achieves universal optimality for time complexity. 
+    \end{itemize}
+\vfill
 
-  \begin{center}becomes\end{center}
-
-  The theme provides sensible defaults to \emph{emphasize} text,
-  \alert{accent} parts or show \textbf{bold} results.
+    We will find such a good intersecting coloring recursively.
 \end{frame}
+\begin{frame}{Deleting Intervals from $\mathcal{I}$}
+    \begin{theorem}
+        Let $\mathcal{I}$ an interval set and $x\in\mathcal{I}$. $k=\max\limits_t|\{I\in\mathcal{I}\mid t\in I\}|$. Then $$Cost(\mathcal{I})\leq Cost(\mathcal{I}\setminus \{x\})+\log |W_x|+\log k$$
+    \end{theorem}\vfill
 
-\begin{frame}{Font feature test}
+    \begin{itemize}
+      \item Let $I_1,\dots, I_l\in\mathcal{I}$ are the only intervals which had nonempty intersection with $x$. So $l\leq k-1$.\vfill 
+      \item Let $t_i$ is starting point of $I_i$. WLOG assume $t_l>\cdots>t_1$.\vfill 
+      \item Let $W_i, W_i'$ are working sets of $I_i$ before and after removing $x$. 
+    \end{itemize}
+\end{frame}
+\begin{frame}{Deleting Intervals from $\mathcal{I}$}
   \begin{itemize}
-    \item Regular
-    \item \textit{Italic}
-    \item \textsc{Small Caps}
-    \item \textbf{Bold}
-    \item \textbf{\textit{Bold Italic}}
-    \item \textbf{\textsc{Bold Small Caps}}
-    \item \texttt{Monospace}
-    \item \texttt{\textit{Monospace Italic}}
-    \item \texttt{\textbf{Monospace Bold}}
-    \item \texttt{\textbf{\textit{Monospace Bold Italic}}}
+    \item Let $t$ is starting point of $x$. Then $W_{i,t}$ contains $x, I_1,\dots, I_i$. So $|W_i|\geq i+1$.
+    \item $|W_i|\in\{|W_i'|,|W_i'|+1\}$ for all $i\in[l]$.
   \end{itemize}
+     \begin{align*}
+         &Cost(\mathcal{I})-Cost(\mathcal{I}\setminus \{x\})-\log |W_x|  \\ 
+         =& \sum\limits_{i=1}^l \log|W_i|-\log|W_i'| \\ 
+         \leq &  \sum\limits_{i=1}^l \log(i+1)-\log i =\log (l+1) \leq \log k
+     \end{align*}
+
+      \begin{alertblock}{Fact}
+		For any working set $|W_x|=k$ we have $$Cost(\mathcal{I})\leq Cost(\mathcal{I}\setminus W_x)+2|W_x|\log |W_x|$$
+	\end{alertblock}
 \end{frame}
-
-\begin{frame}{Lists}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.33\textwidth}
-      Items
-      \begin{itemize}
-        \item Milk \item Eggs \item Potatoes
-      \end{itemize}
-
-    \column{0.33\textwidth}
-      Enumerations
-      \begin{enumerate}
-        \item First, \item Second and \item Last.
-      \end{enumerate}
-
-    \column{0.33\textwidth}
-      Descriptions
-      \begin{description}
-        \item[PowerPoint] Meeh. \item[Beamer] Yeeeha.
-      \end{description}
-  \end{columns}
+\begin{frame}{Finding Good Intersecting Coloring}
+    We will construct $C$ by induction on $|\mathcal{I}|$. 
 \end{frame}
-\begin{frame}{Animation}
-  \begin{itemize}[<+- | alert@+>]
-    \item \alert<4>{This is\only<4>{ really} important}
-    \item Now this
-    \item And now this
-  \end{itemize}
-\end{frame}
-\begin{frame}{Figures}
-  \begin{figure}
-    \newcounter{density}
-    \setcounter{density}{20}
-    \begin{tikzpicture}
-      \def\couleur{alerted text.fg}
-      \path[coordinate] (0,0)  coordinate(A)
-                  ++( 90:5cm) coordinate(B)
-                  ++(0:5cm) coordinate(C)
-                  ++(-90:5cm) coordinate(D);
-      \draw[fill=\couleur!\thedensity] (A) -- (B) -- (C) --(D) -- cycle;
-      \foreach \x in {1,...,40}{%
-          \pgfmathsetcounter{density}{\thedensity+20}
-          \setcounter{density}{\thedensity}
-          \path[coordinate] coordinate(X) at (A){};
-          \path[coordinate] (A) -- (B) coordinate[pos=.10](A)
-                              -- (C) coordinate[pos=.10](B)
-                              -- (D) coordinate[pos=.10](C)
-                              -- (X) coordinate[pos=.10](D);
-          \draw[fill=\couleur!\thedensity] (A)--(B)--(C)-- (D) -- cycle;
-      }
-    \end{tikzpicture}
-    \caption{Rotated square from
-    \href{http://www.texample.net/tikz/examples/rotated-polygons/}{texample.net}.}
-  \end{figure}
-\end{frame}
-\begin{frame}{Tables}
-  \begin{table}
-    \caption{Largest cities in the world (source: Wikipedia)}
-    \begin{tabular}{@{} lr @{}}
-      \toprule
-      City & Population\\
-      \midrule
-      Mexico City & 20,116,842\\
-      Shanghai & 19,210,000\\
-      Peking & 15,796,450\\
-      Istanbul & 14,160,467\\
-      \bottomrule
-    \end{tabular}
-  \end{table}
-\end{frame}
-\begin{frame}{Blocks}
-  Three different block environments are pre-defined and may be styled with an
-  optional background color.
-
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-      \begin{block}{Default}
-        Block content.
-      \end{block}
-
-      \begin{alertblock}{Alert}
-        Block content.
-      \end{alertblock}
-
-      \begin{exampleblock}{Example}
-        Block content.
-      \end{exampleblock}
-
-    \column{0.5\textwidth}
-
-      \metroset{block=fill}
-
-      \begin{block}{Default}
-        Block content.
-      \end{block}
-
-      \begin{alertblock}{Alert}
-        Block content.
-      \end{alertblock}
-
-      \begin{exampleblock}{Example}
-        Block content.
-      \end{exampleblock}
-
-  \end{columns}
-\end{frame}
-\begin{frame}{Math}
-  \begin{equation*}
-    e = \lim_{n\to \infty} \left(1 + \frac{1}{n}\right)^n
-  \end{equation*}
-\end{frame}
-\begin{frame}{Line plots}
-  \begin{figure}
-    \begin{tikzpicture}
-      \begin{axis}[
-        mlineplot,
-        width=0.9\textwidth,
-        height=6cm,
-      ]
-
-        \addplot {sin(deg(x))};
-        \addplot+[samples=100] {sin(deg(2*x))};
-
-      \end{axis}
-    \end{tikzpicture}
-  \end{figure}
-\end{frame}
-\begin{frame}{Bar charts}
-  \begin{figure}
-    \begin{tikzpicture}
-      \begin{axis}[
-        mbarplot,
-        xlabel={Foo},
-        ylabel={Bar},
-        width=0.9\textwidth,
-        height=6cm,
-      ]
-
-      \addplot plot coordinates {(1, 20) (2, 25) (3, 22.4) (4, 12.4)};
-      \addplot plot coordinates {(1, 18) (2, 24) (3, 23.5) (4, 13.2)};
-      \addplot plot coordinates {(1, 10) (2, 19) (3, 25) (4, 15.2)};
-
-      \legend{lorem, ipsum, dolor}
-
-      \end{axis}
-    \end{tikzpicture}
-  \end{figure}
-\end{frame}
-\begin{frame}{Quotes}
-  \begin{quote}
-    Veni, Vidi, Vici
-  \end{quote}
-\end{frame}
-
-{%
-\setbeamertemplate{frame footer}{My custom footer}
-\begin{frame}[fragile]{Frame footer}
-    \themename defines a custom beamer template to add a text to the footer. It can be set via
-    \begin{verbatim}\setbeamertemplate{frame footer}{My custom footer}\end{verbatim}
-\end{frame}
-}
-
-\begin{frame}{References}
-  Some references to showcase [allowframebreaks] \cite{knuth92,ConcreteMath,Simpson,Er01,greenwade93}
-\end{frame}
-
-\section{Conclusion}
-
-\begin{frame}{Summary}
-
-  Get the source of this theme and the demo presentation from
-
-  \begin{center}\url{github.com/matze/mtheme}\end{center}
-
-  The theme \emph{itself} is licensed under a
-  \href{http://creativecommons.org/licenses/by-sa/4.0/}{Creative Commons
-  Attribution-ShareAlike 4.0 International License}.
-
-  \begin{center}\ccbysa\end{center}
-
-\end{frame}
-
 \begin{frame}[standout]
   Questions?
 \end{frame}
