@@ -31,12 +31,12 @@
 % \end{frame}
 
 \begin{frame}{Introduction}
-    \begin{itemize}
-        \item Dijkstra algorithm is a foundation algorithm solving Single Source Shortest Path problem (SSSP) both for directed and undirected graphs.
-        \item Using Fibonacci Heaps we have the worst-case time complexity $O(m+n\log n)$. \pause
-        \item Recently Duan, Mao, Shu and Yin in [Dua+23] solved SSSP for undirected graphs with expected time $O(m\sqrt{\log n\log\log n})$\pause
-        \item This year Stefansson, Biggar and  Johansson gave a fixed-parameter linear algorithm with running time $O(m+n\log w)$ for the single-source shortest path problem (SSSP) on directed graphs where fixed parameter over nesting width $(w)$.
-    \end{itemize}
+	\begin{itemize}
+		\item Dijkstra algorithm is a foundation algorithm solving Single Source Shortest Path problem (SSSP) both for directed and undirected graphs.
+		\item Using Fibonacci Heaps we have the worst-case time complexity $O(m+n\log n)$. \pause
+		\item Recently Duan, Mao, Shu and Yin in [Dua+23] solved SSSP for undirected graphs with expected time $O(m\sqrt{\log n\log\log n})$\pause
+		\item This year Stefansson, Biggar and  Johansson gave a fixed-parameter linear algorithm with running time $O(m+n\log w)$ for the single-source shortest path problem (SSSP) on directed graphs where fixed parameter over nesting width $(w)$.
+	\end{itemize}
 \end{frame}
 \begin{frame}{Universal Optimality}
 	\begin{itemize}
@@ -66,11 +66,11 @@
 			$\textsc{DecreaseKey}( F, v,\min\{dist(v), dist(u)+w(u,v)\})$}
 		}
 		\caption{\textsc{Dijkstra}$(G,s,w)$}
-	\end{algorithm}\pause 
+	\end{algorithm}\pause
 	Dijkstra solves three problems:
 	\begin{itemize}
-		\item  Computes Shortest Distances\pause 
-		\item  Build Shortest Path Tree\pause 
+		\item  Computes Shortest Distances\pause
+		\item  Build Shortest Path Tree\pause
 		\item Sorts vertices by Shortest Distance (DO)
 	\end{itemize}
 \end{frame}
@@ -84,8 +84,8 @@
 \end{frame}
 \begin{frame}{Order of Vertices by a Tree}
 	\begin{itemize}
-		\item Let $T$ be any tree in $G$. An order of $T$ is a total order of $V(T)$ such that for every edge $(u,v)\in E(T)$ we have $u\prec v$ in the order.\pause 
-		\item $L$ is an order of $G$ if there exists a spanning tree of $G$ such that $L$ is an order of $T$.\pause 
+		\item Let $T$ be any tree in $G$. An order of $T$ is a total order of $V(T)$ such that for every edge $(u,v)\in E(T)$ we have $u\prec v$ in the order.\pause
+		\item $L$ is an order of $G$ if there exists a spanning tree of $G$ such that $L$ is an order of $T$.\pause
 		\item $\order(G)$ is the number of all possible orders of $G$.
 	\end{itemize}\pause \vfill
 
@@ -97,15 +97,15 @@
 	\end{theorem}
 \end{frame}
 \begin{frame}{Comparison-Addition Model}
-  Notice the Dijkstra algorithm only adds two values or compares two values. So we will work on a model where all operations possible is addition, compare and storage. \pause 
+	Notice the Dijkstra algorithm only adds two values or compares two values. So we will work on a model where all operations possible is addition, compare and storage. \pause
 
-  For a given graph:
-  \begin{itemize}
-      \item $OPT_Q(G)$ is the number of comparison queries of an optimal algorithm for this graph. 
-      \item $OPT(G)$ be the number of total steps taken by an optimal correct algorithm for the graph. \pause 
-      \item Since $OPT(G)=\Omega(m)$, $OPT_Q(G)+n+m=O(OPT(G))$. 
-  \end{itemize}
-    
+	For a given graph:
+	\begin{itemize}
+		\item $OPT_Q(G)$ is the number of comparison queries of an optimal algorithm for this graph.
+		\item $OPT(G)$ be the number of total steps taken by an optimal correct algorithm for the graph. \pause
+		\item Since $OPT(G)=\Omega(m)$, $OPT_Q(G)+n+m=O(OPT(G))$.
+	\end{itemize}
+
 \end{frame}
 \begin{frame}{Dijkstra Induced Interval Set}
 	Let an interval of time for any vertex $v\in V(G)$ is the set $[l_v,r_v]$ where $l_v$ is the time when $v$ was first discovered and added to the heap and $r_v$ is the time when $v$ was extracted from the heap. \pause \setlength{\parindent}{1cm}\vfill
@@ -115,7 +115,7 @@
 	An interval set $\mathcal{I}$ is collection of intervals for each vertex. It is called Dijkstra Induced when all the intervals for each vertex in $\mathcal{I}$ is induced by a run of Dijkstra on some $(G,w)$.
 \end{frame}
 \begin{frame}{Working set of an Interval Set}
-	Let $\mathcal{I}$ any interval set.\pause 
+	Let $\mathcal{I}$ any interval set.\pause
 
 	\begin{itemize}
 		\item For any vertex $v\in V(G)$ at any time $t\in I(v)$ the working set $W_{v,t}$ is the set of vertices inserted after $x$ and still present at time $t$. So $$W_{v,t}=\{[l_u,r_u]\in\mathcal{I}\colon l_v\leq l_u\leq t\leq r_u\}$$\pause \vfill
@@ -124,7 +124,7 @@
 	\end{itemize}
 \end{frame}
 \begin{frame}{Fibonacci-Like Priority Queue with Working Set Property}
-	A Fibonacci-like priority queue is a priority queue made using a Fibonacci Heap. Fibonacci-Like Priority Queue with Working Set Property is a data structure if it satisfies the amortized time complexity for any sequence of operations as follows:\pause 
+	A Fibonacci-like priority queue is a priority queue made using a Fibonacci Heap. Fibonacci-Like Priority Queue with Working Set Property is a data structure if it satisfies the amortized time complexity for any sequence of operations as follows:\pause
 
 	\begin{center}
 		\begin{tabular}{|c|c|}
@@ -141,16 +141,16 @@
 	\end{alertblock}
 \end{frame}
 \begin{frame}{Time Complexity of Dijkstra}
-	In Dijkstra Algorithm it runs $n$ times \textsc{ExtractMin} calls for each vertex and $m$ times \textsc{DecreaseKey} calls.\pause 
+	In Dijkstra Algorithm it runs $n$ times \textsc{ExtractMin} calls for each vertex and $m$ times \textsc{DecreaseKey} calls.\pause
 	\begin{itemize}
-		\item Hence total time taken by all \textsc{DecreaseKey} calls is $O(m)$.\pause 
+		\item Hence total time taken by all \textsc{DecreaseKey} calls is $O(m)$.\pause
 		\item Total time taken by all \textsc{ExtractMin} calls is \begin{align*}
 			      \sum\limits_{v\in V(G)}O(1+\log|W_v|) & = O\left(n+\sum\limits_{v\in V(G)} \log |W_v| \right) \\
 			                                            & = O(n+Cost(\mathcal{I}))
 		      \end{align*}
 		\item Total time taken by Dijkstra is $O(m+n+Cost(\mathcal{I}))$
-	\end{itemize}\pause 
-  We'll show $OPT_Q(G)=\Omega(Cost(\mathcal{I}))$.  
+	\end{itemize}\pause
+	We'll show $OPT_Q(G)=\Omega(Cost(\mathcal{I}))$.
 \end{frame}
 % \section{Lower Bounding Query Complexity}
 
@@ -171,9 +171,9 @@
 \begin{frame}{Barrier Sequence}
 	Let $T$ be any tree. A \emph{Barrier}, $B\subseteq V(T)$ is a set of nodes where for any two vertices $u,v\in B$, $u$ is not ancestor of $v$ in $T$. \pause \setlength{\parindent}{1cm}
 
-	For two disjoint barriers, $B_1\prec B_2$ if no node of $B_2$ is predecessor of a node in $B_1$.\pause 
+	For two disjoint barriers, $B_1\prec B_2$ if no node of $B_2$ is predecessor of a node in $B_1$.\pause
 
-	$(B_1,\dots, B_k)$ is a \emph{barrier sequence} if whenever $i<j$, $B_i\prec B_j$.\pause 
+	$(B_1,\dots, B_k)$ is a \emph{barrier sequence} if whenever $i<j$, $B_i\prec B_j$.\pause
 	\vfill
 
 	\begin{theorem}
@@ -184,7 +184,7 @@
 \begin{frame}{Barriers Give Lower Bounds}
 	\begin{theorem}
 		Let $T$ be any spanning tree and $(B_1,\dots, B_k)$ be a barrier sequence of $T$. Then $\log(\order(G))=\Omega\left(\sum\limits_{i=1}^k|B_i|\log|B_i|\right)$
-	\end{theorem}\vfill \pause 
+	\end{theorem}\vfill \pause
 
 	\begin{itemize}
 		\item We have $\order(G))\geq \order(T)$. We'll show $\order(T)\geq |B_1|!|B_2|!\cdots|B_k|!$.\pause \vfill
@@ -195,8 +195,8 @@
 \begin{frame}{Barriers Give Lower Bounds}
 
 	\begin{itemize}
-		\item We can order vertices of $B_k$ in any order we want. There are $|B_k|!$ many orders. \pause 
-		\item For each order of $B_k$ and any order of $\order(T')$ we can just concatenate them to get an order of $T$.\pause 
+		\item We can order vertices of $B_k$ in any order we want. There are $|B_k|!$ many orders. \pause
+		\item For each order of $B_k$ and any order of $\order(T')$ we can just concatenate them to get an order of $T$.\pause
 	\end{itemize}
 	\vfill
 
@@ -207,9 +207,9 @@
 \end{frame}
 
 \begin{frame}{Construction of Barrier Sequence}
-	Consider running Dijkstra algorithm until some time. Let $S$ is the set of nodes that are in the priority queue.\pause 
+	Consider running Dijkstra algorithm until some time. Let $S$ is the set of nodes that are in the priority queue.\pause
 	\begin{itemize}
-		\item Notice that $S$ are the leaves of the partial exploration tree built so far which is a subgraph of final exploration tree.\pause 
+		\item Notice that $S$ are the leaves of the partial exploration tree built so far which is a subgraph of final exploration tree.\pause
 		\item Therefore, $S$ is an incomparable set of the final exploration tree.
 		\item $S$ forms a barrier.
 	\end{itemize}\pause \vfill
@@ -224,16 +224,16 @@
 	\end{definition}\pause \vfill
 
 	Every intersecting coloring induces a barrier sequence in the exploration tree in following way: For any color $c$,\pause  \begin{itemize}
-		\item  $B_c=\{v\in V(G)\mid C(I(v))=c\}$\pause 
-		\item $t_c=\min\{t\mid \forall\ v\in B_c, t\in I(v)\}$\pause 
-		\item Order $\{B_c\}$ by increasing order of $\{t_c\}$. WLOG $t_1<\cdots <t_k$.\pause 
+		\item  $B_c=\{v\in V(G)\mid C(I(v))=c\}$\pause
+		\item $t_c=\min\{t\mid \forall\ v\in B_c, t\in I(v)\}$\pause
+		\item Order $\{B_c\}$ by increasing order of $\{t_c\}$. WLOG $t_1<\cdots <t_k$.\pause
 		\item $(B_1,\dots, B_k)$ is a barrier sequence.
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Intersecting Coloring Gives Lower Bounds}
 	Let $C$ be an intersecting coloring of $\mathcal{I}$ with $k$ colors.
-	Let $(B_1,\dots, B_k)$ is the barrier sequence induced by $C$. Then let the energy of $C$ is defined to be $$E(C)=2\sum\limits_{i=1}^k|B_i|\log |B_i|$$\pause 
+	Let $(B_1,\dots, B_k)$ is the barrier sequence induced by $C$. Then let the energy of $C$ is defined to be $$E(C)=2\sum\limits_{i=1}^k|B_i|\log |B_i|$$\pause
 	\vfill
 
 	\begin{alertblock}{Result}
@@ -242,13 +242,13 @@
 \end{frame}
 
 \begin{frame}{Good Intersecting Coloring gives Optimality}
-	\textbf{Goal:} Find an intersecting coloring of $\mathcal{I}$, $C$ such that $E(C)\geq Cost(\mathcal{I})$\pause 
+	\textbf{Goal:} Find an intersecting coloring of $\mathcal{I}$, $C$ such that $E(C)\geq Cost(\mathcal{I})$\pause
 
 	\begin{itemize}
-		\item Then time complexity of all \textsc{ExtractMin} operations is $O(n+Cost(\mathcal{I}))=O(n+E(C))$.\pause 
-		\item We have  $OPT_Q(G)=\Omega (E(C))$.\pause 
-		\item So overall Cost of \textsc{ExtractMin} in Dijkstra is upper bounded by $O(n+OPT_Q(G))$.\pause 
-		\item Dijkstra achieves universal optimality for time complexity.\pause 
+		\item Then time complexity of all \textsc{ExtractMin} operations is $O(n+Cost(\mathcal{I}))=O(n+E(C))$.\pause
+		\item We have  $OPT_Q(G)=\Omega (E(C))$.\pause
+		\item So overall Cost of \textsc{ExtractMin} in Dijkstra is upper bounded by $O(n+OPT_Q(G))$.\pause
+		\item Dijkstra achieves universal optimality for time complexity.\pause
 	\end{itemize}
 	\vfill
 
@@ -257,17 +257,17 @@
 \begin{frame}{Finding Good Intersecting Coloring}
 	We will construct $C$ by induction on $|\mathcal{I}|$.\pause \setlength{\parindent}{1cm}
 
-	Find the interval $x\in\mathcal{I}$ with the largest $W_x$. Use induction on $\mathcal{I}'=\mathcal{I}\setminus W_x$\pause 
+	Find the interval $x\in\mathcal{I}$ with the largest $W_x$. Use induction on $\mathcal{I}'=\mathcal{I}\setminus W_x$\pause
 
-	Let $C'$ is the coloring for $\mathcal{I}'$ such that $E(C')\geq Cost(\mathcal{I}')$. Add a new color for all the elements in $W_x$ to get new coloring $C$.\pause 
+	Let $C'$ is the coloring for $\mathcal{I}'$ such that $E(C')\geq Cost(\mathcal{I}')$. Add a new color for all the elements in $W_x$ to get new coloring $C$.\pause
 
-	$E(C)=E(C')+2|W_x|\log|W_x|$ by definition. \pause 
-  
-  \begin{alertblock}{Fact}
+	$E(C)=E(C')+2|W_x|\log|W_x|$ by definition. \pause
+
+	\begin{alertblock}{Fact}
 		For working set $W_x$ with the largest size $$Cost(\mathcal{I})\leq Cost(\mathcal{I}\setminus W_x)+2|W_x|\log |W_x|$$
-	\end{alertblock}\pause 
-  
-  $Cost(\mathcal{I})\leq Cost(\mathcal{I}')+2|W_x|\log|W_x|$. Hence, $E(C)\geq Cost(\mathcal{I})$.
+	\end{alertblock}\pause
+
+	$Cost(\mathcal{I})\leq Cost(\mathcal{I}')+2|W_x|\log|W_x|$. Hence, $E(C)\geq Cost(\mathcal{I})$.
 \end{frame}
 \begin{frame}[standout]
 	Thank You
