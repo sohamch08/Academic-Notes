@@ -38,11 +38,19 @@
 	\begin{itemize}
 		\item Dijkstra algorithm is a foundation algorithm solving Single Source Shortest Path problem (SSSP) both for directed and undirected graphs.\vfill
 		\item Using Fibonacci Heaps we have the worst-case time complexity $\mathcolor{blue}{O(m+n\log n)}$. \vfill \pause
-		\item Recently Duan, Mao, Shu and Yin in [Dua+23] solved SSSP for undirected graphs with expected time $\mathcolor{blue}{O(m\sqrt{\log n\log\log n})}$\vfill\pause
+		\item Recently Duan, Mao, Shu and Yin in 2023 solved SSSP for undirected graphs with expected time $\mathcolor{blue}{O(m\sqrt{\log n\log\log n})}$\vfill\pause
 		\item This year in STOC Duan, Mao, Mao, Shu, Yin solved SSSP for directed graphs in $\mathcolor{blue}{O(m\log^{\frac23}n)}$ time.
 	\end{itemize}
 \end{frame}
+\begin{frame}{Assumptions}\begin{itemize}
+		\item Input graph is always connected. \vfill
+		\item All trees are rooted at $s$. \vfill
+		\item For any vertex $v$, $T(v)$ denote the subtree of $T$ rooted at $v$.\vfill
+		\item The weights of the graph are positive real numbers. \vfill
+		\item We allow the $\infty$ in the weights.
+	\end{itemize}
 
+\end{frame}
 \begin{frame}{Dijkstra Algorithm}
 
 	\begin{algorithm}[H]
@@ -51,7 +59,7 @@
 		\While{$F\neq \emptyset$}{
 		$u\longleftarrow \textsc{ExtractMin}(F)$\;
 		\For{$e=(u,v)\in E$}{
-			$\textsc{Insert}(F,v)$ \;
+			If $v$ is unseen, $\textsc{Insert}(F,v)$ \;
 			$\textsc{DecreaseKey}( F, v,\min\{dist(v), dist(u)+w(u,v)\})$}
 		}
 		\caption{\textsc{Dijkstra}$(G,s,w)$}
@@ -64,7 +72,11 @@
 	\end{itemize}
 \end{frame}
 \begin{frame}{Comparison-Addition Model}
-	Notice the Dijkstra algorithm only adds two values or compares two values. So we will work on a model where all operations possible is addition, compare and storage. \vfill\pause
+	Notice the Dijkstra algorithm does the following operations: \begin{itemize}
+		\item Adds two values
+		\item Compares two values.
+		\item Stores Values.
+	\end{itemize}So we will work on a model where all possible operations are  addition, compare and storage. \vfill\pause
 
 	For a given graph:
 	\begin{itemize}
@@ -79,16 +91,16 @@
 		\item $\mathcolor{blue}{\mathcal{G}_{n,m}}$ is the set of all graphs with $n$ vertices and $m$ edges.
 		\item $\mathcolor{blue}{\mathcal{W}_G}$ is the set of all possible weights for a graph $\mathcolor{blue}{G\in\mathcal{G}_{n,m}}$.
 	\end{itemize} \pause\vfill
-	A correct algorithm $\mathcolor{blue}{A^*}$ is \emph{existentially optimal} if $$\mathcolor{blue}{\forall\ n,m: \sup\limits_{\substack{G\in\mathcal{G}_{n,m}\\ w\in \mathcal{W}_G} }A^*(G,w)\leq \alpha(n,m)\inf\limits_{A\in \mathcal{A}}\sup\limits_{\substack{G\in\mathcal{G}_{n,m}\\ w\in \mathcal{W}_G} } A(G,w)}$$This corresponds to being optimal wrt worst-case complexity.\pause  \vfill
+	A correct algorithm $\mathcolor{blue}{A^*}$ is \emph{existentially optimal} if $$\mathcolor{blue}{\forall\ n,m: \sup\limits_{\substack{G\in\mathcal{G}_{n,m}\\ w\in \mathcal{W}_G} }A^*(G,w)\leq \alpha\inf\limits_{A\in \mathcal{A}}\sup\limits_{\substack{G\in\mathcal{G}_{n,m}\\ w\in \mathcal{W}_G} } A(G,w)}$$ where $\mathcolor{blue}{\alpha=\tilde{O}(1)}$. This corresponds to being optimal wrt worst-case complexity.\pause  \vfill
 
 	But this is not good. It is just saying $\mathcolor{blue}{A^*}$ may take as much time as it takes in a star-graph or more complicated one.
 \end{frame}
 \begin{frame}{Universal Optimality}
-	We want a notion of optimality which says your algorithm is optimal compared to any other algorithm if you fix the graph.\pause  \vfill
+	We want a notion of optimality which says your algorithm is optimal compared to any other algorithm if you \textcolor{red}{\textbf{fix the graph}}.\pause  \vfill
 
-	A correct algorithm $\mathcolor{blue}{}A^*$ is \emph{universally optimal} if$$\mathcolor{blue}{\forall\ n,m,\ \forall\ G\in \mathcal{G}_{n,m}: \sup\limits_{w\in \mathcal{W}_G} A^*(G,w)\leq \alpha(n,m)\inf\limits_{A\in \mathcal{A}}\sup\limits_{w\in \mathcal{W}_G} A(G,w)}$$\pause \vfill
+	A correct algorithm $\mathcolor{blue}{}A^*$ is \emph{universally optimal} if$$\mathcolor{blue}{\forall\ n,m,\ \forall\ G\in \mathcal{G}_{n,m}: \sup\limits_{w\in \mathcal{W}_G} A^*(G,w)\leq \alpha\inf\limits_{A\in \mathcal{A}}\sup\limits_{w\in \mathcal{W}_G} A(G,w)}$$ where $\mathcolor{blue}{\alpha=\tilde{O}(1)}$.  \pause \vfill
 
-	In this work we focus solely on  $\mathcolor{blue}{\alpha(n,m)=O(1)}$.
+	In this discussion we will focus solely on  $\mathcolor{blue}{\alpha=O(1)}$.
 \end{frame}
 \begin{frame}{Exploration Tree and DO}
 	Consider a run of Dijkstra. Whenever a vertex is extracted add the unexplored neighbors of that vertex as children of that vertex. The tree built this way is called the exploration tree.\pause \vfill
@@ -130,19 +142,19 @@
 	Let $\mathcolor{blue}{\mathcal{I}}$ any interval set.\pause
 
 	\begin{itemize}
-		\item For any vertex $\mathcolor{blue}{v\in V(G)}$ at any time $\mathcolor{blue}{t\in I(v)}$ the working set $\mathcolor{blue}{W_{v,t}}$ is the set of vertices inserted after $\mathcolor{blue}{x}$ and still present at time $\mathcolor{blue}{t}$. So $$\mathcolor{blue}{W_{v,t}=\{[l_u,r_u]\in\mathcal{I}\colon l_v\leq l_u\leq t\leq r_u\}}$$\pause \vfill
+		\item For any vertex $\mathcolor{blue}{v\in V(G)}$ at any time $\mathcolor{blue}{t\in I(v)}$ the working set $\mathcolor{blue}{W_{v,t}}$ is the set of vertices inserted after $\mathcolor{blue}{v}$ and still present at time $\mathcolor{blue}{t}$. So $$\mathcolor{blue}{W_{v,t}=\{[l_u,r_u]\in\mathcal{I}\colon l_v\leq l_u\leq t\leq r_u\}}$$\pause \vfill
 		\item Working set of $\mathcolor{blue}{v}$, $\mathcolor{blue}{W_v=W_{v,t^*}}$ such that $\mathcolor{blue}{t^*=\arg\max\limits_t|W_{v,t}|}$.\pause  \vfill
 		\item The cost of a vertex $\mathcolor{blue}{v\in V(G)}$ is $\mathcolor{blue}{Cost(v)=\log|W_v|}$. And so $\mathcolor{blue}{Cost(\mathcal{I})=\sum\limits_{v\in V(G)} \log |W_v|}$.
 	\end{itemize}
 \end{frame}
 \begin{frame}{Fibonacci-Like Priority Queue with Working Set Property}
-	FPQWSP  is a type of Fibonacci Heap with satisfies the amortized time complexity for any sequence of operations as follows:\vfill \pause
+	FPQWSP  is a type of Fibonacci Heap which satisfies the amortized time complexity for any sequence of operations as follows:\vfill \pause
 
 	\begin{center}
 		\begin{tabular}{|c|c|c|}
 			\hline
 			                     & FPQWSP           & Fibonacci Heap \\ \hline
-			\textsc{Insert}      & $O(1)$           & $O(1)$         \\  \hline
+			\textsc{Insert}      & $O(1)$           & $O(1)$         \\ \hline
 			\textsc{DecreaseKey} & $O(1)$           & $O(1)$         \\ \hline
 			\textsc{ExtractMin}  & $O(1+\log|W_x|)$ & $O(\log n)$    \\ \hline
 		\end{tabular}
@@ -186,8 +198,8 @@
 % \section{Lower Bounding Query Complexity}
 \begin{frame}{Proof Flow}
 	\begin{alertblock}{Fact}
-			$\mathcolor{blue}{OPT_Q(G)=\Omega(\log(\order(G)))}$
-		\end{alertblock}\vfill\pause
+		$\mathcolor{blue}{OPT_Q(G)=\Omega(\log(\order(G)))}$
+	\end{alertblock}\vfill\pause
 	\begin{itemize}
 		\item Partition the exploration tree into non-comparable sets $\mathcolor{blue}{(B_1,\dots, B_k)}$ with $\mathcolor{blue}{i<j}$ then no node of $\mathcolor{blue}{B_j}$ is ancestor of any node of $\mathcolor{blue}{B_i}$. \vfill\pause
 		\item For any such partition $\mathcolor{blue}{\log(\order(G))=\Omega\left(\sum\limits_{i=1}^k|B_i|\log|B_i|\right)}$\vfill\pause
@@ -241,7 +253,7 @@
 \begin{frame}{Barriers in the Heap}
 	Consider running Dijkstra algorithm until some time. Let $\mathcolor{blue}{S}$ is the set of nodes that are in the priority queue.\pause
 	\begin{itemize}
-		\item Notice that $\mathcolor{blue}{S}$ are the leaves of the partial exploration tree built so far which is a subgraph of final exploration tree.\pause
+		\item Notice that $\mathcolor{blue}{S}$ is the leaves of the partial exploration tree built so far which is a subgraph of final exploration tree.\pause
 		\item Therefore, $\mathcolor{blue}{S}$ is an incomparable set of the final exploration tree.
 		\item $\mathcolor{blue}{S}$ forms a barrier.
 	\end{itemize}\pause \vfill
@@ -316,12 +328,12 @@
 \begin{frame}{$OPT_Q(G)=\Omega(\log(\order(G)))$}
 	\begin{lemma}
 		For any directed or undirected graph $\mathcolor{blue}{G}$, any algorithm for the DO problem needs $\mathcolor{blue}{\Omega(\log(\order(G)))}$ comparison queries in expectation.
-	\end{lemma}\pause
+	\end{lemma}
 
 	\begin{itemize}
 		\item Let $\mathcolor{blue}{A}$ is any correct algorithm and  $\mathcolor{blue}{L\in \order(G)}$.
-		\item Given $\mathcolor{blue}{L}$ we have a weight assignment $\mathcolor{blue}{w_L}$ such that $\mathcolor{blue}{L}$ is unique order obtained from $\mathcolor{blue}{w_L}$ upon running Dijkstra. For each $\mathcolor{blue}{L}$ fix $\mathcolor{blue}{w_L}$. Let $\mathcolor{blue}{\mathcal{W} }$ be the collection of all such $\mathcolor{blue}{w_L}$. \pause
-		\item Let $\mathcolor{blue}{C_L\in\{-1,0,1\}^*}$ be the sequence of answers of comparisons made by $\mathcolor{blue}{A}$ on $\mathcolor{blue}{(G,w_L)}$. Then $\mathcolor{blue}{\mathcal{C}:\mathcal{W}\to \{-1,0,1\}^*}$, $\mathcolor{blue}{\mathcal{C}(w_L)=C_L}$ is a ternary prefix free code.\pause
+		\item Given $\mathcolor{blue}{L}$ we have a weight assignment $\mathcolor{blue}{w_L}$ such that $\mathcolor{blue}{L}$ is unique order obtained from $\mathcolor{blue}{w_L}$ upon running Dijkstra. For each $\mathcolor{blue}{L}$ fix $\mathcolor{blue}{w_L}$. Let $\mathcolor{blue}{\mathcal{W} }$ be the collection of all such $\mathcolor{blue}{w_L}$.
+		\item Let $\mathcolor{blue}{C_L\in\{-1,0,1\}^*}$ be the sequence of answers of comparisons made by $\mathcolor{blue}{A}$ on $\mathcolor{blue}{(G,w_L)}$. Then $\mathcolor{blue}{\mathcal{C}:\mathcal{W}\to \{-1,0,1\}^*}$, $\mathcolor{blue}{\mathcal{C}(w_L)=C_L}$ is a ternary prefix free code.
 		\item By Shannon's source coding lemma for symbol codes any such code has expected length $\mathcolor{blue}{\Omega(\log(|\mathcal{W}|))=\Omega(\log(\order(G)))}$
 	\end{itemize}
 
