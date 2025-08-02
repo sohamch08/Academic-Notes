@@ -70,7 +70,7 @@ The Kruskal algorithm uses a concept of component to find the minimum spanning t
 		\item $\forall\ v\notin V'$, there is no edge $e\in E$ such that $e$ connects $v$ to any vertex in $V'$.
 	\end{enumerate}
 \end{Definition}
-In Kruskal algorithm we maintain a set of components each of them is a tree so basically we maintain a forest. And we find a safe edge which is always the least weight edge in the graph that connects two distinct components and add that edge to the collection of edges in the forest and update the components.
+In Kruskal algorithm we maintain a set of components each of them is a tree so basically we maintain a forest. And we find a safe edge which is always the least weight edge in the graph that connects two distinct components and adds that edge to the collection of edges in the forest and update the components.
 
 So the algorithm first sorts the edges in non-decreasing order of their weights. Then it initializes a forest $F$ with all the vertices in the graph and no edges. Then it iterates through the sorted edges and checks if the edge connects two distinct components. If it does, then it adds the edge to the forest and merges the two components. The algorithm stops when we have $n-1$ edges in the forest.
 \begin{algorithm}[]
@@ -134,7 +134,7 @@ So we can use the updated algorithm to implement the Kruskal algorithm  using pr
 \end{algorithm}
 The Kruskal Algorithm calls $m$ times the \textsc{Find} operation and $n$ times the \textsc{Union} operation.
 \section{Data Structure 1: Linear Array}
-We create an $n$ length array $A$ which hold the parent pointer of each vertex. Initially for all vertices $A[v]=v$. So \textsc{Array-Find}$(u)$ will just return $A[u]$. Hence \textsc{Find} takes $O(1)$ time. For \textsc{Union}$(u,v)$ we use the following:
+We create an $n$ length array $A$ which hold the parent pointer of each vertex. Initially for all vertices $A[v]=v$. So \textsc{Array-Find}$(u)$ will just return $A[u]$. Hence, \textsc{Find} takes $O(1)$ time. For \textsc{Union}$(u,v)$ we use the following:
 \begin{algorithm}[]
 	\caption{\textsc{Array-Union}$(u,v)$}
 	\DontPrintSemicolon
@@ -149,12 +149,12 @@ We create an $n$ length array $A$ which hold the parent pointer of each vertex. 
 Therefore, \textsc{Array-Union}$(u,v)$ takes $O(n)$ time. Hence, the time complexity of the Kruskal algorithm using this data structure is $m\cdot O(1)+n\cdot O(n)=O(m+n^2)=O(n^2)$.
 \section{Data Structure 2: Left Child Right Siblings Tree}
 Using an array is not efficient enough.  One place we can optimize is if given the components is there a faster way to get the vertices in the component?  We can use the following tricks to optimize:
-\begin{enumerate}[]
+\begin{enumerate}
 	\item For every representative of a component, store pointers to all vertices in that component.
 	\item Change representative for the smaller component while doing \textsc{Union}$(u,v)$.
 \end{enumerate}
 \subsection{Construction}
-So now every representative of a component we point to one vertex which is also in the component. And from that vertex we can iterate through all the vertices in that component. So basically we can immagine a 2 level tree where all the children point towards the root which is the representative of the component. The root points to one of the children take the left most child. And then all the other children points to the immediate right child of the root.
+So now every representative of a component we point to one vertex which is also in the component. And from that vertex we can iterate through all the vertices in that component. So basically we can imagine a 2 level tree where all the children point towards the root which is the representative of the component. The root points to one of the children take the left most child. And then all the other children points to the immediate right child of the root.
 \begin{center}
 	\usetikzlibrary{arrows.meta}
 	\begin{tikzpicture}[vertex/.style={circle, draw, fill=white, inner sep=2pt}]
@@ -430,7 +430,7 @@ To implement this data structure we will use a tree for each component and every
 
 Our goal is to run Kruskal algorithm in almost $O(n+m)$ time. More precisely $O((n+m)\log^* n)$ time where $\log ^*n$ is the number of times we need to compose $\log $ on $n$ to get $1$.
 \subsection{\textsc{Find} Operation}
-The \textsc{Find} operation does something called path compression i.e. for any vertex $v\in V$, if \textsc{Find}$(v)$ is called then it starts from $v$ changes it's parent to the root of the component $v$ is in and then it moves to its parent and changes his parent to be the root and move to his parent and keep on doing like that till it reaches the root. In other words in path from the root to $v$, for every vertex in that path the \textsc{Find} operation changes the \emph{parent} pointer to the root.
+The \textsc{Find} operation does something called path compression i.e. for any vertex $v\in V$, if \textsc{Find}$(v)$ is called then it starts from $v$ changes it's parent to the root of the component $v$ is in, and then it moves to its parent and changes his parent to be the root and move to his parent and keep on doing like that till it reaches the root. In other words in path from the root to $v$, for every vertex in that path the \textsc{Find} operation changes the \emph{parent} pointer to the root.
 \begin{center}
 	\usetikzlibrary{arrows.meta}
 	\begin{tikzpicture}[vertex/.style={circle, draw, fill=white, inner sep=2pt}]
@@ -488,7 +488,7 @@ Here is the pseudocode of the \textsc{Find} operation below:
 	\Return{$v.\emph{parent}$}
 \end{algorithm}We will not discuss the amortized cost of this operation. Instead, we will do it in \autoref{analysis-union-find}.
 \subsection{\textsc{Union} Operation}
-For the \textsc{Union} operation we change the root of smaller rank to point to the root of the component of larger rank. So for the \textsc{Union}$(u,v)$ operation we assume that $u$, $v$ are the roots of their respective components. 
+For the \textsc{Union} operation we change the root of smaller rank to point to the root of the component of larger rank. So for the \textsc{Union}$(u,v)$ operation we assume that $u$, $v$ are the roots of their respective components.
 \begin{algorithm}[]
 	\caption{\textsc{Union}$(u,v)$}
 	\SetKwComment{Comment}{// }{}
@@ -530,40 +530,85 @@ We call a node in the union-find data-structure a \emph{leader} if it is the roo
 \begin{lemma}{}{}
 	When a node gets rank $k$ than there are at least $\geq 2^k$ elements in its subtree.
 \end{lemma}
-\begin{corolary}{}{}
-	For all vertices $v$, $v.rank\leq \lt\lfloor \log n\rt\rfloor$
+\begin{proof}
+We'll prove it using induction. For $k=0$ it is obvious since a single element in the set. Now a node gets rank $k$ only if two roots of rank $k-1$ were merged. By inductive hypothesis they each have at least $\geq 2^{k-1}$ nodes in their subtrees. Hence, the merged tree has $\geq 2^{k-1}+2^{k-1}=2^{k}$ nodes.
+\end{proof}
+With this lemma we get the following corollaries:
+\begin{corolary}{}{number-of-nodes}
+	The following are true:
+	\begin{enumerate}
+		\item The number of nodes that get assigned rank $k$ throughout the execution of the Union-Find data-structure is at most $\frac{n}{2^k}$.
+		\item For all vertices $v$, $v.rank\leq \lt\lfloor \log n\rt\rfloor$ 
+		\item Height of any tree $\leq \lt\lfloor\log _2n\rt\rfloor$
+	\end{enumerate}
 \end{corolary}
-\begin{corolary}{}{}
-	Height of any tree $\leq \lt\lfloor\log _2n\rt\rfloor$
-\end{corolary}
-\begin{lemma}{}{}
-	The number of nodes that get assigned rank $k$ throughout the execution of the Union-Find data-structure is at most $\frac{n}{2^k}$.
-\end{lemma}
-Define $N(r)=\#$vertices with rank at least $k$. Then by the above lemma we have $N(r)\leq \frac{n}{2^k}$.
 \begin{lemma}{}{}
 	The time to perform a single find operation when we perform union by rank and path
 	compression is $O(\log n)$ time.
 \end{lemma}
 We will show that we can do much better. In fact, we will show that for $m$ operations over $n$ elements the overall running time is $O((n+m)\log ^*n)$
+\begin{Definition}{$\log^* n$}{}
+It is the number of times we need to take log to get less than or equal to $1$. So $$\log^*n=\begin{cases}
+	0 &\text{if $n\leq 1$}\\ 
+	1+\log^*(\log n) & \text{otherwise}
+	\end{cases}$$
+\end{Definition}\parinf Thus $\log^*2=1$, $\log^*2^2=2$. Similarly,  $\log^*2^{2^{2}}=1+\log^*2^2=2+\log^*2=3$. It will also be useful to look at the inverse function of $\log^*$, \emph{Tower}.
+\begin{Definition}{\emph{Tower}$(k)$}{}
+$\emph{Tower}(k)=2^{\emph{Tower}(k-1)}$ and $\emph{Tower}(0)=1$.
+\end{Definition}\parinn
 
-\begin{lemma}{}{}
+\begin{observation}
+	$\log^*(\emph{Tower}(k))=k$
+\end{observation}
+
+Let $\emph{Block}(i)$ denotes a subset of vertices, and it corresponds to the interval $[\emph{Tower}(i-1)+1, \emph{Tower}(i)]$. We correspond $\emph{Block}(0)$ with the interval $ [0,1]$. Then we say a node $v\in \emph{Block}(i)$ if $v.\emph{rank}\in [\emph{Tower}(i-1)+1, \emph{Tower}(i)]$. 
+\begin{observation}
+	The largest $k$ such that for all $t>k$, $\emph{Block}(t)=\emptyset$ will be $k=\log^*n$.
+\end{observation}This is because $$\emph{Block}(k)=\Big\{v\mid v.\emph{rank}\in \big[\emph{Tower}\lt(\log^*n-1\rt)+1,\emph{Tower}\lt(\log^*n\rt)\big]\Big\}=\Big\{v\mid v.\emph{rank}\in \big[ \log n+1,n\big]\Big\}$$Hence the number of blocks available is $O(\log^n)$.
+
+Now we will analyze the \textsc{Find}$(v)$ operation. Let $P$ be the path visited. Let $P=v=v_0\to v_1\to\cdots \to v_k=$ root. Now consider the ranks of the vertices in $P$. We will have $$v_0.\emph{rank}<v_1.\emph{rank}<\cdots <v_k.\emph{rank}$$ Imagine partitioning $P$ into which blocks each element rank belongs to. Let $\textsc{index}_B(v)$ is the index of the block that contains $v$. Since ranks of the vertices are strictly increasing $\textsc{index}_B(v)$ is also increasing.
+
+During \textsc{Find} operation let going from one block to another is called jumping between blocks and going from one vertex to another inside a block is called internal jump. We call a vertex small if the vertex and its parent are in same block. Otherwise we call the vertex large.
+\begin{lemma}{}{block-change}
 	During a single $\prb{Find}(x)$ operation, the number of jumps between blocks along the search path is $O(\log^*n)$.
 \end{lemma}
-\begin{lemma}{}{}
+
+\begin{proof}
+During \textsc{Find} operation since the ranks are strictly increasing once we pass through from a node in $i^{th}$ block to a node in $(i+1)^{th}$ block we can never go back to the $i^{th}$ block. So in a \textsc{Find} operation we can do jumps between blocks at most $O(\log^* n)$ times. 
+\end{proof}
+Therefore there can be at most $O(\log^*n)$ many large vertices encountered in any \textsc{Find} operation.
+\begin{lemma}{}{number-internal-jump}
 	At most $|\emph{Block}(i)|\leq \emph{Tower}(i)$ many \prb{Find} operations can pass through an element $x$ which is in the $i^{th}$ block (i.e. $\prb{index}_B(x)=i$) before $x.\emph{parent}$ is no longer in the $i^{th}$ block. That is $\prb{index}_B(x.\emph{parent})>i$.
 \end{lemma}
+\begin{proof}
+Now consider the case that $v$ and $v.\emph{parent}$ are both in the same block. Let $v.\emph{parent}$ is not root. Now we perform a \textsc{Find} operation that passes through $x$. Let $r_{bef}$ is the $v.\emph{parent}.\emph{rank}$ before the \textsc{Find} operation and $r_{aft}$ is the $v.\emph{parent}.\emph{rank}$ after the \textsc{Find} operation. By path compression we have $r_{aft}>r_{bef}$. 
 
-\begin{lemma}{}{}
+By the above discussion we have that the parent of a vertex $v$ increases its rank every-time an internal jump goes through $v$. Since there are at most $|\emph{Block}(i)|$ different values in $i^{th}$ block. And by definition we have $|\emph{Block}(i)|\leq \emph{Tower}(i)$. Hence, we have the lemma. 
+\end{proof}
+Hence any vertex $v$ appears small at most $\emph{Tower}(i)$ times over the course of \textsc{Find} operations that passes through $v$. 
+\begin{lemma}{}{nodes-in-block}
 	There are at most $\frac{n}{\emph{Tower}(i)}$ nodes that have ranks in the $i^{th}$ block throughout the algorithm execution.
 \end{lemma}
-
+\begin{proof}
+By \corref{number-of-nodes} we have that the number of elements with rank in the $i^{th}$ block is at most $$\sum\limits_{k=\emph{Tower}(i-1)+1}^{\emph{Tower}(i)}\frac{n}{2^k}=n\sum\limits_{k=\emph{Tower}(i-1)+1}^{\emph{Tower}(i)}\frac1{2^k}\leq \frac{n}{2^{\emph{Tower}(i-1)}}=\frac{n}{\emph{Tower}(i)}$$
+\end{proof}
 \begin{lemma}{}{}
 	The number of internal jumps performed, inside the $i^{th}$ block, during the lifetime of \prb{Union-Find} data structure is $O(n)$.
 \end{lemma}
+\begin{proof}
+A vertex $v$ in the $i^{th}$ block can have at most $|\emph{Block}(i)|$ internal jumps, before all jumps through $v$ are jumps between block by \lemref{th:number-of-nodes}. There are at most $\frac{n}{\emph{Tower}(i)}$ vertices with ranks in $i^{th}$ block through out the algorithm execution by \lemref{th:nodes-in-block}. Thus, the total number of internal jumps is $$|\emph{Block}(i)|\cdot\frac{n}{\emph{Tower}(i)}\leq \emph{Tower}(i)\cdot \frac{n}{\emph{Tower}(i)}=n$$Hence there are at most $O(n)$ many internal jumps.
+\end{proof}
 
 \begin{Theorem}{}{}
 	The number of internal jumps performed by the \prb{Union-Find} data structure overall $O(n\log^*n)$.
 \end{Theorem}
+\begin{proof}
+Since in each block the number of internal jumps is $O(n)$ and there are $O(\log^*n)$ many blocks we have total number of internal jumps by the \textsc{Union-Find} data structure is $O(n\log^*n)$. 
+\end{proof}
+Hence over the course of all \textsc{Find} operations the total number of small vertices can be encountered is $O(n\log^*n)$
 \begin{Theorem}{}{}
 	The overall time spent on $m$ \prb{Find} operations, throughout the lifetime of a Union-Find data structure defined over $n$ elements is $O((n+m)\log^*n)$.
 \end{Theorem}
+\begin{proof}
+With $m$ many \textsc{Find} operations the total number of small vertices encountered is $O(n\log^*n)$ as we proved earlier. And the total number of large vertices encountered is $O(m\log ^*n)$ since each \textsc{Find} can encounter $O(\log^*n)$ many large vertices by \lemref{th:block-change}. Hence total taken is $O((m+n)\log^*n)$.
+\end{proof}
