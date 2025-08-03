@@ -1,41 +1,59 @@
 \chapter{\textsc{P, NP} and Reductions}
-Almost all the algorithms we have studied thus far have been \textbf{polynomial time algorithms} i.e. on inputs of size $n$, their worst-case running time is $O(n^k)$ for some constant $k$. A natural question to ask is whether all problems can be solved in polynomial time. The answer is no. 
- 
-There are problems that can be solved but not in polynomial time and there are problems which can not be solved via an algorithm. To discuss problems in general think of computational tasks as language recognition problem. A language is a subset of $\{0,1\}^*$. For example: $$L_{\textsc{conn}}=\{x\in\{0,1\}^*\mid x\text{ represents a connected graph}\}$$So main problem we want to think about is to decide whether a given string is in the language or not. These problems are also called decision problems. 
-\begin{definition}{Decision Problems}{}
-Given a language $L\subseteq \{0,1\}^*$ and a string $x\in\{0,1\}^*$ decide whether $x\in L$ or not. 
-\end{definition}    An algorithm $\mcA$ solves this problem if $x\in L\iff \mcA(x)=1$. Time complexity of $\mcA$: $T_{\mcA}(n)$ is the maximum running time of $\mcA$ on any string $x$ of length $n$. 
+Almost all the algorithms we have studied thus far have been \textbf{polynomial time algorithms} i.e. on inputs of size $n$, their worst-case running time is $O(n^k)$ for some constant $k$. A natural question to ask is whether all problems can be solved in polynomial time. The answer is no.
 
+There are problems that can be solved but not in polynomial time and there are problems which can not be solved via an algorithm. To discuss problems in general think of computational tasks as language recognition problem. A language is a subset of $\{0,1\}^*$. For example: $$L_{\textsc{conn}}=\{x\in\{0,1\}^*\mid x\text{ represents a connected graph}\}$$So main problem we want to think about is to decide whether a given string is in the language or not. These problems are also called decision problems.
+\begin{definition}{Decision Problems}{}
+    Given a language $L\subseteq \{0,1\}^*$ and a string $x\in\{0,1\}^*$ decide whether $x\in L$ or not.
+\end{definition}    An algorithm $\mcA$ solves this problem if $x\in L\iff \mcA(x)=1$. Time complexity of $\mcA$: $T_{\mcA}(n)$ is the maximum running time of $\mcA$ on any string $x$ of length $n$. Since we can work over any set of alphabets and alphabets can  be encoded into binary we will say languages are subset of $\Sg^*$ where $\Sg$ is the finite set of alphabets. 
+\section{Introduction to Complexity Classes}
 Depending on time, space and some other resources based on how much they are used we divide the computational problems into several sets. We call these sets as complexity classes.
 
-\begin{definition}{Polynomial Running Time}{}
-A language $L\subseteq\{0,1\}^*$ has a polynomial-time algorithm if there exists $\mcA$ that solves $L$ and $T_{\mcA}(n)=O(n^k)$ for some constant $k$. 
-\end{definition}
-Now we introduce our first complexity class now. This class is called \textsc{P}. $$\textsc{P}\coloneqq \{L\subseteq \{0,1\}^*\mid \text{ there exists a polynomial time algorithm that decides $L$}\}$$ Till now all the algorithms we have studied are in \textsc{P}. 
+\begin{Definition}{Polynomial Running Time}{}
+    A language $L\subseteq\Sg^*$ has a polynomial-time algorithm if there exists $\mcA$ that solves $L$ and $T_{\mcA}(n)=O(n^k)$ for some constant $k$.
+\end{Definition}
+Now we introduce our first complexity class now. This class is called \textsc{P}. $$\textsc{P}\coloneqq \{L\subseteq \Sg^*\mid \text{ there exists a polynomial time algorithm that decides $L$}\}$$ Till now all the algorithms we have studied are in \textsc{P}.
 \begin{question}{}{}
     What about $L_{\textsc{sat}}, L_{\textsc{3col}}, L_{\textsc{2sat}}, L_{\textsc{conn}}$?
-\end{question}We know $L_{\textsc{conn}}\in \textsc{P}$ since we can run a \textsc{DFS} to check if all the vertex is reachable from a vertex. Also we know $L_{\textsc{2sat}}\in \textsc{P}$. For other languages we don't know if they are in \textsc{P}. But these problems have another noticable nature. Given a potential solution for the problem one can check if that is indeed a solution of the problem or not in polynomial-time. Let's abstract this notion: 
+\end{question}We know $L_{\textsc{conn}}\in \textsc{P}$ since we can run a \textsc{DFS} to check if all the vertex is reachable from a vertex. Also we know $L_{\textsc{2sat}}\in \textsc{P}$. For other languages we don't know if they are in \textsc{P}. But these problems have another noticable nature. Given a potential solution for the problem one can check if that is indeed a solution of the problem or not in polynomial-time. Let's abstract this notion:
 
-\begin{definition}{Short Certificate of Membership}{}
-A language have a short certificate of membership if there exists an algorithm $\mcA$ that runs in polynomial time and \begin{align*}
-    \forall\ x\in L,\ \exs\ y\in \text{poly}(|x|), &\quad \mcA(x,y)=1\\ 
-    \forall\ x\notin L,\ \forall\ y\in \text{poly}(|x|), &\quad  \mcA(x,y)=0
-\end{align*}
-\end{definition}
+\begin{Definition}{Short Certificate of Membership}{}
+    A language have a short certificate of membership if there exists an algorithm $\mcA$ that runs in polynomial time and \begin{align*}
+        \forall\ x\in L,\ \exs\ y\in \text{poly}(|x|),       & \quad \mcA(x,y)=1  \\
+        \forall\ x\notin L,\ \forall\ y\in \text{poly}(|x|), & \quad  \mcA(x,y)=0
+    \end{align*}
+\end{Definition}
 What are the certificates or above-mentioned problems.   \begin{itemize}
     \item $L_{\textsc{sat}}$: Assignment of the variables. Then we can verify if every clause is satisfied
     \item $L_{\textsc{3col}}$: Coloring of the edges.  We can verify if all the edges follows the coloring constraint.
     \item $L_{\textsc{conn}}$: A spanning tree. We can verify if every vertex is present there.
 \end{itemize}
 
-Now we introduce another complexity class called \textsc{NP}. $$\textsc{NP}\coloneqq \{L\subseteq \{0,1\}^*\mid L\text{ has a short certificate of membership}\}$$For \textsc{NP} we call the algorithm to check for the certificate \emph{verifier}. Naturally any problem which is in \textsc{P} has a short certificate. \begin{theorem}{}{}
-$\textsc{P}\subseteq \textsc{NP}$.  
-\end{theorem}
- Another complexity class which come associated with \textsc{NP} is \textsc{coNP}. $$\textsc{coNP}\coloneqq \overline{\textsc{NP}}$$i.e. the complement set of \textsc{NP}. 
- \begin{observation}
-      $\textsc{P}=\overline{\textsc{P}}$
- \end{observation}
- \begin{theorem}{}{}
- $\textsc{P}\subseteq \textsc{coNP}$
- \end{theorem}
- Apart from these two we dont know any relation between \textsc{NP} and \textsc{coNP} whether they are equal or not. 
+Now we introduce another complexity class called \textsc{NP}. $$\textsc{NP}\coloneqq \{L\subseteq \Sg^*\mid L\text{ has a short certificate of membership}\}$$For \textsc{NP} we call the algorithm to check for the certificate \emph{verifier}.  Another way to think about the class \textsc{NP} is to extend the computer to make ``guesses'' or exists in multiple state simultaneously. This is known as non-determinism. Then \textsc{NP} is the class of languages decided by a non-deterministic Turing machine in polynomial time. For example a non-deterministic algorithm for \textsc{3SAT} is \begin{itemize}
+    \item Make a guess for the assignment for each variable.
+    \item If $\phi$ is satisfied return yes else return no.
+\end{itemize}\parinf Naturally any problem which is in \textsc{P} has a short certificate. \begin{Theorem}{}{}
+    $\textsc{P}\subseteq \textsc{NP}$.
+\end{Theorem}\parinn
+Another complexity class which come associated with \textsc{NP} is \textsc{coNP}. $$\textsc{coNP}\coloneqq \overline{\textsc{NP}}$$i.e. the complement set of \textsc{NP}.
+\begin{observation}
+    $\textsc{P}=\overline{\textsc{P}}$
+\end{observation}
+\begin{Theorem}{}{}
+    $\textsc{P}\subseteq \textsc{coNP}$
+\end{Theorem}
+Apart from these two we don't know any relation between \textsc{NP} and \textsc{coNP} whether they are equal or not.
+\section{Reductions}
+\begin{question}{}{}
+    What does it mean for a problem to be at least as hard as another? 
+\end{question}
+To relate hardness of one problem to another we introduce the notion of reductions. There are many reductions. We will only focus on polynomial-time many-one karp reduction. 
+\begin{Definition}{Many-One Karp Reduction}{}
+$L_1,L_2\subseteq\Sg^*$ are two languages. $L_1$ is reducible to $L_2$ under polynomial time many-one karp reduction if and only if there exists a polynomial time computable  function $f:\Sigma^*\to\Sg^*$ such that $\forall\ x\in \Sg^*$ $$x\in L_1\iff f(x)\in L_2$$ and we denote it by $L_1\leq_{m}^{\text{poly}} L_2$. 
+\end{Definition}
+We call a language $L$ to be \textsc{NP}-hard if for every language $L'\in\textsc{NP}$, $L'\leq_{m}^{\text{poly}}L$. And $L$ is called \textsc{NP}-complete if $L\in\textsc{NP}$ and $L$ is \textsc{NP}-hard. 
+\begin{Theorem}{Cook's Theorem}{}
+$3\textsc{SAT}$ is \textsc{NP}-complete.
+\end{Theorem}
+\begin{corolary}{}{}
+    $\overline{\textsc{SAT}}$ is \textsc{coNP}-complete. 
+\end{corolary}
