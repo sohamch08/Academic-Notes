@@ -493,7 +493,7 @@ $N'$ is not maximum matching. Since $\{(v_i,w_i)\mid i\in\{0,1,2,3\}\}$ is maxim
 Suppose we start with a matching $M$ in $G$. We mark all the exposed vertices to be even and keep all the other vertices unmarked at this point. Hence, initially all the vertices are marked even. Now we use the same algorithm for finding augmenting paths as in the case of bipartite graphs but with slight modifications. In the case of bipartite graphs at each iteration we created the $M$-alternating tree we went one level at a time. But in the case of general graphs we'll go two levels at a time. So at each iteration we start with a vertex which is labeled even. Let $u$ be a vertex labeled. Now for each neighbor $v$ of $u$:
 \begin{enumerate}[label=Case \arabic*:, leftmargin=*, align=left]
 	\item $v$ is unmarked. This implies $v$ is matched. Then mark $v$ as odd and $M(v)$ i.e. the vertex matched with $v$ as even and continue the algorithm.
-	\item $v$ is marked, and it is in the same tree as $u$. Then we have a blossom $B$ with respect to $M$. We shrink the blossom $B$ and therefore, we have the matching $M/B$ in the graph $G/B$. Mark the shrunk vertex $v_b$ even and continue the algorithm.
+	\item $v$ is marked, and it is in the same tree as $u$. Then we have a blossom $B$ with respect to $M$. We shrink the blossom $B$ and therefore, we have the matching $M/B$ in the graph $G/B$. Mark the shrunk vertex $v_b$ even and continue the algorithm in the graph $G/B$ with the matching $M/B$.
 
 	      If we get an even cycle then we just ignore i.e. ignore any neighbor marked odd.
 	\item $v$ is marked even, and it is in a different tree from $u$. Let $r_u$ and $r_v$ are the root exposed vertices in the tree of $u$ or $v$ respectively. Then consider the path $P:r_u\rightsquigarrow u\to v\rightsquigarrow r_v$. This is an augmenting path from $r_u$ to $r_v$. Hence, the algorithm found an augmenting path with respect to $M$. Now unshrink the blossoms in $P$ to get the alternating path in $G$. Let that path is $\hat{P}$. So the algorithm updates the matching $M$ to $M\oplus \hat{P}$, and then we will start the algorithm again with the new matching $M\oplus \hat{P}$.
@@ -545,7 +545,7 @@ Suppose we start with a matching $M$ in $G$. We mark all the exposed vertices to
 			      \draw (rw1) -- (b);
 
 			      % Highlighted edge
-			      \draw[red, very thick, decorate, decoration={snake, segment length=3pt, amplitude=1pt}] (b) -- (rw3);
+			      \draw[red, thick, decorate, decoration={snake, segment length=3pt, amplitude=1pt}] (b) -- (rw3);
 
 			      % Set N and N'
 			      \begin{scope}[shift={(10,0)}]
@@ -575,5 +575,37 @@ Suppose we start with a matching $M$ in $G$. We mark all the exposed vertices to
 			      \draw[thick, -{Latex}] (7.5,1) -- (9,1) node[midway, above] {Unshrink};
 		      \end{tikzpicture}
 	      \end{center}
-
 \end{enumerate}
+\parinf
+
+\textbf{Time Complexity:} The algorithm performs at most $n$ augmentations. Between two augmentations, it will shrink a blossom at most $\frac{n}{2}$ times as each shrinking reduces the number of vertices by at least $2$. The time to construct the alternating tree is at most $O(n+m)$. Hence, the total time taken by the algorithm is $O(n^2(n+m))=O(n^2m)$. \parinn
+\subsection{Tutte-Berge Theorem}
+\begin{Theorem}{}{tutte-berge-weak}
+	In any graph $G=(V,E)$ for any matching $M$ in $G$ and any $S\subseteq V$, $$|M|\leq\frac{|V|+|S|-\emph{Odd}(G-S)}2$$ where $\emph{Odd}(G-S)$ is the number of odd components in $G-S$.
+\end{Theorem}
+\begin{proof}
+	If $|S|>\emph{Odd}(G-S)$ then we already have this since $|M|\leq\frac{|V|}{2}$. So let $|S|\leq \emph{Odd}(G-S)$. Now each odd size component has at least one vertex unmatched in that component. So if that vertex is matched it is matched with a vertex in $S$. So $M$ leaves at least $\emph{Odd}(G-S)-|S|$ vertices unmatched. Hence, at most all the rest $|V|-(\emph{Odd}(G-S)-|S|)$ vertices are matched in $G$. Therefore, $|M|\leq\frac{|V|+|S|-\emph{Odd}(G-S)}2$.
+\end{proof}
+
+Now the algorithm stops if none of the cases 1, 2, or 3 happens. Let $G'=(V',E')$ is the final graph after shrinking all the blossoms algorithm encountered in its runtime. And let $M'$ is the matching in $G'$ after the algorithm stops. Now we will show that $M'$ is a maximum matching in $G'$.
+\begin{lemma}{}{}
+	When none of the 3 cases holds the matching $M'$ is maximum in $G'$.
+\end{lemma}
+\begin{proof}
+	We will show that $M'$ attains equality in \thmref{tutte-berge-weak} for some subset $S$ of vertices. Since the algorithm stops the $M'$-alternating tree in $G'$ has no blossoms. So the $M'$-alternating tree is a forest. The algorithm marked the vertices of $G'$ as even or odd. Take $S$ be the set of all odd marked vertices. Hence, all the components of $G'-S$ are odd components where each component contains single vertex which is labeled even. So $\textsc{Odd}(G-S)=|V'|-|S|$. Therefore, $\frac{|V'|+|S|-\emph{Odd}(G-S)}2=\frac{|V'|+S|-(|V|-|S|)}2=|S|$. Since all the odd vertices are matched with even vertices in $G'$  we have $|S|=|M'|$. Hence, $|M'|=\frac{|V|+|S|-\emph{Odd}(G-S)}2$. Therefore, $M'$ is a maximum matching in $G'$.
+\end{proof}
+Let the algorithm performs $k$ blossom shrinking. Let $B_1,\dots, B_k$ are the blossoms. And let $M_i$ be the corresponding matching. $i=0$ corresponds to the original graph. Let $G_i=(V_i,E_i)$ be the graph after $i^{th}$ blossom shrinking. So $G_0=G$ and $G_k$ is the final graph after the algorithm stops. The above lemma shows that $M_k$ is a maximum matching in $G_k$. We will show that if we unshrink the blossoms one at a time in the reverse order of shrinking then we will get a maximum matching.
+\begin{lemma}{}{}
+	If $M_{k}$ is a maximum matching in $G_k$. Then $M_{k-1}$ is a maximum matching in $G_{k-1}$.
+\end{lemma}
+\begin{proof}
+	$G_k$ is obtained from $G_{k-1}$ by shrinking the blossom $B_k$. So $G_k=G_{k-1}/B_{k}$, $M_k=M_{k-1}/B_k$. So $|V_{k-1}|=|V_k|+|B_k|-1$ and $|M_{k-1}|=|M_k|+\frac12(|B_k|-1)$. Let $S$ be the set of odd vertices in $G_k$. Now while unshrinking the blossom $B_k$  we add an even number of vertices ($|B_k|-1$) to one of the connected components to one of the connected components of $G_k-S$ and all these vertices are marked even. So the set of odd vertices of $G_{k-1}$ are the same as set of odd vertices in $G_k$. Hence, $\emph{Odd}(G_k-S)=\emph{Odd}(G_{k-1}-S)$. Therefore, $$\frac{|V_{k-1}|+|S|-\emph{Odd}(G_{k-1}-S)}2=\frac{|V_k|+|B_k|-1+|S|-\emph{Odd}(G_{k}-S)}2=|M_k|+\frac{|B_k|-1}2=|M_{k-1}|$$Therefore $M_{k-1}$ is a maximum matching in $G_{k-1}$.
+\end{proof}Using the same $S$ we can show that if $M_{i+1}$ is a maximum matching in $G_{i+1}$ then $M_i$ is a maximum matching in $G_i$. Hence, we can conclude that if $M_k$ is a maximum matching in $G_k$ then $M_0$ is a maximum matching in $G$. Therefore, after unshrinking all the blossoms in the reverse order of shrinking we get a maximum matching in $G$. Therefore, the above algorithm returns a maximum matching of $G$.
+
+Also, we have shown that the maximum matching attains equality in \thmref{tutte-berge-weak} for the set of odd vertices $S$. Hence, we have the following theorem.
+\begin{Theorem}{Tutte-Berge Theorem}{tutte-berge}
+	For any graph $G=(V,E)$, $$\max\limits_{M\text{ matching in }G}|M|=\min\limits_{S\subseteq V}\frac{|V|+|S|-\emph{Odd}(G-S)}2$$
+	where $\emph{Odd}(G-S)$ is the number of odd components in $G-S$.
+\end{Theorem}
+Now from the Tutte-Berge Theorem we conclude that a graph has a perfect matching if and only if for every $S\subseteq V$, the number of odd components in $G-S$ is at most $|S|$. Hence, we have the following corollary.
+\cor[]{Tutte's Matching Theorem}{For any graph $G=(V,E)$, $G$ has a perfect matching if and only if for every $S\subseteq V$, $\emph{Odd}(G-S)\leq |S|$.}

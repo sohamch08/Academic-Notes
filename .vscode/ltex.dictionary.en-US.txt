@@ -11,3 +11,5 @@ recursing
 rootlist
 Kruskal
 matroid
+unshrink
+matroids
