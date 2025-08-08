@@ -7,10 +7,10 @@
 	\problemoutput{Quotient and reminder when $f$ is divided by $g$.}
 \end{algoprob}
 
-Suppose $\deg f=a$ and $\deg g=b$. Let $(q,r)\in \bbF[X]$ are the quotient and remainder when $f$ is divided by $g$ i.e. $f=qg+r$. Therefore $\deg q=a-b$ and $m\coloneqq \deg r<b$. 
+Suppose $\deg f=a$ and $\deg g=b$. Let $(q,r)\in \bbF[X]$ are the quotient and remainder when $f$ is divided by $g$ i.e. $f=qg+r$. Therefore, $\deg q=a-b$ and $m\coloneqq \deg r<b$. 
 %\subsection{Long Division Algorithm}
 
-We can follow the long division algorithm to find $(q,r)$. This algorithm takes $O(a-b)=O(d)$ many iteration to find $q$. And in each iteration we subtract a polynomial from another polynomial by multiplying one of them with power of $x$. For the multiplying with power $x$ is just shifting of the coefficients. For the subtraction of polynomials it takes $O(d)$ time. Therefore each iteration of the algorithm takes $O(d)$ time complexity. Therefore the long division algorithm takes $O(d^2)$ time complexity. 
+We can follow the long division algorithm to find $(q,r)$. This algorithm takes $O(a-b)=O(d)$ many iterations to find $q$. And in each iteration we subtract a polynomial from another polynomial by multiplying one of them with power of $x$. For the multiplying with power $x$ is just shifting of the coefficients. For the subtraction of polynomials it takes $O(d)$ time. Therefore, each iteration of the algorithm takes $O(d)$ time complexity. Therefore, the long division algorithm takes $O(d^2)$ time complexity. 
 
 %\subsection{Fast Division Algorithm}
 If we can obtain $q$ from $f,g$ then we can get $r$ by following the equation $r=f-gq$.  
@@ -28,9 +28,9 @@ So using reversal we will review the equation $f=gq+r$:
 	\iff & X^af\lt(\frac1X\rt)=cdX^aq\lt(\frac1X\rt)g\lt(\frac1X\rt)+X^ar\lt(\frac1X\rt)\\
 	\iff & rev(f)=rev(q)rev(g)+X^{a-m}rev(r) 
 \end{align*}
-Now we know $a\geq b>m\implies a-m\geq b-m>0$. Therefore $X^{a-m}rev(r)$ is multiple of some nontrivial power of $X$. Now also we have $$a-m>a-b=\deg q\geq \deg(rev(q))$$ Therefore we have $$rev(f)\equiv rev(q)rev(g)\bmod {X^{a-m}}$$Since $a-m\geq a-b+1$ we have $$rev(q)\bmod {X^{a-m}}\equiv rev(q)\bmod {X^{a-b+1}}\equiv rev(q)$$Therefore we have $$rev(f)\equiv rev(q)rev(g)\bmod {X^{a-b+1}}$$
+Now we know $a\geq b>m\implies a-m\geq b-m>0$. Therefore, $X^{a-m}rev(r)$ is multiple of some nontrivial power of $X$. Now also we have $$a-m>a-b=\deg q\geq \deg(rev(q))$$ Therefore we have $$rev(f)\equiv rev(q)rev(g)\bmod {X^{a-m}}$$Since $a-m\geq a-b+1$ we have $$rev(q)\bmod {X^{a-m}}\equiv rev(q)\bmod {X^{a-b+1}}\equiv rev(q)$$Therefore we have $$rev(f)\equiv rev(q)rev(g)\bmod {X^{a-b+1}}$$
 
-Hence it suffices to recover $rev(q)$ in order to recover $q$ from here. So the problem now reduced to finding a solution $h\in\bbF[X]$ for the system $\tdf-h\tdg\equiv 0\bmod{X^N}$.
+Hence, it suffices to recover $rev(q)$ in order to recover $q$ from here. So the problem now reduced to finding a solution $h\in\bbF[X]$ for the system $\tdf-h\tdg\equiv 0\bmod{X^N}$.
 \subsection{Find solution of \texorpdfstring{$\tdf-h\tdg\equiv 0\bmod {X^N}$}{f-fg=0 mod X\^N}}
 \begin{algoprob}
 	\problemtitle{Solve $\tdf-h\tdg\equiv 0\bmod {X^N}$}
@@ -42,7 +42,7 @@ Hence it suffices to recover $rev(q)$ in order to recover $q$ from here. So the 
 \end{lemma}
 \begin{proof}
 	Let $\deg \tdf=k$ and $\deg\tdg=l$. Then Suppose $\tdf=\sum\limits_{i=0}^k\tdf_iX^i$ and $\tdg=\sum\limits_{i=0}^l\tdg_iX^i$. Then we can write the equation  $\tdf-h\tdg\equiv 0\bmod{X^N}$ as a linear system like the following: $$\mat{\tdg_0 & \\ \tdg_1 & \tdg_0&\\ \tdg_2&\tdg_1&\tdg_0 & \\ \vdots
-		& & & \ddots & \\ & & & & &}\mat{h_0\\ h_1 \\ h_2\\ \vdots \\ h_{k-l}}=\mat{\tdf_0\\ \tdf_1\\ \vdots \\ \tdf_k}$$Lets call the matrix $G$. Since $\tdg_0\neq 0$ the $G$ has nonzero elements in the diagonal. Since the $G$ is lower triangular the determinant of the $G$ is nonzero. Therefore there exists unique solution solution for $h$.
+		& & & \ddots & \\ & & & & &}\mat{h_0\\ h_1 \\ h_2\\ \vdots \\ h_{k-l}}=\mat{\tdf_0\\ \tdf_1\\ \vdots \\ \tdf_k}$$Lets call the matrix $G$. Since $\tdg_0\neq 0$ the $G$ has nonzero elements in the diagonal. Since the $G$ is lower triangular the determinant of the $G$ is nonzero. Therefore, there exists unique solution for $h$.
 \end{proof}
 
 But we don't know how to find inverse of $G$ in near linear time. So we cannot find $h$ like this.
@@ -58,7 +58,7 @@ Since we are dealing with the equation $\tdf-h\tdg\equiv 0\bmod{X^N}$ and $\tdg(
 \subsubsection{Algorithm I}
  \begin{align*}
  	\frac{\tdf(X)}{\tdg(X)}\bmod{X^N}  = \frac{\tdf(X)}{\tdg(X)}\;\frac{\tdg(-X)}{\tdg(-X)}\bmod{X^N} = \frac{\tdf(X)\tdg(-X)}{\tdg(X)\tdg(-X)}\bmod{X^N}
- \end{align*}Now $\tdg(X)\tdg(-X)$ is an even function. Therefore $\exs\ G\in\bbF[X]$ and $\deg G\leq d$ such that $G(X^2)=\tdg(X)\tdg(-X)$. Now we can also decompose $\tdf(X)=\tdf_0(X^2)+X\tdf_1(X^2)$ and $\tdg(-X)=\tdg_0(X^2)+X\tdg_0(X^2)$. Then we have 
+ \end{align*}Now $\tdg(X)\tdg(-X)$ is an even function. Therefore, $\exs\ G\in\bbF[X]$ and $\deg G\leq d$ such that $G(X^2)=\tdg(X)\tdg(-X)$. Now we can also decompose $\tdf(X)=\tdf_0(X^2)+X\tdf_1(X^2)$ and $\tdg(-X)=\tdg_0(X^2)+X\tdg_0(X^2)$. Then we have 
 \begin{align*}
 	 \tdf(X)\tdg(-X) & = \lt(\tdf_0(X^2)+X\tdf_1(X^2)\rt)\lt(\tdg_0(X^2)+X\tdg_1(X^2)\rt)\\
 	 & = \underbrace{\lt[ \tdf_0(X^2)\tdg_0(X^2)+X^2\tdf_1(X^2)\tdg_1(X^2)\rt]}_{F_0(X^2)}+X\underbrace{\lt[\tdf_1(X^2)\tdg_0(X^2)+\tdf_0(X^2)\tdg_1(X^2)\rt]}_{F_1(X^2)}\\
@@ -85,7 +85,7 @@ Now we have that $$\frac{F_1(Z)}{G(Z)}\bmod{Z^{\frac{N}2}}=\frac{F_1(Z)\bmod{Z^{
 \subsubsection{Algorithm II}
 Here we can divide $h$ into two parts with each part of degrees $< \frac{N}2$. Then $h(X)=h_0(X)+X^{\frac{N}2}h_1(X)$ where $\deg h_0<\frac{N}2$ and $\deg h_1<\frac{N}2$. Then we have 
 $$
-	\tdf-\lt(h_0+h_1X^{\frac{N}2}\rt)\tdg\equiv 0\bmod{X^N} \implies (\tdf-h_0\tdg)-X^{\frac{N}2}h_1\tdg\equiv 0 \bmod{X^N} $$Hence we have $\tdf-h_0\tdg\equiv 0\bmod{X^{\frac{N}2}}$. Therefore we have $$X^{\frac{N}2}\mid \tdf-h_0\tdg\implies \tdf-h_0\tdg=X^{\frac{N}2}$$ Hence $$X^{\frac{N}2}p-X^{\frac{N}2}h_1\tdg\equiv 0\bmod{X^{N}}\implies p-h_1\tdg\equiv 0\bmod{X^{\frac{N}2}}$$
+	\tdf-\lt(h_0+h_1X^{\frac{N}2}\rt)\tdg\equiv 0\bmod{X^N} \implies (\tdf-h_0\tdg)-X^{\frac{N}2}h_1\tdg\equiv 0 \bmod{X^N} $$Hence we have $\tdf-h_0\tdg\equiv 0\bmod{X^{\frac{N}2}}$. Therefore, we have $$X^{\frac{N}2}\mid \tdf-h_0\tdg\implies \tdf-h_0\tdg=X^{\frac{N}2}$$ Hence $$X^{\frac{N}2}p-X^{\frac{N}2}h_1\tdg\equiv 0\bmod{X^{N}}\implies p-h_1\tdg\equiv 0\bmod{X^{\frac{N}2}}$$
 	
 	\newpage Therefore we have the following algorithm
 
