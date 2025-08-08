@@ -1,11 +1,11 @@
-\chapter{Kruskal Algorithm with Data Structure}
+\chapter{Kruskal's Algorithm with Data Structure}
 \begin{algoprob}
 	\problemtitle{Minimum Spanning Tree}
 	\probleminput{Weighted undirected graph $G=(V,E)$ and weights of edges $W=\{w_e\in\bbZ_0\colon e\in E\}$.}
 	\problemquestion{Find a spanning tree $T\subseteq E$ such that $\sum\limits_{e\in T}w_e$ is minimum.}
 \end{algoprob}
-In this chapter we will discuss this problem. We will first discuss the Kruskal algorithm which gives a greedy solution to the problem. Then we will discuss the data structure that we can use to implement the Kruskal algorithm efficiently.
-\section{Kruskal Algorithm}
+In this chapter we will discuss this problem. We will first discuss the Kruskal's algorithm which gives a greedy solution to the problem. Then we will discuss the data structure that we can use to implement the Kruskal's algorithm efficiently.
+\section{Kruskal's Algorithm}
 \begin{center}
 	\hspace*{4mm}\begin{tikzpicture}[vertex/.style={circle, draw, fill=white, inner sep=2pt}]
 		\begin{scope}[shift={(-5,0)}]
@@ -63,19 +63,19 @@ In this chapter we will discuss this problem. We will first discuss the Kruskal 
 		\end{scope}
 	\end{tikzpicture}
 \end{center}
-The Kruskal algorithm uses a concept of component to find the minimum spanning tree.
+The Kruskal's algorithm uses a concept of component to find the minimum spanning tree.
 \begin{Definition}{Component}{}
 	In a graph $G=(V,E)$, a \emph{component} is a maximal subgraph $G'=(V',E')$ of $G$ such that \begin{enumerate}[label=(\arabic*)]
 		\item $(V',E')$ is connected.
 		\item $\forall\ v\notin V'$, there is no edge $e\in E$ such that $e$ connects $v$ to any vertex in $V'$.
 	\end{enumerate}
 \end{Definition}
-In Kruskal algorithm we maintain a set of components each of them is a tree so basically we maintain a forest. And we find a safe edge which is always the least weight edge in the graph that connects two distinct components and adds that edge to the collection of edges in the forest and update the components.
+In Kruskal's algorithm we maintain a set of components each of them is a tree so basically we maintain a forest. And we find a safe edge which is always the least weight edge in the graph that connects two distinct components and adds that edge to the collection of edges in the forest and update the components.
 
 So the algorithm first sorts the edges in non-decreasing order of their weights. Then it initializes a forest $F$ with all the vertices in the graph and no edges. Then it iterates through the sorted edges and checks if the edge connects two distinct components. If it does, then it adds the edge to the forest and merges the two components. The algorithm stops when we have $n-1$ edges in the forest.
 \begin{algorithm}[]
 	\SetKwComment{Comment}{// }{}
-	\caption{\textsc{Kruskal Algorithm}}
+	\caption{\textsc{Kruskal's Algorithm}}
 	\DontPrintSemicolon
 	\KwIn{$G=(V,E)$, and weights of edges $W=\{w_e\in\bbZ_0\colon e\in E\}$}
 	\KwOut{A minimum spanning tree $T\subseteq E$ of $G$}
@@ -99,7 +99,7 @@ So the algorithm first sorts the edges in non-decreasing order of their weights.
 We have shown in \lmref{graphic-matroid} that the set of collection of acyclic sets in any graph is a matroid. Hence, here we are basically finding a base of the graphic matroid with minimum weight. The algorithm is exactly similar to the greedy algorithm for finding max-weight base of a matroid in \autoref{matroid-max-weight-base}. So you can use the similar arguments to show that the algorithm is correct and returns the minimum spanning tree of the graph.
 
 Now in the algorithm the checking of $T\cup \{e_i\}$ is acyclic can be done by checking if both the end points are in same component or not. And if they are not then we need to combine those to components. But there comes a question:
-\begin{question}{}
+\begin{question}{}{}
 	What it means to give a component?
 \end{question}
 We will use some vertex to represent the component. We keep a pointer $v.\emph{parent}$ for each vertex which points to representative of component $v$ is in. Hence, we need a data structure that can do the following two operations efficiently:
@@ -107,10 +107,10 @@ We will use some vertex to represent the component. We keep a pointer $v.\emph{p
 	\item \textsc{Find}$(u)$: Returns the component $u$ is in.
 	\item \textsc{Union}$(u,v)$: Merges the components of $u$ and $v$ into a single component.
 \end{itemize}
-So we can use the updated algorithm to implement the Kruskal algorithm  using proper data structure:
+So we can use the updated algorithm to implement the Kruskal's algorithm  using proper data structure:
 \begin{algorithm}[]
 	\SetKwComment{Comment}{// }{}
-	\caption{\textsc{Kruskal Algorithm}}
+	\caption{\textsc{Kruskal's Algorithm}}
 	\DontPrintSemicolon
 	\KwIn{$G=(V,E)$, and weights of edges $W=\{w_e\in\bbZ_0\colon e\in E\}$}
 	\KwOut{A minimum spanning tree $T\subseteq E$ of $G$}
@@ -132,7 +132,7 @@ So we can use the updated algorithm to implement the Kruskal algorithm  using pr
 		}
 	}
 \end{algorithm}
-The Kruskal Algorithm calls $m$ times the \textsc{Find} operation and $n$ times the \textsc{Union} operation.
+The Kruskal's Algorithm calls $m$ times the \textsc{Find} operation and $n$ times the \textsc{Union} operation.
 \section{Data Structure 1: Linear Array}
 We create an $n$ length array $A$ which hold the parent pointer of each vertex. Initially for all vertices $A[v]=v$. So \textsc{Array-Find}$(u)$ will just return $A[u]$. Hence, \textsc{Find} takes $O(1)$ time. For \textsc{Union}$(u,v)$ we use the following:
 \begin{algorithm}[]
@@ -146,7 +146,7 @@ We create an $n$ length array $A$ which hold the parent pointer of each vertex. 
 	}
 	}
 \end{algorithm}
-Therefore, \textsc{Array-Union}$(u,v)$ takes $O(n)$ time. Hence, the time complexity of the Kruskal algorithm using this data structure is $m\cdot O(1)+n\cdot O(n)=O(m+n^2)=O(n^2)$.
+Therefore, \textsc{Array-Union}$(u,v)$ takes $O(n)$ time. Hence, the time complexity of the Kruskal's algorithm using this data structure is $m\cdot O(1)+n\cdot O(n)=O(m+n^2)=O(n^2)$.
 \section{Data Structure 2: Left Child Right Siblings Tree}
 Using an array is not efficient enough.  One place we can optimize is if given the components is there a faster way to get the vertices in the component?  We can use the following tricks to optimize:
 \begin{enumerate}
@@ -417,7 +417,7 @@ This way we can unite two components and update the corresponding component repr
 
 Now since there are $n$ vertices at most $O(n\log n)$ times change of \emph{parent} for any vertex happens. Now change of \emph{parent} for any vertex happens only in \textsc{LCRS-Union} function. Total time taken by all the \textsc{LCRS-Union} operations is $O(n\log n)$ time. Since \textsc{LCRS-Union} was called $n$ times the amortized cost of \textsc{LCRS-Union} is $O(\log n)$.
 \subsection{Time Complexity Analysis of Kruskal}
-We have shown above that \textsc{LCRS-Find} takes $O(1)$ time and amortized cost of \textsc{LCRS-Union} is $O(\log n)$. Since \textsc{LCRS-Find} is called $m$ times and \textsc{LCRS-Union} is called $n$ times the total run time of Kruskal Algorithm using the Left Child Right Sibling data structure is $O(m+n\log n)$.
+We have shown above that \textsc{LCRS-Find} takes $O(1)$ time and amortized cost of \textsc{LCRS-Union} is $O(\log n)$. Since \textsc{LCRS-Find} is called $m$ times and \textsc{LCRS-Union} is called $n$ times the total run time of Kruskal's Algorithm using the Left Child Right Sibling data structure is $O(m+n\log n)$.
 \section{Data Structure 3: Union Find}
 We will now give up on the idea of height $1$ trees to optimize more. Representative of a component is still vertex at root, but we will do the following: changes:
 \begin{itemize}
@@ -428,7 +428,7 @@ We will now give up on the idea of height $1$ trees to optimize more. Representa
 \end{itemize}
 To implement this data structure we will use a tree for each component and every node has a \emph{parent} pointer. And there we will use the \textsc{Find} and \textsc{Union} operations.
 
-Our goal is to run Kruskal algorithm in almost $O(n+m)$ time. More precisely $O((n+m)\log^* n)$ time where $\log ^*n$ is the number of times we need to compose $\log $ on $n$ to get $1$.
+Our goal is to run Kruskal's algorithm in almost $O(n+m)$ time. More precisely $O((n+m)\log^* n)$ time where $\log ^*n$ is the number of times we need to compose $\log $ on $n$ to get $1$.
 \subsection{\textsc{Find} Operation}
 The \textsc{Find} operation does something called path compression i.e. for any vertex $v\in V$, if \textsc{Find}$(v)$ is called then it starts from $v$ changes it's parent to the root of the component $v$ is in, and then it moves to its parent and changes his parent to be the root and move to his parent and keep on doing like that till it reaches the root. In other words in path from the root to $v$, for every vertex in that path the \textsc{Find} operation changes the \emph{parent} pointer to the root.
 \begin{center}

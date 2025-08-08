@@ -407,7 +407,7 @@ In order to remove the blossoms from the graph we will shrink the blossoms into 
 	How to shrink a blossom into a single vertex?
 \end{question}
 
-Let $B$ be a blossom in $G$. Then the new graph is $G?B=(V',E')$ where $$V'=(V\setminus B)\cup \{v_b\},\qquad E'=\Big(E\setminus\{(u,v)\colon u\in B\text{ or }v\in B\}\Big)\cup \{(u,v_b)\colon u\notin B, v\in B, (u,v)\in E\}$$ So if $M$ is a matching in $G$ then we can also a get a matching $M/B$  in $G/B$ from $M$ after shrinking $B$ into  a single vertex where $M/B=M\setminus \{\text{Matching edges in $B$}\}$.
+Let $B$ be a blossom in $G$. Then the new graph is $G/B=(V',E')$ where $$V'=(V\setminus B)\cup \{v_b\},\qquad E'=\Big(E\setminus\{(u,v)\colon u\in B\text{ or }v\in B\}\Big)\cup \{(u,v_b)\colon u\notin B, v\in B, (u,v)\in E\}$$ So if $M$ is a matching in $G$ then we can also a get a matching $M/B$  in $G/B$ from $M$ after shrinking $B$ into  a single vertex where $M/B=M\setminus \{\text{Matching edges in $B$}\}$.
 \begin{Theorem}{}{}
 	Let $B$ be a blossom wrt $M$. $M$ is a maximum matching in $G$ if and only if $M/B$ is a maximum matching in $G/B$.
 \end{Theorem}
