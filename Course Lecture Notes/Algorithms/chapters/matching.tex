@@ -371,7 +371,7 @@ By the above theorem like in the case of bipartite graphs we will search for aug
 		For a matching $M$ a \emph{flower} consists of an even $M$-alternating path $P$ from an exposed vertex $u$ to vertex $v$, called the \emph{stem} and an odd cycle containing $v$ in which the edges alternate between in and out of the matching except for the two edges incident to $v$. This odd cycle is called the \emph{blossom}.
 	\end{minipage}\hspace{5pt}
 	\begin{minipage}{0.25\textwidth}
-		\usetikzlibrary{decorations.pathreplacing}
+		\usetikzlibrary{decorations.pathreplacing,arrows.meta, calc}
 		\begin{tikzpicture}[
 				vertex/.style={circle, draw, inner sep=0pt, minimum size=1mm},
 			]
@@ -383,10 +383,10 @@ By the above theorem like in the case of bipartite graphs we will search for aug
 			\node[vertex] (c3) at (3.5,-0.7) {};
 			\node[vertex] (c4) at (2.5,-0.7) {};
 			\draw[dashed] (u) -- (a);
-			\draw[thick, red] (a) -- (v);
+			\draw[thick, decorate, decoration={snake, segment length=3pt, amplitude=1pt},red] (a) -- (v);
 			\draw[dashed] (c1) -- (v) -- (c4);
-			\draw[thick, red] (c1) -- (c2);
-			\draw[thick,red] (c4) -- (c3);
+			\draw[thick, decorate, decoration={snake, segment length=3pt, amplitude=1pt},red] (c1) -- (c2);
+			\draw[thick,decorate, decoration={snake, segment length=3pt, amplitude=1pt},red] (c4) -- (c3);
 			\draw[dashed] (c2) -- (c3);
 			\draw[decoration={brace,mirror,raise=5pt},decorate] (u) -- node[midway, yshift=-0.4cm] {stem} (v);
 			\draw[-latex] (1.75,-0.8) node[left]{base} -- (2,-0.8) -- (v);
@@ -412,7 +412,168 @@ Let $B$ be a blossom in $G$. Then the new graph is $G?B=(V',E')$ where $$V'=(V\s
 	Let $B$ be a blossom wrt $M$. $M$ is a maximum matching in $G$ if and only if $M/B$ is a maximum matching in $G/B$.
 \end{Theorem}
 \begin{proof}
-$(\Longrightarrow):$ Suppose $M/B$ is not maximum matching in $G/B$. Let $N$ is a matching in $G/B$ larger than $M/B$. Now if $N$ has no edge incident to $v_b$ then $N$ is also a matching in $B$. Let $N'$ is the matching in $G$. If there is an edge $(u,v_b)$ incident on $v_b$ in $N$ then we can expand the blossom $B$ and get the matching where the base of $B$ is matched with $u$ and other vertices of $B$ are matched inside $B$. So we have the matching $N'=(N\setminus\{e\})\cup \{(u,w)\}$ where $w$ in $B$ connected to $u$ in $G$. Since $|N'|=|N|>|M/B|$ and $B$ has $\frac{|B|-1}2$ matching edges we have $|N|+\frac{|B|-1}2>|M/B|+\frac{|B|-1}2=|M|$. But $M$ is maximum matching in $G$. Hence, contradiction. Therefore, $M/B$ is a maximum matching in $G/B$.
+	$(\Longrightarrow):$ Suppose $M/B$ is not maximum matching in $G/B$. Let $N$ is a matching in $G/B$ larger than $M/B$. Now if $N$ has no edge incident to $v_b$ then $N$ is also a matching in $B$. Let $N'$ is the matching in $G$. If there is an edge $(u,v_b)$ incident on $v_b$ in $N$ then we can expand the blossom $B$ and get the matching where the base of $B$ is matched with $u$ and other vertices of $B$ are matched inside $B$. So we have the matching $N'=(N\setminus\{e\})\cup \{(u,w)\}$ where $w$ in $B$ connected to $u$ in $G$. Since $|N'|=|N|>|M/B|$ and $B$ has $\frac{|B|-1}2$ matching edges we have $|N|+\frac{|B|-1}2>|M/B|+\frac{|B|-1}2=|M|$. But $M$ is maximum matching in $G$. Hence, contradiction. Therefore, $M/B$ is a maximum matching in $G/B$.
 
-$(\Longleftarrow):$ Suppose $M$ is not a maximum matching in $G$. Now WLOG we can assume the blossom has an empty stem. Otherwise, if $Q$ is the stem of $B$ we can consider the matching $M'=M\oplus Q$. So now we will call
+	$(\Longleftarrow):$ Suppose $M$ is not a maximum matching in $G$. Now WLOG we can assume the blossom has an empty stem. Otherwise, if $Q$ is the stem of $B$ we can consider the matching $M'=M\oplus Q$ and $|M'|=|M|$. We now we will work with a matching which gives $B$ empty stem, and we will call the matching $M$. This will make the base of the blossom $B$ an exposed vertex. Now since $M$ is not a maximum matching in $G$ there exists an augmenting path $P:u\rightsquigarrow v$. Now if $P$ has no vertex of $B$ then $P/B$ is also an augmenting path in $G/B$, but we assumed that $M/B$ is a maximum matching in $G/B$. Hence, $P$ must have a vertex of $B$. Let $w$ be the first vertex of $P$ in $B$. Then vertex $v_b$ in $G/B$ is unmatched. We remove the part $w\rightsquigarrow v$ from $P$. Let $P'=u\rightsquigarrow w$. Now if $w$ is the base of $B$ then $P'$ is an augmenting path, and it is also an augmenting path of $G/B$ which is not possible. So $w$ is not the base of the $B$.
+
+	The last  edge of $P'$ is matched then it is also an edge of $B$. Then $w$ is not the first vertex of $P$ since the other end of the last of $P'$ is before $w$. If the last edge of $P'$ is not matched then $P'$ is already an odd length alternating path from an exposed vertex. Inside $B$ we can find an even length alternating path from $w$ to the base of $B$ where the edge incident on $w$ is matched edge. Let that path is $\hat{P}$. Now consider the path $\tdP=P'+\hat{P}$. It is an augmenting path from $u$ to the base of $B$. Now since $v_b$ is unmatched in $G/B$, $\tdP/B$ is also an augmenting path in $G/B$. But this contradicts the assumption that $M/B$ is a maximum matching in $G/B$. Then $P$ can not exist. Hence, $M$ is a maximum matching in $G$.
 \end{proof}
+
+\begin{question}{}{}
+	If we find a maximum matching $M*$ in $G/B$ and then let $N=M^*\cup (\text{Matching edges in $B$})$, is $N$ a maximum matching in $G$?
+\end{question}
+The answer is no. Consider the following example
+
+\begin{center}
+	\usetikzlibrary{arrows.meta, calc, decorations.pathreplacing}
+	\begin{tikzpicture}
+
+		% Left graph
+		\node[fill=black, circle, inner sep=1.2pt, label=right:$w_0$] (w0) at (3,2) {};
+		\node[fill=black, circle, inner sep=1.2pt, label=right:$w_1$] (w1) at (3,0) {};
+		\node[fill=black, circle, inner sep=1.2pt, label=left:$w_2$] (w2) at (-1,0) {};
+		\node[fill=black, circle, inner sep=1.2pt, label=left:$w_3$] (w3) at (-1,2) {};
+
+
+		\node[fill=black, circle, inner sep=1.2pt] (v) at (1,2.3) {};
+		\node[fill=black, circle, inner sep=1.2pt, label=above:$v_3$] (v3) at (0,1.5) {};
+		\node[fill=black, circle, inner sep=1.2pt, label=below:$v_2$] (v2) at (0.3,0.5) {};
+		\node[fill=black, circle, inner sep=1.2pt, label=below:$v_1$] (v1) at (1.7,0.5) {};
+		\node[fill=black, circle, inner sep=1.2pt, label=above:$v_0$] (v0) at (2,1.5) {};
+
+		% Edges
+		\draw (v3) -- (v) -- (v0);
+		\draw (v2) -- (v1);
+
+		\draw (v3) -- (w3);
+		\draw (v0) -- (w0);
+		\draw (v1) -- (w1);
+		\draw (v2) -- (w2);
+
+		% Matching edges
+		\draw[red, thick, decorate, decoration={snake, segment length=3pt, amplitude=1pt}] (v0) -- (v1);
+		\draw[red, thick, decorate, decoration={snake, segment length=3pt, amplitude=1pt}] (v2) -- (v3);
+
+		% Matching set label
+		\node at (1,-1.3) {$M = \left\{ (u_0, u_1),\, (u_2, u_3) \right\}$};
+
+		% Arrow to right side
+		\draw[thick, -{Latex}] (4,1) -- (7,1);
+
+		% Right graph (contracted blossom)
+		\begin{scope}[shift={(1.5,0)}]
+			\node[fill=black, circle, inner sep=1.2pt, label=above:$b$] (b) at (7.65, 1) {};
+			\node[fill=black, circle, inner sep=1.2pt, label=right:$w_0$] (rw0) at (9,2) {};
+			\node[fill=black, circle, inner sep=1.2pt, label=right:$w_1$] (rw1) at (9,0) {};
+			\node[fill=black, circle, inner sep=1.2pt, label=left:$w_2$] (rw2) at (6.3,0) {};
+			\node[fill=black, circle, inner sep=1.2pt, label=left:$w_3$] (rw3) at (6.3,2) {};
+			\node at (7.65, -1.15) {$\mathcal{N} = \left\{ (w_2, b) \right\}$};
+			\node at (7.65, -1.6) {$\Downarrow$};
+			\node at (7.65, -2) {
+				$\mathcal{N}' = \left\{ (w_2, u_2),\, (u_3, u_4),\, (u_0, u_1) \right\}$
+			};
+		\end{scope}
+
+		\draw (rw0) -- (rw2);
+		\draw (rw1) -- (rw3);
+
+		% Highlighted edge
+		\draw[line width=3pt, blue!20] (b) -- (rw2);
+		\draw (b) -- (rw2);
+
+		% Set N and N'
+
+
+	\end{tikzpicture}
+\end{center}
+$N'$ is not maximum matching. Since $\{(v_i,w_i)\mid i\in\{0,1,2,3\}\}$ is maximum matching.
+\nt{The above is not contradicting the theorem since the blossom with respect to $N'$ is not the blossom with respect to $M$.}
+
+\subsection{Algorithm for Maximum Matching}
+Suppose we start with a matching $M$ in $G$. We mark all the exposed vertices to be even and keep all the other vertices unmarked at this point. Hence, initially all the vertices are marked even. Now we use the same algorithm for finding augmenting paths as in the case of bipartite graphs but with slight modifications. In the case of bipartite graphs at each iteration we created the $M$-alternating tree we went one level at a time. But in the case of general graphs we'll go two levels at a time. So at each iteration we start with a vertex which is labeled even. Let $u$ be a vertex labeled. Now for each neighbor $v$ of $u$:
+\begin{enumerate}[label=Case \arabic*:, leftmargin=*, align=left]
+	\item $v$ is unmarked. This implies $v$ is matched. Then mark $v$ as odd and $M(v)$ i.e. the vertex matched with $v$ as even and continue the algorithm.
+	\item $v$ is marked, and it is in the same tree as $u$. Then we have a blossom $B$ with respect to $M$. We shrink the blossom $B$ and therefore, we have the matching $M/B$ in the graph $G/B$. Mark the shrunk vertex $v_b$ even and continue the algorithm.
+
+	      If we get an even cycle then we just ignore i.e. ignore any neighbor marked odd.
+	\item $v$ is marked even, and it is in a different tree from $u$. Let $r_u$ and $r_v$ are the root exposed vertices in the tree of $u$ or $v$ respectively. Then consider the path $P:r_u\rightsquigarrow u\to v\rightsquigarrow r_v$. This is an augmenting path from $r_u$ to $r_v$. Hence, the algorithm found an augmenting path with respect to $M$. Now unshrink the blossoms in $P$ to get the alternating path in $G$. Let that path is $\hat{P}$. So the algorithm updates the matching $M$ to $M\oplus \hat{P}$, and then we will start the algorithm again with the new matching $M\oplus \hat{P}$.
+
+	      \begin{center}
+		      \usetikzlibrary{arrows.meta, calc, decorations.pathreplacing}
+		      \begin{tikzpicture}
+
+			      % Left graph
+			      \node[fill=black, circle, inner sep=1.2pt] (w0) at (3,2) {};
+			      \node[fill=black, circle, inner sep=1.2pt] (w1) at (3,0) {};
+			      \node[fill=black, circle, inner sep=1.2pt] (w2) at (-1,0) {};
+			      \node[fill=black, circle, inner sep=1.2pt] (w3) at (-1,2) {};
+
+
+			      \node[fill=black, circle, inner sep=1.2pt] (v) at (1,2.3) {};
+			      \node[fill=black, circle, inner sep=1.2pt] (v3) at (0,1.5) {};
+			      \node[fill=black, circle, inner sep=1.2pt] (v2) at (0.3,0.5) {};
+			      \node[fill=black, circle, inner sep=1.2pt] (v1) at (1.7,0.5) {};
+			      \node[fill=black, circle, inner sep=1.2pt] (v0) at (2,1.5) {};
+
+			      % Edges
+			      \draw (v3) -- (v) -- (v0);
+			      \draw (v2) -- (v1);
+
+			      \draw (v3) -- (w3);
+			      \draw (v0) -- (w0);
+			      \draw (v1) -- (w1);
+			      \draw (v2) -- (w2);
+
+			      % Matching edges
+			      \draw[red, thick, decorate, decoration={snake, segment length=3pt, amplitude=1pt}] (v0) -- (v1);
+			      \draw[red, thick, decorate, decoration={snake, segment length=3pt, amplitude=1pt}] (v2) -- (v3);
+
+			      % Arrow to right side
+			      \draw[thick, -{Latex}] (3,1) -- (4.5,1) node[midway, above] {Shrink};
+
+			      % Right graph (contracted blossom)
+			      \begin{scope}[shift={(-1.5,0)}]
+				      \node[fill=black, circle, inner sep=1.2pt] (b) at (7.65, 1) {};
+				      \node[fill=black, circle, inner sep=1.2pt] (rw0) at (9,2) {};
+				      \node[fill=black, circle, inner sep=1.2pt] (rw1) at (9,0) {};
+				      \node[fill=black, circle, inner sep=1.2pt] (rw2) at (6.3,0) {};
+				      \node[fill=black, circle, inner sep=1.2pt] (rw3) at (6.3,2) {};
+
+			      \end{scope}
+
+			      \draw (rw0) -- (rw2);
+			      \draw (rw1) -- (b);
+
+			      % Highlighted edge
+			      \draw[red, very thick, decorate, decoration={snake, segment length=3pt, amplitude=1pt}] (b) -- (rw3);
+
+			      % Set N and N'
+			      \begin{scope}[shift={(10,0)}]
+				      \node[fill=black, circle, inner sep=1.2pt] (w0) at (3,2) {};
+				      \node[fill=black, circle, inner sep=1.2pt] (w1) at (3,0) {};
+				      \node[fill=black, circle, inner sep=1.2pt] (w2) at (-1,0) {};
+				      \node[fill=black, circle, inner sep=1.2pt] (w3) at (-1,2) {};
+
+
+				      \node[fill=black, circle, inner sep=1.2pt] (v) at (1,2.3) {};
+				      \node[fill=black, circle, inner sep=1.2pt] (v3) at (0,1.5) {};
+				      \node[fill=black, circle, inner sep=1.2pt] (v2) at (0.3,0.5) {};
+				      \node[fill=black, circle, inner sep=1.2pt] (v1) at (1.7,0.5) {};
+				      \node[fill=black, circle, inner sep=1.2pt] (v0) at (2,1.5) {};
+
+				      % Edges
+				      \draw (v3) -- (v);
+				      \draw (v3) -- (v2);
+				      \draw (v0) -- (v1);
+				      \draw (v0) -- (w0);
+				      \draw (v1) -- (w1);
+				      \draw (v2) -- (w2);
+				      \draw[red, thick, decorate, decoration={snake, segment length=3pt, amplitude=1pt}] (w3) -- (v3);
+				      \draw[red, thick, decorate, decoration={snake, segment length=3pt, amplitude=1pt}] (v) -- (v0);
+				      \draw[red, thick, decorate, decoration={snake, segment length=3pt, amplitude=1pt}] (v2) -- (v1);
+			      \end{scope}
+			      \draw[thick, -{Latex}] (7.5,1) -- (9,1) node[midway, above] {Unshrink};
+		      \end{tikzpicture}
+	      \end{center}
+
+\end{enumerate}
