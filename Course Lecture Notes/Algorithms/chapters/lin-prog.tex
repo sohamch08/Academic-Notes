@@ -168,7 +168,7 @@ Now using this theorem we will show that the polytope for bipartite maximum matc
 \begin{lemma}{}{max-flow-polytope-integral}
 	The LP for $s-t$ max flow  is \begin{maxi*}
 			{}{\sum\limits_{e\in \textit{out}(s)}x_e}{}{}
-			\addConstraint{}{\sum\limits_{e\in\textit{in}(v)}x_e-\sum\limits_{c\in\textit{out}(v)}x_e=0}{\quad \forall \ v\in V, v\neq s,t}
+			\addConstraint{}{\sum\limits_{e\in\textit{in}(v)}x_e-\sum\limits_{e\in\textit{out}(v)}x_e=0}{\quad \forall \ v\in V, v\neq s,t}
 			\addConstraint{}{c_e\geq x_e\geq 0}{\quad \forall\ e\in E}
 		\end{maxi*}Then the max flow polytope is integral.
 \end{lemma}
@@ -201,7 +201,7 @@ But we also have the conditions that the coefficients of $x_1$ and $x_2$ can not
 
 For every minimization LP there is a dual LP that provides a lower bound on the optimal value of the primal LP.
 \nt{If the Primal LP is unbounded then the dual LP is infeasible.}
-\begin{lemma}{}{}
+\begin{lemma}{}{dual-dual}
 	Dual of Dual is the primal LP
 \end{lemma}
 \subsection{Dualization of LP}
@@ -226,7 +226,35 @@ If the primal LP is in canonical form then we have the following:
 		$\boxed{\text{Dual}}$
 	\end{center}
 \end{minipage}
-\end{center}
+\end{center} 
+
+\begin{proof-of-lemma}[dual-dual]
+	Suppose for $A\in\bbR^{m\times n}$, $c\in\bbR^n$, $b\in\bbR^m$ we have the following LP:\begin{maxi*}{}{c^Tx}{}{}
+		\addConstraint{}{Ax\leq b}{\quad x\in\bbR^n}
+	\end{maxi*}
+	Then the dual the LP is 		\begin{mini*}{}{b^Ty}{}{}
+		\addConstraint{}{A^Ty=c}{\quad y\in\bbR^m}
+		\addConstraint{}{y\geq 0}{}
+	\end{mini*}
+
+	Now consider the LP
+
+	\begin{maxi*}{}{-b^Ty}{}{}
+		\addConstraint{}{A^Ty\leq c}{\quad y\in\bbR^m}
+		\addConstraint{}{-A^Ty\leq -c}{}
+		\addConstraint{}{-y\leq 0}{}
+	\end{maxi*}
+
+	These two LP's are equivalent. Now we obtained another LP which is equivalent to the dual LP. Now we will work with this one. Let $$\tdA=\mat{A^T\\ -A^T\\ -I_m},\tdA\in\bbR^{(2n+m)\times m}\qquad \tdc=\mat{c\\ -c\\ 0},\tdc\in\bbR^{2n+m}\qquad \tdb=-b$$Then the above LP is basically the following 	\begin{maxi*}{}{\tdb^Ty}{}{}
+		\addConstraint{}{\tdA y\leq \tdc}{\quad y\in\bbR^m}
+	\end{maxi*}Hence the dual of this LP is 	\begin{mini*}{}{\tdc^Tz}{}{}
+		\addConstraint{}{\tdA^Tz=\tdb}{\quad z\in\bbR^{2n+m}}
+		\addConstraint{}{z\geq 0}{}
+	\end{mini*}Let $z=\mat{ p & q & r}^T$ where $p,q\in bbR^n$ and $r\in\bbR^m$ and let $r_i$ denote the $i^{th}$ coordinate of $r$ for $i\in [m]$. . For any feasible solution $z$ of the LP $Ap-Aq-r=-b\iff A(q-p)+r=b$. Take $w=q-p$ then $$Ap-Aq-r=-b\iff A(q-p)+r=b\iff Aw+r=b$$Since $r\geq 0$ we have $Aw\leq b$. And we have the minimize $$\tdc^z=c^Tp-\tdc^Tq=c^T(p-q)$$Hence it is equivalent to maximize $c^Tw$. Since final cost vector doesn't depend on the vector $r$ we can disregard $r$ from the constraints and replace with $Aw\leq r$. Therefore the above LP is equivalent to  \begin{maxi*}{}{c^Tw}{}{}
+		\addConstraint{}{A w\leq b}{\quad w\in\bbR^n}
+	\end{maxi*}This is LP is exactly the primal LP. Hence the dual of dual LP is the primal LP.
+\end{proof-of-lemma}
+
 But if the primal LP is not in the canonical form then we have two options: either we can convert the primal to the canonical form and the dualize it or we can directly dualize the primal LP. The following method gives us a way to dualize the primal LP without converting it tot the canonical form.
 
 \begin{center}
