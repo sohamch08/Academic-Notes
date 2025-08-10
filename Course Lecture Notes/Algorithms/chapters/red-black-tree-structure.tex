@@ -1,4 +1,4 @@
-\chapter{Red Black Tree}
+\chapter{Red Black Tree Data Structure}
 A red-black tree is a special type of binary search tree with one extra bit of storage per node, its color which can be either red or black. Also, we keep the tree approximately balanced by enforcing some properties on the tree.
 \begin{definition}{Perfect Binary Tree}{}
 	It is a Binary Tree in which every internal node has exactly two children and all leaves are at the same level.
@@ -23,7 +23,7 @@ A red-black tree is a special type of binary search tree with one extra bit of s
 		\begin{tikzpicture}[
 				level/.style={sibling distance=30mm/#1},
 				level distance=10mm,
-				redVertex/.style={draw=red!80!black,fill=black!10!white,circle,minimum size=20pt,inner sep=0pt, text=red},
+				redVertex/.style={draw=red!80!black,fill=red!5!white,circle,minimum size=20pt,inner sep=0pt, text=red},
 				blackVertex/.style={draw,fill=black!10!white,   circle,minimum size=20pt,inner sep=0pt},
 				nil/.style={draw,fill=black,rectangle,rounded corners, minimum size=18pt,inner sep=0pt, text=white}]
 			\node [blackVertex] (r){29}
@@ -339,7 +339,7 @@ We will now describe how to insert a node in a red-black tree in $O(\log n)$ tim
 			      \draw[thick, -latex] ($(B3)+(-1,0.05)$) -- node[midway, above] {Recolor} ($(C4)+(1,0.05)$);
 		      \end{tikzpicture}
 	      \end{figure}
-	      The color of $v.\emph{parent}.\emph{parent}$ will be black and the color of $v.\emph{parent}$ will be red. The color of $v$ will remain red. This will preserve the number of black nodes in any simple path from root to any leaf. And this case now stabilizes the tree and we can stop the process.
+	      The color of $v.\emph{parent}.\emph{parent}$ will be black and the color of $v.\emph{parent}$ will be red. The color of $v$ will remain red. This will preserve the number of black nodes in any simple path from root to any leaf. And this case now stabilizes the tree, and we can stop the process.
 \end{enumerate}
 So analyzing the insertion process we can insert a node in a red-black tree and using the two cases we can recolor the nodes the balance the tree.\parinf
 

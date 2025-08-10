@@ -498,12 +498,12 @@ First let's define what is a schedule and what is even a feasible schedule:
 	\end{enumerate}
 \end{Definition}\parinn
 
-Now  for any $S\subseteq J$, and $t\in\bbZ_+$, define $N_t(S)=\{j\in S\colon d_j\leq t\}$. Then we have the following lemma:
+Now  for any $S\subseteq J$, and $t\in\bbZ_0$, define $N_t(S)=\{j\in S\colon d_j\leq t\}$. Then we have the following lemma:
 \begin{lemma}{}{job-schedule}
 	Let $S\subseteq J$. \Tfae
 	\begin{enumerate}[label=\bfseries\tiny\protect\circled{\small\arabic*}]
 		\item $S$ is feasible
-		\item $\forall\ t\in\bbZ_t$, $|N_t(S)|\leq t$
+		\item $\forall\ t\in\bbZ_0$, $|N_t(S)|\leq t$
 		\item A schedule that orders jobs in $S$ by deadline is feasible
 	\end{enumerate}
 \end{lemma}

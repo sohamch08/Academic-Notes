@@ -1,7 +1,7 @@
 \chapter{Dijkstra Algorithm with Data Structures}
 \begin{algoprob}
 	\problemtitle{Minimum Weight Path}
-	\probleminput{Directed Graph $G=(V,E)$, $s\in V$ is source and $W=\{w_e\in \bbZ_+\colon e\in E\}$}
+	\probleminput{Directed Graph $G=(V,E)$, $s\in V$ is source and $W=\{w_e\in \bbZ_0\colon e\in E\}$}
 	\problemquestion{$\forall\ v\in V-\{s\}$ find minimum weight path $s\rightsquigarrow v$.}
 \end{algoprob}
 
@@ -13,7 +13,7 @@ $$\delta(v)=\min\limits_{u:(u,v)\in E}\{\delta(u)+e(u,v)\}$$And suppose for any 
 \begin{algorithm}
 	\SetKwComment{Comment}{// }{ }
 	\DontPrintSemicolon
-	\KwIn{Adjacency Matrix of digraph $G=(V,E)$, source vertex $s\in V$ and weight function $W=\{w_e\in \bbZ_+\colon e\in E\}$}
+	\KwIn{Adjacency Matrix of digraph $G=(V,E)$, source vertex $s\in V$ and weight function $W=\{w_e\in \bbZ_0\colon e\in E\}$}
 	\KwOut{$\forall\ v\in V-\{s\}$ minimum weight path from $s\rightsquigarrow v$}
 	\Begin{
 		$S\longleftarrow \emptyset$, $U\longleftarrow V$\;
@@ -317,18 +317,18 @@ Now we will give a proof using the accounting method. In the accounting method o
 		\item Every change from $0\to 1$ charges $1$ Rs and store $1$ Rs.
 		\item Every change from $1\to 0$ charges $2$ Rs.
 	\end{itemize}
-	Now as you can see to change from $1\to 0$ that bit was previously changed from $0\to 1$. So to change from $1\to 0$ we can use the stored $1$ Rs. Hence, in average every operation costs exactly $0$ to $1$ Rs. Since there are $t$ operations total number of bit flips is at most $2t$.
+	Now as you can see to change from $1\to 0$ that bit was previously changed from $0\to 1$. So to change from $1\to 0$ we can use the stored $1$ Rs. Hence, in average every operation costs exactly $2$ Rs. Since there are $t$ operations total number of bit flips is at most $2t$.
 \end{proofmany}
 
 In the next proof we will analyze by computing a necessary potential function. After each operation we can calculate the potential difference.
 
 \begin{proofmany}{3 (Potential)}
-	Consider the potential function $\Phi(i)=\#$1's in $X(i)$. Let at $i^{th}$ operation $t_i$ bits were flipped from $1\to 0$. Now any operation flips at most $1$ bit from $0\to 1$. Therefore, number of bit flips in $i^{th}$ operation is at most $t_i+1$. Therefore, we have $$\Phi(i)\leq \Phi(i-1)-t_i+1$$since the number of $1$'s in $\Phi(i)$ is decreased by $t_i$ many $1\to 0$ flips and then $1$ flip from $0\to 1$. Therefore, the cost at $i^{th}$ operation is at most $\Phi(i-1)-\Phi(i)+2$. Hence, the total number of bit flips in $t$ operations is $\Phi(0)-\Phi(t)+2t\leq 2t$.
+	Consider the potential function $\Phi(i)=\#$1's in $X(i)$. Let at $i^{th}$ operation $t_i$ bits were flipped from $1\to 0$. Now any operation flips at most $1$ bit from $0\to 1$. Therefore, number of bit flips in $i^{th}$ operation is at most $t_i+1$. Therefore, we have $$\Phi(i)\leq \Phi(i-1)-t_i+1$$since the number of $1$'s in $\Phi(i)$ is decreased by $t_i$ many $1\to 0$ flips and then increased because of $1$ flip from $0\to 1$. Therefore, the cost at $i^{th}$ operation is $t_i+1\leq \Phi(i-1)-\Phi(i)+2$. Hence, the total number of bit flips in $t$ operations is $\Phi(0)-\Phi(t)+2t\leq 2t$.
 \end{proofmany}
 
 Hence, after $t$ operations the total number of bit flips is at most $2t$. Therefore, on average the cost per operation is at most $2$. Hence, the amortized cost of the operation is $2$. So we will use such amortized analysis on the next data structure to optimize the run time of Dijkstra Algorithm.
 \section{Data Structure 3: Fibonacci Heap}
-Instead of keeping just one Heap we will now keep an array of Heaps. We will also discard the idea of binary trees. We will now use a data structure which will take the benefit of the faster time of both the data structure. I.e.
+Instead of keeping just one Heap we will now keep an array of Heaps. We will also discard the idea of binary trees. We will now use a data structure which will take the benefit of the faster time of both the data structure i.e.
 \begin{center}
 	\begin{tabular}{c|c|c}
 		               & \prb{Extract-Min}                                       & \prb{Decrease-Key}                                 \\
@@ -337,8 +337,9 @@ Instead of keeping just one Heap we will now keep an array of Heaps. We will als
 		Fibonacci Heap & $O(\log n)^*$                                           & $O(1)^*$
 	\end{tabular}
 \end{center}
-The * is because  in Fibonacci Heap the amortized time taken by \prb{Extract-Min} is  $O(\log n)$.
-
+\begin{remark}
+	The $*$ is because of the amortized time.
+\end{remark}
 Since Fibonacci heap is an array of heaps there is a \emph{rootlist} which is the list of all the roots of all the heaps in the Fibonacci heap. There is a \emph{min-pointer} which points to the root with the minimum key. For each node in the Fibonacci heap we have a pointer to its parent and  we keep 3 variables. The 3 variables are \emph{degree}, \emph{size} and \emph{lost} where \emph{lost} is a Boolean Variable. \begin{itemize}
 	\item For any node $x$ in the Fibonacci heap the $x.\emph{degree}$ is the number of children $x$ has.
 	\item $x.\emph{size}$ is the number of nodes in the tree rooted at $x$.
@@ -369,7 +370,7 @@ To insert a node we call the \prb{Fib-Insert} function and in the function the a
 	\begin{algorithm}[H]
 		\DontPrintSemicolon
 		\caption{\textsc{Fib-Insert}$(F,v)$}
-		$x\longleftarrow \textsc{Create-Node}(v)$\;
+		$x\longleftarrow \textsc{Fib-Create-Node}(v)$\;
 		\If{$F.\min==None$}{
 			$F.\emph{rootlist}\longleftarrow [x]$\;
 			$F.\min\longleftarrow x$\;
@@ -385,7 +386,7 @@ To insert a node we call the \prb{Fib-Insert} function and in the function the a
 
 All of this can be done in $O(1)$ time. Therefore, to insert a node in the Fibonacci heap it takes $O(1)$ time.
 \subsection{Union of Fibonacci Heaps}
-To unite to Fibonacci heaps $F_1$ and $F_2$ we simply concatenate the root lists of $F_1$ and $F_2$ and then determine the new minimum node.
+To unite two Fibonacci heaps $F_1$ and $F_2$ we simply concatenate the root lists of $F_1$ and $F_2$ and then determine the new minimum node.
 \begin{algorithm}
 	\DontPrintSemicolon
 	\caption{\textsc{Fib-Union}$(F_1,F_2)$}
@@ -447,7 +448,7 @@ The \textsc{Fib-Extract-Min} function extracts the minimum node from the Fibonac
 					\If{$y.\emph{key}<x.\emph{key}$}{
 						Exchange $x$ with $y$
 					}
-					\emph{Fib-Heap-Link}$(F,y,x)$\;
+					\textsc{Fib-Heap-Link}$(F,y,x)$\;
 					$A[d]\longleftarrow None$, $d\longleftarrow d+1$\;
 				}
 				$A[d]\longleftarrow x$
@@ -470,7 +471,7 @@ The \textsc{Fib-Extract-Min} function extracts the minimum node from the Fibonac
 	\end{minipage}
 \end{center}
 
-Here $D(n)$ denotes the maximum degree a node can have after \textsc{Consolidate}. The procedure \textsc{Consolidate} uses an auxiliary array of size $A$ of size $D$ which we will choose later. For each $i\leq D(n)$ it keeps a heap of degree $i$. And if it finds two 
+Here $D(n)$ denotes the maximum degree a node can have after \textsc{Consolidate}. The procedure \textsc{Consolidate} uses an auxiliary array of size $A$ of size $D(n)$ which we will choose later. For each $i\leq D(n)$ it keeps a heap of degree $i$. And if it finds two 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.75\textwidth]{images/Fibheap2.pdf}
@@ -529,16 +530,16 @@ In this section we will show how to decrease a key of a node in a Fibonacci heap
 		\end{algorithm}
 	\end{minipage}
 \end{center}
-After decreasing the key of the target node if the min-heap order has been violated then we start by cutting the link between $x$ and its parent by adding it to the rootlist. Let $x$ is a node in $F$. At some time $x$ was a root. 
+After decreasing the key of the target node if the min-heap order has been violated then we start by cutting the link between $x$ and its parent and adding it to the rootlist. Let $x$ is a node in $F$. At some time $x$ was a root. 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.7\textwidth]{images/Fibheap3.pdf}
-	\caption{A run of \textsc{Cascading-Cut}}
+	\includegraphics[width=0.8\textwidth]{images/Fibheap3.pdf}
+	\caption{A run of \textsc{Cascading-Cut}. First \textsc{Fib-Decrease-Key}$(F,46,15)$ and then \textsc{Fib-Decrease-Key}$(F,35,5)$ are called.}
 \end{figure}Then $x$ was linked to another node. Suppose at some time two children of $x$ were removed by cuts. As soon as second child has been lost we cut $x$ from its parent and make it a new root. But we are not done yet. Since $x$ might be the second child cut from its parent. So we have to check for its parent. Therefore, we recursively run \textsc{Cascading-Cut} on its parent till we reach the root or cut the first child from a node.
 
 Notice at each run of \textsc{Cascading-Cut} the \emph{lost} bit of a node is getting reset. Therefore, the total time taken by \textsc{Fib-Decrease-Key} is $O(1+\#\text{lost bits reset})$.
 \subsection{Bounding the Maximum Degree}\label{max-degree-bound}
-To prove that the amortized time of \textsc{Fib-Extract-Min} and \textsc{Fib-Delete} is $O(\log n)$ we must show that upper bound of the maximum degree of any node after \textsc{Consolidate} function is $O(\log n)$. In particular, we will show its $\lt\lfloor \log_{\phi}n\rt\rfloor$ where $\phi$ is the golden ratio.
+To prove that the amortized time of \textsc{Fib-Extract-Min} and \textsc{Fib-Decrease-Key} are $O(\log n)$  and $O(1)$ we must show that upper bound of the maximum degree of any node after \textsc{Consolidate} function is $O(\log n)$. In particular, we will show its $\lt\lfloor \log_{\phi}n\rt\rfloor$ where $\phi$ is the golden ratio.
 \begin{lemma}{}{}
 	Let $x$ be any node in a Fibonacci heap, and suppose that $x.\emph{degree}=k$. Let $y_1,\dots, y_k$ denote the children of $x$ in the order in which they were linked to $x$ from the earliest to the latest. Then $y_1.\emph{degree}\geq 0$ and $y_i.\emph{degree}\geq i-2$ for $i=2,\dots, k$.
 \end{lemma}
@@ -550,7 +551,7 @@ To prove that the amortized time of \textsc{Fib-Extract-Min} and \textsc{Fib-Del
 \end{lemma}
 \begin{proof}
 	We will prove this using induction. For $k=0$, $F_2=1$ so this is obviously true. For $k=1$ there is one child of $x$. Hence, $\emph{size}(x)=2=F_3$. Suppose this is true for $1,\dots, k-1$. Let $y_1,\dots, y_k$ are the children of $x$  in the order in which they were linked to $x$. By the above lemma we have $y_1.\emph{degree}\geq 0$ and $y_i.\emph{degree}\geq i-2$ for all $i=2,\dots, k$. Hence, by Induction hypothesis we have $\emph{size}(y_i)\geq F_{i-2}$ for all $i=2,\dots, k$. Therefore, \[
-		\emph{size}(x) \geq 1+\sum\limits_{i=1}^{k}\emph{size}(y_k)\geq 2+\sum\limits_{i=2}^kF_{k}=1+\sum\limits_{i=0}^k F_k=F_{k+2}\geq \phi^k
+		\emph{size}(x) \geq 1+\sum\limits_{i=1}^{k}\emph{size}(y_k)\geq 2+\sum\limits_{i=2}^kF_{i}=1+\sum\limits_{i=1}^k F_i=F_{k+2}\geq \phi^k
 	\]Hence, we have the lemma.
 \end{proof}
 \begin{corollary}{}{}
@@ -560,7 +561,7 @@ To prove that the amortized time of \textsc{Fib-Extract-Min} and \textsc{Fib-Del
 
 Now we will calculate the amortized time of Dijkstra algorithm. Before that we will calculate the amortized cost of the data structure. Let in an algorithm  \textsc{Fib-Extract-Min} was called $t$ times. Therefore, total cost of all $t$ many \textsc{Fib-Extract-Min} calls is $O(t\log n+\text{total $\#$heaps created})$. Now heaps are created because of \textsc{Fib-Extract-Min} functions and \textsc{Fib-Decrease-Key} function. We know \textsc{Fib-Extract-Min} were called $t$ times and each time it created $O(\log n)$ heaps. Hence, in total \textsc{Fib-Extract-Min} created $O(t\log n)$ heaps. Therefore, time taken by the $t$ many \textsc{Fib-Extract-Min} calls is $O(t\log n+\#\textsc{Fib-Decrease-Key}\text{ calls})$.
 
-Now suppose in an algorithm $k$ times the function \textsc{Fib-Decrease-Key} function were called. Hence, this takes $O(k+\#\text{total number of \textsc{lost} bits reset})=O(k+\#\text{total number of \textsc{lost} bits rset})$ time. Now the \emph{lost} bits are set only by the \textsc{Fib-Decrease--Key}. Therefore, $\#\text{total number of \textsc{lost} bits rset}=\#\text{\textsc{Fib-Decrese-Key} was called}$. Therefore, the total time taken by all the \textsc{Fib-Decrese-Key} calls is $O(k)$.
+Now suppose in that algorithm the function \textsc{Fib-Decrease-Key} were called $k$ times. Hence, this takes $O(k+\#\text{total number of \textsc{lost} bits reset})=O(k+\#\text{total number of \textsc{lost} bits set})$ time. Now the \emph{lost} bits are set only by the \textsc{Fib-Decrease-Key}. Therefore, $\#\text{total number of \textsc{lost} bits rset}=\#\text{\textsc{Fib-Decrese-Key} was called}$. Therefore, the total time taken by all the \textsc{Fib-Decrese-Key} calls is $O(k)$.
 
 Hence, in an algorithm if $t$ times \textsc{Fib-Extract-Min} was called and $k$ times \textsc{Fib-Decrese-Key} was called then total time taken by \textsc{Fib-Extract-Min} is $O(t\log n+k)$ and total time taken by \textsc{Fib-Decrese-Key} is $O(k)$. Therefore, amortized time taken by \textsc{Fib-Extract-Min} is $O(\frac{t}{k}\log n)$ and by \textsc{Fib-Decrese-Key} is $O(1)$.
 
