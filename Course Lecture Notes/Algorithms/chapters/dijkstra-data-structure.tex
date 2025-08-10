@@ -183,14 +183,14 @@ Suppose at any iteration $t$, let $dist_t(v)$ denotes the distance $v$ from $s$ 
 \begin{proof}
 	We will prove this induction. Base case is $|S^{(1)}|=1$. $S$ grows in size. Then only time $|S^{(1)}|=1$ is when $S^{(1)}=\{s\}$ and $d(s)=0=\dl(s)$. Hence, for base case this is correct.
 
-	Suppose this is also true for $t-1$. Let at $t^{th}$ iteration the vertex $u\in V-S$ is picked. By induction hypothesis for all $v\in S^{(t)}-\{u\}$, $dist_t(v)=dist_{t-1}(v)=\dl(v)$. So we have to show that $dist_{t}(u)=\dl(u)$.
+	Suppose this is also true for $t-1$. Let at $t^{th}$ iteration the vertex $u\in V-S^{(t-1)}$ is picked. By induction hypothesis for all $v\in S^{(t)}-\{u\}$, $dist_t(v)=dist_{t-1}(v)=\dl(v)$. So we have to show that $dist_{t}(u)=\dl(u)$.
 
-	Suppose for contradiction the shortest path from $s\rightsquigarrow u$ is $P$ and has total weight $=\dl(u)=w(P)<dist_t(u)$. Now $P$ starts with vertices from $S^{(t)}$ by eventually leaves $S$. Let $(x,y)$ be the first edge in $P$ which leaves $S$ i.e. $x\in S$ but $y\notin S$. By inductive hypothesis $dist_t(x)=\dl(x)$. Let $P_y$ denote the path $s\rightsquigarrow y$ following $P$. Since $y$ appears before $u$ we have $$w(P_y)=\dl(y)\leq \dl(u)=w(P)$$Now $$dist_t(y)\leq dist_t(x)+w(x,y)$$ since $y$ is adjacent to $x$. Therefore $$dist_t(y)\leq dist_t(x)+w(x,y)=\dl(y)\leq dist_t(y)\implies dist_t(y)=\dl(y)$$Now since both $u,y\notin S^{(t)}$ and the algorithm picked up $u$ we have $\dl(u)<dist_t(u)\leq dist_t(y)=\dl(y)$. But we can not have both $\dl(y)\leq \dl(u)$ and $\dl(u)<\dl(y)$. Hence contradiction. Therefore $\dl(u)=dist_t(u)$. Hence by mathematical induction for any iteration $t$, for all $v\in S^{(t)}$, $\dl(v)=dist_t(v)$.
+	Suppose for contradiction the shortest path from $s\rightsquigarrow u$ is $P$ and has total weight $=\dl(u)=w(P)<dist_t(u)$. Now $P$ starts with vertices from $S^{(t)}$ by eventually leaves $S$. Let $(x,y)$ be the first edge in $P$ which leaves $S$ i.e. $x\in S$ but $y\notin S$. By inductive hypothesis $dist_t(x)=\dl(x)$. Let $P_y$ denote the path $s\rightsquigarrow y$ following $P$. Since $y$ appears before $u$ we have $$w(P_y)=\dl(y)\leq \dl(u)=w(P)$$Now $$dist_t(y)\leq dist_t(x)+w(x,y)$$ since $y$ is adjacent to $x$. Therefore $$dist_t(y)\leq dist_t(x)+w(x,y)=\dl(y)\leq dist_t(y)\implies dist_t(y)=\dl(y)$$Now since both $u,y\notin S^{(t)}$ and the algorithm picked up $u$ we have $\dl(u)<dist_t(u)\leq dist_t(y)=\dl(y)$. But we can not have both $\dl(y)\leq \dl(u)$ and $\dl(u)<\dl(y)$. Hence contradiction \ctr Therefore $\dl(u)=dist_t(u)$. Hence by mathematical induction for any iteration $t$, for all $v\in S^{(t)}$, $\dl(v)=dist_t(v)$.
 \end{proof}
 
-Therefore, by the lemma  after all iterations $S$ has all the vertices with their shortest distances from $s$ and henceforth the algorithm runs correctly.
+Therefore, by the theorem  after all iterations $S$ has all the vertices with their shortest distances from $s$ and henceforth the algorithm runs correctly.
 
-Now in the algorithm there are two things which needed to keep track of. At every iteration of the while loop we needed to find the vertex $u$ which had the minimum distance from the source vertex, and we needed to update the distance of a vertex by decreasing the value as needed. So after the decrease we need to update the minimum distance vertex. So in any data structure used to do these two operations we need the following things:\begin{itemize}[label=$\bullet$]
+Now in the algorithm there are two things which we needed to keep track of. At every iteration of the while loop we needed to find the vertex $u$ which had the minimum distance from the source vertex, and we needed to update the distance of a vertex by decreasing the value as needed. So after the decrease we need to update the minimum distance vertex. So in any data structure used to do these two operations we need the following things:\begin{itemize}[label=$\bullet$]
 	\item Need to store: $\forall\ v\in V$, $dist(v)$
 	\item Operations: \begin{itemize}
 		      \item \textsc{Extract-Min}: Gives the vertex with minimum distance in $v$ and remove from the data structure.
@@ -206,10 +206,10 @@ So naively we can use a linear array of size $n$ where each element of the array
 \section{Data Structure 2: Min Heap}
 A binary heap data structure is an array object that we can view as ``Almost complete binary'' tree (ACB tree). Each node of the tree corresponds to an element of the array. The tree is completely filled on all levels except possibly the lowest which is filled from the left up to a point.
 
-Let the ACB tree has height $h$. Then heap  is completely field until height $h-1$ i.e. every vertex up to  level $h-2$ has exactly two children and a node at height $h-1$ is missing a child then:\begin{itemize}
+Let the ACB tree has height $h$. Then heap  is completely field until height $h-1$ i.e. every vertex up to  level $h-2$ has exactly two children and a node at height $h-1$ if  missing a child then:\begin{itemize}
 	\item Either both children are missing or only right child are missing.
 	\item Every vertex to the right of the node is missing both children.
-\end{itemize}An ACB tree height $h$ is represented as an array of size $2^h-1$. For vertex $v$ stored at $A[i]$, the left child of $A$ is at $A[2i]$ and the right child is at $A[2i+1]$ and the parent of $A$ is at $A\lt[\lfloor\frac{i}{2}\rfloor\rt]$.
+\end{itemize}An ACB tree height $h$ is represented as an array of size $2^h-1$. For vertex $v$ stored at $A[i]$, the left child of $A$ is at $A[2i]$ and the right child is at $A[2i+1]$ and the parent of $A$ is at $A\lt[\lt\lfloor\frac{i}{2}\rt\rfloor\rt]$.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.9\textwidth]{images/Heap.pdf}
@@ -217,16 +217,13 @@ Let the ACB tree has height $h$. Then heap  is completely field until height $h-
 \end{figure}
 
 Here we will study min-heap where the value of the children is more than the value of its parent.
-\subsection{Initialization}
-We create an array $A$ of size $n$. Initially we store the key value of every node to be $\infty$. And for the root $s$ we store $s.\emph{key}=0$.
 \subsection{Extracting the Minimum}
 For minimum, we already know the root of the heap or the first element of $A$ is the minimum. But after extracting the minimum we need to balance the heap so that it gets the properties of min-heap back. For that we replace the root with the right most element in the array $A$. Then balance the heap by moving it down if one of the child has \emph{key} smaller than \emph{node.key} and keep doing it until both child is larger.
 \begin{algorithm}[]
 	\caption{\textsc{Extract-Min}$(A)$}
 	\SetKwComment{Comment}{// }{}
 	\DontPrintSemicolon
-	$t\longleftarrow A.\emph{size}$\;
-	$Minval\longleftarrow A[1].\emph{key}$\;
+	$t\longleftarrow A.\emph{size}$, $Minval\longleftarrow A[1].\emph{key}$\;
 	$A[1]\longleftarrow A[t]$\;
 	$t\longleftarrow t-1$, $i\longleftarrow 1$\;
 	\While{True}{
@@ -271,8 +268,8 @@ After decreasing the \emph{key} of a node it may have smaller key than it's pare
 	$A[i]\longleftarrow k$\;
 	\While{$i>1$ and $A[i].\emph{key}<A\lt[\lfloor\frac{i}{2}\rfloor\rt].\emph{key}$}{
 		$curr\_elm\longleftarrow A[i]$\;
-		$A[i].\emph{key}\longleftarrow A\lt[\lfloor\frac{i}{2}\rfloor\rt]$\;
-		$A\lt[\lfloor\frac{i}{2}\rfloor\rt]\longleftarrow curr\_elm$\;
+		$A[i].\emph{key}\longleftarrow A\lt[\lt\lfloor\frac{i}{2}\rt\rfloor\rt]$\;
+		$A\lt[\lt\lfloor\frac{i}{2}\rt\rfloor\rt]\longleftarrow curr\_elm$\;
 		$i\longleftarrow\lt\lfloor\frac{i}{2}\rt\rfloor$
 	}
 \end{algorithm}

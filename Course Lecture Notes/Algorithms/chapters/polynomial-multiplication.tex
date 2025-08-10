@@ -12,7 +12,7 @@ Before diving into the algorithm first let's consider how many ways we can repre
 	\item \textbf{Point-Value Pairs}: We can evaluate the polynomial in distinct $n$ points and give all the point-value pairs. This also uniquely represents a polynomial since there is exactly one polynomial of degree $n-1$ which passes through all these points.
 \end{itemize}
 \begin{Theorem}{}{}
-	Given $n$ distinct points $(x_0,y_0),\dots, (x_{n-1},y_{n-1})$ in $\bbR^2$ there is a unique $(n-1)-$degree polynomial $P(x)$ such that $P(x_i)=y_i$ for all $i\in \llbracket n-1\rrbracket$
+	Given $n$ distinct points $(x_0,y_0),\dots, (x_{n-1},y_{n-1})$ in $\bbR^2$ with $x_i\neq x_j$ for all $i\neq j$ there is a unique $(n-1)-$degree polynomial $P(x)$ such that $P(x_i)=y_i$ for all $i\in \llbracket n-1\rrbracket$
 \end{Theorem}
 \parinn
 
@@ -64,11 +64,11 @@ But we have $O(n)$ points. And if each point takes $O(n)$ time to find the evalu
 \textbf{Idea:} Evaluate at roots of unity and use Fast Fourier Transform
 \parinn
 
-Assume $n$ is a power of 2. We have the polynomial $A(x)=\sum\limits_{i=0}^{n-1}a_ix^i$. So now consider the following two polynomials $$A^0(x)=a_0+a_2x+a_4x^2+\cdots+a_{n-2}x^{\frac{n}2-1}\qquad A^1(x)=a_1+a_3x+a_5x^2+\cdots+a_{n-1}x^{\frac{n}2-1}$$Certainly we have $$A(x)=A^0(x^2)+xA^1(x^2)$$Hence we can get $A(1)$ and $A(-1)$ by $$A(1)=A^0(1)+A^1(1)\qquad A(-1)=A^0(1)-A^1(1)$$Hence like this by evaluating two $\frac{n}2-1$ degree polynomials at one point we get evaluation of $A$ at two points. More generally for any $y\geq 0$ we have$$A(\sqrt{y})=A^0(y)+\sqrt{y}A^1(y)\qquad A(-\sqrt{y})=A^0(y)-\sqrt{y}A^1(y)$$So by recursing like this evaluating at $1,-1$ we can get evaluations of $A$ at $n^{th}$ roots of unity.
+Assume $n$ is a power of 2. We have the polynomial $A(x)=\sum\limits_{i=0}^{n-1}a_ix^i$. So now consider the following two polynomials $$A_0(x)=a_0+a_2x+a_4x^2+\cdots+a_{n-2}x^{\frac{n}2-1}\qquad A_1(x)=a_1+a_3x+a_5x^2+\cdots+a_{n-1}x^{\frac{n}2-1}$$Certainly we have $$A(x)=A_0(x^2)+xA_1(x^2)$$Hence we can get $A(1)$ and $A(-1)$ by $$A(1)=A_0(1)+A_1(1)\qquad A(-1)=A_0(1)-A_1(1)$$Hence like this by evaluating two $\frac{n}2-1$ degree polynomials at one point we get evaluation of $A$ at two points. More generally for any $y\geq 0$ we have$$A(\sqrt{y})=A_0(y)+\sqrt{y}A_1(y)\qquad A(-\sqrt{y})=A_0(y)-\sqrt{y}A_1(y)$$So by recursing like this evaluating at $1,-1$ we can get evaluations of $A$ at $n^{th}$ roots of unity.
 
 Let $$\om_n^k=n^{th}\text{ root of unity for }k\in\llbracket n-1\rrbracket = e^{i\frac{k}{n}2\pi}=\cos\lt(\frac{k}{n}2\pi\rt)+i\sin s\lt(\frac{k}{n}2\pi\rt)$$Hence we have \begin{align*}
-	A\lt(\om_n^k\rt)                               & =A^0\lt(\om_n^{2k}\rt)+\om_n^kA^1\lt(\om_n^{2k}\rt)=A^0\lt(\om_{\frac{n}2}^{k}\rt)+\om_n^kA^1\lt(\om_{\frac{n}2}^{k}\rt) \\
-	A\lt(-\om_n^k\rt)=A\lt(\om_n^{\frac{n}2+k}\rt) & =A^0\lt(\om_n^{2k}\rt)-\om_n^kA^1\lt(\om_n^{2k}\rt)=A^0\lt(\om_{\frac{n}2}^{k}\rt)-\om_n^kA^1\lt(\om_{\frac{n}2}^{k}\rt)
+	A\lt(\om_n^k\rt)                               & =A_0\lt(\om_n^{2k}\rt)+\om_n^kA_1\lt(\om_n^{2k}\rt)=A_0\lt(\om_{\frac{n}2}^{k}\rt)+\om_n^kA_1\lt(\om_{\frac{n}2}^{k}\rt) \\
+	A\lt(-\om_n^k\rt)=A\lt(\om_n^{\frac{n}2+k}\rt) & =A_0\lt(\om_n^{2k}\rt)-\om_n^kA_1\lt(\om_n^{2k}\rt)=A_0\lt(\om_{\frac{n}2}^{k}\rt)-\om_n^kA_1\lt(\om_{\frac{n}2}^{k}\rt)
 \end{align*}Hence now we will solve the following problem:
 \begin{algoprob}
 	\problemtitle{Recursive-DFT}
@@ -77,21 +77,21 @@ Let $$\om_n^k=n^{th}\text{ root of unity for }k\in\llbracket n-1\rrbracket = e^{
 \end{algoprob}
 
 \vspace*{5mm}\parinf
-Since $A^0$ and $A^1$ have degree $\frac{n}2-1$ we can use recursion. Hence, the algorithm is
+Since $A_0$ and $A_1$ have degree $\frac{n}2-1$ we can use recursion. Hence, the algorithm is
 \begin{algorithm}\SetKwComment{Comment}{// }{}
 	\DontPrintSemicolon
 	\KwIn{$A=(a_0,\dots, a_{n-1})$ such that $A(x)=a_0+a_1x+\cdots+ a_{n-1}x^{n-1}$}
 	\KwOut{$A(x)$ evaluated at $n^{th}$ roots of unity $\om_n^k$ for all $k\in\llbracket n-1\rrbracket$}
 	\Begin{
 	\If{$n==1$}{\Return{$A[0]$}}
-	$A^0\longleftarrow (A[0],A[2],\dots,A[n-2])$\;
-	$A^1\longleftarrow(A[1],A[3],\dots,A[n-1])$\;
-	$Y^0\longleftarrow 	\prb{Recursive-DFT}(A^0)$\;
-	$Y^1\longleftarrow 	\prb{Recursive-DFT}(A^1)$\;
+	$A_0\longleftarrow (A[0],A[2],\dots,A[n-2])$\;
+	$A_1\longleftarrow(A[1],A[3],\dots,A[n-1])$\;
+	$Y^0\longleftarrow 	\prb{Recursive-DFT}(A_0)$\;
+	$Y^1\longleftarrow 	\prb{Recursive-DFT}(A_1)$\;
 	\For{$k=0$ to $\frac{n}{2}-1$}{
 
-	$Y[k]\longleftarrow Y^0[k]+\om_n^kY^1[k]$\Comment*{$	A\lt(\om_n^k\rt)=A^0\lt(\om_{\frac{n}2}^{k}\rt)+\om_n^kA^1\lt(\om_{\frac{n}2}^{k}\rt)$}
-	$Y\lt[k+\frac{n}{2}\rt]\longleftarrow Y^0[k]-\om_n^{\frac{n}2+k}Y^1[k]$\Comment*{$	A\lt(-\om_n^k\rt)=A^0\lt(\om_{\frac{n}2}^{k}\rt)-\om_n^kA^1\lt(\om_{\frac{n}2}^{k}\rt)$}
+	$Y[k]\longleftarrow Y^0[k]+\om_n^kY^1[k]$\Comment*{$	A\lt(\om_n^k\rt)=A_0\lt(\om_{\frac{n}2}^{k}\rt)+\om_n^kA_1\lt(\om_{\frac{n}2}^{k}\rt)$}
+	$Y\lt[k+\frac{n}{2}\rt]\longleftarrow Y^0[k]-\om_n^{\frac{n}2+k}Y^1[k]$\Comment*{$	A\lt(-\om_n^k\rt)=A_0\lt(\om_{\frac{n}2}^{k}\rt)-\om_n^kA^1\lt(\om_{\frac{n}2}^{k}\rt)$}
 	}
 	\Return{Y}
 	}

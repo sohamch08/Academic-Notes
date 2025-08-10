@@ -127,15 +127,15 @@ Below we will show a Divide and Conquer algorithm which gives a much faster algo
 	\end{minipage}
 \end{center}
 
-\subsection{Conquer} Now we will recursively get pair of closest points in $S_L$ and $S_R$. Suppose the $(P_1^L,P_2^L)$ are the closest pair of points in $S^L$ and $(P_1^R,P_2^R)$ are the closest pair of points in $S^R$.
+\subsection{Conquer} Now we will recursively get the pair of closest points in $S_L$ and $S_R$. Suppose the $(P_1^L,P_2^L)$ are the closest pair of points in $S^L$ and $(P_1^R,P_2^R)$ are the closest pair of points in $S^R$.
 
 \begin{algorithm}[H]
 	\DontPrintSemicolon
 	\SetKwProg{Fn}{Function}{:}{}
 	\Fn{Conquer}{
 		Solve for $S_L,S^R$.\;
-		$(P_1^L,P_2^L)$ are closest pair of points in $S_L$.\;
-		$(P_1^R,P_2^R)$ are closest pair of points in $S_R$.\;
+		$(P_1^L,P_2^L)$ are the closest pair of points in $S_L$.\;
+		$(P_1^R,P_2^R)$ are the closest pair of points in $S_R$.\;
 		$\delta^L=d(P_1^L,P_2^L)$, $\delta^R=d(P_1^R,P_2^R)$\;
 		$\delta_{min}\longleftarrow \min \{\delta^L,\delta^R\}$
 	}
@@ -253,7 +253,7 @@ We now sort all the points in the $T$ by their decreasing $y-$coordinate. Let $T
 			Number of points (other than $P_i$) that lie inside the box is at most 8
 		\end{lemma}
 		\begin{proof}
-			Suppose there are more than 8 points that lie inside the box apart from $P_i$. The box has a left square part and a right square part. So one of the squares contains at least 5 points. WLOG suppose the left square has at least 5 points. Divide each square into 4 parts by a middle vertical and a middle horizontal line. Now since there are 5 points there is one part which contains 2 points but that is not possible as those two points are in $S_L$ and their distance will be less than $\delta_{min}$ which is not possible. Hence contradiction. Therefore there are at most 8 points inside the box.
+			Suppose there are more than 8 points that lie inside the box apart from $P_i$. The box has a left square part and a right square part. So one of the squares contains at least 5 points. WLOG suppose the left square has at least 5 points. Divide each square into 4 parts by a middle vertical and a middle horizontal line. Now since there are 5 points there is one part which contains 2 points, but that is not possible as those two points are in $S_L$ and their distance will be less than $\delta_{min}$ which is not possible. Hence, contradiction. Therefore, there are at most 8 points inside the box.
 		\end{proof}\parinn
 
 		Hence by the above lemma for each $P_i\in T_y$ there are at most 8 points in $T_i$. So for each $P_j\in T_i$ we find the $d(P_i,P_j)$ and if it is less than $\delta_{min}$ we update the points and the distance
