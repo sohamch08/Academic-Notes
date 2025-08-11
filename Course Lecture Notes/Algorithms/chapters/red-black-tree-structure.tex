@@ -23,7 +23,7 @@ A red-black tree is a special type of binary search tree with one extra bit of s
 		\begin{tikzpicture}[
 				level/.style={sibling distance=30mm/#1},
 				level distance=10mm,
-				redVertex/.style={draw=red!80!black,fill=red!5!white,circle,minimum size=20pt,inner sep=0pt, text=red},
+				redVertex/.style={draw=red!80!black,fill=red!5!white,circle,minimum size=20pt,inner sep=0pt, text=red!80!black},
 				blackVertex/.style={draw,fill=black!10!white,   circle,minimum size=20pt,inner sep=0pt},
 				nil/.style={draw,fill=black,rectangle,rounded corners, minimum size=18pt,inner sep=0pt, text=white}]
 			\node [blackVertex] (r){29}
@@ -68,7 +68,7 @@ We call the number of black nodes on any simple path from  but not including a n
 	A Red-Black Tree with $n$ internal nodes or key nodes has height at most $O(\log n)$.
 \end{Lemma}
 \begin{proof}
-	We will first show that for any subtree rooted at node $x$ contains at least $2^{bh(x)}-1$ internal nodes. We will show this using induction on the height of the tree. For the base case let height of $x$ is $0$. Then $x$ must be a leaf. Therefore, the subtree rooted at $x$ has at least $bh(x)=0$. Hence, $2^{bh(x)}-1=2^0-1=0$  nodes which is true. For inductive step let $x$ has some positive height, and it is an internal node of the R-B Tree. Now $x$ has two children. Hence, each child has black-height either $bh(x)$ or $bh(x)-1$. By inductive hypothesis, the subtrees rooted at the children of $x$ have at least $2^{bh(x)-1}-1$ internal nodes. Thus, subtree rooted at $x$ has at least $2^{bh(x)-1}-1+2^{bh(x)-1}-1+1=2^{bh(x)}-1$ internal nodes.
+	We will first show that for any subtree rooted at node $x$ contains at least $2^{bh(x)}-1$ internal nodes. We will show this using induction on the height of the tree. For the base case let height of $x$ is $1$. Then $x$ must be a leaf. Therefore, the subtree rooted at $x$ has at least $bh(x)=1$. Hence, $2^{bh(x)}-1=2^1-1=1$  nodes which is true. For inductive step let $x$ has height greater than $1$, and it is an internal node of the R-B Tree. Now $x$ has two children. Hence, each child has black-height either $bh(x)$ or $bh(x)-1$. By inductive hypothesis, the subtrees rooted at the children of $x$ have at least $2^{bh(x)-1}-1$ internal nodes. Thus, subtree rooted at $x$ has at least $2^{bh(x)-1}-1+2^{bh(x)-1}-1+1=2^{bh(x)}-1$ internal nodes.
 
 	Now if the R-B tree has height $h$. Then any path from the root to a leaf at least half the nodes including the root must be black. So $bh(\emph{root})\geq \frac{h}2$. Thus, $n\geq 2^{\frac{h}2}-1\implies h\leq 2\log(n+1)$. Hence, we have the lemma.
 \end{proof}
@@ -100,11 +100,11 @@ We call the number of black nodes on any simple path from  but not including a n
 	\end{minipage}
 }
 
-Since by the lemma the R-B tree has height at most $O(\log n)$ and it is a binary search tree we can perform search of a node using \textsc{Find} in $O(\log n)$ time. So now we will focus on the insertion and deletion operations in a red-black tree.  To insert or delete a node in a red-black tree we will  rotations to balance the tree again. So first we will visit rotations.
+Since by the lemma the R-B tree has height at most $O(\log n)$ and it is a binary search tree we can perform search of a node using \textsc{Find} in $O(\log n)$ time. So now we will focus on the insertion and deletion operations in a red-black tree.  To insert or delete a node in a red-black tree we will do  rotations to balance the tree again. So first we will visit rotations.
 \section{Rotation}
 A rotation is a local operation that changes the structure of a binary tree without violating the binary search tree property. There are two types of rotations: left rotation and right rotation.
 
-When we do a left rotation on a node we assume that its right child is not NIL. The left rotation ``pivots'' around the link from the node to its right child and makes the right child the new root of the subtree with the ode as its left child.  Similarly, we can explain the right rotation. The rotations behave like the following:
+When we do a left rotation on a node we assume that its right child is not NIL. The left rotation ``pivots'' around the link from the node to its right child and makes the right child the new root of the subtree with the node as its left child.  Similarly, we can explain the right rotation. The rotations behave like the following:
 
 \begin{figure}[!h]
 	\centering
