@@ -197,7 +197,7 @@ To get a \emph{poly}$(n,m,\log c_e)$ time algorithm  we will always pick the sho
 
 Suppose $f_i$ be the total flow after $i^{th}$ iteration. And $G_{f_i}$ be the residual graph with respect $f_i$. Then $f_0(e)=0$ for all $e\in E$ and $G_{f_0}=G$. Also suppose $\emph{dist}_i(v)=$ Shortest $s\rightsquigarrow v$ path distance in the residual graph $G_{f_i}$. Hence, $\emph{dist}_i(s)=0$ for all $i$ and $\emph{dist}_i(t)=\infty$ at the end of the algorithm.
 \begin{note}
-	In $i^{th}$ iteration of the Ford-Fulkerson Algorithm or Edmonds-Karp Algorithm if $P$ is the $s\rightsquigarrow t$ path in the residual graph $G_{f_i}$ where $e=(u,v)\in P$  is such that4 $c_{f_i}(u,v)=\dl=\min\limits_{e\in P}c_{f_i}(e)$ then the edge $(u,v)$ is not present in the next residual graph $G_{f_{i+1}}$. Thus, at least one edge disappears in each iteration of Ford-Fulkerson or Edmonds-Karp Algorithm.
+	In $i^{th}$ iteration of the Ford-Fulkerson Algorithm or Edmonds-Karp Algorithm if $P$ is the $s\rightsquigarrow t$ path in the residual graph $G_{f_i}$ where $e=(u,v)\in P$  is such that $c_{f_i}(u,v)=\dl=\min\limits_{e\in P}c_{f_i}(e)$ then the edge $(u,v)$ is not present in the next residual graph $G_{f_{i+1}}$. Thus, at least one edge disappears in each iteration of Ford-Fulkerson or Edmonds-Karp Algorithm.
 \end{note}
 Now we will prove following two lemmas which will help us to prove that the Edmond-Karp algorithm takes $O(mn)$ iterations.
 \begin{lemma}{}{distincreasewithiteration}
@@ -241,31 +241,31 @@ With this this lemma we will prove that the Edmonds-Karp Algorithm takes $O(mn)$
 	Edmonds-Karp Algorithm terminates in $O(mn)$ many iterations.
 \end{Theorem}
 \begin{proof}
-	For $k$ iterations at least $k$ edges must disappear. Since each edge can reappear $O(n)$ times by \lmref{lineartimeedgeappear}, it can disappear at most $O(n)$ many times. In each iteration at least one edge disappears. Now after $O(mn)$ iterations number of disappearances is at most $O(mn)$. But after $O(mn)$ many disappearances  there are no edge remaining and Therefore, there is no $s\rightsquigarrow t$ path. Hence, the algorithm terminates. Therefore, the Algorithm terminates in $O(mn)$ iterations.
+	For $k$ iterations at least $k$ edges must disappear. Since each edge can reappear $O(n)$ times by \lmref{lineartimeedgeappear}, it can disappear at most $O(n)$ many times. In each iteration at least one edge disappears. Now after $O(mn)$ iterations number of disappearances is at most $O(mn)$. But after $O(mn)$ many disappearances  there are no edges remaining to disappear or reappear and Therefore, there is no $s\rightsquigarrow t$ path. Hence, the algorithm terminates. Therefore, the Algorithm terminates in $O(mn)$ iterations.
 \end{proof}
 
-Hence, Edmond-Karp Algorithm takes $O(m^2n)\emph{poly}(\log c_e)=O\lt(m^2n\log^{O(1)}(c_e)\rt)$ time since it takes $O(mn)$ iterations and in each iteration it finds the shortest $s\rightsquigarrow t$ path in $G_{f_i}$ in $O(m)$ time and in each iteration it does addition and subtraction and finds minimum of the capacities which takes polynomial of the bits needed to represent them time.
+Hence, Edmonds-Karp Algorithm takes $O(m^2n)\emph{poly}(\log c_e)=O\lt(m^2n\log^{O(1)}(c_e)\rt)$ time since it takes $O(mn)$ iterations and in each iteration it finds the shortest $s\rightsquigarrow t$ path in $G_{f_i}$ in $O(m)$ time and in each iteration it does addition and subtraction and finds minimum of the capacities which takes polynomial of the bits needed to represent them time.
 \section{Preflow-Push/Push-Relabel Algorithm}
 In this algorithm we will maintain something called ``Preflow" which is not a valid flow. Unlike Ford-Fulkerson, Edmonds-Karp it does not maintain a $s\rightsquigarrow t$ path in the residual graph and the algorithm stops when the preflow is actually a valid flow.
 \begin{Definition}{Preflow}{}
-	Given a graph $G=(V,E)$  and the edge capacities $c_e$, a function $f:E\to \bbR_0$ is a preflow if is satisfies:
+	Given a graph $G=(V,E)$  and the edge capacities $c_e$, a function $f:E\to \bbR_0$ is a preflow if it satisfies:
 	\begin{enumerate}[label=\protect\circled{\arabic*}]
 		\item $\forall\ e\in E$, $f(e)\leq c_e$.
-		\item $\forall \ v\in V\setminus\{s\}$, $\sum\limits_{e\emph{in}(v)}f(e)\geq \sum\limits_{e\in\emph{out}(v)}f(e)$
+		\item $\forall \ v\in V\setminus\{s\}$, $\sum\limits_{e\in\emph{in}(v)}f(e)\geq \sum\limits_{e\in\emph{out}(v)}f(e)$
 	\end{enumerate}
 \end{Definition}
-Notice here unlike the definition of \hyperref[def:flow]{Flow} here in the second criteria we need  $\sum\limits_{e\emph{in}(v)}f(e)\geq \sum\limits_{e\in\emph{out}(v)}f(e)$ instead of  $\sum\limits_{e\emph{in}(v)}f(e)= \sum\limits_{e\in\emph{out}(v)}f(e)$.
+\begin{observation}
+	Unlike the definition of \hyperref[def:flow]{Flow} here in the second criteria we need  $\sum\limits_{e\in\emph{in}(v)}f(e)\geq \sum\limits_{e\in\emph{out}(v)}f(e)$ instead of  $\sum\limits_{e\in\emph{in}(v)}f(e)= \sum\limits_{e\in\emph{out}(v)}f(e)$.
+\end{observation}
 
 Now define for all $v\in V$ and for all preflow $f$, $\emph{excess}_f(v)=\sum\limits_{e\in\emph{in}(v)}f(e)-\sum\limits_{e\in\emph{out}(v)}f(e)$. If $f$ is a preflow then $\emph{excess}_f(s)\leq 0$ and $\forall\ v\in V\setminus\{s\},$ $\emph{excess}_f(v)\geq 0$
 \begin{lemma}{}{}
 	For all preflow $f$ $$\sum\limits_{v\in V}\emph{excess}_f(v)=0$$
 \end{lemma}
-\begin{proof}
+\begin{proof}We have
 	\begin{align*}
-		\sum\limits_{v\in V}\emph{excess}_f(v) & = \sum\limits_{v\in V}\lt[ \sum\limits_{e\in\emph{in}(v)}f(e)-\sum\limits_{e\in\emph{out}(v)}f(e)\rt]            \\
-		                                         & = \sum\limits_{v\in V}\sum\limits_{e\in\emph{in}(v)}f(e)-\sum\limits_{v\in V}\sum\limits_{e\in\emph{out}(v)}f(e) \\
-		                                         & = \sum_{e\in E}f(e)-\sum_{e\in E}f(e)=0
-	\end{align*}
+		\sum\limits_{v\in V}\emph{excess}_f(v) & = \sum\limits_{v\in V}\lt[ \sum\limits_{e\in\emph{in}(v)}f(e)-\sum\limits_{e\in\emph{out}(v)}f(e)\rt] = \sum\limits_{v\in V}\sum\limits_{e\in\emph{in}(v)}f(e)-\sum\limits_{v\in V}\sum\limits_{e\in\emph{out}(v)}f(e) = \sum_{e\in E}f(e)-\sum_{e\in E}f(e)=0
+	\end{align*}Hence, we have the lemma.
 \end{proof}
 Now for each $v\in V$ we assign a label $l(v)\in\bbZ_0$. The algorithm then sends flow from $u\to v$ if $l(v)=l(u)-1$.
 \begin{center}
@@ -285,7 +285,7 @@ Now for each $v\in V$ we assign a label $l(v)\in\bbZ_0$. The algorithm then send
 	\KwIn{Directed graph $G=(V,E)$, source $s$, target $t$ and edge capacities $C_e$ for all $e\in E$}
 	\KwOut{Flow $f$ with maximum value}
 	\Begin{
-		Initially $\forall\ e=(s,u)\in E$, $f(e)=c_e$ and $f(e)$ for all other edges.\;
+		Initially $\forall\ e=(s,u)\in E$, $f(e)=c_e$ and $f(e)=0$ for all other edges.\;
 		$l(s)\longleftarrow n$\;
 		\For{$v\in V\setminus\{s\}$}{$l(v)\longleftarrow 0$}
 		\While{$\exs\ v\neq t$, $\emph{excess}_f(v)>0$}{
@@ -338,7 +338,7 @@ Below we will show change of the residual graph and preflow in each iteration of
 		      \draw ($(s)+(-0.5,0.7)$) node[left]{$f:$};
 		      %	\draw[-latex] ($(v)+(0.3,0.2)$) -- ($(t)-(0.3,-0.2)$) node[above, midway]{$4$};
 
-		      \draw (10,0) node[text width=10cm]{Since $\emph{excess}_f(v)=6>0$. So in first iteration $v$ is taken. Since there is no edge $(v,u)$ with $l(u)=l(v)-1$, label of $v$ got increased};
+		      \draw (10,0) node[text width=9cm]{Since $\emph{excess}_f(v)=6>0$. So in first iteration $v$ is taken. Since there is no edge $(v,u)$ with $l(u)=l(v)-1$, label of $v$ got increased};
 	      \end{tikzpicture}
 	\item 	Step 2:
 
@@ -358,7 +358,7 @@ Below we will show change of the residual graph and preflow in each iteration of
 		      \draw[-latex] ($(s)+(0.3,0.7)$) -- ($(v)-(0.3,-0.7)$) node[above, midway]{$6$};
 		      \draw ($(s)+(-0.5,0.7)$) node[left]{$f:$};
 		      \draw[-latex] ($(v)+(0.3,0.7)$) -- ($(t)-(0.3,-0.7)$) node[above, midway]{$4$};
-		      \draw (10,0) node[text width=10cm]{Since $\emph{excess}_ff(v)=2>0$, in second iteration again  $v$ is selected.  There is an edge $(v,t)$ with $l(t)=0=l(v)-1=1-1$. Now $\dl=c_f(v,t)=4$. Hence, saturating push. The preflow gets updated,  $f(s,v)=6$, $f(v,t)=4$.};
+		      \draw (10,0) node[text width=9cm]{Since $\emph{excess}_f(v)=2>0$, in second iteration again  $v$ is selected.  There is an edge $(v,t)$ with $l(t)=0=l(v)-1=1-1$. Now $\dl=c_f(v,t)=4$. Hence, saturating push. The preflow gets updated,  $f(s,v)=6$, $f(v,t)=4$.};
 	      \end{tikzpicture}
 	\item Step 5:
 
@@ -378,7 +378,7 @@ Below we will show change of the residual graph and preflow in each iteration of
 		      \draw[-latex] ($(s)+(0.3,0.7)$) -- ($(v)-(0.3,-0.7)$) node[above, midway]{$6$};
 		      \draw ($(s)+(-0.5,0.7)$) node[left]{$f:$};
 		      \draw[-latex] ($(v)+(0.3,0.7)$) -- ($(t)-(0.3,-0.7)$) node[above, midway]{$4$};
-		      \draw (10,0) node[text width=10cm]{Since $\emph{excess}_ff(v)=2>0$,  in next 3 iterations again  $v$ is selected. Since there is no edge $(v,u)$ with $l(u)=l(v)-1$, label of $v$ gets increased every time. Which becomes $4$ after $3$ iterations.};
+		      \draw (10,0) node[text width=9cm]{Since $\emph{excess}_ff(v)=2>0$,  in next 3 iterations again  $v$ is selected. Since there is no edge $(v,u)$ with $l(u)=l(v)-1$, label of $v$ gets increased every time. Which becomes $4$ after $3$ iterations.};
 	      \end{tikzpicture}
 	      %\item 
 	\item Step 6:
@@ -400,14 +400,14 @@ Below we will show change of the residual graph and preflow in each iteration of
 		      \draw[-latex] ($(s)+(0.3,0.7)$) -- ($(v)-(0.3,-0.7)$) node[above, midway]{$4$};
 		      \draw ($(s)+(-0.5,0.7)$) node[left]{$f:$};
 		      \draw[-latex] ($(v)+(0.3,0.7)$) -- ($(t)-(0.3,-0.7)$) node[above, midway]{$4$};
-		      \draw (10,0) node[text width=10cm]{Since $\emph{excess}_ff(v)=2>0$,  in this iteration again  $v$ is selected. There is an edge $(v,s)$ with $l(t)=3=l(v)-1=4-1$. Now $\dl=\emph{excess}_f(v,s)=2$. Hence, it's non-saturating push. So the preflow gets updated $f(s,v)=6-2=4$, $f(v,t)=4$. Now it's a valid flow. Now there is no vertex with postive \emph{excess}. Hence, the algorithm stops.};
+		      \draw (10,0) node[text width=9cm]{Since $\emph{excess}_f(v)=2>0$,  in this iteration again  $v$ is selected. There is an edge $(v,s)$ with $l(s)=3=l(v)-1=4-1$. Now $\dl=\emph{excess}_f(v,s)=2$. Hence, it's non-saturating push. So the preflow gets updated $f(s,v)=6-2=4$, $f(v,t)=4$. Now it's a valid flow. Now there is no vertex with postive \emph{excess}. Hence, the algorithm stops.};
 	      \end{tikzpicture}
 \end{itemize}
 %\end{example}
 
 
 \begin{observation}\label{obs-labelsmonotone}
-	Labels are monotone non-decreasing.
+	Labels are monotonically non-decreasing.
 \end{observation}
 \begin{observation}\label{obs-everyiterationpreflow}
 	For every iteration $f$ is always a preflow. The proof is similar to \lmref{flowaugment} but use inequalities.
@@ -416,7 +416,7 @@ Below we will show change of the residual graph and preflow in each iteration of
 	$\sum\limits_{v\in V}\emph{excess}_f(v)=0$  and $\forall\ v\in V\setminus \{s\}$, $\emph{excess}_f(v)\geq 0$. Hence, $\emph{excess}_f(s)\leq 0\implies l(s)$ is unchanged.
 \end{observation}
 
-Now suppose $f^i$ denote the preflow after the $i^{th}$ iteration of the algorithm. Then $$f^0(e)=\begin{cases}
+Now suppose $f^i$ denote the preflow after the $i^{th}$ iteration of the algorithm. Then define $$f^0(e)=\begin{cases}
 		c_e & \text{when $e=(s,u)$} \\ 0 & \text{otherwise}
 	\end{cases}$$
 Now we will show the correctness of the algorithm.
