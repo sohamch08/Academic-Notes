@@ -1,4 +1,4 @@
-\documentclass[10pt,handout]{beamer}
+\documentclass[10pt]{beamer}
 
 \usetheme{metropolis}
 \usepackage{appendixnumberbeamer,amsmath}
@@ -40,7 +40,21 @@
 % 	\setbeamertemplate{section in toc}[sections numbered]
 % 	\tableofcontents[hideallsubsections]
 % \end{frame}
-\begin{frame}[c]{Complexity Classes}
+\begin{frame}{Complexity Classes}
+	\begin{itemize}
+		\item \textsf{L}: Deterministic Logarithmic Space.
+		\item $\mathsf{L}^\alpha$, $\alpha> 0$: Set of problems decidable in $O(\log^{\alpha}n)$ space deterministically.
+		\item \textsf{NL}: Nondeterministic Logarithmic Space.
+		\item \textsf{RL}: Randomized Logarithmic Space with One-sided error $\frac13$. 
+		\item \textsf{BPL}: Randomized Logarithmic Space with Two-sided error $\frac13$.
+		\item \textsf{SC}: Steve's Class or \textsf{DTISP}$(\poly(n),\poly(\log n))$ i.e. set of problems decidable deterministically in polynomial time and polylog space.
+		\item \textsf{NC}: Nick's Class i.e. set of problems decidable in circuits of polynomial size and polylog depth and bounded fan-in. 
+	\end{itemize}
+	\begin{alertblock}{Remark}
+		Don't confuse \textsf{SC} with $\mathsf{P}\cap \textsf{PolylogSpace}$!
+	\end{alertblock}
+\end{frame}
+\begin{frame}[c]{Complexity Classes Zoo}
 
 	\centering
 	\begin{tikzpicture}[
@@ -89,11 +103,11 @@
 		% From NC
 		\draw[arrow] (NC) -- (P);
 		% \draw[arrow, red] (BPL) -- node[midway,font=\scriptsize,right,pos=0.6,color=red] {Today} (SC);
-		\draw<1>[arrow] (BPL) -- (SC);
+		% \draw<1>[arrow] (BPL) -- (SC);
 
 		% Red "Today" edge: appears starting slide 2
 		\draw<2->[arrow, red] (BPL) --
-		node[midway,font=\scriptsize,right,pos=0.6,color=red] {Today} (SC);
+		node[midway,font=\scriptsize,right,pos=0.6,color=red,align=left] {[Nisan]\\ Today} (SC);
 	\end{tikzpicture}
 \end{frame}
 \begin{frame}{Pseudorandom Generator}
@@ -102,8 +116,8 @@
 	\end{definition}
 	\begin{itemize}
 		\item Here $l$ is called the seed-length of the PRG.
-		\item $n-l$ is called the stretch of the PRG.
-		\item We call $\mcG$, $\epsilon$-fools $\mcC$.
+		\item $n-l$ is called the stretch of the PRG.\pause
+		\item We call $\mcG$, $\epsilon$-fools $\mcC$.\pause
 		\item Typically, we want $n>> l$ and $\mcG$ to be efficiently computable.
 	\end{itemize}
 \end{frame}
@@ -167,9 +181,9 @@
 \end{frame}
 \begin{frame}{Dividing \textsf{BPL} Computation into Blocks}
 	\begin{itemize}
-		\item Let the \textsf{BPL} machine $T$ run in time $n^c$ using $n^{c'}$ random bits and $O(\log n)$ space on input $x$ of length $n$.
+		\item Let the \textsf{BPL} machine $T$ run in time $\poly(n)$ using $n^{c}$ random bits and $O(\log n)$ space on input $x$ of length $n$.\pause
 		\item Let $k<< n^{c}$ be a parameter to be fixed later.
-		\item Divide the computation of $T$ into $t=n^c/k$ blocks, where each block uses $k$ random bits.
+		\item Divide the computation of $T$ into $t=n^c/k$ blocks, where each block uses $k$ random bits.\pause
 		\item We can treat each block as a separate \textsf{BPL} machine $T_i$ (in some sense) which takes input as the final configuration of $T_{i-1}$ and $k$ random bits.
 	\end{itemize}
 \end{frame}
@@ -185,12 +199,13 @@
 	\textbf{Goal:} Approximate $M^t$ using PRG.
 \end{frame}
 \begin{frame}{Approximate Automata Matrix}
-	Suppose we have a pseudorandom generator $\mcG:\{0,1\}^k\to \{0,1\}^{k\cdot t}$. Let $Q$ be a finite state automata with $N$ staes and its matrix be $M$ as defined above.
+	Suppose we have a pseudorandom generator $\mcG:\{0,1\}^k\to \{0,1\}^{k\cdot t}$. Let $Q$ be a finite state automata with $N$ states and its matrix be $M$ as defined above.\pause
 	\begin{itemize}
-		\item From definition of $M$, $M^t[i,j]=\underset{r_1,\dots, r_t\in\{0,1\}^k}{\bbP}[Q(i;r_1\dots ;r_t)=j]$
-		\item Using $\mcG$, let $M_{\mcG}[i,j]=\underset{r\in\{0,1\}^k}{\bbP}[Q(i;\mcG(r))=j]$
-		\item Want to construct $\mcG$ such that $$\|M^t-M_{\mcG}\|<\epsilon$$ for small $\epsilon$ with high probability.
-	\end{itemize}
+		\item From definition of $M$, $M^t[i,j]=\underset{r_1,\dots, r_t\in\{0,1\}^k}{\bbP}[Q(i;r_1\dots ;r_t)=j]$\pause
+		\item Using $\mcG$, let $M_{\mcG}[i,j]=\underset{r\in\{0,1\}^k}{\bbP}[Q(i;\mcG(r))=j]$\pause
+		\item Want to construct $\mcG$ such that $$\|M^t-M_{\mcG}\|<\epsilon$$ for small $\epsilon$.
+	\end{itemize} \pause
+	Then if $T$ decides a language with error probability at most $\frac13$, using $\mcG$ we can calculate the $\sum_{j:\text{Accepting state}}M_{\mcG}[1,j]$ and decide the language if  it is at least $\frac23-\epsilon$.
 \end{frame}
 \begin{frame}{Matrix Norm}
 	For any vector $v\in \bbR^N$, define $\|v\|=\sum_{i\in [N]}|v(i)|$. Then for any matrix $M\in \bbR^{N\times N}$ define $$\|M\|=\sup\limits_{0\neq v\in\bbR^N}\frac{\|Mv\|}{\|v\|}$$\pause
@@ -226,9 +241,9 @@
 
 	\vfill
 
-	\begin{lemma}
+	\begin{lemma}[Proved in Appendix]
 		If $\mcH$ is a universal hash family, then for any $A\subseteq \{0,1\}^k$, $B\subseteq \{0,1\}^m$, $\epsilon>0$, $$\underset{h\in\mcH}{\bbP}[h\text{ is not $(\epsilon,A,B)$-good}]\leq \frac{\alpha\cdot\beta}{2^k\epsilon^2}$$
-	\end{lemma}\pause
+	\end{lemma}
 
 	% For $k=m$, by union bound an uniformly random $h$ is $\left(\frac{\epsilon}{k^2}, A,B\right)$-good for all $A,B$.
 \end{frame}
@@ -253,52 +268,53 @@
 
 	\begin{itemize}
 		\item Using $h_1,\dots, h_s$ we had $2^s$ many transitions in $Q$. So we should compare $M_{h_1,\dots, h_s}$ with $M^{2^s}$.
-	\end{itemize}
+	\end{itemize}\pause
 
-	\textbf{Goal:} For `good' choice of $h_1,\dots, h_m$, $\|M^{2^m}-M_{h_1,\dots, h_m}\|<\epsilon$
+	\textbf{Goal:} For `good' choice of $h_1,\dots, h_m$, $\|M^{2^m}-M_{h_1,\dots, h_m}\|<\epsilon$\pause
 
 	\textbf{Approach:}
 
-	\textbf{Step 1:} Suppose we have $h_1,\dots, h_{s-1}$. We will find $h_s\in \mcH$ such that for all $i,j\in [N]$, $$\left\|M^2_{h_1,\dots, h_{s-1}}-M_{h_1,\dots, h_s}\right\|\leq \delta$$
-	\textbf{Step 2:} Using above property show for all $s\in[m]$, $$\left\|M_{h_1,\dots, h_s}-M^{2^s}\right\|\leq (2^s-1)\delta$$
+	\textbf{Step 1:} Suppose we have $h_1,\dots, h_{s-1}$. We will find $h_s\in \mcH$ such that for all $i,j\in [N]$, $$\left\|M^2_{h_1,\dots, h_{s-1}}-M_{h_1,\dots, h_s}\right\|\leq \delta$$\pause
+	\textbf{Step 2:} Using above property will show for all $s\in[m]$, $$\left\|M_{h_1,\dots, h_s}-M^{2^s}\right\|\leq (2^s-1)\delta$$
 \end{frame}
 \begin{frame}{Find good $h_s$ from $h_1,\dots, h_{s-1}$}
-	Suppose we have $h_1,\dots, h_{s-1}\in \mcH$ such that, $$ \left\|M_{h_1,\dots, h_{ls-1}}-M^{2^{s-1}}\right\|\leq (2^{s-1}-1)\delta$$If we can find $h_s$ such that $\|M^2_{h_1,\dots, h_{s-1}}-M_{h_1,\dots, h_s}\|\leq \delta$ then we are done.
+	Suppose we have $h_1,\dots, h_{s-1}\in \mcH$ such that, $$ \left\|M_{h_1,\dots, h_{ls-1}}-M^{2^{s-1}}\right\|\leq (2^{s-1}-1)\delta$$If we can find $h_s$ such that $\|M^2_{h_1,\dots, h_{s-1}}-M_{h_1,\dots, h_s}\|\leq \delta$ then we are done.\pause
 
-	\textbf{Algorithm:} Go over all $h\in \mcH$ and all $i,j\in [N]$:
+	\textbf{Algorithm (\textsc{Find}):} Go over all $h\in \mcH$ and all $i,j\in [N]$:\pause
 
 	\textbf{Step 1:}  Compute \begin{itemize}
 		\item $p_1=M_{h_1,\dots, h_{s-1}, h}[i,j]$
 		\item $p_{2}=\sum_{l\in [N]}M_{h_1,\dots, h_{s-1}}[i,l]\cdot M_{h_1,\dots, h_{s-1}}[l,j]$
-	\end{itemize}
+	\end{itemize}\pause
 	\textbf{Step 2:} Check if $|p_1-p_2|>\frac{\delta}{N}$ go to next $h$ else return $h$.
 
 	% To compute $M_{h_1,\dots, h_{s}}[i,j]$, go over all $r\in\{0,1\}^k$ and count how many $r$ gives, $Q(i;\mcG_s(r,h_1,\dots, h_s))=j$. then return $count/2^k$.
 
 \end{frame}
-\begin{frame}[allowframebreaks]{Algorithm always returns an $h$}
+\begin{frame}{Algorithm always returns an $h$\hfill (I)}
 	\begin{claim}
 		There exists an $h_s\in\mcH$ such that for all $i,j\in [N]$, $$\left|M_{h_1,\dots, h_{s-1}, h_s}[i,j]-M_{h_1,\dots, h_{s-1}}^2[i,j]\right|\leq \frac{\delta}{N}$$
-	\end{claim}
-	Let $A_{i,j}$ be the set of $r\in\{0,1\}^k$ such that $Q(i;\mcG_{s-1}(r,h_1,\dots, h_{s-1}))=j$. So $M_{h_1,\dots, h_{s-1}}[i,j]=\rho(A_{i,j})$ where $\rho(A)=|A|/2^k$.
+	\end{claim}\pause
+	Let $A_{i,j}$ be the set of $r\in\{0,1\}^k$ such that $Q(i;\mcG_{s-1}(r,h_1,\dots, h_{s-1}))=j$. So $M_{h_1,\dots, h_{s-1}}[i,j]=\rho(A_{i,j})$ where $\rho(A)=|A|/2^k$.\pause
 
 
 	\begin{itemize}
-		\item For any $i,j\in[N]$, $$M^2_{h_1,\dots, h_{s-1}}=\sum_{l\in[N]}\rho(A_{i,l})\cdot \rho(A_{l,j})$$
+		\item For any $i,j\in[N]$, $$M^2_{h_1,\dots, h_{s-1}}=\sum_{l\in[N]}\rho(A_{i,l})\cdot \rho(A_{l,j})$$\pause
 		\item For any $h\in\mcH$, $$M_{h_1,\dots, h_{s-1}, h}[i,j]=\sum_{l\in[N]}\underset{r\in\{0,1\}^k}{\bbP}[r\in A_{i,l}\wedge h(r)\in A_{l,j}]$$
 	\end{itemize}
 
-	\framebreak
+\end{frame}
+\begin{frame}{Algorithm always returns an $h$ \hfill (II)}
 
 
-	For a random $h\in\mcH$ with probability at least $1-\frac{N^4}{2^k\delta^2}\geq 1-\frac1{2n^3}$, $$\left|\underset{r\in\{0,1\}^k}{\bbP}[r\in A_{i,l}\wedge h(r)\in A_{l,j}]-\rho(A_{i,l})\cdot \rho(A_{l,j})\right|\leq \frac{\rho(A_{i,l})\cdot \rho(A_{l,j})}{k^2}\leq \frac{\delta}{N^2}$$
+	For a random $h\in\mcH$ with probability at least $1-\frac{N^4}{2^k\delta^2}\geq 1-\frac1{2n^3}$, $$\left|\underset{r\in\{0,1\}^k}{\bbP}[r\in A_{i,l}\wedge h(r)\in A_{l,j}]-\rho(A_{i,l})\cdot \rho(A_{l,j})\right|\leq \frac{\rho(A_{i,l})\cdot \rho(A_{l,j})}{k^2}\leq \frac{\delta}{N^2}$$\pause
 
-	So by Union Bound random $h\in \mcH$, $(\frac{\dl}{N^2},A,B)$-good for all $A,B$ with probability at least $\frac12$.
+	So by Union Bound random $h\in \mcH$, $(\frac{\dl}{N^2},A,B)$-good for all $A,B$ with probability at least $\frac12$.\pause
 
 	\begin{align*}
 		     & \left|M^2_{h_1,\dots, h_{s-1}}[i,j]- M_{h_1,\dots, h_{s-1}, h}[i,j]\right|                                                          \\
 		\leq & \sum_{l\in[N]}\left|\underset{r\in\{0,1\}^k}{\bbP}[r\in A_{i,l}\wedge h(r)\in A_{l,j}]-\rho(A_{i,l})\cdot \rho(A_{l,j})\right| \\
-		\leq & N^2\cdot \frac{\delta}{N^2}=\delta
+		\leq &\; N^2\cdot \frac{\delta}{N^2}=\delta
 	\end{align*}
 \end{frame}
 \begin{frame}{Algorithm returns \emph{good} $h_s$}
@@ -324,7 +340,7 @@
 \end{frame}
 \begin{frame}{Setting Parameters}
 	\begin{itemize}
-		\item Set $k=\log(n^c)=O(\log n)$. So $t\approx n^c$.
+		\item Set $k=\log(N)=O(\log n)$. So $t\approx n^c$.
 	 \vfill 
 
 		\item Set $m=\log t=O(\log n)$.
@@ -333,7 +349,45 @@
 		\item Want $(2^m-1)\delta=\epsilon\implies \delta=\frac{\epsilon}{2^m}$
 	\end{itemize}
 \end{frame}
+\begin{frame}{Final Algorithm}
+\begin{itemize}
+	\item Compute $h_1,\dots, h_m$ one by one using the algorithm \textsc{Find}. \pause
+	\item Compute $A[i,j]=M_{h_1,\dots, h_m}[i,j]$ for all $i,j\in[N]$. \pause
+	\item Compute $\sum_{j:\text{Accepting state}}A[1,j]$ and accept if this is at least $\frac23-\epsilon$ else reject. 
+\end{itemize}\pause
+\textbf{Space:} The only place where more than $O(\log n)$ space is needed is to store the value of $h_1,\dots, h_m$. And each $h_i$ can be stored in $O(k)=O(\log n)$ space. So total space used is $O(\log^2 n)$. \pause
+
+\textbf{Time:} For all $s\in[m]$, computing $M_{h_1,\dots, h_s}[i,j]$ takes $O(2^{k})$ times computation of $\mcG_s(r,h_1,\dots, h_s)$ for all $r$ and to check if $Q(i;\mcG_s(r,h_1,\dots, h_s))=j$ which takes $O(2^m)\cdot \poly(m)$ time. So \textsc{Find} takes $O(N^2\cdot 2^{2m}\cdot 2^{m+k})\poly(m)$. Hence total time $O(N^2\cdot 2^{2m}\cdot 2^{m+k})\poly(m)\cdot m=\poly(n)$. 
+\end{frame}
 \begin{frame}[standout]
 	Thank You
+\end{frame}
+\begin{frame}[allowframebreaks]{Appendix}
+	\begin{lemma}
+		If $\mcH$ is a universal hash family, then for any $A\subseteq \{0,1\}^k$, $B\subseteq \{0,1\}^m$, $\epsilon>0$, $$\underset{h\in\mcH}{\bbP}[h\text{ is not $(\epsilon,A,B)$-good}]\leq \frac{\alpha\beta(1-\beta)}{2^k\epsilon^2}$$
+	\end{lemma}
+	
+
+	Consider the matrix $M\in \{0,1\}^{2^k\times |\mcH|}$ where $M[x,h]=1$ if $h(x)\in B$ and $0$ otherwise. For any $x_1\neq x_2\in\{0,1\}^k$, $\underset{h\in\mcH}{\bbE}[M[x_1,h]]=\beta$ and  $ \underset{h\in\mcH}{\bbE}[M[x_1,h]M[x_2,h]]=\beta^2$
+
+	\begin{align*}
+		 \underset{h\in\mcH}{\bbE}\left[(\beta-\underset{x\in A}{\bbE}[M[x,h]])^2\right] & = \underset{x_1,x_2\in A}{\bbE}\ \underset{h\in\mcH}{\bbE}\left[(\beta-M[x_1,h])(\beta-M[x_2,h])\right]\\[-0.1cm]
+		 & =  \underset{x_1,x_2\in A}{\bbE}\left[\beta^2-\beta \underset{h\in\mcH}{\bbE}[M[x_1,h]] -\beta\underset{h\in\mcH}{\bbE}[M[x_1,h]]\right.\\[-0.3cm]  
+		 & \qquad\qquad\qquad\qquad\quad\; \left.+\underset{h\in\mcH}{\bbE}[M[x_1,h]\cdot M[x_2,h]]\right] \\[-0.2cm]
+		  & = \underset{x_1,x_2\in A}{\bbE}\left[\underset{h\in\mcH}{\bbE}[M[x_1,h]\cdot M[x_2,h]]-\beta^2\right] 
+	\end{align*}
+\begin{itemize}
+	\item For $x_1\neq x_2$: $\underset{h\in\mcH}{\bbE}[M[x_1,h]\cdot M[x_2,h]]=\beta^2$
+	\item For $x_1=x_2$: $\underset{h\in\mcH}{\bbE}[M[x_1,h]\cdot M[x_2,h]]=\underset{h\in\mcH}{\bbE}[M[x_1,h]]=\beta$. 
+\end{itemize} 
+
+\framebreak
+So,
+$$\underset{h\in\mcH}{\bbE}\left[(\beta-\underset{x\in A}{\bbE}[M[x,h]])^2\right]=\frac1{|A|}(\beta-\beta^2)=\frac{\alpha\beta(1-\beta)}{2^k}$$
+
+
+	Now $\underset{x\in \{0,1\}^k}{\bbP}[x\in A\wedge h(x)\in B]=\alpha\underset{x\in A}{\bbP}[h(x)\in B]=\alpha\cdot \underset{x\in A}{\bbE}[M[x,h]]$. So $h$ is not $(\epsilon,A,B)$-good iff $$\left|\underset{x\in A}{\bbE}[M[x,h]]-\beta\right|\geq \frac{\epsilon}{\alpha}$$
+
+	By Markov, $$\underset{h\in\mcH}{\bbP}\left[\left|\beta-\underset{x\in A}{\bbE}[M[x,h]]\right|\geq \frac{\epsilon}{\alpha}\right]\leq \frac{\alpha\beta(1-\beta)}{2^k\epsilon^2}$$
 \end{frame}
 \end{document}
