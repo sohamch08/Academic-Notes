@@ -42,59 +42,59 @@
 % \end{frame}
 \begin{frame}[c]{Complexity Classes}
 
-\centering
-\begin{tikzpicture}[
-    node distance=0.8cm and 2cm,
-    class/.style={font=\sffamily},
-    arrow/.style={-latex},
-    annotation/.style={font=\scriptsize, text=blue}
-]
-\path[use as bounding box] (-3,-2) rectangle (3,-1);
-\node[class] (SC) at (0,0) {SC};
-\node[class, right=of SC] (NC) {NC};
-\node[class, left=of SC] (L2) {$\mathsf{L}^2$};
+	\centering
+	\begin{tikzpicture}[
+			node distance=0.8cm and 2cm,
+			class/.style={font=\sffamily},
+			arrow/.style={-latex},
+			annotation/.style={font=\scriptsize, text=blue}
+		]
+		\path[use as bounding box] (-3,-2) rectangle (3,-1);
+		\node[class] (SC) at (0,0) {SC};
+		\node[class, right=of SC] (NC) {NC};
+		\node[class, left=of SC] (L2) {$\mathsf{L}^2$};
 
-% Now position other nodes relative to these
-\node[class, above=of NC] (P) {P};
-\node[class, above=of L2] (PolylogSpace) {PolylogSpace};
-\node[class, below=of SC] (BPL) {BPL};
-\node[class, below=of NC] (NL) {NL};
-\node[class, below=of L2] (L32) {$\mathsf{L}^{3/2}$};
-\node[class, below=of BPL] (RL) {RL};
-\node[class, below=of RL] (L) {L};
+		% Now position other nodes relative to these
+		\node[class, above=of NC] (P) {P};
+		\node[class, above=of L2] (PolylogSpace) {PolylogSpace};
+		\node[class, below=of SC] (BPL) {BPL};
+		\node[class, below=of NC] (NL) {NL};
+		\node[class, below=of L2] (L32) {$\mathsf{L}^{3/2}$};
+		\node[class, below=of BPL] (RL) {RL};
+		\node[class, below=of RL] (L) {L};
 
-% Draw arrows
-\draw[arrow] (L) -- (RL);
-\draw[arrow] (RL) -- (NL);
-\draw[arrow] (RL) -- (BPL);
-\draw[arrow] (RL) -- (L32);
+		% Draw arrows
+		\draw[arrow] (L) -- (RL);
+		\draw[arrow] (RL) -- (NL);
+		\draw[arrow] (RL) -- (BPL);
+		\draw[arrow] (RL) -- (L32);
 
-% From NL
-\draw[arrow] (NL) -- (NC);
-\draw[arrow] (NL) to[out=270,in=240,looseness=2.1] node[pos=0.7,annotation,above,sloped] {[Savitch]} (L2);
+		% From NL
+		\draw[arrow] (NL) -- (NC);
+		\draw[arrow] (NL) to[out=270,in=240,looseness=2.1] node[pos=0.7,annotation,above,sloped] {[Savitch]} (L2);
 
-% From BPL
-\draw[arrow] (BPL) -- (NC);
-\draw[arrow] (BPL) -- (L2);
-\draw[arrow] (BPL) -- node[midway,annotation,pos=0.6,above] {[Saks-Zhou]} (L32);
+		% From BPL
+		\draw[arrow] (BPL) -- (NC);
+		\draw[arrow] (BPL) -- (L2);
+		\draw[arrow] (BPL) -- node[midway,annotation,pos=0.6,above] {[Saks-Zhou]} (L32);
 
-% Left column
-\draw[arrow] (L32) -- (L2);
-\draw[arrow] (L2) -- (PolylogSpace);
+		% Left column
+		\draw[arrow] (L32) -- (L2);
+		\draw[arrow] (L2) -- (PolylogSpace);
 
-% From SC
-\draw[arrow] (SC) -- (PolylogSpace);
-\draw[arrow] (SC) -- (P);
+		% From SC
+		\draw[arrow] (SC) -- (PolylogSpace);
+		\draw[arrow] (SC) -- (P);
 
-% From NC
-\draw[arrow] (NC) -- (P);
-% \draw[arrow, red] (BPL) -- node[midway,font=\scriptsize,right,pos=0.6,color=red] {Today} (SC);
-\draw<1>[arrow] (BPL) -- (SC);
+		% From NC
+		\draw[arrow] (NC) -- (P);
+		% \draw[arrow, red] (BPL) -- node[midway,font=\scriptsize,right,pos=0.6,color=red] {Today} (SC);
+		\draw<1>[arrow] (BPL) -- (SC);
 
-% Red "Today" edge: appears starting slide 2
-\draw<2->[arrow, red] (BPL) --
-  node[midway,font=\scriptsize,right,pos=0.6,color=red] {Today} (SC);
-\end{tikzpicture}
+		% Red "Today" edge: appears starting slide 2
+		\draw<2->[arrow, red] (BPL) --
+		node[midway,font=\scriptsize,right,pos=0.6,color=red] {Today} (SC);
+	\end{tikzpicture}
 \end{frame}
 \begin{frame}{Pseudorandom Generator}
 	\begin{definition}[Pseudorandom Generator]
@@ -196,7 +196,7 @@
 	For any vector $v\in \bbR^N$, define $\|v\|=\sum_{i\in [N]}|v(i)|$. Then for any matrix $M\in \bbR^{N\times N}$ define $$\|M\|=\sup\limits_{0\neq v\in\bbR^N}\frac{\|Mv\|}{\|v\|}$$\pause
 
 	\textbf{Properties:}\begin{itemize}
-		\item $\|M\|=\max\limits_{i\in [N]}\sum_{j\in [N]}|M[i,j]|$
+		\item $\|M\|\leq\max\limits_{i\in [N]}\sum_{j\in [N]}|M[i,j]|$
 		\item $\|M+N\|\leq \|M\|+\|N\|$
 		\item $\|MN\|\leq \|M\|\cdot \|N\|$
 	\end{itemize}
@@ -230,7 +230,7 @@
 		If $\mcH$ is a universal hash family, then for any $A\subseteq \{0,1\}^k$, $B\subseteq \{0,1\}^m$, $\epsilon>0$, $$\underset{h\in\mcH}{\bbP}[h\text{ is not $(\epsilon,A,B)$-good}]\leq \frac{\alpha\cdot\beta}{2^k\epsilon^2}$$
 	\end{lemma}\pause
 
-	For $k=m$, by union bound an uniformly random $h$ is $\left(\frac{\epsilon}{k^2}, A,B\right)$-good for all $A,B$.
+	% For $k=m$, by union bound an uniformly random $h$ is $\left(\frac{\epsilon}{k^2}, A,B\right)$-good for all $A,B$.
 \end{frame}
 \begin{frame}{Nisan's Generator}
 	Let $\mcH$ be an universal hash family from $\{0,1\}^k$ to $\{0,1\}^k$. For any integer $m\geq 0$ define the function $\mcG_m\colon\{0,1\}^k\times \mcH^{m}\to \{0,1\}^{k\cdot 2^m}$ recursively as follows:\pause
@@ -257,13 +257,13 @@
 
 	\textbf{Goal:} For `good' choice of $h_1,\dots, h_m$, $\|M^{2^m}-M_{h_1,\dots, h_m}\|<\epsilon$
 
-	\textbf{Approach:} 
+	\textbf{Approach:}
 
-		\textbf{Step 1:} Suppose we have $h_1,\dots, h_{s-1}$. We will find $h_s\in \mcH$ such that for all $i,j\in [N]$, $$\left\|M^2_{h_1,\dots, h_{s-1}}-M_{h_1,\dots, h_s}\right\|\leq \delta$$
-		\textbf{Step 2:} Using above property show for all $s\in[m]$, $$\left\|M_{h_1,\dots, h_s}-M^{2^s}\right\|\leq (2^s-1)\delta$$
+	\textbf{Step 1:} Suppose we have $h_1,\dots, h_{s-1}$. We will find $h_s\in \mcH$ such that for all $i,j\in [N]$, $$\left\|M^2_{h_1,\dots, h_{s-1}}-M_{h_1,\dots, h_s}\right\|\leq \delta$$
+	\textbf{Step 2:} Using above property show for all $s\in[m]$, $$\left\|M_{h_1,\dots, h_s}-M^{2^s}\right\|\leq (2^s-1)\delta$$
 \end{frame}
 \begin{frame}{Find good $h_s$ from $h_1,\dots, h_{s-1}$}
-	Suppose we have $h_1,\dots, h_{s-1}\in \mcH$ such that, $$ \left\|M_{h_1,\dots, h_{ls-1}}-M^{2^{s-1}}\right\|\leq (2^{s-1}-1)\delta$$If we can find $h_s$ such that $\|M^2_{h_1,\dots, h_{s-1}}-M_{h_1,\dots, h_s}\|\leq \delta$ then we are done. 
+	Suppose we have $h_1,\dots, h_{s-1}\in \mcH$ such that, $$ \left\|M_{h_1,\dots, h_{ls-1}}-M^{2^{s-1}}\right\|\leq (2^{s-1}-1)\delta$$If we can find $h_s$ such that $\|M^2_{h_1,\dots, h_{s-1}}-M_{h_1,\dots, h_s}\|\leq \delta$ then we are done.
 
 	\textbf{Algorithm:} Go over all $h\in \mcH$ and all $i,j\in [N]$:
 
@@ -271,31 +271,67 @@
 		\item $p_1=M_{h_1,\dots, h_{s-1}, h}[i,j]$
 		\item $p_{2}=\sum_{l\in [N]}M_{h_1,\dots, h_{s-1}}[i,l]\cdot M_{h_1,\dots, h_{s-1}}[l,j]$
 	\end{itemize}
-	\textbf{Step 2:} Check if $|p_1-p_2|>\frac{\delta}{N}$ go to next $h$ else return $h$. 
+	\textbf{Step 2:} Check if $|p_1-p_2|>\frac{\delta}{N}$ go to next $h$ else return $h$.
 
 	% To compute $M_{h_1,\dots, h_{s}}[i,j]$, go over all $r\in\{0,1\}^k$ and count how many $r$ gives, $Q(i;\mcG_s(r,h_1,\dots, h_s))=j$. then return $count/2^k$.
 
 \end{frame}
+\begin{frame}[allowframebreaks]{Algorithm always returns an $h$}
+	\begin{claim}
+		There exists an $h_s\in\mcH$ such that for all $i,j\in [N]$, $$\left|M_{h_1,\dots, h_{s-1}, h_s}[i,j]-M_{h_1,\dots, h_{s-1}}^2[i,j]\right|\leq \frac{\delta}{N}$$
+	\end{claim}
+	Let $A_{i,j}$ be the set of $r\in\{0,1\}^k$ such that $Q(i;\mcG_{s-1}(r,h_1,\dots, h_{s-1}))=j$. So $M_{h_1,\dots, h_{s-1}}[i,j]=\rho(A_{i,j})$ where $\rho(A)=|A|/2^k$.
+
+
+	\begin{itemize}
+		\item For any $i,j\in[N]$, $$M^2_{h_1,\dots, h_{s-1}}=\sum_{l\in[N]}\rho(A_{i,l})\cdot \rho(A_{l,j})$$
+		\item For any $h\in\mcH$, $$M_{h_1,\dots, h_{s-1}, h}[i,j]=\sum_{l\in[N]}\underset{r\in\{0,1\}^k}{\bbP}[r\in A_{i,l}\wedge h(r)\in A_{l,j}]$$
+	\end{itemize}
+
+	\framebreak
+
+
+	For a random $h\in\mcH$ with probability at least $1-\frac{N^4}{2^k\delta^2}\geq 1-\frac1{2n^3}$, $$\left|\underset{r\in\{0,1\}^k}{\bbP}[r\in A_{i,l}\wedge h(r)\in A_{l,j}]-\rho(A_{i,l})\cdot \rho(A_{l,j})\right|\leq \frac{\rho(A_{i,l})\cdot \rho(A_{l,j})}{k^2}\leq \frac{\delta}{N^2}$$
+
+	So by Union Bound random $h\in \mcH$, $(\frac{\dl}{N^2},A,B)$-good for all $A,B$ with probability at least $\frac12$.
+
+	\begin{align*}
+		     & \left|M^2_{h_1,\dots, h_{s-1}}[i,j]- M_{h_1,\dots, h_{s-1}, h}[i,j]\right|                                                          \\
+		\leq & \sum_{l\in[N]}\left|\underset{r\in\{0,1\}^k}{\bbP}[r\in A_{i,l}\wedge h(r)\in A_{l,j}]-\rho(A_{i,l})\cdot \rho(A_{l,j})\right| \\
+		\leq & N^2\cdot \frac{\delta}{N^2}=\delta
+	\end{align*}
+\end{frame}
 \begin{frame}{Algorithm returns \emph{good} $h_s$}
-\begin{claim}
-If $h_s$ is returned by the above algorithm, then $$\left\|M_{h_1,\dots, h_s}-M^{2^s}\right\|\leq (2^s-1)\delta$$\pause
-\end{claim}
+	\begin{claim}
+		If $h_s$ is returned by the above algorithm, then $$\left\|M_{h_1,\dots, h_s}-M^{2^s}\right\|\leq (2^s-1)\delta$$\pause
+	\end{claim}
 	We have $\|M^2_{h_1,\dots, h_{s-1}}-M_{h_1,\dots, h_s}\|\leq \delta$. \pause
 	$$
 		\|M_{h_1,\dots, h_s}-M^{2^s}\|  \leq \|M_{h_1,\dots, h_s}-M_{h_1,\dots, h_{s-1}}^2\|+\|M_{h_1,\dots, h_{s-1}}^2-M^{2^s}\|
-		$$\pause
-\begin{align*}
-	\|M_{h_1,\dots, h_{s-1}}^2-M^{2^s}\|
-		&\leq \|M_{h_1,\dots, h_{s-1}}\|\cdot \|M_{h_1,\dots, h_{s-1}}-M^{2^{s-1}}\| \\ 
-		&\qquad \qquad\quad+ \|M_{h_1,\dots, h_{s-1}}-M^{2^{s-1}}\|\cdot \|M^{2^{s-1}}\|\\
-	\uncover<5->{%
-		&\le 1\cdot (2^{s-1}-1)\delta
-		  +(2^{s-1}-1)\delta\cdot 1
-		  =(2^s-2)\delta
-	}
-\end{align*}
+	$$\pause
+	\begin{align*}
+		\|M_{h_1,\dots, h_{s-1}}^2-M^{2^s}\|
+		 & \leq \|M_{h_1,\dots, h_{s-1}}\|\cdot \|M_{h_1,\dots, h_{s-1}}-M^{2^{s-1}}\|     \\
+		 & \qquad \qquad\quad+ \|M_{h_1,\dots, h_{s-1}}-M^{2^{s-1}}\|\cdot \|M^{2^{s-1}}\| \\
+		\uncover<5->{%
+		 & \le 1\cdot (2^{s-1}-1)\delta
+			+(2^{s-1}-1)\delta\cdot 1
+			=(2^s-2)\delta
+		}
+	\end{align*}
 
 
+\end{frame}
+\begin{frame}{Setting Parameters}
+	\begin{itemize}
+		\item Set $k=\log(n^c)=O(\log n)$. So $t\approx n^c$.
+	 \vfill 
+
+		\item Set $m=\log t=O(\log n)$.
+	 \vfill 
+	 
+		\item Want $(2^m-1)\delta=\epsilon\implies \delta=\frac{\epsilon}{2^m}$
+	\end{itemize}
 \end{frame}
 \begin{frame}[standout]
 	Thank You
