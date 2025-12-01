@@ -117,62 +117,62 @@
 		\item Input $x$ is accepted if $T$ reaches a state representing acceptance.
 	\end{itemize} \pause
 
-	Therefore the configuration graph of $T$ on input $x$ represents a finite state automata with $N=\poly(n)$ states. 
+	Therefore the configuration graph of $T$ on input $x$ represents a finite state automata with $N=\poly(n)$ states.
 \end{frame}
 
 \begin{frame}[c]{Computational Tableau of \textsf{BPL} machine}
-\begin{figure}
-	\centering
-	\begin{tikzpicture}[
-    box/.style={draw, minimum width=1.5cm, minimum height=6cm},
-    brace/.style={decorate,decoration={brace,amplitude=5pt}},
-    arrow/.style={-latex},
-    txt/.style={font=\scriptsize}
-]
+	\begin{figure}
+		\centering
+		\begin{tikzpicture}[
+				box/.style={draw, minimum width=1.5cm, minimum height=6cm},
+				brace/.style={decorate,decoration={brace,amplitude=5pt}},
+				arrow/.style={-latex},
+				txt/.style={font=\scriptsize}
+			]
 
-% Main box
-\node[box] (B) at (0,0) {};
+			% Main box
+			\node[box] (B) at (0,0) {};
 
-% Horizontal slices
-\draw (B.north west)++(0,-1.5) -- ++(1.5,0);
-\draw (B.north west)++(0,-3) -- ++(1.5,0);
-\draw (B.north west)++(0,-4.5) -- ++(1.5,0);
+			% Horizontal slices
+			\draw (B.north west)++(0,-1.5) -- ++(1.5,0);
+			\draw (B.north west)++(0,-3) -- ++(1.5,0);
+			\draw (B.north west)++(0,-4.5) -- ++(1.5,0);
 
-% Left input arrow
-\draw[arrow] (-2,3) -- ++(+1,0);
-\node[txt, anchor=east] at (-2,3) {$\text{Input: } x$};
+			% Left input arrow
+			\draw[arrow] (-2,3) -- ++(+1,0);
+			\node[txt, anchor=east] at (-2,3) {$\text{Input: } x$};
 
-% Right braces + text
-\draw[brace] (B.north east)++(+0.05,0) -- ++(0,-1.5)
-    node[midway,right=0.1cm,txt] {$k$ Random Bits};
+			% Right braces + text
+			\draw[brace] (B.north east)++(+0.05,0) -- ++(0,-1.5)
+			node[midway,right=0.1cm,txt] {$k$ Random Bits};
 
-\draw[brace] (B.north east)++(+0.05,-1.5) -- ++(0,-1.5)
-    node[midway,right=0.1cm,txt] {$k$ Random Bits};
+			\draw[brace] (B.north east)++(+0.05,-1.5) -- ++(0,-1.5)
+			node[midway,right=0.1cm,txt] {$k$ Random Bits};
 
-\draw[brace] (B.north east)++(+0.05,-4.5) -- ++(0,-1.5)
-    node[midway,right=0.1cm,txt] {$k$ Random Bits};
-% Left Brace + text
-\draw[brace] 
-    (B.south west)++(-0.05,0) -- ++(0,6)
-    node[midway, txt, left=0.1cm, align=right]{Time: $\poly(n)$\\ Random Bits: $n^{c}$};
-% Top Brace + text
-\draw[brace] (B.north west) ++(0,0.05) -- node[txt,midway,above=0.1cm] {Space: $ O(\log n)$}++(+1.5,0);
-% Bottom output arrow
-\draw[arrow] (B.south east) ++ (+1,0) node[txt,right=0.05cm,align=left] {Output: Accept/Reject} -- ++(-0.9,0);
+			\draw[brace] (B.north east)++(+0.05,-4.5) -- ++(0,-1.5)
+			node[midway,right=0.1cm,txt] {$k$ Random Bits};
+			% Left Brace + text
+			\draw[brace]
+			(B.south west)++(-0.05,0) -- ++(0,6)
+			node[midway, txt, left=0.1cm, align=right]{Time: $\poly(n)$\\ Random Bits: $n^{c}$};
+			% Top Brace + text
+			\draw[brace] (B.north west) ++(0,0.05) -- node[txt,midway,above=0.1cm] {Space: $ O(\log n)$}++(+1.5,0);
+			% Bottom output arrow
+			\draw[arrow] (B.south east) ++ (+1,0) node[txt,right=0.05cm,align=left] {Output: Accept/Reject} -- ++(-0.9,0);
 
-% Annotations
-\node[txt] at (0,-0.7) {$\vdots$};
-\end{tikzpicture}
-\caption{Computational Tableau of \textsf{BPL} machine $T$.}
-\end{figure}
+			% Annotations
+			\node[txt] at (0,-0.7) {$\vdots$};
+		\end{tikzpicture}
+		\caption{Computational Tableau of \textsf{BPL} machine $T$.}
+	\end{figure}
 
-\end{frame}	
+\end{frame}
 
 \begin{frame}{Dividing \textsf{BPL} Computation into Blocks}
 	\begin{itemize}
 		\item Let the \textsf{BPL} machine $T$ run in time $n^c$ using $n^{c'}$ random bits and $O(\log n)$ space on input $x$ of length $n$.
 		\item Let $k<< n^{c}$ be a parameter to be fixed later.
-		\item Divide the computation of $T$ into $t=n^c/k$ blocks, where each block uses $k$ random bits. 
+		\item Divide the computation of $T$ into $t=n^c/k$ blocks, where each block uses $k$ random bits.
 		\item We can treat each block as a separate \textsf{BPL} machine $T_i$ (in some sense) which takes input as the final configuration of $T_{i-1}$ and $k$ random bits.
 	\end{itemize}
 \end{frame}
@@ -192,41 +192,49 @@
 	\begin{itemize}
 		\item From definition of $M$, $M^t[i,j]=\underset{r_1,\dots, r_t\in\{0,1\}^k}{\bbP}[Q(i;r_1\dots ;r_t)=j]$
 		\item Using $\mcG$, let $M_{\mcG}[i,j]=\underset{r\in\{0,1\}^k}{\bbP}[Q(i;\mcG(r))=j]$
-		\item Want to construct $\mcG$ such that $$\|M^t-M_{\mcG}\|<\epsilon$$ for small $\epsilon$ with high probability. 
+		\item Want to construct $\mcG$ such that $$\|M^t-M_{\mcG}\|<\epsilon$$ for small $\epsilon$ with high probability.
 	\end{itemize}
 \end{frame}
+\begin{frame}{Matrix Norm}
+	For any vector $v\in \bbR^N$, define $\|v\|=\sum_{i\in [N]}|v(i)|$. Then for any matrix $M\in \bbR^{N\times N}$ define $$\|M\|=\sup\limits_{0\neq v\in\bbR^N}\frac{\|Mv\|}{\|v\|}$$\pause
 
+	\textbf{Properties:}\begin{itemize}
+		\item $\|M\|=\max\limits_{i\in [N]}\sum_{j\in [N]}|M[i,j]|$
+		\item $\|M+N\|\leq \|M\|+\|N\|$
+		\item $\|MN\|\leq \|M\|\cdot \|N\|$
+	\end{itemize}
+\end{frame}
 \begin{frame}{Universal Hash Family}
 	\begin{definition}[Universal Hash Family (Carter-Wegman)]
 		$\mcH=\{h:\{0,1\}^k\to\{0,1\}^m\}$ is a \textit{universal hash family} if for any $x_1\neq x_2\in\{0,1\}^k$ and $y_1,y_2\in\{0,1\}^m$,\begin{itemize}
 			\item $\underset{h \in \mathcal{H}}{\bbP}[\,h(x_1) = y_1\,] \;=\; \frac{1}{2^m}$
 			\item $\underset{h \in \mathcal{H}}{\bbP}[\,h(x_1)=y_1 \;\wedge\; h(x_2)=y_2\,]
-\;=\; \frac{1}{2^{2m}}$
+				      \;=\; \frac{1}{2^{2m}}$
 		\end{itemize}
 	\end{definition}\pause
 
 	\vfill
 
 	\begin{itemize}
-	\item For our purpose, we have $k=m$. \pause
-	\item We can construct such a family with $|\mcH|=2^{O(k)}$ where $$\mcH=\{a\cdot x+ b\mid a,b\in\{0,1\}^k\}$$ over $GF(2^k)$.
-\end{itemize}
+		\item For our purpose, we have $k=m$. \pause
+		\item We can construct such a family with $|\mcH|=2^{O(k)}$ where $$\mcH=\{a\cdot x+ b\mid a,b\in\{0,1\}^k\}$$ over $GF(2^k)$.
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Property of Universal Hash Family}
-\begin{definition}[$(\epsilon,A,B)$-good hash function]
-Let $A\subseteq \{0,1\}^k$, $B\subseteq \{0,1\}^m$, $\epsilon>0$, $h:\{0,1\}^k\to\{0,1\}^m$ is said to be \textit{$(\epsilon,A,B)$-good} if 
-$$\left|\underset{x\in\{0,1\}^k}{\bbP}[x\in A\wedge h(x)\in B]-\alpha\cdot \beta\right|\leq \epsilon$$ 
-where $\alpha=\frac{|A|}{2^k}$ and $\beta=\frac{|B|}{2^m}$.
-\end{definition}\pause
+	\begin{definition}[$(\epsilon,A,B)$-good hash function]
+		Let $A\subseteq \{0,1\}^k$, $B\subseteq \{0,1\}^m$, $\epsilon>0$, $h:\{0,1\}^k\to\{0,1\}^m$ is said to be \textit{$(\epsilon,A,B)$-good} if
+		$$\left|\underset{x\in\{0,1\}^k}{\bbP}[x\in A\wedge h(x)\in B]-\alpha\cdot \beta\right|\leq \epsilon$$
+		where $\alpha=\frac{|A|}{2^k}$ and $\beta=\frac{|B|}{2^m}$.
+	\end{definition}\pause
 
-\vfill
+	\vfill
 
-\begin{lemma}
-	If $\mcH$ is a universal hash family, then for any $A\subseteq \{0,1\}^k$, $B\subseteq \{0,1\}^m$, $\epsilon>0$, $$\underset{h\in\mcH}{\bbP}[h\text{ is not $(\epsilon,A,B)$-good}]\leq \frac{\alpha\cdot\beta}{2^k\epsilon^2}$$
-\end{lemma}\pause
+	\begin{lemma}
+		If $\mcH$ is a universal hash family, then for any $A\subseteq \{0,1\}^k$, $B\subseteq \{0,1\}^m$, $\epsilon>0$, $$\underset{h\in\mcH}{\bbP}[h\text{ is not $(\epsilon,A,B)$-good}]\leq \frac{\alpha\cdot\beta}{2^k\epsilon^2}$$
+	\end{lemma}\pause
 
-For $k=m$, by union bound an uniformly random $h$ is $\left(\frac{\epsilon}{k^2}, A,B\right)$-good for all $A,B$.
+	For $k=m$, by union bound an uniformly random $h$ is $\left(\frac{\epsilon}{k^2}, A,B\right)$-good for all $A,B$.
 \end{frame}
 \begin{frame}{Nisan's Generator}
 	Let $\mcH$ be an universal hash family from $\{0,1\}^k$ to $\{0,1\}^k$. For any integer $m\geq 0$ define the function $\mcG_m\colon\{0,1\}^k\times \mcH^{m}\to \{0,1\}^{k\cdot 2^m}$ recursively as follows:\pause
@@ -245,6 +253,20 @@ For $k=m$, by union bound an uniformly random $h$ is $\left(\frac{\epsilon}{k^2}
 \end{frame}
 \begin{frame}{Proof Flow}
 	Let $h_1,\dots, h_s$ be some fixed hash functions from $\mcH$.  Define the matrix $$M_{h_1,\dots, h_s}[i,j]=\underset{x\in\{0,1\}^k}{\bbP}[Q(i;\mcG_s(x,h_1,\dots, h_s))=j]$$
+	\vspace{-0.5cm}
+
+	\begin{itemize}
+		\item Using $h_1,\dots, h_s$ we had $2^s$ many transitions in $Q$. So we should compare $M_{h_1,\dots, h_s}$ with $M^{2^s}$.
+	\end{itemize}
+
+	\textbf{Goal:} For `good' choice of $h_1,\dots, h_m$, $\|M^{2^m}-M_{h_1,\dots, h_m}\|<\epsilon$
+
+	\textbf{Approach:} 
+
+		\textbf{Step 1:} Suppose we have $h_1,\dots, h_{s-1}$. We will find $h_s\in \mcH$ such that for all $i,j\in [N]$, $$\left\|M^2_{h_1,\dots, h_{s-1}}-M_{h_1,\dots, h_s}\right\|\leq \delta$$
+		\textbf{Step 2:} Using above property show for all $s\in[m]$, $$\|M_{h_1,\dots, h_s}-M^{2^s}\|\leq (2^s-1)\delta$$
+\end{frame}
+\begin{frame}{Find good $h_s$ from $h_1,\dots, h_{s-1}$}
 \end{frame}
 \begin{frame}[standout]
 	Thank You
