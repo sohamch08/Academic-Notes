@@ -1,4 +1,4 @@
-\documentclass[10pt,handout]{beamer}
+\documentclass[10pt]{beamer}
 
 \usetheme{metropolis}
 \usepackage{appendixnumberbeamer,amsmath}
@@ -24,7 +24,7 @@
 \newcommand{\tfae}{the following are equivalent:}
 \newcommand{\sparsity}{\textit{sparsity}}
 \DeclareMathOperator{\poly}{poly}
-
+\newtheorem{claim}{Claim}
 \title{Nisan's Pseudorandom Generator for \textsf{RL}}
 \subtitle{$\textsf{BPL}\subseteq \textsf{SC}=\textsf{DTISP}(\poly(n),\log^2(n))$}
 \date{December 2, 2025}
@@ -264,9 +264,42 @@
 	\textbf{Approach:} 
 
 		\textbf{Step 1:} Suppose we have $h_1,\dots, h_{s-1}$. We will find $h_s\in \mcH$ such that for all $i,j\in [N]$, $$\left\|M^2_{h_1,\dots, h_{s-1}}-M_{h_1,\dots, h_s}\right\|\leq \delta$$
-		\textbf{Step 2:} Using above property show for all $s\in[m]$, $$\|M_{h_1,\dots, h_s}-M^{2^s}\|\leq (2^s-1)\delta$$
+		\textbf{Step 2:} Using above property show for all $s\in[m]$, $$\left\|M_{h_1,\dots, h_s}-M^{2^s}\right\|\leq (2^s-1)\delta$$
 \end{frame}
 \begin{frame}{Find good $h_s$ from $h_1,\dots, h_{s-1}$}
+	Suppose we have $h_1,\dots, h_{s-1}\in \mcH$ such that, $$ \left\|M_{h_1,\dots, h_{ls-1}}-M^{2^{s-1}}\right\|\leq (2^{s-1}-1)\delta$$If we can find $h_s$ such that $\|M^2_{h_1,\dots, h_{s-1}}-M_{h_1,\dots, h_s}\|\leq \delta$ then we are done. 
+
+	\textbf{Algorithm:} Go over all $h\in \mcH$ and all $i,j\in [N]$:
+
+	\textbf{Step 1:}  Compute \begin{itemize}
+		\item $p_1=M_{h_1,\dots, h_{s-1}, h}[i,j]$
+		\item $p_{2}=\sum_{l\in [N]}M_{h_1,\dots, h_{s-1}}[i,l]\cdot M_{h_1,\dots, h_{s-1}}[l,j]$
+	\end{itemize}
+	\textbf{Step 2:} Check if $|p_1-p_2|>\frac{\delta}{N}$ go to next $h$ else return $h$. 
+
+	% To compute $M_{h_1,\dots, h_{s}}[i,j]$, go over all $r\in\{0,1\}^k$ and count how many $r$ gives, $Q(i;\mcG_s(r,h_1,\dots, h_s))=j$. then return $count/2^k$.
+
+\end{frame}
+\begin{frame}{Algorithm returns \emph{good} $h_s$}
+\begin{claim}
+If $h_s$ is returned by the above algorithm, then $$\left\|M_{h_1,\dots, h_s}-M^{2^s}\right\|\leq (2^s-1)\delta$$\pause
+\end{claim}
+	We have $\|M^2_{h_1,\dots, h_{s-1}}-M_{h_1,\dots, h_s}\|\leq \delta$. \pause
+	$$
+		\|M_{h_1,\dots, h_s}-M^{2^s}\|  \leq \|M_{h_1,\dots, h_s}-M_{h_1,\dots, h_{s-1}}^2\|+\|M_{h_1,\dots, h_{s-1}}^2-M^{2^s}\|
+		$$\pause
+\begin{align*}
+	\|M_{h_1,\dots, h_{s-1}}^2-M^{2^s}\|
+		&\leq \|M_{h_1,\dots, h_{s-1}}\|\cdot \|M_{h_1,\dots, h_{s-1}}-M^{2^{s-1}}\| \\ 
+		&\qquad \qquad\quad+ \|M_{h_1,\dots, h_{s-1}}-M^{2^{s-1}}\|\cdot \|M^{2^{s-1}}\|\\
+	\uncover<5->{%
+		&\le 1\cdot (2^{s-1}-1)\delta
+		  +(2^{s-1}-1)\delta\cdot 1
+		  =(2^s-2)\delta
+	}
+\end{align*}
+
+
 \end{frame}
 \begin{frame}[standout]
 	Thank You
