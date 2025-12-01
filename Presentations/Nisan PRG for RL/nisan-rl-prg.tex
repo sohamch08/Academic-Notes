@@ -1,4 +1,4 @@
-\documentclass[10pt]{beamer}
+\documentclass[10pt,handout]{beamer}
 
 \usetheme{metropolis}
 \usepackage{appendixnumberbeamer,amsmath}
@@ -40,62 +40,62 @@
 % 	\setbeamertemplate{section in toc}[sections numbered]
 % 	\tableofcontents[hideallsubsections]
 % \end{frame}
-% \begin{frame}[c]{Complexity Classes}
+\begin{frame}[c]{Complexity Classes}
 
-% \centering
-% \begin{tikzpicture}[
-%     node distance=0.8cm and 2cm,
-%     class/.style={font=\sffamily},
-%     arrow/.style={-latex},
-%     annotation/.style={font=\scriptsize, text=blue}
-% ]
-% \path[use as bounding box] (-3,-2) rectangle (3,-1);
-% \node[class] (SC) at (0,0) {SC};
-% \node[class, right=of SC] (NC) {NC};
-% \node[class, left=of SC] (L2) {$\mathsf{L}^2$};
+\centering
+\begin{tikzpicture}[
+    node distance=0.8cm and 2cm,
+    class/.style={font=\sffamily},
+    arrow/.style={-latex},
+    annotation/.style={font=\scriptsize, text=blue}
+]
+\path[use as bounding box] (-3,-2) rectangle (3,-1);
+\node[class] (SC) at (0,0) {SC};
+\node[class, right=of SC] (NC) {NC};
+\node[class, left=of SC] (L2) {$\mathsf{L}^2$};
 
-% % Now position other nodes relative to these
-% \node[class, above=of NC] (P) {P};
-% \node[class, above=of L2] (PolylogSpace) {PolylogSpace};
-% \node[class, below=of SC] (BPL) {BPL};
-% \node[class, below=of NC] (NL) {NL};
-% \node[class, below=of L2] (L32) {$\mathsf{L}^{3/2}$};
-% \node[class, below=of BPL] (RL) {RL};
-% \node[class, below=of RL] (L) {L};
+% Now position other nodes relative to these
+\node[class, above=of NC] (P) {P};
+\node[class, above=of L2] (PolylogSpace) {PolylogSpace};
+\node[class, below=of SC] (BPL) {BPL};
+\node[class, below=of NC] (NL) {NL};
+\node[class, below=of L2] (L32) {$\mathsf{L}^{3/2}$};
+\node[class, below=of BPL] (RL) {RL};
+\node[class, below=of RL] (L) {L};
 
-% % Draw arrows
-% \draw[arrow] (L) -- (RL);
-% \draw[arrow] (RL) -- (NL);
-% \draw[arrow] (RL) -- (BPL);
-% \draw[arrow] (RL) -- (L32);
+% Draw arrows
+\draw[arrow] (L) -- (RL);
+\draw[arrow] (RL) -- (NL);
+\draw[arrow] (RL) -- (BPL);
+\draw[arrow] (RL) -- (L32);
 
-% % From NL
-% \draw[arrow] (NL) -- (NC);
-% \draw[arrow] (NL) to[out=270,in=240,looseness=2.1] node[pos=0.7,annotation,above,sloped] {[Savitch]} (L2);
+% From NL
+\draw[arrow] (NL) -- (NC);
+\draw[arrow] (NL) to[out=270,in=240,looseness=2.1] node[pos=0.7,annotation,above,sloped] {[Savitch]} (L2);
 
-% % From BPL
-% \draw[arrow] (BPL) -- (NC);
-% \draw[arrow] (BPL) -- (L2);
-% \draw[arrow] (BPL) -- node[midway,annotation,pos=0.6,above] {[Saks-Zhou]} (L32);
+% From BPL
+\draw[arrow] (BPL) -- (NC);
+\draw[arrow] (BPL) -- (L2);
+\draw[arrow] (BPL) -- node[midway,annotation,pos=0.6,above] {[Saks-Zhou]} (L32);
 
-% % Left column
-% \draw[arrow] (L32) -- (L2);
-% \draw[arrow] (L2) -- (PolylogSpace);
+% Left column
+\draw[arrow] (L32) -- (L2);
+\draw[arrow] (L2) -- (PolylogSpace);
 
-% % From SC
-% \draw[arrow] (SC) -- (PolylogSpace);
-% \draw[arrow] (SC) -- (P);
+% From SC
+\draw[arrow] (SC) -- (PolylogSpace);
+\draw[arrow] (SC) -- (P);
 
-% % From NC
-% \draw[arrow] (NC) -- (P);
-% % \draw[arrow, red] (BPL) -- node[midway,font=\scriptsize,right,pos=0.6,color=red] {Today} (SC);
-% \draw<1>[arrow] (BPL) -- (SC);
+% From NC
+\draw[arrow] (NC) -- (P);
+% \draw[arrow, red] (BPL) -- node[midway,font=\scriptsize,right,pos=0.6,color=red] {Today} (SC);
+\draw<1>[arrow] (BPL) -- (SC);
 
-% % Red "Today" edge: appears starting slide 2
-% \draw<2->[arrow, red] (BPL) --
-%   node[midway,font=\scriptsize,right,pos=0.6,color=red] {Today} (SC);
-% \end{tikzpicture}
-% \end{frame}
+% Red "Today" edge: appears starting slide 2
+\draw<2->[arrow, red] (BPL) --
+  node[midway,font=\scriptsize,right,pos=0.6,color=red] {Today} (SC);
+\end{tikzpicture}
+\end{frame}
 \begin{frame}{Pseudorandom Generator}
 	\begin{definition}[Pseudorandom Generator]
 		A map $\mcG:\{0,1\}^l\to \{0,1\}^n$, where $n\geq l$ is called a PRG for a class $\mcC$ with a parameter $\epsilon>0$ if for any $f\in \mcC$, $$\left|\underset{y\in\{0,1\}^n}{\bbP}[f(y)=1]-\underset{x\in\{0,1\}^l}{\bbP}[f(\mcG(x))=1]\right|\leq \epsilon$$
@@ -107,7 +107,6 @@
 		\item Typically, we want $n>> l$ and $\mcG$ to be efficiently computable.
 	\end{itemize}
 \end{frame}
-
 \begin{frame}{Finite State Automata}
 	Let $T$ be a \textsf{BPL} machine which uses $n^c$ random bits on inputs of length $n$ and runs in polynomial time and uses $S=O(\log n)$ space. \pause
 	\begin{itemize}
@@ -119,7 +118,6 @@
 
 	Therefore the configuration graph of $T$ on input $x$ represents a finite state automata with $N=\poly(n)$ states.
 \end{frame}
-
 \begin{frame}[c]{Computational Tableau of \textsf{BPL} machine}
 	\begin{figure}
 		\centering
@@ -167,7 +165,6 @@
 	\end{figure}
 
 \end{frame}
-
 \begin{frame}{Dividing \textsf{BPL} Computation into Blocks}
 	\begin{itemize}
 		\item Let the \textsf{BPL} machine $T$ run in time $n^c$ using $n^{c'}$ random bits and $O(\log n)$ space on input $x$ of length $n$.
@@ -220,7 +217,6 @@
 		\item We can construct such a family with $|\mcH|=2^{O(k)}$ where $$\mcH=\{a\cdot x+ b\mid a,b\in\{0,1\}^k\}$$ over $GF(2^k)$.
 	\end{itemize}
 \end{frame}
-
 \begin{frame}{Property of Universal Hash Family}
 	\begin{definition}[$(\epsilon,A,B)$-good hash function]
 		Let $A\subseteq \{0,1\}^k$, $B\subseteq \{0,1\}^m$, $\epsilon>0$, $h:\{0,1\}^k\to\{0,1\}^m$ is said to be \textit{$(\epsilon,A,B)$-good} if
