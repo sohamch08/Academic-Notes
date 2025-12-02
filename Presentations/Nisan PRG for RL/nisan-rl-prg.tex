@@ -181,7 +181,7 @@
 \end{frame}
 \begin{frame}{Dividing \textsf{BPL} Computation into Blocks}
 	\begin{itemize}
-		\item Let the \textsf{BPL} machine $\mathcolor{blue}{T}$  run in time $\mathcolor{blue}{\poly(n)}$  using $\mathcolor{blue}{n^{c}}$  random bits and $\mathcolor{blue}{O(\log n)}$  space on input $\mathcolor{blue}{x}$  of length $\mathcolor{blue}{n}$.\pause
+		\item Let the \textsf{BPL} machine $\mathcolor{blue}{T}$  run in time $\mathcolor{blue}{T(n)=\poly(n)}$  using $\mathcolor{blue}{n^{c}}$  random bits and $\mathcolor{blue}{O(\log n)}$  space on input $\mathcolor{blue}{x}$  of length $\mathcolor{blue}{n}$.\pause
 		\item Let $\mathcolor{blue}{k<< n^{c}}$  be a parameter to be fixed later.
 		\item Divide the computation of $\mathcolor{blue}{T}$  into $\mathcolor{blue}{t=n^c/k}$  blocks, where each block uses $\mathcolor{blue}{k}$  random bits.\pause
 		\item We can treat each block as a separate \textsf{BPL} machine $\mathcolor{blue}{T_i}$  (in some sense) which takes input as the final configuration of $\mathcolor{blue}{T_{i-1}}$  and $\mathcolor{blue}{k}$  random bits.
@@ -259,9 +259,12 @@
 		\item $\mathcolor{blue}{\mcG_m(x,h_1,\dots, h_m)=(\mcG_{m-1}(x,h_1,\dots,h_{m-1}), \mcG_{m-1}(h_m(x),h_1,\dots, h_{m-1}))}$ 
 	\end{itemize}\pause
 
-	For example: $${\mcG_1(x,h)=(x,h(x)),\quad \mcG_2(x,h_1,h_2)=(x,h_1(x), h_2(x), h_1\cdot h_2(x))}$$
+	For example: $${\mcG_1(x,h)=(x,h(x)),\quad \mcG_2(x,h_1,h_2)=(x,h_1(x), h_2(x), h_1\circ h_2(x))}$$
  \pause
-	$${\mcG_3(x,h_1,h_2,h_3)=(x,h_1(x), h_2(x), h_1\cdot h_2(x), h_3(x), h_1\cdot h_3(x), h_2\cdot h_3(x), h_1\cdot h_2\cdot h_3(x))}$$
+	\begin{multline*}
+		\mcG_3(x,h_1,h_2,h_3)=(x,h_1(x), h_2(x), h_1\circ h_2(x), \\ 
+		h_3(x), h_1\circ h_3(x), h_2\circ h_3(x), h_1\circ h_2\circ h_3(x))
+	\end{multline*}
 \pause
 
 	\begin{itemize}
@@ -299,7 +302,7 @@ If we can find $\mathcolor{blue}{h_s}$  such that $\mathcolor{blue}{\|M^2_{h_1,\
 	\end{itemize}\pause
 	\textbf{Step 2:} Check if $\mathcolor{blue}{|p_1-p_2|>\frac{\delta}{N}}$  go to next $\mathcolor{blue}{h}$  else return $\mathcolor{blue}{h}$.\pause
 \begin{alertblock}{Remark}
-	To compute $\mathcolor{blue}{M_{h_1,\dots, h_{s-1}, h}[i,j]}$  it goes over all $\mathcolor{blue}{r\in\{0,1\}^k}$  and compute $\mathcolor{blue}{\mcG_s(r;h)1,\dots, h_s)}$  and counts how many $\mathcolor{blue}{r}$  gives $\mathcolor{blue}{Q(i;\mcG_s(r,h_1,\dots, h_s))=j}$. and return $\mathcolor{blue}{count/2^k}$.
+	To compute $\mathcolor{blue}{M_{h_1,\dots, h_{s-1}, h}[i,j]}$  it goes over all $\mathcolor{blue}{r\in\{0,1\}^k}$  and compute $\mathcolor{blue}{\mcG_s(r;h)1,\dots, h_s)}$  and counts how many $\mathcolor{blue}{r}$  gives $\mathcolor{blue}{Q(i;\mcG_s(r,h_1,\dots, h_s))=j}$ by simulating $\mathcolor{blue}{T}$. and return $\mathcolor{blue}{count/2^k}$.
 \end{alertblock}
 \end{frame}
 \begin{frame}{Algorithm always returns an $h$\hfill (I)}
@@ -321,7 +324,7 @@ If we can find $\mathcolor{blue}{h_s}$  such that $\mathcolor{blue}{\|M^2_{h_1,\
 \begin{frame}{Algorithm always returns an $h$ \hfill (II)}
 
 
-	For a random $\mathcolor{blue}{h\in\mcH}$  with probability at least $\mathcolor{blue}{1-\frac{N^4}{2^k\delta^2}\geq 1-\frac1{2n^3}}$, $$\mathcolor{blue}{\left|\underset{r\in\{0,1\}^k}{\bbP}[r\in A_{i,l}\wedge h(r)\in A_{l,j}]-\rho(A_{i,l})\cdot \rho(A_{l,j})\right|\leq \frac{\rho(A_{i,l})\cdot \rho(A_{l,j})}{k^2}\leq \frac{\delta}{N^2}}$$
+	For a random $\mathcolor{blue}{h\in\mcH}$  with probability at least $\mathcolor{blue}{1-\frac{N^4}{2^k\delta^2}\geq 1-\frac1{2n^3}}$, $$\mathcolor{blue}{\left|\underset{r\in\{0,1\}^k}{\bbP}[r\in A_{i,l}\wedge h(r)\in A_{l,j}]-\rho(A_{i,l})\cdot \rho(A_{l,j})\right|\leq \frac{\delta}{N^2}}$$
 \pause
 
 	So by Union Bound random $\mathcolor{blue}{h\in \mcH}$, $\mathcolor{blue}{(\frac{\dl}{N^2},A,B)}$ -good for all $\mathcolor{blue}{A,B}$  with probability at least $\mathcolor{blue}{\frac12}$.\pause
@@ -329,7 +332,7 @@ If we can find $\mathcolor{blue}{h_s}$  such that $\mathcolor{blue}{\|M^2_{h_1,\
 	{\color{blue}\begin{align*}
 		     & \left|M^2_{h_1,\dots, h_{s-1}}[i,j]- M_{h_1,\dots, h_{s-1}, h}[i,j]\right|                                                          \\
 		\leq & \sum_{l\in[N]}\left|\underset{r\in\{0,1\}^k}{\bbP}[r\in A_{i,l}\wedge h(r)\in A_{l,j}]-\rho(A_{i,l})\cdot \rho(A_{l,j})\right| \\
-		\leq &\; N^2\cdot \frac{\delta}{N^2}=\delta
+		\leq &\; N\cdot \frac{\delta}{N^2}=\frac{\delta}{N}
 	\end{align*}}
 \end{frame}
 \begin{frame}{Algorithm returns \emph{good} $h_s$}
@@ -373,7 +376,7 @@ If we can find $\mathcolor{blue}{h_s}$  such that $\mathcolor{blue}{\|M^2_{h_1,\
 \end{itemize}\pause
 \textbf{Space:} The only place where more than $\mathcolor{blue}{O(\log n)}$  space is needed is to store the value of $\mathcolor{blue}{h_1,\dots, h_m}$. And each $\mathcolor{blue}{h_i}$  can be stored in $\mathcolor{blue}{O(k)=O(\log n)}$  space. So total space used is $\mathcolor{blue}{O(\log^2 n)}$. \pause
 
-\textbf{Time:} For all $\mathcolor{blue}{s\in[m]}$, computing $\mathcolor{blue}{M_{h_1,\dots, h_s}[i,j]}$  takes $\mathcolor{blue}{O(2^{k})}$  times computation of $\mathcolor{blue}{\mcG_s(r,h_1,\dots, h_s)}$  for all $\mathcolor{blue}{r}$  and to check if $\mathcolor{blue}{Q(i;\mcG_s(r,h_1,\dots, h_s))=j}$  which takes $\mathcolor{blue}{O(2^m)\cdot \poly(m)}$  time. So \textsc{Find} takes $\mathcolor{blue}{O(N^2\cdot 2^{2m}\cdot 2^{m+k})\poly(m)}$. Hence total time $\mathcolor{blue}{O(N^2\cdot 2^{2m}\cdot 2^{m+k})\poly(m)\cdot m=\poly(n)}$. 
+\textbf{Time:} For all $\mathcolor{blue}{s\in[m]}$, computing $\mathcolor{blue}{M_{h_1,\dots, h_s}[i,j]}$  takes $\mathcolor{blue}{O(2^{k})}$  times computation of $\mathcolor{blue}{\mcG_s(r,h_1,\dots, h_s)}$  for all $\mathcolor{blue}{r}$  and to check if $\mathcolor{blue}{Q(i;\mcG_s(r,h_1,\dots, h_s))=j}$  which takes $\mathcolor{blue}{O(2^m\cdot mk)\cdot T(n)}$  time. So \textsc{Find} takes $\mathcolor{blue}{O(N^2\cdot 2^{2m}\cdot 2^{m+k}\cdot mk)\cdot T(n)}$. Hence total time $\mathcolor{blue}{O(N^2\cdot 2^{2m}\cdot 2^{m+k}\cdot mk)\cdot m\cdot T(n)=\poly(n)}$. 
 \end{frame}
 \begin{frame}[standout]
 	Thank You
@@ -388,7 +391,7 @@ If we can find $\mathcolor{blue}{h_s}$  such that $\mathcolor{blue}{\|M^2_{h_1,\
 	Consider the matrix $\mathcolor{blue}{M\in \{0,1\}^{2^k\times |\mcH|}}$  where $\mathcolor{blue}{M[x,h]=1}$  if $\mathcolor{blue}{h(x)\in B}$  and $\mathcolor{blue}{0}$  otherwise. For any $\mathcolor{blue}{x_1\neq x_2\in\{0,1\}^k}$, $\mathcolor{blue}{\underset{h\in\mcH}{\bbE}[M[x_1,h]]=\beta}$  and  $\mathcolor{blue}{ \underset{h\in\mcH}{\bbE}[M[x_1,h]M[x_2,h]]=\beta^2}$ 
 
 	{\color{blue}\begin{align*}
-		 \underset{h\in\mcH}{\bbE}\left[(\beta-\underset{x\in A}{\bbE}[M[x,h]])^2\right] & = \underset{x_1,x_2\in A}{\bbE}\ \underset{h\in\mcH}{\bbE}\left[(\beta-M[x_1,h])(\beta-M[x_2,h])\right]\\[-0.1cm]
+		 \underset{h\in\mcH}{\bbE}\left[\left(\beta-\underset{x\in A}{\bbE}[M[x,h]]\right)^2\right] & = \underset{x_1,x_2\in A}{\bbE}\ \underset{h\in\mcH}{\bbE}\left[(\beta-M[x_1,h])(\beta-M[x_2,h])\right]\\[-0.1cm]
 		 & =  \underset{x_1,x_2\in A}{\bbE}\left[\beta^2-\beta \underset{h\in\mcH}{\bbE}[M[x_1,h]] -\beta\underset{h\in\mcH}{\bbE}[M[x_1,h]]\right.\\[-0.3cm]  
 		 & \qquad\qquad\qquad\qquad\quad\; \left.+\underset{h\in\mcH}{\bbE}[M[x_1,h]\cdot M[x_2,h]]\right] \\[-0.2cm]
 		  & = \underset{x_1,x_2\in A}{\bbE}\left[\underset{h\in\mcH}{\bbE}[M[x_1,h]\cdot M[x_2,h]]-\beta^2\right] 
@@ -400,7 +403,7 @@ If we can find $\mathcolor{blue}{h_s}$  such that $\mathcolor{blue}{\|M^2_{h_1,\
 
 \framebreak
 So,
-$$\mathcolor{blue}{\underset{h\in\mcH}{\bbE}\left[(\beta-\underset{x\in A}{\bbE}[M[x,h]])^2\right]=\frac1{|A|}(\beta-\beta^2)=\frac{\alpha\beta(1-\beta)}{2^k}}$$
+$$\mathcolor{blue}{\underset{h\in\mcH}{\bbE}\left[\left(\beta-\underset{x\in A}{\bbE}[M[x,h]]\right)^2\right]=\frac1{|A|}(\beta-\beta^2)=\frac{\alpha\beta(1-\beta)}{2^k}}$$
 
 
 
