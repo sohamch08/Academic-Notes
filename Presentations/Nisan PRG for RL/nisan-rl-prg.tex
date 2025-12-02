@@ -1,4 +1,4 @@
-\documentclass[10pt]{beamer}
+\documentclass[10pt,handout]{beamer}
 
 \usetheme{metropolis}
 \usepackage{appendixnumberbeamer,amsmath}
@@ -192,7 +192,7 @@
 		\item We can think of $\mathcolor{blue}{T}$  as a finite state automata with $\mathcolor{blue}{N}$  states.
 		\item Each state makes $\mathcolor{blue}{2^k}$  transitions where each transion corresponds to a choice of $\mathcolor{blue}{k}$  random bits. \pause
 		\item Let $\mathcolor{blue}{Q}$  be this automata. For transition we write $\mathcolor{blue}{Q(i;r)=j}$  for any $\mathcolor{blue}{r\in\{0,1\}^k}$  if $\mathcolor{blue}{Q}$  goes from state $\mathcolor{blue}{i}$  to state $\mathcolor{blue}{j}$  when fed $\mathcolor{blue}{r}$. \pause
-		\item Let $\mathcolor{blue}{M}$  be the matrix where $\mathcolor{blue}{M[i,j]=\underset{r\in\{0,1\}^k}{\bbP}[Q(i;x)=j]}$ \pause
+		\item Let $\mathcolor{blue}{M}$  be the matrix where $\mathcolor{blue}{M[i,j]=\underset{r\in\{0,1\}^k}{\bbP}[Q(i;r)=j]}$ \pause
 	\end{itemize}
 	$$\mathcolor{blue}{\underset{r\in \{0,1\}^{k\times t}}{\bbP}[T(x,r)=\text{Acc}]=\sum_{j:\text{Accepting state}}M^t[1,j]}$$
 
@@ -215,7 +215,8 @@
 	\textbf{Properties:}\begin{itemize}
 		\item $\mathcolor{blue}{\|M\|\leq\max\limits_{i\in [N]}\sum_{j\in [N]}|M[i,j]|}$ 
 		\item $\mathcolor{blue}{\|M+N\|\leq \|M\|+\|N\|}$ 
-		\item $\mathcolor{blue}{\|MN\|\leq \|M\|\cdot \|N\|}$ 
+		\item $\mathcolor{blue}{\|MN\|\leq \|M\|\cdot \|N\|}$
+		\item For our use-case $M$ is row-stochastic, so $\mathcolor{blue}{\|M\|=1}$ 
 	\end{itemize}
 \end{frame}
 \begin{frame}{Universal Hash Family}
@@ -231,8 +232,7 @@
 
 	\begin{itemize}
 		\item For our purpose, we have $\mathcolor{blue}{k=m}$. \pause
-		\item We can construct such a family with $\mathcolor{blue}{|\mcH|=2^{O(k)}}$  where $$\mathcolor{blue}{\mcH=\{a\cdot x+ b\mid a,b\in\{0,1\}^k\}}$$
- over $\mathcolor{blue}{GF(2^k)}$.
+		\item We can construct such a family with $\mathcolor{blue}{|\mcH|=2^{O(k)}}$  where each $h\in\mcH$ can be represented using $\mathcolor{blue}{O(k)}$  bits and evaluated in $\mathcolor{blue}{\poly(k)}$  time over $\mathcolor{blue}{GF(2^k)}$.
 	\end{itemize}
 \end{frame}
 \begin{frame}{Property of Universal Hash Family}
@@ -314,7 +314,7 @@ If we can find $\mathcolor{blue}{h_s}$  such that $\mathcolor{blue}{\|M^2_{h_1,\
 
 
 	\begin{itemize}
-		\item For any $\mathcolor{blue}{i,j\in[N]}$, $$\mathcolor{blue}{M^2_{h_1,\dots, h_{s-1}}=\sum_{l\in[N]}\rho(A_{i,l})\cdot \rho(A_{l,j})}$$
+		\item For any $\mathcolor{blue}{i,j\in[N]}$, $$\mathcolor{blue}{M^2_{h_1,\dots, h_{s-1}}[i,j]=\sum_{l\in[N]}\rho(A_{i,l})\cdot \rho(A_{l,j})}$$
 \pause
 		\item For any $\mathcolor{blue}{h\in\mcH}$, $$\mathcolor{blue}{M_{h_1,\dots, h_{s-1}, h}[i,j]=\sum_{l\in[N]}\underset{r\in\{0,1\}^k}{\bbP}[r\in A_{i,l}\wedge h(r)\in A_{l,j}]}$$
 
