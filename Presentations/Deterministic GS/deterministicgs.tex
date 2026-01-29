@@ -295,6 +295,67 @@
 	\end{theorem}
 \end{frame}
 \section{Splitting Algorithm}
+\begin{frame}{Hensel Lifting}
+	Let $\textcolor{blue}{P(X,Y)\in\bbF_q[X,Y]}$ and $\textcolor{blue}{P}$ is monic in $\textcolor{blue}{Y}$. Let $\textcolor{blue}{g,h,a,b\in\bbF_q[X,Y]}$ such that
+	$$\textcolor{blue}{P\equiv gh\bmod{(X-\alpha)^m}\qquad ag+bh\equiv 1\bmod{(X-\alpha)^m}}$$
+	Then there exists unique $\textcolor{blue}{g',h',a',b'\in\bbF_q[X,Y]}$ such that
+	\begin{enumerate}
+		\item $\textcolor{blue}{P\equiv g'h'\bmod{(X-\alpha)^{2m}}}$
+		\item $\textcolor{blue}{g'\equiv g\bmod{(X-\alpha)^m}}$, $\textcolor{blue}{h'\equiv h\bmod{(X-\alpha)^m}}$, called lifts
+		\item $\textcolor{blue}{a'g'+b'h'\equiv 1\bmod{(X-\alpha)^{2m}}}$
+	\end{enumerate}
+	You can compute $\textcolor{blue}{g',h',a',b'}$ in $\textcolor{blue}{\poly(\deg P, m,\log q)}$ field operations
+
+	\begin{block}{Remark}
+		General version: Non-monic \textcolor{blue}{[Sinhababu-Thierauf, 2021]}, \textcolor{blue}{Sudan}'s notes. 
+
+		We gave degree bounds for multiple iteration of general Hensel Lifting
+	\end{block}
+\end{frame}
+\begin{frame}{Lifting}
+	$\textcolor{blue}{P(X,Y)\in\bbF_q[X,Y]}$, monic in $\textcolor{blue}{Y}$ with no pure $\textcolor{blue}{X}$-factors and point $\textcolor{blue}{(\alpha,\beta)}$.
+
+	We factorize: 
+	$$\textcolor{blue}{P(\alpha,Y)= \underbrace{(Y-\beta)^m}_{g_0}\cdot \underbrace{\hat{P}(Y)}_{h_0},\quad \hat{P}(\beta)\neq 0}$$
+	If $\textcolor{blue}{(Y-\beta)^m=P(\alpha,Y)}$ then $\textcolor{blue}{P=P_A}$
+
+	If $\textcolor{blue}{\hat{P}(Y)=P(\alpha,Y)}$ then $\textcolor{blue}{P=P_B}$
+
+	Otherwise:
+
+	Use Hensel Lifting $\textcolor{blue}{t=2\log(\deg_YP)}$ times to get $\textcolor{blue}{g_t,h_t}$ such that
+	$$\textcolor{blue}{P\equiv g_t h_t \bmod{(X-\alpha)^{2^t}},\quad g_t\equiv g_0\bmod{(X-\alpha)},\quad h_t\equiv h_0\bmod{(X-\alpha)}}$$
+\end{frame}
+\begin{frame}{Recursive Step}
+	$\textcolor{blue}{g_t,h_t}$ may not be actual factors of $\textcolor{blue}{P}$ as we are viewing modulo $\textcolor{blue}{(X-\alpha)^{2^t}}$. 
+
+	\textbf{Observe:} Actual factor of $\textcolor{blue}{g',h'}$ such that $\textcolor{blue}{g_t=g'\cdot h''}$, $\textcolor{blue}{h'=h''\cdot h_t}$. 
+
+	Need to solve linear systems of the form:
+	$$\textcolor{blue}{F\equiv E\cdot h_t \bmod{(X-\alpha)^{2^t}},\qquad V\equiv U\cdot g_t \bmod{(X-\alpha)^{2^t}}}$$
+
+	\begin{itemize}
+		\item $\textcolor{blue}{\deg_Y(F,V)\leq \deg_Y(P)-1}$, $\textcolor{blue}{\deg_X(F,V)\leq \deg_X(P)}$. 
+	\end{itemize}
+
+	\textbf{Observe:} Both $\textcolor{blue}{F,V}$ have factors of $\textcolor{blue}{P}$ but not exactly factor of $\textcolor{blue}{P}$. 
+
+	So we take gcd $\textcolor{blue}{P_1=gcd(P,F)}$, $\textcolor{blue}{P_2=gcd(P,V)}$
+	
+	Recurse on $\textcolor{blue}{P_1, P/P_1}$ (or $\textcolor{blue}{P_2, P/P_2}$).  
+	Then combine them to get $\textcolor{blue}{P_A, P_B}$. 
+\end{frame}
+\begin{frame}{Final Theorem}
+	\begin{lemma}
+		If the algorithm passes initial checks and has no solution of linear systems. Then $\textcolor{blue}{P=P_C}$.
+	\end{lemma}
+	Here we mention the full version of the theorem we proved:\vfill
+	
+	\begin{theorem}
+		For every bivariate polynomial $\textcolor{blue}{P(X,Y)\in\bbF_q[X,Y]}$ and point $\textcolor{blue}{(\alpha,\beta)\in\bbF_q^2}$ the above algorithm outputs $\textcolor{blue}{(P_1,P_2)}$ such that
+		$\textcolor{blue}{P_1=P_A\cdot R_1}$ and $\textcolor{blue}{P_2=P_B\cdot R_2}$ where $\textcolor{blue}{R_1R_2\mid P_D}$. 
+	\end{theorem}
+\end{frame}
 \begin{frame}[standout]
 	Thank You
 \end{frame}
