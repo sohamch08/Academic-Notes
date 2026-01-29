@@ -45,7 +45,7 @@
 		\item Blocklength: $\textcolor{blue}{n}$\pause
 		\item Dimension of Code: $\textcolor{blue}{k=\log |\mcC|}$\pause
 		\item Rate of Code: $\textcolor{blue}{R(\mcC)=\frac{k}{n\log |\Sg|}}$
-	\end{itemize}
+	\end{itemize}\pause
 
 	The distance between two codewords $\textcolor{blue}{c_1\neq c_2\in\mcC}$ is the hamming distance between them, $\textcolor{blue}{\Dl(c_1,c_2)}$.\pause
 
@@ -59,7 +59,7 @@
 	\begin{itemize}
 		\item Codewords to be ``far apart'' from each other $\implies$ \textcolor{blue}{High Distance}\pause
 		\item Redundancy to be low $\implies$ \textcolor{blue}{High Rate}
-	\end{itemize}
+	\end{itemize}\pause
 
 	\begin{block}{Relation between Rate and Distance}
 		For any code $\textcolor{blue}{\mcC}$ $$\textcolor{blue}{k\leq n-d+1}$$
@@ -91,26 +91,26 @@
 
 	\textbf{List Decoding Problem:} Given a received word $\textcolor{blue}{v\in \Sg^n}$
 	\begin{itemize}
-		\item Combinatorial List Decoding: If $\textcolor{blue}{|L(v)|=\poly(n)}$\pause
+		\item Combinatorial List Decoding: Prove if $\textcolor{blue}{|L(v)|=\poly(n)}$\pause
 		\item Algorithmic List Decoding: Find all codewords in $\textcolor{blue}{L(v)}$ in $\textcolor{blue}{\poly(n)}$ time.
-	\end{itemize}
+	\end{itemize}\pause
 
 	\begin{theorem}[Johnson Bound]
 		For a code $\textcolor{blue}{\mcC}$ with rate $\textcolor{blue}{R}$ the list size remains polynomial in $\textcolor{blue}{n}$ for $\textcolor{blue}{\rho\leq 1-\sqrt{R}}$
 	\end{theorem}\pause
 
-	We will talk in terms of agreement.
+	We will talk in terms of agreement instead of errors
 	$$1-t\text{ fraction of errors}\implies t\text{ fraction of agreement}$$
 \end{frame}
 \section{Reed Solomon Codes}
 \begin{frame}{Reed Solomon Codes}
-	Fix the following \begin{itemize}\pause
+	Fix the following \begin{itemize}
 		\item Alphabets: finite field $\textcolor{blue}{\bbF_q}$ of size $\textcolor{blue}{q}$\pause
 		\item Subset $\textcolor{blue}{S\subseteq \bbF_q}$, $\textcolor{blue}{|S|=n}$. $\textcolor{blue}{S=\{\alpha_1,\alpha_2,\dots, \alpha_n\}}$
-	\end{itemize}
+	\end{itemize}\pause
 
-	$\textcolor{blue}{RS[n,k]_q}$ encodes every message polynomial $\textcolor{blue}{f(X)\in\bbF_q[X]}$ with $\textcolor{blue}{\deg(f)<k}$ to\pause
-	$$\textcolor{blue}{(f(\alpha_1),f(\alpha_2), \dots, f(\alpha_n))}$$
+	$\textcolor{blue}{RS[n,k]_q}$ encodes every message polynomial $\textcolor{blue}{f(X)\in\bbF_q[X]}$ with $\textcolor{blue}{\deg(f)<k}$ to
+	$$\textcolor{blue}{(f(\alpha_1),f(\alpha_2), \dots, f(\alpha_n))}$$\pause
 
 	\begin{itemize}
 		\item Rate $\textcolor{blue}{R=\frac{k}{n}}$\pause
@@ -170,7 +170,7 @@
 
 	Let $\textcolor{blue}{P(X,Y)\in\bbF_q[X,Y]}$ and $\textcolor{blue}{f(X)\in\bbF_q[X]}$ such that
 	\begin{itemize}
-		\item $\textcolor{blue}{P(X,f(X))\equiv 0}$ and\pause
+		\item $\textcolor{blue}{P(X,f(X))\equiv 0}$ \pause
 		\item $\textcolor{blue}{\alpha\in\bbF_q}$ such that $\textcolor{blue}{\frac{\partial}{\partial Y}P(\alpha, f(\alpha))\neq 0}$.\pause
 		\item $\textcolor{blue}{Y_t=f(X)\mod X^t}$ for all $\textcolor{blue}{t\in\bbN}$
 	\end{itemize}\pause
@@ -211,7 +211,7 @@
 	Suppose we are given the factorization $\textcolor{blue}{P=\prod_{i=1}^s P_i}$ into irreducibles (with multiplicity)\pause
 
 	Eg: $\textcolor{blue}{P(X,Y)=(Y^2+X)(Y^2+X+1)^2}$ then
-	$$\textcolor{blue}{P_1=Y^2+X, \quad P_2=Y^2+X+1, \quad P_3=Y^2+X+1}$$
+	$$\textcolor{blue}{P_1=Y^2+X, \quad P_2=Y^2+X+1, \quad P_3=Y^2+X+1}$$\pause
 
 	We partition $\textcolor{blue}{[s]}$ into four sets which defines four types of factors at $\textcolor{blue}{(\alpha,\beta)}$:
 	$$\textcolor{blue}{A(\alpha,\beta),\quad B(\alpha,\beta),\quad C(\alpha,\beta),\quad D(\alpha,\beta)}$$
@@ -296,8 +296,8 @@
 \end{frame}
 \section{Splitting Algorithm}
 \begin{frame}{Hensel Lifting}
-	Let $\textcolor{blue}{P(X,Y)\in\bbF_q[X,Y]}$ and $\textcolor{blue}{P}$ is monic in $\textcolor{blue}{Y}$. Let $\textcolor{blue}{g,h,a,b\in\bbF_q[X,Y]}$ such that\pause
-	$$\textcolor{blue}{P\equiv gh\bmod{(X-\alpha)^m}\qquad ag+bh\equiv 1\bmod{(X-\alpha)^m}}$$
+	Let $\textcolor{blue}{P(X,Y)\in\bbF_q[X,Y]}$ and $\textcolor{blue}{P}$ is monic in $\textcolor{blue}{Y}$. Let $\textcolor{blue}{g,h,a,b\in\bbF_q[X,Y]}$ such that
+	$$\textcolor{blue}{P\equiv gh\bmod{(X-\alpha)^m}\qquad ag+bh\equiv 1\bmod{(X-\alpha)^m}}$$\pause
 	Then there exists unique $\textcolor{blue}{g',h',a',b'\in\bbF_q[X,Y]}$ such that\pause
 	\begin{enumerate}
 		\item $\textcolor{blue}{P\equiv g'h'\bmod{(X-\alpha)^{2m}}}$\pause
@@ -360,9 +360,9 @@
 		\item Derandomize Sudan and Guruswami-Sudan in near linear time. \pause
 		\item What about beyond johnson bound list decoding of Reed Solomon Codes? \pause
 		
-		Ben-Sasson, Kopparty, Radhakrishnan (2006) showed us we have no hope for low rate regime. But high/constant rate we have hope\pause
+		\textcolor{blue}{Ben-Sasson, Kopparty, Radhakrishnan (2006)} showed us we have no hope for low rate regime. But high/constant rate we have hope\pause
 		\item For beyond Johnson Bound even finding one element of the list is open. \pause
-		\item List decode Folded Reed Solomon Codes and Univariate Multiplicity Codes deterministically upto list decoding capacity in $\poly(1/\epsilon)\tilde{O}(n)$ time. 
+		\item List decode Folded Reed Solomon Codes and Univariate Multiplicity Codes deterministically upto list decoding capacity in $\mathcolor{blue}{\poly(1/\epsilon)\tilde{O}(n)}$ time. 
 	\end{itemize}
 \end{frame}
 \begin{frame}[standout]
