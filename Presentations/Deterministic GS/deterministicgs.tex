@@ -1,0 +1,299 @@
+\documentclass[10pt]{beamer}
+
+\usetheme{metropolis}
+\usepackage{appendixnumberbeamer,amsmath}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+\DeclareMathOperator{\order}{Order}
+
+\usepackage{libertine}
+\usepackage[libertine]{newtxmath}
+\usepackage{mathrsfs}
+\title{Deterministic List Decoding of Reed Solomon Codes}
+% \subtitle{Derandomizing Sudan and Guruswami-Sudan Algorithm}
+\date{\today}
+\author{Soham Chatterjee}
+% \institute{ISI Seminar}
+\renewcommand{\thealgocf}{}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+\metroset{block=fill}
+\pagestyle{empty}
+\input{../../letterfonts.tex}
+\DeclareMathOperator{\poly}{poly}
+\begin{document}
+\maketitle
+
+% \begin{frame}{Table of contents}
+% 	\setbeamertemplate{section in toc}[sections numbered]
+% 	\tableofcontents[hideallsubsections]
+% \end{frame}
+
+\section{Introduction}
+\begin{frame}{Introduction to Coding Theory}
+	An Error-Correcting code or simply code, $\textcolor{blue}{\mcC\subseteq \Sg^n}$ for some fixed finite set of alphabets $\textcolor{blue}{\Sg}$. You have a set of messages $\textcolor{blue}{\mcM}$ and encode them to $\textcolor{blue}{\mcC}$.
+	\begin{itemize}
+		\item Blocklength: $\textcolor{blue}{n}$
+		\item Dimension of Code: $\textcolor{blue}{k=\log |\mcC|}$
+		\item Rate of Code: $\textcolor{blue}{R(\mcC)=\frac{k}{n\log |\Sg|}}$
+	\end{itemize}
+
+	The distance between two codewords $\textcolor{blue}{c_1\neq c_2\in\mcC}$ is the hamming distance between them, $\textcolor{blue}{\Dl(c_1,c_2)}$.
+
+	\begin{itemize}
+		\item Distance of Code: $\textcolor{blue}{\Dl(\mcC)=\min\limits_{c_1\neq c_2\in\mcC}\Dl(c_1,c_2)}$
+		\item Relative Distance: $\textcolor{blue}{\dl(\mcC)=\frac{\Dl(\mcC)}{n}}$
+	\end{itemize}
+\end{frame}
+\begin{frame}{Introduction to Coding Theory}
+	\textbf{Goal:} Construct codes such that
+	\begin{itemize}
+		\item Codewords to be ``far apart'' from each other $\implies$ \textcolor{blue}{High Distance}
+		\item Redundancy to be low $\implies$ \textcolor{blue}{High Rate}
+	\end{itemize}
+
+	\begin{block}{Relation between Rate and Distance}
+		For any code $\textcolor{blue}{\mcC}$ $$\textcolor{blue}{k\leq n-d+1}$$
+		Asymptotically $\textcolor{blue}{R+\dl\leq 1}$ as $\textcolor{blue}{n}$ becomes very large.
+	\end{block}
+
+	Codes achieving this bound are called \textbf{Maximum Distance Separable (MDS)} codes.
+	\begin{itemize}
+		\item Reed Solomon Codes are MDS codes.
+	\end{itemize}
+\end{frame}
+\begin{frame}{Unique Decoding}
+	Let $\textcolor{blue}{\Dl(\mcC)=d}$. For any $\textcolor{blue}{v\in\Sg^n}$ there is at most one codeword $\textcolor{blue}{c\in\mcC}$ such that $\textcolor{blue}{\Dl(v,c)\leq  (d-1)/2}$.
+	\vfill
+
+	\textbf{Unique Decoding Problem:} Given a received word $\textcolor{blue}{v\in\Sg^n}$, find the unique codeword $\textcolor{blue}{c\in\mcC}$ such that $\textcolor{blue}{\Dl(v,c)< d/2}$ if it exists.
+	\vfill
+
+	\begin{itemize}
+		\item If we go more than $\textcolor{blue}{d/2}$ distance, multiple codewords may lie in the radius of hamming ball.
+	\end{itemize}
+\end{frame}
+\begin{frame}{List Decoding}
+	\begin{definition}[$\textcolor{blue}{(\rho,L)}$-List Decodable]
+		$\textcolor{blue}{\mcC}$ is called $\textcolor{blue}{(\rho,L)}$-list decodable if for every $\textcolor{blue}{v\in\Sg^n}$,
+		$$\textcolor{blue}{|\{c\in\mcC\mid \Dl(c,v)\leq \rho n\}|\leq L}$$
+	\end{definition}
+	We denote the list for $\textcolor{blue}{v}$ by $\textcolor{blue}{L(v)}$.
+
+	\textbf{List Decoding Problem:} Given a received word $\textcolor{blue}{v\in \Sg^n}$
+	\begin{itemize}
+		\item Combinatorial List Decoding: If $\textcolor{blue}{|L(v)|=\poly(n)}$
+		\item Algorithmic List Decoding: Find all codewords in $\textcolor{blue}{L(v)}$ in $\textcolor{blue}{\poly(n)}$ time.
+	\end{itemize}
+
+	\begin{theorem}[Johnson Bound]
+		For a code $\textcolor{blue}{\mcC}$ with rate $\textcolor{blue}{R}$ the list size remains polynomial in $\textcolor{blue}{n}$ for $\textcolor{blue}{\rho\leq 1-\sqrt{R}}$
+	\end{theorem}
+
+	We will talk in terms of agreement.
+	$$1-t\text{ fraction of errors}\implies t\text{ fraction of agreement}$$
+\end{frame}
+\section{Reed Solomon Codes}
+\begin{frame}{Reed Solomon Codes}
+	Fix the following \begin{itemize}
+		\item Alphabets: finite field $\textcolor{blue}{\bbF_q}$ of size $\textcolor{blue}{q}$
+		\item Subset $\textcolor{blue}{S\subseteq \bbF_q}$, $\textcolor{blue}{|S|=n}$. $\textcolor{blue}{S=\{\alpha_1,\alpha_2,\dots, \alpha_n\}}$
+	\end{itemize}
+
+	$\textcolor{blue}{RS[n,k]_q}$ encodes every message polynomial $\textcolor{blue}{f(X)\in\bbF_q[X]}$ with $\textcolor{blue}{\deg(f)<k}$ to
+	$$\textcolor{blue}{(f(\alpha_1),f(\alpha_2), \dots, f(\alpha_n))}$$
+
+	\begin{itemize}
+		\item Rate $\textcolor{blue}{R=\frac{k}{n}}$
+		\item Distance $\textcolor{blue}{d=n-k+1}$
+	\end{itemize}
+\end{frame}
+\begin{frame}{Reed Solomon Decoding History}
+	\textbf{Want:} unique and list decoding in $\textcolor{blue}{\poly(n,\log |\bbF_q|)}$ time.
+
+	Deterministic unique decoding upto $\textcolor{blue}{(n-k+1)/2}$ errors is possible using \textcolor{blue}{Berlekamp-Welch} algorithm in $\textcolor{blue}{\poly(n,\log |\bbF|)}$ time.
+
+	Johnson Bound gives polynomial list size for more than $\textcolor{blue}{\sqrt{n(k-1)}}$ agreement
+	\begin{itemize}
+		\item \textcolor{blue}{Sudan (1997)} gave randomized list decoding for more than $\textcolor{blue}{\sqrt{2n(k-1)}}$ agreement in $\textcolor{blue}{\poly(n,\log q)}$ time.
+		\item \textcolor{blue}{Guruswami-Sudan (1999)} improved it to more than $\textcolor{blue}{\sqrt{n(k-1)}}$ agreement using randomization in $\textcolor{blue}{\poly(n,\log q)}$ time.
+	\end{itemize}
+
+	Their Deterministic variant has polynomial dependence on field characteristic
+\end{frame}
+\begin{frame}{Framework of Sudan and Guruswami-Sudan}
+	Let $\textcolor{blue}{w=\{(\alpha_j,\beta_j)\}_{j\in[n]}}$ denote the received word. Both algorithms share the same two-step structure:
+	\begin{itemize}
+		\item \textbf{Interpolation}: Find a nonzero polynomial $\textcolor{blue}{Q(X,Y)\in\bbF_q[X,Y]}$ of $\textcolor{blue}{(1,k-1)}$-degree at most $\textcolor{blue}{D}$ that vanishes at each $\textcolor{blue}{(\alpha_j,\beta_j)}$ with multiplicity at least $\textcolor{blue}{m}$.
+		\item \textbf{Factorization}: Factorize $\textcolor{blue}{Q(X,Y)}$ over $\textcolor{blue}{\bbF_q}$; for each factor of the form $\textcolor{blue}{Y-f(X)}$, output $\textcolor{blue}{f}$ if $\textcolor{blue}{\deg f<k}$ and $\textcolor{blue}{f}$ agrees with $\textcolor{blue}{w}$ on at least $\textcolor{blue}{t}$ evaluations.
+	\end{itemize}
+	\begin{table}[h]
+		\centering
+		\renewcommand{\arraystretch}{1.3}
+		\begin{tabular}{|p{0.45\textwidth}|p{0.48\textwidth}|}
+			\hline
+			Sudan & Guruswami--Sudan \\
+			\hline
+			$m=1$, \; $D,t \approx \sqrt{2n(k-1)}$
+			      &
+			$m=\sqrt{n(k-1)}$, \;
+			$D \approx m\sqrt{n(k-1)}$, \;
+			$t=\sqrt{n(k-1)}$        \\
+			\hline
+		\end{tabular}
+	\end{table}
+
+	Both algorithms we denote $\textcolor{blue}{Q}$ be the polynomial from interpolation step.
+\end{frame}
+\begin{frame}{Factorization Barrier}
+	Sudan and Guruswami–Sudan algorithms rely on the factorization of bivariate polynomials over finite fields
+	\begin{itemize}
+		\item \textcolor{blue}{Barlekamp}, \textcolor{blue}{Cantor-Zassenhaus}, \textcolor{blue}{LLL}, \textcolor{blue}{Kaltofen} runs in polynomial time but randomized.
+		\item Their deterministic variants have polynomial dependence on field characteristic.
+	\end{itemize}
+
+	Large field characteristic (super polynomial in $\textcolor{blue}{n}$) is a problem. \vfill
+
+	\textbf{Want:} Do the factorization step deterministically in $\textcolor{blue}{\poly(n,\log q)}$ time.
+\end{frame}
+\section{Derandomization of Sudan}
+\begin{frame}{Newton Iteration}
+
+	Let $\textcolor{blue}{P(X,Y)\in\bbF_q[X,Y]}$ and $\textcolor{blue}{f(X)\in\bbF_q[X]}$ such that
+	\begin{itemize}
+		\item $\textcolor{blue}{P(X,f(X))\equiv 0}$ and
+		\item $\textcolor{blue}{\alpha\in\bbF_q}$ such that $\textcolor{blue}{\frac{\partial}{\partial Y}P(\alpha, f(\alpha))\neq 0}$.
+		\item $\textcolor{blue}{Y_t=f(X)\mod X^t}$ for all $\textcolor{blue}{t\in\bbN}$
+	\end{itemize}
+
+	Newton Iteration gives an efficient way to compute $\textcolor{blue}{Y_{t+1}}$ from $\textcolor{blue}{Y_t}$ as follows:
+	$$\textcolor{blue}{Y_{t+1}=Y_t-\frac{P(X,Y_t)}{\partial_YP(X,Y_t)}}$$
+\end{frame}
+\begin{frame}{Sudan Derandomization}
+	Let $\textcolor{blue}{f}$ is in the list. And let $\textcolor{blue}{j\in[n]}$ such that $\textcolor{blue}{f(\alpha_j)=\beta_j}$. Suppose $\textcolor{blue}{Q}$ is the polynomial from interpolation step.
+	\vfill
+
+	If $\textcolor{blue}{\partial_Y Q(\alpha_j,f(\alpha_j))\neq 0}$:
+	Then Newton Iteration from $\textcolor{blue}{Y_0}$ till $\textcolor{blue}{Y_k}$ gives $\textcolor{blue}{f}$. \vfill
+
+	Else $\textcolor{blue}{\partial_Y Q(\alpha_j,f(\alpha_j))=0}$ for all $\textcolor{blue}{j}$ in agreement. \vfill
+
+	\textbf{Observe:} $\textcolor{blue}{\partial_Y(Q(X,f(X)))}$ has more than $\textcolor{blue}{\sqrt{2n(k-1)}}$ roots but degree at most $\textcolor{blue}{\sqrt{2n(k-1)}}$.
+	Implying $\textcolor{blue}{\partial_Y(Q(X,f(X)))\equiv 0}$
+
+	So recurse on $\textcolor{blue}{\partial_Y(Q(X,f(X)))}$.
+\end{frame}
+\begin{frame}{Sudan Derandomization}
+	\textbf{Algorithm:}
+	\begin{enumerate}
+		\item Check for each $\textcolor{blue}{j\in[n]}$ if $\textcolor{blue}{\partial_Y Q(\alpha_j,\beta_j)\neq0}$. If yes, do Newton Iteration from there.
+		\item Else compute $\textcolor{blue}{\partial_Y(Q(X,Y))}$ and continue from step 1 with $\textcolor{blue}{\partial_YQ(X,Y)}$ instead of $\textcolor{blue}{Q}$.
+	\end{enumerate} \vfill
+
+	\begin{theorem}
+		There is a deterministic algorithm that, for every finite field $\textcolor{blue}{\bbF}$ and parameters $\textcolor{blue}{n,k\in\bbN}$ runs in time $\textcolor{blue}{\poly(n,\log|\bbF|)}$ list decodes Reed Solomon code $\textcolor{blue}{RS[n,k]}$ from agreement more than $\textcolor{blue}{\sqrt{2n(k-1)}}$.
+	\end{theorem}
+\end{frame}
+\section{Derandomization of Guruswami-Sudan}
+
+\begin{frame}{Local Splitting}
+	Let $\textcolor{blue}{P(X,Y)\in \bbF_q[X,Y]}$ with no-pure $\textcolor{blue}{X}$-factors. Let $\textcolor{blue}{(\alpha,\beta)\in\bbF_q^2}$ any point.
+
+	Suppose we are given the factorization $\textcolor{blue}{P=\prod_{i=1}^s P_i}$ into irreducibles (with multiplicity)
+
+	Eg: $\textcolor{blue}{P(X,Y)=(Y^2+X)(Y^2+X+1)^2}$ then
+	$$\textcolor{blue}{P_1=Y^2+X, \quad P_2=Y^2+X+1, \quad P_3=Y^2+X+1}$$
+
+	We partition $\textcolor{blue}{[s]}$ into four sets which defines four types of factors at $\textcolor{blue}{(\alpha,\beta)}$:
+	$$\textcolor{blue}{A(\alpha,\beta),\quad B(\alpha,\beta),\quad C(\alpha,\beta),\quad D(\alpha,\beta)}$$
+\end{frame}
+\begin{frame}{Local Splitting}
+	Let $P(X,Y)=(Y^2+X+1)(Y^2+X)(Y^2+X^2+Y)(XY+1)$ and  $(\alpha,\beta)=(0,0)$
+	\begin{itemize}
+		\item $A(\alpha,\beta)= \{i\in[s]\mid P_i(\alpha,\beta)\neq 0, \deg(P_i(\alpha,Y))\geq 1\}$
+
+		      So $Y^2+X+1\in A(0,0)$
+		\item $		B(\alpha,\beta) = \{i\in[s]\mid P_i(\alpha,Y)=\gm(Y-\beta)^m,m\geq 1,\gm\neq 0\}$
+
+		      So $Y^2+X\in B(0,0)$
+		\item $C(\alpha,\beta) =\{i\in[s]\mid P_i(\alpha,Y)=(Y-\beta)^m\hat{P}_i(Y),m\geq 1, \hat{P}_i(\beta)\neq 0, \deg \hat{P}_i\geq 1\}$
+
+		      So $Y^2+X^2+Y\in C(0,0)$
+		\item $D(\alpha,\beta) =\{i\in[s]\mid P_i(\alpha,\beta)\neq 0, \deg(P_i(\alpha,Y))=0\}$
+
+		      So $XY+1\in D(0,0)$
+	\end{itemize}
+
+	I will use $A,B,C,D$ to denote these. Define $P_A=\prod_{i\in A} P_i$ and similarly $P_B,P_C,P_D$.
+
+	\textbf{Observe: }If $P$ is monic in $Y$ then $D$ is empty.
+\end{frame}
+
+\begin{frame}{A Nice Observation}
+	$\textcolor{blue}{w=\{(\alpha_j,\beta_j)\}_{j\in[n]}}$ denote the received word. 
+	
+	$\textcolor{blue}{Q}$ is the polynomial from Interpolation step of Guruswami-Sudan algorithm. Let $\textcolor{blue}{f}$ is in the list.\vspace{5mm} 
+
+	For any $\textcolor{blue}{j\in[n]}$:\vspace{2mm}
+
+	\hspace{1cm} If $\textcolor{blue}{f(\alpha_j)=\beta_j}$: Then $\textcolor{blue}{Y-f(X)\mid P_B}$\vspace{2mm}
+
+	\hspace{1cm} If $\textcolor{blue}{f(\alpha_j)\neq \beta_j}$: Then $\textcolor{blue}{Y-f(X)\mid P_A}$
+\end{frame}
+\begin{frame}{Derandomization}
+	\begin{block}{Remark}
+		We will assume $\textcolor{blue}{Q}$ is monic in $\textcolor{blue}{Y}$ and has no pure $\textcolor{blue}{X}$-factors. 
+	\end{block}
+
+	\textbf{If only we had:} An efficient $\textcolor{blue}{\poly(n,\log q)}$ time algorithm \textsc{Split} to find $\textcolor{blue}{P_A,P_B}$ from $\textcolor{blue}{P, (\alpha,\beta)}$ then:
+
+	\textbf{Algorithm:}
+	\begin{enumerate}
+		\item $\textcolor{blue}{S\longleftarrow \{Q\}}$
+		\item Choose $\textcolor{blue}{j\in[n]}$ and for all $\textcolor{blue}{g\in S}$ compute $\textcolor{blue}{(g_A,g_B)=\textsc{Split}(g,(\alpha_j,\beta_j))}$
+		\item Remove $\textcolor{blue}{g}$ from $\textcolor{blue}{S}$ and put $\textcolor{blue}{g_A,g_B}$ in $\textcolor{blue}{S}$.
+		\item Continue from step 2 till $\textcolor{blue}{S}$ stabilizes.
+		\item Do some interpolations to recover list
+	\end{enumerate}
+\end{frame}
+\begin{frame}{Recover List from Stable Set}
+	\textbf{Observe:} If $\textcolor{blue}{f}$ is in the list there is one factor $\textcolor{blue}{g\in S}$, $\textcolor{blue}{Y-f(X)\mid g}$. 
+
+	\begin{lemma}
+		For all $\textcolor{blue}{j\in[n]}$,
+		$$\textcolor{blue}{g(\alpha_j,\beta_j)=0\iff f(\alpha_j)=\beta_j}$$
+	\end{lemma}
+	So go over all $\textcolor{blue}{g\in S}$, find $\textcolor{blue}{j\in[n]}$ such that $\textcolor{blue}{g(\alpha_j,\beta_j)=0}$, do interpolation to find appropriate $\textcolor{blue}{f}$.
+
+	\boxed{\text{But stabilization can take long time !!\;\;\;\;}} 
+
+	Simple potential function:
+	$$\textcolor{blue}{\Phi(S)=\sum_{i=1}^{\deg_Y(Q)}(i-1)\times \#(\text{polynomials with $Y$-deg $=i$  in $S$})}$$
+	You will notice $\textcolor{blue}{\Phi(S)}$ decreases by at least $\textcolor{blue}{1}$ in each update of $\textcolor{blue}{S}$.
+\end{frame}
+\begin{frame}{Finally}
+	Final Algorithm:
+	\begin{enumerate}
+		\item $\textcolor{blue}{S\longleftarrow \{Q\}}$
+		\item Choose $\textcolor{blue}{j\in[n]}$ and for all $\textcolor{blue}{g\in S}$ compute $\textcolor{blue}{(g_A,g_B)=\textsc{Split}(g,(\alpha_j,\beta_j))}$
+		\item Remove $\textcolor{blue}{g}$ from $\textcolor{blue}{S}$ and put $\textcolor{blue}{g_A,g_B}$ in $\textcolor{blue}{S}$.
+		\item Continue from step 2 till $\textcolor{blue}{S}$ stabilizes.
+		\item Go over all $\textcolor{blue}{g\in S}$ and do interpolation on the set $\textcolor{blue}{\{j\in[n]\mid g(\alpha_j,\beta_j)=0\}}$ and recover list
+	\end{enumerate}\vfill 
+
+	\begin{theorem}
+	There is a deterministic algorithm that, for every finite field $\textcolor{blue}{\bbF}$ and parameters $\textcolor{blue}{n,k\in\bbN}$ runs in time $\textcolor{blue}{\poly(n,\log|\bbF|)}$ list decodes Reed Solomon code $\textcolor{blue}{RS[n,k]}$ from agreement more than $\textcolor{blue}{\sqrt{n(k-1)}}$. 
+	\end{theorem}
+\end{frame}
+\section{Splitting Algorithm}
+\begin{frame}[standout]
+	Thank You
+\end{frame}
+
+\end{document}
