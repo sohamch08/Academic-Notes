@@ -1,4 +1,4 @@
-\documentclass[10pt]{beamer}
+\documentclass[10pt,handout]{beamer}
 
 \usetheme{metropolis}
 \usepackage{appendixnumberbeamer,amsmath}
@@ -120,7 +120,7 @@
 \begin{frame}{Reed Solomon Decoding History}
 	\textbf{Want:} unique and list decoding in $\textcolor{blue}{\poly(n,\log |\bbF_q|)}$ time.\pause
 
-	Deterministic unique decoding upto $\textcolor{blue}{(n-k+1)/2}$ errors is possible using \textcolor{blue}{Berlekamp-Welch} algorithm in $\textcolor{blue}{\poly(n,\log |\bbF|)}$ time.\pause
+	Deterministic unique decoding upto $\textcolor{blue}{(n-k+1)/2}$ errors is possible using \textcolor{blue}{Berlekamp-Welch} algorithm in $\textcolor{blue}{\poly(n,\log q)}$ time.\pause
 
 	Johnson Bound gives polynomial list size for more than $\textcolor{blue}{\sqrt{n(k-1)}}$ agreement\pause
 	\begin{itemize}
@@ -274,7 +274,7 @@
 	\end{lemma}\pause
 	So go over all $\textcolor{blue}{g\in S}$, find $\textcolor{blue}{j\in[n]}$ such that $\textcolor{blue}{g(\alpha_j,\beta_j)=0}$, do interpolation to find appropriate $\textcolor{blue}{f}$.\pause
 
-	\boxed{\text{But stabilization can take long time !!\;\;\;\;}}\pause 
+	\boxed{\text{But stabilization can take long time !!}}\pause 
 
 	Simple potential function:
 	$$\textcolor{blue}{\Phi(S)=\sum_{i=1}^{\deg_Y(Q)}(i-1)\times \#(\text{polynomials with $Y$-deg $=i$  in $S$})}$$\pause
