@@ -31,14 +31,15 @@ References for this topic are \cite{highratesublin}, \cite{kopparty2015remarks}
 		Hence  comparing the coefficients of $\ovZ^{\ovj}\ovW^{\ovi}$ we obtain $\lt(P^{(\ovi)}\rt)^{(\ovj)}(\ovX)=\comb{\ovi+\ovj}{\ovi}P^{(\ovi+\ovj)}(\ovX)$
 	\end{itemize}
 \end{proof}
+
 \section{Multiplicity}
 Now we will define the notion of the multiplicity of a polynomial.
 \begin{definition}[Multiplicity]
-	For $P(\ovX)\in \bbF[\ovX]$ and $\ova\in \bbF^m$ the multiplicity of $P$ at $\ova\in \bbF^m$ denoted $mult(P,\ova)$ id the largest integer $M$ such that for every non-negative vector $\ovi$ with $wt(\ovi)<M$ we have $P^{(\ovi)}(\ova)=0$ (If $M$ may be taken arbitrarily large we set $mult(P,\ova)=\infty$)
+	For $P(\ovX)\in \bbF[\ovX]$ and $\ova\in \bbF^m$ the multiplicity of $P$ at $\ova\in \bbF^m$ denoted $mult(P,\ova)$ is the largest integer $M$ such that for every non-negative vector $\ovi$ with $wt(\ovi)<M$ we have $P^{(\ovi)}(\ova)=0$ (If $M$ may be taken arbitrarily large we set $mult(P,\ova)=\infty$)
 \end{definition}
 Note that $mult(P,\ova)\geq 0$ for all $\ova\in \bbF^m$.
 \subsection{Basic Properties of Multiplicity}
-We now translate some of the properties of the Hasse derivative into properties of the multiplicities. We will discuss the properties of multiplicities from \cite{dvir2009extensions}
+We now translate some properties of the Hasse derivative into properties of the multiplicities. We will discuss the properties of multiplicities from \cite{dvir2009extensions}
 \begin{proposition}\label{diffmult}
 	If $P(\ovX)\in \bbF[\ovX]$ and $\ova\in \bbF^m$ are such that $mult(O,\ova)=n$ then $mult(P^{(\ovi)},\ova)\geq n-wt(\ovi)$
 \end{proposition}
